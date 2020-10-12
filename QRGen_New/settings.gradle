@@ -1,0 +1,2 @@
+rootProject.name='QRGen_New'
+include ':app'

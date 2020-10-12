@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">QR_Gen</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="increase">+</string>
+    <string name="decrease">-</string>
+    <string name="lowPortTitle">Lower Port</string>
+    <string name="highPortTitle">High Port</string>
+    <string name="autonomous">Autonomous</string>
+    <string name="teleop">Teleoperated</string>
+    <string name="auto_line">Passed Initiation Line</string>
+    <string name="other">Additional Details</string>
+    <string name="defense">Defense</string>
+
+
+    <string name="level_zero">0</string>
+    <string name="level_one">1</string>
+    <string name="level_two">2</string>
+    <string name="level_three">3</string>
+    <string name="level_four">4</string>
+    <string name="level_five">5</string>
+
+    <string name="comments">Comments</string>
+    <string name="clear_form_button">CLEAR FORM</string>
+
+</resources>
