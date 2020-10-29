@@ -61,8 +61,16 @@ public class MatchData {
 
     //Sets extComments to given String
     public void setExtComments(CharSequence x){
-        stats[4] = "\"" + x + "\"";
-        extComments = "\"" + x + "\"";
+       String y = x.toString();
+       for(int i = 0; i < x.length()-1; i++){
+           if(y.charAt(i) == ','){
+               y = y.substring(0, i)+ y.substring(i+1);
+               i--;
+           }
+       }
+
+       stats[4]= y;
+       extComments = y;
     }
 
     //Returns current status of extComments
@@ -89,7 +97,7 @@ public class MatchData {
     public String toString(){
         String message = "";
         for(Object x: stats){
-            message += (x + ",  ");
+            message += (x + ",");
         }
         return message;
     }

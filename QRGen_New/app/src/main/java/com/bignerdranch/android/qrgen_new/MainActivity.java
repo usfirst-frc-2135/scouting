@@ -19,13 +19,12 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";// This is the tag that will be used for all Log statements generated from this activity
-    private static MatchData mMatchData;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mMatchData = new MatchData();
 
         //Initialize toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -43,21 +42,7 @@ public class MainActivity extends AppCompatActivity {
         fm.beginTransaction().add(R.id.fragmentContainer, fragment[0]).commit();
 
         //Set up the send button which generates a QR code upon being pressed
-        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
 
-            @Override
-            public void onClick(View view) {
-                //Uses intents to start the QQ code activity --> changes screens
-                Snackbar.make(view, "Generating QR code", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-               Intent i = new Intent(MainActivity.this, QRActivity.class);
-               i.putExtra("stats", mMatchData.toString());
-               startActivityForResult(i, 0);
-               Log.d("MainActivity", "Sent intent");
-
-            }
-        });
 
     }
 
@@ -67,9 +52,6 @@ public class MainActivity extends AppCompatActivity {
         return new com.bignerdranch.android.qrgen_new.MatchFragment();
     }
 
-    protected static MatchData getMatchData(){
-        return mMatchData;
-    }
 
 
     @Override

@@ -1,5 +1,6 @@
 package com.bignerdranch.android.qrgen_new;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -25,7 +26,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.UUID;
 
-import static com.bignerdranch.android.qrgen_new.MainActivity.getMatchData;
+
 
 
 public class MatchFragment extends Fragment {
@@ -52,7 +53,7 @@ public class MatchFragment extends Fragment {
     private EditText mEditText;
 
     private static final String TAG = "MatchFragment";
-
+    private static MatchData mMatchData;
 
 
 
@@ -66,6 +67,8 @@ public class MatchFragment extends Fragment {
         //Creates a view using the specific fragment layout, match_data_fragment
         View v = inflater.inflate(R.layout.match_data_fragment, parent, false);
         FragmentManager fm = getActivity().getSupportFragmentManager();
+
+        mMatchData = new MatchData();
 
         //Sets up TextView that displays low points, setting 0 as the default
         mLowPoints = (TextView)v.findViewById(R.id.lowportpoints);
@@ -81,9 +84,9 @@ public class MatchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //Sets all mMatchData data to defaults and resets the UI
-                getMatchData().clearStats();
-                mLowPoints.setText(getMatchData().getLowPoints() + "");
-                mHighPoints.setText(getMatchData().getHighPoints() + "");
+                mMatchData.clearStats();
+                mLowPoints.setText(mMatchData.getLowPoints() + "");
+                mHighPoints.setText(mMatchData.getHighPoints() + "");
                 mCheckBox.setChecked(false);
                 mEditText.setText("");
                 mEditText.setHint("Enter any additional comments here");
@@ -96,11 +99,9 @@ public class MatchFragment extends Fragment {
         mLowPortPointsDec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //updates mMatchData to reflect the current number of points
                 //Decreases displayed point value by 1
-                getMatchData().setLowPoints(getMatchData().getLowPoints()-1);
-                mLowPoints.setText(getMatchData().getLowPoints() + "");
-                Log.d(TAG ,getMatchData().getLowPoints() + "");
+                mLowPoints.setText((Integer.parseInt(mLowPoints.getText().toString())- 1) + "");
+                Log.d(TAG ,mMatchData.getLowPoints() + "");
             }
         });
 
@@ -109,10 +110,8 @@ public class MatchFragment extends Fragment {
         mLowPortPointsInc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //updates mMatchData to reflect the current number of points
                 //Increases displayed point value by 1
-                getMatchData().setLowPoints(getMatchData().getLowPoints()+1);
-                mLowPoints.setText(getMatchData().getLowPoints() + "");
+                mLowPoints.setText((Integer.parseInt(mLowPoints.getText().toString())+ 1) + "");
             }
         });
 
@@ -121,10 +120,8 @@ public class MatchFragment extends Fragment {
         mHighPortPointsDec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //updates mMatchData to reflect the current number of points
                 //Decreases displayed point value by 1
-                getMatchData().setHighPoints(getMatchData().getHighPoints()-1);
-                mHighPoints.setText(getMatchData().getHighPoints() + "");
+                mHighPoints.setText((Integer.parseInt(mHighPoints.getText().toString())- 1) + "");
             }
         });
 
@@ -133,22 +130,15 @@ public class MatchFragment extends Fragment {
         mHighPortPointsInc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //updates mMatchData to reflect the current number of points
                 //Increases displayed point value by 1
-                getMatchData().setHighPoints(getMatchData().getHighPoints()+1);
-                mHighPoints.setText(getMatchData().getHighPoints() + "");
+                mHighPoints.setText((Integer.parseInt(mHighPoints.getText().toString())+ 1) + "");
             }
         });
 
         //Connects the checkbox for passing the initiation line and sets up a listener to detect when the checked status is changed
         mCheckBox = (CheckBox)v.findViewById(R.id.auto_line_checkbox);
         mCheckBox.setChecked(false);// Default is unchecked
-        mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
-                //When the checked status changes, mMatchData is changed to reflect the status of whether the initiation line was passed
-                getMatchData().setPassedInitLine(isChecked);
-            }
-        });
+
 
         mRadioGroup = (RadioGroup)v.findViewById(R.id.defense_scale);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
         mRadioButton0 = (RadioButton)v.findViewById(R.id.level_zero);//Sets up radio button that corresponds to 0
@@ -164,22 +154,22 @@ public class MatchFragment extends Fragment {
 
                                                        //Changes mMatchData's defense variable according to which radio button is selected
                                                        if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton0.getId()) {
-                                                           getMatchData().setDefense(0);
+                                                           mMatchData.setDefense(0);
                                                        }
                                                        if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton1.getId()) {
-                                                           getMatchData().setDefense(1);
+                                                           mMatchData.setDefense(1);
                                                        }
                                                        if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton2.getId()) {
-                                                           getMatchData().setDefense(2);
+                                                           mMatchData.setDefense(2);
                                                        }
                                                        if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton3.getId()) {
-                                                           getMatchData().setDefense(3);
+                                                           mMatchData.setDefense(3);
                                                        }
                                                        if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton4.getId()) {
-                                                           getMatchData().setDefense(4);
+                                                           mMatchData.setDefense(4);
                                                        }
                                                        if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton5.getId()) {
-                                                           getMatchData().setDefense(5);
+                                                           mMatchData.setDefense(5);
                                                        }
                                                    }
                                                });
@@ -190,14 +180,33 @@ public class MatchFragment extends Fragment {
         mEditText.setHint("Enter any additional comments here");
         mEditText.addTextChangedListener(new TextWatcher(){
             public void onTextChanged(CharSequence c, int start, int before, int count){
-                //Sets the extComments field in mMatchData to whatever the text is changed to when it is changed
-                getMatchData().setExtComments(c);
             }
             public void beforeTextChanged(CharSequence c, int start, int count, int after){
             }
             public void afterTextChanged(Editable c){
             }
 
+        });
+
+        FloatingActionButton fab = (FloatingActionButton)v.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
+
+            @Override
+            public void onClick(View view) {
+                mMatchData.setExtComments(mEditText.getText());
+                mMatchData.setLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
+                mMatchData.setHighPoints(Integer.parseInt(mHighPoints.getText().toString()));
+                mMatchData.setPassedInitLine(mCheckBox.isChecked());
+
+                //Uses intents to start the QQ code activity --> changes screens
+                Snackbar.make(view, "Generating QR code", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                Intent i = new Intent(getActivity(), QRActivity.class);
+                i.putExtra("stats", mMatchData.toString());
+                startActivityForResult(i, 0);
+                Log.d("MainActivity", "Sent intent");
+
+            }
         });
 
 

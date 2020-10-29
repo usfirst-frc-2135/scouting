@@ -49,6 +49,8 @@ public class QRFragment extends Fragment {
         QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(message, null,
                 Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), qrCodeDimension);
 
+        Log.i(TAG, message);
+
         try {
             Bitmap bitmap = qrCodeEncoder.encodeAsBitmap();
             mImageView.setImageBitmap(bitmap);
