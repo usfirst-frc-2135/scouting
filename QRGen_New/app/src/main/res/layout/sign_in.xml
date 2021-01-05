@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
+
+       <TextView
+           android:id="@+id/sign_in_text"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="@string/sign_in_text">
+
+       </TextView>
+
+       <EditText
+           android:id="@+id/scouter_name"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+
+       </EditText>
+
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+
+
+           <EditText
+               android:id="@+id/scouting_date"
+               android:layout_width="250dp"
+               android:layout_height="wrap_content"
+               >
+           </EditText>
+
+           <ImageButton
+               android:id="@+id/date_button"
+               android:layout_width="50dp"
+               android:layout_height="50dp"
+               android:background="@drawable/calendar_icon">
+           </ImageButton>
+       </LinearLayout>
+
+       <Button
+           android:id="@+id/log_in_button"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/sign_in_button_text">
+
+       </Button>
+
+       <TextView
+           android:id="@+id/error_message1"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+
+       </TextView>
+
+
+
+   </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

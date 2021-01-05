@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_activated">
+
+
+      <TableLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          >
+          <TableRow>
+              <TextView
+                  android:textSize="9dp"
+                  android:text="High Points"
+                  android:layout_weight="1">
+              </TextView>
+
+              <TextView
+                  android:textSize="9dp"
+                  android:text="Low Points"
+                  android:layout_weight="1" >
+              </TextView>
+
+              <TextView
+                  android:textSize="9dp"
+                  android:text="Init Line"
+                  android:layout_weight="1" >
+              </TextView>
+
+              <TextView
+                  android:textSize="9dp"
+                  android:text="Defense"
+                  android:layout_weight="1" >
+              </TextView>
+
+              <TextView
+                  android:textSize="9dp"
+                  android:text="Comments"
+                  android:layout_weight="1" >
+              </TextView>
+          </TableRow>
+
+          <TableRow>
+              <TextView
+                  android:paddingLeft="15dp"
+                  android:layout_width="wrap_content"
+                  android:layout_height="match_parent"
+                  android:id="@+id/lowpointsdisplay"
+                  android:paddingRight="30dp"
+                  android:layout_weight="1"
+                  >
+              </TextView>
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="match_parent"
+                  android:id="@+id/highpointsdisplay"
+                  android:paddingRight="30dp"
+                  android:layout_weight="1">
+              </TextView>
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="match_parent"
+                  android:id="@+id/initlinedisplay"
+                  android:paddingRight="30dp"
+                  android:layout_weight="1">
+              </TextView>
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="match_parent"
+                  android:id="@+id/defensedisplay"
+                  android:paddingRight="30dp"
+                  android:layout_weight="1">
+              </TextView>
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="match_parent"
+                  android:id="@+id/commentsdisplay"
+                  android:layout_weight="1">
+              </TextView>
+          </TableRow>
+
+
+
+
+      </TableLayout>
+
+
+
+
+
+</RelativeLayout>

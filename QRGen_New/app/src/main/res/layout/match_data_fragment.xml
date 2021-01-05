@@ -53,7 +53,7 @@
                 android:id="@+id/highportTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/highPortTitle"
+                android:text="@string/outerPortTitle"
                 android:textSize="18dp"
                 style="?android:listSeparatorTextViewStyle"/>
             <LinearLayout
@@ -200,6 +200,15 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_menu_send" />
+
+
+    <!-- <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_margin="@dimen/fab_margin"
+        />-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -13,7 +13,7 @@
     <string name="increase">+</string>
     <string name="decrease">-</string>
     <string name="lowPortTitle">Lower Port</string>
-    <string name="highPortTitle">High Port</string>
+    <string name="outerPortTitle">High Port</string>
     <string name="autonomous">Autonomous</string>
     <string name="teleop">Teleoperated</string>
     <string name="auto_line">Passed Initiation Line</string>
@@ -30,5 +30,9 @@
 
     <string name="comments">Comments</string>
     <string name="clear_form_button">CLEAR FORM</string>
+
+    <string name="sign_in_text">Please enter your name and the today\'s date</string>
+    <string name="date_picker_title">Date of Crime:</string>
+    <string name="sign_in_button_text">Sign In</string>
 
 </resources>

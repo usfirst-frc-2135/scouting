@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         //Connects this Java class to the XML file activity_main, linking the UI to the controller layer
         setContentView(R.layout.activity_main);
 

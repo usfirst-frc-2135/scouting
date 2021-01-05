@@ -1,12 +1,22 @@
 package com.bignerdranch.android.qrgen_new;
 
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Date;
+import java.util.UUID;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class MatchData {
     //Creating private variables for all of the match data that is collected with an addition of an array to hold everything
     private Object[] stats;
+    private UUID mId;
     private int lowPoints;
     private int highPoints;
     private int defense;
@@ -16,6 +26,7 @@ public class MatchData {
     public MatchData(){
 
         //Initializes/constructs everything
+        mId = UUID.randomUUID();
         stats = new Object[5];
         setLowPoints(0);
         setHighPoints(0);
@@ -23,6 +34,16 @@ public class MatchData {
         setExtComments("");
         setDefense(0);
 
+    }
+
+    public MatchData(JSONObject json) throws JSONException{
+        stats = new Object[5];
+        mId = UUID.randomUUID();
+        setHighPoints(json.getInt("high points"));
+        setLowPoints(json.getInt("low points"));
+        setPassedInitLine(json.getBoolean("init_line"));
+        setDefense(json.getInt("defense"));
+        setExtComments(json.getString("comments"));
     }
 
     //Sets LowPoints to given number
@@ -61,11 +82,14 @@ public class MatchData {
 
     //Sets extComments to given String
     public void setExtComments(CharSequence x){
-       String y = x.toString();
-       for(int i = 0; i < x.length()-1; i++){
-           if(y.charAt(i) == ','){
-               y = y.substring(0, i)+ y.substring(i+1);
-               i--;
+       String y = "";
+        if(x != null){
+           y = x.toString();
+           for(int i = 0; i < x.length()-2; i++){
+               if(y.charAt(i) == ','){
+                   y = y.substring(0, i)+ y.substring(i+1);
+                   i++;
+               }
            }
        }
 
@@ -95,11 +119,32 @@ public class MatchData {
 
     //Provides a string of all match data separated by commas
     public String toString(){
+
+        String message = "High Points, Low Points, Crossed Initiation Line, Defense Rating, Additional Comments \n";
+        for(Object x: stats){
+            message += (x + ",");
+        }
+        return message;
+    }
+
+    public String encodeToURL(){
+        String message = "High Points%2C%20Low Points%2C%20Crossed Initiation Line%2C%20Defense Rating%2C%20Additional Comments%7C";
+        for(Object x: stats){
+            message += (x + "%2C%20");
+        }
+        return message;
+    }
+
+    public String dataNums(){
         String message = "";
         for(Object x: stats){
             message += (x + ",");
         }
         return message;
+    }
+
+    public UUID getId(){
+        return mId;
     }
 
 
@@ -110,6 +155,22 @@ public class MatchData {
         setPassedInitLine(false);
         setHighPoints(0);
         setLowPoints(0);
+    }
+
+    public JSONObject toJSON() throws JSONException {
+        //This code uses the JSON class to convert the aspects of each crime into data that can be to a file as JSON
+        JSONObject json = new JSONObject();
+        json.put("headings", "High Points,Low Points,Crossed Initiation Line,Defense Rating,Additional Comments \n");
+        json.put("high points", highPoints );
+        json.put("divider", ",");
+        json.put("low points", lowPoints);
+        json.put("divider", ",");
+        json.put("init_line", passedInitLine);
+        json.put("divider", ",");
+        json.put("defense", defense);
+        json.put("divider", ",");
+        json.put("comments", extComments);
+        return json;
     }
 
 

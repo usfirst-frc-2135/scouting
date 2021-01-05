@@ -1,7 +1,6 @@
 package com.bignerdranch.android.qrgen_new;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,22 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-
-import java.util.UUID;
-
-
 
 
 public class MatchFragment extends Fragment {
@@ -52,6 +46,7 @@ public class MatchFragment extends Fragment {
     private RadioButton mRadioButton5;
     private EditText mEditText;
 
+    public static final String EXTRA_MATCH_ID = "com.bignerdranch.android.qrgen_new.match_id";
     private static final String TAG = "MatchFragment";
     private static MatchData mMatchData;
 
@@ -68,7 +63,9 @@ public class MatchFragment extends Fragment {
         View v = inflater.inflate(R.layout.match_data_fragment, parent, false);
         FragmentManager fm = getActivity().getSupportFragmentManager();
 
+
         mMatchData = new MatchData();
+
 
         //Sets up TextView that displays low points, setting 0 as the default
         mLowPoints = (TextView)v.findViewById(R.id.lowportpoints);
@@ -91,6 +88,8 @@ public class MatchFragment extends Fragment {
                 mEditText.setText("");
                 mEditText.setHint("Enter any additional comments here");
                 mRadioGroup.clearCheck();
+
+
             }
         });
 
@@ -194,20 +193,46 @@ public class MatchFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
+
                 mMatchData.setExtComments(mEditText.getText());
                 mMatchData.setLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
                 mMatchData.setHighPoints(Integer.parseInt(mHighPoints.getText().toString()));
                 mMatchData.setPassedInitLine(mCheckBox.isChecked());
+                MatchHistory.get(getContext()).addMatch(mMatchData);
+
+                Log.d(TAG, mMatchData.getId()+"");
 
                 //Uses intents to start the QQ code activity --> changes screens
                 Snackbar.make(view, "Generating QR code", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 Intent i = new Intent(getActivity(), QRActivity.class);
-                i.putExtra("stats", mMatchData.toString());
+                i.putExtra("stats", mMatchData.encodeToURL());
                 startActivityForResult(i, 0);
                 Log.d("MainActivity", "Sent intent");
 
             }
         });
+
+        /*FloatingActionButton fab2 = (FloatingActionButton)v.findViewById(R.id.fab3);
+        fab2.setOnClickListener(new View.OnClickListener() {
+            //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
+
+            @Override
+            public void onClick(View view) {
+                mMatchData.setExtComments(mEditText.getText());
+                mMatchData.setLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
+                mMatchData.setHighPoints(Integer.parseInt(mHighPoints.getText().toString()));
+                mMatchData.setPassedInitLine(mCheckBox.isChecked());
+                MatchHistory.get(getContext()).addMatch(mMatchData);
+
+                Log.d(TAG, mMatchData.getId()+"");
+
+                //Uses intents to start the QQ code activity --> changes screens
+                Intent i = new Intent(getActivity(), MatchListActivity.class);
+                startActivityForResult(i, 0);
+                Log.d("MainActivity", "Sent intent");
+
+            }
+        });*/
 
 
         return v;
