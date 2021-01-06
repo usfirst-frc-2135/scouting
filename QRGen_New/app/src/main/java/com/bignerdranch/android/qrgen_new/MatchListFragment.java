@@ -55,7 +55,7 @@ public class MatchListFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
-
+        mMatchData = MatchHistory.get(getActivity()).getMatches();
         MatchAdapter adapter = new MatchAdapter(mMatchData);
         View v1 = inflater.inflate(R.layout.match_list, parent, false);
         mListView = v1.findViewById(android.R.id.list);
@@ -188,6 +188,7 @@ public class MatchListFragment extends ListFragment {
 
     @Override
     public void onPause(){
+        Log.d(TAG, "onPause()");
         super.onPause();
         MatchHistory.get(getActivity()).saveMatches();
     }
@@ -196,7 +197,7 @@ public class MatchListFragment extends ListFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.match_crime_list, menu);
+        inflater.inflate(R.menu.match_list, menu);
         //This tells the program to inflate the view for the menu when the method is called.
     }
 

@@ -16,7 +16,6 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class MatchData {
     //Creating private variables for all of the match data that is collected with an addition of an array to hold everything
     private Object[] stats;
-    private UUID mId;
     private int autonLowPoints;
     private int autonOuterPoints;
     private int teleopLowPoints;
@@ -29,12 +28,12 @@ public class MatchData {
     private String teamNumber;
     private int matchNumber;
     private boolean climbed;
+    private UUID matchID;
 
     public MatchData(){
 
         //Initializes/constructs everything
-        mId = UUID.randomUUID();
-        stats = new Object[5];
+        stats = new Object[12];
         setAutonLowPoints(0);
         setAutonOuterPoints(0);
         setTeleopLowPoints(0);
@@ -47,12 +46,16 @@ public class MatchData {
         date = Scouter.get().getDate();
         teamNumber = "";
         matchNumber = 0;
+        matchID = UUID.randomUUID();
 
     }
 
     public MatchData(JSONObject json) throws JSONException{
-        stats = new Object[5];
-        mId = UUID.randomUUID();
+
+        Log.d(TAG, "Matches being created using json data");
+
+        stats = new Object[12];
+        matchID = UUID.randomUUID();
         setAutonOuterPoints(json.getInt("auton outer points"));
         setAutonLowPoints(json.getInt("auton low points"));
         setPassedInitLine(json.getBoolean("init_line"));
@@ -64,36 +67,38 @@ public class MatchData {
         setTeamNumber(json.getString("team number"));
         setMatchNumber(json.getInt("match number"));
         name = json.getString("scouter name");
+        stats[0] = name;
         date = json.getString("scouting date");
+        stats[1] = date;
     }
 
     //Sets LowPoints to given number
     public void setAutonLowPoints(int x){
-        stats[1]=x;
+        stats[5]=x;
         autonLowPoints = x;
     }
 
     //Sets HighPoints to given number
     public void setAutonOuterPoints(int y){
-        stats[0]=y;
+        stats[4]=y;
         autonOuterPoints = y;
     }
 
     //Sets LowPoints to given number
     public void setTeleopLowPoints(int x){
-        stats[1]=x;
+        stats[8]=x;
         teleopLowPoints = x;
     }
 
     //Sets HighPoints to given number
     public void setTeleopOuterPoints(int y){
-        stats[0]=y;
+        stats[7]=y;
         teleopOuterPoints = y;
     }
 
     //Sets passedInitLine to given boolean: true for passed, false for no
     public void setPassedInitLine(boolean x){
-        stats[2] = x;
+        stats[6] = x;
         passedInitLine = x;
     }
 
@@ -103,6 +108,7 @@ public class MatchData {
     }
 
     public void setClimb(boolean x){
+        stats[9] = x;
         climbed = x;
     }
 
@@ -112,7 +118,7 @@ public class MatchData {
 
     //Sets defense to an given integer between 0 and 5
     public void setDefense(int x){
-        stats[3] = x;
+        stats[10] = x;
         defense = x;
     }
 
@@ -134,7 +140,7 @@ public class MatchData {
            }
        }
 
-       stats[4]= y;
+       stats[11]= y;
        extComments = y;
     }
 
@@ -169,7 +175,7 @@ public class MatchData {
     }
 
     public String getName(){
-        Log.d(TAG, name);
+
         return name;
     }
 
@@ -178,6 +184,7 @@ public class MatchData {
     }
 
     public void setTeamNumber(String n){
+        stats[2] = n;
         teamNumber = n;
     }
 
@@ -186,6 +193,7 @@ public class MatchData {
     }
 
     public void setMatchNumber(int n){
+        stats[3] = n;
         matchNumber = n;
     }
 
@@ -193,35 +201,16 @@ public class MatchData {
         return matchNumber;
     }
 
-
-    //Provides a string of all match data separated by commas
-    /*public String toString(){
-
-        String message = "High Points, Low Points, Crossed Initiation Line, Defense Rating, Additional Comments \n";
-        for(Object x: stats){
-            message += (x + ",");
-        }
-        return message;
-    }*/
+    public UUID getMatchID(){
+        return matchID;
+    }
 
     public String encodeToURL(){
-        String message = "High Points%2C%20Low Points%2C%20Crossed Initiation Line%2C%20Defense Rating%2C%20Additional Comments%7C";
+        String message = "Scouter Name%2C%20Scouting Date%2C%20Team Number%2C%20Match Number%2C%20Auton Outer Port%2C%20Auton Lower Port%2C%20Crossed Initiation Line%2C%20Teleop Outer Port%2C%20Teleop Lower Port%2C%20Climbed%2C%20Defense Rating%2C%20Additional Comments%7C";
         for(Object x: stats){
             message += (x + "%2C%20");
         }
         return message;
-    }
-
-    /*public String dataNums(){
-        String message = "";
-        for(Object x: stats){
-            message += (x + ",");
-        }
-        return message;
-    }*/
-
-    public UUID getId(){
-        return mId;
     }
 
 
@@ -237,29 +226,34 @@ public class MatchData {
     public JSONObject toJSON() throws JSONException {
         //This code uses the JSON class to convert the aspects of each crime into data that can be to a file as JSON
         JSONObject json = new JSONObject();
-        json.put("headings", "High Points,Low Points,Crossed Initiation Line,Defense Rating,Additional Comments \n");
+
+        json.put("scouter name", name);
+        json.put("divider", ",");
+        json.put("scouting date", date);
+        json.put("divider", ", \n");
+
+        //headings
+        json.put("headings", "Team Number, Match Number, Auton Outer Port, Auton Lower Port, Crossed Initiation Line, Teleop Outer Port, Teleop Lower Port, Climbed, Defense Rating, Additional Comments \n");
+        json.put("team number", teamNumber);
+        json.put("divider", ",");
+        json.put("match number", matchNumber);
+        json.put("divider", ",");
         json.put("auton outer points", autonOuterPoints );
         json.put("divider", ",");
         json.put("auton low points", autonLowPoints);
         json.put("divider", ",");
         json.put("init_line", passedInitLine);
         json.put("divider", ",");
-        json.put("defense", defense);
-        json.put("divider", ",");
-        json.put("comments", extComments);
-        json.put("divider", ",");
-        json.put("teleop low point", teleopLowPoints);
+        json.put("teleop low points", teleopLowPoints);
         json.put("divider", ",");
         json.put("teleop outer points", teleopOuterPoints);
         json.put("divider", ",");
-        json.put("team number", teamNumber);
-        json.put("divider", ",");
-        json.put("match number", matchNumber);
-        json.put("divider", ",");
         json.put("climbed", climbed);
         json.put("divider", ",");
-        json.put("scouter name", name);
-        json.put("scouting date", date);
+        json.put("divider", ",");
+        json.put("defense", defense);
+        json.put("divider", ",");
+        json.put("comments", extComments);
     json.put("divider", ",");
         return json;
     }

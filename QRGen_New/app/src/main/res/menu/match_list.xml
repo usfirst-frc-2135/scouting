@@ -7,7 +7,7 @@
 
     <item android:id="@+id/menu_item_new_match"
         android:icon="@android:drawable/ic_menu_add"
-        android:title="Add Crime"
+        android:title="Add Match"
         app:showAsAction="ifRoom|withText" />
 
 </menu>

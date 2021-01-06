@@ -20,7 +20,7 @@ import android.view.MenuItem;
 public class ScoutingActivity extends AppCompatActivity {
     private static final String TAG = "ScoutingActivity";// This is the tag that will be used for all Log statements generated from this activity
 
-    protected static MatchData mMatchData;
+
 
 
     @Override

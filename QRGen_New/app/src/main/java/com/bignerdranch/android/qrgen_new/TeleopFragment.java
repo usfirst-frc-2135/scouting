@@ -21,7 +21,9 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import static com.bignerdranch.android.qrgen_new.ScoutingActivity.mMatchData;
+import java.io.Serializable;
+import java.util.UUID;
+
 
 public class TeleopFragment extends Fragment {
     private static final String TAG = "TeleopFragment";
@@ -45,6 +47,8 @@ public class TeleopFragment extends Fragment {
     private RadioButton mRadioButton5;
     private EditText mEditText;
 
+    private MatchData mMatchData;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -57,6 +61,10 @@ public class TeleopFragment extends Fragment {
         View v = inflater.inflate(R.layout.teleop_fragment, parent, false);
         FragmentManager fm = getActivity().getSupportFragmentManager();
 
+
+        UUID mMatchId = (UUID)getArguments().getSerializable("match ID");
+        Log.d(TAG, mMatchId.toString());
+        mMatchData = MatchHistory.get(getContext()).getMatch(mMatchId);
 
 
 
@@ -173,9 +181,8 @@ public class TeleopFragment extends Fragment {
                 mMatchData.setTeleopLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
                 mMatchData.setTeleopOuterPoints(Integer.parseInt(mHighPoints.getText().toString()));
                 mMatchData.setPassedInitLine(mCheckBox.isChecked());
-                MatchHistory.get(getContext()).addMatch(mMatchData);
 
-                Log.d(TAG, mMatchData.getId()+"");
+
 
                 //Uses intents to start the QQ code activity --> changes screens
                 Snackbar.make(view, "Generating QR code", Snackbar.LENGTH_LONG).setAction("Action", null).show();

@@ -23,7 +23,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import static com.bignerdranch.android.qrgen_new.ScoutingActivity.mMatchData;
 
 public class AutonFragment extends Fragment {
     private static final String TAG = "AutonFragment";
@@ -41,6 +40,7 @@ public class AutonFragment extends Fragment {
 
     private CheckBox mCheckBox;
 
+    private MatchData mMatchData;
 
 
     @Override
@@ -56,6 +56,7 @@ public class AutonFragment extends Fragment {
 
 
         mMatchData = new MatchData();
+        Log.d(TAG, mMatchData.getMatchID().toString());
 
         mTeamNumberField = (EditText)v.findViewById(R.id.team_number_field);
         mTeamNumberField.addTextChangedListener(new TextWatcher(){
@@ -145,26 +146,24 @@ public class AutonFragment extends Fragment {
                 mMatchData.setPassedInitLine(mCheckBox.isChecked());
                 //MatchHistory.get(getContext()).addMatch(mMatchData);
 
-                Log.d(TAG, mMatchData.getId()+"");
 
-
-
+                MatchHistory.get(getContext()).addMatch(mMatchData);
+                Log.d(TAG,mMatchData.getMatchID().toString());
+                Log.d(TAG, MatchHistory.get(getContext()).getMatch(mMatchData.getMatchID()).getMatchID().toString());
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 
+
+                Bundle args = new Bundle();
+                args.putSerializable("match ID", mMatchData.getMatchID());
+
+
                 TeleopFragment fragment = new TeleopFragment();
+                fragment.setArguments(args);
                 fragmentTransaction.replace(R.id.fragmentContainer, fragment);
 
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
-                //Designates that chosen fragment will be housed within fragmentContainer, a frame layout in the activity's XML
-
-
-                //Uses intents to start the QQ code activity --> changes screens
-                /*Intent i = new Intent(getActivity(), QRActivity.class);
-                i.putExtra("stats", mMatchData.encodeToURL());
-                startActivityForResult(i, 0);
-                Log.d("ScoutingActivity", "Sent intent");*/
 
             }
         });

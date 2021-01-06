@@ -34,7 +34,7 @@
     <string name="clear_form_button">CLEAR FORM</string>
 
     <string name="sign_in_text">Please enter your name and the today\'s date</string>
-    <string name="date_picker_title">Date of Crime:</string>
+    <string name="date_picker_title">Date of Scouting:</string>
     <string name="sign_in_button_text">Sign In</string>
     <string name="climb_title">Climb</string>
     <string name="climb_checkbox">Successfully climbed</string>

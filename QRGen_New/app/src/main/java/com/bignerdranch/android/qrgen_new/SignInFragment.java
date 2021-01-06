@@ -29,6 +29,7 @@ public class SignInFragment extends Fragment {
     private EditText mScouterNameField;
     private ImageButton mDatePickerButton;
     private Button mSignInButton;
+    private boolean isBlank;
 
     private String scout_name;
     private Date scout_date;
@@ -52,11 +53,14 @@ public class SignInFragment extends Fragment {
         View v = inflater.inflate(R.layout.sign_in, parent, false);
         FragmentManager fm = getActivity().getSupportFragmentManager();
 
+        isBlank = false;
+
         mSignInInstructions = (TextView)v.findViewById(R.id.sign_in_text);
 
         mScouterNameField = (EditText)v.findViewById(R.id.scouter_name);
         mScouterNameField.addTextChangedListener(new TextWatcher(){
             public void onTextChanged(CharSequence c, int start, int before, int count){
+                if(isBlank) mDatePickerButton.setVisibility(View.INVISIBLE);
             }
             public void beforeTextChanged(CharSequence c, int start, int count, int after){
             }
@@ -96,6 +100,7 @@ public class SignInFragment extends Fragment {
                     mErrorMessage1.setText("***Please fill in the required fields");
                     mErrorMessage1.setTextColor(Color.RED);
                     mErrorMessage1.setVisibility(View.VISIBLE);
+                    isBlank = true;
                 }
                 else{
                     mScout = Scouter.get();
