@@ -2,6 +2,7 @@ package com.bignerdranch.android.qrgen_new;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.service.autofill.FieldClassification;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
@@ -10,7 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 public class MatchListActivity extends AppCompatActivity {
-    private static final String TAG =  "Fragment Activity";
+    private static final String TAG =  "MatchListActivity";
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -30,6 +32,8 @@ public class MatchListActivity extends AppCompatActivity {
 
 
 
+
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -37,5 +41,9 @@ public class MatchListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         return new MatchListFragment();
     }
+
+    /*public static Scouter getScouter(){
+        return mScout;
+    }*/
 
 }

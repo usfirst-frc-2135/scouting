@@ -13,12 +13,13 @@
     <string name="increase">+</string>
     <string name="decrease">-</string>
     <string name="lowPortTitle">Lower Port</string>
-    <string name="outerPortTitle">High Port</string>
+    <string name="outerPortTitle">Outer Port</string>
     <string name="autonomous">Autonomous</string>
     <string name="teleop">Teleoperated</string>
     <string name="auto_line">Passed Initiation Line</string>
     <string name="other">Additional Details</string>
     <string name="defense">Defense</string>
+    <string name="team_number">Team Number</string>
 
 
     <string name="level_zero">0</string>
@@ -34,5 +35,8 @@
     <string name="sign_in_text">Please enter your name and the today\'s date</string>
     <string name="date_picker_title">Date of Crime:</string>
     <string name="sign_in_button_text">Sign In</string>
+    <string name="climb_title">Climb</string>
+    <string name="climb_checkbox">Successfully climbed</string>
+    <string name="back_to_menu_button">Back to Menu</string>
 
 </resources>

@@ -25,13 +25,16 @@ public class SignInFragment extends Fragment {
 
     private TextView mSignInInstructions;
     private TextView mErrorMessage1;
-    private EditText mScoutingDate;
+    private TextView mScoutingDate;
     private EditText mScouterNameField;
     private ImageButton mDatePickerButton;
     private Button mSignInButton;
 
     private String scout_name;
     private Date scout_date;
+
+    private static Scouter mScout;
+
 
     private static final int REQUEST_DATETIME = 0;
     public static final String EXTRA_DATE = "com.bignerranch.android.qrgen.date";
@@ -78,18 +81,9 @@ public class SignInFragment extends Fragment {
 
             });
 
-        mScoutingDate = (EditText)v.findViewById(R.id.scouting_date);
+        mScoutingDate = (TextView)v.findViewById(R.id.scouting_date);
         mScoutingDate.setText(formattedDate(Calendar.getInstance().getTime()).toString());
-        mScouterNameField.addTextChangedListener(new TextWatcher(){
-            public void onTextChanged(CharSequence c, int start, int before, int count){
-            }
-            public void beforeTextChanged(CharSequence c, int start, int count, int after){
-            }
-            public void afterTextChanged(Editable c){
-                scout_name = c.toString();
-            }
 
-        });
 
         mErrorMessage1 = (TextView)v.findViewById(R.id.error_message1);
         mErrorMessage1.setVisibility(View.INVISIBLE);
@@ -98,22 +92,25 @@ public class SignInFragment extends Fragment {
         mSignInButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                if(mScouterNameField.getText().equals("") | mScouterNameField.getText().equals(null)){
+                if(mScouterNameField.getText().toString().trim().equals("")){
                     mErrorMessage1.setText("***Please fill in the required fields");
                     mErrorMessage1.setTextColor(Color.RED);
-                    mErrorMessage1.setVisibility(View.INVISIBLE);
+                    mErrorMessage1.setVisibility(View.VISIBLE);
                 }
                 else{
-                    Log.d("SignInFragment", mScouterNameField.getText().toString());
+                    mScout = Scouter.get();
+                    mScout.setName(mScouterNameField.getText().toString());
+                    mScout.setDate(mScoutingDate.getText().toString());
+
                     Intent i = new Intent(getActivity(), MatchListActivity.class);
-                    i.putExtra("scouter_name", mScouterNameField.getText());
-                    i.putExtra("scouting date", mScoutingDate.toString());
                     startActivityForResult(i, 0);
                     Log.d("SignInFragment", "Sent intent");
+
                 }
 
             }
         });
+
 
         return v;
 

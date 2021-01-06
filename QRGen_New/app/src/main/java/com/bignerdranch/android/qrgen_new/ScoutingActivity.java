@@ -17,8 +17,10 @@ import android.view.MenuItem;
 
 
 
-public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";// This is the tag that will be used for all Log statements generated from this activity
+public class ScoutingActivity extends AppCompatActivity {
+    private static final String TAG = "ScoutingActivity";// This is the tag that will be used for all Log statements generated from this activity
+
+    protected static MatchData mMatchData;
 
 
     @Override
@@ -50,12 +52,13 @@ public class MainActivity extends AppCompatActivity {
     //This method returns an instance of the class MatchFragment, so that whichever XML file is linked to Match Fragment will be placed in fragmentContainer
     protected Fragment createFragment(){
         setContentView(R.layout.activity_main);
-        return new com.bignerdranch.android.qrgen_new.MatchFragment();
+        return new com.bignerdranch.android.qrgen_new.AutonFragment();
     }
 
 
 
-    @Override
+
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @Override
     public void onStart(){

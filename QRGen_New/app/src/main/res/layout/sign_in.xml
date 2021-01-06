@@ -29,12 +29,12 @@
            android:orientation="horizontal">
 
 
-           <EditText
+           <TextView
                android:id="@+id/scouting_date"
                android:layout_width="250dp"
                android:layout_height="wrap_content"
                >
-           </EditText>
+           </TextView>
 
            <ImageButton
                android:id="@+id/date_button"

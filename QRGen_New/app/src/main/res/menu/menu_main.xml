@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.bignerdranch.android.qrgen_new.MainActivity">
+    tools:context="com.bignerdranch.android.qrgen_new.ScoutingActivity">
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

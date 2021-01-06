@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/team_number_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/team_number"
+                android:textSize="24dp"
+                style="?android:listSeparatorTextViewStyle"/>
+
+            <EditText
+                android:id="@+id/team_number_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </EditText>
+
+            <TextView
+                android:id="@+id/match_number_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/team_number"
+                android:textSize="24dp"
+                style="?android:listSeparatorTextViewStyle"/>
+
+            <EditText
+                android:id="@+id/match_number_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </EditText>
+
+            <TextView
+                android:id="@+id/autonomous_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/autonomous"
+                android:textSize="24dp"
+                style="?android:listSeparatorTextViewStyle"/>
+
+
+
+            <CheckBox
+                android:id="@+id/auto_line_checkbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:text="@string/auto_line"
+                android:textSize="18dp"
+                />
+            <TextView
+                android:id="@+id/highportTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/outerPortTitle"
+                android:textSize="18dp"
+                style="?android:listSeparatorTextViewStyle"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/highportpointsdec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/decrease">
+                </Button>
+
+                <TextView
+                    android:id="@+id/highportpoints"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="25dp">
+                </TextView>
+
+                <Button
+                    android:id="@+id/highportpointsinc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/increase">
+                </Button>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/lowportTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lowPortTitle"
+                android:textSize="18dp"
+                style="?android:listSeparatorTextViewStyle"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="50dp">
+                <Button
+                    android:id="@+id/lowportpointsdec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/decrease">
+                </Button>
+
+                <TextView
+                    android:id="@+id/lowportpoints"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="25dp">
+                </TextView>
+
+                <Button
+                    android:id="@+id/lowportpointsinc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/increase">
+                </Button>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@android:drawable/ic_menu_send" />
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

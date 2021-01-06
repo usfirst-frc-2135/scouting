@@ -1,7 +1,6 @@
 package com.bignerdranch.android.qrgen_new;
 
 import android.content.Intent;
-import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,13 +16,11 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
 
 import java.util.ArrayList;
@@ -35,6 +32,9 @@ public class MatchListFragment extends ListFragment {
     private boolean isSubtitleShown;
     private ListView mListView;
     private Button mAddCrimeButton;
+    //private Scouter mScout;
+    //private String scoutName;
+    //private String scoutDate;
 
 
     @Override
@@ -63,11 +63,19 @@ public class MatchListFragment extends ListFragment {
         mListView.setAdapter(adapter);
         registerForContextMenu(mListView);
 
+        /*mScout = MatchListActivity.getScouter();
+        scoutName = mScout.getName();
+        Log.d(TAG, scoutName);
+        scoutDate = mScout.getDate();*/
+
+
+
+
         mAddCrimeButton = (Button)v1.findViewById(R.id.empty_button);
         mAddCrimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), MainActivity.class);
+                Intent i = new Intent(getActivity(), ScoutingActivity.class);
                 startActivityForResult(i, 0);
             }
         });
@@ -129,7 +137,7 @@ public class MatchListFragment extends ListFragment {
     //@Override
     /*public void onListItemClick(ListView l, View v, int position, long id){
         MatchData m = ((MatchAdapter)getListAdapter()).getItem(position);
-        Intent i = new Intent(getActivity(), MainActivity.class);
+        Intent i = new Intent(getActivity(), ScoutingActivity.class);
         i.putExtra("fun", "works");
         i.putExtra(MatchFragment.EXTRA_MATCH_ID, m.getId());
         startActivity(i);
@@ -149,25 +157,21 @@ public class MatchListFragment extends ListFragment {
             }
             MatchData m = getItem(position);
 
-            Log.d("MatchListFragment", m.getId()+"");
-            Log.d("MatchListFragment", m.getHighPoints()+"");
-            Log.d("MatchListFragment", m.getLowPoints()+"");
 
 
-            TextView mHighPointsDisplay = (TextView)convertView.findViewById(R.id.highpointsdisplay);
-            mHighPointsDisplay.setText(m.getHighPoints()+"");
+            TextView mTeamNumberDisplay = (TextView)convertView.findViewById(R.id.team_number);
+            mTeamNumberDisplay.setText("Team Number: " + m.getTeamNumber().toString());
 
-            TextView mLowPointsDisplay = (TextView)convertView.findViewById(R.id.lowpointsdisplay);
-            mLowPointsDisplay.setText(m.getLowPoints()+"");
+            TextView mMatchNumberDisplay = (TextView)convertView.findViewById(R.id.match_number);
+            mMatchNumberDisplay.setText("Match Number: "+ m.getMatchNumber());
 
-            TextView mInitLineDisplay = (TextView)convertView.findViewById(R.id.initlinedisplay);
-            mInitLineDisplay.setText(m.getPassedInitLine()+"");
+            TextView  mScouterName = (TextView) convertView.findViewById(R.id.scouter_name_display);
+            mScouterName.setText(m.getName());
 
-            TextView mDefenseDisplay = (TextView)convertView.findViewById(R.id.defensedisplay);
-            mDefenseDisplay.setText(m.getDefense()+"");
 
-            TextView mCommentsDisplay = (TextView)convertView.findViewById(R.id.commentsdisplay);
-            mCommentsDisplay.setText(m.getExtComments());
+            TextView mScouterDate = (TextView) convertView.findViewById(R.id.scouter_date_display);
+            mScouterDate.setText(m.getDate());
+            Log.d(TAG, mScouterDate.getText().toString() + "hello");
 
 
 
@@ -201,7 +205,7 @@ public class MatchListFragment extends ListFragment {
         switch(item.getItemId()){
             case R.id.menu_item_new_match:
                 //This controls the button on the menu which allows users to add crimes.
-                Intent i = new Intent(getActivity(), MainActivity.class);
+                Intent i = new Intent(getActivity(), ScoutingActivity.class);
                 startActivityForResult(i, 0);
                 return true;
             default: return super.onOptionsItemSelected(item);

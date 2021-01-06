@@ -1,4 +1,4 @@
-/*package com.bignerdranch.android.qrgen_new;
+package com.bignerdranch.android.qrgen_new;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,16 +15,16 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import static com.bignerdranch.android.qrgen_new.ScoutingActivity.mMatchData;
 
-public class MatchFragment extends Fragment {
-
+public class TeleopFragment extends Fragment {
+    private static final String TAG = "TeleopFragment";
 
     private TextView mLowPoints;
     private TextView mHighPoints;
@@ -34,7 +34,6 @@ public class MatchFragment extends Fragment {
     private Button mLowPortPointsInc;
     private Button mHighPortPointsDec;
     private Button mHighPortPointsInc;
-    private Button mClearFormButton;
 
     private CheckBox mCheckBox;
     private RadioGroup mRadioGroup;
@@ -46,11 +45,6 @@ public class MatchFragment extends Fragment {
     private RadioButton mRadioButton5;
     private EditText mEditText;
 
-    public static final String EXTRA_MATCH_ID = "com.bignerdranch.android.qrgen_new.match_id";
-    private static final String TAG = "MatchFragment";
-    private static MatchData mMatchData;
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -60,11 +54,10 @@ public class MatchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
         //Creates a view using the specific fragment layout, match_data_fragment
-        View v = inflater.inflate(R.layout.match_data_fragment, parent, false);
+        View v = inflater.inflate(R.layout.teleop_fragment, parent, false);
         FragmentManager fm = getActivity().getSupportFragmentManager();
 
 
-        mMatchData = new MatchData();
 
 
         //Sets up TextView that displays low points, setting 0 as the default
@@ -75,32 +68,14 @@ public class MatchFragment extends Fragment {
         mHighPoints = (TextView)v.findViewById(R.id.highportpoints);
         mHighPoints.setText(0+ "");
 
-        //Connects the "Clear Form" button and sets up a listener that detects when the button is clicked
-        /*mClearFormButton = (Button)v.findViewById(R.id.clear_form);
-        mClearFormButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Sets all mMatchData data to defaults and resets the UI
-                mMatchData.clearStats();
-                mLowPoints.setText(mMatchData.getLowPoints() + "");
-                mHighPoints.setText(mMatchData.getHighPoints() + "");
-                mCheckBox.setChecked(false);
-                mEditText.setText("");
-                mEditText.setHint("Enter any additional comments here");
-                mRadioGroup.clearCheck();
-
-
-            }
-        });*/
 
         //Connects the decrement button for low points and sets up a listener that detects when the button is clicked
-        /*mLowPortPointsDec = (Button)v.findViewById(R.id.lowportpointsdec);
+        mLowPortPointsDec = (Button)v.findViewById(R.id.lowportpointsdec);
         mLowPortPointsDec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Decreases displayed point value by 1
                 mLowPoints.setText((Integer.parseInt(mLowPoints.getText().toString())- 1) + "");
-                Log.d(TAG ,mMatchData.getLowPoints() + "");
             }
         });
 
@@ -135,7 +110,7 @@ public class MatchFragment extends Fragment {
         });
 
         //Connects the checkbox for passing the initiation line and sets up a listener to detect when the checked status is changed
-        mCheckBox = (CheckBox)v.findViewById(R.id.auto_line_checkbox);
+        mCheckBox = (CheckBox)v.findViewById(R.id.climb_checkbox);
         mCheckBox.setChecked(false);// Default is unchecked
 
 
@@ -148,30 +123,30 @@ public class MatchFragment extends Fragment {
         mRadioButton4 = (RadioButton)v.findViewById(R.id.level_four);//Sets up radio button that corresponds to 4
         mRadioButton5 = (RadioButton)v.findViewById(R.id.level_five);//Sets up radio button that corresponds to 5
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
-                                                   @Override
-                                                   public void onCheckedChanged(RadioGroup group, int checkedId) {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-                                                       //Changes mMatchData's defense variable according to which radio button is selected
-                                                       if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton0.getId()) {
-                                                           mMatchData.setDefense(0);
-                                                       }
-                                                       if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton1.getId()) {
-                                                           mMatchData.setDefense(1);
-                                                       }
-                                                       if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton2.getId()) {
-                                                           mMatchData.setDefense(2);
-                                                       }
-                                                       if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton3.getId()) {
-                                                           mMatchData.setDefense(3);
-                                                       }
-                                                       if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton4.getId()) {
-                                                           mMatchData.setDefense(4);
-                                                       }
-                                                       if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton5.getId()) {
-                                                           mMatchData.setDefense(5);
-                                                       }
-                                                   }
-                                               });
+                //Changes mMatchData's defense variable according to which radio button is selected
+                if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton0.getId()) {
+                    mMatchData.setDefense(0);
+                }
+                if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton1.getId()) {
+                    mMatchData.setDefense(1);
+                }
+                if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton2.getId()) {
+                    mMatchData.setDefense(2);
+                }
+                if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton3.getId()) {
+                    mMatchData.setDefense(3);
+                }
+                if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton4.getId()) {
+                    mMatchData.setDefense(4);
+                }
+                if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton5.getId()) {
+                    mMatchData.setDefense(5);
+                }
+            }
+        });
 
 
         //Sets up an EditText that allows users to input any additional comments
@@ -195,8 +170,8 @@ public class MatchFragment extends Fragment {
             public void onClick(View view) {
 
                 mMatchData.setExtComments(mEditText.getText());
-                mMatchData.setLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
-                mMatchData.setHighPoints(Integer.parseInt(mHighPoints.getText().toString()));
+                mMatchData.setTeleopLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
+                mMatchData.setTeleopOuterPoints(Integer.parseInt(mHighPoints.getText().toString()));
                 mMatchData.setPassedInitLine(mCheckBox.isChecked());
                 MatchHistory.get(getContext()).addMatch(mMatchData);
 
@@ -212,31 +187,9 @@ public class MatchFragment extends Fragment {
             }
         });
 
-        /*FloatingActionButton fab2 = (FloatingActionButton)v.findViewById(R.id.fab3);
-        fab2.setOnClickListener(new View.OnClickListener() {
-            //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
-
-            @Override
-            public void onClick(View view) {
-                mMatchData.setExtComments(mEditText.getText());
-                mMatchData.setLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
-                mMatchData.setHighPoints(Integer.parseInt(mHighPoints.getText().toString()));
-                mMatchData.setPassedInitLine(mCheckBox.isChecked());
-                MatchHistory.get(getContext()).addMatch(mMatchData);
-
-                Log.d(TAG, mMatchData.getId()+"");
-
-                //Uses intents to start the QQ code activity --> changes screens
-                Intent i = new Intent(getActivity(), MatchListActivity.class);
-                startActivityForResult(i, 0);
-                Log.d("ScoutingActivity", "Sent intent");
-
-            }
-        });*/
 
 
-        /*return v;
+        return v;
     }
 
-
-}*/
+}
