@@ -31,7 +31,7 @@
                 android:id="@+id/match_number_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/team_number"
+                android:text="@string/match_number"
                 android:textSize="24dp"
                 style="?android:listSeparatorTextViewStyle"/>
 

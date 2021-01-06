@@ -11,12 +11,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -147,13 +149,16 @@ public class AutonFragment extends Fragment {
 
 
 
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 
+                TeleopFragment fragment = new TeleopFragment();
+                fragmentTransaction.replace(R.id.fragmentContainer, fragment);
 
-                final Fragment[] fragment = {getActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainer)};
-                fragment[0] = createFragment();
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
 
                 //Designates that chosen fragment will be housed within fragmentContainer, a frame layout in the activity's XML
-                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, fragment[0]).commit();
+
 
                 //Uses intents to start the QQ code activity --> changes screens
                 /*Intent i = new Intent(getActivity(), QRActivity.class);
