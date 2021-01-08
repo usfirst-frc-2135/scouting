@@ -26,14 +26,16 @@ public class MatchData {
     private String name;
     private String date;
     private String teamNumber;
-    private int matchNumber;
+    private String matchNumber;
     private boolean climbed;
     private UUID matchID;
+    private String competition;
+    private Date timestamp;
 
     public MatchData(){
 
         //Initializes/constructs everything
-        stats = new Object[12];
+        stats = new Object[13];
         setAutonLowPoints(0);
         setAutonOuterPoints(0);
         setTeleopLowPoints(0);
@@ -45,8 +47,10 @@ public class MatchData {
         name = Scouter.get().getName();
         date = Scouter.get().getDate();
         teamNumber = "";
-        matchNumber = 0;
+        matchNumber = "";
         matchID = UUID.randomUUID();
+        competition = Scouter.get().getCompetition();
+        timestamp = null;
 
     }
 
@@ -65,7 +69,7 @@ public class MatchData {
         setTeleopOuterPoints(json.getInt("teleop outer points"));
         setClimb(json.getBoolean("climbed"));
         setTeamNumber(json.getString("team number"));
-        setMatchNumber(json.getInt("match number"));
+        setMatchNumber(json.getString("match number"));
         name = json.getString("scouter name");
         stats[0] = name;
         date = json.getString("scouting date");
@@ -192,17 +196,32 @@ public class MatchData {
         return teamNumber;
     }
 
-    public void setMatchNumber(int n){
+    public void setMatchNumber(String n){
         stats[3] = n;
         matchNumber = n;
     }
 
-    public int getMatchNumber(){
+    public String getMatchNumber(){
         return matchNumber;
     }
 
     public UUID getMatchID(){
         return matchID;
+    }
+
+    public void setCompetition(String x){
+        competition = x;
+    }
+
+    public String getCompetition(){
+        return competition;
+    }
+    public void setTimestamp(Date d){
+        timestamp = d;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
     }
 
     public String encodeToURL(){

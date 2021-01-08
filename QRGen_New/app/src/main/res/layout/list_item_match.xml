@@ -10,45 +10,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/scouter_name_display"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:visibility="visible"
-                android:layout_weight="1"></TextView>
-
-            <TextView
-                android:id="@+id/scouter_date_display"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:visibility="visible"
-                android:layout_weight="1"></TextView>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/team_number"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:visibility="visible"
-                android:layout_weight="1"></TextView>
-
-            <TextView
-                android:id="@+id/match_number"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:visibility="visible"
-                android:layout_weight="1"></TextView>
-        </LinearLayout>
+       <TextView
+           android:id="@+id/match_tag_display"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:textSize="24dp"></TextView>
 
 
     </LinearLayout>

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.UUID;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class MatchHistory {
     private static final String TAG = "MatchHistory";
@@ -22,6 +25,7 @@ public class MatchHistory {
 
         //Rather than start with a new CrimeLab every time, the following code allows the program to call the method loadCrimes() in order to add the previously saved crimes
         try{
+            Log.d(TAG, "Matches being loaded into MatchHistory");
             mMatchHistory = mSerializer.loadMatchData();
         }
         catch(Exception e){
@@ -34,11 +38,23 @@ public class MatchHistory {
         if(sMatchHistory == null) {
             sMatchHistory = new MatchHistory(c.getApplicationContext());
         }
+
         return sMatchHistory;
     }
 
     public ArrayList getMatches(){
         return mMatchHistory;
+    }
+
+    public MatchData getMatch(UUID x){
+        for(MatchData y:mMatchHistory){
+            if(y.getMatchID().equals(x)){
+                return y;
+            }
+        }
+        Log.d(TAG, "no such match");
+        return null;
+
     }
 
     public void deleteMatch(MatchData m){

@@ -26,6 +26,7 @@ public class SignInFragment extends Fragment {
     private TextView mSignInInstructions;
     private TextView mErrorMessage1;
     private TextView mScoutingDate;
+    private EditText mCompetitionField;
     private EditText mScouterNameField;
     private ImageButton mDatePickerButton;
     private Button mSignInButton;
@@ -57,10 +58,27 @@ public class SignInFragment extends Fragment {
 
         mSignInInstructions = (TextView)v.findViewById(R.id.sign_in_text);
 
+        mCompetitionField = (EditText)v.findViewById(R.id.competition_name);
+        mCompetitionField.setHint("Competition");
+        mCompetitionField.addTextChangedListener(new TextWatcher(){
+            public void onTextChanged(CharSequence c, int start, int before, int count){
+                if(isBlank) mErrorMessage1.setVisibility(View.INVISIBLE);
+                isBlank = false;
+            }
+            public void beforeTextChanged(CharSequence c, int start, int count, int after){
+            }
+            public void afterTextChanged(Editable c){
+                scout_name = c.toString();
+            }
+
+        });
+
         mScouterNameField = (EditText)v.findViewById(R.id.scouter_name);
+        mScouterNameField.setHint("Name");
         mScouterNameField.addTextChangedListener(new TextWatcher(){
             public void onTextChanged(CharSequence c, int start, int before, int count){
-                if(isBlank) mDatePickerButton.setVisibility(View.INVISIBLE);
+                if(isBlank) mErrorMessage1.setVisibility(View.INVISIBLE);
+                isBlank = false;
             }
             public void beforeTextChanged(CharSequence c, int start, int count, int after){
             }
@@ -89,6 +107,8 @@ public class SignInFragment extends Fragment {
         mScoutingDate.setText(formattedDate(Calendar.getInstance().getTime()).toString());
 
 
+
+
         mErrorMessage1 = (TextView)v.findViewById(R.id.error_message1);
         mErrorMessage1.setVisibility(View.INVISIBLE);
 
@@ -96,7 +116,7 @@ public class SignInFragment extends Fragment {
         mSignInButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                if(mScouterNameField.getText().toString().trim().equals("")){
+                if(mScouterNameField.getText().toString().trim().equals("") | mScoutingDate.getText().toString().trim().equals("") |  mCompetitionField.getText().toString().trim().equals("")  ){
                     mErrorMessage1.setText("***Please fill in the required fields");
                     mErrorMessage1.setTextColor(Color.RED);
                     mErrorMessage1.setVisibility(View.VISIBLE);
@@ -104,6 +124,7 @@ public class SignInFragment extends Fragment {
                 }
                 else{
                     mScout = Scouter.get();
+                    mScout.setCompetition(mCompetitionField.getText().toString());
                     mScout.setName(mScouterNameField.getText().toString());
                     mScout.setDate(mScoutingDate.getText().toString());
 

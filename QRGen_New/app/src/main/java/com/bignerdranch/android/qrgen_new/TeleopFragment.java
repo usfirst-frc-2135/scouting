@@ -22,6 +22,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.UUID;
 
 
@@ -181,6 +182,7 @@ public class TeleopFragment extends Fragment {
                 mMatchData.setTeleopLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
                 mMatchData.setTeleopOuterPoints(Integer.parseInt(mHighPoints.getText().toString()));
                 mMatchData.setPassedInitLine(mCheckBox.isChecked());
+                mMatchData.setTimestamp(Calendar.getInstance().getTime());
 
 
 

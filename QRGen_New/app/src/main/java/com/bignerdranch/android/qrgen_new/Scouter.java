@@ -9,6 +9,7 @@ public class Scouter {
 
     private String mScouterName;
     private String mScoutingDateString;
+    private String competition;
     private static Scouter sScouter;
 
     private Scouter(String n, String d){
@@ -37,5 +38,13 @@ public class Scouter {
 
     public void setDate(String d){
         mScoutingDateString = d;
+    }
+
+    public void setCompetition(String x){
+        competition = x;
+    }
+
+    public String getCompetition(){
+        return competition;
     }
 }

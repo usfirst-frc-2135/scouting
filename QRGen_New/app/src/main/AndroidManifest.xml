@@ -28,7 +28,7 @@
 
         <activity
             android:name=".SignInActivity"
-            android:label="Input Match Data"
+            android:label="2135 Scouting App"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

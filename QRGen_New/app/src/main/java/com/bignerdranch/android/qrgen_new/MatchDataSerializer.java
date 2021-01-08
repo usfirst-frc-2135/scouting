@@ -19,6 +19,8 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 public class MatchDataSerializer {
     private static final String TAG = "MatchDataJSONSerializer";
     private Context mContext;
@@ -30,6 +32,7 @@ public class MatchDataSerializer {
     }
 
     public void saveMatches(ArrayList<MatchData> matchHistory) throws JSONException, IOException {
+        Log.d(TAG, "saveMatches called");
         JSONArray array = new JSONArray(); //Creates a JSON array object to store the data of each crime
 
         for(MatchData c: matchHistory){
@@ -51,6 +54,7 @@ public class MatchDataSerializer {
     }
 
     public ArrayList<MatchData> loadMatchData()throws IOException, JSONException {
+        Log.d(TAG, "json being read into matchHistory");
         ArrayList<MatchData> matchHistory = new ArrayList<MatchData>();
         BufferedReader reader = null;
         try {

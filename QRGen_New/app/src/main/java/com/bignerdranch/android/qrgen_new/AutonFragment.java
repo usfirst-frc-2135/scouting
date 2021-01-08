@@ -138,9 +138,8 @@ public class AutonFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                mMatchData.setTeamNumber(mTeamNumberField.getText().toString());
-                int x = Integer.parseInt(String.valueOf(mMatchNumberField.getText()));
-                mMatchData.setMatchNumber(x);
+                mMatchData.setTeamNumber(mTeamNumberField.getText().toString().trim());
+                mMatchData.setMatchNumber(mMatchNumberField.getText().toString().trim());
                 mMatchData.setAutonLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
                 mMatchData.setAutonOuterPoints(Integer.parseInt(mHighPoints.getText().toString()));
                 mMatchData.setPassedInitLine(mCheckBox.isChecked());

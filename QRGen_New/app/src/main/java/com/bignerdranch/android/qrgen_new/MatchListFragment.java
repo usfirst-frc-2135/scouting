@@ -1,6 +1,7 @@
 package com.bignerdranch.android.qrgen_new;
 
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.ListFragment;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MatchListFragment extends ListFragment {
 
@@ -159,25 +161,26 @@ public class MatchListFragment extends ListFragment {
 
 
 
-            TextView mTeamNumberDisplay = (TextView)convertView.findViewById(R.id.team_number);
-            mTeamNumberDisplay.setText("Team Number: " + m.getTeamNumber().toString());
-
-            TextView mMatchNumberDisplay = (TextView)convertView.findViewById(R.id.match_number);
-            mMatchNumberDisplay.setText("Match Number: "+ m.getMatchNumber());
-
-            TextView  mScouterName = (TextView) convertView.findViewById(R.id.scouter_name_display);
-            mScouterName.setText(m.getName());
-
-
-            TextView mScouterDate = (TextView) convertView.findViewById(R.id.scouter_date_display);
-            mScouterDate.setText(m.getDate());
-            Log.d(TAG, mScouterDate.getText().toString() + "hello");
+            TextView mMatchSummary = (TextView)convertView.findViewById(R.id.match_tag_display);
+            mMatchSummary.setText(m.getCompetition()+"-"+m.getTeamNumber()+"-"+m.getMatchNumber()+ "-"+formattedDate(m.getTimestamp()));
 
 
 
             return convertView;
         }
 
+    }
+
+    public String formattedDate(Date d){
+        SimpleDateFormat dt = new SimpleDateFormat("E MMM dd hh:mm:ss z yyyy");
+        Date date = null;
+        try{
+            date=dt.parse(d.toString());
+        }catch(Exception e){
+            Log.d("SignInFragment", e.getMessage());
+        }
+        SimpleDateFormat dt1 = new SimpleDateFormat("hh:mm:ss");
+        return (dt1.format(date));
     }
 
     @Override
