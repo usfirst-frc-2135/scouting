@@ -58,6 +58,7 @@ public class SignInFragment extends DialogFragment {
         //Creates a view using the specific fragment layout, match_data_fragment
         View v = getActivity().getLayoutInflater().inflate(R.layout.sign_in, null);
 
+        setCancelable(false);
         //View v = inflater.inflate(R.layout.sign_in, parent, false);
        //FragmentManager fm = getActivity().getSupportFragmentManager();
 
@@ -119,31 +120,6 @@ public class SignInFragment extends DialogFragment {
         mErrorMessage1 = (TextView)v.findViewById(R.id.error_message1);
         mErrorMessage1.setVisibility(View.INVISIBLE);
 
-        /*mSignInButton = (Button)v.findViewById(R.id.log_in_button);
-        mSignInButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                if(mScouterNameField.getText().toString().trim().equals("") | mScoutingDate.getText().toString().trim().equals("") |  mCompetitionField.getText().toString().trim().equals("")  ){
-                    mErrorMessage1.setText("***Please fill in the required fields");
-                    mErrorMessage1.setTextColor(Color.RED);
-                    mErrorMessage1.setVisibility(View.VISIBLE);
-                    isBlank = true;
-                }
-                else{
-                    mScout = Scouter.get();
-                    mScout.setCompetition(mCompetitionField.getText().toString());
-                    mScout.setName(mScouterNameField.getText().toString());
-                    mScout.setDate(mScoutingDate.getText().toString());
-
-                    Intent i = new Intent(getActivity(), MatchListActivity.class);
-                    startActivityForResult(i, 0);
-                    Log.d("SignInFragment", "Sent intent");
-
-                }
-
-            }
-        });*/
-
 
         return new AlertDialog.Builder(getActivity()).setView(v).setTitle("Please sign in to proceed scouting").setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialog, int which){
@@ -153,13 +129,6 @@ public class SignInFragment extends DialogFragment {
 
 
     }
-
-    /*@Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        Date d = new Date(data.getStringExtra(EXTRA_DATE));
-        mScoutingDate.setText(formattedDate(d).toString());
-    }*/
-
 
     public String formattedDate(Date d){
         SimpleDateFormat dt = new SimpleDateFormat("E MMM dd hh:mm:ss z yyyy");

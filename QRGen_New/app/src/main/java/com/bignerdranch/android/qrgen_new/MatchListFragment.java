@@ -245,41 +245,7 @@ public class MatchListFragment extends ListFragment {
         //This tells the program to inflate the view for the menu when the method is called.
     }
 
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch(item.getItemId()){
-            case R.id.popup_menu:
-                PopupMenu popup = new PopupMenu(getContext(), getView());
-                MenuInflater inflater = popup.getMenuInflater();
-                inflater.inflate(R.menu.settings_context_menu, popup.getMenu());
-                popup.show();
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.sign_out_item:
-                                Log.d(TAG, "Sign out clicked");
-                                Scouter.get(getContext()).setName("");
-                                Scouter.get(getContext()).setDate("");
-                                FragmentManager fm = getActivity().getSupportFragmentManager();
-                                SignInFragment dialog = SignInFragment.newInstance();
-                                dialog.setTargetFragment(MatchListFragment.this, REQUEST_SIGNIN);
-                                dialog.show(fm, SITAG);
-                                return true;
-                            case R.id.assign_item:
-                                // do your code
-                                return true;
 
-                            default:
-                                return false;
-                        }
-                    }
-                });
-                Log.d(TAG, "Pop up Menu created.");
-                return true;
-            default: return super.onOptionsItemSelected(item);
-        }
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
