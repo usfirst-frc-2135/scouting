@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -55,7 +56,7 @@ public class AutonFragment extends Fragment {
         FragmentManager fm = getActivity().getSupportFragmentManager();
 
 
-        mMatchData = new MatchData();
+        mMatchData = new MatchData(getContext());
         Log.d(TAG, mMatchData.getMatchID().toString());
 
         mTeamNumberField = (EditText)v.findViewById(R.id.team_number_field);
@@ -132,7 +133,7 @@ public class AutonFragment extends Fragment {
 
 
 
-        FloatingActionButton fab = (FloatingActionButton)v.findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
 

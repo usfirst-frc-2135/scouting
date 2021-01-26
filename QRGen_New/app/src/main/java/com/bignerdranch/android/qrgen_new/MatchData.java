@@ -1,5 +1,6 @@
 package com.bignerdranch.android.qrgen_new;
 
+import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
@@ -32,7 +33,7 @@ public class MatchData {
     private String competition;
     private Date timestamp;
 
-    public MatchData(){
+    public MatchData(Context c){
 
         //Initializes/constructs everything
         stats = new Object[13];
@@ -44,12 +45,12 @@ public class MatchData {
         setClimb(false);
         setExtComments("");
         setDefense(0);
-        name = Scouter.get().getName();
-        date = Scouter.get().getDate();
+        name = Scouter.get(c).getName();
+        date = Scouter.get(c).getDate();
         teamNumber = "";
         matchNumber = "";
         matchID = UUID.randomUUID();
-        competition = Scouter.get().getCompetition();
+        competition = Scouter.get(c).getCompetition();
         timestamp = null;
 
     }
@@ -70,6 +71,8 @@ public class MatchData {
         setClimb(json.getBoolean("climbed"));
         setTeamNumber(json.getString("team number"));
         setMatchNumber(json.getString("match number"));
+        setTimestamp(new Date(json.getString("timestamp")));
+        //setCompetition(json.getString("competition"));   Remember to change once sign out is possible
         name = json.getString("scouter name");
         stats[0] = name;
         date = json.getString("scouting date");
@@ -224,10 +227,10 @@ public class MatchData {
         return timestamp;
     }
 
-    public String encodeToURL(){
-        String message = "Scouter Name%2C%20Scouting Date%2C%20Team Number%2C%20Match Number%2C%20Auton Outer Port%2C%20Auton Lower Port%2C%20Crossed Initiation Line%2C%20Teleop Outer Port%2C%20Teleop Lower Port%2C%20Climbed%2C%20Defense Rating%2C%20Additional Comments%7C";
+    public String encodeToTSV(){
+        String message = "";
         for(Object x: stats){
-            message += (x + "%2C%20");
+            message += (x + "\t");
         }
         return message;
     }
@@ -251,8 +254,10 @@ public class MatchData {
         json.put("scouting date", date);
         json.put("divider", ", \n");
 
-        //headings
-        json.put("headings", "Team Number, Match Number, Auton Outer Port, Auton Lower Port, Crossed Initiation Line, Teleop Outer Port, Teleop Lower Port, Climbed, Defense Rating, Additional Comments \n");
+
+        json.put("headings", "Competition, Team Number, Match Number, Auton Outer Port, Auton Lower Port, Crossed Initiation Line, Teleop Outer Port, Teleop Lower Port, Climbed, Defense Rating, Additional Comments \n");
+        json.put("competition", competition);
+        json.put("divider", ",");
         json.put("team number", teamNumber);
         json.put("divider", ",");
         json.put("match number", matchNumber);
@@ -273,7 +278,8 @@ public class MatchData {
         json.put("defense", defense);
         json.put("divider", ",");
         json.put("comments", extComments);
-    json.put("divider", ",");
+        json.put("divider", ",");
+        json.put("timestamp", timestamp);
         return json;
     }
 

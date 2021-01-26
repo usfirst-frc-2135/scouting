@@ -18,11 +18,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.ListFragment;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,20 +46,37 @@ public class MatchListFragment extends ListFragment {
     //private String scoutDate;
 
 
+    private static final int REQUEST_SIGNIN = 1;
+    public static final String SITAG = "sign/in";
+
+    private static final int REQUEST_QR = 2;
+    public static final String QRTAG = "qr";
+
+
     @Override
     public void onCreate( Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Recorded Matches");
+
          mMatchData = MatchHistory.get(getActivity()).getMatches();
 
-        //CrimeAdapter adapter = new CrimeAdapter(mCrimes);
-        //setListAdapter(adapter);
         setHasOptionsMenu(true); //alerts the fragment manager that the it should receive options menu callbacks
 
         setRetainInstance(true);
         isSubtitleShown = false;
+
+        if(Scouter.get(getContext()).getName().equals("") || Scouter.get(getContext()).getDate().equals("")){
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Recorded Matches");
+            FragmentManager fm = getActivity().getSupportFragmentManager();
+            SignInFragment dialog = SignInFragment.newInstance();
+            dialog.setTargetFragment(MatchListFragment.this, REQUEST_SIGNIN);
+            dialog.show(fm, SITAG);
+
+        }
+        else{
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Recorded Matches- " + Scouter.get(getContext()).getName());
+        }
     }
 
     @Override
@@ -65,10 +89,20 @@ public class MatchListFragment extends ListFragment {
         mListView.setAdapter(adapter);
         registerForContextMenu(mListView);
 
-        /*mScout = MatchListActivity.getScouter();
-        scoutName = mScout.getName();
-        Log.d(TAG, scoutName);
-        scoutDate = mScout.getDate();*/
+
+        FloatingActionButton fab = (FloatingActionButton)v1.findViewById(R.id.fab);
+        fab.setVisibility(View.INVISIBLE);
+        if(MatchHistory.get(getActivity()).getMatches().size()!=0){
+            fab.setVisibility(View.VISIBLE);
+            fab.setOnClickListener(new View.OnClickListener() {
+                //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(getActivity(), ScoutingActivity.class);
+                    startActivityForResult(i, 0);
+                }
+            });
+        }
 
 
 
@@ -77,6 +111,7 @@ public class MatchListFragment extends ListFragment {
         mAddCrimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent i = new Intent(getActivity(), ScoutingActivity.class);
                 startActivityForResult(i, 0);
             }
@@ -134,16 +169,20 @@ public class MatchListFragment extends ListFragment {
             registerForContextMenu(mListView);
         }
 
+        Log.d(TAG, Scouter.get(getContext()).getName());
+
+
+
         return v1;
     }
-    //@Override
-    /*public void onListItemClick(ListView l, View v, int position, long id){
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id){
         MatchData m = ((MatchAdapter)getListAdapter()).getItem(position);
-        Intent i = new Intent(getActivity(), ScoutingActivity.class);
-        i.putExtra("fun", "works");
-        i.putExtra(MatchFragment.EXTRA_MATCH_ID, m.getId());
-        startActivity(i);
-    }*/
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        QRFragment dialog = QRFragment.newInstance(m);
+        dialog.setTargetFragment(MatchListFragment.this, REQUEST_QR);
+        dialog.show(fm, QRTAG);
+    }
 
     private class MatchAdapter extends ArrayAdapter<MatchData> {
         public MatchAdapter(ArrayList<MatchData> matchData){
@@ -159,11 +198,8 @@ public class MatchListFragment extends ListFragment {
             }
             MatchData m = getItem(position);
 
-
-
             TextView mMatchSummary = (TextView)convertView.findViewById(R.id.match_tag_display);
-            mMatchSummary.setText(m.getCompetition()+"-"+m.getTeamNumber()+"-"+m.getMatchNumber()+ "-"+formattedDate(m.getTimestamp()));
-
+            mMatchSummary.setText(m.getCompetition()+"-"+m.getTeamNumber()+"-"+m.getMatchNumber()+ "-" + formattedDate(m.getTimestamp()));
 
 
             return convertView;
@@ -180,7 +216,11 @@ public class MatchListFragment extends ListFragment {
             Log.d("SignInFragment", e.getMessage());
         }
         SimpleDateFormat dt1 = new SimpleDateFormat("hh:mm:ss");
-        return (dt1.format(date));
+
+        if(date == null) {
+            return null;
+        }
+        else { return (dt1.format(date)); }
     }
 
     @Override
@@ -193,33 +233,79 @@ public class MatchListFragment extends ListFragment {
     public void onPause(){
         Log.d(TAG, "onPause()");
         super.onPause();
-        MatchHistory.get(getActivity()).saveMatches();
+
+        MatchHistory.get(getActivity()).saveData();
     }
 
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.match_list, menu);
+        inflater.inflate(R.menu.settings_context_menu, menu);
         //This tells the program to inflate the view for the menu when the method is called.
     }
+
+    /*@Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case R.id.popup_menu:
+                PopupMenu popup = new PopupMenu(getContext(), getView());
+                MenuInflater inflater = popup.getMenuInflater();
+                inflater.inflate(R.menu.settings_context_menu, popup.getMenu());
+                popup.show();
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.sign_out_item:
+                                Log.d(TAG, "Sign out clicked");
+                                Scouter.get(getContext()).setName("");
+                                Scouter.get(getContext()).setDate("");
+                                FragmentManager fm = getActivity().getSupportFragmentManager();
+                                SignInFragment dialog = SignInFragment.newInstance();
+                                dialog.setTargetFragment(MatchListFragment.this, REQUEST_SIGNIN);
+                                dialog.show(fm, SITAG);
+                                return true;
+                            case R.id.assign_item:
+                                // do your code
+                                return true;
+
+                            default:
+                                return false;
+                        }
+                    }
+                });
+                Log.d(TAG, "Pop up Menu created.");
+                return true;
+            default: return super.onOptionsItemSelected(item);
+        }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch(item.getItemId()){
-            case R.id.menu_item_new_match:
-                //This controls the button on the menu which allows users to add crimes.
-                Intent i = new Intent(getActivity(), ScoutingActivity.class);
-                startActivityForResult(i, 0);
+            case R.id.sign_out_item:
+                Log.d(TAG, "Sign out clicked");
+                Scouter.get(getContext()).setName("");
+                Scouter.get(getContext()).setDate("");
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                SignInFragment dialog = SignInFragment.newInstance();
+                dialog.setTargetFragment(MatchListFragment.this, REQUEST_SIGNIN);
+                dialog.show(fm, SITAG);
                 return true;
+
             default: return super.onOptionsItemSelected(item);
         }
     }
 
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
-        getActivity().getMenuInflater().inflate(R.menu.match_list_item_context, menu);
+
+            getActivity().getMenuInflater().inflate(R.menu.match_list_item_context, menu);
+
     }
+
 
     @Override
     public boolean onContextItemSelected(MenuItem item){
@@ -236,6 +322,9 @@ public class MatchListFragment extends ListFragment {
         }
         return super.onContextItemSelected(item);
     }
+
+
+
 
 
 }

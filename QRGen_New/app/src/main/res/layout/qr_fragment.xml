@@ -13,15 +13,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="8">
         </ImageView>
-        <Button
-            android:id="@+id/back_to_menu_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:text = "@string/back_to_menu_button">
-
-        </Button>
-
     </LinearLayout>
 
 

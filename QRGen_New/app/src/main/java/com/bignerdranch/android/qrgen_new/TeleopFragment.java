@@ -1,6 +1,7 @@
 package com.bignerdranch.android.qrgen_new;
 
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,6 +16,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -23,6 +25,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 
@@ -49,6 +52,9 @@ public class TeleopFragment extends Fragment {
     private EditText mEditText;
 
     private MatchData mMatchData;
+
+    private static final int REQUEST_QR = 2;
+    public static final String QRTAG = "qr";
 
 
     @Override
@@ -188,10 +194,13 @@ public class TeleopFragment extends Fragment {
 
                 //Uses intents to start the QQ code activity --> changes screens
                 Snackbar.make(view, "Generating QR code", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                Intent i = new Intent(getActivity(), QRActivity.class);
-                i.putExtra("stats", mMatchData.encodeToURL());
-                startActivityForResult(i, 0);
+
                 Log.d("ScoutingActivity", "Sent intent");
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                QRFragment dialog = QRFragment.newInstance(mMatchData);
+                dialog.setTargetFragment(TeleopFragment.this, REQUEST_QR);
+                dialog.show(fm, QRTAG);
+
 
             }
         });
@@ -200,5 +209,22 @@ public class TeleopFragment extends Fragment {
 
         return v;
     }
+
+    public String formattedDate(Date d){
+        SimpleDateFormat dt = new SimpleDateFormat("E MMM dd hh:mm:ss z yyyy");
+        Date date = null;
+        try{
+            date=dt.parse(d.toString());
+        }catch(Exception e){
+            Log.d("SignInFragment", e.getMessage());
+        }
+        SimpleDateFormat dt1 = new SimpleDateFormat("hh:mm:ss");
+
+        if(date == null) {
+            return null;
+        }
+        else { return (dt1.format(date)); }
+    }
+
 
 }

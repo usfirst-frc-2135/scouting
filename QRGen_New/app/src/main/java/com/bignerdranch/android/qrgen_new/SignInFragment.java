@@ -1,5 +1,9 @@
 package com.bignerdranch.android.qrgen_new;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
@@ -16,12 +20,13 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import java.util.Calendar;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import java.util.Date;
 
-public class SignInFragment extends Fragment {
+public class SignInFragment extends DialogFragment {
 
     private TextView mSignInInstructions;
     private TextView mErrorMessage1;
@@ -43,20 +48,22 @@ public class SignInFragment extends Fragment {
     public static final String TDTAG = "date/time";
 
 
-    @Override
+    /*@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
+    }*/
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
         //Creates a view using the specific fragment layout, match_data_fragment
-        View v = inflater.inflate(R.layout.sign_in, parent, false);
-        FragmentManager fm = getActivity().getSupportFragmentManager();
+        View v = getActivity().getLayoutInflater().inflate(R.layout.sign_in, null);
+
+        //View v = inflater.inflate(R.layout.sign_in, parent, false);
+       //FragmentManager fm = getActivity().getSupportFragmentManager();
 
         isBlank = false;
 
-        mSignInInstructions = (TextView)v.findViewById(R.id.sign_in_text);
+        //mSignInInstructions = (TextView)v.findViewById(R.id.sign_in_text);
 
         mCompetitionField = (EditText)v.findViewById(R.id.competition_name);
         mCompetitionField.setHint("Competition");
@@ -112,7 +119,7 @@ public class SignInFragment extends Fragment {
         mErrorMessage1 = (TextView)v.findViewById(R.id.error_message1);
         mErrorMessage1.setVisibility(View.INVISIBLE);
 
-        mSignInButton = (Button)v.findViewById(R.id.log_in_button);
+        /*mSignInButton = (Button)v.findViewById(R.id.log_in_button);
         mSignInButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -135,19 +142,23 @@ public class SignInFragment extends Fragment {
                 }
 
             }
-        });
+        });*/
 
 
-        return v;
+        return new AlertDialog.Builder(getActivity()).setView(v).setTitle("Please sign in to proceed scouting").setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int which){
+                sendResult(Activity.RESULT_OK);
+            }
+        }).create();
 
 
     }
 
-    @Override
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         Date d = new Date(data.getStringExtra(EXTRA_DATE));
         mScoutingDate.setText(formattedDate(d).toString());
-    }
+    }*/
 
 
     public String formattedDate(Date d){
@@ -161,4 +172,40 @@ public class SignInFragment extends Fragment {
         SimpleDateFormat dt1 = new SimpleDateFormat("E, dd MMM yyyy");
         return (dt1.format(date));
     }
+
+    public static SignInFragment newInstance(){
+        /*Bundle args = new Bundle();
+        args.putSerializable(EXTRA_DATE, date);*/
+
+        SignInFragment fragment = new SignInFragment();
+        //fragment.setArguments(args);
+
+        return fragment;
+    }
+
+    private void sendResult(int resultCode){
+        if(mScouterNameField.getText().toString().trim().equals("") | mScoutingDate.getText().toString().trim().equals("") |  mCompetitionField.getText().toString().trim().equals("")  ){
+            mErrorMessage1.setText("***Please fill in the required fields");
+            mErrorMessage1.setTextColor(Color.RED);
+            mErrorMessage1.setVisibility(View.VISIBLE);
+            isBlank = true;
+        }
+        else if(getTargetFragment()== null){
+            return;
+        }
+        else{
+            mScout = Scouter.get(getContext());
+            mScout.setCompetition(mCompetitionField.getText().toString());
+            mScout.setName(mScouterNameField.getText().toString());
+            mScout.setDate(mScoutingDate.getText().toString());
+            mScout.saveData(getContext());
+
+
+            Intent i = new Intent(getActivity(), MatchListActivity.class);
+            startActivityForResult(i, 0);
+            Log.d("SignInFragment", "Sent intent");
+
+        }
+    }
+
 }

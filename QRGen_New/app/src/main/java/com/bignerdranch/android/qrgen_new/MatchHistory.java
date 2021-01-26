@@ -23,7 +23,7 @@ public class MatchHistory {
         mAppContext = appContext;
         mSerializer = new MatchDataSerializer(mAppContext, FILENAME);
 
-        //Rather than start with a new CrimeLab every time, the following code allows the program to call the method loadCrimes() in order to add the previously saved crimes
+        //Rather than start with a new matchHistory every time, the following code allows the program to call the method loadCrimes() in order to add the previously saved crimes
         try{
             Log.d(TAG, "Matches being loaded into MatchHistory");
             mMatchHistory = mSerializer.loadMatchData();
@@ -65,14 +65,14 @@ public class MatchHistory {
         mMatchHistory.add(m);
     }
 
-    public boolean saveMatches(){
+    public boolean saveData(){
         try{
-            mSerializer.saveMatches(mMatchHistory);
+            mSerializer.saveData(mMatchHistory);
             Log.d(TAG, "matches saved to file");
             return true;
         }
         catch(Exception e){
-            Log.e(TAG, "Error saving crimes:", e);
+            Log.e(TAG, "Error saving scouter:", e);
             return false;
         }
     }

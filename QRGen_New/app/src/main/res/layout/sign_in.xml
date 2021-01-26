@@ -8,17 +8,6 @@
        android:layout_height="match_parent"
        android:orientation="vertical">
 
-       <TextView
-           android:id="@+id/sign_in_text"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:textSize="18dp"
-           android:text="@string/sign_in_text"
-           style="?android:listSeparatorTextViewStyle"
-           >
-
-       </TextView>
-
 
            <EditText
                android:id="@+id/competition_name"
@@ -48,7 +37,7 @@
 
            <TextView
                android:id="@+id/scouting_date"
-               android:layout_width="250dp"
+               android:layout_width="150dp"
                android:layout_height="wrap_content"
                android:textSize="18dp"
                android:paddingTop="15dp"
@@ -64,13 +53,6 @@
 
        </LinearLayout>
 
-       <Button
-           android:id="@+id/log_in_button"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="@string/sign_in_button_text">
-
-       </Button>
 
        <TextView
            android:id="@+id/error_message1"

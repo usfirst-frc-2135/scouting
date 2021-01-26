@@ -1,20 +1,11 @@
 package com.bignerdranch.android.qrgen_new;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton; //Imports button necessary for creating QR code generate button
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;//Imports use of fragments
 import androidx.fragment.app.FragmentManager;
 import android.util.Log;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-
 
 
 public class ScoutingActivity extends AppCompatActivity {
@@ -28,13 +19,8 @@ public class ScoutingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-        //Initialize toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-
         //Connects this Java class to the XML file activity_main, linking the UI to the controller layer
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.scouting_activity);
 
         //Initializes FragmentManager so that we can host a fragment within our activity
         final FragmentManager fm = getSupportFragmentManager();
@@ -51,7 +37,7 @@ public class ScoutingActivity extends AppCompatActivity {
 
     //This method returns an instance of the class MatchFragment, so that whichever XML file is linked to Match Fragment will be placed in fragmentContainer
     protected Fragment createFragment(){
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.scouting_activity);
         return new com.bignerdranch.android.qrgen_new.AutonFragment();
     }
 

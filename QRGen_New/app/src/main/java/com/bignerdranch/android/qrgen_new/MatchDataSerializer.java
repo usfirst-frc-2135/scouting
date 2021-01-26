@@ -25,19 +25,22 @@ public class MatchDataSerializer {
     private static final String TAG = "MatchDataJSONSerializer";
     private Context mContext;
     private String mFileName;
+    private Scouter s;
 
     public MatchDataSerializer(Context c, String f){
         mContext = c;
         mFileName = f;
     }
 
-    public void saveMatches(ArrayList<MatchData> matchHistory) throws JSONException, IOException {
-        Log.d(TAG, "saveMatches called");
-        JSONArray array = new JSONArray(); //Creates a JSON array object to store the data of each crime
+    public void saveData(ArrayList<MatchData> matchHistory) throws JSONException, IOException {
+        Log.d(TAG, "saveData called");
+        JSONArray array = new JSONArray(); //Creates a JSON array object to store the data of each match
+
+        array.put(Scouter.get(mContext).toJSON());
 
         for(MatchData c: matchHistory){
             array.put(c.toJSON());
-            Log.d(TAG, "Crime converted to JSON format and added to an array");
+            Log.d(TAG, "Data converted to JSON format and added to an array");
         }
 
         Writer writer = null;
@@ -71,7 +74,7 @@ public class MatchDataSerializer {
             //Parse the JSON using JSONTokener
             JSONArray array = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
             //Build the array of crimes from JSONObjects
-            for (int i = 0; i < array.length(); i++) {
+            for (int i = 1; i < array.length(); i++) {
                 matchHistory.add(new MatchData(array.getJSONObject(i)));
             }
         } catch (FileNotFoundException e) {
@@ -82,5 +85,36 @@ public class MatchDataSerializer {
             }
         }
         return matchHistory;
+    }
+
+    public Scouter loadScouterData()throws IOException, JSONException {
+        Log.d(TAG, "json being read into Scouter");
+        ArrayList<MatchData> matchHistory = new ArrayList<MatchData>();
+        BufferedReader reader = null;
+        try {
+            //Open and read the file into a StringBuilder
+            InputStream in = mContext.openFileInput(mFileName);
+            reader = new BufferedReader(new InputStreamReader(in));
+            StringBuilder jsonString = new StringBuilder();
+            String line = null;
+
+            while ((line = reader.readLine()) != null) {
+                //Line breaks are omitted and irrelevant
+                jsonString.append(line);
+            }
+            //Parse the JSON using JSONTokener
+            JSONArray array = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
+            //Build the array of crimes from JSONObjects
+            s=new Scouter(array.getJSONObject(0));
+
+
+        } catch (FileNotFoundException e) {
+            //ignore this one; it happens when starting fresh
+        } finally {
+            if (reader != null) {
+                reader.close();
+            }
+        }
+    return s;
     }
 }
