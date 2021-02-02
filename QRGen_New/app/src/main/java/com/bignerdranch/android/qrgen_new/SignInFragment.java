@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.Calendar;
 
 import androidx.fragment.app.DialogFragment;
@@ -36,42 +38,51 @@ public class SignInFragment extends DialogFragment {
     private ImageButton mDatePickerButton;
     private Button mSignInButton;
     private boolean isBlank;
+    private boolean prevInvalidAttempt;
 
     private String scout_name;
     private Date scout_date;
 
     private static Scouter mScout;
 
+    private AlertDialog dialog;
+
 
     private static final int REQUEST_DATETIME = 0;
+    public static final String TAG = "SignInDialog";
     public static final String EXTRA_DATE = "com.bignerranch.android.qrgen.date";
     public static final String TDTAG = "date/time";
 
-
-    /*@Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }*/
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         //Creates a view using the specific fragment layout, match_data_fragment
         View v = getActivity().getLayoutInflater().inflate(R.layout.sign_in, null);
 
-        setCancelable(false);
-        //View v = inflater.inflate(R.layout.sign_in, parent, false);
-       //FragmentManager fm = getActivity().getSupportFragmentManager();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setCancelable(false).setMessage("Please sign in to start scouting").setView(v)
+                .setPositiveButton("Sign-In", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        if(getTargetFragment()== null){
+                            return;
+                        }
+                        else{
+                            sendResult(Activity.RESULT_OK);
 
-        isBlank = false;
+                        }
+                    }
+                });
+         dialog = builder.create();
 
-        //mSignInInstructions = (TextView)v.findViewById(R.id.sign_in_text);
+
+
+
 
         mCompetitionField = (EditText)v.findViewById(R.id.competition_name);
         mCompetitionField.setHint("Competition");
         mCompetitionField.addTextChangedListener(new TextWatcher(){
             public void onTextChanged(CharSequence c, int start, int before, int count){
-                if(isBlank) mErrorMessage1.setVisibility(View.INVISIBLE);
-                isBlank = false;
+
             }
             public void beforeTextChanged(CharSequence c, int start, int count, int after){
             }
@@ -85,13 +96,11 @@ public class SignInFragment extends DialogFragment {
         mScouterNameField.setHint("Name");
         mScouterNameField.addTextChangedListener(new TextWatcher(){
             public void onTextChanged(CharSequence c, int start, int before, int count){
-                if(isBlank) mErrorMessage1.setVisibility(View.INVISIBLE);
-                isBlank = false;
+
             }
             public void beforeTextChanged(CharSequence c, int start, int count, int after){
             }
             public void afterTextChanged(Editable c){
-                scout_name = c.toString();
             }
 
         });
@@ -101,32 +110,22 @@ public class SignInFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 FragmentManager fm = getActivity().getSupportFragmentManager();
-                DatePickerFragment dialog = DatePickerFragment.newInstance();
-                dialog.setTargetFragment(SignInFragment.this, REQUEST_DATETIME);
-                /*Bundle bundle = new Bundle();
-                bundle.putSerializable(EXTRA_CRIME_ID1, mCrime.getId());
-                dialog.setArguments(bundle);*/
-                dialog.show(fm, TDTAG);
+                DatePickerFragment d1 = DatePickerFragment.newInstance();
+                d1.setTargetFragment(SignInFragment.this, REQUEST_DATETIME);
+                d1.show(fm, TDTAG);
+
             }
 
             });
 
         mScoutingDate = (TextView)v.findViewById(R.id.scouting_date);
-        mScoutingDate.setText(formattedDate(Calendar.getInstance().getTime()).toString());
-
-
-
+        mScoutingDate.setText(formattedDate(Calendar.getInstance().getTime()));
 
         mErrorMessage1 = (TextView)v.findViewById(R.id.error_message1);
         mErrorMessage1.setVisibility(View.INVISIBLE);
 
 
-        return new AlertDialog.Builder(getActivity()).setView(v).setTitle("Please sign in to proceed scouting").setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-            public void onClick(DialogInterface dialog, int which){
-                sendResult(Activity.RESULT_OK);
-            }
-        }).create();
-
+        return dialog;
 
     }
 
@@ -153,28 +152,28 @@ public class SignInFragment extends DialogFragment {
     }
 
     private void sendResult(int resultCode){
-        if(mScouterNameField.getText().toString().trim().equals("") | mScoutingDate.getText().toString().trim().equals("") |  mCompetitionField.getText().toString().trim().equals("")  ){
+        if(mScouterNameField.getText().toString().trim().equals("") || mScoutingDate.getText().toString().trim().equals("") ||  mCompetitionField.getText().toString().trim().equals("")){
+            Log.d(TAG, "Required fields left blank");
             mErrorMessage1.setText("***Please fill in the required fields");
             mErrorMessage1.setTextColor(Color.RED);
             mErrorMessage1.setVisibility(View.VISIBLE);
-            isBlank = true;
+            Toast.makeText(getActivity(), "Invalid data", Toast.LENGTH_SHORT).show();
         }
-        else if(getTargetFragment()== null){
-            return;
-        }
-        else{
-            mScout = Scouter.get(getContext());
-            mScout.setCompetition(mCompetitionField.getText().toString());
-            mScout.setName(mScouterNameField.getText().toString());
-            mScout.setDate(mScoutingDate.getText().toString());
-            mScout.saveData(getContext());
+        Log.d(TAG, "Sign In successful");
+        mScout = Scouter.get(getContext());
+        mScout.setCompetition(mCompetitionField.getText().toString());
+        mScout.setName(mScouterNameField.getText().toString());
+        mScout.setDate(mScoutingDate.getText().toString());
+        mScout.saveData(getContext());
+        Intent i = new Intent(getActivity(), MatchListActivity.class);
+        startActivityForResult(i, 0);
+        getActivity().finish();
+        Log.d("SignInFragment", "Sent intent");
 
-
-            Intent i = new Intent(getActivity(), MatchListActivity.class);
-            startActivityForResult(i, 0);
-            Log.d("SignInFragment", "Sent intent");
-
-        }
     }
+
+
+
+
 
 }

@@ -29,7 +29,7 @@ public class MatchData {
     private String teamNumber;
     private String matchNumber;
     private boolean climbed;
-    private UUID matchID;
+    private String matchID;
     private String competition;
     private Date timestamp;
 
@@ -49,7 +49,7 @@ public class MatchData {
         date = Scouter.get(c).getDate();
         teamNumber = "";
         matchNumber = "";
-        matchID = UUID.randomUUID();
+        matchID = UUID.randomUUID()+"";
         competition = Scouter.get(c).getCompetition();
         timestamp = null;
 
@@ -60,7 +60,7 @@ public class MatchData {
         Log.d(TAG, "Matches being created using json data");
 
         stats = new Object[12];
-        matchID = UUID.randomUUID();
+        matchID = json.getString("id");
         setAutonOuterPoints(json.getInt("auton outer points"));
         setAutonLowPoints(json.getInt("auton low points"));
         setPassedInitLine(json.getBoolean("init_line"));
@@ -72,7 +72,7 @@ public class MatchData {
         setTeamNumber(json.getString("team number"));
         setMatchNumber(json.getString("match number"));
         setTimestamp(new Date(json.getString("timestamp")));
-        //setCompetition(json.getString("competition"));   Remember to change once sign out is possible
+        setCompetition(json.getString("competition"));   
         name = json.getString("scouter name");
         stats[0] = name;
         date = json.getString("scouting date");
@@ -208,7 +208,7 @@ public class MatchData {
         return matchNumber;
     }
 
-    public UUID getMatchID(){
+    public String getMatchID(){
         return matchID;
     }
 
@@ -249,6 +249,8 @@ public class MatchData {
         //This code uses the JSON class to convert the aspects of each crime into data that can be to a file as JSON
         JSONObject json = new JSONObject();
 
+        json.put("id", matchID);
+        json.put("divider", ",");
         json.put("scouter name", name);
         json.put("divider", ",");
         json.put("scouting date", date);

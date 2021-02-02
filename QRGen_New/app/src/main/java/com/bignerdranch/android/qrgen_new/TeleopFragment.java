@@ -68,10 +68,11 @@ public class TeleopFragment extends Fragment {
         View v = inflater.inflate(R.layout.teleop_fragment, parent, false);
         FragmentManager fm = getActivity().getSupportFragmentManager();
 
-
-        UUID mMatchId = (UUID)getArguments().getSerializable("match ID");
+        String mMatchId = getArguments().getString("match ID");
         Log.d(TAG, mMatchId.toString());
         mMatchData = MatchHistory.get(getContext()).getMatch(mMatchId);
+
+
 
 
 
@@ -126,7 +127,7 @@ public class TeleopFragment extends Fragment {
 
         //Connects the checkbox for passing the initiation line and sets up a listener to detect when the checked status is changed
         mCheckBox = (CheckBox)v.findViewById(R.id.climb_checkbox);
-        mCheckBox.setChecked(false);// Default is unchecked
+        mCheckBox.setChecked(mMatchData.getPassedInitLine());// Default is unchecked
 
 
         mRadioGroup = (RadioGroup)v.findViewById(R.id.defense_scale);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
@@ -137,6 +138,15 @@ public class TeleopFragment extends Fragment {
         mRadioButton3 = (RadioButton)v.findViewById(R.id.level_three);//Sets up radio button that corresponds to 3
         mRadioButton4 = (RadioButton)v.findViewById(R.id.level_four);//Sets up radio button that corresponds to 4
         mRadioButton5 = (RadioButton)v.findViewById(R.id.level_five);//Sets up radio button that corresponds to 5
+
+        int x = mMatchData.getDefense();
+        if(x==0)mRadioButton0.setActivated(true);
+        else if(x==1)mRadioButton1.setActivated(true);
+        else if(x==2)mRadioButton2.setActivated(true);
+        else if(x==3)mRadioButton3.setActivated(true);
+        else if(x==4)mRadioButton4.setActivated(true);
+        else if(x==5)mRadioButton5.setActivated(true);
+
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -167,6 +177,7 @@ public class TeleopFragment extends Fragment {
         //Sets up an EditText that allows users to input any additional comments
         mEditText = (EditText)v.findViewById(R.id.comments);
         mEditText.setHint("Enter any additional comments here");
+        mEditText.setText(mMatchData.getExtComments());
         mEditText.addTextChangedListener(new TextWatcher(){
             public void onTextChanged(CharSequence c, int start, int before, int count){
             }
@@ -177,22 +188,17 @@ public class TeleopFragment extends Fragment {
 
         });
 
-        FloatingActionButton fab = (FloatingActionButton)v.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mHighPoints.setText(mMatchData.getTelopHighPoints()+"");
+        mLowPoints.setText(mMatchData.getTeleopLowPoints()+"");
+
+
+        Button mQRButton = (Button)v.findViewById(R.id.gen_QR);
+        mQRButton.setOnClickListener(new View.OnClickListener() {
             //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
 
             @Override
             public void onClick(View view) {
-
-                mMatchData.setExtComments(mEditText.getText());
-                mMatchData.setTeleopLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
-                mMatchData.setTeleopOuterPoints(Integer.parseInt(mHighPoints.getText().toString()));
-                mMatchData.setPassedInitLine(mCheckBox.isChecked());
-                mMatchData.setTimestamp(Calendar.getInstance().getTime());
-
-
-
-                //Uses intents to start the QQ code activity --> changes screens
+                //Uses intents to start the QR code dialog
                 Snackbar.make(view, "Generating QR code", Snackbar.LENGTH_LONG).setAction("Action", null).show();
 
                 Log.d("ScoutingActivity", "Sent intent");
@@ -200,6 +206,46 @@ public class TeleopFragment extends Fragment {
                 QRFragment dialog = QRFragment.newInstance(mMatchData);
                 dialog.setTargetFragment(TeleopFragment.this, REQUEST_QR);
                 dialog.show(fm, QRTAG);
+
+
+            }
+        });
+
+
+        /*if(getArguments().getBoolean("match to be edited", false) == true){
+            mHighPoints.setText(mMatchData.getTelopHighPoints()+"");
+            mLowPoints.setText(mMatchData.getTeleopLowPoints()+"");
+            mCheckBox.setChecked(mMatchData.getPassedInitLine());
+
+            int x = mMatchData.getDefense();
+            if(x==0)mRadioButton0.setActivated(true);
+            else if(x==1)mRadioButton1.setActivated(true);
+            else if(x==2)mRadioButton2.setActivated(true);
+            else if(x==3)mRadioButton3.setActivated(true);
+            else if(x==4)mRadioButton4.setActivated(true);
+            else if(x==5)mRadioButton5.setActivated(true);
+
+            mEditText.setText(mMatchData.getExtComments());
+        }*/
+
+
+
+        Button mNextButton  = (Button)v.findViewById(R.id.nav_to_menu_button);
+        mNextButton.setOnClickListener(new View.OnClickListener() {
+            //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
+
+            @Override
+            public void onClick(View view) {
+                mMatchData.setExtComments(mEditText.getText());
+                mMatchData.setTeleopLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
+                mMatchData.setTeleopOuterPoints(Integer.parseInt(mHighPoints.getText().toString()));
+                mMatchData.setPassedInitLine(mCheckBox.isChecked());
+                mMatchData.setTimestamp(Calendar.getInstance().getTime());
+
+                Intent i = new Intent(getActivity(), MatchListActivity.class);
+                startActivityForResult(i, 0);
+                getActivity().finish();
+                Log.d("TeleopFragment", "Sent intent");
 
 
             }

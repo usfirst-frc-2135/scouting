@@ -46,7 +46,7 @@ public class MatchHistory {
         return mMatchHistory;
     }
 
-    public MatchData getMatch(UUID x){
+    public MatchData getMatch(String x){
         for(MatchData y:mMatchHistory){
             if(y.getMatchID().equals(x)){
                 return y;

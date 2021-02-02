@@ -1,5 +1,6 @@
 package com.bignerdranch.android.qrgen_new;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
@@ -33,6 +34,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
 public class MatchListFragment extends ListFragment {
 
@@ -77,6 +79,7 @@ public class MatchListFragment extends ListFragment {
         else{
             ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Recorded Matches- " + Scouter.get(getContext()).getName());
         }
+
     }
 
     @Override
@@ -90,6 +93,7 @@ public class MatchListFragment extends ListFragment {
         registerForContextMenu(mListView);
 
 
+
         FloatingActionButton fab = (FloatingActionButton)v1.findViewById(R.id.fab);
         fab.setVisibility(View.INVISIBLE);
         if(MatchHistory.get(getActivity()).getMatches().size()!=0){
@@ -100,6 +104,7 @@ public class MatchListFragment extends ListFragment {
                 public void onClick(View view) {
                     Intent i = new Intent(getActivity(), ScoutingActivity.class);
                     startActivityForResult(i, 0);
+
                 }
             });
         }
@@ -111,14 +116,16 @@ public class MatchListFragment extends ListFragment {
         mAddCrimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                MatchData m = new MatchData(getContext());
+                MatchHistory.get(getContext()).addMatch(m);
                 Intent i = new Intent(getActivity(), ScoutingActivity.class);
+                i.putExtra("match_ID", m.getMatchID());
                 startActivityForResult(i, 0);
             }
         });
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
-            mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+            mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
             mListView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
                 @Override
                 public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
@@ -142,7 +149,7 @@ public class MatchListFragment extends ListFragment {
                 @Override
                 public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                     switch(item.getItemId()){
-                        case R.id.menu_item_delete_crime:
+                        case R.id.menu_item_delete_match:
                             MatchAdapter adapter = (MatchAdapter)getListAdapter();
                             MatchHistory matchHistory = MatchHistory.get(getActivity());
                             for(int i = adapter.getCount()-1; i>=0; i--){
@@ -154,6 +161,8 @@ public class MatchListFragment extends ListFragment {
                             mode.finish();
                             adapter.notifyDataSetChanged();
                             return true;
+
+
                         default:
                             return false;
                     }
@@ -258,6 +267,7 @@ public class MatchListFragment extends ListFragment {
                 SignInFragment dialog = SignInFragment.newInstance();
                 dialog.setTargetFragment(MatchListFragment.this, REQUEST_SIGNIN);
                 dialog.show(fm, SITAG);
+
                 return true;
 
             default: return super.onOptionsItemSelected(item);
@@ -267,9 +277,7 @@ public class MatchListFragment extends ListFragment {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
-
-            getActivity().getMenuInflater().inflate(R.menu.match_list_item_context, menu);
-
+        getActivity().getMenuInflater().inflate(R.menu.match_list_item_context, menu);
     }
 
 
@@ -281,9 +289,24 @@ public class MatchListFragment extends ListFragment {
         MatchData m = adapter.getItem(position);
 
         switch(item.getItemId()){
-            case R.id.menu_item_delete_crime:
+            case R.id.menu_item_delete_match:
+                Log.d(TAG, "Delete match button clicked");
                 MatchHistory.get(getActivity()).deleteMatch(m);
                 adapter.notifyDataSetChanged();
+                MatchHistory.get(getContext()).saveData();
+                return true;
+            case R.id.edit_match_button:
+                Log.d(TAG, "Edit match button clicked");
+
+
+                adapter = (MatchAdapter)getListAdapter();
+                MatchHistory matchHistory = MatchHistory.get(getActivity());
+
+                Intent data = new Intent(getActivity(), ScoutingActivity.class);
+                data.putExtra("match_ID", m.getMatchID());
+
+                startActivity(data);
+                //Makes data editable once more
                 return true;
         }
         return super.onContextItemSelected(item);

@@ -72,22 +72,11 @@ public class QRFragment extends DialogFragment {
 
         return new AlertDialog.Builder(getActivity()).setView(v).setTitle(heading).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialog, int which){
-                sendResult(Activity.RESULT_OK);
+                //sendResult(Activity.RESULT_OK);
             }
         }).create();
     }
 
-    private void sendResult(int resultCode){
-        if(getTargetFragment()== null){
-            return;
-        }
-        else{
-            Intent i = new Intent(getActivity(), MatchListActivity.class);
-            startActivityForResult(i, 0);
-            Log.d("QRFragment", "Sent intent");
-
-        }
-    }
 
     public static QRFragment newInstance(MatchData mMatchData){
 

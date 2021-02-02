@@ -24,6 +24,8 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.UUID;
+
 
 public class AutonFragment extends Fragment {
     private static final String TAG = "AutonFragment";
@@ -46,7 +48,13 @@ public class AutonFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState){
+
         super.onCreate(savedInstanceState);
+
+        String matchId = getActivity().getIntent().getStringExtra("match_ID");
+        Log.d(TAG, matchId);
+        mMatchData = MatchHistory.get(getActivity()).getMatch(matchId);
+
     }
 
     @Override
@@ -56,22 +64,22 @@ public class AutonFragment extends Fragment {
         FragmentManager fm = getActivity().getSupportFragmentManager();
 
 
-        mMatchData = new MatchData(getContext());
-        Log.d(TAG, mMatchData.getMatchID().toString());
 
         mTeamNumberField = (EditText)v.findViewById(R.id.team_number_field);
-        mTeamNumberField.addTextChangedListener(new TextWatcher(){
+        mTeamNumberField.setText(mMatchData.getTeamNumber()+"");
+        /*mTeamNumberField.addTextChangedListener(new TextWatcher(){
             public void onTextChanged(CharSequence c, int start, int before, int count){
             }
             public void beforeTextChanged(CharSequence c, int start, int count, int after){
             }
             public void afterTextChanged(Editable c){
-                mMatchData.setTeamNumber(c.toString());
+
             }
 
-        });
+        });*/
 
         mMatchNumberField = (EditText)v.findViewById(R.id.match_number_field);
+        mMatchNumberField.setText(mMatchData.getMatchNumber());
 
 
 
@@ -127,10 +135,12 @@ public class AutonFragment extends Fragment {
 
         //Connects the checkbox for passing the initiation line and sets up a listener to detect when the checked status is changed
         mCheckBox = (CheckBox)v.findViewById(R.id.auto_line_checkbox);
-        mCheckBox.setChecked(false);// Default is unchecked
+        mCheckBox.setChecked(mMatchData.getPassedInitLine());
 
 
 
+        mHighPoints.setText(mMatchData.getAutonHighPoints()+"");
+        mLowPoints.setText(mMatchData.getAutonLowPoints()+"");
 
 
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
@@ -144,10 +154,10 @@ public class AutonFragment extends Fragment {
                 mMatchData.setAutonLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
                 mMatchData.setAutonOuterPoints(Integer.parseInt(mHighPoints.getText().toString()));
                 mMatchData.setPassedInitLine(mCheckBox.isChecked());
+                mMatchData.setTeamNumber(mTeamNumberField.getText().toString());
                 //MatchHistory.get(getContext()).addMatch(mMatchData);
 
 
-                MatchHistory.get(getContext()).addMatch(mMatchData);
                 Log.d(TAG,mMatchData.getMatchID().toString());
                 Log.d(TAG, MatchHistory.get(getContext()).getMatch(mMatchData.getMatchID()).getMatchID().toString());
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -174,4 +184,5 @@ public class AutonFragment extends Fragment {
     protected Fragment createFragment(){
         return new com.bignerdranch.android.qrgen_new.TeleopFragment();
     }
+
 }
