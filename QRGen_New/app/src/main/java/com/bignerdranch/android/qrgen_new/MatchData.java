@@ -72,7 +72,7 @@ public class MatchData {
         setTeamNumber(json.getString("team number"));
         setMatchNumber(json.getString("match number"));
         setTimestamp(new Date(json.getString("timestamp")));
-        setCompetition(json.getString("competition"));   
+        competition = json.getString("competition");
         name = json.getString("scouter name");
         stats[0] = name;
         date = json.getString("scouting date");
@@ -210,10 +210,6 @@ public class MatchData {
 
     public String getMatchID(){
         return matchID;
-    }
-
-    public void setCompetition(String x){
-        competition = x;
     }
 
     public String getCompetition(){

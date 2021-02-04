@@ -102,9 +102,11 @@ public class MatchListFragment extends ListFragment {
                 //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
                 @Override
                 public void onClick(View view) {
+                    MatchData m = new MatchData(getContext());
+                    MatchHistory.get(getContext()).addMatch(m);
                     Intent i = new Intent(getActivity(), ScoutingActivity.class);
+                    i.putExtra("match_ID", m.getMatchID());
                     startActivityForResult(i, 0);
-
                 }
             });
         }
@@ -236,6 +238,7 @@ public class MatchListFragment extends ListFragment {
     public void onResume(){
         super.onResume();
         ((MatchAdapter)getListAdapter()).notifyDataSetChanged();
+        MatchHistory.get(getContext()).saveData();
     }
 
     @Override

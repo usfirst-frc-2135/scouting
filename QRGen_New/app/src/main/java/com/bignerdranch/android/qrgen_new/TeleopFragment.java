@@ -241,6 +241,7 @@ public class TeleopFragment extends Fragment {
                 mMatchData.setTeleopOuterPoints(Integer.parseInt(mHighPoints.getText().toString()));
                 mMatchData.setPassedInitLine(mCheckBox.isChecked());
                 mMatchData.setTimestamp(Calendar.getInstance().getTime());
+                MatchHistory.get(getActivity()).saveData();
 
                 Intent i = new Intent(getActivity(), MatchListActivity.class);
                 startActivityForResult(i, 0);
