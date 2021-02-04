@@ -155,11 +155,9 @@ public class AutonFragment extends Fragment {
                 mMatchData.setAutonOuterPoints(Integer.parseInt(mHighPoints.getText().toString()));
                 mMatchData.setPassedInitLine(mCheckBox.isChecked());
                 mMatchData.setTeamNumber(mTeamNumberField.getText().toString());
-                //MatchHistory.get(getContext()).addMatch(mMatchData);
 
-
-                Log.d(TAG,mMatchData.getMatchID().toString());
-                Log.d(TAG, MatchHistory.get(getContext()).getMatch(mMatchData.getMatchID()).getMatchID().toString());
+                Log.d(TAG,mMatchData.getMatchID());
+                Log.d(TAG, MatchHistory.get(getContext()).getMatch(mMatchData.getMatchID()).getMatchID());
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 
 

@@ -238,14 +238,12 @@ public class MatchListFragment extends ListFragment {
     public void onResume(){
         super.onResume();
         ((MatchAdapter)getListAdapter()).notifyDataSetChanged();
-        MatchHistory.get(getContext()).saveData();
     }
 
     @Override
     public void onPause(){
         Log.d(TAG, "onPause()");
         super.onPause();
-
         MatchHistory.get(getActivity()).saveData();
     }
 

@@ -51,7 +51,7 @@ public class Scouter {
         Log.d(TAG, "Scouter being created using json data");
         mScouterName = json.getString("scouter name");
         mScoutingDateString = json.getString("scouting date");
-        competition = json.getString("competition");
+        competition = json.getString("competition1");
 
 
     }
@@ -94,7 +94,7 @@ public class Scouter {
 
         json.put("scouter name", mScouterName);
         json.put("scouting date", mScoutingDateString);
-        json.put("competition", competition);
+        json.put("competition1", competition);
 
         return json;
     }

@@ -212,22 +212,6 @@ public class TeleopFragment extends Fragment {
         });
 
 
-        /*if(getArguments().getBoolean("match to be edited", false) == true){
-            mHighPoints.setText(mMatchData.getTelopHighPoints()+"");
-            mLowPoints.setText(mMatchData.getTeleopLowPoints()+"");
-            mCheckBox.setChecked(mMatchData.getPassedInitLine());
-
-            int x = mMatchData.getDefense();
-            if(x==0)mRadioButton0.setActivated(true);
-            else if(x==1)mRadioButton1.setActivated(true);
-            else if(x==2)mRadioButton2.setActivated(true);
-            else if(x==3)mRadioButton3.setActivated(true);
-            else if(x==4)mRadioButton4.setActivated(true);
-            else if(x==5)mRadioButton5.setActivated(true);
-
-            mEditText.setText(mMatchData.getExtComments());
-        }*/
-
 
 
         Button mNextButton  = (Button)v.findViewById(R.id.nav_to_menu_button);
@@ -240,7 +224,6 @@ public class TeleopFragment extends Fragment {
                 mMatchData.setTeleopLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
                 mMatchData.setTeleopOuterPoints(Integer.parseInt(mHighPoints.getText().toString()));
                 mMatchData.setPassedInitLine(mCheckBox.isChecked());
-                mMatchData.setTimestamp(Calendar.getInstance().getTime());
                 MatchHistory.get(getActivity()).saveData();
 
                 Intent i = new Intent(getActivity(), MatchListActivity.class);

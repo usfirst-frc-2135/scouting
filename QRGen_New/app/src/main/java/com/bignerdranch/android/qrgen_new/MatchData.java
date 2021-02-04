@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
@@ -51,7 +52,7 @@ public class MatchData {
         matchNumber = "";
         matchID = UUID.randomUUID()+"";
         competition = Scouter.get(c).getCompetition();
-        timestamp = null;
+        timestamp = Calendar.getInstance().getTime();
 
     }
 
@@ -72,10 +73,12 @@ public class MatchData {
         setTeamNumber(json.getString("team number"));
         setMatchNumber(json.getString("match number"));
         setTimestamp(new Date(json.getString("timestamp")));
-        competition = json.getString("competition");
+
         name = json.getString("scouter name");
-        stats[0] = name;
+        competition = json.getString("competition");
         date = json.getString("scouting date");
+
+        stats[0] = name;
         stats[1] = date;
     }
 
@@ -231,18 +234,8 @@ public class MatchData {
         return message;
     }
 
-
-    //Purges the record of everything, setting all variables and arrays to initial values
-    public void clearStats(){
-        setExtComments(null);
-        setDefense(0);
-        setPassedInitLine(false);
-        setAutonOuterPoints(0);
-        setAutonLowPoints(0);
-    }
-
     public JSONObject toJSON() throws JSONException {
-        //This code uses the JSON class to convert the aspects of each crime into data that can be to a file as JSON
+        //This code uses the JSON class to convert the aspects of each match into data that can be to a file as JSON
         JSONObject json = new JSONObject();
 
         json.put("id", matchID);
@@ -278,6 +271,8 @@ public class MatchData {
         json.put("comments", extComments);
         json.put("divider", ",");
         json.put("timestamp", timestamp);
+
+
         return json;
     }
 
