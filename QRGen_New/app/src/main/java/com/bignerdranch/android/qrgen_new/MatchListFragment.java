@@ -42,7 +42,7 @@ public class MatchListFragment extends ListFragment {
     private ArrayList<MatchData> mMatchData;
     private boolean isSubtitleShown;
     private ListView mListView;
-    private Button mAddCrimeButton;
+    private Button mAddMatchButton;
     //private Scouter mScout;
     //private String scoutName;
     //private String scoutDate;
@@ -114,8 +114,8 @@ public class MatchListFragment extends ListFragment {
 
 
 
-        mAddCrimeButton = (Button)v1.findViewById(R.id.empty_button);
-        mAddCrimeButton.setOnClickListener(new View.OnClickListener() {
+        mAddMatchButton = (Button)v1.findViewById(R.id.empty_button);
+        mAddMatchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MatchData m = new MatchData(getContext());
@@ -157,7 +157,7 @@ public class MatchListFragment extends ListFragment {
                             for(int i = adapter.getCount()-1; i>=0; i--){
                                 if(getListView().isItemChecked(i)){
                                     matchHistory.deleteMatch(adapter.getItem(i));
-                                    //Deletes all selected crimes
+                                    //Deletes all selected matches
                                 }
                             }
                             mode.finish();
@@ -199,7 +199,7 @@ public class MatchListFragment extends ListFragment {
         public MatchAdapter(ArrayList<MatchData> matchData){
             super(getActivity(), 0, matchData);
         }
-        private Button mAddCrimeButton;
+        private Button mAddMatchButton;
 
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override

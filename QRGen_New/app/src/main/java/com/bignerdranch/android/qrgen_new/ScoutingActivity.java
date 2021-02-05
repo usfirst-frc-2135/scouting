@@ -1,5 +1,7 @@
 package com.bignerdranch.android.qrgen_new;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +41,23 @@ public class ScoutingActivity extends AppCompatActivity {
     protected Fragment createFragment(){
         setContentView(R.layout.scouting_activity);
         return new com.bignerdranch.android.qrgen_new.AutonFragment();
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Fragment f = (ScoutingActivity.this).getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+        if(f instanceof AutonFragment){
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("hasBackPressed",true);
+            setResult(Activity.RESULT_OK,returnIntent);
+            MatchHistory.get(ScoutingActivity.this).getMatches().remove(MatchHistory.get(ScoutingActivity.this).getMatches().size()-1);
+            finish();
+        }
+
     }
 
 

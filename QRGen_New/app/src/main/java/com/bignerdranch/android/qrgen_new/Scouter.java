@@ -36,6 +36,7 @@ public class Scouter {
            try{
                Log.d(TAG, "Loading scouter");
                mScouterName = mSerializer.loadScouterData().getName();
+               competition = mSerializer.loadScouterData().getCompetition();
                mScoutingDateString = mSerializer.loadScouterData().getDate();
 
 
@@ -89,7 +90,7 @@ public class Scouter {
     }
 
     public JSONObject toJSON() throws JSONException {
-        //This code uses the JSON class to convert the aspects of each crime into data that can be to a file as JSON
+        //This code uses the JSON class to convert the aspects of each match into data that can be to a file as JSON
         JSONObject json = new JSONObject();
 
         json.put("scouter name", mScouterName);

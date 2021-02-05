@@ -1,5 +1,6 @@
 package com.bignerdranch.android.qrgen_new;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -67,16 +68,7 @@ public class AutonFragment extends Fragment {
 
         mTeamNumberField = (EditText)v.findViewById(R.id.team_number_field);
         mTeamNumberField.setText(mMatchData.getTeamNumber()+"");
-        /*mTeamNumberField.addTextChangedListener(new TextWatcher(){
-            public void onTextChanged(CharSequence c, int start, int before, int count){
-            }
-            public void beforeTextChanged(CharSequence c, int start, int count, int after){
-            }
-            public void afterTextChanged(Editable c){
 
-            }
-
-        });*/
 
         mMatchNumberField = (EditText)v.findViewById(R.id.match_number_field);
         mMatchNumberField.setText(mMatchData.getMatchNumber());
@@ -182,5 +174,8 @@ public class AutonFragment extends Fragment {
     protected Fragment createFragment(){
         return new com.bignerdranch.android.qrgen_new.TeleopFragment();
     }
+
+
+
 
 }
