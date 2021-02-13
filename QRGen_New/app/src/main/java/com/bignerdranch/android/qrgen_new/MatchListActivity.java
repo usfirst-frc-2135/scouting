@@ -16,10 +16,11 @@ public class MatchListActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         Log.i(TAG, "Activity created.");
-        //Log.d(TAG,  getSupportActionBar() + "");
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.scouting_activity);
+        setContentView(R.layout.match_list_activity);
 
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);

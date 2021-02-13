@@ -46,12 +46,12 @@ public class MatchData {
         setClimb(false);
         setExtComments("");
         setDefense(0);
-        name = Scouter.get(c).getName();
-        date = Scouter.get(c).getDate();
+        name = "";
+        date = "";
         teamNumber = "";
         matchNumber = "";
         matchID = UUID.randomUUID()+"";
-        competition = Scouter.get(c).getCompetition();
+        competition = "";
         timestamp = Calendar.getInstance().getTime();
 
     }
@@ -80,6 +80,18 @@ public class MatchData {
 
         stats[0] = name;
         stats[1] = date;
+    }
+
+    public void setName(String n){
+        name = n;
+    }
+
+    public void setCompetition(String c){
+        competition = c;
+    }
+
+    public void setDate(String d){
+        date = d;
     }
 
     //Sets LowPoints to given number

@@ -42,5 +42,9 @@
     <string name="climb_title">Climb</string>
     <string name="climb_checkbox">Successfully climbed</string>
     <string name="back_to_menu_button">Back to Menu</string>
+    <string name="title_activity_scouting_tabbed">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 
 </resources>

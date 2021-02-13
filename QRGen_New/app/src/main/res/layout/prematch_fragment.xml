@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/comp_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Competition"
+            android:textSize="24dp"
+            style="?android:listSeparatorTextViewStyle"/>
+
+        <AutoCompleteTextView
+            android:id="@+id/competition_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10">
+
+
+        </AutoCompleteTextView>
+
+        <TextView
+            android:id="@+id/scout_name_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textSize="24dp"
+            style="?android:listSeparatorTextViewStyle"/>
+
+        <AutoCompleteTextView
+            android:id="@+id/scouter_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10">
+
+        </AutoCompleteTextView>
+
+        <!-- <TextView
+            android:id="@+id/error_message1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </TextView> -->
+
+
+
+        <TextView
+            android:paddingTop="50dp"
+            android:id="@+id/team_number_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/team_number"
+            android:textSize="24dp"
+            style="?android:listSeparatorTextViewStyle"/>
+
+        <EditText
+            android:id="@+id/team_number_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </EditText>
+
+        <TextView
+            android:id="@+id/match_number_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/match_number"
+            android:textSize="24dp"
+            style="?android:listSeparatorTextViewStyle"/>
+
+        <EditText
+            android:id="@+id/match_number_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </EditText>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

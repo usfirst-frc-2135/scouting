@@ -68,17 +68,19 @@ public class MatchListFragment extends ListFragment {
         setRetainInstance(true);
         isSubtitleShown = false;
 
-        if(Scouter.get(getContext()).getName().equals("") || Scouter.get(getContext()).getDate().equals("")){
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Recorded Matches");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Recorded Matches");
+
+        /*if(Scouter.get(getContext()).getName().equals("") || Scouter.get(getContext()).getDate().equals("")){
+
             FragmentManager fm = getActivity().getSupportFragmentManager();
-            SignInFragment dialog = SignInFragment.newInstance();
-            dialog.setTargetFragment(MatchListFragment.this, REQUEST_SIGNIN);
-            dialog.show(fm, SITAG);
+            //SignInFragment dialog = SignInFragment.newInstance();
+            //dialog.setTargetFragment(MatchListFragment.this, REQUEST_SIGNIN);
+            //dialog.show(fm, SITAG);
 
         }
         else{
             ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Recorded Matches- " + Scouter.get(getContext()).getName());
-        }
+        }*/
 
     }
 
@@ -179,11 +181,6 @@ public class MatchListFragment extends ListFragment {
         else{
             registerForContextMenu(mListView);
         }
-
-        Log.d(TAG, Scouter.get(getContext()).getName());
-
-
-
         return v1;
     }
     @Override
@@ -262,12 +259,12 @@ public class MatchListFragment extends ListFragment {
         switch(item.getItemId()){
             case R.id.sign_out_item:
                 Log.d(TAG, "Sign out clicked");
-                Scouter.get(getContext()).setName("");
-                Scouter.get(getContext()).setDate("");
+                //Scouter.get(getContext()).setName("");
+                //Scouter.get(getContext()).setDate("");
                 FragmentManager fm = getActivity().getSupportFragmentManager();
-                SignInFragment dialog = SignInFragment.newInstance();
-                dialog.setTargetFragment(MatchListFragment.this, REQUEST_SIGNIN);
-                dialog.show(fm, SITAG);
+                //SignInFragment dialog = SignInFragment.newInstance();
+                //dialog.setTargetFragment(MatchListFragment.this, REQUEST_SIGNIN);
+                //dialog.show(fm, SITAG);
 
                 return true;
 
@@ -294,7 +291,7 @@ public class MatchListFragment extends ListFragment {
                 Log.d(TAG, "Delete match button clicked");
                 MatchHistory.get(getActivity()).deleteMatch(m);
                 adapter.notifyDataSetChanged();
-                MatchHistory.get(getContext()).saveData();
+                //MatchHistory.get(getContext()).saveData();
                 return true;
             case R.id.edit_match_button:
                 Log.d(TAG, "Edit match button clicked");

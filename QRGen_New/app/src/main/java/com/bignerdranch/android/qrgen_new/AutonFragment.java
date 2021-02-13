@@ -17,6 +17,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -46,15 +49,19 @@ public class AutonFragment extends Fragment {
 
     private MatchData mMatchData;
 
+    private ActionBar t;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState){
 
         super.onCreate(savedInstanceState);
 
-        String matchId = getActivity().getIntent().getStringExtra("match_ID");
-        Log.d(TAG, matchId);
-        mMatchData = MatchHistory.get(getActivity()).getMatch(matchId);
+        mMatchData = ((ScoutingActivity)getActivity()).getCurrentMatch();
+        Log.d(TAG, mMatchData.getMatchID());
+
+        t =  ((AppCompatActivity)getActivity()).getSupportActionBar();
+        t.setTitle("Autonomous: ");
 
     }
 
@@ -63,18 +70,6 @@ public class AutonFragment extends Fragment {
         //Creates a view using the specific fragment layout, match_data_fragment
         View v = inflater.inflate(R.layout.auton_fragment, parent, false);
         FragmentManager fm = getActivity().getSupportFragmentManager();
-
-
-
-        mTeamNumberField = (EditText)v.findViewById(R.id.team_number_field);
-        mTeamNumberField.setText(mMatchData.getTeamNumber()+"");
-
-
-        mMatchNumberField = (EditText)v.findViewById(R.id.match_number_field);
-        mMatchNumberField.setText(mMatchData.getMatchNumber());
-
-
-
 
         //Sets up TextView that displays low points, setting 0 as the default
         mLowPoints = (TextView)v.findViewById(R.id.lowportpoints);
@@ -134,48 +129,12 @@ public class AutonFragment extends Fragment {
         mHighPoints.setText(mMatchData.getAutonHighPoints()+"");
         mLowPoints.setText(mMatchData.getAutonLowPoints()+"");
 
-
-        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
-
-            @Override
-            public void onClick(View view) {
-                mMatchData.setTeamNumber(mTeamNumberField.getText().toString().trim());
-                mMatchData.setMatchNumber(mMatchNumberField.getText().toString().trim());
-                mMatchData.setAutonLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
-                mMatchData.setAutonOuterPoints(Integer.parseInt(mHighPoints.getText().toString()));
-                mMatchData.setPassedInitLine(mCheckBox.isChecked());
-                mMatchData.setTeamNumber(mTeamNumberField.getText().toString());
-
-                Log.d(TAG,mMatchData.getMatchID());
-                Log.d(TAG, MatchHistory.get(getContext()).getMatch(mMatchData.getMatchID()).getMatchID());
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-
-
-                Bundle args = new Bundle();
-                args.putSerializable("match ID", mMatchData.getMatchID());
-
-
-                TeleopFragment fragment = new TeleopFragment();
-                fragment.setArguments(args);
-                fragmentTransaction.replace(R.id.fragmentContainer, fragment);
-
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-
-
-            }
-        });
-
         return v;
     }
 
-    protected Fragment createFragment(){
-        return new com.bignerdranch.android.qrgen_new.TeleopFragment();
+    public void updateAutonData(){
+        mMatchData.setAutonLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
+        mMatchData.setAutonOuterPoints(Integer.parseInt(mHighPoints.getText().toString()));
+        mMatchData.setPassedInitLine(mCheckBox.isChecked());
     }
-
-
-
-
 }

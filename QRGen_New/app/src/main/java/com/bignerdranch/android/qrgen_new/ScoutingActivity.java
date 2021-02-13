@@ -4,15 +4,28 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;//Imports use of fragments
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class ScoutingActivity extends AppCompatActivity {
     private static final String TAG = "ScoutingActivity";// This is the tag that will be used for all Log statements generated from this activity
 
+
+    private MatchData mMatchData;
 
 
 
@@ -22,7 +35,7 @@ public class ScoutingActivity extends AppCompatActivity {
 
 
         //Connects this Java class to the XML file activity_main, linking the UI to the controller layer
-        setContentView(R.layout.scouting_activity);
+        setContentView(R.layout.activity_scouting_tabbed);
 
         //Initializes FragmentManager so that we can host a fragment within our activity
         final FragmentManager fm = getSupportFragmentManager();
@@ -32,20 +45,140 @@ public class ScoutingActivity extends AppCompatActivity {
         //Designates that chosen fragment will be housed within fragmentContainer, a frame layout in the activity's XML
         fm.beginTransaction().add(R.id.fragmentContainer, fragment[0]).commit();
 
-        //Set up the send button which generates a QR code upon being pressed
+
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_pregame, R.id.navigation_auton, R.id.navigation_teleop, R.id.navigation_endgame)
+                .build();
+
+        navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.navigation_teleop:
+                        Fragment f = (ScoutingActivity.this).getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+
+                        if(f instanceof AutonFragment){
+                            ((AutonFragment)f).updateAutonData();
+                        }
+                        if(f instanceof  TeleopFragment){
+                            ((TeleopFragment) f).updateTeleopData();
+                        }
+                        if(f instanceof  PreMatchFragment){
+                            ((PreMatchFragment) f).updatePreMatchData();
+                        }
+                        if(f instanceof  EndgameFragment){
+                            ((EndgameFragment) f).updateEndgameData();
+                        }
+
+                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+                        TeleopFragment fragment1 = new TeleopFragment();
+                        fragmentTransaction.replace(R.id.fragmentContainer, fragment1);
+
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+
+                        break;
+
+                    case R.id.navigation_auton:
+                        Fragment f1 = (ScoutingActivity.this).getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+
+                        if(f1 instanceof AutonFragment){
+                            ((AutonFragment)f1).updateAutonData();
+                        }
+                        if(f1 instanceof  TeleopFragment){
+                            ((TeleopFragment) f1).updateTeleopData();
+                        }
+
+                        if(f1 instanceof  PreMatchFragment){
+                            ((PreMatchFragment) f1).updatePreMatchData();
+                        }
+                        if(f1 instanceof  EndgameFragment){
+                            ((EndgameFragment) f1).updateEndgameData();
+                        }
+
+                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+                        AutonFragment fragment2 = new AutonFragment();
+                        fragmentTransaction.replace(R.id.fragmentContainer, fragment2);
+
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                        break;
+
+                    case R.id.navigation_pregame:
+                        Fragment f2 = (ScoutingActivity.this).getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+
+                        if(f2 instanceof AutonFragment){
+                            ((AutonFragment)f2).updateAutonData();
+                        }
+                        if(f2 instanceof  TeleopFragment){
+                            ((TeleopFragment) f2).updateTeleopData();
+                        }
+                        if(f2 instanceof  PreMatchFragment){
+                            ((PreMatchFragment) f2).updatePreMatchData();
+                        }
+                        if(f2 instanceof  EndgameFragment){
+                            ((EndgameFragment) f2).updateEndgameData();
+                        }
+
+                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+                        PreMatchFragment fragment3 = new PreMatchFragment();
+                        fragmentTransaction.replace(R.id.fragmentContainer, fragment3);
+
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                        break;
+
+                    case R.id.navigation_endgame:
+                        Fragment f3 = (ScoutingActivity.this).getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+
+                        if(f3 instanceof AutonFragment){
+                            ((AutonFragment)f3).updateAutonData();
+                        }
+                        if(f3 instanceof  TeleopFragment){
+                            ((TeleopFragment) f3).updateTeleopData();
+                        }
+                        if(f3 instanceof  PreMatchFragment){
+                            ((PreMatchFragment) f3).updatePreMatchData();
+                        }
+                        if(f3 instanceof  EndgameFragment){
+                            ((EndgameFragment) f3).updateEndgameData();
+                        }
 
 
+                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+                        EndgameFragment fragment4 = new EndgameFragment();
+                        fragmentTransaction.replace(R.id.fragmentContainer, fragment4);
+
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                        break;
+
+                }
+                return true;
+            }
+        });
+
+
+        String matchId = getIntent().getStringExtra("match_ID");
+        Log.d(TAG, matchId);
+        mMatchData = MatchHistory.get(getApplicationContext()).getMatch(matchId);
     }
+
 
     //This method returns an instance of the class MatchFragment, so that whichever XML file is linked to Match Fragment will be placed in fragmentContainer
     protected Fragment createFragment(){
-        setContentView(R.layout.scouting_activity);
-        return new com.bignerdranch.android.qrgen_new.AutonFragment();
+        setContentView(R.layout.activity_scouting_tabbed);
+        return new com.bignerdranch.android.qrgen_new.PreMatchFragment();
     }
 
-
-
-    @Override
+    /*@Override
     public void onBackPressed() {
         super.onBackPressed();
 
@@ -58,17 +191,17 @@ public class ScoutingActivity extends AppCompatActivity {
             finish();
         }
 
+    }*/
+
+    protected  MatchData getCurrentMatch(){
+        return mMatchData;
     }
 
 
-
-
-
-
-    /*@Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        //getMenuInflater().inflate(R.menu, menu);
         return true;
     }
 
@@ -80,12 +213,13 @@ public class ScoutingActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        /*if (id == R.id.navigation_teleop) {
+            Log.d("TAG", "teleop pressed");
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
-    }*/
+    }
 
     @Override
     public void onStart(){

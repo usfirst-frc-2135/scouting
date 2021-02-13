@@ -106,6 +106,7 @@ public class MatchDataSerializer {
             JSONArray array = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
             //Build the array of crimes from JSONObjects
             s=new Scouter(array.getJSONObject(0));
+            Log.d(TAG, s.getPastScouts()[0]);
 
 
         } catch (FileNotFoundException e) {

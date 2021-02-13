@@ -35,44 +35,27 @@ public class TeleopFragment extends Fragment {
     private TextView mLowPoints;
     private TextView mHighPoints;
 
-
     private Button mLowPortPointsDec;
     private Button mLowPortPointsInc;
     private Button mHighPortPointsDec;
     private Button mHighPortPointsInc;
 
-    private CheckBox mCheckBox;
-    private RadioGroup mRadioGroup;
-    private RadioButton mRadioButton0;
-    private RadioButton mRadioButton1;
-    private RadioButton mRadioButton2;
-    private RadioButton mRadioButton3;
-    private RadioButton mRadioButton4;
-    private RadioButton mRadioButton5;
-    private EditText mEditText;
-
     private MatchData mMatchData;
-
-    private static final int REQUEST_QR = 2;
-    public static final String QRTAG = "qr";
-
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
+        mMatchData = ((ScoutingActivity)getActivity()).getCurrentMatch();
+        Log.d(TAG, mMatchData.getMatchID());
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
         //Creates a view using the specific fragment layout, match_data_fragment
         View v = inflater.inflate(R.layout.teleop_fragment, parent, false);
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-
-        String mMatchId = getArguments().getString("match ID");
-        Log.d(TAG, mMatchId.toString());
-        mMatchData = MatchHistory.get(getContext()).getMatch(mMatchId);
-
-
 
 
 
@@ -125,119 +108,18 @@ public class TeleopFragment extends Fragment {
             }
         });
 
-        //Connects the checkbox for passing the initiation line and sets up a listener to detect when the checked status is changed
-        mCheckBox = (CheckBox)v.findViewById(R.id.climb_checkbox);
-        mCheckBox.setChecked(mMatchData.getPassedInitLine());// Default is unchecked
 
-
-        mRadioGroup = (RadioGroup)v.findViewById(R.id.defense_scale);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
-        mRadioButton0 = (RadioButton)v.findViewById(R.id.level_zero);//Sets up radio button that corresponds to 0
-        mRadioButton0.setActivated(true);
-        mRadioButton1 = (RadioButton)v.findViewById(R.id.level_one);//Sets up radio button that corresponds to 1
-        mRadioButton2 = (RadioButton)v.findViewById(R.id.level_two);//Sets up radio button that corresponds to 2
-        mRadioButton3 = (RadioButton)v.findViewById(R.id.level_three);//Sets up radio button that corresponds to 3
-        mRadioButton4 = (RadioButton)v.findViewById(R.id.level_four);//Sets up radio button that corresponds to 4
-        mRadioButton5 = (RadioButton)v.findViewById(R.id.level_five);//Sets up radio button that corresponds to 5
-
-        int x = mMatchData.getDefense();
-        if(x==0)mRadioButton0.setActivated(true);
-        else if(x==1)mRadioButton1.setActivated(true);
-        else if(x==2)mRadioButton2.setActivated(true);
-        else if(x==3)mRadioButton3.setActivated(true);
-        else if(x==4)mRadioButton4.setActivated(true);
-        else if(x==5)mRadioButton5.setActivated(true);
-
-        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-                //Changes mMatchData's defense variable according to which radio button is selected
-                if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton0.getId()) {
-                    mMatchData.setDefense(0);
-                }
-                if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton1.getId()) {
-                    mMatchData.setDefense(1);
-                }
-                if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton2.getId()) {
-                    mMatchData.setDefense(2);
-                }
-                if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton3.getId()) {
-                    mMatchData.setDefense(3);
-                }
-                if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton4.getId()) {
-                    mMatchData.setDefense(4);
-                }
-                if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton5.getId()) {
-                    mMatchData.setDefense(5);
-                }
-            }
-        });
-
-
-        //Sets up an EditText that allows users to input any additional comments
-        mEditText = (EditText)v.findViewById(R.id.comments);
-        mEditText.setHint("Enter any additional comments here");
-        mEditText.setText(mMatchData.getExtComments());
-        mEditText.addTextChangedListener(new TextWatcher(){
-            public void onTextChanged(CharSequence c, int start, int before, int count){
-            }
-            public void beforeTextChanged(CharSequence c, int start, int count, int after){
-            }
-            public void afterTextChanged(Editable c){
-            }
-
-        });
 
         mHighPoints.setText(mMatchData.getTelopHighPoints()+"");
         mLowPoints.setText(mMatchData.getTeleopLowPoints()+"");
 
-
-        Button mQRButton = (Button)v.findViewById(R.id.gen_QR);
-        mQRButton.setOnClickListener(new View.OnClickListener() {
-            //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
-
-            @Override
-            public void onClick(View view) {
-                //Uses intents to start the QR code dialog
-                Snackbar.make(view, "Generating QR code", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-
-                Log.d("ScoutingActivity", "Sent intent");
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                QRFragment dialog = QRFragment.newInstance(mMatchData);
-                dialog.setTargetFragment(TeleopFragment.this, REQUEST_QR);
-                dialog.show(fm, QRTAG);
-
-
-            }
-        });
-
-
-
-
-        Button mNextButton  = (Button)v.findViewById(R.id.nav_to_menu_button);
-        mNextButton.setOnClickListener(new View.OnClickListener() {
-            //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
-
-            @Override
-            public void onClick(View view) {
-                mMatchData.setExtComments(mEditText.getText());
-                mMatchData.setTeleopLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
-                mMatchData.setTeleopOuterPoints(Integer.parseInt(mHighPoints.getText().toString()));
-                mMatchData.setPassedInitLine(mCheckBox.isChecked());
-                MatchHistory.get(getActivity()).saveData();
-
-                Intent i = new Intent(getActivity(), MatchListActivity.class);
-                startActivityForResult(i, 0);
-                getActivity().finish();
-                Log.d("TeleopFragment", "Sent intent");
-
-
-            }
-        });
-
-
-
         return v;
+    }
+
+    public void updateTeleopData(){
+        mMatchData.setTeleopLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
+        mMatchData.setTeleopOuterPoints(Integer.parseInt(mHighPoints.getText().toString()));
+        MatchHistory.get(getActivity()).saveData();
     }
 
     public String formattedDate(Date d){

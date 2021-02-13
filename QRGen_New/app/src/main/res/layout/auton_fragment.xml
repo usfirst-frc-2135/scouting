@@ -11,37 +11,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/team_number_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/team_number"
-                android:textSize="24dp"
-                style="?android:listSeparatorTextViewStyle"/>
-
-            <EditText
-                android:id="@+id/team_number_field"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </EditText>
-
-            <TextView
-                android:id="@+id/match_number_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/match_number"
-                android:textSize="24dp"
-                style="?android:listSeparatorTextViewStyle"/>
-
-            <EditText
-                android:id="@+id/match_number_field"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </EditText>
-
             <TextView
                 android:id="@+id/autonomous_title"
                 android:layout_width="match_parent"
@@ -130,15 +99,6 @@
         </LinearLayout>
     </ScrollView>
 
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_gravity="bottom|right"
-        app:srcCompat="@android:drawable/ic_menu_send"
-        />
 
 
 
