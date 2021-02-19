@@ -295,7 +295,7 @@ public class MatchListFragment extends ListFragment {
                 adapter = (MatchAdapter)getListAdapter();
                 MatchHistory matchHistory = MatchHistory.get(getActivity());
 
-                Intent data = new Intent(getActivity(), ScoutingActivity.class);
+                Intent data = new Intent(getActivity(), PreMatchActivity.class);
                 data.putExtra("match_ID", m.getMatchID());
 
                 startActivity(data);

@@ -148,14 +148,14 @@ public class ScoutingActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        Fragment f = (ScoutingActivity.this).getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+        /*Fragment f = (ScoutingActivity.this).getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
         if(f instanceof AutonFragment){
             Intent returnIntent = new Intent();
             returnIntent.putExtra("hasBackPressed",true);
             setResult(Activity.RESULT_OK,returnIntent);
             MatchHistory.get(ScoutingActivity.this).getMatches().remove(MatchHistory.get(ScoutingActivity.this).getMatches().size()-1);
             finish();
-        }
+        }*/
 
     }
 

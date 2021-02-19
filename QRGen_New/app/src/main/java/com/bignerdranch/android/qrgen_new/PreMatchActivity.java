@@ -35,13 +35,13 @@ public class PreMatchActivity extends AppCompatActivity {
     private ActionBar t;
 
 
-    private static final int REQUEST_DATETIME = 0;
+    //private static final int REQUEST_DATETIME = 0;
     public static final String TAG = "PreMatch Fragment";
     public static final String EXTRA_DATE = "com.bignerranch.android.qrgen.date";
-    public static final String TDTAG = "date/time";
+    //public static final String TDTAG = "date/time";
 
-    private String scout_name;
-    private Date scout_date;
+    /*private String scout_name;
+    private Date scout_date;*/
 
     private static Scouter mScout;
 
@@ -61,6 +61,7 @@ public class PreMatchActivity extends AppCompatActivity {
 
         mCompetitionField = (AutoCompleteTextView) findViewById(R.id.competition_name);
         mCompetitionField.setHint("Competition");
+        mCompetitionField.setText(mMatchData.getCompetition());
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>
                 (PreMatchActivity.this, android.R.layout.select_dialog_item, Scouter.get(getApplicationContext()).getPastComps());
         mCompetitionField.setAdapter(adapter1);
@@ -76,6 +77,7 @@ public class PreMatchActivity extends AppCompatActivity {
 
         mScouterNameField =(AutoCompleteTextView)findViewById(R.id.scouter_name);
         mScouterNameField.setHint("Name");
+        mScouterNameField.setText(mMatchData.getName());
         mScouterNameField.addTextChangedListener(new TextWatcher(){
             public void onTextChanged(CharSequence c, int start, int before, int count){
 
