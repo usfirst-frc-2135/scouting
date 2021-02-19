@@ -106,7 +106,7 @@ public class MatchListFragment extends ListFragment {
                 public void onClick(View view) {
                     MatchData m = new MatchData(getContext());
                     MatchHistory.get(getContext()).addMatch(m);
-                    Intent i = new Intent(getActivity(), ScoutingActivity.class);
+                    Intent i = new Intent(getActivity(), PreMatchActivity.class);
                     i.putExtra("match_ID", m.getMatchID());
                     startActivityForResult(i, 0);
                 }
@@ -122,7 +122,7 @@ public class MatchListFragment extends ListFragment {
             public void onClick(View v) {
                 MatchData m = new MatchData(getContext());
                 MatchHistory.get(getContext()).addMatch(m);
-                Intent i = new Intent(getActivity(), ScoutingActivity.class);
+                Intent i = new Intent(getActivity(), PreMatchActivity.class);
                 i.putExtra("match_ID", m.getMatchID());
                 startActivityForResult(i, 0);
             }
@@ -257,15 +257,10 @@ public class MatchListFragment extends ListFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch(item.getItemId()){
-            case R.id.sign_out_item:
-                Log.d(TAG, "Sign out clicked");
-                //Scouter.get(getContext()).setName("");
-                //Scouter.get(getContext()).setDate("");
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                //SignInFragment dialog = SignInFragment.newInstance();
-                //dialog.setTargetFragment(MatchListFragment.this, REQUEST_SIGNIN);
-                //dialog.show(fm, SITAG);
-
+            case R.id.clear_preferences:
+                Log.d(TAG, "Clear clicked");
+                Scouter.get(getContext()).clear();
+                Scouter.get(getContext()).saveData(getContext());
                 return true;
 
             default: return super.onOptionsItemSelected(item);

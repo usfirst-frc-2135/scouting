@@ -15,6 +15,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -38,11 +40,16 @@ public class EndgameFragment extends Fragment {
     public static final String QRTAG = "qr";
     private static final String TAG = "Endgame Fragment";
 
+    private ActionBar t;
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
         mMatchData = ((ScoutingActivity)getActivity()).getCurrentMatch();
+
+        t =  ((AppCompatActivity)getActivity()).getSupportActionBar();
+        t.setTitle("Endgame: ");
     }
 
     @Override

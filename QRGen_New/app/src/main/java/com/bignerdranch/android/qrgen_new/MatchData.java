@@ -83,11 +83,11 @@ public class MatchData {
     }
 
     public void setName(String n){
-        name = n;
+        name = n.substring(0,1).toUpperCase()+n.substring(1).toLowerCase();
     }
 
     public void setCompetition(String c){
-        competition = c;
+        competition = c.toUpperCase();
     }
 
     public void setDate(String d){

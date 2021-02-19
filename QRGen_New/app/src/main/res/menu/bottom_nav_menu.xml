@@ -2,11 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_pregame"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="Pre-Match" />
-
-    <item
         android:id="@+id/navigation_auton"
         android:icon="@drawable/ic_dashboard_black_24dp"
         android:title="Auton" />

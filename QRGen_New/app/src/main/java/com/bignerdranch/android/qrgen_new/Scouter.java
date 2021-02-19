@@ -71,7 +71,7 @@ public class Scouter {
             String tag2 = "competition";
             int j=0;
             while(json.has(tag2+j +"")){
-                pastComps.add(json.getString(tag+j +""));
+                pastComps.add(json.getString(tag2+j +""));
                 j++;
             }
         }catch(Exception e){
@@ -91,7 +91,12 @@ public class Scouter {
     }
 
     public void addPastScouter(String n){
-        pastScouters.add(n);
+        for(String x: pastScouters){
+            if(n.trim().toLowerCase().equals(x.trim().toLowerCase())){
+                return;
+            }
+        }
+        pastScouters.add(n.trim());
     }
 
     public String[] getPastScouts(){
@@ -110,8 +115,18 @@ public class Scouter {
         return comps;
     }
 
+    public void clear(){
+        pastScouters.clear();
+        pastComps.clear();
+    }
+
     public void addPastComp(String c){
-        pastComps.add(c);
+        for(String x: pastComps){
+            if(x.trim().toLowerCase().equals(c.trim().toLowerCase())){
+                return;
+            }
+        }
+        pastComps.add(c.trim());
     }
 
     public JSONObject toJSON() throws JSONException {

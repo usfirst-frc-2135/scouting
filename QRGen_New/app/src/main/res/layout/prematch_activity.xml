@@ -42,15 +42,6 @@
 
         </AutoCompleteTextView>
 
-        <!-- <TextView
-            android:id="@+id/error_message1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </TextView> -->
-
-
-
         <TextView
             android:paddingTop="50dp"
             android:id="@+id/team_number_title"
@@ -81,6 +72,14 @@
             android:layout_height="wrap_content">
 
         </EditText>
+
+        <Button
+            android:id="@+id/start_scouting_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Scouting">
+
+        </Button>
 
     </LinearLayout>
 

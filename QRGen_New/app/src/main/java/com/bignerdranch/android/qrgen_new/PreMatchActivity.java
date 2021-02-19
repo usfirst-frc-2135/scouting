@@ -1,6 +1,6 @@
 package com.bignerdranch.android.qrgen_new;
 
-import android.content.Context;
+import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,25 +12,22 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import java.util.Calendar;
 import java.util.Date;
 
-public class PreMatchFragment extends Fragment {
+public class PreMatchActivity extends AppCompatActivity {
 
     private AutoCompleteTextView mCompetitionField;
     private AutoCompleteTextView mScouterNameField;
     private EditText mTeamNumberField;
     private EditText mMatchNumberField;
+    private Button mStartScoutingButton;
 
 
 
@@ -54,26 +51,18 @@ public class PreMatchFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
 
-        mMatchData = ((ScoutingActivity)getActivity()).getCurrentMatch();
+        String matchId = getIntent().getStringExtra("match_ID");
+        mMatchData = MatchHistory.get(getApplicationContext()).getMatch(matchId);
 
-        t =  ((AppCompatActivity)getActivity()).getSupportActionBar();
+        t =  getSupportActionBar();
         t.setTitle("Pre-Match: ");
 
-        mMatchData = ((ScoutingActivity)getActivity()).getCurrentMatch();
-        Log.d(TAG, mMatchData.getMatchID());
+        setContentView(R.layout.prematch_activity);
 
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
-        //Creates a view using the specific fragment layout, match_data_fragment
-        View v = inflater.inflate(R.layout.prematch_fragment, parent, false);
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-
-        mCompetitionField = (AutoCompleteTextView) v.findViewById(R.id.competition_name);
+        mCompetitionField = (AutoCompleteTextView) findViewById(R.id.competition_name);
         mCompetitionField.setHint("Competition");
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>
-                (getActivity(), android.R.layout.select_dialog_item, Scouter.get(getContext()).getPastComps());
+                (PreMatchActivity.this, android.R.layout.select_dialog_item, Scouter.get(getApplicationContext()).getPastComps());
         mCompetitionField.setAdapter(adapter1);
         mCompetitionField.setThreshold(0);
         mCompetitionField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -85,7 +74,7 @@ public class PreMatchFragment extends Fragment {
             }
         });
 
-        mScouterNameField =(AutoCompleteTextView)v.findViewById(R.id.scouter_name);
+        mScouterNameField =(AutoCompleteTextView)findViewById(R.id.scouter_name);
         mScouterNameField.setHint("Name");
         mScouterNameField.addTextChangedListener(new TextWatcher(){
             public void onTextChanged(CharSequence c, int start, int before, int count){
@@ -98,7 +87,7 @@ public class PreMatchFragment extends Fragment {
 
         });
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>
-                (getActivity(), android.R.layout.select_dialog_item, Scouter.get(getContext()).getPastScouts());
+                (PreMatchActivity.this, android.R.layout.select_dialog_item, Scouter.get(getApplicationContext()).getPastScouts());
         mScouterNameField.setAdapter(adapter2);
         mScouterNameField.setThreshold(0);
         mScouterNameField.setOnFocusChangeListener(new View.OnFocusChangeListener(){
@@ -110,7 +99,7 @@ public class PreMatchFragment extends Fragment {
             }
         });
 
-        mTeamNumberField = (EditText)v.findViewById(R.id.team_number_field);
+        mTeamNumberField = (EditText)findViewById(R.id.team_number_field);
         mTeamNumberField.setText(mMatchData.getTeamNumber()+"");
         mTeamNumberField.addTextChangedListener(new TextWatcher(){
             public void onTextChanged(CharSequence c, int start, int before, int count){
@@ -126,7 +115,7 @@ public class PreMatchFragment extends Fragment {
         });
 
 
-        mMatchNumberField = (EditText)v.findViewById(R.id.match_number_field);
+        mMatchNumberField = (EditText)findViewById(R.id.match_number_field);
         mMatchNumberField.setText(mMatchData.getMatchNumber());
         mMatchNumberField.addTextChangedListener(new TextWatcher(){
             public void onTextChanged(CharSequence c, int start, int before, int count){
@@ -140,32 +129,39 @@ public class PreMatchFragment extends Fragment {
 
         });
 
-        return v;
+        mStartScoutingButton = (Button) findViewById(R.id.start_scouting_button);
+        mStartScoutingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updatePreMatchData();
+                Intent i = new Intent(PreMatchActivity.this, ScoutingActivity.class);
+                i.putExtra("match_ID", mMatchData.getMatchID());
+                startActivityForResult(i, 0);
+
+            }
+        });
+
+
     }
 
     public void updatePreMatchData(){
-        mScout = Scouter.get(getContext());
+        mScout = Scouter.get(getApplicationContext());
         mScout.addPastComp(mCompetitionField.getText().toString());
         mScout.addPastScouter(mScouterNameField.getText().toString());
-        mScout.saveData(getContext());
+        mScout.saveData(getApplicationContext());
         mMatchData.setName(mScouterNameField.getText().toString());
         mMatchData.setCompetition(mCompetitionField.getText().toString());
         mMatchData.setMatchNumber(mMatchNumberField.getText().toString().trim());
         mMatchData.setTeamNumber(mTeamNumberField.getText().toString());
     }
 
-    public String formattedDate(Date d){
-        SimpleDateFormat dt = new SimpleDateFormat("E MMM dd hh:mm:ss z yyyy");
-        Date date = null;
-        try{
-            date=dt.parse(d.toString());
-        }catch(Exception e){
-            Log.d("SignInFragment", e.getMessage());
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode,resultCode, data);
+        if(requestCode == 0){
+            finish();
         }
-        SimpleDateFormat dt1 = new SimpleDateFormat("E, dd MMM yyyy");
-        return (dt1.format(date));
     }
-
 }
 
 

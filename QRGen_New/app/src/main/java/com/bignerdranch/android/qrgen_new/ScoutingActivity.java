@@ -50,7 +50,7 @@ public class ScoutingActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_pregame, R.id.navigation_auton, R.id.navigation_teleop, R.id.navigation_endgame)
+                R.id.navigation_auton, R.id.navigation_teleop, R.id.navigation_endgame)
                 .build();
 
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -65,9 +65,6 @@ public class ScoutingActivity extends AppCompatActivity {
                         }
                         if(f instanceof  TeleopFragment){
                             ((TeleopFragment) f).updateTeleopData();
-                        }
-                        if(f instanceof  PreMatchFragment){
-                            ((PreMatchFragment) f).updatePreMatchData();
                         }
                         if(f instanceof  EndgameFragment){
                             ((EndgameFragment) f).updateEndgameData();
@@ -93,9 +90,6 @@ public class ScoutingActivity extends AppCompatActivity {
                             ((TeleopFragment) f1).updateTeleopData();
                         }
 
-                        if(f1 instanceof  PreMatchFragment){
-                            ((PreMatchFragment) f1).updatePreMatchData();
-                        }
                         if(f1 instanceof  EndgameFragment){
                             ((EndgameFragment) f1).updateEndgameData();
                         }
@@ -109,31 +103,6 @@ public class ScoutingActivity extends AppCompatActivity {
                         fragmentTransaction.commit();
                         break;
 
-                    case R.id.navigation_pregame:
-                        Fragment f2 = (ScoutingActivity.this).getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-
-                        if(f2 instanceof AutonFragment){
-                            ((AutonFragment)f2).updateAutonData();
-                        }
-                        if(f2 instanceof  TeleopFragment){
-                            ((TeleopFragment) f2).updateTeleopData();
-                        }
-                        if(f2 instanceof  PreMatchFragment){
-                            ((PreMatchFragment) f2).updatePreMatchData();
-                        }
-                        if(f2 instanceof  EndgameFragment){
-                            ((EndgameFragment) f2).updateEndgameData();
-                        }
-
-                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
-                        PreMatchFragment fragment3 = new PreMatchFragment();
-                        fragmentTransaction.replace(R.id.fragmentContainer, fragment3);
-
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
-                        break;
-
                     case R.id.navigation_endgame:
                         Fragment f3 = (ScoutingActivity.this).getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
 
@@ -142,9 +111,6 @@ public class ScoutingActivity extends AppCompatActivity {
                         }
                         if(f3 instanceof  TeleopFragment){
                             ((TeleopFragment) f3).updateTeleopData();
-                        }
-                        if(f3 instanceof  PreMatchFragment){
-                            ((PreMatchFragment) f3).updatePreMatchData();
                         }
                         if(f3 instanceof  EndgameFragment){
                             ((EndgameFragment) f3).updateEndgameData();
@@ -175,10 +141,10 @@ public class ScoutingActivity extends AppCompatActivity {
     //This method returns an instance of the class MatchFragment, so that whichever XML file is linked to Match Fragment will be placed in fragmentContainer
     protected Fragment createFragment(){
         setContentView(R.layout.activity_scouting_tabbed);
-        return new com.bignerdranch.android.qrgen_new.PreMatchFragment();
+        return new com.bignerdranch.android.qrgen_new.AutonFragment();
     }
 
-    /*@Override
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
 
@@ -191,7 +157,7 @@ public class ScoutingActivity extends AppCompatActivity {
             finish();
         }
 
-    }*/
+    }
 
     protected  MatchData getCurrentMatch(){
         return mMatchData;

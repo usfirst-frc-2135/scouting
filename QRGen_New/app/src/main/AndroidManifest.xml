@@ -19,6 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".PreMatchActivity"
+            android:label="Input Match Data"></activity>
+
         <activity
             android:name=".ScoutingActivity"
             android:label="Input Match Data"></activity>
