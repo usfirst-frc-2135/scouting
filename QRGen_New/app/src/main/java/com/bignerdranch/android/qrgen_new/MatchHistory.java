@@ -1,8 +1,10 @@
 package com.bignerdranch.android.qrgen_new;
 
 import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -10,13 +12,14 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class MatchHistory {
     private static final String TAG = "MatchHistory";
-    private static final String FILENAME = "matches.csv";
+    private static final String FILENAME = "Scouter.json";
 
     private ArrayList<MatchData> mMatchHistory;
     private MatchDataSerializer mSerializer;
 
     private static MatchHistory sMatchHistory;
     private Context mAppContext;
+    private File externalFilesDir;
 
 
     private MatchHistory(Context appContext){
@@ -59,6 +62,7 @@ public class MatchHistory {
 
     public void deleteMatch(MatchData m){
         mMatchHistory.remove(m);
+        mAppContext.deleteFile(m.getMatchFileName());
     }
 
     public void addMatch(MatchData m){
@@ -72,10 +76,11 @@ public class MatchHistory {
             return true;
         }
         catch(Exception e){
-            Log.e(TAG, "Error saving scouter:", e);
+            Log.e(TAG, "Error saving data:", e);
             return false;
         }
     }
+
 
 
 

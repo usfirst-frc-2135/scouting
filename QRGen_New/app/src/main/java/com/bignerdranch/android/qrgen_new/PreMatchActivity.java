@@ -1,6 +1,7 @@
 package com.bignerdranch.android.qrgen_new;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -28,20 +30,13 @@ public class PreMatchActivity extends AppCompatActivity {
     private EditText mTeamNumberField;
     private EditText mMatchNumberField;
     private Button mStartScoutingButton;
-
-
+    private TextView mErrorMessagepm;
 
     private MatchData mMatchData;
     private ActionBar t;
 
-
-    //private static final int REQUEST_DATETIME = 0;
     public static final String TAG = "PreMatch Fragment";
     public static final String EXTRA_DATE = "com.bignerranch.android.qrgen.date";
-    //public static final String TDTAG = "date/time";
-
-    /*private String scout_name;
-    private Date scout_date;*/
 
     private static Scouter mScout;
 
@@ -62,6 +57,17 @@ public class PreMatchActivity extends AppCompatActivity {
         mCompetitionField = (AutoCompleteTextView) findViewById(R.id.competition_name);
         mCompetitionField.setHint("Competition");
         mCompetitionField.setText(mMatchData.getCompetition());
+        mCompetitionField.addTextChangedListener(new TextWatcher(){
+            public void onTextChanged(CharSequence c, int start, int before, int count){
+
+            }
+            public void beforeTextChanged(CharSequence c, int start, int count, int after){
+            }
+            public void afterTextChanged(Editable c){
+                checkValidData();
+            }
+
+        });
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>
                 (PreMatchActivity.this, android.R.layout.select_dialog_item, Scouter.get(getApplicationContext()).getPastComps());
         mCompetitionField.setAdapter(adapter1);
@@ -85,6 +91,7 @@ public class PreMatchActivity extends AppCompatActivity {
             public void beforeTextChanged(CharSequence c, int start, int count, int after){
             }
             public void afterTextChanged(Editable c){
+                checkValidData();
             }
 
         });
@@ -111,6 +118,7 @@ public class PreMatchActivity extends AppCompatActivity {
             }
             public void afterTextChanged(Editable c){
                 t.setSubtitle(c + "  " + mMatchNumberField.getText().toString());
+                checkValidData();
 
             }
 
@@ -127,6 +135,7 @@ public class PreMatchActivity extends AppCompatActivity {
             }
             public void afterTextChanged(Editable c){
                 t.setSubtitle( mTeamNumberField.getText().toString()+ " " + c);
+                checkValidData();
             }
 
         });
@@ -135,13 +144,21 @@ public class PreMatchActivity extends AppCompatActivity {
         mStartScoutingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updatePreMatchData();
-                Intent i = new Intent(PreMatchActivity.this, ScoutingActivity.class);
-                i.putExtra("match_ID", mMatchData.getMatchID());
-                startActivityForResult(i, 0);
+
+                if(checkValidData()){
+                    updatePreMatchData();
+                    Intent i = new Intent(PreMatchActivity.this, ScoutingActivity.class);
+                    i.putExtra("match_ID", mMatchData.getMatchID());
+                    startActivityForResult(i, 0);
+                }
+
 
             }
         });
+
+        mErrorMessagepm = (TextView) findViewById(R.id.error_message_pm);
+        mErrorMessagepm.setVisibility(View.INVISIBLE);
+        mErrorMessagepm.setTextColor(Color.RED);
 
 
     }
@@ -163,6 +180,15 @@ public class PreMatchActivity extends AppCompatActivity {
         if(requestCode == 0){
             finish();
         }
+    }
+
+    private boolean checkValidData(){
+        if(mCompetitionField.getText().toString().trim().equals("")||mScouterNameField.getText().toString().trim().equals("")|| mTeamNumberField.getText().toString().trim().equals("")||mMatchNumberField.getText().toString().trim().equals("")){
+            mErrorMessagepm.setVisibility(View.VISIBLE);
+            return false;
+        }
+        mErrorMessagepm.setVisibility(View.INVISIBLE);
+        return true;
     }
 }
 

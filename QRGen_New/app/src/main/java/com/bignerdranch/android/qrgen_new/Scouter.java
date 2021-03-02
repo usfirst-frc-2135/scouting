@@ -1,12 +1,14 @@
 package com.bignerdranch.android.qrgen_new;
 
 import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
@@ -156,5 +158,11 @@ public class Scouter {
             Log.e(TAG, "Error saving scouters/competitions:", e);
             return false;
         }
+    }
+
+    public File getScouterFile(){
+        File externalFilesDir = mContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
+        if(externalFilesDir == null){return null;}
+        return new File(externalFilesDir, "pastScoutComps.json");
     }
 }

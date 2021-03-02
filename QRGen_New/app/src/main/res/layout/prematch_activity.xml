@@ -81,6 +81,15 @@
 
         </Button>
 
+        <TextView
+            android:id="@+id/error_message_pm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="***Please fill in the required field***">
+
+        </TextView>
+
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

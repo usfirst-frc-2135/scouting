@@ -61,7 +61,6 @@ public class MatchData {
         Log.d(TAG, "Matches being created using json data");
 
         stats = new Object[12];
-        matchID = json.getString("id");
         setAutonOuterPoints(json.getInt("auton outer points"));
         setAutonLowPoints(json.getInt("auton low points"));
         setPassedInitLine(json.getBoolean("init_line"));
@@ -73,6 +72,7 @@ public class MatchData {
         setTeamNumber(json.getString("team number"));
         setMatchNumber(json.getString("match number"));
         setTimestamp(new Date(json.getString("timestamp")));
+        matchID = json.getString("id1");
 
         name = json.getString("scouter name");
         competition = json.getString("competition");
@@ -201,9 +201,6 @@ public class MatchData {
         return name;
     }
 
-    public String getDate(){
-        return date;
-    }
 
     public void setTeamNumber(String n){
         stats[2] = n;
@@ -247,10 +244,9 @@ public class MatchData {
     }
 
     public JSONObject toJSON() throws JSONException {
-        //This code uses the JSON class to convert the aspects of each match into data that can be to a file as JSON
+        //This code uses the JSON class to convert the aspects of each match into data that can be saved to a file as JSON
         JSONObject json = new JSONObject();
 
-        json.put("id", matchID);
         json.put("divider", ",");
         json.put("scouter name", name);
         json.put("divider", ",");
@@ -283,9 +279,14 @@ public class MatchData {
         json.put("comments", extComments);
         json.put("divider", ",");
         json.put("timestamp", timestamp);
+        json.put("id1", matchID);
 
 
         return json;
+    }
+
+    public String getMatchFileName(){
+        return matchID+".json";
     }
 
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.ContextMenu;
@@ -59,8 +60,6 @@ public class MatchListFragment extends ListFragment {
     public void onCreate( Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-
-
          mMatchData = MatchHistory.get(getActivity()).getMatches();
 
         setHasOptionsMenu(true); //alerts the fragment manager that the it should receive options menu callbacks
@@ -70,17 +69,7 @@ public class MatchListFragment extends ListFragment {
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Recorded Matches");
 
-        /*if(Scouter.get(getContext()).getName().equals("") || Scouter.get(getContext()).getDate().equals("")){
-
-            FragmentManager fm = getActivity().getSupportFragmentManager();
-            //SignInFragment dialog = SignInFragment.newInstance();
-            //dialog.setTargetFragment(MatchListFragment.this, REQUEST_SIGNIN);
-            //dialog.show(fm, SITAG);
-
-        }
-        else{
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Recorded Matches- " + Scouter.get(getContext()).getName());
-        }*/
+        Log.i(TAG, getContext().getFilesDir()+"");
 
     }
 
@@ -187,6 +176,7 @@ public class MatchListFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id){
         MatchData m = ((MatchAdapter)getListAdapter()).getItem(position);
         FragmentManager fm = getActivity().getSupportFragmentManager();
+        v.setActivated(false);
         QRFragment dialog = QRFragment.newInstance(m);
         dialog.setTargetFragment(MatchListFragment.this, REQUEST_QR);
         dialog.show(fm, QRTAG);
@@ -252,8 +242,6 @@ public class MatchListFragment extends ListFragment {
         //This tells the program to inflate the view for the menu when the method is called.
     }
 
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch(item.getItemId()){
@@ -267,12 +255,10 @@ public class MatchListFragment extends ListFragment {
         }
     }
 
-
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
         getActivity().getMenuInflater().inflate(R.menu.match_list_item_context, menu);
     }
-
 
     @Override
     public boolean onContextItemSelected(MenuItem item){
