@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -31,6 +32,7 @@ public class PreMatchActivity extends AppCompatActivity {
     private EditText mMatchNumberField;
     private Button mStartScoutingButton;
     private TextView mErrorMessagepm;
+    private Spinner mMatchTypesSpinner;
 
     private MatchData mMatchData;
     private ActionBar t;
@@ -160,6 +162,12 @@ public class PreMatchActivity extends AppCompatActivity {
         mErrorMessagepm.setVisibility(View.INVISIBLE);
         mErrorMessagepm.setTextColor(Color.RED);
 
+        mMatchTypesSpinner = (Spinner) findViewById(R.id.match_types);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.match_types_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mMatchTypesSpinner.setAdapter(adapter);
+
 
     }
 
@@ -170,7 +178,7 @@ public class PreMatchActivity extends AppCompatActivity {
         mScout.saveData(getApplicationContext());
         mMatchData.setName(mScouterNameField.getText().toString());
         mMatchData.setCompetition(mCompetitionField.getText().toString());
-        mMatchData.setMatchNumber(mMatchNumberField.getText().toString().trim());
+        mMatchData.setMatchNumber(mMatchTypesSpinner.getSelectedItem().toString()+ " "+ mMatchNumberField.getText().toString().trim());
         mMatchData.setTeamNumber(mTeamNumberField.getText().toString());
     }
 

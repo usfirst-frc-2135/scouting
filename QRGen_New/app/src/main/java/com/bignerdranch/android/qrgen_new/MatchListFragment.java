@@ -75,15 +75,13 @@ public class MatchListFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
-        mMatchData = MatchHistory.get(getActivity()).getMatches();
+        mMatchData = MatchHistory.get(getActivity()).sortByTimestamp();
         MatchAdapter adapter = new MatchAdapter(mMatchData);
         View v1 = inflater.inflate(R.layout.match_list, parent, false);
         mListView = v1.findViewById(android.R.id.list);
         setListAdapter(adapter);
         mListView.setAdapter(adapter);
         registerForContextMenu(mListView);
-
-
 
         FloatingActionButton fab = (FloatingActionButton)v1.findViewById(R.id.fab);
         fab.setVisibility(View.INVISIBLE);
@@ -213,7 +211,7 @@ public class MatchListFragment extends ListFragment {
         }catch(Exception e){
             Log.d("SignInFragment", e.getMessage());
         }
-        SimpleDateFormat dt1 = new SimpleDateFormat("hh:mm:ss");
+        SimpleDateFormat dt1 = new SimpleDateFormat("MMM dd hh:mm:ss");
 
         if(date == null) {
             return null;

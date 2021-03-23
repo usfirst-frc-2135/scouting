@@ -66,12 +66,35 @@
             android:textSize="24dp"
             style="?android:listSeparatorTextViewStyle"/>
 
-        <EditText
-            android:id="@+id/match_number_field"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        </EditText>
+            <Spinner
+                android:id="@+id/match_types"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:text="Match type"
+                android:layout_weight="1">
+
+            </Spinner>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="10">
+                <EditText
+                    android:id="@+id/match_number_field"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </EditText>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/start_scouting_button"

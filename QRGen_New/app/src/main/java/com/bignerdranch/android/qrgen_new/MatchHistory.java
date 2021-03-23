@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
@@ -79,6 +80,70 @@ public class MatchHistory {
             Log.e(TAG, "Error saving data:", e);
             return false;
         }
+    }
+
+    public ArrayList sortByTimestamp(){
+        ArrayList sorted = new ArrayList<MatchData>();
+        boolean isAdded = false;
+        if(mMatchHistory.size()>0){
+            sorted.add(mMatchHistory.get(0));
+            for(int i = 1; i < mMatchHistory.size(); i++){
+                for(int j = 0; j <sorted.size(); j++){
+                    Date d1 = mMatchHistory.get(i).getTimestamp();
+                    Date d2 = ((MatchData)sorted.get(j)).getTimestamp();
+                    if(d1.before(d2)){
+                        sorted.add(j, mMatchHistory.get(i));
+                        j= sorted.size();
+                        isAdded = true;
+                    }
+                }
+                if(!isAdded){
+                    sorted.add(mMatchHistory.get(i));
+                }
+                isAdded = false;
+            }
+        }
+        return sorted;
+    }
+
+    public ArrayList filterByTeam(String t){
+        ArrayList sorted = new ArrayList<MatchData>();
+        for(MatchData m: mMatchHistory){
+            if(m.getTeamNumber().equals(t)){
+                sorted.add(m);
+            }
+        }
+        return sorted;
+    }
+
+    public ArrayList filterByCompetition(String c){
+        ArrayList sorted = new ArrayList<MatchData>();
+        for(MatchData m: mMatchHistory){
+            if(m.getCompetition().equals(c)){
+                sorted.add(m);
+            }
+        }
+        return sorted;
+    }
+
+    public ArrayList filterByScouter(String n){
+        ArrayList sorted = new ArrayList<MatchData>();
+        for(MatchData m: mMatchHistory){
+            if(m.getName().equals(n)){
+                sorted.add(m);
+            }
+        }
+        return sorted;
+    }
+
+    public ArrayList filterByMatchNumber(String mN){
+        ArrayList sorted = new ArrayList<MatchData>();
+        for(MatchData m: mMatchHistory){
+            if(m.getMatchNumber().equals(mN)){
+                sorted.add(m);
+            }
+        }
+        return sorted;
     }
 
 

@@ -26,20 +26,27 @@ public class MatchListActivity extends AppCompatActivity {
         Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
 
         if(fragment == null){
-            fragment = createFragment();
+            fragment = createMatchListFragment();
             fm.beginTransaction().add(R.id.fragmentContainer, fragment).commit();
         }
 
-
-
-
-
+        Fragment fragment2 = fm.findFragmentById(R.id.fragmentContainer1);
+        if(fragment2 == null){
+            fragment2 = createFilterFragment();
+            fm.beginTransaction().add(R.id.fragmentContainer1, fragment2).commit();
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    protected Fragment createFragment(){
+    protected Fragment createMatchListFragment(){
         setContentView(R.layout.match_list_activity);
         return new MatchListFragment();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    protected Fragment createFilterFragment(){
+        setContentView(R.layout.match_list_activity);
+        return new FilterFragment();
     }
 
 

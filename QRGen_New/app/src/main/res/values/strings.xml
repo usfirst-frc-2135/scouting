@@ -47,4 +47,11 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 
+    <string-array name="match_types_array">
+        <item>Q</item>
+        <item>QF</item>
+        <item>SF</item>
+        <item>F</item>
+    </string-array>
+
 </resources>
