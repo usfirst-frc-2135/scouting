@@ -14,7 +14,10 @@
            android:id="@+id/match_tag_display"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:textSize="24dp"></TextView>
+           android:textSize="24dp"
+           android:paddingTop="10dp"
+           android:paddingBottom="10dp">
+       </TextView>
 
 
 

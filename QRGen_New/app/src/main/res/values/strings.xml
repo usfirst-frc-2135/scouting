@@ -54,4 +54,15 @@
         <item>F</item>
     </string-array>
 
+    <string-array name="sort_array">
+        <item>Date</item>
+    </string-array>
+
+    <string-array name="filter_array">
+        <item>Team Number</item>
+        <item> Competition</item>
+        <item>Scout</item>
+        <item>Date</item>
+    </string-array>
+
 </resources>

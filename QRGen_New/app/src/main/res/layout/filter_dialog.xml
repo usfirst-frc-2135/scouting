@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/team_select"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+            </CheckBox>
+
+            <TextView
+                android:paddingTop="20dp"
+                android:id="@+id/filter_team"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Team"
+                android:textSize="20dp">
+            </TextView>
+
+            <Spinner
+                android:id="@+id/team_options"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+            </Spinner>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/competition_select"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+            </CheckBox>
+
+            <TextView
+                android:paddingTop="20dp"
+                android:id="@+id/filter_competition"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Competition"
+                android:textSize="20dp">
+            </TextView>
+
+            <Spinner
+                android:id="@+id/competition_options"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+            </Spinner>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/scout_select"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+            </CheckBox>
+
+            <TextView
+                android:paddingTop="20dp"
+                android:id="@+id/scout_competition"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Scout"
+                android:textSize="20dp">
+            </TextView>
+
+            <Spinner
+                android:id="@+id/scout_options"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+            </Spinner>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/match_select"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+            </CheckBox>
+
+            <TextView
+                android:paddingTop="10dp"
+                android:id="@+id/match_competition"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Specific Match"
+                android:textSize="20dp">
+            </TextView>
+
+            <EditText
+                android:id="@+id/match_entry"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+            </EditText>
+        </LinearLayout>
+
+
+
+
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

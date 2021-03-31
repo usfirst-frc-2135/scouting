@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,10 +41,14 @@ import java.util.UUID;
 public class MatchListFragment extends ListFragment {
 
     private static final String TAG = "MatchListFragment";
+    private static int REQUEST_FILTER = 300;
     private ArrayList<MatchData> mMatchData;
     private boolean isSubtitleShown;
     private ListView mListView;
     private Button mAddMatchButton;
+    private Spinner mSortSpinner;
+    private Button mFilter;
+    private ArrayList<MatchData> displayedMatches;
     //private Scouter mScout;
     //private String scoutName;
     //private String scoutDate;
@@ -71,12 +76,33 @@ public class MatchListFragment extends ListFragment {
 
         Log.i(TAG, getContext().getFilesDir()+"");
 
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
-        mMatchData = MatchHistory.get(getActivity()).sortByTimestamp();
-        MatchAdapter adapter = new MatchAdapter(mMatchData);
+        displayedMatches = MatchHistory.get(getActivity()).sortByTimestamp(MatchHistory.get(getContext()).getMatches());
+        MatchAdapter adapter;
+        Intent i = getActivity().getIntent();
+        if(i.hasExtra("team")){
+            adapter = new MatchAdapter(MatchHistory.get(getContext()).filterByTeam(displayedMatches, i.getStringExtra("team")));
+            displayedMatches = MatchHistory.get(getContext()).filterByTeam(displayedMatches, i.getStringExtra("team"));
+        }if(i.hasExtra("competition")){
+            adapter = new MatchAdapter(MatchHistory.get(getContext()).filterByCompetition(displayedMatches, i.getStringExtra("competition")));
+            displayedMatches = MatchHistory.get(getContext()).filterByTeam(displayedMatches, i.getStringExtra("competition"));
+        }if(i.hasExtra("scout")){
+            adapter = new MatchAdapter(MatchHistory.get(getContext()).filterByScout(displayedMatches, i.getStringExtra("scout")));
+            displayedMatches = MatchHistory.get(getContext()).filterByTeam(displayedMatches, i.getStringExtra("scout"));
+        }if(i.hasExtra("match")){
+            adapter = new MatchAdapter(MatchHistory.get(getContext()).filterByMatchNumber(displayedMatches, i.getStringExtra("match")));
+            displayedMatches = MatchHistory.get(getContext()).filterByTeam(displayedMatches, i.getStringExtra("match"));
+        }else{
+            displayedMatches = MatchHistory.get(getContext()).sortByTimestamp(getDisplayedMatches());
+            adapter = new MatchAdapter(displayedMatches);
+        }
+
+        //MatchAdapter adapter = new MatchAdapter(mMatchData);
         View v1 = inflater.inflate(R.layout.match_list, parent, false);
         mListView = v1.findViewById(android.R.id.list);
         setListAdapter(adapter);
@@ -100,8 +126,23 @@ public class MatchListFragment extends ListFragment {
             });
         }
 
+        mSortSpinner = (Spinner)v1.findViewById(R.id.sort_options);
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this.getContext(),
+                R.array.sort_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSortSpinner.setAdapter(adapter1);
 
 
+        mFilter = (Button) v1.findViewById(R.id.filter_text);
+        mFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                FilterDialog dialog = FilterDialog.newInstance();
+                dialog.setTargetFragment(MatchListFragment.this, REQUEST_FILTER);
+                dialog.show(fm, "filter_dialog");
+            }
+        });
 
         mAddMatchButton = (Button)v1.findViewById(R.id.empty_button);
         mAddMatchButton.setOnClickListener(new View.OnClickListener() {
@@ -287,6 +328,10 @@ public class MatchListFragment extends ListFragment {
                 return true;
         }
         return super.onContextItemSelected(item);
+    }
+
+    public ArrayList getDisplayedMatches(){
+        return displayedMatches;
     }
 
 
