@@ -49,17 +49,12 @@ public class MatchListFragment extends ListFragment {
     private Spinner mSortSpinner;
     private Button mFilter;
     private ArrayList<MatchData> displayedMatches;
-    //private Scouter mScout;
-    //private String scoutName;
-    //private String scoutDate;
-
 
     private static final int REQUEST_SIGNIN = 1;
     public static final String SITAG = "sign/in";
 
     private static final int REQUEST_QR = 2;
     public static final String QRTAG = "qr";
-
 
     @Override
     public void onCreate( Bundle savedInstanceState){
@@ -83,7 +78,7 @@ public class MatchListFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
         displayedMatches = MatchHistory.get(getActivity()).sortByTimestamp(MatchHistory.get(getContext()).getMatches());
-        MatchAdapter adapter;
+        MatchAdapter adapter = new MatchAdapter(displayedMatches);
         Intent i = getActivity().getIntent();
         if(i.hasExtra("team")){
             adapter = new MatchAdapter(MatchHistory.get(getContext()).filterByTeam(displayedMatches, i.getStringExtra("team")));
@@ -118,12 +113,6 @@ public class MatchListFragment extends ListFragment {
             for(MatchData x: displayedMatches){
                 Log.d(TAG, x.getTimestamp().toString());
             }
-        } else{
-            displayedMatches = MatchHistory.get(getContext()).sortByTimestamp(getDisplayedMatches());
-            adapter = new MatchAdapter(displayedMatches);
-            for(MatchData x: displayedMatches){
-                Log.d(TAG, x.getTimestamp().toString());
-            }
         }
 
         View v1 = inflater.inflate(R.layout.match_list, parent, false);
@@ -140,8 +129,11 @@ public class MatchListFragment extends ListFragment {
                 //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
                 @Override
                 public void onClick(View view) {
+                    MatchAdapter adapter = ((MatchAdapter)getListAdapter());
                     MatchData m = new MatchData(getContext());
                     MatchHistory.get(getContext()).addMatch(m);
+                    displayedMatches.add(m);
+                    adapter.notifyDataSetChanged();
                     Intent i = new Intent(getActivity(), PreMatchActivity.class);
                     i.putExtra("match_ID", m.getMatchID());
                     startActivityForResult(i, 0);
@@ -171,8 +163,11 @@ public class MatchListFragment extends ListFragment {
         mAddMatchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MatchAdapter adapter = ((MatchAdapter)getListAdapter());
                 MatchData m = new MatchData(getContext());
                 MatchHistory.get(getContext()).addMatch(m);
+                displayedMatches.add(m);
+                adapter.notifyDataSetChanged();
                 Intent i = new Intent(getActivity(), PreMatchActivity.class);
                 i.putExtra("match_ID", m.getMatchID());
                 startActivityForResult(i, 0);
@@ -286,7 +281,7 @@ public class MatchListFragment extends ListFragment {
     @Override
     public void onResume(){
         super.onResume();
-        ((MatchAdapter)getListAdapter()).notifyDataSetChanged();
+        Log.d(TAG, "onResume() called");
     }
 
     @Override
@@ -295,7 +290,6 @@ public class MatchListFragment extends ListFragment {
         super.onPause();
         MatchHistory.get(getActivity()).saveData();
     }
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
@@ -333,19 +327,18 @@ public class MatchListFragment extends ListFragment {
             case R.id.menu_item_delete_match:
                 Log.d(TAG, "Delete match button clicked");
                 displayedMatches.remove(m);
-                MatchHistory.get(getActivity()).deleteMatch(MatchHistory.get(getContext()).getMatch(m.getMatchID()));
+                MatchHistory.get(getActivity()).deleteMatch(m);
                 adapter.notifyDataSetChanged();
-                //MatchHistory.get(getContext()).saveData();
                 return true;
             case R.id.edit_match_button:
                 Log.d(TAG, "Edit match button clicked");
-
 
                 adapter = (MatchAdapter)getListAdapter();
                 MatchHistory matchHistory = MatchHistory.get(getActivity());
 
                 Intent data = new Intent(getActivity(), PreMatchActivity.class);
                 data.putExtra("match_ID", m.getMatchID());
+                getListView().clearFocus();
 
                 startActivity(data);
                 //Makes data editable once more
@@ -354,9 +347,7 @@ public class MatchListFragment extends ListFragment {
         return super.onContextItemSelected(item);
     }
 
-    public ArrayList getDisplayedMatches(){
-        return displayedMatches;
-    }
+
 
 
 

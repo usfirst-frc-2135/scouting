@@ -132,7 +132,9 @@ public class PreMatchActivity extends AppCompatActivity {
 
 
         mMatchNumberField = (EditText)findViewById(R.id.match_number_field);
-        mMatchNumberField.setText(mMatchData.getMatchNumber());
+        if(!formattedMN().equals("")){
+            mMatchNumberField.setText(formattedMN());
+        }
         mMatchNumberField.addTextChangedListener(new TextWatcher(){
             public void onTextChanged(CharSequence c, int start, int before, int count){
 
@@ -201,6 +203,29 @@ public class PreMatchActivity extends AppCompatActivity {
         }
         mErrorMessagepm.setVisibility(View.INVISIBLE);
         return true;
+    }
+
+    public String formattedMN(){
+        String full = mMatchData.getMatchNumber();
+        String formatted = "";
+        if(full.length()<2){
+            return "";
+        }
+        else{
+            if(full.substring(1,2).equals("F")){
+                formatted = full.substring(2);
+            }
+            else{
+                formatted = full.substring(1);
+            }
+        }
+
+        return formatted;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
 
