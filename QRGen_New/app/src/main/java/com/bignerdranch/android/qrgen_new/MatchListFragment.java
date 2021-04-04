@@ -88,18 +88,42 @@ public class MatchListFragment extends ListFragment {
         if(i.hasExtra("team")){
             adapter = new MatchAdapter(MatchHistory.get(getContext()).filterByTeam(displayedMatches, i.getStringExtra("team")));
             displayedMatches = MatchHistory.get(getContext()).filterByTeam(displayedMatches, i.getStringExtra("team"));
+            Log.d(TAG, "Filtered by team");
+            Log.d(TAG, displayedMatches.size()+"");
+
+
         }if(i.hasExtra("competition")){
+            Log.d(TAG, displayedMatches.size()+"");
+            for(MatchData x: displayedMatches){
+                Log.d(TAG, x.getCompetition().toString());
+            }
+            Log.d(TAG,"*****"+ i.getStringExtra("competition")+"******");
             adapter = new MatchAdapter(MatchHistory.get(getContext()).filterByCompetition(displayedMatches, i.getStringExtra("competition")));
-            displayedMatches = MatchHistory.get(getContext()).filterByTeam(displayedMatches, i.getStringExtra("competition"));
+            displayedMatches = MatchHistory.get(getContext()).filterByCompetition(displayedMatches, i.getStringExtra("competition"));
+            Log.d(TAG, "Filtered by competition");
+            for(MatchData x: displayedMatches){
+                Log.d(TAG, x.getTimestamp().toString());
+            }
         }if(i.hasExtra("scout")){
             adapter = new MatchAdapter(MatchHistory.get(getContext()).filterByScout(displayedMatches, i.getStringExtra("scout")));
-            displayedMatches = MatchHistory.get(getContext()).filterByTeam(displayedMatches, i.getStringExtra("scout"));
+            displayedMatches = MatchHistory.get(getContext()).filterByScout(displayedMatches, i.getStringExtra("scout"));
+            Log.d(TAG, "Filtered by scout");
+            for(MatchData x: displayedMatches){
+                Log.d(TAG, x.getTimestamp().toString());
+            }
         }if(i.hasExtra("match")){
             adapter = new MatchAdapter(MatchHistory.get(getContext()).filterByMatchNumber(displayedMatches, i.getStringExtra("match")));
-            displayedMatches = MatchHistory.get(getContext()).filterByTeam(displayedMatches, i.getStringExtra("match"));
+            displayedMatches = MatchHistory.get(getContext()).filterByScout(displayedMatches, i.getStringExtra("match"));
+            Log.d(TAG, "Filtered by match");
+            for(MatchData x: displayedMatches){
+                Log.d(TAG, x.getTimestamp().toString());
+            }
         }else{
             displayedMatches = MatchHistory.get(getContext()).sortByTimestamp(getDisplayedMatches());
             adapter = new MatchAdapter(displayedMatches);
+            for(MatchData x: displayedMatches){
+                Log.d(TAG, x.getTimestamp().toString());
+            }
         }
 
         //MatchAdapter adapter = new MatchAdapter(mMatchData);

@@ -38,7 +38,7 @@ public class FilterDialog extends DialogFragment {
     private Bundle b;
 
     public Dialog onCreateDialog(Bundle SavedInstanceState){
-        b = SavedInstanceState;
+        setCancelable(false);
 
         Log.i(TAG, "onCreateDialog called");
 
@@ -134,13 +134,19 @@ public class FilterDialog extends DialogFragment {
         Log.i(TAG, "sendResult() called");
         Intent i = new Intent(getActivity(), MatchListActivity.class);
         if(filterTeam){
+            Log.d(TAG, mTeamSpinner.getSelectedItem().toString());
             i.putExtra("team", mTeamSpinner.getSelectedItem().toString());
-        }else if(filterScout){
+            Log.d(TAG, "I want to filter by team");
+        }if(filterScout){
             i.putExtra("scout", mScoutSpinner.getSelectedItem().toString());
-        }else if(filterCompetition){
+            Log.d(TAG, "I want to filter by scout");
+        }if(filterCompetition){
+            Log.d(TAG, mCompetitionSpinner.getSelectedItem().toString());
             i.putExtra("competition", mCompetitionSpinner.getSelectedItem().toString());
-        }else if(filterMatch){
+            Log.d(TAG, "I want to filter by competition");
+        }if(filterMatch){
             i.putExtra("match", mMatchEditText.getText().toString());
+            Log.d(TAG, "I want to filter by match");
         }
         startActivity(i);
     }
