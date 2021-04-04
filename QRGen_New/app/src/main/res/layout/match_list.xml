@@ -11,7 +11,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="#FFC107">
 
         <TextView
             android:paddingTop="15dp"
@@ -33,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="8"
-            android:background="@color/colorAccent">
+            android:background="#FFC107">
 
         </Space>
 
@@ -41,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@android:drawable/ic_menu_search"
-            android:background="@color/colorAccent">
+            android:background="#FFC107">
         </ImageView>
 
         <Button
@@ -51,7 +52,7 @@
             android:text="Filter List"
             android:textSize="20dp"
             android:layout_weight="1"
-            android:background="@color/colorAccent"
+            android:background="#FFC107"
             >
         </Button>
 
@@ -120,7 +121,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_input_add" />
+
+        app:srcCompat="@drawable/add_icon_blue" />
 
 
 
