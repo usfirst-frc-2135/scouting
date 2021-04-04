@@ -90,10 +90,8 @@ public class MatchListFragment extends ListFragment {
             displayedMatches = MatchHistory.get(getContext()).filterByTeam(displayedMatches, i.getStringExtra("team"));
             Log.d(TAG, "Filtered by team");
             Log.d(TAG, displayedMatches.size()+"");
-
-
-        }if(i.hasExtra("competition")){
-            Log.d(TAG, displayedMatches.size()+"");
+        }
+        if(i.hasExtra("competition")){
             for(MatchData x: displayedMatches){
                 Log.d(TAG, x.getCompetition().toString());
             }
@@ -104,21 +102,23 @@ public class MatchListFragment extends ListFragment {
             for(MatchData x: displayedMatches){
                 Log.d(TAG, x.getTimestamp().toString());
             }
-        }if(i.hasExtra("scout")){
+        }
+        if(i.hasExtra("scout")){
             adapter = new MatchAdapter(MatchHistory.get(getContext()).filterByScout(displayedMatches, i.getStringExtra("scout")));
             displayedMatches = MatchHistory.get(getContext()).filterByScout(displayedMatches, i.getStringExtra("scout"));
             Log.d(TAG, "Filtered by scout");
             for(MatchData x: displayedMatches){
                 Log.d(TAG, x.getTimestamp().toString());
             }
-        }if(i.hasExtra("match")){
+        }
+        if(i.hasExtra("match")){
             adapter = new MatchAdapter(MatchHistory.get(getContext()).filterByMatchNumber(displayedMatches, i.getStringExtra("match")));
-            displayedMatches = MatchHistory.get(getContext()).filterByScout(displayedMatches, i.getStringExtra("match"));
+            displayedMatches = MatchHistory.get(getContext()).filterByMatchNumber(displayedMatches, i.getStringExtra("match"));
             Log.d(TAG, "Filtered by match");
             for(MatchData x: displayedMatches){
                 Log.d(TAG, x.getTimestamp().toString());
             }
-        }else{
+        } else{
             displayedMatches = MatchHistory.get(getContext()).sortByTimestamp(getDisplayedMatches());
             adapter = new MatchAdapter(displayedMatches);
             for(MatchData x: displayedMatches){
@@ -126,7 +126,6 @@ public class MatchListFragment extends ListFragment {
             }
         }
 
-        //MatchAdapter adapter = new MatchAdapter(mMatchData);
         View v1 = inflater.inflate(R.layout.match_list, parent, false);
         mListView = v1.findViewById(android.R.id.list);
         setListAdapter(adapter);
@@ -333,7 +332,8 @@ public class MatchListFragment extends ListFragment {
         switch(item.getItemId()){
             case R.id.menu_item_delete_match:
                 Log.d(TAG, "Delete match button clicked");
-                MatchHistory.get(getActivity()).deleteMatch(m);
+                displayedMatches.remove(m);
+                MatchHistory.get(getActivity()).deleteMatch(MatchHistory.get(getContext()).getMatch(m.getMatchID()));
                 adapter.notifyDataSetChanged();
                 //MatchHistory.get(getContext()).saveData();
                 return true;

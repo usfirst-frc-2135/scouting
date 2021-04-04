@@ -67,6 +67,8 @@ public class PreMatchActivity extends AppCompatActivity {
             }
             public void afterTextChanged(Editable c){
                 checkValidData();
+                mMatchData.setCompetition(mCompetitionField.getText().toString());
+
             }
 
         });
@@ -93,7 +95,9 @@ public class PreMatchActivity extends AppCompatActivity {
             public void beforeTextChanged(CharSequence c, int start, int count, int after){
             }
             public void afterTextChanged(Editable c){
+                //updatePreMatchData();
                 checkValidData();
+                mMatchData.setName(mScouterNameField.getText().toString());
             }
 
         });

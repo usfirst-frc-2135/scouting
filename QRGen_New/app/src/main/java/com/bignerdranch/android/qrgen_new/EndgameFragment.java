@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -61,6 +62,12 @@ public class EndgameFragment extends Fragment {
         mCheckBox = (CheckBox)v.findViewById(R.id.climb_checkbox);
         Log.d(TAG, mMatchData.getClimb()+"");
         mCheckBox.setChecked(mMatchData.getClimb());// Default is unchecked
+        mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                updateEndgameData();
+            }
+        });
 
         mRadioGroup = (RadioGroup)v.findViewById(R.id.defense_scale);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
         mRadioButton0 = (RadioButton)v.findViewById(R.id.level_zero);//Sets up radio button that corresponds to 0
@@ -130,7 +137,6 @@ public class EndgameFragment extends Fragment {
             public void onClick(View view) {
                 //Uses intents to start the QR code dialog
                 Snackbar.make(view, "Generating QR code", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-
                 Log.d("ScoutingActivity", "Sent intent");
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 QRFragment dialog = QRFragment.newInstance(mMatchData);
@@ -147,8 +153,6 @@ public class EndgameFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-
-
                 Intent i = new Intent(getActivity(), MatchListActivity.class);
                 startActivityForResult(i, 0);
                 getActivity().finish();

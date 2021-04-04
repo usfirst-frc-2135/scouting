@@ -60,7 +60,7 @@ public class MatchData {
 
         Log.d(TAG, "Matches being created using json data");
 
-        stats = new Object[12];
+        stats = new Object[13];
         setAutonOuterPoints(json.getInt("auton outer points"));
         setAutonLowPoints(json.getInt("auton low points"));
         setPassedInitLine(json.getBoolean("init_line"));
@@ -79,20 +79,20 @@ public class MatchData {
         date = json.getString("scouting date");
 
         stats[0] = name;
-        stats[1] = date;
+        stats[1] = competition;
+        stats[12] = timestamp;
     }
 
     public void setName(String n){
         name = n.substring(0,1).toUpperCase()+n.substring(1).toLowerCase();
+        stats[0] = name;
     }
 
     public void setCompetition(String c){
         competition = c.toUpperCase();
+        stats[1] = competition;
     }
 
-    public void setDate(String d){
-        date = d;
-    }
 
     //Sets LowPoints to given number
     public void setAutonLowPoints(int x){
@@ -229,6 +229,7 @@ public class MatchData {
     }
     public void setTimestamp(Date d){
         timestamp = d;
+        stats[12] = timestamp;
     }
 
     public Date getTimestamp() {

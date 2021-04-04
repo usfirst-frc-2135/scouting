@@ -60,8 +60,6 @@ public class QRFragment extends DialogFragment {
         QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(message, null,
                 Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), qrCodeDimension);
 
-        Log.i(TAG, message);
-
         try {
             Bitmap bitmap = qrCodeEncoder.encodeAsBitmap();
             mImageView.setImageBitmap(bitmap);
