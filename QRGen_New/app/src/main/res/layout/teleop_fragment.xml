@@ -35,21 +35,31 @@
                     android:id="@+id/highportpointsdec"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/decrease">
+                    android:text="@string/decrease"
+                    android:textSize="30dp"
+                    android:layout_weight="1"
+                    android:textColor="#3F51B5"
+                    android:background="#FFC107">
                 </Button>
 
                 <TextView
                     android:id="@+id/highportpoints"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textSize="25dp">
+                    android:textSize="25dp"
+                    android:layout_weight="3"
+                    android:textAlignment="center">
                 </TextView>
 
                 <Button
                     android:id="@+id/highportpointsinc"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/increase">
+                    android:text="@string/increase"
+                    android:textSize="30dp"
+                    android:layout_weight="1"
+                    android:textColor="#3F51B5"
+                    android:background="#FFC107">
                 </Button>
             </LinearLayout>
             <TextView
@@ -69,21 +79,31 @@
                     android:id="@+id/lowportpointsdec"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/decrease">
+                    android:text="@string/decrease"
+                    android:textSize="30dp"
+                    android:layout_weight="1"
+                    android:textColor="#3F51B5"
+                    android:background="#FFC107">
                 </Button>
 
                 <TextView
                     android:id="@+id/lowportpoints"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textSize="25dp">
+                    android:textSize="25dp"
+                    android:layout_weight="3"
+                    android:textAlignment="center">
                 </TextView>
 
                 <Button
                     android:id="@+id/lowportpointsinc"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/increase">
+                    android:text="@string/increase"
+                    android:textSize="30dp"
+                    android:layout_weight="1"
+                    android:textColor="#3F51B5"
+                    android:background="#FFC107">
                 </Button>
             </LinearLayout>
 
