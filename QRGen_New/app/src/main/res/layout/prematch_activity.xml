@@ -100,7 +100,9 @@
             android:id="@+id/start_scouting_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Start Scouting">
+            android:text="Start Scouting"
+            android:textColor="#3F51B5"
+            android:background="#FFC107">
 
         </Button>
 

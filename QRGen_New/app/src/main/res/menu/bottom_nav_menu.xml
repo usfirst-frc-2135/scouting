@@ -8,12 +8,12 @@
 
     <item
         android:id="@+id/navigation_teleop"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/ic_home_black_24dp"
         android:title="Teleop" />
 
     <item
         android:id="@+id/navigation_endgame"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_notifications_black_24dp"
         android:title="Endgame" />
 
 </menu>

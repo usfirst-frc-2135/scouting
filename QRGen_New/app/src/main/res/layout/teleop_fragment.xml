@@ -39,7 +39,8 @@
                     android:textSize="30dp"
                     android:layout_weight="1"
                     android:textColor="#3F51B5"
-                    android:background="#FFC107">
+                    android:background="#FFC107"
+                    android:layout_marginLeft="30dp">
                 </Button>
 
                 <TextView
@@ -59,7 +60,8 @@
                     android:textSize="30dp"
                     android:layout_weight="1"
                     android:textColor="#3F51B5"
-                    android:background="#FFC107">
+                    android:background="#FFC107"
+                    android:layout_marginRight="30dp">
                 </Button>
             </LinearLayout>
             <TextView
@@ -83,7 +85,8 @@
                     android:textSize="30dp"
                     android:layout_weight="1"
                     android:textColor="#3F51B5"
-                    android:background="#FFC107">
+                    android:background="#FFC107"
+                    android:layout_marginLeft="30dp">
                 </Button>
 
                 <TextView
@@ -103,7 +106,8 @@
                     android:textSize="30dp"
                     android:layout_weight="1"
                     android:textColor="#3F51B5"
-                    android:background="#FFC107">
+                    android:background="#FFC107"
+                    android:layout_marginRight="30dp">
                 </Button>
             </LinearLayout>
 

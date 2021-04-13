@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="-44dp"
+        tools:layout_editor_absoluteY="46dp">
+
         <TextView
             android:id="@+id/climb_title"
+            style="?android:listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/climb_title"
-            android:textSize="18dp"
-            style="?android:listSeparatorTextViewStyle"/>
+            android:textSize="18dp" />
 
         <CheckBox
             android:id="@+id/climb_checkbox"
@@ -22,26 +27,25 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:text="@string/climb_checkbox"
-            android:textSize="18dp"
-            />
+            android:textSize="18dp" />
 
         <TextView
-            android:paddingTop="50dp"
             android:id="@+id/other_title"
+            style="?android:listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="50dp"
             android:text="@string/other"
-            android:textSize="24dp"
-            style="?android:listSeparatorTextViewStyle" />
+            android:textSize="24dp" />
 
 
         <TextView
             android:id="@+id/defenseTitle"
+            style="?android:listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/defense"
-            android:textSize="18dp"
-            style="?android:listSeparatorTextViewStyle"/>
+            android:textSize="18dp" />
 
         <RadioGroup
             android:id="@+id/defense_scale"
@@ -49,60 +53,72 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <RadioButton android:id="@+id/level_zero"
+            <RadioButton
+                android:id="@+id/level_zero"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/level_zero"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:text="@string/level_zero" />
 
-            <RadioButton android:id="@+id/level_one"
+            <RadioButton
+                android:id="@+id/level_one"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/level_one"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:text="@string/level_one" />
 
-            <RadioButton android:id="@+id/level_two"
+            <RadioButton
+                android:id="@+id/level_two"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/level_two"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:text="@string/level_two" />
 
-            <RadioButton android:id="@+id/level_three"
+            <RadioButton
+                android:id="@+id/level_three"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/level_three"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:text="@string/level_three" />
 
-            <RadioButton android:id="@+id/level_four"
+            <RadioButton
+                android:id="@+id/level_four"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/level_four"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:text="@string/level_four" />
 
-            <RadioButton android:id="@+id/level_five"
+            <RadioButton
+                android:id="@+id/level_five"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/level_five"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:text="@string/level_five" />
         </RadioGroup>
 
         <TextView
             android:id="@+id/comments_title"
+            style="?android:listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/comments"
-            android:textSize="18dp"
-            style="?android:listSeparatorTextViewStyle"/>
+            android:textSize="18dp" />
 
         <EditText
             android:id="@+id/comments"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16dp">
-        </EditText>
+            android:textSize="16dp"></EditText>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            >
+>
+
+        </Space>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -110,17 +126,26 @@
                 android:id="@+id/gen_QR"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="#FFC107"
                 android:text="Generate QR code"
-                android:layout_weight="1">
-            </Button>
+                android:textColor="#3F51B5"
+                android:layout_marginLeft="30dp"></Button>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="10"></Space>
 
             <Button
                 android:id="@+id/nav_to_menu_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#FFC107"
                 android:text="Continue to match list"
-                android:layout_weight="1">
-            </Button>
+                android:textColor="#3F51B5"
+                android:layout_marginRight="30dp"></Button>
 
 
         </LinearLayout>
