@@ -154,11 +154,10 @@ public class EndgameFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), MatchListActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivityForResult(i, 0);
                 getActivity().finish();
                 Log.d("TeleopFragment", "Sent intent");
-
-
             }
         });
 
