@@ -77,7 +77,7 @@ public class MatchListFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
-        displayedMatches = MatchHistory.get(getActivity()).sortByTimestamp(MatchHistory.get(getContext()).getMatches());
+        displayedMatches = MatchHistory.get(getActivity()).sortByTimestamp2(MatchHistory.get(getContext()).getMatches());
         MatchAdapter adapter = new MatchAdapter(displayedMatches);
         Intent i = getActivity().getIntent();
         if(i.hasExtra("team")){

@@ -123,7 +123,7 @@ public class PreMatchActivity extends AppCompatActivity {
             public void beforeTextChanged(CharSequence c, int start, int count, int after){
             }
             public void afterTextChanged(Editable c){
-                t.setSubtitle(c + "  " + mMatchNumberField.getText().toString());
+                t.setSubtitle(c + "  " + mTeamNumberField.getText().toString());
                 checkValidData();
 
             }
@@ -142,7 +142,7 @@ public class PreMatchActivity extends AppCompatActivity {
             public void beforeTextChanged(CharSequence c, int start, int count, int after){
             }
             public void afterTextChanged(Editable c){
-                t.setSubtitle( mTeamNumberField.getText().toString()+ " " + c);
+                t.setSubtitle( mMatchNumberField.getText().toString()+ " " + c);
                 checkValidData();
             }
 
@@ -184,7 +184,7 @@ public class PreMatchActivity extends AppCompatActivity {
         mScout.saveData(getApplicationContext());
         mMatchData.setName(mScouterNameField.getText().toString());
         mMatchData.setCompetition(mCompetitionField.getText().toString());
-        mMatchData.setMatchNumber(mMatchTypesSpinner.getSelectedItem().toString()+ " "+ mMatchNumberField.getText().toString().trim());
+        mMatchData.setMatchNumber(mMatchTypesSpinner.getSelectedItem().toString()+ mMatchNumberField.getText().toString().trim());
         mMatchData.setTeamNumber(mTeamNumberField.getText().toString());
     }
 

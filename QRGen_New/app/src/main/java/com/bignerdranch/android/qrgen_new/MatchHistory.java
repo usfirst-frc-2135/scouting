@@ -82,7 +82,7 @@ public class MatchHistory {
         }
     }
 
-    public ArrayList sortByTimestamp(ArrayList<MatchData> l){
+    public ArrayList sortByTimestamp1(ArrayList<MatchData> l){
         ArrayList sorted = new ArrayList<MatchData>();
         boolean isAdded = false;
         if(l.size()>0){
@@ -102,6 +102,16 @@ public class MatchHistory {
                 }
                 isAdded = false;
             }
+        }
+        return sorted;
+    }
+
+    public ArrayList sortByTimestamp2(ArrayList<MatchData> l){
+        ArrayList sorted = new ArrayList<MatchData>();
+        ArrayList temp = new ArrayList<MatchData>();
+        temp = sortByTimestamp1(l);
+        for(Object m : temp){
+            sorted.add(0, ((MatchData)m));
         }
         return sorted;
     }
