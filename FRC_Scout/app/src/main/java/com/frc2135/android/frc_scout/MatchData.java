@@ -23,7 +23,6 @@ public class MatchData {
     private boolean passedInitLine;
     private String extComments;
     private String name;
-    private String date;
     private String teamNumber;
     private String matchNumber;
     private boolean climbed;
@@ -44,12 +43,11 @@ public class MatchData {
         setExtComments("");
         setDefense(0);
         name = "";
-        date = "";
         teamNumber = "";
         matchNumber = "";
         matchID = UUID.randomUUID()+"";
         competition = "";
-        timestamp = Calendar.getInstance().getTime();
+        setTimestamp(Calendar.getInstance().getTime());
 
     }
 
@@ -73,7 +71,6 @@ public class MatchData {
 
         name = json.getString("scouter name");
         competition = json.getString("competition");
-        date = json.getString("scouting date");
 
         stats[0] = name;
         stats[1] = competition;
@@ -248,7 +245,6 @@ public class MatchData {
         json.put("divider", ",");
         json.put("scouter name", name);
         json.put("divider", ",");
-        json.put("scouting date", date);
         json.put("divider", ", \n");
 
 
