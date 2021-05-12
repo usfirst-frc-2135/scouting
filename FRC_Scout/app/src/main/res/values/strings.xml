@@ -55,7 +55,8 @@
     </string-array>
 
     <string-array name="sort_array">
-        <item>Date</item>
+        <item>Newest</item>
+        <item>Oldest</item>
     </string-array>
 
     <string-array name="filter_array">

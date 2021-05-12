@@ -42,6 +42,7 @@ public class MatchListFragment extends ListFragment {
     private Spinner mSortSpinner;
     private Button mFilter;
     private ArrayList<MatchData> displayedMatches;
+    private MatchAdapter adapter;
 
     private static final int REQUEST_SIGNIN = 1;
     public static final String SITAG = "sign/in";
@@ -71,7 +72,7 @@ public class MatchListFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
         displayedMatches = MatchHistory.get(getActivity()).sortByTimestamp2(MatchHistory.get(getContext()).getMatches());
-        MatchAdapter adapter = new MatchAdapter(displayedMatches);
+        adapter = new MatchAdapter(displayedMatches);
         Intent i = getActivity().getIntent();
         if(i.hasExtra("team")){
             adapter = new MatchAdapter(MatchHistory.get(getContext()).filterByTeam(displayedMatches, i.getStringExtra("team")));
@@ -80,16 +81,9 @@ public class MatchListFragment extends ListFragment {
             Log.d(TAG, displayedMatches.size()+"");
         }
         if(i.hasExtra("competition")){
-            for(MatchData x: displayedMatches){
-                Log.d(TAG, x.getCompetition().toString());
-            }
-            Log.d(TAG,"*****"+ i.getStringExtra("competition")+"******");
             adapter = new MatchAdapter(MatchHistory.get(getContext()).filterByCompetition(displayedMatches, i.getStringExtra("competition")));
             displayedMatches = MatchHistory.get(getContext()).filterByCompetition(displayedMatches, i.getStringExtra("competition"));
             Log.d(TAG, "Filtered by competition");
-            for(MatchData x: displayedMatches){
-                Log.d(TAG, x.getTimestamp().toString());
-            }
         }
         if(i.hasExtra("scout")){
             adapter = new MatchAdapter(MatchHistory.get(getContext()).filterByScout(displayedMatches, i.getStringExtra("scout")));
@@ -122,7 +116,6 @@ public class MatchListFragment extends ListFragment {
                 //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
                 @Override
                 public void onClick(View view) {
-                    MatchAdapter adapter = ((MatchAdapter)getListAdapter());
                     MatchData m = new MatchData(getContext());
                     MatchHistory.get(getContext()).addMatch(m);
                     displayedMatches.add(m);
@@ -137,9 +130,33 @@ public class MatchListFragment extends ListFragment {
         mSortSpinner = (Spinner)v1.findViewById(R.id.sort_options);
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this.getContext(),
                 R.array.sort_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSortSpinner.setAdapter(adapter1);
+        mSortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(parent.getItemAtPosition(position).toString().equals("Newest")){
+                    ArrayList temp = MatchHistory.get(getContext()).sortByTimestamp2(displayedMatches);
+                    displayedMatches.clear();
+                    for(Object m: temp){
+                        displayedMatches.add((MatchData)m);
+                    }
+                }
+                if(parent.getItemAtPosition(position).toString().equals("Oldest")){
+                    ArrayList temp = MatchHistory.get(getContext()).sortByTimestamp1(displayedMatches);
+                    displayedMatches.clear();
+                    for(Object m: temp){
+                        displayedMatches.add((MatchData)m);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         mFilter = (Button) v1.findViewById(R.id.filter_text);
         mFilter.setOnClickListener(new View.OnClickListener() {
@@ -156,7 +173,6 @@ public class MatchListFragment extends ListFragment {
         mAddMatchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MatchAdapter adapter = ((MatchAdapter)getListAdapter());
                 MatchData m = new MatchData(getContext());
                 MatchHistory.get(getContext()).addMatch(m);
                 displayedMatches.add(m);
@@ -313,7 +329,6 @@ public class MatchListFragment extends ListFragment {
     public boolean onContextItemSelected(MenuItem item){
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
         int position = info.position;
-        MatchAdapter adapter = ((MatchAdapter)getListAdapter());
         MatchData m = adapter.getItem(position);
 
         switch(item.getItemId()){
