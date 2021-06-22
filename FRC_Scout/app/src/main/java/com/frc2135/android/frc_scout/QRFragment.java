@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,12 +56,17 @@ public class QRFragment extends DialogFragment {
             Log.d("QRFragment", e+"");
         }
 
-
-        return new AlertDialog.Builder(getActivity()).setView(v).setTitle(heading).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+        AlertDialog dialog = new AlertDialog.Builder(getActivity()).setView(v).setTitle(heading).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialog, int which){
                 //sendResult(Activity.RESULT_OK);
             }
         }).create();
+
+        dialog.show();
+        Button b = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        b.setBackgroundColor(Color.parseColor("#3F51B5"));
+
+        return dialog;
     }
 
 
@@ -69,7 +75,7 @@ public class QRFragment extends DialogFragment {
         QRFragment fragment = new QRFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putString("dialog heading", mMatchData.getCompetition()+"-"+mMatchData.getTeamNumber()+"-"+mMatchData.getMatchNumber()+ "-" + formattedDate(mMatchData.getTimestamp()));
+        bundle.putString("dialog heading", mMatchData.getCompetition()+"-"+mMatchData.getMatchNumber()+"-"+mMatchData.getTeamNumber()+"-" + formattedDate(mMatchData.getTimestamp()));
         bundle.putString("stats", mMatchData.encodeToTSV());
         fragment.setArguments(bundle);
 
@@ -84,7 +90,7 @@ public class QRFragment extends DialogFragment {
         }catch(Exception e){
             Log.d("SignInFragment", e.getMessage());
         }
-        SimpleDateFormat dt1 = new SimpleDateFormat("hh:mm:ss");
+        SimpleDateFormat dt1 = new SimpleDateFormat("[yyyy/M/dd hh:mm:ss]");
 
         if(date == null) {
             return null;

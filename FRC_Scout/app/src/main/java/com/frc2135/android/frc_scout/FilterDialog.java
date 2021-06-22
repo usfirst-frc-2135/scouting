@@ -5,10 +5,12 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -112,12 +114,22 @@ public class FilterDialog extends DialogFragment {
         mScoutSpinner.setAdapter(adapter2);
 
 
-
-        return new AlertDialog.Builder(getActivity()).setView(v).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+        AlertDialog dialog = new AlertDialog.Builder(getActivity()).setView(v).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialog, int which){
                 sendResult(Activity.RESULT_OK);
             }
         }).create();
+
+        dialog.setTitle("Filter Matches");
+
+        dialog.show();
+        Button b = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        b.setBackgroundColor(Color.parseColor("#3F51B5"));
+
+        return dialog;
+
+
+
     }
 
     public static FilterDialog newInstance(){

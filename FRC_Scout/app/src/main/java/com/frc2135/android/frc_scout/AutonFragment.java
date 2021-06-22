@@ -46,7 +46,7 @@ public class AutonFragment extends Fragment {
         Log.d(TAG, mMatchData.getMatchID());
 
         t =  ((AppCompatActivity)getActivity()).getSupportActionBar();
-        t.setTitle("Autonomous: ");
+        t.setTitle("Autonomous");
 
     }
 

@@ -9,107 +9,143 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
 
 
             <TextView
-                android:id="@+id/teleop_title"
+                android:id="@+id/power_port_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/teleop"
+                android:text="@string/teleop_power_port"
                 android:textSize="24dp"
-                style="?android:listSeparatorTextViewStyle"/>
-
-            <TextView
-                android:id="@+id/highportTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/outerPortTitle"
-                android:textSize="18dp"
-                style="?android:listSeparatorTextViewStyle"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <Button
-                    android:id="@+id/highportpointsdec"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="@string/decrease"
-                    android:textSize="30dp"
-                    android:layout_weight="1"
-                    android:textColor="#3F51B5"
-                    android:background="#FFC107"
-                    android:layout_marginLeft="30dp">
-                </Button>
-
-                <TextView
-                    android:id="@+id/highportpoints"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="25dp"
-                    android:layout_weight="3"
-                    android:textAlignment="center">
-                </TextView>
-
-                <Button
-                    android:id="@+id/highportpointsinc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="@string/increase"
-                    android:textSize="30dp"
-                    android:layout_weight="1"
-                    android:textColor="#3F51B5"
-                    android:background="#FFC107"
-                    android:layout_marginRight="30dp">
-                </Button>
-            </LinearLayout>
-            <TextView
-                android:id="@+id/lowportTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/lowPortTitle"
-                android:textSize="18dp"
                 style="?android:listSeparatorTextViewStyle"
-                />
+                android:textColor="#000000"
+                android:paddingTop="10dp"
+                android:paddingBottom="15dp"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                >
-                <Button
-                    android:id="@+id/lowportpointsdec"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="@string/decrease"
-                    android:textSize="30dp"
-                    android:layout_weight="1"
-                    android:textColor="#3F51B5"
-                    android:background="#FFC107"
-                    android:layout_marginLeft="30dp">
-                </Button>
+                android:paddingBottom="10dp">
 
                 <TextView
-                    android:id="@+id/lowportpoints"
+                    android:id="@+id/highportTitle"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="25dp"
-                    android:layout_weight="3"
-                    android:textAlignment="center">
-                </TextView>
+                    android:layout_height="wrap_content"
+                    android:text="@string/outerPortTitle"
+                    android:textSize="18dp"
+                    android:textAlignment="center"
+                    style="?android:listSeparatorTextViewStyle"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/highportpointsdec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/decrease"
+                        android:textSize="30dp"
+                        android:layout_weight="1"
+                        android:textColor="#3F51B5"
+                        android:background="#FFC107"
+                        android:layout_marginLeft="30dp">
+                    </Button>
 
-                <Button
-                    android:id="@+id/lowportpointsinc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="@string/increase"
-                    android:textSize="30dp"
-                    android:layout_weight="1"
-                    android:textColor="#3F51B5"
-                    android:background="#FFC107"
-                    android:layout_marginRight="30dp">
-                </Button>
+                    <TextView
+                        android:id="@+id/highportpoints"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="25dp"
+                        android:layout_weight="3"
+                        android:textAlignment="center">
+                    </TextView>
+
+                    <Button
+                        android:id="@+id/highportpointsinc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/increase"
+                        android:textSize="30dp"
+                        android:layout_weight="1"
+                        android:textColor="#3F51B5"
+                        android:background="#FFC107"
+                        android:layout_marginRight="30dp">
+                    </Button>
+                </LinearLayout>
+
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/lowportTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lowPortTitle"
+                    android:textSize="18dp"
+                    style="?android:listSeparatorTextViewStyle"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <Button
+                        android:id="@+id/lowportpointsdec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/decrease"
+                        android:textSize="30dp"
+                        android:layout_weight="1"
+                        android:textColor="#3F51B5"
+                        android:background="#FFC107"
+                        android:layout_marginLeft="30dp">
+                    </Button>
+
+                    <TextView
+                        android:id="@+id/lowportpoints"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="25dp"
+                        android:layout_weight="3"
+                        android:textAlignment="center">
+                    </TextView>
+
+                    <Button
+                        android:id="@+id/lowportpointsinc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/increase"
+                        android:textSize="30dp"
+                        android:layout_weight="1"
+                        android:textColor="#3F51B5"
+                        android:background="#FFC107"
+                        android:layout_marginRight="30dp">
+                    </Button>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/control_panel_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/teleop_control_panel"
+                android:textSize="24dp"
+                style="?android:listSeparatorTextViewStyle"
+                android:paddingTop="20dp"
+                android:paddingBottom="10dp"
+                android:textColor="#000000"/>
+
+
+
 
 
 

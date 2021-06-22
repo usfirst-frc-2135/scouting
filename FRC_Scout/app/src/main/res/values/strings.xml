@@ -16,6 +16,8 @@
     <string name="outerPortTitle">Outer Port</string>
     <string name="autonomous">Autonomous</string>
     <string name="teleop">Teleoperated</string>
+    <string name="teleop_power_port">Power Port</string>
+    <string name="teleop_control_panel">Control Panel</string>
     <string name="auto_line">Passed Initiation Line</string>
     <string name="other">Additional Details</string>
     <string name="defense">Defense</string>

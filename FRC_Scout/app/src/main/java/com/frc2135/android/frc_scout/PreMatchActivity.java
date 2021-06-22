@@ -49,7 +49,7 @@ public class PreMatchActivity extends AppCompatActivity {
 
         setContentView(R.layout.prematch_activity);
 
-        mCompetitionField = (AutoCompleteTextView) findViewById(R.id.competition_name);
+        mCompetitionField = (AutoCompleteTextView) findViewById(R.id.comp_name);
         mCompetitionField.setHint("Competition");
         mCompetitionField.setText(mMatchData.getCompetition());
         mCompetitionField.addTextChangedListener(new TextWatcher(){
@@ -108,6 +108,7 @@ public class PreMatchActivity extends AppCompatActivity {
         });
 
         mTeamNumberField = (EditText)findViewById(R.id.team_number_field);
+        mTeamNumberField.setHint("Team #");
         mTeamNumberField.setText(mMatchData.getTeamNumber()+"");
         mTeamNumberField.addTextChangedListener(new TextWatcher(){
             public void onTextChanged(CharSequence c, int start, int before, int count){
@@ -125,6 +126,7 @@ public class PreMatchActivity extends AppCompatActivity {
 
 
         mMatchNumberField = (EditText)findViewById(R.id.match_number_field);
+        mMatchNumberField.setHint("Match #");
         if(!formattedMN().equals("")){
             mMatchNumberField.setText(formattedMN());
         }
@@ -166,6 +168,7 @@ public class PreMatchActivity extends AppCompatActivity {
                 R.array.match_types_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mMatchTypesSpinner.setAdapter(adapter);
+        mMatchTypesSpinner.setSelection(0);
 
 
     }
@@ -184,9 +187,9 @@ public class PreMatchActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode,resultCode, data);
-        if(requestCode == 0){
-            finish();
-        }
+        //if(requestCode == 0){
+            //finish();
+        //}
     }
 
     private boolean checkValidData(){

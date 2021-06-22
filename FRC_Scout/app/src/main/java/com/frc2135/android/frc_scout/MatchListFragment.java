@@ -169,19 +169,6 @@ public class MatchListFragment extends ListFragment {
             }
         });
 
-        mAddMatchButton = (Button)v1.findViewById(R.id.empty_button);
-        mAddMatchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MatchData m = new MatchData(getContext());
-                MatchHistory.get(getContext()).addMatch(m);
-                displayedMatches.add(m);
-                adapter.notifyDataSetChanged();
-                Intent i = new Intent(getActivity(), PreMatchActivity.class);
-                i.putExtra("match_ID", m.getMatchID());
-                startActivityForResult(i, 0);
-            }
-        });
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
             mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -263,7 +250,7 @@ public class MatchListFragment extends ListFragment {
             MatchData m = getItem(position);
 
             TextView mMatchSummary = (TextView)convertView.findViewById(R.id.match_tag_display);
-            mMatchSummary.setText(m.getCompetition()+"-"+m.getTeamNumber()+"-"+m.getMatchNumber()+ "-" + formattedDate(m.getTimestamp()));
+            mMatchSummary.setText(m.getCompetition()+"-"+m.getMatchNumber()+"-"+m.getTeamNumber()+ "-" + formattedDate(m.getTimestamp()));
 
 
             return convertView;
@@ -279,7 +266,7 @@ public class MatchListFragment extends ListFragment {
         }catch(Exception e){
             Log.d("SignInFragment", e.getMessage());
         }
-        SimpleDateFormat dt1 = new SimpleDateFormat("MMM dd hh:mm:ss");
+        SimpleDateFormat dt1 = new SimpleDateFormat("[yyyy/M/dd hh:mm:ss]");
 
         if(date == null) {
             return null;
@@ -315,6 +302,11 @@ public class MatchListFragment extends ListFragment {
                 Scouter.get(getContext()).clear();
                 Scouter.get(getContext()).saveData(getContext());
                 return true;
+
+            case R.id.about_item:
+                Intent i = new Intent(getActivity(), Splash.class);
+                startActivity(i);
+                getActivity().finish();
 
             default: return super.onOptionsItemSelected(item);
         }

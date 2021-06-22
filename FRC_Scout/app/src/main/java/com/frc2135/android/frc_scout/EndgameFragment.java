@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -49,7 +50,7 @@ public class EndgameFragment extends Fragment {
         mMatchData = ((ScoutingActivity)getActivity()).getCurrentMatch();
 
         t =  ((AppCompatActivity)getActivity()).getSupportActionBar();
-        t.setTitle("Endgame: ");
+        t.setTitle("Endgame");
     }
 
     @Override
@@ -58,7 +59,7 @@ public class EndgameFragment extends Fragment {
         View v = inflater.inflate(R.layout.endgame_fragment, parent, false);
 
         //Connects the checkbox for passing the initiation line and sets up a listener to detect when the checked status is changed
-        mCheckBox = (CheckBox)v.findViewById(R.id.climb_checkbox);
+        mCheckBox = (CheckBox)v.findViewById(R.id.climb_checkbox_success);
         Log.d(TAG, mMatchData.getClimb()+"");
         mCheckBox.setChecked(mMatchData.getClimb());// Default is unchecked
         mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -128,7 +129,7 @@ public class EndgameFragment extends Fragment {
 
 
 
-        Button mQRButton = (Button)v.findViewById(R.id.gen_QR);
+        ImageButton mQRButton = (ImageButton)v.findViewById(R.id.gen_QR);
         mQRButton.setOnClickListener(new View.OnClickListener() {
             //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
 

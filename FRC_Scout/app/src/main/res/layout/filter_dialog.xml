@@ -8,7 +8,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,7 +26,7 @@
             <TextView
                 android:paddingTop="20dp"
                 android:id="@+id/filter_team"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:text="Team"
                 android:textSize="20dp">
@@ -52,7 +54,7 @@
             <TextView
                 android:paddingTop="20dp"
                 android:id="@+id/filter_competition"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:text="Competition"
                 android:textSize="20dp">
@@ -79,7 +81,7 @@
             <TextView
                 android:paddingTop="20dp"
                 android:id="@+id/scout_competition"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:text="Scout"
                 android:textSize="20dp">
@@ -106,7 +108,7 @@
             <TextView
                 android:paddingTop="10dp"
                 android:id="@+id/match_competition"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:text="Specific Match"
                 android:textSize="20dp">
@@ -115,7 +117,8 @@
             <EditText
                 android:id="@+id/match_entry"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:textSize="20dp">
             </EditText>
         </LinearLayout>
 

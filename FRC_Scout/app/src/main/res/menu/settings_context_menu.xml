@@ -3,8 +3,8 @@
     android:id="@+id/popup_menu">
     <item android:id="@+id/clear_preferences"
         android:title="Clear Presets" />
-    <item android:id="@+id/assign_item"
-        android:title="Assign value later" />
+    <item android:id="@+id/about_item"
+        android:title="About" />
 
 
 </menu>

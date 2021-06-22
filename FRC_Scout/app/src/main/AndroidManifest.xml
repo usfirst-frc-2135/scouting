@@ -11,13 +11,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.frc2135.android.frc_scout.MatchListActivity"
-            android:label="FRC Scout">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:name="com.frc2135.android.frc_scout.MatchListActivity">
         </activity>
 
         <activity
@@ -27,6 +21,17 @@
         <activity
             android:name="com.frc2135.android.frc_scout.ScoutingActivity"
             android:label="Input Match Data"></activity>
+
+        <activity
+            android:name="com.frc2135.android.frc_scout.Splash"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="FRC Scout">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
     </application>
 
 </manifest>

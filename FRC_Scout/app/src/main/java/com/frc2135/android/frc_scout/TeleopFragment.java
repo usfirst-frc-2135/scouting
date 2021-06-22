@@ -38,7 +38,7 @@ public class TeleopFragment extends Fragment {
         Log.d(TAG, mMatchData.getMatchID());
 
         t =  ((AppCompatActivity)getActivity()).getSupportActionBar();
-        t.setTitle("Teleoperated: ");
+        t.setTitle("Teleoperated");
 
 
     }

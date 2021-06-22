@@ -10,105 +10,146 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="-44dp"
-        tools:layout_editor_absoluteY="46dp">
+        tools:layout_editor_absoluteY="46dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
 
-        <TextView
-            android:id="@+id/climb_title"
-            style="?android:listSeparatorTextViewStyle"
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/climb_title"
+                    style="?android:listSeparatorTextViewStyle"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/climb_title"
+                    android:textSize="24dp"
+                    android:textColor="#000000"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    >
+
+                    <CheckBox
+                        android:id="@+id/climb_checkbox_success"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/climb_checkbox"
+                        android:textSize="18dp" />
+
+                    <CheckBox
+                        android:id="@+id/climb_checkbox_balance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Balanced"
+                        android:textSize="18dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/climb_title"
-            android:textSize="18dp" />
+            android:orientation="horizontal"
+            android:paddingTop="20dp">
 
-        <CheckBox
-            android:id="@+id/climb_checkbox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:text="@string/climb_checkbox"
-            android:textSize="18dp" />
+            <TextView
+                android:id="@+id/defenseTitle"
+                style="?android:listSeparatorTextViewStyle"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="@string/defense"
+                android:textSize="24dp"
+                android:textColor="#000000"
+                />
 
-        <TextView
-            android:id="@+id/other_title"
-            style="?android:listSeparatorTextViewStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="50dp"
-            android:text="@string/other"
-            android:textSize="24dp" />
-
-
-        <TextView
-            android:id="@+id/defenseTitle"
-            style="?android:listSeparatorTextViewStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/defense"
-            android:textSize="18dp" />
-
-        <RadioGroup
-            android:id="@+id/defense_scale"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/level_zero"
+            <RadioGroup
+                android:id="@+id/defense_scale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/level_zero" />
+                android:orientation="horizontal"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp">
 
-            <RadioButton
-                android:id="@+id/level_one"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/level_one" />
+                <RadioButton
+                    android:id="@+id/level_zero"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/level_zero" />
 
-            <RadioButton
-                android:id="@+id/level_two"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/level_two" />
+                <RadioButton
+                    android:id="@+id/level_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/level_one" />
 
-            <RadioButton
-                android:id="@+id/level_three"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/level_three" />
+                <RadioButton
+                    android:id="@+id/level_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/level_two" />
 
-            <RadioButton
-                android:id="@+id/level_four"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/level_four" />
+                <RadioButton
+                    android:id="@+id/level_three"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/level_three" />
 
-            <RadioButton
-                android:id="@+id/level_five"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/level_five" />
-        </RadioGroup>
+                <RadioButton
+                    android:id="@+id/level_four"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/level_four" />
 
-        <TextView
-            android:id="@+id/comments_title"
-            style="?android:listSeparatorTextViewStyle"
+                <RadioButton
+                    android:id="@+id/level_five"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/level_five" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/comments"
-            android:textSize="18dp" />
+            android:orientation="horizontal"
+            android:paddingTop="20dp">
 
-        <EditText
-            android:id="@+id/comments"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16dp"></EditText>
+            <TextView
+                android:id="@+id/comments_title"
+                style="?android:listSeparatorTextViewStyle"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="@string/comments"
+                android:textSize="24dp"
+                android:textColor="#000000"/>
+
+            <EditText
+                android:id="@+id/comments"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:layout_marginLeft="16dp"></EditText>
+
+        </LinearLayout>
+
+
 
         <Space
             android:layout_width="match_parent"
@@ -120,32 +161,33 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:paddingTop="20dp"
+            android:gravity="center_horizontal">
 
-            <Button
+            <ImageButton
                 android:id="@+id/gen_QR"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:background="#FFC107"
-                android:text="Generate QR code"
+                android:src="@drawable/qr_code_icon"
                 android:textColor="#3F51B5"
-                android:layout_marginLeft="30dp"></Button>
+                android:focusable="true"
+                ></ImageButton>
 
             <Space
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="10"></Space>
+                android:layout_width="match_parent"
+                android:layout_height="100dp"></Space>
 
             <Button
                 android:id="@+id/nav_to_menu_button"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:background="#FFC107"
-                android:text="Continue to match list"
+                android:text="Match list"
                 android:textColor="#3F51B5"
-                android:layout_marginRight="30dp"></Button>
+                android:textSize="36dp"
+                android:focusable="true"></Button>
 
 
         </LinearLayout>
