@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FBF194">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FRC Scout"
+            android:textSize="48dp"
+            android:textColor="#3F51B5"
+            android:textStyle="bold">
+        </TextView>
+
+        <ImageView
+            android:layout_width="440dp"
+            android:layout_height="378dp"
+            android:layout_gravity="center"
+            android:src="@drawable/t2135_logo"></ImageView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Team 2135 Presentation Invasion"
+            android:textSize="18dp"
+            android:textColor="#3F51B5">
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="San Jose, CA"
+            android:textSize="18dp"
+            android:textColor="#3F51B5">
+        </TextView>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
