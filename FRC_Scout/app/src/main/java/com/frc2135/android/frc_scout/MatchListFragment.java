@@ -121,10 +121,8 @@ public class MatchListFragment extends ListFragment {
                     adapter.notifyDataSetChanged();
                     Intent i = new Intent(getActivity(), PreMatchActivity.class);
                     i.putExtra("match_ID", m.getMatchID());
-                    startActivityForResult(i, 0);
-                }
+                    startActivityForResult(i, 0); }
             });
-        }
 
         mSortSpinner = (Spinner)v1.findViewById(R.id.sort_options);
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this.getContext(),
