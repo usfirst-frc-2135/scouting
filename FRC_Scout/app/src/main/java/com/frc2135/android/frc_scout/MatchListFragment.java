@@ -109,10 +109,9 @@ public class MatchListFragment extends ListFragment {
         registerForContextMenu(mListView);
 
         FloatingActionButton fab = (FloatingActionButton)v1.findViewById(R.id.fab);
-        fab.setVisibility(View.INVISIBLE);
-        if(MatchHistory.get(getActivity()).getMatches().size()!=0){
-            fab.setVisibility(View.VISIBLE);
-            fab.setOnClickListener(new View.OnClickListener() {
+        fab.setVisibility(View.VISIBLE);
+
+        fab.setOnClickListener(new View.OnClickListener() {
                 //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
                 @Override
                 public void onClick(View view) {
@@ -122,10 +121,8 @@ public class MatchListFragment extends ListFragment {
                     adapter.notifyDataSetChanged();
                     Intent i = new Intent(getActivity(), PreMatchActivity.class);
                     i.putExtra("match_ID", m.getMatchID());
-                    startActivityForResult(i, 0);
-                }
+                    startActivityForResult(i, 0); }
             });
-        }
 
         mSortSpinner = (Spinner)v1.findViewById(R.id.sort_options);
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this.getContext(),
