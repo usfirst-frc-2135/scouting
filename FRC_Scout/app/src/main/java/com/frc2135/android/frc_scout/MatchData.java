@@ -21,6 +21,7 @@ public class MatchData {
     private int teleopOuterPoints;
     private int defense;
     private boolean passedInitLine;
+    private boolean rotationControl;
     private String extComments;
     private String name;
     private String teamNumber;
@@ -33,12 +34,13 @@ public class MatchData {
     public MatchData(Context c){
 
         //Initializes/constructs everything
-        stats = new Object[13];
+        stats = new Object[14];
         setAutonLowPoints(0);
         setAutonOuterPoints(0);
         setTeleopLowPoints(0);
         setTeleopOuterPoints(0);
         setPassedInitLine(false);
+        setRotationControl(false);
         setClimb(false);
         setExtComments("");
         setDefense(0);
@@ -59,6 +61,7 @@ public class MatchData {
         setAutonOuterPoints(json.getInt("auton outer points"));
         setAutonLowPoints(json.getInt("auton low points"));
         setPassedInitLine(json.getBoolean("init_line"));
+        setRotationControl(json.getBoolean( "rot_control"));
         setDefense(json.getInt("defense"));
         setExtComments(json.getString("comments"));
         setTeleopLowPoints(json.getInt("teleop low points"));
@@ -121,6 +124,17 @@ public class MatchData {
     //Returns current status of passedInitLine
     public boolean getPassedInitLine(){
         return passedInitLine;
+    }
+
+    //Sets rotationControl to given boolean: true for successful, false for no
+    public void setRotationControl(boolean x){
+        stats[13] = x;
+        rotationControl = x;
+    }
+
+    //Returns current status of rotationControl
+    public boolean getRotationControl(){
+        return rotationControl;
     }
 
     public void setClimb(boolean x){
@@ -260,6 +274,7 @@ public class MatchData {
         json.put("auton low points", autonLowPoints);
         json.put("divider", ",");
         json.put("init_line", passedInitLine);
+        json.put("rot_control", rotationControl);
         json.put("divider", ",");
         json.put("teleop low points", teleopLowPoints);
         json.put("divider", ",");

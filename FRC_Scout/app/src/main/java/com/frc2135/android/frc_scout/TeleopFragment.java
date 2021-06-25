@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -26,6 +27,9 @@ public class TeleopFragment extends Fragment {
     private Button mLowPortPointsInc;
     private Button mHighPortPointsDec;
     private Button mHighPortPointsInc;
+
+    private CheckBox mRotationCheckBox;
+
 
     private MatchData mMatchData;
     private ActionBar t;
@@ -99,6 +103,10 @@ public class TeleopFragment extends Fragment {
             }
         });
 
+        //Connects the checkbox for rotation control and sets up a listener to detect when the checked status is changed
+        mRotationCheckBox = (CheckBox)v.findViewById(R.id.rotation_checkbox);
+        mRotationCheckBox.setChecked(mMatchData.getRotationControl());
+
 
 
         mHighPoints.setText(mMatchData.getTelopHighPoints()+"");
@@ -110,6 +118,7 @@ public class TeleopFragment extends Fragment {
     public void updateTeleopData(){
         mMatchData.setTeleopLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
         mMatchData.setTeleopOuterPoints(Integer.parseInt(mHighPoints.getText().toString()));
+        mMatchData.setPassedInitLine(mRotationCheckBox.isChecked());
         MatchHistory.get(getActivity()).saveData();
     }
 
