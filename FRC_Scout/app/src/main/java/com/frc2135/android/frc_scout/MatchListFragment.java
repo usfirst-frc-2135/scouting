@@ -109,9 +109,8 @@ public class MatchListFragment extends ListFragment {
         registerForContextMenu(mListView);
 
         FloatingActionButton fab = (FloatingActionButton)v1.findViewById(R.id.fab);
-        fab.setVisibility(View.INVISIBLE);
+        fab.setVisibility(View.VISIBLE);
         if(MatchHistory.get(getActivity()).getMatches().size()!=0){
-            fab.setVisibility(View.VISIBLE);
             fab.setOnClickListener(new View.OnClickListener() {
                 //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
                 @Override
