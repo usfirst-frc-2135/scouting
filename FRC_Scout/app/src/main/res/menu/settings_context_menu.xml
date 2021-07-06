@@ -3,8 +3,13 @@
     android:id="@+id/popup_menu">
     <item android:id="@+id/clear_preferences"
         android:title="Clear Presets" />
+<<<<<<< Updated upstream
     <item android:id="@+id/about_item"
         android:title="About" />
+=======
+    <item android:id="@+id/load_data_over_network"
+        android:title="Load competition data" />
+>>>>>>> Stashed changes
 
 
 </menu>
