@@ -27,19 +27,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.ListFragment;
 
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -278,12 +276,12 @@ public class MatchListFragment extends ListFragment {
         }catch(Exception e){
             Log.d("SignInFragment", e.getMessage());
         }
-        SimpleDateFormat dt1 = new SimpleDateFormat("[yyyy/M/dd hh:mm:ss]");
+        SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-M-dd hh:mm:ss");
 
         if(date == null) {
             return null;
         }
-        else { return (dt1.format(date)); }
+        else { return (dt1.format(date).substring(0,9)+"T"+dt1.format(date).substring(10)); }
     }
 
     @Override
@@ -315,14 +313,14 @@ public class MatchListFragment extends ListFragment {
                 Scouter.get(getContext()).saveData(getContext());
                 return true;
 
-<<<<<<< Updated upstream
             case R.id.about_item:
                 Intent i = new Intent(getActivity(), Splash.class);
                 startActivity(i);
                 getActivity().finish();
-=======
             case R.id.load_data_over_network:
                 Log.d(TAG, "Load data clicked");
+
+
                 // Instantiate the RequestQueue.
                 RequestQueue queue = Volley.newRequestQueue(getActivity());
                 String url ="https://www.thebluealliance.com/api/v3/events/2021";
@@ -350,8 +348,6 @@ public class MatchListFragment extends ListFragment {
 
                 queue.add(jsonArrayRequest);
                 return true;
->>>>>>> Stashed changes
-
             default: return super.onOptionsItemSelected(item);
         }
     }

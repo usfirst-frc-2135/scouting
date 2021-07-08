@@ -90,12 +90,12 @@ public class QRFragment extends DialogFragment {
         }catch(Exception e){
             Log.d("SignInFragment", e.getMessage());
         }
-        SimpleDateFormat dt1 = new SimpleDateFormat("[yyyy/M/dd hh:mm:ss]");
+        SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-M-dd hh:mm:ss");
 
         if(date == null) {
             return null;
         }
-        else { return (dt1.format(date)); }
+        else { return (dt1.format(date).substring(0,9)+"T"+dt1.format(date).substring(10)); }
     }
 
 

@@ -57,11 +57,12 @@ public class MatchData {
 
         Log.d(TAG, "Matches being created using json data");
 
-        stats = new Object[13];
+        stats = new Object[14];
         setAutonOuterPoints(json.getInt("auton outer points"));
         setAutonLowPoints(json.getInt("auton low points"));
         setPassedInitLine(json.getBoolean("init_line"));
-        setRotationControl(json.getBoolean( "rot_control"));
+        //setRotationControl(json.getBoolean( "rot_control"));
+        setRotationControl(true);
         setDefense(json.getInt("defense"));
         setExtComments(json.getString("comments"));
         setTeleopLowPoints(json.getInt("teleop low points"));
