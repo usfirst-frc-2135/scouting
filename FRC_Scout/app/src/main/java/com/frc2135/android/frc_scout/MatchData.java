@@ -6,6 +6,7 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
@@ -30,8 +31,9 @@ public class MatchData {
     private String matchID;
     private String competition;
     private Date timestamp;
+    private CompetitionDataSerializer competitionDataSerializer;
 
-    public MatchData(Context c){
+    public MatchData(Context c) throws IOException, JSONException {
 
         //Initializes/constructs everything
         stats = new Object[14];
@@ -48,7 +50,8 @@ public class MatchData {
         teamNumber = "";
         matchNumber = "";
         matchID = UUID.randomUUID()+"";
-        competition = "";
+        competitionDataSerializer = new CompetitionDataSerializer(c, "current_competition.json");
+        competition = competitionDataSerializer.loadCurrentComp().getCompName();
         setTimestamp(Calendar.getInstance().getTime());
 
     }

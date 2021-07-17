@@ -13,10 +13,7 @@ import java.util.ArrayList;
 public class Scouter {
 
     private ArrayList<String> pastScouters;
-    private ArrayList<String> pastComps;
-
     private static Scouter sScouter;
-    //private ScouterDataSerializer mSerializer;
     private MatchDataSerializer mSerializer;
     private Context mContext;
     private String mFileName;
@@ -27,7 +24,6 @@ public class Scouter {
     private Scouter(Context mAppContext){
 
         pastScouters = new ArrayList<String>();
-        pastComps = new ArrayList<String>();
 
         mSerializer = new MatchDataSerializer(mAppContext, FILENAME);
 
@@ -37,9 +33,6 @@ public class Scouter {
                Log.d(TAG, "Loading scouter");
                for(String x:mSerializer.loadScouterData().getPastScouts()){
                    pastScouters.add(x);
-               }
-               for(String x:mSerializer.loadScouterData().getPastComps()){
-                   pastComps.add(x);
                }
 
 
@@ -55,7 +48,6 @@ public class Scouter {
         Log.d(TAG, "Scouter being created using json data");
 
         pastScouters = new ArrayList<String>();
-        pastComps = new ArrayList<String>();
 
         try{
             String tag = "scoutername";
@@ -65,14 +57,9 @@ public class Scouter {
                 i++;
             }
 
-            String tag2 = "competition";
-            int j=0;
-            while(json.has(tag2+j +"")){
-                pastComps.add(json.getString(tag2+j +""));
-                j++;
-            }
+
         }catch(Exception e){
-            Log.d(TAG, "Error loading past scouter/comp data");
+            Log.d(TAG, "Error loading past scout data");
             Log.e(TAG, e.toString());
         }
 
@@ -104,27 +91,11 @@ public class Scouter {
         return names;
     }
 
-    public String[] getPastComps(){
-        String[] comps = new String[pastComps.size()];
-        for(int i = 0; i<comps.length; i++){
-            comps[i]=pastComps.get(i);
-        }
-        return comps;
-    }
 
     public void clear(){
         pastScouters.clear();
-        pastComps.clear();
     }
 
-    public void addPastComp(String c){
-        for(String x: pastComps){
-            if(x.trim().toLowerCase().equals(c.trim().toLowerCase())){
-                return;
-            }
-        }
-        pastComps.add(c.trim());
-    }
 
     public JSONObject toJSON() throws JSONException {
         //This code uses the JSON class to convert the aspects of each match into data that can be to a file as JSON
@@ -134,9 +105,6 @@ public class Scouter {
         for(int i = 0; i < pastScouters.size(); i++){
             json.put("scoutername" + i, pastScouters.get(i));
             logmessage1 +="scoutername" + i + pastScouters.get(i);
-        }
-        for(int i = 0; i < pastComps.size(); i++){
-            json.put("competition"+i, pastComps.get(i));
         }
 
         Log.d(TAG, logmessage1);
@@ -155,9 +123,4 @@ public class Scouter {
         }
     }
 
-    public File getScouterFile(){
-        File externalFilesDir = mContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
-        if(externalFilesDir == null){return null;}
-        return new File(externalFilesDir, "pastScoutComps.json");
-    }
 }

@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FBF194">
+    android:background="#000F396B">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:text="FRC Scout"
             android:textSize="48dp"
-            android:textColor="#3F51B5"
+            android:textColor="#FF0F396B"
             android:textStyle="bold">
         </TextView>
 
@@ -29,14 +29,14 @@
             android:layout_height="wrap_content"
             android:text="Team 2135 Presentation Invasion"
             android:textSize="18dp"
-            android:textColor="#3F51B5">
+            android:textColor="#FF0F396B">
         </TextView>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="San Jose, CA"
             android:textSize="18dp"
-            android:textColor="#3F51B5">
+            android:textColor="#FF0F396B">
         </TextView>
     </LinearLayout>
 

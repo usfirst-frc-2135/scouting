@@ -38,7 +38,9 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -48,6 +50,7 @@ public class MatchListFragment extends ListFragment {
 
     private static final String TAG = "MatchListFragment";
     private static int REQUEST_FILTER = 300;
+    private static int REQUEST_LOADEVENT = 400;
     private ArrayList<MatchData> mMatchData;
     private boolean isSubtitleShown;
     private ListView mListView;
@@ -56,6 +59,7 @@ public class MatchListFragment extends ListFragment {
     private Button mFilter;
     private ArrayList<MatchData> displayedMatches;
     private MatchAdapter adapter;
+
 
     private static final int REQUEST_SIGNIN = 1;
     public static final String SITAG = "sign/in";
@@ -318,35 +322,10 @@ public class MatchListFragment extends ListFragment {
                 startActivity(i);
                 getActivity().finish();
             case R.id.load_data_over_network:
-                Log.d(TAG, "Load data clicked");
-
-
-                // Instantiate the RequestQueue.
-                RequestQueue queue = Volley.newRequestQueue(getActivity());
-                String url ="https://www.thebluealliance.com/api/v3/events/2021";
-
-                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null , new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d(TAG, "success");
-                        Log.d(TAG, response.toString().substring(0,100));
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d(TAG, "fail");
-                        Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT);
-                    }
-                }
-                ){
-                    @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("X-TBA-Auth-Key", "E7akoVihRO2ZbNHtW2nRrjuNTcZaOxWtfeYWwh4XILMsKsqLnH2ZQrKAnbevlWGn");
-                        return params;
-                }};
-
-                queue.add(jsonArrayRequest);
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                LoadEventDialog dialog = LoadEventDialog.newInstance();
+                dialog.setTargetFragment(MatchListFragment.this, REQUEST_LOADEVENT);
+                dialog.show(fm, "filter_dialog");
                 return true;
             default: return super.onOptionsItemSelected(item);
         }

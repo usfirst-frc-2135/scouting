@@ -85,7 +85,8 @@ public class MatchDataSerializer {
        if(test != null){
            for(File f: test){
                Log.d(TAG, f.toString() + "*");
-               if(!f.getName().equals("Scouter.json")){
+
+               if(f.getName().length()>30){
                    try {
                        //Open and read the file into a StringBuilder
                        InputStream in = mContext.openFileInput(f.getName().trim());

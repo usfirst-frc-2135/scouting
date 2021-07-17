@@ -17,8 +17,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class PreMatchActivity extends AppCompatActivity {
+import org.json.JSONException;
 
+import java.io.IOException;
+
+public class PreMatchActivity extends AppCompatActivity {
     private AutoCompleteTextView mCompetitionField;
     private AutoCompleteTextView mScouterNameField;
     private EditText mTeamNumberField;
@@ -64,18 +67,6 @@ public class PreMatchActivity extends AppCompatActivity {
 
             }
 
-        });
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>
-                (PreMatchActivity.this, android.R.layout.select_dialog_item, Scouter.get(getApplicationContext()).getPastComps());
-        mCompetitionField.setAdapter(adapter1);
-        mCompetitionField.setThreshold(0);
-        mCompetitionField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange (View v, boolean hasFocus){
-                if(hasFocus){
-                    mCompetitionField.showDropDown();
-                }
-            }
         });
 
         mScouterNameField =(AutoCompleteTextView)findViewById(R.id.scouter_name);
@@ -175,7 +166,6 @@ public class PreMatchActivity extends AppCompatActivity {
 
     public void updatePreMatchData(){
         mScout = Scouter.get(getApplicationContext());
-        mScout.addPastComp(mCompetitionField.getText().toString());
         mScout.addPastScouter(mScouterNameField.getText().toString());
         mScout.saveData(getApplicationContext());
         mMatchData.setName(mScouterNameField.getText().toString());
