@@ -132,7 +132,14 @@ public class MatchListFragment extends ListFragment {
                 //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
                 @Override
                 public void onClick(View view) {
-                    MatchData m = new MatchData(getContext());
+                    MatchData m = null;
+                    try {
+                        m = new MatchData(getContext());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     MatchHistory.get(getContext()).addMatch(m);
                     displayedMatches.add(m);
                     adapter.notifyDataSetChanged();

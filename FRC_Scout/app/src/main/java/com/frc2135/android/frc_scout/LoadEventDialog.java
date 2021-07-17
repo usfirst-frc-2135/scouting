@@ -30,6 +30,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -108,7 +109,17 @@ public class LoadEventDialog extends DialogFragment {
                 Log.d(TAG, "success");
                 Log.d(TAG, response.toString().substring(0,100));
                 try {
-                    mCompDataSerializer.saveEventData(response);
+                    File file = new File("/data/user/0/com.frc2135.android.frc_scout/files");
+                    File[] test = file.listFiles();
+                    boolean alrExists = false;
+                    if(test != null){
+                        for(File f: test){
+                            if(f.getName().equals(mEventCodeText.getText().toString().trim()+"matches.json")){
+                                alrExists = true;
+                            }
+                        }
+                    }
+                    if(!alrExists) {mCompDataSerializer.saveEventData(response);}
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
