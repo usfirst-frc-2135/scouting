@@ -250,9 +250,16 @@ public class MatchData {
 
     public String encodeToTSV(){
         String message = "";
-        for(Object x: stats){
-            message += (x + "\t");
-        }
+        message += "--\t";
+        message += teamNumber+"  \t";
+        message += passedInitLine+"\t";
+        message += autonLowPoints+"\t";
+        message += autonOuterPoints+"\t";
+        message += teleopLowPoints+"\t";
+        message += teleopOuterPoints+"\t";
+        message += rotationControl+"\t";
+        message += climbed+"\t";
+        message += "--\t";
         return message;
     }
 
