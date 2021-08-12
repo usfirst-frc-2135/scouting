@@ -135,6 +135,7 @@ public class MatchListFragment extends ListFragment {
                     MatchData m = null;
                     try {
                         m = new MatchData(getContext());
+                        Log.d(TAG, m.getMatchID()+"******");
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (JSONException e) {

@@ -36,9 +36,6 @@ public class MatchDataSerializer {
 
         arrayScouter.put(Scouter.get(mContext).toJSON());
 
-
-
-
         Writer writerScouter = null;
         try{
             OutputStream out = mContext.openFileOutput(mFileName, Context.MODE_PRIVATE);//This method(openFileOutput) takes a file name and a mode and uses both to create a pathway and a file to open for writing

@@ -96,7 +96,7 @@ public class LoadEventDialog extends DialogFragment {
         Log.d(TAG, "Load data clicked");
 
         CurrentCompetition.get(getContext()).setCompName(mEventCodeText.getText().toString().substring(4).toUpperCase());
-        CurrentCompetition.get(getContext()).setEventCode(mEventCodeText.getText().toString());
+        CurrentCompetition.get(getContext()).setEventCode(mEventCodeText.getText().toString().trim());
         mCompDataSerializer = new CompetitionDataSerializer(getActivity(),mEventCodeText.getText().toString().trim()+"matches.json");
 
         // Instantiate the RequestQueue.
@@ -111,15 +111,15 @@ public class LoadEventDialog extends DialogFragment {
                 try {
                     File file = new File("/data/user/0/com.frc2135.android.frc_scout/files");
                     File[] test = file.listFiles();
-                    boolean alrExists = false;
                     if(test != null){
                         for(File f: test){
                             if(f.getName().equals(mEventCodeText.getText().toString().trim()+"matches.json")){
-                                alrExists = true;
-                            }
+                                f.delete();}
+                                mCompDataSerializer.saveEventData(response);
+                                //CurrentCompetition.get(getContext()).setData(response);
+                                Log.d(TAG, response.toString().substring(0, 50)+"&&&&&&&&&&");
                         }
                     }
-                    if(!alrExists) {mCompDataSerializer.saveEventData(response);}
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -131,7 +131,7 @@ public class LoadEventDialog extends DialogFragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG, "fail");
-                Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG);
+                Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_LONG);
             }
         }
         ){

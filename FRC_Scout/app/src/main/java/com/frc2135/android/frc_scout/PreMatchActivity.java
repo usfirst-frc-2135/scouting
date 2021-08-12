@@ -5,7 +5,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -20,15 +22,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class PreMatchActivity extends AppCompatActivity {
     private AutoCompleteTextView mCompetitionField;
     private AutoCompleteTextView mScouterNameField;
-    private EditText mTeamNumberField;
-    private EditText mMatchNumberField;
+    private AutoCompleteTextView mTeamNumberField;
+    private AutoCompleteTextView mMatchNumberField;
     private Button mStartScoutingButton;
     private TextView mErrorMessagepm;
-    private Spinner mMatchTypesSpinner;
 
     private MatchData mMatchData;
     private ActionBar t;
@@ -46,6 +48,7 @@ public class PreMatchActivity extends AppCompatActivity {
 
         String matchId = getIntent().getStringExtra("match_ID");
         mMatchData = MatchHistory.get(getApplicationContext()).getMatch(matchId);
+        final Event e = new Event(this, mMatchData.getCompetition().trim());
 
         t =  getSupportActionBar();
         t.setTitle("Pre-Match: ");
@@ -85,6 +88,7 @@ public class PreMatchActivity extends AppCompatActivity {
             }
 
         });
+
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>
                 (PreMatchActivity.this, android.R.layout.select_dialog_item, Scouter.get(getApplicationContext()).getPastScouts());
         mScouterNameField.setAdapter(adapter2);
@@ -98,41 +102,80 @@ public class PreMatchActivity extends AppCompatActivity {
             }
         });
 
-        mTeamNumberField = (EditText)findViewById(R.id.team_number_field);
-        mTeamNumberField.setHint("Team #");
-        mTeamNumberField.setText(mMatchData.getTeamNumber()+"");
-        mTeamNumberField.addTextChangedListener(new TextWatcher(){
-            public void onTextChanged(CharSequence c, int start, int before, int count){
-
-            }
-            public void beforeTextChanged(CharSequence c, int start, int count, int after){
-            }
-            public void afterTextChanged(Editable c){
-                t.setSubtitle(c + "  " + mTeamNumberField.getText().toString());
-                checkValidData();
-
+        mMatchNumberField = (AutoCompleteTextView)findViewById(R.id.match_number_field);
+        mMatchData.getMatchNumber();
+        mMatchNumberField.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mMatchData.setMatchNumber(parent.getItemAtPosition(position).toString());
             }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                mMatchNumberField.setSelection(0);
+            }
         });
 
-
-        mMatchNumberField = (EditText)findViewById(R.id.match_number_field);
-        mMatchNumberField.setHint("Match #");
-        if(!formattedMN().equals("")){
-            mMatchNumberField.setText(formattedMN());
+        ArrayAdapter<String> adapter4 = null;
+        try {
+            adapter4 = new ArrayAdapter<String>
+                    (PreMatchActivity.this, android.R.layout.select_dialog_item, e.getEventMatches(mMatchData.getCompetition()));
+        } catch (JSONException | IOException jsonException) {
+            jsonException.printStackTrace();
         }
-        mMatchNumberField.addTextChangedListener(new TextWatcher(){
-            public void onTextChanged(CharSequence c, int start, int before, int count){
-
+        mMatchNumberField.setAdapter(adapter4);
+        mMatchNumberField.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange (View v, boolean hasFocus){
+                if(hasFocus){
+                    mMatchNumberField.showDropDown();
+                }
             }
-            public void beforeTextChanged(CharSequence c, int start, int count, int after){
-            }
-            public void afterTextChanged(Editable c){
-                t.setSubtitle( mMatchNumberField.getText().toString()+ " " + c);
-                checkValidData();
-            }
-
         });
+
+        mTeamNumberField = (AutoCompleteTextView)findViewById(R.id.team_number_field);
+        mTeamNumberField.setText(mMatchData.getTeamNumber()+"");
+        mTeamNumberField.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mMatchData.setTeamNumber(parent.getItemAtPosition(position).toString());
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                mTeamNumberField.setSelection(0);
+            }
+        });
+
+
+        mTeamNumberField.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange (View v, boolean hasFocus){
+                if(hasFocus){
+                    Log.d(TAG, "mTeamNumberField clicked");
+                    try {
+                        ArrayAdapter<String> adapter3 = null;
+                        String[] teams = e.getTeams(mMatchNumberField.getText().toString().trim());
+                        if(teams == null){
+                            teams = new String[1];
+                            teams[0] = "Error loading teams";
+                        }
+                        adapter3 = new ArrayAdapter<String>
+                                (PreMatchActivity.this, android.R.layout.select_dialog_item, teams);
+                        mTeamNumberField.setAdapter(adapter3);
+                    } catch (JSONException jsonException) {
+                        Log.e("Event", "finding teams failed");
+                        jsonException.printStackTrace();
+                    }catch(NullPointerException nullPointerException){
+                        nullPointerException.printStackTrace();
+                    }
+                    mTeamNumberField.showDropDown();
+
+                }
+            }
+        });
+
+
+
 
         mStartScoutingButton = (Button) findViewById(R.id.start_scouting_button);
         mStartScoutingButton.setOnClickListener(new View.OnClickListener() {
@@ -154,12 +197,7 @@ public class PreMatchActivity extends AppCompatActivity {
         mErrorMessagepm.setVisibility(View.INVISIBLE);
         mErrorMessagepm.setTextColor(Color.RED);
 
-        mMatchTypesSpinner = (Spinner) findViewById(R.id.match_types);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.match_types_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mMatchTypesSpinner.setAdapter(adapter);
-        mMatchTypesSpinner.setSelection(0);
+
 
 
     }
@@ -170,7 +208,7 @@ public class PreMatchActivity extends AppCompatActivity {
         mScout.saveData(getApplicationContext());
         mMatchData.setName(mScouterNameField.getText().toString());
         mMatchData.setCompetition(mCompetitionField.getText().toString());
-        mMatchData.setMatchNumber(mMatchTypesSpinner.getSelectedItem().toString()+ mMatchNumberField.getText().toString().trim());
+        mMatchData.setMatchNumber(mMatchNumberField.getText().toString().trim());
         mMatchData.setTeamNumber(mTeamNumberField.getText().toString());
     }
 
@@ -183,7 +221,7 @@ public class PreMatchActivity extends AppCompatActivity {
     }
 
     private boolean checkValidData(){
-        if(mCompetitionField.getText().toString().trim().equals("")||mScouterNameField.getText().toString().trim().equals("")|| mTeamNumberField.getText().toString().trim().equals("")||mMatchNumberField.getText().toString().trim().equals("")){
+        if(mCompetitionField.getText().toString().trim().equals("")||mScouterNameField.getText().toString().trim().equals("")|| mTeamNumberField.getText().toString().trim().equals("")||mMatchNumberField.getText().equals("")){
             mErrorMessagepm.setVisibility(View.VISIBLE);
             return false;
         }
@@ -191,23 +229,7 @@ public class PreMatchActivity extends AppCompatActivity {
         return true;
     }
 
-    public String formattedMN(){
-        String full = mMatchData.getMatchNumber();
-        String formatted = "";
-        if(full.length()<2){
-            return "";
-        }
-        else{
-            if(full.substring(1,2).equals("F")){
-                formatted = full.substring(2);
-            }
-            else{
-                formatted = full.substring(1);
-            }
-        }
 
-        return formatted;
-    }
 
     @Override
     public void onBackPressed() {

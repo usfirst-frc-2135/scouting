@@ -51,7 +51,7 @@ public class MatchData {
         matchNumber = "";
         matchID = UUID.randomUUID()+"";
         competitionDataSerializer = new CompetitionDataSerializer(c, "current_competition.json");
-        competition = competitionDataSerializer.loadCurrentComp().getCompName();
+        competition = competitionDataSerializer.loadCurrentComp().getEventCode();
         setTimestamp(Calendar.getInstance().getTime());
 
     }
