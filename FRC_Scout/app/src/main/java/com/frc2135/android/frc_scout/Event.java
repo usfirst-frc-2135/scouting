@@ -26,9 +26,8 @@ public class Event {
     public Event(Context c, String eC){
         mAppContext = c;
         eventCode = eC;
-        //eventName = n;
 
-        File file = new File("/data/user/0/com.frc2135.android.frc_scout/files/"+eventCode.trim()+"matches.json");
+        File file = new File("/data/user/0/com.frc2135.android.frc_scout/files/"+eventCode.trim().toLowerCase()+"matches.json");
         BufferedReader reader = null;
 
         try {
@@ -60,13 +59,15 @@ public class Event {
 
 
     public String[] getEventMatches(String ec) throws JSONException, IOException {
-        String[] matches = new String[array.length()+1];
-        matches[0] = "No match selected";
-        if(ec.equals(eventCode)){
-            for(int i= 1; i < array.length(); i++){
-                matches[i] = ((JSONObject)array.get(i)).getString("comp_level") + ((JSONObject)array.get(i)).getString("match_number");
+        if(array != null){
+            String[] matches = new String[array.length()+1];
+            matches[0] = "No match selected";
+            if(ec.equals(eventCode)){
+                for(int i= 1; i < array.length(); i++){
+                    matches[i] = ((JSONObject)array.get(i)).getString("comp_level") + ((JSONObject)array.get(i)).getString("match_number");
+                }
+                return matches;
             }
-            return matches;
         }
         return null;
     }
@@ -82,7 +83,7 @@ public class Event {
         for(int i= 0; i < array.length(); i++){
            if((((JSONObject)array.get(i)).getString("comp_level") + ((JSONObject)array.get(i)).getString("match_number")).equals(m.trim())){
                Log.d("Event", "match found");
-               JSONObject alliances = (JSONObject)array.get(1);
+               JSONObject alliances = (JSONObject)array.get(i);
                JSONObject color = (JSONObject)alliances.get("alliances");
                tempB = (JSONObject)color.get("blue");
                blueTeams = (JSONArray)tempB.get("team_keys");

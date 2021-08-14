@@ -103,7 +103,7 @@ public class PreMatchActivity extends AppCompatActivity {
         });
 
         mMatchNumberField = (AutoCompleteTextView)findViewById(R.id.match_number_field);
-        mMatchData.getMatchNumber();
+        mMatchNumberField.setText(mMatchData.getMatchNumber());
         mMatchNumberField.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
