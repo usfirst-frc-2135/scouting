@@ -55,16 +55,16 @@ public class TeleopFragment extends Fragment {
 
 
         //Sets up TextView that displays low points, setting 0 as the default
-        mLowPoints = (TextView)v.findViewById(R.id.lowportpoints);
+        mLowPoints = v.findViewById(R.id.lowportpoints);
         mLowPoints.setText(0 + "");
 
         //Sets up TextView that displays high points, setting 0 as the default
-        mHighPoints = (TextView)v.findViewById(R.id.highportpoints);
+        mHighPoints = v.findViewById(R.id.highportpoints);
         mHighPoints.setText(0+ "");
 
 
         //Connects the decrement button for low points and sets up a listener that detects when the button is clicked
-        mLowPortPointsDec = (Button)v.findViewById(R.id.lowportpointsdec);
+        mLowPortPointsDec = v.findViewById(R.id.lowportpointsdec);
         mLowPortPointsDec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +74,7 @@ public class TeleopFragment extends Fragment {
         });
 
         //Connects the increment button for low points and sets up a listener that detects when the button is clicked
-        mLowPortPointsInc = (Button)v.findViewById(R.id.lowportpointsinc);
+        mLowPortPointsInc = v.findViewById(R.id.lowportpointsinc);
         mLowPortPointsInc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +84,7 @@ public class TeleopFragment extends Fragment {
         });
 
         //Connects the decrement button for high points and sets up a listener that detects when the button is clicked
-        mHighPortPointsDec = (Button)v.findViewById(R.id.highportpointsdec);
+        mHighPortPointsDec = v.findViewById(R.id.highportpointsdec);
         mHighPortPointsDec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +94,7 @@ public class TeleopFragment extends Fragment {
         });
 
         //Connects the increment button for high points and sets up a listener that detects when the button is clicked
-        mHighPortPointsInc = (Button)v.findViewById(R.id.highportpointsinc);
+        mHighPortPointsInc = v.findViewById(R.id.highportpointsinc);
         mHighPortPointsInc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,7 +104,7 @@ public class TeleopFragment extends Fragment {
         });
 
         //Connects the checkbox for rotation control and sets up a listener to detect when the checked status is changed
-        mRotationCheckBox = (CheckBox)v.findViewById(R.id.rotation_checkbox);
+        mRotationCheckBox = v.findViewById(R.id.rotation_checkbox);
         mRotationCheckBox.setChecked(mMatchData.getRotationControl());
 
 

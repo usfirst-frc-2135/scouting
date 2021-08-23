@@ -15,7 +15,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class MatchData {
     //Creating private variables for all of the match data that is collected with an addition of an array to hold everything
-    private Object[] stats;
+    private final Object[] stats;
     private int autonLowPoints;
     private int autonOuterPoints;
     private int teleopLowPoints;
@@ -28,7 +28,7 @@ public class MatchData {
     private String teamNumber;
     private String matchNumber;
     private boolean climbed;
-    private String matchID;
+    private final String matchID;
     private String competition;
     private Date timestamp;
     private CompetitionDataSerializer competitionDataSerializer;

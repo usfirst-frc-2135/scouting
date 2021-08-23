@@ -49,8 +49,8 @@ import java.util.Map;
 public class MatchListFragment extends ListFragment {
 
     private static final String TAG = "MatchListFragment";
-    private static int REQUEST_FILTER = 300;
-    private static int REQUEST_LOADEVENT = 400;
+    private static final int REQUEST_FILTER = 300;
+    private static final int REQUEST_LOADEVENT = 400;
     private ArrayList<MatchData> mMatchData;
     private boolean isSubtitleShown;
     private ListView mListView;
@@ -125,7 +125,7 @@ public class MatchListFragment extends ListFragment {
         mListView.setAdapter(adapter);
         registerForContextMenu(mListView);
 
-        FloatingActionButton fab = (FloatingActionButton)v1.findViewById(R.id.fab);
+        FloatingActionButton fab = v1.findViewById(R.id.fab);
         fab.setVisibility(View.VISIBLE);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -149,7 +149,7 @@ public class MatchListFragment extends ListFragment {
                     startActivityForResult(i, 0); }
             });
 
-        mSortSpinner = (Spinner)v1.findViewById(R.id.sort_options);
+        mSortSpinner = v1.findViewById(R.id.sort_options);
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this.getContext(),
                 R.array.sort_array, android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -180,7 +180,7 @@ public class MatchListFragment extends ListFragment {
             }
         });
 
-        mFilter = (Button) v1.findViewById(R.id.filter_text);
+        mFilter = v1.findViewById(R.id.filter_text);
         mFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -271,7 +271,7 @@ public class MatchListFragment extends ListFragment {
             }
             MatchData m = getItem(position);
 
-            TextView mMatchSummary = (TextView)convertView.findViewById(R.id.match_tag_display);
+            TextView mMatchSummary = convertView.findViewById(R.id.match_tag_display);
             mMatchSummary.setText(m.getCompetition()+"-"+m.getMatchNumber()+"-"+m.getTeamNumber()+ "-" + formattedDate(m.getTimestamp()));
 
 

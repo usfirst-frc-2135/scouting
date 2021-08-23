@@ -25,7 +25,7 @@ import zxing.QRCodeEncoder;
 
 
 public class QRFragment extends DialogFragment {
-    private static String TAG = "QRFragment";
+    private static final String TAG = "QRFragment";
     private ImageView mImageView;
     private Button mBacktoMenuButton;
     private String heading;
@@ -40,7 +40,7 @@ public class QRFragment extends DialogFragment {
         message = getArguments().getString("stats");
 
 
-        ImageView mImageView = (ImageView)v.findViewById(R.id.matchdata_qr);
+        ImageView mImageView = v.findViewById(R.id.matchdata_qr);
 
         int qrCodeDimension = 1000;
 

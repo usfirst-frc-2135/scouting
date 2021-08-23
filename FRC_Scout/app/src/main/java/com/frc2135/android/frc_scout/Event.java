@@ -18,10 +18,10 @@ import java.io.InputStreamReader;
 
 public class Event {
 
-    private String eventCode;
+    private final String eventCode;
     private String eventName;
     private JSONArray array;
-    private Context mAppContext;
+    private final Context mAppContext;
 
     public Event(Context c, String eC){
         mAppContext = c;

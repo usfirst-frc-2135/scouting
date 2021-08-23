@@ -59,7 +59,7 @@ public class EndgameFragment extends Fragment {
         View v = inflater.inflate(R.layout.endgame_fragment, parent, false);
 
         //Connects the checkbox for passing the initiation line and sets up a listener to detect when the checked status is changed
-        mCheckBox = (CheckBox)v.findViewById(R.id.climb_checkbox_success);
+        mCheckBox = v.findViewById(R.id.climb_checkbox_success);
         Log.d(TAG, mMatchData.getClimb()+"");
         mCheckBox.setChecked(mMatchData.getClimb());// Default is unchecked
         mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -69,14 +69,14 @@ public class EndgameFragment extends Fragment {
             }
         });
 
-        mRadioGroup = (RadioGroup)v.findViewById(R.id.defense_scale);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
-        mRadioButton0 = (RadioButton)v.findViewById(R.id.level_zero);//Sets up radio button that corresponds to 0
+        mRadioGroup = v.findViewById(R.id.defense_scale);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
+        mRadioButton0 = v.findViewById(R.id.level_zero);//Sets up radio button that corresponds to 0
         mRadioButton0.setActivated(true);
-        mRadioButton1 = (RadioButton)v.findViewById(R.id.level_one);//Sets up radio button that corresponds to 1
-        mRadioButton2 = (RadioButton)v.findViewById(R.id.level_two);//Sets up radio button that corresponds to 2
-        mRadioButton3 = (RadioButton)v.findViewById(R.id.level_three);//Sets up radio button that corresponds to 3
-        mRadioButton4 = (RadioButton)v.findViewById(R.id.level_four);//Sets up radio button that corresponds to 4
-        mRadioButton5 = (RadioButton)v.findViewById(R.id.level_five);//Sets up radio button that corresponds to 5
+        mRadioButton1 = v.findViewById(R.id.level_one);//Sets up radio button that corresponds to 1
+        mRadioButton2 = v.findViewById(R.id.level_two);//Sets up radio button that corresponds to 2
+        mRadioButton3 = v.findViewById(R.id.level_three);//Sets up radio button that corresponds to 3
+        mRadioButton4 = v.findViewById(R.id.level_four);//Sets up radio button that corresponds to 4
+        mRadioButton5 = v.findViewById(R.id.level_five);//Sets up radio button that corresponds to 5
 
         int x = mMatchData.getDefense();
         if(x==0)mRadioButton0.setActivated(true);
@@ -114,7 +114,7 @@ public class EndgameFragment extends Fragment {
 
 
         //Sets up an EditText that allows users to input any additional comments
-        mEditText = (EditText)v.findViewById(R.id.comments);
+        mEditText = v.findViewById(R.id.comments);
         mEditText.setHint("Enter any additional comments here");
         mEditText.setText(mMatchData.getExtComments());
         mEditText.addTextChangedListener(new TextWatcher(){
@@ -129,7 +129,7 @@ public class EndgameFragment extends Fragment {
 
 
 
-        ImageButton mQRButton = (ImageButton)v.findViewById(R.id.gen_QR);
+        ImageButton mQRButton = v.findViewById(R.id.gen_QR);
         mQRButton.setOnClickListener(new View.OnClickListener() {
             //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
 
@@ -147,7 +147,7 @@ public class EndgameFragment extends Fragment {
             }
         });
 
-        Button mNextButton  = (Button)v.findViewById(R.id.nav_to_menu_button);
+        Button mNextButton  = v.findViewById(R.id.nav_to_menu_button);
         mNextButton.setOnClickListener(new View.OnClickListener() {
             //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
 

@@ -12,10 +12,10 @@ public class MatchHistory {
     private static final String FILENAME = "Scouter.json";
 
     private ArrayList<MatchData> mTotalMatchHistory;
-    private MatchDataSerializer mSerializer;
+    private final MatchDataSerializer mSerializer;
 
     private static MatchHistory sMatchHistory;
-    private Context mAppContext;
+    private final Context mAppContext;
     private File externalFilesDir;
 
 
@@ -107,7 +107,7 @@ public class MatchHistory {
         ArrayList temp = new ArrayList<MatchData>();
         temp = sortByTimestamp1(l);
         for(Object m : temp){
-            sorted.add(0, ((MatchData)m));
+            sorted.add(0, m);
         }
         return sorted;
     }

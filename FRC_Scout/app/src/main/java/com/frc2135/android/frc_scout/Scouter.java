@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class Scouter {
 
-    private ArrayList<String> pastScouters;
+    private final ArrayList<String> pastScouters;
     private static Scouter sScouter;
     private MatchDataSerializer mSerializer;
     private Context mContext;
@@ -76,7 +76,7 @@ public class Scouter {
 
     public void addPastScouter(String n){
         for(String x: pastScouters){
-            if(n.trim().toLowerCase().equals(x.trim().toLowerCase())){
+            if(n.trim().equalsIgnoreCase(x.trim())){
                 return;
             }
         }
