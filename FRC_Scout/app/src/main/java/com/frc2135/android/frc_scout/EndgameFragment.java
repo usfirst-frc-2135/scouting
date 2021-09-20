@@ -33,6 +33,7 @@ public class EndgameFragment extends Fragment {
     private RadioButton mRadioButton3;
     private RadioButton mRadioButton4;
     private RadioButton mRadioButton5;
+    private CheckBox mCheckBox1;
     private EditText mEditText;
 
     private MatchData mMatchData;
@@ -63,6 +64,17 @@ public class EndgameFragment extends Fragment {
         Log.d(TAG, mMatchData.getClimb()+"");
         mCheckBox.setChecked(mMatchData.getClimb());// Default is unchecked
         mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                updateEndgameData();
+            }
+        });
+
+        //Connects the checkbox for if the robot dies and sets up a listener to detect when the checked status is changed
+        mCheckBox1 = (CheckBox)v.findViewById(R.id.died_checkbox_true);
+        Log.d(TAG, mMatchData.getDied()+"");
+        mCheckBox1.setChecked(mMatchData.getDied());// Default is unchecked
+        mCheckBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 updateEndgameData();
@@ -166,6 +178,7 @@ public class EndgameFragment extends Fragment {
 
     public void updateEndgameData(){
         mMatchData.setClimb(mCheckBox.isChecked());
+        mMatchData.setDied(mCheckBox1.isChecked());
         mMatchData.setExtComments(mEditText.getText());
     }
 }

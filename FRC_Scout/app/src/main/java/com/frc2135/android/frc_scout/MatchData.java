@@ -28,6 +28,7 @@ public class MatchData {
     private String teamNumber;
     private String matchNumber;
     private boolean climbed;
+    private boolean died;
     private String matchID;
     private String competition;
     private Date timestamp;
@@ -35,8 +36,8 @@ public class MatchData {
 
     public MatchData(Context c) throws IOException, JSONException {
 
-        //Initializes/constructs everything
-        stats = new Object[14];
+        //Initializes/constructs everything (note: changed 14 to 15 in new object[15], could be wrong)
+        stats = new Object[15];
         setAutonLowPoints(0);
         setAutonOuterPoints(0);
         setTeleopLowPoints(0);
@@ -44,6 +45,7 @@ public class MatchData {
         setPassedInitLine(false);
         setRotationControl(false);
         setClimb(false);
+        setDied(false);
         setExtComments("");
         setDefense(0);
         name = "";
@@ -71,6 +73,7 @@ public class MatchData {
         setTeleopLowPoints(json.getInt("teleop low points"));
         setTeleopOuterPoints(json.getInt("teleop outer points"));
         setClimb(json.getBoolean("climbed"));
+        setDied(json.getBoolean("died"));
         setTeamNumber(json.getString("team number"));
         setMatchNumber(json.getString("match number"));
         setTimestamp(new Date(json.getString("timestamp")));
@@ -154,6 +157,15 @@ public class MatchData {
     public void setDefense(int x){
         stats[10] = x;
         defense = x;
+    }
+
+    public void setDied(boolean x){
+        stats[14] = x;
+        died = x;
+    }
+
+    public boolean getDied(){
+        return died;
     }
 
     //Returns current status of defense
@@ -295,6 +307,8 @@ public class MatchData {
         json.put("divider", ",");
         json.put("divider", ",");
         json.put("defense", defense);
+        json.put("divider", ",");
+        json.put("died", died);
         json.put("divider", ",");
         json.put("comments", extComments);
         json.put("divider", ",");

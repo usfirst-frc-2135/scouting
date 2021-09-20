@@ -125,6 +125,33 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:id="@+id/died_title"
+                style="?android:listSeparatorTextViewStyle"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Died"
+                android:textSize="24dp"
+                android:textColor="#000000"
+                />
+
+            <CheckBox
+                    android:id="@+id/died_checkbox_true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Robot Died"
+                    android:textSize="18dp" />
+
+
+
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -178,7 +205,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="100dp"></Space>
+                android:layout_height="50dp"></Space>
 
             <Button
                 android:id="@+id/nav_to_menu_button"
