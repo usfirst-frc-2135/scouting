@@ -51,7 +51,7 @@ public class LoadEventDialog extends DialogFragment {
         View v = getActivity().getLayoutInflater().inflate(R.layout.load_event_data_dialog,null);
 
 
-        mEventCodeText = (EditText)v.findViewById(R.id.event_code_field);
+        mEventCodeText = v.findViewById(R.id.event_code_field);
         mEventCodeText.setHint("Enter event code");
 
 

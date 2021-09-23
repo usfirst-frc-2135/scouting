@@ -55,7 +55,7 @@ public class PreMatchActivity extends AppCompatActivity {
 
         setContentView(R.layout.prematch_activity);
 
-        mCompetitionField = (AutoCompleteTextView) findViewById(R.id.comp_name);
+        mCompetitionField = findViewById(R.id.comp_name);
         mCompetitionField.setHint("Competition");
         mCompetitionField.setText(mMatchData.getCompetition());
         mCompetitionField.addTextChangedListener(new TextWatcher(){
@@ -72,7 +72,7 @@ public class PreMatchActivity extends AppCompatActivity {
 
         });
 
-        mScouterNameField =(AutoCompleteTextView)findViewById(R.id.scouter_name);
+        mScouterNameField = findViewById(R.id.scouter_name);
         mScouterNameField.setHint("Name");
         mScouterNameField.setText(mMatchData.getName());
         mScouterNameField.addTextChangedListener(new TextWatcher(){
@@ -133,7 +133,7 @@ public class PreMatchActivity extends AppCompatActivity {
             }
         });
 
-        mTeamNumberField = (AutoCompleteTextView)findViewById(R.id.team_number_field);
+        mTeamNumberField = findViewById(R.id.team_number_field);
         mTeamNumberField.setText(mMatchData.getTeamNumber()+"");
         mTeamNumberField.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -177,7 +177,7 @@ public class PreMatchActivity extends AppCompatActivity {
 
 
 
-        mStartScoutingButton = (Button) findViewById(R.id.start_scouting_button);
+        mStartScoutingButton = findViewById(R.id.start_scouting_button);
         mStartScoutingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -193,7 +193,7 @@ public class PreMatchActivity extends AppCompatActivity {
             }
         });
 
-        mErrorMessagepm = (TextView) findViewById(R.id.error_message_pm);
+        mErrorMessagepm = findViewById(R.id.error_message_pm);
         mErrorMessagepm.setVisibility(View.INVISIBLE);
         mErrorMessagepm.setTextColor(Color.RED);
 

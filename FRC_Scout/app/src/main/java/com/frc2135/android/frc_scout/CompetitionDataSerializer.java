@@ -22,8 +22,8 @@ import java.util.ArrayList;
 
 public class CompetitionDataSerializer {
     private static final String TAG = "CompetitionDataJSONSerializer";
-    private Context mContext;
-    private String mFileName;
+    private final Context mContext;
+    private final String mFileName;
     private CurrentCompetition c;
 
     public CompetitionDataSerializer(Context c, String f) {

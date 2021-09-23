@@ -21,8 +21,8 @@ import java.util.ArrayList;
 
 public class MatchDataSerializer {
     private static final String TAG = "MatchDataJSONSerializer";
-    private Context mContext;
-    private String mFileName;
+    private final Context mContext;
+    private final String mFileName;
     private Scouter s;
 
     public MatchDataSerializer(Context c, String f){
