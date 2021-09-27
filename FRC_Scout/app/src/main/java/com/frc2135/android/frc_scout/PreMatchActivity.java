@@ -111,7 +111,11 @@ public class PreMatchActivity extends AppCompatActivity {
         });
 
         mMatchNumberField = (AutoCompleteTextView)findViewById(R.id.match_number_field);
-        mMatchNumberField.setText(mMatchData.getMatchNumber());
+        if(mMatchData.getMatchNumber() != "")
+            mMatchNumberField.setText(mMatchData.getMatchNumber());
+        else if(mScout != null && mScout.getMostRecentMatchNumber() != "")
+            mMatchNumberField.setText(mScout.getNextExpectedMatchNumber());
+
         mMatchNumberField.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -216,6 +220,7 @@ public class PreMatchActivity extends AppCompatActivity {
         mScout = Scouter.get(getApplicationContext());
         mScout.addPastScouter(mScouterNameField.getText().toString());
         mScout.setMostRecentScoutName(mScouterNameField.getText().toString());
+        mScout.setMostRecentMatchNumber(mMatchNumberField.getText().toString());
         mScout.saveData(getApplicationContext());
         mMatchData.setName(mScouterNameField.getText().toString());
         mMatchData.setCompetition(mCompetitionField.getText().toString());

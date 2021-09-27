@@ -18,6 +18,7 @@ public class Scouter {
     private Context mContext;
     private String mFileName;
     private String mMostRecentScoutName;
+    private String mMostRecentMatchNumber;
     private static final String FILENAME = "Scouter.json";
     private static final String TAG = "Scouter";
 
@@ -25,6 +26,8 @@ public class Scouter {
     private Scouter(Context mAppContext){
 
         pastScouters = new ArrayList<String>();
+        mMostRecentScoutName = "";
+        mMostRecentMatchNumber = "";
 
         mSerializer = new MatchDataSerializer(mAppContext, FILENAME);
 
@@ -84,13 +87,36 @@ public class Scouter {
         pastScouters.add(n.trim());
     }
 
+    public String getMostRecentMatchNumber(){
+        return mMostRecentMatchNumber;
+    }
+    public void setMostRecentMatchNumber(String value){
+        mMostRecentMatchNumber = value;
+    }
+    public String getNextExpectedMatchNumber(){
+        String newMatchNumber = "";
+        if(mMostRecentMatchNumber != "") {
+            String prefix = "";
+            String numStr = "";
+            for(int i = 0; i < mMostRecentMatchNumber.length(); i++){
+                if(Character.isDigit(mMostRecentMatchNumber.charAt(i)))
+                    numStr += mMostRecentMatchNumber.charAt(i);
+                else prefix += mMostRecentMatchNumber.charAt(i);
+            }
+            newMatchNumber = prefix;
+            int newNum = Integer.parseInt(numStr);
+            newNum++;
+            newMatchNumber += Integer.toString(newNum);
+        }
+        return newMatchNumber;
+    }
+
     public String getMostRecentScoutName(){
         return mMostRecentScoutName;
     }
     public void setMostRecentScoutName(String name){
         mMostRecentScoutName = name;
     }
-
 
     public String[] getPastScouts(){
         String[] names = new String[pastScouters.size()];
