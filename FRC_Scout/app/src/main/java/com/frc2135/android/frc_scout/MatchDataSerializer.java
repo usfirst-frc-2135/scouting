@@ -55,6 +55,7 @@ public class MatchDataSerializer {
             Writer writerMatches = null;
             try{
                 Log.d(TAG, "Match saved to" + c.getMatchFileName());
+                Log.d(TAG, "====>> Match saved to" + c.getMatchFileName());
                 File f = new File("/data/user/0/com.frc2135.android.frc_scout/files"+"/"+c.getMatchFileName());
                 OutputStream out = new FileOutputStream(f);//This method(openFileOutput) takes a file name and a mode and uses both to create a pathway and a file to open for writing
                 writerMatches = new OutputStreamWriter(out); // This handles converting the written string data to byte code
@@ -117,6 +118,7 @@ public class MatchDataSerializer {
 
     public Scouter loadScouterData()throws IOException, JSONException {
         Log.d(TAG, "json being read into Scouter");
+        Log.d(TAG, "===> mFileName = "+mFileName.toString());
         ArrayList<MatchData> matchHistory = new ArrayList<MatchData>();
         BufferedReader reader = null;
         try {
@@ -134,7 +136,8 @@ public class MatchDataSerializer {
             JSONArray array = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
             //Build the array of matches from JSONObjects
             s=new Scouter(array.getJSONObject(0));
-            Log.d(TAG, s.getPastScouts()[0]);
+            if(s.getPastScouts() != null)
+              Log.d(TAG, s.getPastScouts()[0]);
 
 
         } catch (FileNotFoundException e) {

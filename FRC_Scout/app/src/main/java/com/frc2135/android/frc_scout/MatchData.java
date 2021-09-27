@@ -52,10 +52,13 @@ public class MatchData {
         teamNumber = "";
         matchNumber = "";
         matchID = UUID.randomUUID()+"";
+        competition = "compX"; //default
         competitionDataSerializer = new CompetitionDataSerializer(c, "current_competition.json");
-        competition = competitionDataSerializer.loadCurrentComp().getEventCode();
+        if(null != competitionDataSerializer && null != competitionDataSerializer.loadCurrentComp()){
+          competition = competitionDataSerializer.loadCurrentComp().getEventCode();
+        }
+        Log.d(TAG,"====>> MatchData competition set to "+competition.toString());
         setTimestamp(Calendar.getInstance().getTime());
-
     }
 
     public MatchData(JSONObject json) throws JSONException{

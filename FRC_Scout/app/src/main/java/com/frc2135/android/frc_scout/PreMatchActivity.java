@@ -117,12 +117,14 @@ public class PreMatchActivity extends AppCompatActivity {
         });
 
         ArrayAdapter<String> adapter4 = null;
-        try {
-            adapter4 = new ArrayAdapter<String>
-                    (PreMatchActivity.this, android.R.layout.select_dialog_item, e.getEventMatches(mMatchData.getCompetition()));
-        } catch (JSONException | IOException jsonException) {
-            jsonException.printStackTrace();
-        }
+        if(e != null && mMatchData != null && mMatchData.getCompetition() != "compX"){
+
+          try {
+              adapter4 = new ArrayAdapter<String>(PreMatchActivity.this, android.R.layout.select_dialog_item, e.getEventMatches(mMatchData.getCompetition()));
+          } catch (JSONException | IOException jsonException) {
+              jsonException.printStackTrace();
+          }
+        } else Log.d(TAG,"====>> mMatchData is null or competition is compX!");
         mMatchNumberField.setAdapter(adapter4);
         mMatchNumberField.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             @Override
