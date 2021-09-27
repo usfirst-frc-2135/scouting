@@ -45,6 +45,7 @@ public class PreMatchActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState){
 
         super.onCreate(savedInstanceState);
+        mScout = Scouter.get(getApplicationContext());
 
         String matchId = getIntent().getStringExtra("match_ID");
         mMatchData = MatchHistory.get(getApplicationContext()).getMatch(matchId);
@@ -73,8 +74,15 @@ public class PreMatchActivity extends AppCompatActivity {
         });
 
         mScouterNameField = findViewById(R.id.scouter_name);
-        mScouterNameField.setHint("Name");
-        mScouterNameField.setText(mMatchData.getName());
+        mScouterNameField.setHint("Scout Name");
+        if(mMatchData != null && mMatchData.getName() != "")
+            mScouterNameField.setText(mMatchData.getName());
+        else if(mScout != null) {
+            String mostRecentScoutName = mScout.getMostRecentScoutName();
+            if(mostRecentScoutName != ""){
+              mScouterNameField.setText(mostRecentScoutName);
+            }
+        }
         mScouterNameField.addTextChangedListener(new TextWatcher(){
             public void onTextChanged(CharSequence c, int start, int before, int count){
 
@@ -124,7 +132,7 @@ public class PreMatchActivity extends AppCompatActivity {
           } catch (JSONException | IOException jsonException) {
               jsonException.printStackTrace();
           }
-        } else Log.d(TAG,"====>> mMatchData is null or competition is compX!");
+        } 
         mMatchNumberField.setAdapter(adapter4);
         mMatchNumberField.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             @Override
@@ -207,6 +215,7 @@ public class PreMatchActivity extends AppCompatActivity {
     public void updatePreMatchData(){
         mScout = Scouter.get(getApplicationContext());
         mScout.addPastScouter(mScouterNameField.getText().toString());
+        mScout.setMostRecentScoutName(mScouterNameField.getText().toString());
         mScout.saveData(getApplicationContext());
         mMatchData.setName(mScouterNameField.getText().toString());
         mMatchData.setCompetition(mCompetitionField.getText().toString());

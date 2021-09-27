@@ -17,6 +17,7 @@ public class Scouter {
     private MatchDataSerializer mSerializer;
     private Context mContext;
     private String mFileName;
+    private String mMostRecentScoutName;
     private static final String FILENAME = "Scouter.json";
     private static final String TAG = "Scouter";
 
@@ -82,6 +83,14 @@ public class Scouter {
         }
         pastScouters.add(n.trim());
     }
+
+    public String getMostRecentScoutName(){
+        return mMostRecentScoutName;
+    }
+    public void setMostRecentScoutName(String name){
+        mMostRecentScoutName = name;
+    }
+
 
     public String[] getPastScouts(){
         String[] names = new String[pastScouters.size()];
