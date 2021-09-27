@@ -49,7 +49,7 @@ public class PreMatchActivity extends AppCompatActivity {
 
         String matchId = getIntent().getStringExtra("match_ID");
         mMatchData = MatchHistory.get(getApplicationContext()).getMatch(matchId);
-        final Event e = new Event(this, mMatchData.getCompetition().trim());
+        final Event finalEvent = new Event(this, mMatchData.getCompetition().trim());
 
         t =  getSupportActionBar();
         t.setTitle("Pre-Match: ");
@@ -75,11 +75,11 @@ public class PreMatchActivity extends AppCompatActivity {
 
         mScouterNameField = findViewById(R.id.scouter_name);
         mScouterNameField.setHint("Scout Name");
-        if(mMatchData != null && mMatchData.getName() != "")
+        if(mMatchData != null && !mMatchData.getName().isEmpty())
             mScouterNameField.setText(mMatchData.getName());
         else if(mScout != null) {
             String mostRecentScoutName = mScout.getMostRecentScoutName();
-            if(mostRecentScoutName != ""){
+            if(!mostRecentScoutName.isEmpty()){
               mScouterNameField.setText(mostRecentScoutName);
             }
         }
@@ -111,9 +111,9 @@ public class PreMatchActivity extends AppCompatActivity {
         });
 
         mMatchNumberField = (AutoCompleteTextView)findViewById(R.id.match_number_field);
-        if(mMatchData.getMatchNumber() != "")
+        if(!mMatchData.getMatchNumber().isEmpty())
             mMatchNumberField.setText(mMatchData.getMatchNumber());
-        else if(mScout != null && mScout.getMostRecentMatchNumber() != "")
+        else if(mScout != null && !mScout.getMostRecentMatchNumber().isEmpty())
             mMatchNumberField.setText(mScout.getNextExpectedMatchNumber());
 
         mMatchNumberField.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -129,13 +129,18 @@ public class PreMatchActivity extends AppCompatActivity {
         });
 
         ArrayAdapter<String> adapter4 = null;
-        if(e != null && mMatchData != null && mMatchData.getCompetition() != "compX"){
+        if(finalEvent != null && mMatchData != null && mMatchData.getCompetition() != "compX" && !mMatchData.getCompetition().isEmpty() ){
+            Log.d(TAG,"===> mMatchData.getCompetition() = "+mMatchData.getCompetition());
 
-          try {
-              adapter4 = new ArrayAdapter<String>(PreMatchActivity.this, android.R.layout.select_dialog_item, e.getEventMatches(mMatchData.getCompetition()));
-          } catch (JSONException | IOException jsonException) {
-              jsonException.printStackTrace();
-          }
+                try {
+                    String[] matchArray = finalEvent.getEventMatches(mMatchData.getCompetition());
+                    if(matchArray != null && matchArray.length > 0)
+                        adapter4 = new ArrayAdapter<String>(PreMatchActivity.this, android.R.layout.select_dialog_item, matchArray);
+                } catch (JSONException | IOException jsonException) {
+                    Log.d(TAG, "====> PreMatchActivity: adapter4 exception");
+                    jsonException.printStackTrace();
+                }
+
         } 
         mMatchNumberField.setAdapter(adapter4);
         mMatchNumberField.setOnFocusChangeListener(new View.OnFocusChangeListener(){
@@ -168,7 +173,7 @@ public class PreMatchActivity extends AppCompatActivity {
                     Log.d(TAG, "mTeamNumberField clicked");
                     try {
                         ArrayAdapter<String> adapter3 = null;
-                        String[] teams = e.getTeams(mMatchNumberField.getText().toString().trim());
+                        String[] teams = finalEvent.getTeams(mMatchNumberField.getText().toString().trim());
                         if(teams == null){
                             teams = new String[1];
                             teams[0] = "Error loading teams";

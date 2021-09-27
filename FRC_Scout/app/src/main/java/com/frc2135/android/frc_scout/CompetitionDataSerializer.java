@@ -75,11 +75,13 @@ public class CompetitionDataSerializer {
         ArrayList<MatchData> matchHistory = new ArrayList<MatchData>();
         BufferedReader reader = null;
 
+        CurrentCompetition currComp = null;
+        Log.d(TAG, "===> loadCurrentComp(): Looking up current Competition");
         File file = new File("/data/user/0/com.frc2135.android.frc_scout/files");
         File[] test = file.listFiles();
         if (test != null) {
             for (File f : test) {
-                Log.d(TAG, f.toString() + "*");
+                Log.d(TAG, "===> Looking at file: "+f.toString() + "*");
                 if (f.getName().equals("current_competition.json")) {
                     try {
                         //Open and read the file into a StringBuilder
@@ -95,7 +97,7 @@ public class CompetitionDataSerializer {
                         //Parse the JSON using JSONTokener
                         JSONObject object = (JSONObject) new JSONTokener(jsonString.toString()).nextValue();
                         //Build the array of matches from JSONObjects
-                        c = new CurrentCompetition(object);
+                        currComp = new CurrentCompetition(object);
                     } catch (FileNotFoundException e) {
                         //ignore this one; it happens when starting fresh
                         Log.e(TAG, e.toString());
@@ -105,11 +107,9 @@ public class CompetitionDataSerializer {
                         }
                     }
                 }
-
             }
         }
-
-        return c;
+        return currComp;
     }
 
 

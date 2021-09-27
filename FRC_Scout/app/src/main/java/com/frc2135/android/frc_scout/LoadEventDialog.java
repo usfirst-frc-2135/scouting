@@ -1,5 +1,7 @@
 package com.frc2135.android.frc_scout;
-
+import java.net.URL;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -32,6 +34,7 @@ import org.json.JSONException;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -94,60 +97,77 @@ public class LoadEventDialog extends DialogFragment {
         Intent i = new Intent(getActivity(), MatchListActivity.class);
 
         Log.d(TAG, "Load data clicked");
+        String eventCode = mEventCodeText.getText().toString();
+        Log.d(TAG,"====> LoadEventDialog: eventCode = '"+eventCode+"'");
+        if(!eventCode.isEmpty() && eventCode.length() > 4) {
+            CurrentCompetition.get(getContext()).setCompName(eventCode.substring(4).toUpperCase());
+            CurrentCompetition.get(getContext()).setEventCode(eventCode.trim());
+            if(getActivity() != null) {
+                mCompDataSerializer = new CompetitionDataSerializer(getActivity(), mEventCodeText.getText().toString().trim() + "matches.json");
 
-        CurrentCompetition.get(getContext()).setCompName(mEventCodeText.getText().toString().substring(4).toUpperCase());
-        CurrentCompetition.get(getContext()).setEventCode(mEventCodeText.getText().toString().trim());
-        mCompDataSerializer = new CompetitionDataSerializer(getActivity(),mEventCodeText.getText().toString().trim()+"matches.json");
-
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String url ="https://www.thebluealliance.com/api/v3/event/"+ mEventCodeText.getText().toString().trim()+"/matches";
-
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null , new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                Log.d(TAG, "success");
-                Log.d(TAG, response.toString().substring(0,100));
+                // Instantiate the RequestQueue.
+                RequestQueue queue = Volley.newRequestQueue(getActivity());
+                String urlStr = "https://www.thebluealliance.com/api/v3/event/" + mEventCodeText.getText().toString().trim() + "/matches";
                 try {
-                    File file = new File("/data/user/0/com.frc2135.android.frc_scout/files");
-                    File[] test = file.listFiles();
-                    if(test != null){
-                        for(File f: test){
-                            if(f.getName().equals(mEventCodeText.getText().toString().trim()+"matches.json")){
-                                f.delete();}
-                                mCompDataSerializer.saveEventData(response);
-                                //CurrentCompetition.get(getContext()).setData(response);
-                                Log.d(TAG, response.toString().substring(0, 50)+"&&&&&&&&&&");
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.d(TAG, "===> LoadEventData url = " + urlStr);
+                    URL urlObj = new URL(urlStr);
+                    urlObj.toURI();
+                } catch (MalformedURLException e) {
+                    Log.d(TAG,"===> URL not valid (MalformedURLException)!");
+                    return;
+                } catch (URISyntaxException e) {
+                    Log.d(TAG,"===> URL not valid (URISyntaxException)!");
+                    return;
                 }
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlStr, null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d(TAG, "success");
+                        Log.d(TAG, response.toString().substring(0, 100));
+                        try {
+                            File file = new File("/data/user/0/com.frc2135.android.frc_scout/files");
+                            File[] test = file.listFiles();
+                            if (test != null) {
+                                for (File f : test) {
+                                    if (f.getName().equals(mEventCodeText.getText().toString().trim() + "matches.json")) {
+                                        f.delete();
+                                    }
+                                    mCompDataSerializer.saveEventData(response);
+                                    //CurrentCompetition.get(getContext()).setData(response);
+                                    Log.d(TAG, response.toString().substring(0, 50) + "&&&&&&&&&&");
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "fail");
-                Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_LONG);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d(TAG, "LoadEventData::sendResult() failed!");
+       //                 Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_LONG);
+                    }
+                }
+                ) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("X-TBA-Auth-Key", "E7akoVihRO2ZbNHtW2nRrjuNTcZaOxWtfeYWwh4XILMsKsqLnH2ZQrKAnbevlWGn");
+                        return params;
+                    }
+                };
+
+                queue.add(jsonArrayRequest);
+
+                mCompDataSerializer.saveCurrentCompetition(CurrentCompetition.get(getContext()).toJSON());
+
+                startActivity(i);
             }
         }
-        ){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("X-TBA-Auth-Key", "E7akoVihRO2ZbNHtW2nRrjuNTcZaOxWtfeYWwh4XILMsKsqLnH2ZQrKAnbevlWGn");
-                return params;
-            }};
-
-        queue.add(jsonArrayRequest);
-
-        mCompDataSerializer.saveCurrentCompetition(CurrentCompetition.get(getContext()).toJSON());
-
-        startActivity(i);
-
+        else Log.d(TAG, "===> LoadEventDialog: no event code entered!");
     }
 }
 
