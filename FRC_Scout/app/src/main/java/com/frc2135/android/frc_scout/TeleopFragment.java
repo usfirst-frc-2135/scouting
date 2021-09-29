@@ -118,7 +118,7 @@ public class TeleopFragment extends Fragment {
     public void updateTeleopData(){
         mMatchData.setTeleopLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
         mMatchData.setTeleopOuterPoints(Integer.parseInt(mHighPoints.getText().toString()));
-        mMatchData.setPassedInitLine(mRotationCheckBox.isChecked());
+        mMatchData.setRotationControl(mRotationCheckBox.isChecked());
         MatchHistory.get(getActivity()).saveData();
     }
 
