@@ -66,9 +66,7 @@ public class PreMatchActivity extends AppCompatActivity {
             public void beforeTextChanged(CharSequence c, int start, int count, int after){
             }
             public void afterTextChanged(Editable c){
-                checkValidData();
-                mMatchData.setCompetition(mCompetitionField.getText().toString());
-
+                mErrorMessagepm.setVisibility(View.INVISIBLE);
             }
 
         });
@@ -85,14 +83,11 @@ public class PreMatchActivity extends AppCompatActivity {
         }
         mScouterNameField.addTextChangedListener(new TextWatcher(){
             public void onTextChanged(CharSequence c, int start, int before, int count){
-
             }
             public void beforeTextChanged(CharSequence c, int start, int count, int after){
             }
             public void afterTextChanged(Editable c){
-                //updatePreMatchData();
-                checkValidData();
-                mMatchData.setName(mScouterNameField.getText().toString());
+                mErrorMessagepm.setVisibility(View.INVISIBLE);
             }
 
         });
@@ -130,14 +125,11 @@ public class PreMatchActivity extends AppCompatActivity {
 
         ArrayAdapter<String> adapter4 = null;
         if(finalEvent != null && mMatchData != null && mMatchData.getCompetition() != "compX" && !mMatchData.getCompetition().isEmpty() ){
-            Log.d(TAG,"===> mMatchData.getCompetition() = "+mMatchData.getCompetition());
-
                 try {
                     String[] matchArray = finalEvent.getEventMatches(mMatchData.getCompetition());
                     if(matchArray != null && matchArray.length > 0)
                         adapter4 = new ArrayAdapter<String>(PreMatchActivity.this, android.R.layout.select_dialog_item, matchArray);
                 } catch (JSONException | IOException jsonException) {
-                    Log.d(TAG, "====> PreMatchActivity: adapter4 exception");
                     jsonException.printStackTrace();
                 }
 
@@ -157,10 +149,13 @@ public class PreMatchActivity extends AppCompatActivity {
         mTeamNumberField.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mErrorMessagepm.setVisibility(View.INVISIBLE);
                 mMatchData.setTeamNumber(parent.getItemAtPosition(position).toString());
+                // TODO - can we remove keyboard here???
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                mErrorMessagepm.setVisibility(View.INVISIBLE);
                 mTeamNumberField.setSelection(0);
             }
         });
@@ -242,7 +237,9 @@ public class PreMatchActivity extends AppCompatActivity {
     }
 
     private boolean checkValidData(){
+        mErrorMessagepm.setVisibility(View.INVISIBLE);
         if(mCompetitionField.getText().toString().trim().equals("")||mScouterNameField.getText().toString().trim().equals("")|| mTeamNumberField.getText().toString().trim().equals("")||mMatchNumberField.getText().equals("")){
+            Log.d(TAG,"+++>> checkValidData(): ERROR");
             mErrorMessagepm.setVisibility(View.VISIBLE);
             return false;
         }
