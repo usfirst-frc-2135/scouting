@@ -297,7 +297,6 @@ public class MatchData {
 
     public String encodeToTSV(){
         String message = "";
-        message += "--\t";
         message += m_teamNumber+"  \t";
         message += m_passedInitLine+"\t";
         message += m_autonLowPoints+"\t";
@@ -307,8 +306,8 @@ public class MatchData {
         message += m_rotationControl+"\t";
         message += m_climbed+"\t";
         message += m_died+"\t";
-// NOTE - m_balanced and m_defense are not included here yet!
-        message += "--\t";
+        message += m_defense+"\t";
+// NOTE - m_balanced is not included here yet!
         return message;
     }
 
