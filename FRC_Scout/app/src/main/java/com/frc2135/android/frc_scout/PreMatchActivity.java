@@ -182,6 +182,7 @@ public class PreMatchActivity extends AppCompatActivity {
                     }catch(NullPointerException nullPointerException){
                         nullPointerException.printStackTrace();
                     }
+                    mTeamNumberField.setDropDownHeight(620);
                     mTeamNumberField.showDropDown();
 
                 }
