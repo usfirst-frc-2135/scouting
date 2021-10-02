@@ -122,7 +122,7 @@ public class LoadEventDialog extends DialogFragment {
                 JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlStr, null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.d(TAG, "success");
+                        Log.d(TAG, "JsonArrayRequest success");
                         Log.d(TAG, response.toString().substring(0, 100));
                         try {
                             File file = new File("/data/user/0/com.frc2135.android.frc_scout/files");

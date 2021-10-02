@@ -35,10 +35,11 @@ public class Scouter {
        if(pastScouters.size()==0){
            try{
                Log.d(TAG, "Loading scouter");
-               for(String x:mSerializer.loadScouterData().getPastScouts()){
-                   pastScouters.add(x);
+               if(mSerializer.loadScouterData() != null) {
+                   for (String x : mSerializer.loadScouterData().getPastScouts()) {
+                       pastScouters.add(x);
+                   }
                }
-
 
            }
            catch(Exception e){
