@@ -56,6 +56,16 @@ public class MatchData {
     private CompetitionDataSerializer m_competitionDataSerializer;
     private static final int STATS_SIZE = 16;
 
+    public String stripTeamNamePrefix(String teamName){
+        String newTeamName = "";
+        for(int i = 0; i < teamName.length(); i++){
+                if(Character.isDigit(teamName.charAt(i)))
+                    newTeamName += teamName.charAt(i);
+            }
+            return newTeamName;
+        }
+
+
     ////////////////////////  constructor   //////////////////////////////
     public MatchData(Context c) throws IOException, JSONException {
 
@@ -109,10 +119,9 @@ public class MatchData {
         setBalanced(json.getBoolean("balanced"));
         m_matchID = json.getString("id1");
 
-        stats[0] = m_name;
-        stats[1] = m_competition;
-        stats[12] = m_timestamp;
-//????? why are the rest of the stats not set here???
+//Redundant        stats[0] = m_name;
+//Redundant        stats[1] = m_competition;
+//Redundant        stats[12] = m_timestamp;
     }
 
     ////////////  m_matchID   /////////////////////
@@ -296,18 +305,37 @@ public class MatchData {
     }
 
     public String encodeToTSV(){
+        // The order is important! 
         String message = "";
-        message += m_teamNumber+"  \t";
-        message += m_passedInitLine+"\t";
-        message += m_autonLowPoints+"\t";
-        message += m_autonOuterPoints+"\t";
-        message += m_teleopLowPoints+"\t";
-        message += m_teleopOuterPoints+"\t";
-        message += m_rotationControl+"\t";
-        message += m_climbed+"\t";
-        message += m_died+"\t";
-        message += m_defense+"\t";
-// NOTE - m_balanced is not included here yet!
+
+        // For teamNumber, strip off 'frc' prefix.
+        message += stripTeamNamePrefix(m_teamNumber) +"\t";
+
+        if(m_passedInitLine)  // bool value: use 1/0 instead of true/false
+            message += "1" + "\t";
+        else message += "0" + "\t";
+
+        message += m_autonLowPoints + "\t";
+        message += m_autonOuterPoints + "\t";
+        message += m_teleopLowPoints + "\t";
+        message += m_teleopOuterPoints + "\t";
+
+        // Boolean values: use 1/0 instead of true/false.
+        if(m_rotationControl)
+            message += "1" + "\t";
+        else message += "0" + "\t";
+
+        if(m_climbed)
+            message += "1" + "\t";
+        else message += "0" + "\t";
+        if(m_died)
+            message += "1" + "\t";
+        else message += "0" + "\t";
+
+        message += m_defense + "\t";
+// TODO - m_balanced is not included here yet! (It's not yet in the spreadsheet!)
+
+        Log.d(TAG,"MatchData encodeToTSV(): " + message.toString());
         return message;
     }
 
