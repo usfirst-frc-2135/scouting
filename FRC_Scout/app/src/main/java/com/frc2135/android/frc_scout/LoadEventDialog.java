@@ -1,22 +1,18 @@
 package com.frc2135.android.frc_scout;
-import java.net.URL;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
@@ -43,8 +39,9 @@ public class LoadEventDialog extends DialogFragment {
     private CompetitionDataSerializer mCompDataSerializer;
 
     private EditText mEventCodeText;
-
+    private String mEVENTCODE  = "myEventCode"; // Used for Toast msg
     private Bundle b;
+    private Context mAppContext;  // TEST
 
     public Dialog onCreateDialog(Bundle SavedInstanceState){
         setCancelable(true);
@@ -102,23 +99,15 @@ public class LoadEventDialog extends DialogFragment {
         if(!eventCode.isEmpty() && eventCode.length() > 4) {
             CurrentCompetition.get(getContext()).setCompName(eventCode.substring(4).toUpperCase());
             CurrentCompetition.get(getContext()).setEventCode(eventCode.trim());
+            mAppContext = getContext();
+            mEVENTCODE = eventCode;
             if(getActivity() != null) {
                 mCompDataSerializer = new CompetitionDataSerializer(getActivity(), mEventCodeText.getText().toString().trim() + "matches.json");
 
                 // Instantiate the RequestQueue.
                 RequestQueue queue = Volley.newRequestQueue(getActivity());
                 String urlStr = "https://www.thebluealliance.com/api/v3/event/" + mEventCodeText.getText().toString().trim() + "/matches";
-                try {
-                    Log.d(TAG, "===> LoadEventData url = " + urlStr);
-                    URL urlObj = new URL(urlStr);
-                    urlObj.toURI();
-                } catch (MalformedURLException e) {
-                    Log.d(TAG,"===> URL not valid (MalformedURLException)!");
-                    return;
-                } catch (URISyntaxException e) {
-                    Log.d(TAG,"===> URL not valid (URISyntaxException)!");
-                    return;
-                }
+                Log.d(TAG, "===> LoadEventData url = " + urlStr);
                 JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlStr, null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -134,7 +123,10 @@ public class LoadEventDialog extends DialogFragment {
                                     }
                                     mCompDataSerializer.saveEventData(response);
                                     //CurrentCompetition.get(getContext()).setData(response);
-                                    Log.d(TAG, response.toString().substring(0, 50) + "&&&&&&&&&&");
+                                    Log.d(TAG,"+++>> Successfully loaded competition data!");
+                                    Toast toast1 = Toast.makeText(mAppContext, "Successfully loaded competition match data for event: "+mEVENTCODE, Toast.LENGTH_LONG);
+                                    toast1.setGravity(Gravity.CENTER,0,0);
+                                    toast1.show();
                                 }
                             }
                         } catch (JSONException e) {
@@ -148,7 +140,12 @@ public class LoadEventDialog extends DialogFragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d(TAG, "LoadEventData::sendResult() failed!");
-       //                 Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_LONG);
+                        String toastMsg = " Failed to load competition match data for event: '"+mEVENTCODE+"'. \n Check wifi connections or eventCode string.";
+                        Toast toast2 = Toast.makeText(mAppContext, toastMsg, Toast.LENGTH_LONG);
+                        View view2 = toast2.getView();
+                        view2.setBackgroundColor(Color.RED);
+                        toast2.setGravity(Gravity.CENTER,0,0);
+                        toast2.show();
                     }
                 }
                 ) {

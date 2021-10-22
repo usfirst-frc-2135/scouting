@@ -33,7 +33,7 @@ public class PreMatchActivity extends AppCompatActivity {
     private TextView mErrorMessagepm;
 
     private MatchData mMatchData;
-    private ActionBar t;
+    private ActionBar mActionBar;
 
     public static final String TAG = "PreMatch Fragment";
     public static final String EXTRA_DATE = "com.frc2135.android.frc_scout.date";
@@ -51,8 +51,8 @@ public class PreMatchActivity extends AppCompatActivity {
         mMatchData = MatchHistory.get(getApplicationContext()).getMatch(matchId);
         final Event finalEvent = new Event(this, mMatchData.getCompetition().trim());
 
-        t =  getSupportActionBar();
-        t.setTitle("Pre-Match: ");
+        mActionBar =  getSupportActionBar();
+        mActionBar.setTitle("Pre-Match: ");
 
         setContentView(R.layout.prematch_activity);
 
@@ -114,7 +114,8 @@ public class PreMatchActivity extends AppCompatActivity {
         mMatchNumberField.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mMatchData.setMatchNumber(parent.getItemAtPosition(position).toString());
+                if(parent != null && parent.getItemAtPosition(position) != null)
+                    mMatchData.setMatchNumber(parent.getItemAtPosition(position).toString());
             }
 
             @Override
@@ -130,7 +131,11 @@ public class PreMatchActivity extends AppCompatActivity {
                     if(matchArray != null && matchArray.length > 0)
                         adapter4 = new ArrayAdapter<String>(PreMatchActivity.this, android.R.layout.select_dialog_item, matchArray);
                 } catch (JSONException | IOException jsonException) {
+                    Log.d(TAG,"====>> adapter4 catch JSONEexception/IOException - finalEvent.getEventMatches()!");
                     jsonException.printStackTrace();
+                } catch(NullPointerException nullPointerException){
+                    Log.d(TAG,"====>> adapter4 catch NullPointerException - finalEvent.getEventMatches()!");
+                    nullPointerException.printStackTrace();
                 }
 
         } 
@@ -150,8 +155,10 @@ public class PreMatchActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mErrorMessagepm.setVisibility(View.INVISIBLE);
-                mMatchData.setTeamNumber(parent.getItemAtPosition(position).toString());
-                // TODO - can we remove keyboard here???
+                if (parent != null && parent.getItemAtPosition(position) != null) {
+                    mMatchData.setTeamNumber(parent.getItemAtPosition(position).toString());
+                    // TODO - can we remove keyboard here???
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -184,13 +191,9 @@ public class PreMatchActivity extends AppCompatActivity {
                     }
                     mTeamNumberField.setDropDownHeight(620);
                     mTeamNumberField.showDropDown();
-
                 }
             }
         });
-
-
-
 
         mStartScoutingButton = findViewById(R.id.start_scouting_button);
         mStartScoutingButton.setOnClickListener(new View.OnClickListener() {
@@ -199,22 +202,16 @@ public class PreMatchActivity extends AppCompatActivity {
 
                 if(checkValidData()){
                     updatePreMatchData();
-                    Intent i = new Intent(PreMatchActivity.this, ScoutingActivity.class);
-                    i.putExtra("match_ID", mMatchData.getMatchID());
-                    startActivityForResult(i, 0);
+                    Intent intent1 = new Intent(PreMatchActivity.this, ScoutingActivity.class);
+                    intent1.putExtra("match_ID", mMatchData.getMatchID());
+                    startActivityForResult(intent1, 0);
                 }
-
-
             }
         });
 
         mErrorMessagepm = findViewById(R.id.error_message_pm);
         mErrorMessagepm.setVisibility(View.INVISIBLE);
         mErrorMessagepm.setTextColor(Color.RED);
-
-
-
-
     }
 
     public void updatePreMatchData(){
@@ -247,8 +244,6 @@ public class PreMatchActivity extends AppCompatActivity {
         mErrorMessagepm.setVisibility(View.INVISIBLE);
         return true;
     }
-
-
 
     @Override
     public void onBackPressed() {

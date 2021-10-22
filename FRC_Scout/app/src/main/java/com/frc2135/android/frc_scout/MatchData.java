@@ -66,7 +66,7 @@ public class MatchData {
         }
 
 
-    ////////////////////////  constructor   //////////////////////////////
+    ////////////////////////  Default constructor   //////////////////////////////
     public MatchData(Context c) throws IOException, JSONException {
 
         //Initializes/constructs everything 
@@ -96,6 +96,7 @@ public class MatchData {
         Log.d(TAG,"MatchData m_competition set to "+m_competition.toString());
     }
 
+    ////////////////////////  Main constructor   //////////////////////////////
     public MatchData(JSONObject json) throws JSONException{
 
         Log.d(TAG, "Matches being created using json data");
