@@ -32,7 +32,7 @@ public class TeleopFragment extends Fragment {
 
 
     private MatchData mMatchData;
-    private ActionBar t;
+    private ActionBar mActionBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -41,10 +41,9 @@ public class TeleopFragment extends Fragment {
         mMatchData = ((ScoutingActivity)getActivity()).getCurrentMatch();
         Log.d(TAG, mMatchData.getMatchID());
 
-        t =  ((AppCompatActivity)getActivity()).getSupportActionBar();
-        t.setTitle("Teleoperated");
-
-
+        mActionBar =  ((AppCompatActivity)getActivity()).getSupportActionBar();
+        String teamNumber = mMatchData.stripTeamNamePrefix(mMatchData.getTeamNumber());
+        mActionBar.setTitle("Teleoperated                      - scouting Team "+teamNumber);
     }
 
     @Override

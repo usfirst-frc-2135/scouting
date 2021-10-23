@@ -43,7 +43,7 @@ public class EndgameFragment extends Fragment {
     public static final String QRTAG = "qr";
     private static final String TAG = "Endgame Fragment";
 
-    private ActionBar t;
+    private ActionBar mActionBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -51,8 +51,9 @@ public class EndgameFragment extends Fragment {
 
         mMatchData = ((ScoutingActivity)getActivity()).getCurrentMatch();
 
-        t =  ((AppCompatActivity)getActivity()).getSupportActionBar();
-        t.setTitle("Endgame");
+        mActionBar =  ((AppCompatActivity)getActivity()).getSupportActionBar();
+        String teamNumber = mMatchData.stripTeamNamePrefix(mMatchData.getTeamNumber());
+        mActionBar.setTitle("Endgame                           - scouting Team "+teamNumber);
     }
 
     @Override
