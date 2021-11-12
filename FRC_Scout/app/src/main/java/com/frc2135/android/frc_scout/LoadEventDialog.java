@@ -67,7 +67,7 @@ public class LoadEventDialog extends DialogFragment {
             }
         }).create();
 
-        dialog.setTitle("Filter Matches");
+        dialog.setTitle("Load Competition Data");
 
         dialog.show();
         Button b = dialog.getButton(AlertDialog.BUTTON_POSITIVE);

@@ -6,6 +6,6 @@
     <item android:id="@+id/about_item"
         android:title="About" />
     <item android:id="@+id/load_data_over_network"
-        android:title="Load competition data" />
+        android:title="Load Competition Data" />
 
 </menu>
