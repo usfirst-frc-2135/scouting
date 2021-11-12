@@ -34,6 +34,18 @@ public class TeleopFragment extends Fragment {
     private MatchData mMatchData;
     private ActionBar mActionBar;
 
+    // Sets the new result integer value for the given Button, either decrementing or incrementing it.
+    // If the decrement case falls below zero, returns 0.
+    public void updatePointsInt(TextView pointsTextView,boolean bIncr){
+      int result = Integer.parseInt(pointsTextView.getText().toString()); // get current value as int
+      if(bIncr)
+        result += 1;
+      else result -= 1;
+      if(result < 0)
+        result = 0;
+      pointsTextView.setText(result + "");
+    }
+ 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -67,8 +79,8 @@ public class TeleopFragment extends Fragment {
         mLowPortPointsDec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Decreases displayed point value by 1
-                mLowPoints.setText((Integer.parseInt(mLowPoints.getText().toString())- 1) + "");
+                // Decreases displayed point value by 1; sets to 0 if result goes negative.
+                updatePointsInt(mLowPoints,false);
             }
         });
 
@@ -77,8 +89,8 @@ public class TeleopFragment extends Fragment {
         mLowPortPointsInc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Increases displayed point value by 1
-                mLowPoints.setText((Integer.parseInt(mLowPoints.getText().toString())+ 1) + "");
+                // Increases displayed point value by 1
+                updatePointsInt(mLowPoints,true);
             }
         });
 
@@ -87,8 +99,8 @@ public class TeleopFragment extends Fragment {
         mHighPortPointsDec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Decreases displayed point value by 1
-                mHighPoints.setText((Integer.parseInt(mHighPoints.getText().toString())- 1) + "");
+                // Decreases displayed point value by 1; sets to 0 if negative result
+                updatePointsInt(mHighPoints,false);
             }
         });
 
@@ -98,7 +110,7 @@ public class TeleopFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //Increases displayed point value by 1
-                mHighPoints.setText((Integer.parseInt(mHighPoints.getText().toString())+ 1) + "");
+                updatePointsInt(mHighPoints,true);
             }
         });
 
