@@ -20,7 +20,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 // stats[3] - m_matchNumber
 // stats[4] - m_autonOuterPoints
 // stats[5] - m_autonLowPoints
-// stats[6] - m_passedInitLine
+// stats[6] - m_exitedTarmac
 // stats[7] - m_teleopOuterPoints
 // stats[8] - m_teleopLowPoints
 // stats[9] - m_climbed
@@ -41,7 +41,7 @@ public class MatchData {
     private int m_teleopLowPoints;
     private int m_teleopOuterPoints;
     private int m_defense;
-    private boolean m_passedInitLine;
+    private boolean m_exitedTarmac;
     private boolean m_rotationControl;
     private String m_extComments;
     private boolean m_climbed;
@@ -77,7 +77,7 @@ public class MatchData {
         m_matchNumber = "";
         setAutonOuterPoints(0);
         setAutonLowPoints(0);
-        setPassedInitLine(false);
+        setExitedTarmac(false);
         setTeleopOuterPoints(0);
         setTeleopLowPoints(0);
         setClimb(false);
@@ -108,7 +108,7 @@ public class MatchData {
         setMatchNumber(json.getString("match number"));
         setAutonOuterPoints(json.getInt("auton outer points"));
         setAutonLowPoints(json.getInt("auton low points"));
-        setPassedInitLine(json.getBoolean("init_line"));
+        setExitedTarmac(json.getBoolean("tarmac"));
         setTeleopOuterPoints(json.getInt("teleop outer points"));
         setTeleopLowPoints(json.getInt("teleop low points"));
         setClimb(json.getBoolean("climbed"));
@@ -190,14 +190,14 @@ public class MatchData {
         return m_autonLowPoints;
     }
 
-    ////////////  m_passedInitLine   /////////////////////
-    public void setPassedInitLine(boolean x){
+    ////////////  m_exitedTarmac   /////////////////////
+    public void setExitedTarmac(boolean x){
         stats[6] = x;
-        m_passedInitLine = x;
+        m_exitedTarmac = x;
     }
 
-    public boolean getPassedInitLine(){
-        return m_passedInitLine;
+    public boolean getExitedTarmac(){
+        return m_exitedTarmac;
     }
 
     ////////////  m_teleopOuterPoints   /////////////////////
@@ -312,7 +312,7 @@ public class MatchData {
         // For teamNumber, strip off 'frc' prefix.
         message += stripTeamNamePrefix(m_teamNumber) +"\t";
 
-        if(m_passedInitLine)  // bool value: use 1/0 instead of true/false
+        if(m_exitedTarmac)  // bool value: use 1/0 instead of true/false
             message += "1" + "\t";
         else message += "0" + "\t";
 
@@ -350,7 +350,7 @@ public class MatchData {
         json.put("divider", ", \n");
 
 
-        json.put("headings", "Competition, Team Number, Match Number, Auton Outer Port, Auton Lower Port, Crossed Initiation Line, Rotational Control, Teleop Low Port, Teleop Outer Port, Climbed, Defense Rating, Died, Comments, Timestamp, MatchID \n");
+        json.put("headings", "Competition, Team Number, Match Number, Auton Outer Port, Auton Lower Port, Exited Tarmac, Rotational Control, Teleop Low Port, Teleop Outer Port, Climbed, Defense Rating, Died, Comments, Timestamp, MatchID \n");
         json.put("competition", m_competition);
         json.put("divider", ",");
         json.put("team number", m_teamNumber);
@@ -361,7 +361,7 @@ public class MatchData {
         json.put("divider", ",");
         json.put("auton low points", m_autonLowPoints);
         json.put("divider", ",");
-        json.put("init_line", m_passedInitLine);
+        json.put("tarmac", m_exitedTarmac);
         json.put("divider", ",");
         json.put("rot_control", m_rotationControl);
         json.put("divider", ",");
