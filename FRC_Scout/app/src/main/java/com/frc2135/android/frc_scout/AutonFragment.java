@@ -117,9 +117,9 @@ public class AutonFragment extends Fragment {
             }
         });
 
-        //Connects the checkbox for passing the initiation line and sets up a listener to detect when the checked status is changed
-        mCheckBox = v.findViewById(R.id.auto_line_checkbox);
-        mCheckBox.setChecked(mMatchData.getPassedInitLine());
+        //Connects the checkbox for exiting the tarmac and sets up a listener to detect when the checked status is changed
+        mCheckBox = v.findViewById(R.id.tarmac_checkbox);
+        mCheckBox.setChecked(mMatchData.getExitedTarmac());
 
 
 
@@ -132,6 +132,6 @@ public class AutonFragment extends Fragment {
     public void updateAutonData(){
         mMatchData.setAutonLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
         mMatchData.setAutonOuterPoints(Integer.parseInt(mHighPoints.getText().toString()));
-        mMatchData.setPassedInitLine(mCheckBox.isChecked());
+        mMatchData.setExitedTarmac(mCheckBox.isChecked());
     }
 }

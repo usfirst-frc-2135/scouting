@@ -23,7 +23,7 @@
                 android:id="@+id/autonomous_title_init_line"
                 android:layout_width="190dp"
                 android:layout_height="wrap_content"
-                android:text="Initiation Line"
+                android:text="Tarmac"
                 android:textSize="24dp"
                 style="?android:listSeparatorTextViewStyle"
                 android:textColor="#000000"/>
@@ -31,12 +31,12 @@
 
 
             <CheckBox
-                android:id="@+id/auto_line_checkbox"
+                android:id="@+id/tarmac_checkbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:text="@string/auto_line"
+                android:text="@string/tarmac_cross"
                 android:textSize="18dp" />
 
         </LinearLayout>
