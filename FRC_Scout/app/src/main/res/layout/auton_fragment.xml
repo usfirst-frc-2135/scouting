@@ -20,13 +20,14 @@
             android:orientation="horizontal"
             android:paddingTop="10dp">
             <TextView
-                android:id="@+id/autonomous_title_init_line"
+                android:id="@+id/tarmac_title"
                 android:layout_width="190dp"
                 android:layout_height="wrap_content"
                 android:text="Tarmac"
                 android:textSize="24dp"
                 style="?android:listSeparatorTextViewStyle"
-                android:textColor="#000000"/>
+                android:textColor="#900C3F"/>
+                android:paddingBottom="20dp"/>
 
 
 
@@ -42,13 +43,13 @@
         </LinearLayout>
 
             <TextView
-                android:id="@+id/power_port_title"
+                android:id="@+id/hub_scoring_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/teleop_power_port"
+                android:text="HUB SCORING"
                 android:textSize="24dp"
                 style="?android:listSeparatorTextViewStyle"
-                android:textColor="#000000"
+                android:textColor="#900C3F"
                 android:paddingTop="20dp"
                 android:paddingBottom="10dp"/>
 
@@ -61,14 +62,14 @@
                 android:layout_marginTop="20dp">
 
                 <TextView
-                    android:id="@+id/highportTitle"
+                    android:id="@+id/high_hub_title"
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
-                    android:text="@string/outerPortTitle"
+                    android:text="Upper Hub"
                     android:textSize="18dp"
                     style="?android:listSeparatorTextViewStyle"/>
                 <Button
-                    android:id="@+id/highportpointsdec"
+                    android:id="@+id/high_points_dec"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="@string/decrease"
@@ -80,7 +81,7 @@
                 </Button>
 
                 <TextView
-                    android:id="@+id/highportpoints"
+                    android:id="@+id/high_points_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="25dp"
@@ -89,7 +90,7 @@
                 </TextView>
 
                 <Button
-                    android:id="@+id/highportpointsinc"
+                    android:id="@+id/high_points_inc"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="@string/increase"
@@ -109,16 +110,16 @@
                 android:layout_marginTop="20dp">
 
                 <TextView
-                    android:id="@+id/lowportTitle"
+                    android:id="@+id/low_points_title"
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
-                    android:text="@string/lowPortTitle"
+                    android:text="Lower Hub"
                     android:textSize="18dp"
                     style="?android:listSeparatorTextViewStyle"
                     />
 
                 <Button
-                    android:id="@+id/lowportpointsdec"
+                    android:id="@+id/low_points_dec"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="@string/decrease"
@@ -130,7 +131,7 @@
                 </Button>
 
                 <TextView
-                    android:id="@+id/lowportpoints"
+                    android:id="@+id/low_points_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="25dp"
@@ -139,7 +140,7 @@
                 </TextView>
 
                 <Button
-                    android:id="@+id/lowportpointsinc"
+                    android:id="@+id/low_points_inc"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="@string/increase"

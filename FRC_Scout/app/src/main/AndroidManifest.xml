@@ -27,7 +27,7 @@
         <activity
             android:name="com.frc2135.android.frc_scout.Splash"
             android:theme="@style/AppTheme.NoActionBar"
-            android:label="FRC Scout">
+            android:label="FRC Scout 2022">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
