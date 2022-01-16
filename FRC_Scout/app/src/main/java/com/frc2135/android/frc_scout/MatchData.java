@@ -24,12 +24,10 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 // stats[7] - m_teleopOuterPoints
 // stats[8] - m_teleopLowPoints
 // stats[9] - m_climbed
-// stats[10] - m_defense
-// stats[11] - m_extComments
-// stats[12] - m_timestamp
-// stats[13] - m_rotationControl
-// stats[14] - m_died
-// stats[15] - m_balanced
+// stats[10] - m_extComments
+// stats[11] - m_timestamp
+// stats[12] - m_rotationControl
+// stats[13] - m_died
 // If a new stats[] is added, make sure to adjust STATS_SIZE!
 /////////////////////////
 
@@ -40,12 +38,10 @@ public class MatchData {
     private int m_autonHighPoints;
     private int m_teleopLowPoints;
     private int m_teleopOuterPoints;
-    private int m_defense;
+    private int m_climbed;
     private boolean m_exitedTarmac;
     private boolean m_rotationControl;
     private String m_extComments;
-    private boolean m_climbed;
-    private boolean m_balanced;
     private boolean m_died;
     private String m_name;
     private String m_teamNumber;
@@ -54,7 +50,7 @@ public class MatchData {
     private String m_competition;
     private Date m_timestamp;
     private CompetitionDataSerializer m_competitionDataSerializer;
-    private static final int STATS_SIZE = 16;
+    private static final int STATS_SIZE = 14;
 
     public String stripTeamNamePrefix(String teamName){
         String newTeamName = "";
@@ -80,13 +76,11 @@ public class MatchData {
         setExitedTarmac(false);
         setTeleopOuterPoints(0);
         setTeleopLowPoints(0);
-        setClimb(false);
-        setDefense(0);
+        setClimb(0);
         setExtComments("");
         setRotationControl(false);
         setTimestamp(Calendar.getInstance().getTime());
         setDied(false);
-        setBalanced(false);
 
         m_matchID = UUID.randomUUID()+"";
         m_competitionDataSerializer = new CompetitionDataSerializer(c, "current_competition.json");
@@ -111,13 +105,11 @@ public class MatchData {
         setExitedTarmac(json.getBoolean("tarmac"));
         setTeleopOuterPoints(json.getInt("teleop outer points"));
         setTeleopLowPoints(json.getInt("teleop low points"));
-        setClimb(json.getBoolean("climbed"));
-        setDefense(json.getInt("defense"));
+        setClimb(json.getInt("climb"));
         setExtComments(json.getString("comments"));
         setTimestamp(new Date(json.getString("timestamp")));
         setRotationControl(json.getBoolean( "rot_control"));
         setDied(json.getBoolean("died"));
-        setBalanced(json.getBoolean("balanced"));
         m_matchID = json.getString("id1");
     }
 
@@ -216,24 +208,15 @@ public class MatchData {
         return m_teleopLowPoints;
     }
 
+
     ////////////  m_climbed   /////////////////////
-    public void setClimb(boolean x){
+    public void setClimb(int x){
         stats[9] = x;
         m_climbed = x;
     }
 
-    public boolean getClimb(){
+    public int getClimb(){
         return m_climbed;
-    }
-
-    ////////////  m_defense   /////////////////////
-    public void setDefense(int x){
-        stats[10] = x;
-        m_defense = x;
-    }
-
-    public int getDefense(){
-        return m_defense;
     }
 
     ////////////  m_extComments   /////////////////////
@@ -248,7 +231,7 @@ public class MatchData {
                }
            }
        }
-       stats[11]= y;
+       stats[10]= y;
        m_extComments = y;
     }
 
@@ -259,7 +242,7 @@ public class MatchData {
     ////////////  m_timestamp   /////////////////////
     public void setTimestamp(Date d){
         m_timestamp = d;
-        stats[12] = m_timestamp;
+        stats[11] = m_timestamp;
     }
 
     public Date getTimestamp() {
@@ -268,7 +251,7 @@ public class MatchData {
 
     ////////////  m_rotationControl   /////////////////////
     public void setRotationControl(boolean x){
-        stats[13] = x;
+        stats[12] = x;
         m_rotationControl = x;
     }
 
@@ -278,22 +261,12 @@ public class MatchData {
 
     ////////////  m_died   /////////////////////
     public void setDied(boolean x){
-        stats[14] = x;
+        stats[13] = x;
         m_died = x;
     }
 
     public boolean getDied(){
         return m_died;
-    }
-
-    ////////////  m_balanced   /////////////////////
-    public void setBalanced(boolean x){
-        stats[15] = x;
-        m_balanced = x;
-    }
-
-    public boolean getBalanced(){
-        return m_balanced;
     }
 
     //Returns current array of match data
@@ -322,15 +295,11 @@ public class MatchData {
             message += "1" + "\t";
         else message += "0" + "\t";
 
-        if(m_climbed)
-            message += "1" + "\t";
-        else message += "0" + "\t";
+        message += m_climbed + "\t";
+
         if(m_died)
             message += "1" + "\t";
         else message += "0" + "\t";
-
-        message += m_defense + "\t";
-// TODO - m_balanced is not included here yet! (It's not yet in the spreadsheet!)
 
         Log.d(TAG,"MatchData encodeToTSV(): " + message.toString());
         return message;
@@ -346,7 +315,7 @@ public class MatchData {
         json.put("divider", ", \n");
 
 
-        json.put("headings", "Competition, Team Number, Match Number, Auton High Hub, Auton Lower Hub, Exited Tarmac, Rotational Control, Teleop Low Port, Teleop Outer Port, Climbed, Defense Rating, Died, Comments, Timestamp, MatchID \n");
+        json.put("headings", "Competition, Team Number, Match Number, Auton High Hub, Auton Lower Hub, Exited Tarmac, Rotational Control, Teleop Low Port, Teleop Outer Port, Climbed, Died, Comments, Timestamp, MatchID \n");
         json.put("competition", m_competition);
         json.put("divider", ",");
         json.put("team number", m_teamNumber);
@@ -366,8 +335,6 @@ public class MatchData {
         json.put("teleop outer points", m_teleopOuterPoints);
         json.put("divider", ",");
         json.put("climbed", m_climbed);
-        json.put("divider", ",");
-        json.put("defense", m_defense);
         json.put("divider", ",");
         json.put("died", m_died);
         json.put("divider", ",");

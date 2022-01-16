@@ -126,15 +126,15 @@
 
 
             <TextView
-                android:id="@+id/defenseTitle"
+                android:id="@+id/climbTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/defense"
+                android:text="Climb"
                 android:textSize="18dp"
                 style="?android:listSeparatorTextViewStyle"/>
 
             <RadioGroup
-                android:id="@+id/defense_scale"
+                android:id="@+id/climb_level"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -169,11 +169,6 @@
                     android:text="@string/level_four"
                     android:layout_weight="1"/>
 
-                <RadioButton android:id="@+id/level_five"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/level_five"
-                    android:layout_weight="1"/>
             </RadioGroup>
 
             <TextView

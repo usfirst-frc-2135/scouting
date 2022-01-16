@@ -20,7 +20,6 @@
     <string name="teleop_control_panel">Control Panel</string>
     <string name="tarmac_cross">Exited Tarmac</string>
     <string name="other">Additional Details</string>
-    <string name="defense">Defense</string>
     <string name="team_number">Team Number</string>
     <string name="match_number">Match Number</string>
 
@@ -30,7 +29,6 @@
     <string name="level_two">2</string>
     <string name="level_three">3</string>
     <string name="level_four">4</string>
-    <string name="level_five">5</string>
 
     <string name="comments">Comments</string>
     <string name="clear_form_button">CLEAR FORM</string>
