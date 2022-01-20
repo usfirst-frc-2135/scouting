@@ -18,16 +18,17 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 // stats[1] - m_competition
 // stats[2] - m_teamNumber
 // stats[3] - m_matchNumber
-// stats[4] - m_autonHighPoints
-// stats[5] - m_autonLowPoints
-// stats[6] - m_exitedTarmac
-// stats[7] - m_teleopOuterPoints
-// stats[8] - m_teleopLowPoints
-// stats[9] - m_climbed
-// stats[10] - m_extComments
-// stats[11] - m_timestamp
-// stats[12] - m_rotationControl
-// stats[13] - m_died
+// stats[4] - m_startPosition
+// stats[5] - m_autonHighPoints
+// stats[6] - m_autonLowPoints
+// stats[7] - m_exitedTarmac
+// stats[8] - m_teleopOuterPoints
+// stats[9] - m_teleopLowPoints
+// stats[10] - m_climbed
+// stats[11] - m_extComments
+// stats[12] - m_timestamp
+// stats[13] - m_rotationControl
+// stats[14] - m_died
 // If a new stats[] is added, make sure to adjust STATS_SIZE!
 /////////////////////////
 
@@ -39,6 +40,7 @@ public class MatchData {
     private int m_teleopLowPoints;
     private int m_teleopOuterPoints;
     private int m_climbed;
+    private int m_startPosition;
     private boolean m_exitedTarmac;
     private boolean m_rotationControl;
     private String m_extComments;
@@ -50,7 +52,7 @@ public class MatchData {
     private String m_competition;
     private Date m_timestamp;
     private CompetitionDataSerializer m_competitionDataSerializer;
-    private static final int STATS_SIZE = 14;
+    private static final int STATS_SIZE = 15;
 
     public String stripTeamNamePrefix(String teamName){
         String newTeamName = "";
@@ -71,6 +73,7 @@ public class MatchData {
         m_competition = "compX"; //default
         m_teamNumber = "";
         m_matchNumber = "";
+        setStartPosition(0);
         setAutonHighPoints(0);
         setAutonLowPoints(0);
         setExitedTarmac(false);
@@ -100,6 +103,7 @@ public class MatchData {
         setCompetition(json.getString("competition"));
         setTeamNumber(json.getString("team number"));
         setMatchNumber(json.getString("match number"));
+        setStartPosition(json.getInt("start position"));
         setAutonHighPoints(json.getInt("auton outer points"));
         setAutonLowPoints(json.getInt("auton low points"));
         setExitedTarmac(json.getBoolean("tarmac"));
@@ -158,9 +162,19 @@ public class MatchData {
         return m_matchNumber;
     }
 
+    ////////////  m_startPosition   /////////////////////
+    public void setStartPosition(int x){
+        stats[4] = x;
+        m_startPosition = x;
+    }
+
+    public int getStartPosition(){
+        return m_startPosition;
+    }
+
     ////////////  m_autonHighPoints   /////////////////////
     public void setAutonHighPoints(int y){
-        stats[4]=y;
+        stats[5]=y;
         m_autonHighPoints = y;
     }
 
@@ -170,7 +184,7 @@ public class MatchData {
 
     ////////////  m_autonLowPoints   /////////////////////
     public void setAutonLowPoints(int x){
-        stats[5]=x;
+        stats[6]=x;
         m_autonLowPoints = x;
     }
 
@@ -180,7 +194,7 @@ public class MatchData {
 
     ////////////  m_exitedTarmac   /////////////////////
     public void setExitedTarmac(boolean x){
-        stats[6] = x;
+        stats[7] = x;
         m_exitedTarmac = x;
     }
 
@@ -190,7 +204,7 @@ public class MatchData {
 
     ////////////  m_teleopOuterPoints   /////////////////////
     public void setTeleopOuterPoints(int y){
-        stats[7]=y;
+        stats[8]=y;
         m_teleopOuterPoints = y;
     }
 
@@ -200,7 +214,7 @@ public class MatchData {
 
     ////////////  m_teleopLowPoints   /////////////////////
     public void setTeleopLowPoints(int x){
-        stats[8]=x;
+        stats[9]=x;
         m_teleopLowPoints = x;
     }
 
@@ -211,7 +225,7 @@ public class MatchData {
 
     ////////////  m_climbed   /////////////////////
     public void setClimb(int x){
-        stats[9] = x;
+        stats[10] = x;
         m_climbed = x;
     }
 
@@ -231,7 +245,7 @@ public class MatchData {
                }
            }
        }
-       stats[10]= y;
+       stats[11]= y;
        m_extComments = y;
     }
 
@@ -242,7 +256,7 @@ public class MatchData {
     ////////////  m_timestamp   /////////////////////
     public void setTimestamp(Date d){
         m_timestamp = d;
-        stats[11] = m_timestamp;
+        stats[12] = m_timestamp;
     }
 
     public Date getTimestamp() {
@@ -251,7 +265,7 @@ public class MatchData {
 
     ////////////  m_rotationControl   /////////////////////
     public void setRotationControl(boolean x){
-        stats[12] = x;
+        stats[13] = x;
         m_rotationControl = x;
     }
 
@@ -261,7 +275,7 @@ public class MatchData {
 
     ////////////  m_died   /////////////////////
     public void setDied(boolean x){
-        stats[13] = x;
+        stats[14] = x;
         m_died = x;
     }
 
@@ -280,6 +294,8 @@ public class MatchData {
 
         // For teamNumber, strip off 'frc' prefix.
         message += stripTeamNamePrefix(m_teamNumber) +"\t";
+
+        message += m_startPosition + "\t";
 
         if(m_exitedTarmac)  // bool value: use 1/0 instead of true/false
             message += "1" + "\t";
@@ -315,12 +331,14 @@ public class MatchData {
         json.put("divider", ", \n");
 
 
-        json.put("headings", "Competition, Team Number, Match Number, Auton High Hub, Auton Lower Hub, Exited Tarmac, Rotational Control, Teleop Low Port, Teleop Outer Port, Climbed, Died, Comments, Timestamp, MatchID \n");
+        json.put("headings", "Competition, Team Number, Match Number, Start Position, Auton High Hub, Auton Lower Hub, Exited Tarmac, Rotational Control, Teleop Low Port, Teleop Outer Port, Climbed, Died, Comments, Timestamp, MatchID \n");
         json.put("competition", m_competition);
         json.put("divider", ",");
         json.put("team number", m_teamNumber);
         json.put("divider", ",");
         json.put("match number", m_matchNumber);
+        json.put("divider", ",");
+        json.put("start position", m_startPosition);
         json.put("divider", ",");
         json.put("auton outer points", m_autonHighPoints );
         json.put("divider", ",");

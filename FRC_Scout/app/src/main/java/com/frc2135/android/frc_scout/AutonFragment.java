@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -19,6 +21,14 @@ import androidx.fragment.app.FragmentManager;
 public class AutonFragment extends Fragment {
     private static final String TAG = "AutonFragment";
 
+    private RadioGroup mRadioGroup;
+    private RadioButton mRadioButton1;
+    private RadioButton mRadioButton2;
+    private RadioButton mRadioButton3;
+    private RadioButton mRadioButton4;
+    private RadioButton mRadioButton5;
+    private RadioButton mRadioButton6;
+
     private TextView mLowPoints;
     private TextView mHighPoints;
 
@@ -26,9 +36,6 @@ public class AutonFragment extends Fragment {
     private Button mLowPointsInc;
     private Button mHighPointsDec;
     private Button mHighPointsInc;
-
-//REMOVE    private EditText mTeamNumberField;
-//REMOVE    private EditText mMatchNumberField;
 
     private CheckBox mCheckBox;
 
@@ -67,6 +74,38 @@ public class AutonFragment extends Fragment {
         //Creates a view using the specific fragment layout, match_data_fragment
         View v = inflater.inflate(R.layout.auton_fragment, parent, false);
         FragmentManager fm = getActivity().getSupportFragmentManager();
+
+        mRadioGroup = (RadioGroup)v.findViewById(R.id.start_position);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
+        mRadioButton1 = (RadioButton)v.findViewById(R.id.start_one);//Sets up radio button that corresponds to 1
+        mRadioButton2 = (RadioButton)v.findViewById(R.id.start_two);//Sets up radio button that corresponds to 2
+        mRadioButton3 = (RadioButton)v.findViewById(R.id.start_three);//Sets up radio button that corresponds to 3
+        mRadioButton4 = (RadioButton)v.findViewById(R.id.start_four);//Sets up radio button that corresponds to 4
+        mRadioButton5 = (RadioButton)v.findViewById(R.id.start_five);//Sets up radio button that corresponds to 5
+        mRadioButton6 = (RadioButton)v.findViewById(R.id.start_six);//Sets up radio button that corresponds to 6
+
+        int x = mMatchData.getStartPosition();
+        Log.d(TAG,"Setting up start position to "+x);
+        if(x==1)
+            mRadioButton1.setChecked(true);
+        else if(x==2)
+            mRadioButton2.setChecked(true);
+        else if(x==3)
+            mRadioButton3.setChecked(true);
+        else if(x==4)
+            mRadioButton4.setChecked(true);
+        else if(x==5)
+            mRadioButton5.setChecked(true);
+        else if(x==6)
+            mRadioButton6.setChecked(true);
+
+        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                //Changes mMatchData's start position variable according to which radio button is selected
+                mMatchData.setStartPosition(getCurrentStartPosition());
+            }
+        });
 
         //Sets up TextView that displays low points, setting 0 as the default
         mLowPoints = v.findViewById(R.id.low_points_text);
@@ -129,7 +168,34 @@ public class AutonFragment extends Fragment {
         return v;
     }
 
+            public int getCurrentStartPosition() {
+                // Returns the integer start position that is currently checked in the radio buttons
+                int rtn = 0;
+                if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton1.getId()) {
+                    rtn = 1;
+                }
+                else if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton2.getId()) {
+                    rtn = 2;
+                }
+                else if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton3.getId()) {
+                    rtn = 3;
+                }
+                else if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton4.getId()) {
+                    rtn = 4;
+                }
+                else if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton5.getId()) {
+                    rtn = 5;
+                }
+                else if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton6.getId()) {
+                        rtn = 6;
+                }
+
+                return rtn;
+            }
+
+
     public void updateAutonData(){
+        mMatchData.setStartPosition(getCurrentStartPosition());
         mMatchData.setAutonLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
         mMatchData.setAutonHighPoints(Integer.parseInt(mHighPoints.getText().toString()));
         mMatchData.setExitedTarmac(mCheckBox.isChecked());

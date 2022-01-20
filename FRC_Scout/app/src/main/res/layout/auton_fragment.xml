@@ -12,13 +12,91 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingLeft="15dp"
-            android:paddingRight="15dp">
+            android:paddingRight="15dp"
+            android:paddingTop="20dp">
 
-        <LinearLayout
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/start_title"
+                    style="?android:listSeparatorTextViewStyle"
+                    android:layout_width="210dp"
+                    android:layout_height="wrap_content"
+                    android:text="Start Position"
+                    android:textColor="#900C3F"
+                    android:textSize="24dp" />
+
+                <RadioGroup
+                    android:id="@+id/start_position"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="10dp">
+
+                    <RadioButton
+                        android:id="@+id/start_one"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="1" />
+
+                    <RadioButton
+                        android:id="@+id/start_two"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="2" />
+
+                    <RadioButton
+                        android:id="@+id/start_three"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="3" />
+
+                    <RadioButton
+                        android:id="@+id/start_four"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="4" />
+
+                    <RadioButton
+                        android:id="@+id/start_five"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="5" />
+
+                    <RadioButton
+                        android:id="@+id/start_six"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="6" />
+
+                </RadioGroup>
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/starting_position" />
+
+
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="10dp">
+            android:paddingTop="20dp"
+            android:paddingBottom="10dp">
             <TextView
                 android:id="@+id/tarmac_title"
                 android:layout_width="190dp"
@@ -26,10 +104,7 @@
                 android:text="Tarmac"
                 android:textSize="24dp"
                 style="?android:listSeparatorTextViewStyle"
-                android:textColor="#900C3F"/>
-                android:paddingBottom="20dp"/>
-
-
+                android:textColor="#900C3F" />
 
             <CheckBox
                 android:id="@+id/tarmac_checkbox"
@@ -50,8 +125,7 @@
                 android:textSize="24dp"
                 style="?android:listSeparatorTextViewStyle"
                 android:textColor="#900C3F"
-                android:paddingTop="20dp"
-                android:paddingBottom="10dp"/>
+                android:paddingTop="20dp"/>
 
 
             <LinearLayout
@@ -59,7 +133,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/high_hub_title"
@@ -152,9 +226,10 @@
                     >
                 </Button>
             </LinearLayout>
+
+
         </LinearLayout>
     </ScrollView>
-
 
 
 
