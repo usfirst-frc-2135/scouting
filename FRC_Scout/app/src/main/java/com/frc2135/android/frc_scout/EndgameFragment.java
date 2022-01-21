@@ -25,15 +25,12 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class EndgameFragment extends Fragment {
 
-    private CheckBox mClimbCheckbox;
-    private CheckBox mBalancedCheckbox;
     private RadioGroup mRadioGroup;
     private RadioButton mRadioButton0;
     private RadioButton mRadioButton1;
     private RadioButton mRadioButton2;
     private RadioButton mRadioButton3;
     private RadioButton mRadioButton4;
-    private RadioButton mRadioButton5;
     private CheckBox mDiedCheckbox;
     private EditText mEditText;
 
@@ -61,27 +58,6 @@ public class EndgameFragment extends Fragment {
         //Creates a view using the specific fragment layout, match_data_fragment
         View v = inflater.inflate(R.layout.endgame_fragment, parent, false);
 
-        //Connects the checkbox for successful climb and sets up a listener to detect when the checked status is changed
-        mClimbCheckbox = (CheckBox)v.findViewById(R.id.climb_checkbox_success);
-        Log.d(TAG, "Setting up Climb checkbox to "+mMatchData.getClimb());
-        mClimbCheckbox.setChecked(mMatchData.getClimb());// Default is unchecked
-        mClimbCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                updateEndgameData();
-            }
-        });
-
-        //Connects the checkbox for Balanced and sets up a listener to detect when the checked status is changed
-        mBalancedCheckbox = (CheckBox)v.findViewById(R.id.climb_checkbox_balance);
-        Log.d(TAG, "Setting up Balanced checkbox to "+mMatchData.getBalanced());
-        mBalancedCheckbox.setChecked(mMatchData.getBalanced());
-        mBalancedCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                updateEndgameData();
-            }
-        });
 
         //Connects the checkbox for if the robot dies and sets up a listener to detect when the checked status is changed
         mDiedCheckbox = (CheckBox)v.findViewById(R.id.died_checkbox_true);
@@ -94,17 +70,16 @@ public class EndgameFragment extends Fragment {
             }
         });
 
-        mRadioGroup = (RadioGroup)v.findViewById(R.id.defense_scale);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
+        mRadioGroup = (RadioGroup)v.findViewById(R.id.climb_level);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
         mRadioButton0 = (RadioButton)v.findViewById(R.id.level_zero);//Sets up radio button that corresponds to 0
         mRadioButton0.setChecked(true);
         mRadioButton1 = (RadioButton)v.findViewById(R.id.level_one);//Sets up radio button that corresponds to 1
         mRadioButton2 = (RadioButton)v.findViewById(R.id.level_two);//Sets up radio button that corresponds to 2
         mRadioButton3 = (RadioButton)v.findViewById(R.id.level_three);//Sets up radio button that corresponds to 3
         mRadioButton4 = (RadioButton)v.findViewById(R.id.level_four);//Sets up radio button that corresponds to 4
-        mRadioButton5 = (RadioButton)v.findViewById(R.id.level_five);//Sets up radio button that corresponds to 5
 
-        int x = mMatchData.getDefense();
-        Log.d(TAG,"Setting up defense level to "+x);
+        int x = mMatchData.getClimb();
+        Log.d(TAG,"Setting up climb level to "+x);
         if(x==0) 
             mRadioButton0.setChecked(true);
         else if(x==1) 
@@ -115,15 +90,13 @@ public class EndgameFragment extends Fragment {
             mRadioButton3.setChecked(true);
         else if(x==4) 
             mRadioButton4.setChecked(true);
-        else if(x==5) 
-            mRadioButton5.setChecked(true);
 
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-                //Changes mMatchData's defense variable according to which radio button is selected
-                mMatchData.setDefense(getCurrentDefenseLevelChecked());
+                //Changes mMatchData's climb variable according to which radio button is selected
+                mMatchData.setClimb(getCurrentClimbLevel());
             }
         });
 
@@ -172,8 +145,8 @@ public class EndgameFragment extends Fragment {
 
         return v;
     }
-    public int getCurrentDefenseLevelChecked() {
-        // Returns the integer defense level that is current checked in the radio buttons
+    public int getCurrentClimbLevel() {
+        // Returns the integer climb level that is current checked in the radio buttons
         int rtn = 0;
         if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton1.getId()) {
             rtn = 1;
@@ -187,16 +160,11 @@ public class EndgameFragment extends Fragment {
         else if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton4.getId()) {
             rtn = 4;
         }
-        else if (mRadioGroup.getCheckedRadioButtonId() == mRadioButton5.getId()) {
-            rtn = 5;
-        }
         return rtn;
     }
     public void updateEndgameData(){
-        mMatchData.setClimb(mClimbCheckbox.isChecked());
+        mMatchData.setClimb(getCurrentClimbLevel());
         mMatchData.setDied(mDiedCheckbox.isChecked());
-        mMatchData.setBalanced(mBalancedCheckbox.isChecked());
         mMatchData.setExtComments(mEditText.getText());
-        mMatchData.setDefense(getCurrentDefenseLevelChecked());
     }
 }
