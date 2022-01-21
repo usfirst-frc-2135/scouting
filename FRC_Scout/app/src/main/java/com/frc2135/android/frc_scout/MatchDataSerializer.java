@@ -20,48 +20,50 @@ import java.io.Writer;
 import java.util.ArrayList;
 
 public class MatchDataSerializer {
-    private static final String TAG = "MatchDataJSONSerializer";
-    private final Context mContext;
-    private final String mFileName;
-    private Scouter s;
+    private static final String TAG = "MatchDataSerializer";
+    private final Context m_Context;
+    private final String m_FileName;
+    private Scouter m_Scouter;
 
     public MatchDataSerializer(Context c, String f){
-        mContext = c;
-        mFileName = f;
+        m_Context = c;
+        m_FileName = f;
     }
 
     public void saveData(ArrayList<MatchData> matchHistory) throws JSONException, IOException {
-        Log.d(TAG, "saveData called");
-        JSONArray arrayScouter = new JSONArray(); //Creates a JSON array object to store the data of each match
+        Log.d(TAG, "saveData() going to save MatchHistory matches to JSON files");
 
-        arrayScouter.put(Scouter.get(mContext).toJSON());
-
-        Writer writerScouter = null;
+        JSONArray arrayS = new JSONArray(); //Creates a JSON array object to hold the Scouter data 
+        arrayS.put(Scouter.get(m_Context).toJSON());
+        Writer writerS = null;
         try{
-            OutputStream out = mContext.openFileOutput(mFileName, Context.MODE_PRIVATE);//This method(openFileOutput) takes a file name and a mode and uses both to create a pathway and a file to open for writing
-            writerScouter = new OutputStreamWriter(out); // This handles converting the written string data to byte code
-            writerScouter.write(arrayScouter.toString());
+            //This method(openFileOutput) takes a file name and a mode and uses both to create a pathway and a file to open for writing
+            OutputStream out = m_Context.openFileOutput(m_FileName, Context.MODE_PRIVATE);
+            // This handles converting the written string data to byte code
+            writerS = new OutputStreamWriter(out); 
+            writerS.write(arrayS.toString());
+            Log.d(TAG, "Wrote Scouter file: "+ m_FileName);
         }
         finally{
-            if(writerScouter != null){
-                writerScouter.close();
+            if(writerS != null){
+                writerS.close();
             }
         }
 
-        for(MatchData c: matchHistory){
-            JSONArray array = new JSONArray();
-            array.put(c.toJSON());
-            Log.d(TAG, "Data converted to JSON format and added to an array");
+        // Write out all matchData files.
+        for(MatchData mdata: matchHistory){
+            JSONArray array = new JSONArray(); // Create a JSON array obj to hold the MatchDatas from MatchHistory
+            array.put(mdata.toJSON());
             Writer writerMatches = null;
             try{
-                Log.d(TAG, "Match saved to" + c.getMatchFileName());
-                Log.d(TAG, "====>> Match saved to" + c.getMatchFileName());
-                File f = new File("/data/user/0/com.frc2135.android.frc_scout/files"+"/"+c.getMatchFileName());
-                OutputStream out = new FileOutputStream(f);//This method(openFileOutput) takes a file name and a mode and uses both to create a pathway and a file to open for writing
+                Log.d(TAG, "Saving match to" + mdata.getMatchFileName());
+                File fileM = new File("/data/user/0/com.frc2135.android.frc_scout/files"+"/"+mdata.getMatchFileName());
+                OutputStream out = new FileOutputStream(fileM);//This method(openFileOutput) takes a file name and a mode and uses both to create a pathway and a file to open for writing
                 writerMatches = new OutputStreamWriter(out); // This handles converting the written string data to byte code
                 writerMatches.write(array.toString());
-                Log.d(TAG, array.toString() + "@");
-                Log.d(TAG, f.getAbsolutePath() + "%");
+//REMOVE                Log.d(TAG, array.toString() + "@");
+//REMOVE                Log.d(TAG, fileM.getAbsolutePath() + "%");
+                Log.d(TAG, "Wrote match file: "+ fileM.getName());
             }
             finally{
                 if(writerMatches != null){
@@ -74,20 +76,19 @@ public class MatchDataSerializer {
     }
 
     public ArrayList<MatchData> loadMatchData()throws IOException, JSONException {
-        Log.d(TAG, "json being read into matchHistory");
-        ArrayList<MatchData> matchHistory = new ArrayList<MatchData>();
-        BufferedReader reader = null;
+       // Create a new MatchHistory obj and load it with all the existing match files.
+       ArrayList<MatchData> matchHistory = new ArrayList<MatchData>();
+       BufferedReader reader = null;
+       File file = new File("/data/user/0/com.frc2135.android.frc_scout/files"); // dir to use
 
-       File file = new File("/data/user/0/com.frc2135.android.frc_scout/files");
-       File[] test = file.listFiles();
-       if(test != null){
-           for(File f: test){
-               Log.d(TAG, f.toString() + "*");
-
-               if(f.getName().length()>30){
+       Log.d(TAG, "Going to read in files found at /data/user/0/com.frc2135.android.frc_scout/files");
+       File[] jfilesList = file.listFiles();
+       if(jfilesList != null) {
+           for(File tfile: jfilesList) {
+               if(tfile.getName().length()>30) {
                    try {
-                       //Open and read the file into a StringBuilder
-                       InputStream in = mContext.openFileInput(f.getName().trim());
+                       // Open and read the file into a StringBuilder
+                       InputStream in = m_Context.openFileInput(tfile.getName().trim());
                        reader = new BufferedReader(new InputStreamReader(in));
                        StringBuilder jsonString = new StringBuilder();
                        String line = null;
@@ -96,10 +97,13 @@ public class MatchDataSerializer {
                            //Line breaks are omitted and irrelevant
                            jsonString.append(line);
                        }
+
                        //Parse the JSON using JSONTokener
                        JSONArray array = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
+
                        //Build the array of matches from JSONObjects
                        matchHistory.add(new MatchData(array.getJSONObject(0)));
+                       Log.d(TAG, "Reading in file: "+ tfile.getName());
                    } catch (FileNotFoundException e) {
                        //ignore this one; it happens when starting fresh
                        Log.e(TAG, e.toString());
@@ -109,21 +113,20 @@ public class MatchDataSerializer {
                        }
                    }
                }
+               else Log.d(TAG, "Ignoring file: "+ tfile.getName());
 
            }
        }
-
-        return matchHistory;
+       return matchHistory;
     }
 
     public Scouter loadScouterData()throws IOException, JSONException {
-        Log.d(TAG, "json being read into Scouter");
-        Log.d(TAG, "===> mFileName = "+mFileName.toString());
+        Log.d(TAG, "loadScouterData(): m_FileName = "+m_FileName.toString());
         ArrayList<MatchData> matchHistory = new ArrayList<MatchData>();
         BufferedReader reader = null;
         try {
             //Open and read the file into a StringBuilder
-            InputStream in = mContext.openFileInput(mFileName);
+            InputStream in = m_Context.openFileInput(m_FileName);
             reader = new BufferedReader(new InputStreamReader(in));
             StringBuilder jsonString = new StringBuilder();
             String line = null;
@@ -134,11 +137,13 @@ public class MatchDataSerializer {
             }
             //Parse the JSON using JSONTokener
             JSONArray array = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
-            //Build the array of matches from JSONObjects
-            s=new Scouter(array.getJSONObject(0));
-            if(s.getPastScouts() != null)
-              Log.d(TAG, s.getPastScouts()[0]);
 
+            //Build the array of matches from JSONObjects
+            m_Scouter = new Scouter(array.getJSONObject(0));
+            if(m_Scouter.getPastScouts() != null){
+                Log.d(TAG, "Loaded Scouter data from file: "+m_FileName);
+                Log.d(TAG, "Past scouts = "+m_Scouter.getPastScouts()[0]);
+            }
 
         } catch (FileNotFoundException e) {
             //ignore this one; it happens when starting fresh
@@ -147,6 +152,6 @@ public class MatchDataSerializer {
                 reader.close();
             }
         }
-    return s;
+    return m_Scouter;
     }
 }

@@ -18,21 +18,27 @@ import java.io.InputStreamReader;
 
 public class Event {
 
-    private final String eventCode;
-    private String eventName;
-    private JSONArray array;
-    private final Context mAppContext;
+    public static final String TAG = "Event";
+    private final String m_eventCode;
+    private String m_eventName;
+    private JSONArray m_array;
+    private final Context m_appContext;
+    private boolean m_bEventDataLoaded;
 
-    public Event(Context c, String eC){
-        mAppContext = c;
-        eventCode = eC;
-
-        File file = new File("/data/user/0/com.frc2135.android.frc_scout/files/"+eventCode.trim().toLowerCase()+"matches.json");
+    public Event(Context context, String eC){
+        m_appContext = context;
+        m_eventCode = eC;
+        m_bEventDataLoaded = false;
+        m_array = null;
+ 
+        String filename = "/data/user/0/com.frc2135.android.frc_scout/files/"+m_eventCode.trim().toLowerCase()+"matches.json";
+        Log.d(TAG, "Event constructor: going to read in file: "+filename);
+        File file = new File(filename);
         BufferedReader reader = null;
 
         try {
             //Open and read the file into a StringBuilder
-            InputStream in = mAppContext.openFileInput(file.getName().trim());
+            InputStream in = m_appContext.openFileInput(file.getName().trim());
             reader = new BufferedReader(new InputStreamReader(in));
             StringBuilder jsonString = new StringBuilder();
             String line = null;
@@ -41,30 +47,35 @@ public class Event {
                 //Line breaks are omitted and irrelevant
                 jsonString.append(line);
             }
-            //Parse the JSON using JSONTokener
-            array = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
 
-        } catch (FileNotFoundException e) {
+            //Parse the JSON using JSONTokener
+            m_array = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
+            Log.d(TAG, "Event constructor: setting m_bEventDataLoaded = true");
+            m_bEventDataLoaded = true;
+
+        } catch (FileNotFoundException err) {
             //ignore this one; it happens when starting fresh
-            Log.e("Event", e.toString());
-            Toast.makeText(mAppContext, "Event file not found", Toast.LENGTH_LONG);
+            Log.e(TAG, err.toString());
+            Toast.makeText(m_appContext, "Event file not found", Toast.LENGTH_LONG);
         } catch (JSONException jsonException) {
             jsonException.printStackTrace();
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
-
-
     }
 
+    public boolean isEventDataLoaded() {
+        Log.d(TAG, "isEventDataLoaded() returning "+ m_bEventDataLoaded);
+        return m_bEventDataLoaded;
+    }
 
     public String[] getEventMatches(String ec) throws JSONException, IOException {
-        if(array != null){
-            String[] matches = new String[array.length()+1];
+        if(m_array != null) {
+            String[] matches = new String[m_array.length()+1];
             matches[0] = "No match selected";
-            if(ec.equals(eventCode)){
-                for(int i= 1; i < array.length(); i++){
-                    matches[i] = ((JSONObject)array.get(i)).getString("comp_level") + ((JSONObject)array.get(i)).getString("match_number");
+            if(ec.equals(m_eventCode)){
+                for(int i= 1; i < m_array.length(); i++){
+                    matches[i] = ((JSONObject)m_array.get(i)).getString("comp_level") + ((JSONObject)m_array.get(i)).getString("match_number");
                 }
                 return matches;
             }
@@ -72,36 +83,46 @@ public class Event {
         return null;
     }
 
-    public String[] getTeams(String m) throws JSONException {
-        Log.d("Event", "getTeams() called");
-        int t =0;
-        JSONObject tempB = new JSONObject();
-        JSONObject tempR = new JSONObject();
-        JSONArray redTeams = new JSONArray();
-        JSONArray blueTeams = new JSONArray();
+    public String[] getTeams(String matchnum) throws JSONException {
         String[] teams = new String[7];
-        for(int i= 0; i < array.length(); i++){
-           if((((JSONObject)array.get(i)).getString("comp_level") + ((JSONObject)array.get(i)).getString("match_number")).equals(m.trim())){
-               Log.d("Event", "match found");
-               JSONObject alliances = (JSONObject)array.get(i);
-               JSONObject color = (JSONObject)alliances.get("alliances");
-               tempB = (JSONObject)color.get("blue");
-               blueTeams = (JSONArray)tempB.get("team_keys");
-               tempR = (JSONObject)color.get("red");
-               redTeams = (JSONArray)tempR.get("team_keys");
+        teams[0] = "";   // initialize with empty strings
+        teams[1] = "";
+        teams[2] = "";
+        teams[3] = "";
+        teams[4] = "";
+        teams[5] = "";
+        teams[6] = "";
+        boolean bMatchNumFound = false;
+        if(m_array != null) {
+            JSONObject tempB = new JSONObject();
+            JSONObject tempR = new JSONObject();
+            JSONArray redTeams = new JSONArray();
+            JSONArray blueTeams = new JSONArray();
+//            Log.d(TAG,"getTeams(): looking for match "+matchnum.trim());
+            for(int i= 0; i < m_array.length(); i++){
+                if((((JSONObject)m_array.get(i)).getString("comp_level") + ((JSONObject)m_array.get(i)).getString("match_number")).equals(matchnum.trim())){
+//                     Log.d(TAG, "getTeams(): matchnum found");
+                     bMatchNumFound = true;
+                     JSONObject alliances = (JSONObject)m_array.get(i);
+                     JSONObject color = (JSONObject)alliances.get("alliances");
+                     tempB = (JSONObject)color.get("blue");
+                     blueTeams = (JSONArray)tempB.get("team_keys");
+                     tempR = (JSONObject)color.get("red");
+                     redTeams = (JSONArray)tempR.get("team_keys");
+                }
+                Log.d(TAG, "getTeams(): matchnum '"+matchnum+ "' NOT found!");
             }
-
+            if(bMatchNumFound) {
+                for(int i = 1; i<4; i++){
+                    teams[0]="No team selected";
+                    teams[i]= redTeams.getString(i-1);
+                }
+                for(int i = 4; i <7; i++){
+                    teams[i]=blueTeams.getString(i-4);
+                }
+            }
         }
-        for(int i = 1; i<4; i++){
-           teams[0]="No team selected";
-           teams[i]= redTeams.getString(i-1);
-        }
-        for(int i = 4; i <7; i++){
-            teams[i]=blueTeams.getString(i-4);
-        }
-
         return teams;
     }
-
-
 }
+

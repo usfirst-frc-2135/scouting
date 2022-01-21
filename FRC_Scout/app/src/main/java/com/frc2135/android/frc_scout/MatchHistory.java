@@ -23,22 +23,23 @@ public class MatchHistory {
         mAppContext = appContext;
         mSerializer = new MatchDataSerializer(mAppContext, FILENAME);
 
-        //Rather than start with a new matchHistory every time, the following code allows the program to call the method loadCrimes() in order to add the previously saved crimes
+        //Rather than start with a new matchHistory every time, the following code allows the program to call the method loadMatchData() in order to add the previously saved MatchData
         try{
-            Log.d(TAG, "Matches being loaded into MatchHistory");
+            Log.d(TAG, "mSerializer loading MatchHistory");
             mTotalMatchHistory = mSerializer.loadMatchData();
+            Log.d(TAG, "Number of matches loaded from mSerializer: "+mTotalMatchHistory.size());
         }
         catch(Exception e){
             mTotalMatchHistory = new ArrayList<MatchData>();
-            Log.e(TAG, "Error loading crimes: ", e);
+            Log.e(TAG, "Error loading matchHistory: ", e);
         }
     }
 
     public static MatchHistory get(Context c){
         if(sMatchHistory == null) {
+            Log.d(TAG, "Creating a new sMatchHistory");
             sMatchHistory = new MatchHistory(c.getApplicationContext());
         }
-
         return sMatchHistory;
     }
 
@@ -46,55 +47,56 @@ public class MatchHistory {
         return mTotalMatchHistory;
     }
 
-    public MatchData getMatch(String x){
-        for(MatchData y:mTotalMatchHistory){
-            if(y.getMatchID().equals(x)){
-                return y;
+    public MatchData getMatch(String matchStr){
+        for(MatchData mX:mTotalMatchHistory){
+            if(mX.getMatchID().equals(matchStr)){
+                return mX;
             }
         }
-        Log.d(TAG, "no such match");
+        Log.d(TAG, "no match found for getMatch(): "+matchStr);
         return null;
 
     }
 
-    public void deleteMatch(MatchData m){
-        mTotalMatchHistory.remove(m);
-        mAppContext.deleteFile(m.getMatchFileName());
+    public void deleteMatch(MatchData mY){
+        mTotalMatchHistory.remove(mY);
+        mAppContext.deleteFile(mY.getMatchFileName());
     }
 
-    public void addMatch(MatchData m){
-        mTotalMatchHistory.add(m);
+    public void addMatch(MatchData mData){
+        mTotalMatchHistory.add(mData);
     }
 
     public boolean saveData(){
+        Log.d(TAG, "MatchHistory::saveData() starting");
         try{
             mSerializer.saveData(mTotalMatchHistory);
-            Log.d(TAG, "matches saved to file");
+            Log.d(TAG, "Using MatchHistory serializer to save matches to file");
             return true;
         }
         catch(Exception e){
-            Log.e(TAG, "Error saving data:", e);
+            Log.e(TAG, "saveData(): Error saving data:", e);
             return false;
         }
     }
 
-    public ArrayList sortByTimestamp1(ArrayList<MatchData> l){
+    public ArrayList sortByTimestamp1(ArrayList<MatchData> mdList){
         ArrayList sorted = new ArrayList<MatchData>();
         boolean isAdded = false;
-        if(l.size()>0){
-            sorted.add(l.get(0));
-            for(int i = 1; i < l.size(); i++){
-                for(int j = 0; j <sorted.size(); j++){
-                    Date d1 = l.get(i).getTimestamp();
-                    Date d2 = ((MatchData)sorted.get(j)).getTimestamp();
+        if(mdList.size()>0){
+            sorted.add(mdList.get(0));
+            for(int ctr1 = 1; ctr1 < mdList.size(); ctr1++){
+                for(int ctr2 = 0; ctr2 <sorted.size(); ctr2++){
+                    Date d1 = mdList.get(ctr1).getTimestamp();
+                    Date d2 = ((MatchData)sorted.get(ctr2)).getTimestamp();
                     if(d1.before(d2)){
-                        sorted.add(j, l.get(i));
-                        j= sorted.size();
+                        sorted.add(ctr2, mdList.get(ctr1));
+                        ctr2= sorted.size();
                         isAdded = true;
                     }
                 }
                 if(!isAdded){
-                    sorted.add(l.get(i));
+                    sorted.add(mdList.get(ctr1));
                 }
                 isAdded = false;
             }
@@ -102,51 +104,51 @@ public class MatchHistory {
         return sorted;
     }
 
-    public ArrayList sortByTimestamp2(ArrayList<MatchData> l){
+    public ArrayList sortByTimestamp2(ArrayList<MatchData> mdlist){
         ArrayList sorted = new ArrayList<MatchData>();
         ArrayList temp = new ArrayList<MatchData>();
-        temp = sortByTimestamp1(l);
-        for(Object m : temp){
-            sorted.add(0, m);
+        temp = sortByTimestamp1(mdlist);
+        for(Object mData : temp){
+            sorted.add(0, mData);
         }
         return sorted;
     }
 
-    public ArrayList filterByTeam(ArrayList<MatchData> l, String t){
+    public ArrayList filterByTeam(ArrayList<MatchData> mdlist, String teamNumber){
         ArrayList sorted = new ArrayList<MatchData>();
-        for(MatchData m: l){
-            if(m.getTeamNumber().equals(t)){
-                sorted.add(m);
+        for(MatchData mData: mdlist){
+            if(mData.getTeamNumber().equals(teamNumber)){
+                sorted.add(mData);
             }
         }
         return sorted;
     }
 
-    public ArrayList filterByCompetition(ArrayList<MatchData> l , String c){
+    public ArrayList filterByCompetition(ArrayList<MatchData> mdlist , String comp){
         ArrayList sorted = new ArrayList<MatchData>();
-        for(MatchData m: l){
-            if(m.getCompetition().equals(c)){
-                sorted.add(m);
+        for(MatchData mData: mdlist){
+            if(mData.getCompetition().equals(comp)){
+                sorted.add(mData);
             }
         }
         return sorted;
     }
 
-    public ArrayList filterByScout(ArrayList<MatchData> l, String n){
+    public ArrayList filterByScout(ArrayList<MatchData> mdlist, String scoutName){
         ArrayList sorted = new ArrayList<MatchData>();
-        for(MatchData m: l){
-            if(m.getName().equals(n)){
-                sorted.add(m);
+        for(MatchData mData: mdlist){
+            if(mData.getName().equals(scoutName)){
+                sorted.add(mData);
             }
         }
         return sorted;
     }
 
-    public ArrayList filterByMatchNumber(ArrayList<MatchData> l, String mN){
+    public ArrayList filterByMatchNumber(ArrayList<MatchData> mdlist, String matchNum){
         ArrayList sorted = new ArrayList<MatchData>();
-        for(MatchData m: l){
-            if(m.getMatchNumber().equals(mN)){
-                sorted.add(m);
+        for(MatchData mData: mdlist){
+            if(mData.getMatchNumber().equals(matchNum)){
+                sorted.add(mData);
             }
         }
         return sorted;
@@ -154,8 +156,8 @@ public class MatchHistory {
     
     public String[] listTeams(){
         ArrayList teams = new ArrayList<String>();
-        for(MatchData m: mTotalMatchHistory){
-            String team = m.getTeamNumber();
+        for(MatchData mData: mTotalMatchHistory){
+            String team = mData.getTeamNumber();
             if(!teams.contains(team)){
                 teams.add(team);
             }
@@ -165,14 +167,13 @@ public class MatchHistory {
         for(int i = 1; i<array.length; i++){
             array[i] = teams.get(i-1).toString();
         }
-        
         return array;
     }
 
     public String[] listCompetitions(){
         ArrayList competitions = new ArrayList<String>();
-        for(MatchData m: mTotalMatchHistory){
-            String competition = m.getCompetition();
+        for(MatchData mData: mTotalMatchHistory){
+            String competition = mData.getCompetition();
             if(!competitions.contains(competition)){
                 competitions.add(competition);
             }
@@ -182,14 +183,13 @@ public class MatchHistory {
         for(int i = 1; i<array.length; i++){
             array[i] = competitions.get(i-1).toString();
         }
-
         return array;
     }
 
     public String[] listScouts(){
         ArrayList scouts = new ArrayList<String>();
-        for(MatchData m: mTotalMatchHistory){
-            String scout = m.getName();
+        for(MatchData mData: mTotalMatchHistory){
+            String scout = mData.getName();
             if(!scouts.contains(scout)){
                 scouts.add(scout);
             }
@@ -199,7 +199,6 @@ public class MatchHistory {
         for(int i = 1; i<array.length; i++){
             array[i] = scouts.get(i-1).toString();
         }
-
         return array;
     }
 

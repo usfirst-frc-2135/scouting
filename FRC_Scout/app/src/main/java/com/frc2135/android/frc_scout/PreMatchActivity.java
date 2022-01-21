@@ -35,7 +35,7 @@ public class PreMatchActivity extends AppCompatActivity {
     private MatchData mMatchData;
     private ActionBar mActionBar;
 
-    public static final String TAG = "PreMatch Fragment";
+    public static final String TAG = "PreMatchActivity";
     public static final String EXTRA_DATE = "com.frc2135.android.frc_scout.date";
 
     private static Scouter mScout;
@@ -125,7 +125,7 @@ public class PreMatchActivity extends AppCompatActivity {
         });
 
         ArrayAdapter<String> adapter4 = null;
-        if(finalEvent != null && mMatchData != null && mMatchData.getCompetition() != "compX" && !mMatchData.getCompetition().isEmpty() ){
+        if(finalEvent != null && finalEvent.isEventDataLoaded() && mMatchData != null && mMatchData.getCompetition() != "compX" && !mMatchData.getCompetition().isEmpty() ){
                 try {
                     String[] matchArray = finalEvent.getEventMatches(mMatchData.getCompetition());
                     if(matchArray != null && matchArray.length > 0)
@@ -173,24 +173,33 @@ public class PreMatchActivity extends AppCompatActivity {
             public void onFocusChange (View v, boolean hasFocus){
                 if(hasFocus){
                     Log.d(TAG, "mTeamNumberField clicked");
-                    try {
-                        ArrayAdapter<String> adapter3 = null;
-                        String[] teams = finalEvent.getTeams(mMatchNumberField.getText().toString().trim());
-                        if(teams == null){
-                            teams = new String[1];
-                            teams[0] = "Error loading teams";
+                    String matchNumStr = mMatchNumberField.getText().toString().trim();
+                    if(!matchNumStr.isEmpty() && finalEvent != null && finalEvent.isEventDataLoaded()) {
+                        boolean bTeamsLoadedSuccessfully = false;
+                        try {
+                            ArrayAdapter<String> adapter3 = null;
+                            String[] teams = finalEvent.getTeams(mMatchNumberField.getText().toString().trim());
+                            if(teams[0] != "")
+                                bTeamsLoadedSuccessfully = true;
+//REMOVE                            if(teams == null){
+//REMOVE                                teams = new String[1];
+//REMOVE                                teams[0] = "Error loading teams";
+//REMOVE                                Log.e(TAG, "finalEvent.getTeams failed");
+//REMOVE                            }
+                            adapter3 = new ArrayAdapter<String> (PreMatchActivity.this, android.R.layout.select_dialog_item, teams);
+                            mTeamNumberField.setAdapter(adapter3);
+                        } catch (JSONException jsonException) {
+                            Log.e(TAG, "finding teams failed");
+                            jsonException.printStackTrace();
+                        }catch(NullPointerException nullPointerException){
+                            nullPointerException.printStackTrace();
                         }
-                        adapter3 = new ArrayAdapter<String>
-                                (PreMatchActivity.this, android.R.layout.select_dialog_item, teams);
-                        mTeamNumberField.setAdapter(adapter3);
-                    } catch (JSONException jsonException) {
-                        Log.e("Event", "finding teams failed");
-                        jsonException.printStackTrace();
-                    }catch(NullPointerException nullPointerException){
-                        nullPointerException.printStackTrace();
+                        if(bTeamsLoadedSuccessfully)
+                        {
+                            mTeamNumberField.setDropDownHeight(620);
+                            mTeamNumberField.showDropDown();
+                        }
                     }
-                    mTeamNumberField.setDropDownHeight(620);
-                    mTeamNumberField.showDropDown();
                 }
             }
         });
@@ -219,7 +228,8 @@ public class PreMatchActivity extends AppCompatActivity {
         mScout.addPastScouter(mScouterNameField.getText().toString());
         mScout.setMostRecentScoutName(mScouterNameField.getText().toString());
         mScout.setMostRecentMatchNumber(mMatchNumberField.getText().toString());
-        mScout.saveData(getApplicationContext());
+//REMOVE        Log.d(TAG,"updatePreMatchData() calling Scouter::saveData()");
+//REMOVE        mScout.saveData(getApplicationContext());
         mMatchData.setName(mScouterNameField.getText().toString());
         mMatchData.setCompetition(mCompetitionField.getText().toString());
         mMatchData.setMatchNumber(mMatchNumberField.getText().toString().trim());

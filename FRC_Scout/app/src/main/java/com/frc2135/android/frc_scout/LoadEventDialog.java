@@ -95,7 +95,7 @@ public class LoadEventDialog extends DialogFragment {
 
         Log.d(TAG, "Load data clicked");
         String eventCode = mEventCodeText.getText().toString();
-        Log.d(TAG,"====> LoadEventDialog: eventCode = '"+eventCode+"'");
+        Log.d(TAG,"LoadEventDialog: eventCode = '"+eventCode+"'");
         if(!eventCode.isEmpty() && eventCode.length() > 4) {
             CurrentCompetition.get(getContext()).setCompName(eventCode.substring(4).toUpperCase());
             CurrentCompetition.get(getContext()).setEventCode(eventCode.trim());
@@ -107,27 +107,34 @@ public class LoadEventDialog extends DialogFragment {
                 // Instantiate the RequestQueue.
                 RequestQueue queue = Volley.newRequestQueue(getActivity());
                 String urlStr = "https://www.thebluealliance.com/api/v3/event/" + mEventCodeText.getText().toString().trim() + "/matches";
-                Log.d(TAG, "===> LoadEventData url = " + urlStr);
+                Log.d(TAG, "LoadEventData URL = " + urlStr);
                 JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlStr, null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.d(TAG, "JsonArrayRequest success");
-                        Log.d(TAG, response.toString().substring(0, 100));
+                        Log.d(TAG, "JsonArrayRequest success in loading URL file");
+//                        Log.d(TAG, response.toString().substring(0, 100));
+
                         try {
-                            File file = new File("/data/user/0/com.frc2135.android.frc_scout/files");
+                            // Look thru existing files on device.
+                            String dataFileDir = "/data/user/0/com.frc2135.android.frc_scout/files";
+                            File file = new File(dataFileDir);
                             File[] test = file.listFiles();
                             if (test != null) {
-                                for (File f : test) {
-                                    if (f.getName().equals(mEventCodeText.getText().toString().trim() + "matches.json")) {
-                                        f.delete();
+                                String eventFileName = mEventCodeText.getText().toString().trim() + "matches.json";
+                                for (File f1 : test) {
+                                    if (f1.getName().equals(eventFileName)) {
+                                        // Remove comp data file if it exists already
+                                        Log.d(TAG,"Deleting existing competition file on device: "+f1.getName());
+                                        f1.delete();
+                                        break;
                                     }
-                                    mCompDataSerializer.saveEventData(response);
-                                    //CurrentCompetition.get(getContext()).setData(response);
-                                    Log.d(TAG,"+++>> Successfully loaded competition data!");
-                                    Toast toast1 = Toast.makeText(mAppContext, "Successfully loaded competition match data for event: "+mEVENTCODE, Toast.LENGTH_LONG);
-                                    toast1.setGravity(Gravity.CENTER,0,0);
-                                    toast1.show();
                                 }
+                                // Save comp data to file 
+                                mCompDataSerializer.saveEventData(response);
+                                Log.d(TAG,"Successfully saved data to file: "+dataFileDir +"/"+eventFileName);
+                                Toast toast1 = Toast.makeText(mAppContext, "Successfully loaded competition match data for event: "+mEVENTCODE, Toast.LENGTH_LONG);
+                                toast1.setGravity(Gravity.CENTER,0,0);
+                                toast1.show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -164,7 +171,7 @@ public class LoadEventDialog extends DialogFragment {
                 startActivity(i);
             }
         }
-        else Log.d(TAG, "===> LoadEventDialog: no event code entered!");
+        else Log.d(TAG, "LoadEventDialog: no event code entered!");
     }
 }
 

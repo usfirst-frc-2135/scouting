@@ -38,7 +38,7 @@ public class EndgameFragment extends Fragment {
 
     private static final int REQUEST_QR = 2;
     public static final String QRTAG = "qr";
-    private static final String TAG = "Endgame Fragment";
+    private static final String TAG = "EndgameFragment";
 
     private ActionBar mActionBar;
 
@@ -61,7 +61,7 @@ public class EndgameFragment extends Fragment {
 
         //Connects the checkbox for if the robot dies and sets up a listener to detect when the checked status is changed
         mDiedCheckbox = (CheckBox)v.findViewById(R.id.died_checkbox_true);
-        Log.d(TAG, "Setting up Died checkbox to "+mMatchData.getDied());
+//REMOVE        Log.d(TAG, "Setting up Died checkbox to "+mMatchData.getDied());
         mDiedCheckbox.setChecked(mMatchData.getDied());// Default is unchecked
         mDiedCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -79,7 +79,7 @@ public class EndgameFragment extends Fragment {
         mRadioButton4 = (RadioButton)v.findViewById(R.id.level_four);//Sets up radio button that corresponds to 4
 
         int x = mMatchData.getClimb();
-        Log.d(TAG,"Setting up climb level to "+x);
+//REMOVE        Log.d(TAG,"Setting up climb level to "+x);
         if(x==0) 
             mRadioButton0.setChecked(true);
         else if(x==1) 
@@ -121,7 +121,7 @@ public class EndgameFragment extends Fragment {
             public void onClick(View view) {
                 //Uses intents to start the QR code dialog
                 Snackbar.make(view, "Generating QR code", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                Log.d("ScoutingActivity", "Sent intent");
+                Log.d(TAG, "Clicked on QR Code");
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 QRFragment dialog = QRFragment.newInstance(mMatchData);
                 dialog.setTargetFragment(EndgameFragment.this, REQUEST_QR);
@@ -139,7 +139,7 @@ public class EndgameFragment extends Fragment {
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivityForResult(i, 0);
                 getActivity().finish();
-                Log.d("TeleopFragment", "Sent intent");
+                Log.d(TAG, "Sent intent");
             }
         });
 
