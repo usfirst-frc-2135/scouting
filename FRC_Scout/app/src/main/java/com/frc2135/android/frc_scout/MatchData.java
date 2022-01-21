@@ -27,8 +27,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 // stats[10] - m_climbed
 // stats[11] - m_extComments
 // stats[12] - m_timestamp
-// stats[13] - m_rotationControl
-// stats[14] - m_died
+// stats[13] - m_died
 // If a new stats[] is added, make sure to adjust STATS_SIZE!
 /////////////////////////
 
@@ -42,7 +41,6 @@ public class MatchData {
     private int m_climbed;
     private int m_startPosition;
     private boolean m_exitedTarmac;
-    private boolean m_rotationControl;
     private String m_extComments;
     private boolean m_died;
     private String m_name;
@@ -52,7 +50,7 @@ public class MatchData {
     private String m_competition;
     private Date m_timestamp;
     private CompetitionDataSerializer m_competitionDataSerializer;
-    private static final int STATS_SIZE = 15;
+    private static final int STATS_SIZE = 14;
 
     public String stripTeamNamePrefix(String teamName){
         String newTeamName = "";
@@ -81,7 +79,6 @@ public class MatchData {
         setTeleopLowPoints(0);
         setClimb(0);
         setExtComments("");
-        setRotationControl(false);
         setTimestamp(Calendar.getInstance().getTime());
         setDied(false);
 
@@ -112,7 +109,6 @@ public class MatchData {
         setClimb(json.getInt("climb"));
         setExtComments(json.getString("comments"));
         setTimestamp(new Date(json.getString("timestamp")));
-        setRotationControl(json.getBoolean( "rot_control"));
         setDied(json.getBoolean("died"));
         m_matchID = json.getString("id1");
     }
@@ -263,19 +259,10 @@ public class MatchData {
         return m_timestamp;
     }
 
-    ////////////  m_rotationControl   /////////////////////
-    public void setRotationControl(boolean x){
-        stats[13] = x;
-        m_rotationControl = x;
-    }
-
-    public boolean getRotationControl(){
-        return m_rotationControl;
-    }
 
     ////////////  m_died   /////////////////////
     public void setDied(boolean x){
-        stats[14] = x;
+        stats[13] = x;
         m_died = x;
     }
 
@@ -306,11 +293,6 @@ public class MatchData {
         message += m_teleopLowPoints + "\t";
         message += m_teleopOuterPoints + "\t";
 
-        // Boolean values: use 1/0 instead of true/false.
-        if(m_rotationControl)
-            message += "1" + "\t";
-        else message += "0" + "\t";
-
         message += m_climbed + "\t";
 
         if(m_died)
@@ -331,7 +313,7 @@ public class MatchData {
         json.put("divider", ", \n");
 
 
-        json.put("headings", "Competition, Team Number, Match Number, Start Position, Auton High Hub, Auton Lower Hub, Exited Tarmac, Rotational Control, Teleop Low Port, Teleop Outer Port, Climbed, Died, Comments, Timestamp, MatchID \n");
+        json.put("headings", "Competition, Team Number, Match Number, Start Position, Auton High Hub, Auton Lower Hub, Exited Tarmac, Teleop Low Port, Teleop Outer Port, Climbed, Died, Comments, Timestamp, MatchID \n");
         json.put("competition", m_competition);
         json.put("divider", ",");
         json.put("team number", m_teamNumber);
@@ -345,8 +327,6 @@ public class MatchData {
         json.put("auton low points", m_autonLowPoints);
         json.put("divider", ",");
         json.put("tarmac", m_exitedTarmac);
-        json.put("divider", ",");
-        json.put("rot_control", m_rotationControl);
         json.put("divider", ",");
         json.put("teleop low points", m_teleopLowPoints);
         json.put("divider", ",");
