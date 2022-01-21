@@ -27,10 +27,6 @@ public class TeleopFragment extends Fragment {
     private Button mLowPortPointsInc;
     private Button mHighPortPointsDec;
     private Button mHighPortPointsInc;
-
-    private CheckBox mRotationCheckBox;
-
-
     private MatchData mMatchData;
     private ActionBar mActionBar;
 
@@ -114,12 +110,6 @@ public class TeleopFragment extends Fragment {
             }
         });
 
-        //Connects the checkbox for rotation control and sets up a listener to detect when the checked status is changed
-        mRotationCheckBox = v.findViewById(R.id.rotation_checkbox);
-        mRotationCheckBox.setChecked(mMatchData.getRotationControl());
-
-
-
         mHighPoints.setText(mMatchData.getTelopHighPoints()+"");
         mLowPoints.setText(mMatchData.getTeleopLowPoints()+"");
 
@@ -129,8 +119,6 @@ public class TeleopFragment extends Fragment {
     public void updateTeleopData(){
         mMatchData.setTeleopLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
         mMatchData.setTeleopOuterPoints(Integer.parseInt(mHighPoints.getText().toString()));
-        mMatchData.setRotationControl(mRotationCheckBox.isChecked());
-        Log.d(TAG,"updateTeleopData() calling MatchHistory->saveData()");
         MatchHistory.get(getActivity()).saveData();
     }
 

@@ -11,8 +11,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
-//import static androidx.constraintlayout.widget.Constraints.TAG;
-
 public class MatchData {
     private static final String TAG = "MatchData";
     private static final String JSON_KEY_SCOUTNAME = "scoutname";
@@ -39,7 +37,6 @@ public class MatchData {
     private int m_climbed;
     private int m_startPosition;
     private boolean m_exitedTarmac;
-    private boolean m_rotationControl;
     private String m_extComments;
     private boolean m_died;
     private String m_name;
@@ -76,7 +73,6 @@ public class MatchData {
         setTeleopLowPoints(0);
         setClimb(0);
         setExtComments("");
-        setRotationControl(false);
         setTimestamp(Calendar.getInstance().getTime());
         setDied(false);
 
@@ -243,15 +239,6 @@ public class MatchData {
         return m_timestamp;
     }
 
-    ////////////  m_rotationControl   /////////////////////
-    public void setRotationControl(boolean x){
-        m_rotationControl = x;
-    }
-
-    public boolean getRotationControl(){
-        return m_rotationControl;
-    }
-
     ////////////  m_died   /////////////////////
     public void setDied(boolean x){
         m_died = x;
@@ -279,11 +266,6 @@ public class MatchData {
         message += m_teleopLowPoints + "\t";
         message += m_teleopOuterPoints + "\t";
 
-        // Boolean values: use 1/0 instead of true/false.
-        if(m_rotationControl)
-            message += "1" + "\t";
-        else message += "0" + "\t";
-
         message += m_climbed + "\t";
 
         if(m_died)
@@ -303,7 +285,7 @@ public class MatchData {
         json.put("divider", ",");
         json.put("divider", ", \n");
 
-        json.put("headings", "Competition, Team Number, Match Number, Auton High Points, Auton Low Points, Exited Tarmac, Rotational Control, Teleop Low Port, Teleop Outer Port, Climbed, Died, Comments, Timestamp, MatchID \n");
+        json.put("headings", "Competition, Team Number, Match Number, Start Position, Auton High Points, Auton Low Points, Exited Tarmac, Teleop Low Port, Teleop Outer Port, Climbed, Died, Comments, Timestamp, MatchID \n");
         json.put(JSON_KEY_COMPETITION, m_competition);
         json.put("divider", ",");
         json.put(JSON_KEY_TEAMNUMBER, m_teamNumber);
