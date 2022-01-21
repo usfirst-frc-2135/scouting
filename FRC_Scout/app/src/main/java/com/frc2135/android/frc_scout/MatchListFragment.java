@@ -85,9 +85,8 @@ public class MatchListFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
-        Log.d(TAG, "Getting MatchData to display");
         mDisplayedMatches = MatchHistory.get(getActivity()).sortByTimestamp2(MatchHistory.get(getContext()).getMatches());
-        Log.d(TAG, "Initial search: displayedMatches size = "+mDisplayedMatches.size()+"");
+        Log.d(TAG, "Initial file search: displayedMatches size = "+mDisplayedMatches.size()+"");
         mAdapter = new MatchAdapter(mDisplayedMatches);
         Intent intent = getActivity().getIntent();
         if(intent.hasExtra("team")){

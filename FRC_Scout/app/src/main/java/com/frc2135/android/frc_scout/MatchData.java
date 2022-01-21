@@ -292,6 +292,8 @@ public class MatchData {
         json.put("divider", ",");
         json.put(JSON_KEY_MATCHNUMBER, m_matchNumber);
         json.put("divider", ",");
+        json.put(JSON_KEY_STARTPOS, m_startPosition );
+        json.put("divider", ",");
         json.put(JSON_KEY_AUTONHIGHPOINTS, m_autonHighPoints );
         json.put("divider", ",");
         json.put(JSON_KEY_AUTONLOWPOINTS, m_autonLowPoints);
