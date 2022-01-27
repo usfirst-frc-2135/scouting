@@ -44,17 +44,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <Button
                         android:id="@+id/highportpointsdec"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@string/decrease"
-                        android:textSize="30dp"
+                        android:layout_marginLeft="30dp"
                         android:layout_weight="1"
-                        android:textColor="#3F51B5"
-                        android:background="#FFC107"
-                        android:layout_marginLeft="30dp">
-                    </Button>
+                        android:background="#3F98B5"
+                        android:text="@string/decrease"
+                        android:textColor="#FFC107"
+                        android:textSize="30dp"></Button>
 
                     <TextView
                         android:id="@+id/highportpoints"
@@ -69,13 +69,12 @@
                         android:id="@+id/highportpointsinc"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@string/increase"
-                        android:textSize="30dp"
+                        android:layout_marginRight="30dp"
                         android:layout_weight="1"
-                        android:textColor="#3F51B5"
-                        android:background="#FFC107"
-                        android:layout_marginRight="30dp">
-                    </Button>
+                        android:background="#3F98B5"
+                        android:text="@string/increase"
+                        android:textColor="#FFC107"
+                        android:textSize="30dp"></Button>
                 </LinearLayout>
 
             </LinearLayout>
@@ -99,17 +98,17 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     >
+
                     <Button
                         android:id="@+id/lowportpointsdec"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@string/decrease"
-                        android:textSize="30dp"
+                        android:layout_marginLeft="30dp"
                         android:layout_weight="1"
-                        android:textColor="#3F51B5"
                         android:background="#FFC107"
-                        android:layout_marginLeft="30dp">
-                    </Button>
+                        android:text="@string/decrease"
+                        android:textColor="#3F98B5"
+                        android:textSize="30dp"></Button>
 
                     <TextView
                         android:id="@+id/lowportpoints"
@@ -124,13 +123,12 @@
                         android:id="@+id/lowportpointsinc"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@string/increase"
-                        android:textSize="30dp"
+                        android:layout_marginRight="30dp"
                         android:layout_weight="1"
-                        android:textColor="#3F51B5"
                         android:background="#FFC107"
-                        android:layout_marginRight="30dp">
-                    </Button>
+                        android:text="@string/increase"
+                        android:textColor="#3F98B5"
+                        android:textSize="30dp"></Button>
                 </LinearLayout>
 
             </LinearLayout>
