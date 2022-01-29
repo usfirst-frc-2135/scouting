@@ -23,10 +23,10 @@ public class TeleopFragment extends Fragment {
     private TextView mLowPoints;
     private TextView mHighPoints;
 
-    private Button mLowPortPointsDec;
-    private Button mLowPortPointsInc;
-    private Button mHighPortPointsDec;
-    private Button mHighPortPointsInc;
+    private Button mLowPointsDec;
+    private Button mLowPointsInc;
+    private Button mHighPointsDec;
+    private Button mHighPointsInc;
     private MatchData mMatchData;
     private ActionBar mActionBar;
 
@@ -62,17 +62,17 @@ public class TeleopFragment extends Fragment {
 
 
         //Sets up TextView that displays low points, setting 0 as the default
-        mLowPoints = v.findViewById(R.id.lowportpoints);
+        mLowPoints = v.findViewById(R.id.lowpoints);
         mLowPoints.setText(0 + "");
 
         //Sets up TextView that displays high points, setting 0 as the default
-        mHighPoints = v.findViewById(R.id.highportpoints);
+        mHighPoints = v.findViewById(R.id.highpoints);
         mHighPoints.setText(0+ "");
 
 
         //Connects the decrement button for low points and sets up a listener that detects when the button is clicked
-        mLowPortPointsDec = v.findViewById(R.id.lowportpointsdec);
-        mLowPortPointsDec.setOnClickListener(new View.OnClickListener() {
+        mLowPointsDec = v.findViewById(R.id.lowpointsdec);
+        mLowPointsDec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Decreases displayed point value by 1; sets to 0 if result goes negative.
@@ -81,8 +81,8 @@ public class TeleopFragment extends Fragment {
         });
 
         //Connects the increment button for low points and sets up a listener that detects when the button is clicked
-        mLowPortPointsInc = v.findViewById(R.id.lowportpointsinc);
-        mLowPortPointsInc.setOnClickListener(new View.OnClickListener() {
+        mLowPointsInc = v.findViewById(R.id.lowpointsinc);
+        mLowPointsInc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Increases displayed point value by 1
@@ -91,8 +91,8 @@ public class TeleopFragment extends Fragment {
         });
 
         //Connects the decrement button for high points and sets up a listener that detects when the button is clicked
-        mHighPortPointsDec = v.findViewById(R.id.highportpointsdec);
-        mHighPortPointsDec.setOnClickListener(new View.OnClickListener() {
+        mHighPointsDec = v.findViewById(R.id.highpointsdec);
+        mHighPointsDec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Decreases displayed point value by 1; sets to 0 if negative result
@@ -101,8 +101,8 @@ public class TeleopFragment extends Fragment {
         });
 
         //Connects the increment button for high points and sets up a listener that detects when the button is clicked
-        mHighPortPointsInc = v.findViewById(R.id.highportpointsinc);
-        mHighPortPointsInc.setOnClickListener(new View.OnClickListener() {
+        mHighPointsInc = v.findViewById(R.id.highpointsinc);
+        mHighPointsInc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Increases displayed point value by 1
@@ -118,7 +118,7 @@ public class TeleopFragment extends Fragment {
 
     public void updateTeleopData(){
         mMatchData.setTeleopLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
-        mMatchData.setTeleopOuterPoints(Integer.parseInt(mHighPoints.getText().toString()));
+        mMatchData.setTeleopHighPoints(Integer.parseInt(mHighPoints.getText().toString()));
         MatchHistory.get(getActivity()).saveData();
     }
 

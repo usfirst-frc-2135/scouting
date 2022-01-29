@@ -15,10 +15,10 @@
 
 
             <TextView
-                android:id="@+id/power_port_title"
+                android:id="@+id/hub_scoring_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/teleop_power_port"
+                android:text="Hub Scoring"
                 android:textSize="24dp"
                 style="?android:listSeparatorTextViewStyle"
                 android:textColor="#000000"
@@ -33,10 +33,10 @@
                 android:layout_marginTop="20dp">
 
                 <TextView
-                    android:id="@+id/highportTitle"
+                    android:id="@+id/highTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/outerPortTitle"
+                    android:text="Upper Hub"
                     android:textSize="18dp"
                     android:textAlignment="center"
                     style="?android:listSeparatorTextViewStyle"/>
@@ -46,7 +46,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/highportpointsdec"
+                        android:id="@+id/highpointsdec"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="30dp"
@@ -57,7 +57,7 @@
                         android:textSize="30dp"></Button>
 
                     <TextView
-                        android:id="@+id/highportpoints"
+                        android:id="@+id/highpoints"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:textSize="25dp"
@@ -66,7 +66,7 @@
                     </TextView>
 
                     <Button
-                        android:id="@+id/highportpointsinc"
+                        android:id="@+id/highpointsinc"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginRight="30dp"
@@ -86,10 +86,10 @@
                 android:layout_marginTop="20dp">
 
                 <TextView
-                    android:id="@+id/lowportTitle"
+                    android:id="@+id/lowTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/lowPortTitle"
+                    android:text="Lower Hub"
                     android:textSize="18dp"
                     style="?android:listSeparatorTextViewStyle"
                     />
@@ -100,7 +100,7 @@
                     >
 
                     <Button
-                        android:id="@+id/lowportpointsdec"
+                        android:id="@+id/lowpointsdec"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="30dp"
@@ -111,7 +111,7 @@
                         android:textSize="30dp"></Button>
 
                     <TextView
-                        android:id="@+id/lowportpoints"
+                        android:id="@+id/lowpoints"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:textSize="25dp"
@@ -120,7 +120,7 @@
                     </TextView>
 
                     <Button
-                        android:id="@+id/lowportpointsinc"
+                        android:id="@+id/lowpointsinc"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginRight="30dp"

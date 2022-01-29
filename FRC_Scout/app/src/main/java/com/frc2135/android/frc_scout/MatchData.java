@@ -33,7 +33,7 @@ public class MatchData {
     private int m_autonLowPoints;
     private int m_autonHighPoints;
     private int m_teleopLowPoints;
-    private int m_teleopOuterPoints;
+    private int m_teleopHighPoints;
     private int m_climbed;
     private int m_startPosition;
     private boolean m_exitedTarmac;
@@ -69,7 +69,7 @@ public class MatchData {
         setAutonHighPoints(0);
         setAutonLowPoints(0);
         setExitedTarmac(false);
-        setTeleopOuterPoints(0);
+        setTeleopHighPoints(0);
         setTeleopLowPoints(0);
         setClimb(0);
         setExtComments("");
@@ -97,7 +97,7 @@ public class MatchData {
         setAutonHighPoints(json.getInt(JSON_KEY_AUTONHIGHPOINTS));
         setAutonLowPoints(json.getInt(JSON_KEY_AUTONLOWPOINTS));
         setExitedTarmac(json.getBoolean(JSON_KEY_TARMAC));
-        setTeleopOuterPoints(json.getInt(JSON_KEY_TELEOPHIGHPOINTS));
+        setTeleopHighPoints(json.getInt(JSON_KEY_TELEOPHIGHPOINTS));
         setTeleopLowPoints(json.getInt(JSON_KEY_TELEOPLOWPOINTS));
         setClimb(json.getInt(JSON_KEY_CLIMBED));
         setExtComments(json.getString(JSON_KEY_COMMENTS));
@@ -183,13 +183,13 @@ public class MatchData {
         return m_exitedTarmac;
     }
 
-    ////////////  m_teleopOuterPoints   /////////////////////
-    public void setTeleopOuterPoints(int y){
-        m_teleopOuterPoints = y;
+    ////////////  m_teleopHighPoints   /////////////////////
+    public void setTeleopHighPoints(int y){
+        m_teleopHighPoints = y;
     }
 
     public int getTelopHighPoints(){
-        return m_teleopOuterPoints;
+        return m_teleopHighPoints;
     }
 
     ////////////  m_teleopLowPoints   /////////////////////
@@ -264,7 +264,7 @@ public class MatchData {
         message += m_autonLowPoints + "\t";
         message += m_autonHighPoints + "\t";
         message += m_teleopLowPoints + "\t";
-        message += m_teleopOuterPoints + "\t";
+        message += m_teleopHighPoints + "\t";
 
         message += m_climbed + "\t";
 
@@ -302,7 +302,7 @@ public class MatchData {
         json.put("divider", ",");
         json.put(JSON_KEY_TELEOPLOWPOINTS, m_teleopLowPoints);
         json.put("divider", ",");
-        json.put(JSON_KEY_TELEOPHIGHPOINTS, m_teleopOuterPoints);
+        json.put(JSON_KEY_TELEOPHIGHPOINTS, m_teleopHighPoints);
         json.put("divider", ",");
         json.put(JSON_KEY_CLIMBED, m_climbed);
         json.put("divider", ",");
