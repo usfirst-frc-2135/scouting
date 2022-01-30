@@ -119,7 +119,6 @@ public class TeleopFragment extends Fragment {
     public void updateTeleopData(){
         mMatchData.setTeleopLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
         mMatchData.setTeleopHighPoints(Integer.parseInt(mHighPoints.getText().toString()));
-        MatchHistory.get(getActivity()).saveData();
     }
 
     public String formattedDate(Date d){

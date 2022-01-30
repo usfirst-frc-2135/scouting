@@ -70,8 +70,8 @@ public class MatchHistory {
     public boolean saveData(){
         Log.d(TAG, "MatchHistory::saveData() starting");
         try{
-            mSerializer.saveData(mTotalMatchHistory);
             Log.d(TAG, "Using MatchHistory serializer to save matches to file");
+            mSerializer.saveData(mTotalMatchHistory);
             return true;
         }
         catch(Exception e){

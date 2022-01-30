@@ -12,35 +12,36 @@ import java.util.ArrayList;
 
 public class Scouter {
 
-    private final ArrayList<String> pastScouters;
+    private final ArrayList<String> m_pastScouters;
     private static Scouter sScouter;
-    private MatchDataSerializer mSerializer;
-    private Context mContext;
-    private String mFileName;
-    private String mMostRecentScoutName;
-    private String mMostRecentMatchNumber;
+    private MatchDataSerializer m_Serializer;
+    private String m_teamIndexStr;
+    private String m_mostRecentScoutName;
+    private String m_mostRecentMatchNumber;
     private static final String FILENAME = "Scouter.json";
     private static final String TAG = "Scouter";
 
 
     private Scouter(Context mAppContext){
 
-        pastScouters = new ArrayList<String>();
-        mMostRecentScoutName = "";
-        mMostRecentMatchNumber = "";
+        m_pastScouters = new ArrayList<String>();
+        m_mostRecentScoutName = "";
+        m_mostRecentMatchNumber = "";
+        m_teamIndexStr = "None";
 
-        mSerializer = new MatchDataSerializer(mAppContext, FILENAME);
+        m_Serializer = new MatchDataSerializer(mAppContext, FILENAME);
 
-        //Rather than start with a new Scouter every time, the following code allows the program to call the method loadScouter() in order to add the previously saved match
-       if(pastScouters.size()==0){
+        // Load the previously saved Scouter data from Scouter.json file.
+       if(m_pastScouters.size()==0){
            try{
                Log.d(TAG, "Loading scouter");
-               if(mSerializer.loadScouterData() != null) {
-                   for (String x : mSerializer.loadScouterData().getPastScouts()) {
-                       pastScouters.add(x);
+               Scouter tmpScouter = m_Serializer.loadScouterData();
+               if(tmpScouter != null) {
+                   for (String pastScout : tmpScouter.getPastScouts()) {
+                       m_pastScouters.add(pastScout);
                    }
+                   m_teamIndexStr = tmpScouter.getTeamIndexStr();
                }
-
            }
            catch(Exception e){
                Log.e(TAG, "Error loading scouter: ", e);
@@ -51,25 +52,19 @@ public class Scouter {
 
     public Scouter(JSONObject json) throws JSONException{
         Log.d(TAG, "Scouter being created using json data");
-
-        pastScouters = new ArrayList<String>();
-
+        m_pastScouters = new ArrayList<String>();
         try{
             String tag = "scoutername";
             int i=0;
             while(json.has(tag+i)){
-                pastScouters.add(json.getString(tag+i +""));
+                m_pastScouters.add(json.getString(tag+i +""));
                 i++;
             }
-
-
+            setTeamIndexStr(json.getString("teamindex"));
         }catch(Exception e){
             Log.d(TAG, "Error loading past scout data");
             Log.e(TAG, e.toString());
         }
-
-
-
     }
 
     public static Scouter get(Context c){
@@ -80,29 +75,29 @@ public class Scouter {
     }
 
     public void addPastScouter(String n){
-        for(String x: pastScouters){
+        for(String x: m_pastScouters){
             if(n.trim().equalsIgnoreCase(x.trim())){
                 return;
             }
         }
-        pastScouters.add(n.trim());
+        m_pastScouters.add(n.trim());
     }
 
     public String getMostRecentMatchNumber(){
-        return mMostRecentMatchNumber;
+        return m_mostRecentMatchNumber;
     }
     public void setMostRecentMatchNumber(String value){
-        mMostRecentMatchNumber = value;
+        m_mostRecentMatchNumber = value;
     }
     public String getNextExpectedMatchNumber(){
         String newMatchNumber = "";
-        if(mMostRecentMatchNumber != "") {
+        if(m_mostRecentMatchNumber != "") {
             String prefix = "";
             String numStr = "";
-            for(int i = 0; i < mMostRecentMatchNumber.length(); i++){
-                if(Character.isDigit(mMostRecentMatchNumber.charAt(i)))
-                    numStr += mMostRecentMatchNumber.charAt(i);
-                else prefix += mMostRecentMatchNumber.charAt(i);
+            for(int i = 0; i < m_mostRecentMatchNumber.length(); i++){
+                if(Character.isDigit(m_mostRecentMatchNumber.charAt(i)))
+                    numStr += m_mostRecentMatchNumber.charAt(i);
+                else prefix += m_mostRecentMatchNumber.charAt(i);
             }
             newMatchNumber = prefix;
             int newNum = Integer.parseInt(numStr);
@@ -112,38 +107,64 @@ public class Scouter {
         return newMatchNumber;
     }
 
+    public String getTeamIndexStr(){
+        return m_teamIndexStr;
+    }
+    public void setTeamIndexStr(String indexStr){
+        m_teamIndexStr = indexStr;
+    }
+
+    // Returns true if given indexStr is a number: 1, 2, 3, 4, 5, or 6
+    public boolean isValidTeamIndexNum(String indexStr){
+        if(indexStr.equals("1") || indexStr.equals("2") || indexStr.equals("3") || indexStr.equals("4") || indexStr.equals("5") || indexStr.equals("6")) {
+            return true;
+        }
+        return false;
+    }
+
+    // Returns true if given indexStr is None, 1, 2, 3, 4, 5, or 6
+    public boolean isValidTeamIndexStr(String indexStr){
+        if(indexStr.equals("1") || indexStr.equals("2") || indexStr.equals("3") || indexStr.equals("4") || indexStr.equals("5") || indexStr.equals("6") || indexStr.equals("None"))  {
+            return true;
+        }
+        return false;
+    }
+
+
     public String getMostRecentScoutName(){
-        return mMostRecentScoutName;
+        return m_mostRecentScoutName;
     }
     public void setMostRecentScoutName(String name){
-        mMostRecentScoutName = name;
+        m_mostRecentScoutName = name;
     }
 
     public String[] getPastScouts(){
-        String[] names = new String[pastScouters.size()];
+        String[] names = new String[m_pastScouters.size()];
         for(int i = 0; i<names.length; i++){
-            names[i]=pastScouters.get(i);
+            names[i]=m_pastScouters.get(i);
         }
         return names;
     }
 
 
     public void clear(){
-        pastScouters.clear();
+        m_pastScouters.clear();
     }
 
 
     public JSONObject toJSON() throws JSONException {
-        //This code uses the JSON class to convert the aspects of each match into data that can be to a file as JSON
+        // Writes the Scouter data to Scouter.json file.
         JSONObject json = new JSONObject();
 
-        String logmessage1 = "";
-        for(int i = 0; i < pastScouters.size(); i++){
-            json.put("scoutername" + i, pastScouters.get(i));
-            logmessage1 +="scoutername" + i + pastScouters.get(i);
+        String logmsg = "";
+        for(int i = 0; i < m_pastScouters.size(); i++){
+            json.put("scoutername" + i, m_pastScouters.get(i));
+            logmsg +="scoutername" + i + "="+m_pastScouters.get(i)+"; ";
         }
+        json.put("teamindex", m_teamIndexStr);
+        logmsg +="teamindex" +"="+ m_teamIndexStr;
 
-        Log.d(TAG, logmessage1);
+        Log.d(TAG,"Writing to Scouter.json: "+logmsg);
         return json;
     }
 
@@ -151,7 +172,7 @@ public class Scouter {
 //???? should this just save Scouter.json????? and not all the matchHistory????
         try{
            Log.d(TAG,"Scouter saveData() calling MatchDataSerializer->saveData(MatchHistory->getMatches())");
-            mSerializer.saveData(MatchHistory.get(c).getMatches());
+            m_Serializer.saveData(MatchHistory.get(c).getMatches());
             Log.d(TAG, "scouters/competitions saved to file");
             return true;
         }

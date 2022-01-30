@@ -74,9 +74,7 @@ public class CompetitionDataSerializer {
     public CurrentCompetition loadCurrentComp() throws IOException, JSONException {
         // Going to load existing current_competitionjson file");
         Log.d(TAG, "loadCurrentComp() starting");
-//REMOVE        ArrayList<MatchData> matchHistory = new ArrayList<MatchData>();
         BufferedReader reader = null;
-
         CurrentCompetition currComp = null;
         File file = new File("/data/user/0/com.frc2135.android.frc_scout/files");
         File[] test = file.listFiles();
@@ -109,6 +107,7 @@ public class CompetitionDataSerializer {
                             reader.close();
                         }
                     }
+                    break;
                 }
             }
         }

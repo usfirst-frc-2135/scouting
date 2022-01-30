@@ -16,10 +16,45 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/preferences_title_comp"
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Preferences"
+            android:textColor="#000000"
+            android:textSize="24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/team_index_title"
+                style="?android:listSeparatorTextViewStyle"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Team Index"
+                android:textSize="18dp"
+                android:paddingTop="20dp"/>
+
+            <AutoCompleteTextView
+                android:id="@+id/team_index_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:paddingTop="20dp"
+                android:layout_marginLeft="16dp">
+            </AutoCompleteTextView>
+
+        </LinearLayout>
+
+        <TextView
             android:id="@+id/prematch_title_comp"
             style="?android:listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="50dp"
             android:text="Competition Info"
             android:textColor="#000000"
             android:textSize="24dp" />
@@ -150,7 +185,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:background="#FFC107"
-            android:layout_marginTop="250dp"
+            android:layout_marginTop="100dp"
             android:text="Start Scouting"
             android:textColor="#3F51B5">
 

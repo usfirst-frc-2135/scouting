@@ -17,11 +17,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class ScoutingActivity extends AppCompatActivity {
-    private static final String TAG = "ScoutingActivity";// This is the tag that will be used for all Log statements generated from this activity
-
-
+    private static final String TAG = "ScoutingActivity";
     private MatchData mMatchData;
-
 
 
     @Override

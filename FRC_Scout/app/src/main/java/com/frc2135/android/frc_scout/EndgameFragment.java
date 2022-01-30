@@ -166,5 +166,7 @@ public class EndgameFragment extends Fragment {
         mMatchData.setClimb(getCurrentClimbLevel());
         mMatchData.setDied(mDiedCheckbox.isChecked());
         mMatchData.setExtComments(mEditText.getText());
+        Log.d(TAG,"updateEndgame() calling MatchHistory->saveData()");
+        MatchHistory.get(getActivity()).saveData();
     }
 }
