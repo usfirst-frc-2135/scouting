@@ -43,7 +43,7 @@ public class MatchDataSerializer {
             writerS = new OutputStreamWriter(out); 
             writerS.write(arrayS.toString());
             Log.d(TAG, "Wrote Scouter file: "+ m_FileName);
-        }
+        }  // ???? Why no catch ???
         finally{
             if(writerS != null){
                 writerS.close();
@@ -61,10 +61,8 @@ public class MatchDataSerializer {
                 OutputStream out = new FileOutputStream(fileM);//This method(openFileOutput) takes a file name and a mode and uses both to create a pathway and a file to open for writing
                 writerMatches = new OutputStreamWriter(out); // This handles converting the written string data to byte code
                 writerMatches.write(array.toString());
-//REMOVE                Log.d(TAG, array.toString() + "@");
-//REMOVE                Log.d(TAG, fileM.getAbsolutePath() + "%");
                 Log.d(TAG, "Wrote match file: "+ fileM.getName());
-            }
+            }  // ???? Why no catch???
             finally{
                 if(writerMatches != null){
                     writerMatches.close();
@@ -139,10 +137,11 @@ public class MatchDataSerializer {
             JSONArray array = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
 
             //Build the array of matches from JSONObjects
+            Log.d(TAG, "Loaded Scouter data from file: "+m_FileName);
             m_Scouter = new Scouter(array.getJSONObject(0));
             if(m_Scouter.getPastScouts() != null){
-                Log.d(TAG, "Loaded Scouter data from file: "+m_FileName);
-                Log.d(TAG, "Past scouts = "+m_Scouter.getPastScouts()[0]);
+                Log.d(TAG, "Most recent past scout = "+m_Scouter.getPastScouts()[0]);
+                Log.d(TAG, "Past teamIndexStr = "+m_Scouter.getTeamIndexStr());
             }
 
         } catch (FileNotFoundException e) {

@@ -98,10 +98,8 @@ public class Event {
             JSONObject tempR = new JSONObject();
             JSONArray redTeams = new JSONArray();
             JSONArray blueTeams = new JSONArray();
-//            Log.d(TAG,"getTeams(): looking for match "+matchnum.trim());
             for(int i= 0; i < m_array.length(); i++){
                 if((((JSONObject)m_array.get(i)).getString("comp_level") + ((JSONObject)m_array.get(i)).getString("match_number")).equals(matchnum.trim())){
-//                     Log.d(TAG, "getTeams(): matchnum found");
                      bMatchNumFound = true;
                      JSONObject alliances = (JSONObject)m_array.get(i);
                      JSONObject color = (JSONObject)alliances.get("alliances");
@@ -109,18 +107,19 @@ public class Event {
                      blueTeams = (JSONArray)tempB.get("team_keys");
                      tempR = (JSONObject)color.get("red");
                      redTeams = (JSONArray)tempR.get("team_keys");
+                     break;
                 }
-                Log.d(TAG, "getTeams(): matchnum '"+matchnum+ "' NOT found!");
             }
             if(bMatchNumFound) {
+                teams[0]="No team selected";
                 for(int i = 1; i<4; i++){
-                    teams[0]="No team selected";
                     teams[i]= redTeams.getString(i-1);
                 }
                 for(int i = 4; i <7; i++){
                     teams[i]=blueTeams.getString(i-4);
                 }
             }
+            else Log.d(TAG, "getTeams(): matchnum '"+matchnum+ "' NOT found!");
         }
         return teams;
     }

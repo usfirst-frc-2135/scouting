@@ -25,109 +25,157 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class PreMatchActivity extends AppCompatActivity {
-    private AutoCompleteTextView mCompetitionField;
-    private AutoCompleteTextView mScouterNameField;
-    private AutoCompleteTextView mTeamNumberField;
-    private AutoCompleteTextView mMatchNumberField;
-    private Button mStartScoutingButton;
-    private TextView mErrorMessagepm;
+    private AutoCompleteTextView m_teamIndexField;
+    private AutoCompleteTextView m_competitionField;
+    private AutoCompleteTextView m_scoutNameField;
+    private AutoCompleteTextView m_teamNumberField;
+    private AutoCompleteTextView m_matchNumberField;
+    private Button m_startScoutingButton;
+    private TextView m_errMsgPM;
 
-    private MatchData mMatchData;
-    private ActionBar mActionBar;
+    private MatchData m_matchData;
+    private ActionBar m_actionBar;
 
     public static final String TAG = "PreMatchActivity";
     public static final String EXTRA_DATE = "com.frc2135.android.frc_scout.date";
 
-    private static Scouter mScout;
+    private static Scouter m_Scouter;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState){
 
         super.onCreate(savedInstanceState);
-        mScout = Scouter.get(getApplicationContext());
+        m_Scouter = Scouter.get(getApplicationContext());
 
         String matchId = getIntent().getStringExtra("match_ID");
-        mMatchData = MatchHistory.get(getApplicationContext()).getMatch(matchId);
-        final Event finalEvent = new Event(this, mMatchData.getCompetition().trim());
+        m_matchData = MatchHistory.get(getApplicationContext()).getMatch(matchId);
+        final Event finalEvent = new Event(this, m_matchData.getCompetition().trim());
 
-        mActionBar =  getSupportActionBar();
-        mActionBar.setTitle("Pre-Match: ");
+        m_actionBar =  getSupportActionBar();
+        m_actionBar.setTitle("Pre-Match: ");
 
         setContentView(R.layout.prematch_activity);
 
-        mCompetitionField = findViewById(R.id.comp_name);
-        mCompetitionField.setHint("Competition");
-        mCompetitionField.setText(mMatchData.getCompetition());
-        mCompetitionField.addTextChangedListener(new TextWatcher(){
-            public void onTextChanged(CharSequence c, int start, int before, int count){
-
-            }
-            public void beforeTextChanged(CharSequence c, int start, int count, int after){
-            }
-            public void afterTextChanged(Editable c){
-                mErrorMessagepm.setVisibility(View.INVISIBLE);
-            }
-
-        });
-
-        mScouterNameField = findViewById(R.id.scouter_name);
-        mScouterNameField.setHint("Scout Name");
-        if(mMatchData != null && !mMatchData.getName().isEmpty())
-            mScouterNameField.setText(mMatchData.getName());
-        else if(mScout != null) {
-            String mostRecentScoutName = mScout.getMostRecentScoutName();
-            if(!mostRecentScoutName.isEmpty()){
-              mScouterNameField.setText(mostRecentScoutName);
-            }
+        m_teamIndexField = findViewById(R.id.team_index_field);
+        m_teamIndexField.setHint("Team Number index to use");
+        if(m_Scouter != null) {
+            String indexStr = m_Scouter.getTeamIndexStr();
+            Log.d(TAG,"From Scouter: teamFieldIndex = "+indexStr);
+            if(m_Scouter.isValidTeamIndexStr(indexStr)) 
+                m_teamIndexField.setText(m_Scouter.getTeamIndexStr());
+            else m_teamIndexField.setText("None");
         }
-        mScouterNameField.addTextChangedListener(new TextWatcher(){
+        else m_teamIndexField.setText("None");
+        m_teamIndexField.addTextChangedListener(new TextWatcher(){
             public void onTextChanged(CharSequence c, int start, int before, int count){
+ //HOLD           String indexStr = m_teamIndexField.getText().toString().trim();
+ //HOLD           if(!m_Scouter.isValidTeamIndexStr(indexStr))  {
+ //HOLD               m_teamIndexField.setText("None");
+ //HOLD               Log.d(TAG,"teamFieldIndex value "+indexStr+" is not valid, so set to None!");
+ //HOLD           }
             }
             public void beforeTextChanged(CharSequence c, int start, int count, int after){
             }
             public void afterTextChanged(Editable c){
-                mErrorMessagepm.setVisibility(View.INVISIBLE);
+               //??? validate entry must be one of expected values ?????? else clear
+                m_errMsgPM.setVisibility(View.INVISIBLE);
             }
 
         });
 
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>
-                (PreMatchActivity.this, android.R.layout.select_dialog_item, Scouter.get(getApplicationContext()).getPastScouts());
-        mScouterNameField.setAdapter(adapter2);
-        mScouterNameField.setThreshold(0);
-        mScouterNameField.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+        // Set up the dropdown list for the TeamIndex field.
+        String[] teamIndexList = new String[7];
+        teamIndexList[0]="None";
+        teamIndexList[1]="1";
+        teamIndexList[2]="2";
+        teamIndexList[3]="3";
+        teamIndexList[4]="4";
+        teamIndexList[5]="5";
+        teamIndexList[6]="6";
+        ArrayAdapter<String> teamIndexAdapter = new ArrayAdapter<String> (PreMatchActivity.this, android.R.layout.select_dialog_item,teamIndexList );
+        m_teamIndexField.setAdapter(teamIndexAdapter);
+        m_teamIndexField.setThreshold(0);
+        m_teamIndexField.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             @Override
             public void onFocusChange (View v, boolean hasFocus){
                 if(hasFocus){
-                    mScouterNameField.showDropDown();
+                    m_teamIndexField.showDropDown();
                 }
             }
         });
 
-        mMatchNumberField = (AutoCompleteTextView)findViewById(R.id.match_number_field);
-        if(!mMatchData.getMatchNumber().isEmpty())
-            mMatchNumberField.setText(mMatchData.getMatchNumber());
-        else if(mScout != null && !mScout.getMostRecentMatchNumber().isEmpty())
-            mMatchNumberField.setText(mScout.getNextExpectedMatchNumber());
+        m_competitionField = findViewById(R.id.comp_name);
+        m_competitionField.setHint("Competition");
+        m_competitionField.setText(m_matchData.getCompetition());
+        m_competitionField.addTextChangedListener(new TextWatcher(){
+            public void onTextChanged(CharSequence c, int start, int before, int count){
 
-        mMatchNumberField.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            }
+            public void beforeTextChanged(CharSequence c, int start, int count, int after){
+            }
+            public void afterTextChanged(Editable c){
+                m_errMsgPM.setVisibility(View.INVISIBLE);
+            }
+
+        });
+
+        m_scoutNameField = findViewById(R.id.scouter_name);
+        m_scoutNameField.setHint("Scout Name");
+        if(m_matchData != null && !m_matchData.getName().isEmpty())
+            m_scoutNameField.setText(m_matchData.getName());
+        else if(m_Scouter != null) {
+            String mostRecentScoutName = m_Scouter.getMostRecentScoutName();
+            if(!mostRecentScoutName.isEmpty()){
+              m_scoutNameField.setText(mostRecentScoutName);
+            }
+        }
+        m_scoutNameField.addTextChangedListener(new TextWatcher(){
+            public void onTextChanged(CharSequence c, int start, int before, int count){
+            }
+            public void beforeTextChanged(CharSequence c, int start, int count, int after){
+            }
+            public void afterTextChanged(Editable c){
+                m_errMsgPM.setVisibility(View.INVISIBLE);
+            }
+
+        });
+
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String> (PreMatchActivity.this, android.R.layout.select_dialog_item, Scouter.get(getApplicationContext()).getPastScouts());
+        m_scoutNameField.setAdapter(adapter2);
+        m_scoutNameField.setThreshold(0);
+        m_scoutNameField.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange (View v, boolean hasFocus){
+                if(hasFocus){
+                    m_scoutNameField.showDropDown();
+                }
+            }
+        });
+
+        m_matchNumberField = (AutoCompleteTextView)findViewById(R.id.match_number_field);
+        if(!m_matchData.getMatchNumber().isEmpty())
+            m_matchNumberField.setText(m_matchData.getMatchNumber());
+        else if(m_Scouter != null && !m_Scouter.getMostRecentMatchNumber().isEmpty())
+            m_matchNumberField.setText(m_Scouter.getNextExpectedMatchNumber());
+
+        m_matchNumberField.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(parent != null && parent.getItemAtPosition(position) != null)
-                    mMatchData.setMatchNumber(parent.getItemAtPosition(position).toString());
+                    m_matchData.setMatchNumber(parent.getItemAtPosition(position).toString());
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                mMatchNumberField.setSelection(0);
+                m_matchNumberField.setSelection(0);
             }
         });
 
         ArrayAdapter<String> adapter4 = null;
-        if(finalEvent != null && finalEvent.isEventDataLoaded() && mMatchData != null && mMatchData.getCompetition() != "compX" && !mMatchData.getCompetition().isEmpty() ){
+        if(finalEvent != null && finalEvent.isEventDataLoaded() && m_matchData != null && m_matchData.getCompetition() != "compX" && !m_matchData.getCompetition().isEmpty() ){
                 try {
-                    String[] matchArray = finalEvent.getEventMatches(mMatchData.getCompetition());
+                    String[] matchArray = finalEvent.getEventMatches(m_matchData.getCompetition());
                     if(matchArray != null && matchArray.length > 0)
                         adapter4 = new ArrayAdapter<String>(PreMatchActivity.this, android.R.layout.select_dialog_item, matchArray);
                 } catch (JSONException | IOException jsonException) {
@@ -139,55 +187,66 @@ public class PreMatchActivity extends AppCompatActivity {
                 }
 
         } 
-        mMatchNumberField.setAdapter(adapter4);
-        mMatchNumberField.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+        m_matchNumberField.setAdapter(adapter4);
+        m_matchNumberField.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             @Override
             public void onFocusChange (View v, boolean hasFocus){
                 if(hasFocus){
-                    mMatchNumberField.showDropDown();
+                    m_matchNumberField.showDropDown();
                 }
             }
         });
 
-        mTeamNumberField = findViewById(R.id.team_number_field);
-        mTeamNumberField.setText(mMatchData.getTeamNumber()+"");
-        mTeamNumberField.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        m_teamNumberField = findViewById(R.id.team_number_field);
+        m_teamNumberField.setText(m_matchData.getTeamNumber());
+
+        // If there is a match number and a team index, load that team number from event teams list.
+        String matchNumStr = m_matchNumberField.getText().toString().trim();
+        String teamIndexStr = m_teamIndexField.getText().toString().trim();
+      
+        if(!matchNumStr.isEmpty() && !teamIndexStr.isEmpty() && m_Scouter.isValidTeamIndexNum(teamIndexStr)  && finalEvent != null && finalEvent.isEventDataLoaded()) {
+            try {
+                String[] teams = finalEvent.getTeams(m_matchNumberField.getText().toString().trim());
+                int teamIndx = Integer.parseInt(teamIndexStr);
+                String teamNumStr = teams[teamIndx];
+                Log.d(TAG,"Preloading team number using index "+teamIndexStr+": "+teamNumStr);
+                m_teamNumberField.setText(teamNumStr);
+            } catch (JSONException jsonException) {
+                Log.e(TAG, "For preload: couldn't get teams from finalEvent");
+                jsonException.printStackTrace();
+            }
+        }
+
+        m_teamNumberField.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mErrorMessagepm.setVisibility(View.INVISIBLE);
+                m_errMsgPM.setVisibility(View.INVISIBLE);
                 if (parent != null && parent.getItemAtPosition(position) != null) {
-                    mMatchData.setTeamNumber(parent.getItemAtPosition(position).toString());
+                    m_matchData.setTeamNumber(parent.getItemAtPosition(position).toString());
                     // TODO - can we remove keyboard here???
                 }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                mErrorMessagepm.setVisibility(View.INVISIBLE);
-                mTeamNumberField.setSelection(0);
+                m_errMsgPM.setVisibility(View.INVISIBLE);
+                m_teamNumberField.setSelection(0);
             }
         });
 
-
-        mTeamNumberField.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+        m_teamNumberField.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             @Override
             public void onFocusChange (View v, boolean hasFocus){
                 if(hasFocus){
-                    Log.d(TAG, "mTeamNumberField clicked");
-                    String matchNumStr = mMatchNumberField.getText().toString().trim();
+                    Log.d(TAG, "m_teamNumberField clicked");
+                    String matchNumStr = m_matchNumberField.getText().toString().trim();
                     if(!matchNumStr.isEmpty() && finalEvent != null && finalEvent.isEventDataLoaded()) {
                         boolean bTeamsLoadedSuccessfully = false;
                         try {
-                            ArrayAdapter<String> adapter3 = null;
-                            String[] teams = finalEvent.getTeams(mMatchNumberField.getText().toString().trim());
+                            String[] teams = finalEvent.getTeams(m_matchNumberField.getText().toString().trim());
                             if(teams[0] != "")
                                 bTeamsLoadedSuccessfully = true;
-//REMOVE                            if(teams == null){
-//REMOVE                                teams = new String[1];
-//REMOVE                                teams[0] = "Error loading teams";
-//REMOVE                                Log.e(TAG, "finalEvent.getTeams failed");
-//REMOVE                            }
-                            adapter3 = new ArrayAdapter<String> (PreMatchActivity.this, android.R.layout.select_dialog_item, teams);
-                            mTeamNumberField.setAdapter(adapter3);
+                            ArrayAdapter<String> adapter3 = new ArrayAdapter<String> (PreMatchActivity.this, android.R.layout.select_dialog_item, teams);
+                            m_teamNumberField.setAdapter(adapter3);
                         } catch (JSONException jsonException) {
                             Log.e(TAG, "finding teams failed");
                             jsonException.printStackTrace();
@@ -196,44 +255,43 @@ public class PreMatchActivity extends AppCompatActivity {
                         }
                         if(bTeamsLoadedSuccessfully)
                         {
-                            mTeamNumberField.setDropDownHeight(620);
-                            mTeamNumberField.showDropDown();
+                            m_teamNumberField.setDropDownHeight(620);
+                            m_teamNumberField.showDropDown();
                         }
                     }
                 }
             }
         });
 
-        mStartScoutingButton = findViewById(R.id.start_scouting_button);
-        mStartScoutingButton.setOnClickListener(new View.OnClickListener() {
+        m_startScoutingButton = findViewById(R.id.start_scouting_button);
+        m_startScoutingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if(checkValidData()){
                     updatePreMatchData();
                     Intent intent1 = new Intent(PreMatchActivity.this, ScoutingActivity.class);
-                    intent1.putExtra("match_ID", mMatchData.getMatchID());
+                    intent1.putExtra("match_ID", m_matchData.getMatchID());
                     startActivityForResult(intent1, 0);
                 }
             }
         });
 
-        mErrorMessagepm = findViewById(R.id.error_message_pm);
-        mErrorMessagepm.setVisibility(View.INVISIBLE);
-        mErrorMessagepm.setTextColor(Color.RED);
+        m_errMsgPM = findViewById(R.id.error_message_pm);
+        m_errMsgPM.setVisibility(View.INVISIBLE);
+        m_errMsgPM.setTextColor(Color.RED);
     }
 
     public void updatePreMatchData(){
-        mScout = Scouter.get(getApplicationContext());
-        mScout.addPastScouter(mScouterNameField.getText().toString());
-        mScout.setMostRecentScoutName(mScouterNameField.getText().toString());
-        mScout.setMostRecentMatchNumber(mMatchNumberField.getText().toString());
-//REMOVE        Log.d(TAG,"updatePreMatchData() calling Scouter::saveData()");
-//REMOVE        mScout.saveData(getApplicationContext());
-        mMatchData.setName(mScouterNameField.getText().toString());
-        mMatchData.setCompetition(mCompetitionField.getText().toString());
-        mMatchData.setMatchNumber(mMatchNumberField.getText().toString().trim());
-        mMatchData.setTeamNumber(mTeamNumberField.getText().toString());
+        m_Scouter = Scouter.get(getApplicationContext());
+        m_Scouter.addPastScouter(m_scoutNameField.getText().toString());
+        m_Scouter.setMostRecentScoutName(m_scoutNameField.getText().toString());
+        m_Scouter.setMostRecentMatchNumber(m_matchNumberField.getText().toString());
+        m_matchData.setName(m_scoutNameField.getText().toString());
+        m_matchData.setCompetition(m_competitionField.getText().toString());
+        m_matchData.setMatchNumber(m_matchNumberField.getText().toString().trim());
+        m_matchData.setTeamNumber(m_teamNumberField.getText().toString());
+        m_Scouter.setTeamIndexStr(m_teamIndexField.getText().toString());
     }
 
     @Override
@@ -245,13 +303,18 @@ public class PreMatchActivity extends AppCompatActivity {
     }
 
     private boolean checkValidData(){
-        mErrorMessagepm.setVisibility(View.INVISIBLE);
-        if(mCompetitionField.getText().toString().trim().equals("")||mScouterNameField.getText().toString().trim().equals("")|| mTeamNumberField.getText().toString().trim().equals("")||mMatchNumberField.getText().equals("")){
+        m_errMsgPM.setVisibility(View.INVISIBLE);
+
+        // Validate team index 
+        if(!m_Scouter.isValidTeamIndexStr(m_teamIndexField.getText().toString().trim()))
+            m_errMsgPM.setVisibility(View.VISIBLE); ////???? use a different error msg- yes???
+
+        if(m_competitionField.getText().toString().trim().equals("")||m_scoutNameField.getText().toString().trim().equals("")|| m_teamNumberField.getText().toString().trim().equals("")||m_matchNumberField.getText().equals("")){
             Log.d(TAG,"+++>> checkValidData(): ERROR");
-            mErrorMessagepm.setVisibility(View.VISIBLE);
+            m_errMsgPM.setVisibility(View.VISIBLE);
             return false;
         }
-        mErrorMessagepm.setVisibility(View.INVISIBLE);
+        m_errMsgPM.setVisibility(View.INVISIBLE);
         return true;
     }
 

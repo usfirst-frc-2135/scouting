@@ -272,6 +272,9 @@ public class MatchData {
             message += "1" + "\t";
         else message += "0" + "\t";
 
+        message += m_matchNumber + "\t";
+        message += m_competition + "\t";
+
         Log.d(TAG,"MatchData encodeToTSV(): " + message.toString());
         return message;
     }
