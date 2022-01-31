@@ -167,19 +167,4 @@ public class Scouter {
         Log.d(TAG,"Writing to Scouter.json: "+logmsg);
         return json;
     }
-
-    public boolean saveData(Context c){
-//???? should this just save Scouter.json????? and not all the matchHistory????
-        try{
-           Log.d(TAG,"Scouter saveData() calling MatchDataSerializer->saveData(MatchHistory->getMatches())");
-            m_Serializer.saveData(MatchHistory.get(c).getMatches());
-            Log.d(TAG, "scouters/competitions saved to file");
-            return true;
-        }
-        catch(Exception e){
-            Log.e(TAG, "Error saving scouters/competitions:", e);
-            return false;
-        }
-    }
-
 }

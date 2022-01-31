@@ -3,6 +3,9 @@ package com.frc2135.android.frc_scout;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
+import android.view.View;
+import android.graphics.Color;
+import android.view.Gravity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,19 +22,20 @@ import java.io.InputStreamReader;
 public class Event {
 
     public static final String TAG = "Event";
+    private static final String DEVICE_DATA_PATH = "/data/user/0/com.frc2135.android.frc_scout/files";
     private final String m_eventCode;
     private String m_eventName;
     private JSONArray m_array;
     private final Context m_appContext;
     private boolean m_bEventDataLoaded;
 
-    public Event(Context context, String eC){
+    public Event(Context context, String eventCode){
         m_appContext = context;
-        m_eventCode = eC;
+        m_eventCode = eventCode;
         m_bEventDataLoaded = false;
         m_array = null;
  
-        String filename = "/data/user/0/com.frc2135.android.frc_scout/files/"+m_eventCode.trim().toLowerCase()+"matches.json";
+        String filename = DEVICE_DATA_PATH +"/"+ m_eventCode.trim().toLowerCase() + "matches.json";
         Log.d(TAG, "Event constructor: going to read in file: "+filename);
         File file = new File(filename);
         BufferedReader reader = null;
@@ -54,9 +58,14 @@ public class Event {
             m_bEventDataLoaded = true;
 
         } catch (FileNotFoundException err) {
-            //ignore this one; it happens when starting fresh
-            Log.e(TAG, err.toString());
-            Toast.makeText(m_appContext, "Event file not found", Toast.LENGTH_LONG);
+            String errMsg = "ERROR reading event matches file: \n" + err.toString();
+            Log.e(TAG, errMsg);
+            Toast.makeText(m_appContext, errMsg, Toast.LENGTH_LONG);
+            Toast toastM = Toast.makeText(m_appContext, errMsg, Toast.LENGTH_LONG);
+            View view2 = toastM.getView();
+            view2.setBackgroundColor(Color.RED);
+            toastM.setGravity(Gravity.CENTER,0,0);
+            toastM.show();
         } catch (JSONException jsonException) {
             jsonException.printStackTrace();
         } catch (IOException ioException) {

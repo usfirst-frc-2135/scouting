@@ -9,9 +9,8 @@ import org.json.JSONObject;
 
 public class CurrentCompetition {
 
-    private String eventCode;
-    private String compName;
-    private JSONArray data;
+    private String m_eventCode;
+    private String m_compName;
     private static CurrentCompetition sCurrentCompetition;
 
     public CurrentCompetition(Context mAppContext){
@@ -20,53 +19,37 @@ public class CurrentCompetition {
     }
 
     public CurrentCompetition(JSONObject json) throws JSONException{
-        eventCode = json.getString("eventCode");
-        compName = json.getString("compName");
-        //data = json.getJSONArray("data");
-
+        m_eventCode = json.getString("eventCode");
+        m_compName = json.getString("compName");
     }
 
     public static CurrentCompetition get(Context c){
         if(sCurrentCompetition == null) {
             sCurrentCompetition = new CurrentCompetition(c.getApplicationContext());
         }
-
         return sCurrentCompetition;
     }
 
     public void setEventCode(String ec){
-        eventCode = ec;
+        m_eventCode = ec;
     }
 
     public String getEventCode(){
-        return eventCode;
+        return m_eventCode;
     }
 
     public void setCompName(String cn){
-        compName = cn;
+        m_compName = cn;
     }
 
     public String getCompName(){
-        return compName;
+        return m_compName;
     }
-
-    public JSONArray getData(){
-        return data;
-    }
-
-    public void setData(JSONArray j){
-        data = j;
-    }
-
 
     public JSONObject toJSON() throws JSONException {
         JSONObject json = new JSONObject();
-        json.put("compName", compName);
-        Log.d("CurrentCompetition", compName);
-        json.put("eventCode", eventCode);
-        //json.put("data", data);
-        //Log.d("CurrentCompetition", data.toString().substring(0, 50));
-
+        json.put("compName", m_compName);
+        json.put("eventCode", m_eventCode);
         return json;
     }
 }

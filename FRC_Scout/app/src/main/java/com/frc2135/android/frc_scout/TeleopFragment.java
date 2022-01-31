@@ -47,8 +47,6 @@ public class TeleopFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mMatchData = ((ScoutingActivity)getActivity()).getCurrentMatch();
-        Log.d(TAG, mMatchData.getMatchID());
-
         mActionBar =  ((AppCompatActivity)getActivity()).getSupportActionBar();
         String teamNumber = mMatchData.stripTeamNamePrefix(mMatchData.getTeamNumber());
         mActionBar.setTitle("Teleoperated                      - scouting Team "+teamNumber);
@@ -59,8 +57,6 @@ public class TeleopFragment extends Fragment {
         //Creates a view using the specific fragment layout, match_data_fragment
         View v = inflater.inflate(R.layout.teleop_fragment, parent, false);
 
-
-
         //Sets up TextView that displays low points, setting 0 as the default
         mLowPoints = v.findViewById(R.id.lowpoints);
         mLowPoints.setText(0 + "");
@@ -68,7 +64,6 @@ public class TeleopFragment extends Fragment {
         //Sets up TextView that displays high points, setting 0 as the default
         mHighPoints = v.findViewById(R.id.highpoints);
         mHighPoints.setText(0+ "");
-
 
         //Connects the decrement button for low points and sets up a listener that detects when the button is clicked
         mLowPointsDec = v.findViewById(R.id.lowpointsdec);

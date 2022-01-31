@@ -22,8 +22,6 @@ public class MatchHistory {
     private MatchHistory(Context appContext){
         mAppContext = appContext;
         mSerializer = new MatchDataSerializer(mAppContext, FILENAME);
-
-        //Rather than start with a new matchHistory every time, the following code allows the program to call the method loadMatchData() in order to add the previously saved MatchData
         try{
             Log.d(TAG, "mSerializer loading MatchHistory");
             mTotalMatchHistory = mSerializer.loadMatchData();
@@ -48,7 +46,7 @@ public class MatchHistory {
     }
 
     public MatchData getMatch(String matchStr){
-        for(MatchData mX:mTotalMatchHistory){
+        for(MatchData mX : mTotalMatchHistory){
             if(mX.getMatchID().equals(matchStr)){
                 return mX;
             }
@@ -67,15 +65,38 @@ public class MatchHistory {
         mTotalMatchHistory.add(mData);
     }
 
-    public boolean saveData(){
-        Log.d(TAG, "MatchHistory::saveData() starting");
+    public boolean saveScouterData(){
         try{
-            Log.d(TAG, "Using MatchHistory serializer to save matches to file");
-            mSerializer.saveData(mTotalMatchHistory);
+            Log.d(TAG, "Saving scouter data to JSON file");
+            mSerializer.saveScouterData();
             return true;
         }
         catch(Exception e){
-            Log.e(TAG, "saveData(): Error saving data:", e);
+            Log.e(TAG, "saveScouterData(): Error saving data:", e);
+            return false;
+        }
+    }
+
+    public boolean saveMatchData(MatchData matchData){
+        try{
+            Log.d(TAG, "Saving saveMatchData data to JSON files");
+            mSerializer.saveMatchData(matchData);
+            return true;
+        }
+        catch(Exception e){
+            Log.e(TAG, "saveMatchData(): Error saving data:", e);
+            return false;
+        }
+    }
+
+    public boolean saveAllData(){
+        try{
+            Log.d(TAG, "Saving all data to JSON files");
+            mSerializer.saveAllData(mTotalMatchHistory);
+            return true;
+        }
+        catch(Exception e){
+            Log.e(TAG, "saveAllData(): Error saving data:", e);
             return false;
         }
     }

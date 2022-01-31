@@ -21,90 +21,86 @@ import java.io.Writer;
 import java.util.ArrayList;
 
 public class CompetitionDataSerializer {
-    private static final String TAG = "CompetitionDataJSONSerializer";
-    private final Context mContext;
-    private final String mFileName;
-    private CurrentCompetition c;
+    private static final String TAG = "CompetitionDataSerializer";
+    private static final String DEVICE_DATA_PATH = "/data/user/0/com.frc2135.android.frc_scout/files";
+    private final Context m_context;
+    private final String  m_filename;
 
-    public CompetitionDataSerializer(Context c, String f) {
-        mContext = c;
-        mFileName = f;
+    public CompetitionDataSerializer(Context context, String filename) {
+        m_context = context;
+        m_filename = filename;
     }
 
     public void saveEventData(JSONArray compData) throws JSONException, IOException {
         // Writes out the given compData JSONArray to the '<eventCode>matches.json' file.
         Log.d(TAG, "saveEventData() starting");
-        Writer writerScouter = null;
+        Writer compWriter = null;
         try {
-            File f = new File("/data/user/0/com.frc2135.android.frc_scout/files/"+CurrentCompetition.get(mContext).getEventCode()+"matches.json");
-            OutputStream out = new FileOutputStream(f);//This method(openFileOutput) takes a file name and a mode and uses both to create a pathway and a file to open for writing
-            writerScouter = new OutputStreamWriter(out); // This handles converting the written string data to byte code
-            writerScouter.write(compData.toString());
-            Log.d(TAG, "File created: /data/user/0/com.frc2135.android.frc_scout/files/"+CurrentCompetition.get(mContext).getEventCode()+"matches.json");
+            File file1 = new File(DEVICE_DATA_PATH+"/"+CurrentCompetition.get(m_context).getEventCode()+"matches.json");
+            OutputStream out = new FileOutputStream(file1);
+            compWriter = new OutputStreamWriter(out);
+            compWriter.write(compData.toString());
+            Log.d(TAG, "File created: "+DEVICE_DATA_PATH+"/"+CurrentCompetition.get(m_context).getEventCode()+"matches.json");
         } finally {
-            if (writerScouter != null) {
-                writerScouter.close();
+            if (compWriter != null) {
+                compWriter.close();
             }
         }
     }
 
     public void saveCurrentCompetition(JSONObject compJSON) throws IOException {
+        // Write out current_competition.json file.
         Log.d(TAG, "saveCurrentCompetition() starting");
-        Writer writerScouter = null;
-        // Write out current_competition.json file
+        Writer compWriter = null;
         try {
-            File fileC = new File("/data/user/0/com.frc2135.android.frc_scout/files/current_competition.json");
-            //This method (openFileOutput) takes a file name and a mode and uses both to create a pathway and a file to open for writing.
+            File fileC = new File(DEVICE_DATA_PATH +"/current_competition.json");
             OutputStream out = new FileOutputStream(fileC);  
-            writerScouter = new OutputStreamWriter(out); // This handles converting the written string data to byte code
-            writerScouter.write(compJSON.toString());
-            Log.d(TAG, "File created: /data/user/0/com.frc2135.android.frc_scout/files/current_competition.json");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            compWriter = new OutputStreamWriter(out);
+            compWriter.write(compJSON.toString());
+            Log.d(TAG, "File created: "+DEVICE_DATA_PATH+"/current_competition.json");
+        } catch (FileNotFoundException err) {
+            err.printStackTrace();
+        } catch (IOException err2) {
+            err2.printStackTrace();
         } finally {
-            if (writerScouter != null) {
-                writerScouter.close();
+            if (compWriter != null) {
+                compWriter.close();
             }
         }
     }
 
-
     public CurrentCompetition loadCurrentComp() throws IOException, JSONException {
-        // Going to load existing current_competitionjson file");
+        // Reads in existing current_competition.json file");
         Log.d(TAG, "loadCurrentComp() starting");
         BufferedReader reader = null;
         CurrentCompetition currComp = null;
-        File file = new File("/data/user/0/com.frc2135.android.frc_scout/files");
-        File[] test = file.listFiles();
-        if (test != null) {
-            for (File file1 : test) {
-                if (file1.getName().equals("current_competition.json")) {
+        File file = new File(DEVICE_DATA_PATH);
+        File[] filelist = file.listFiles();
+        if (filelist != null) {
+            // Go thru files to find current_competition.json file, then load it.
+            for (File file1 : filelist) {
+                String filename = file1.getName().trim();
+                if (filename.equals("current_competition.json")) {
                     try {
-                        //Open and read the file into a StringBuilder
-                        InputStream in = mContext.openFileInput(file1.getName().trim());
+                        InputStream in = m_context.openFileInput(filename);
                         reader = new BufferedReader(new InputStreamReader(in));
                         StringBuilder jsonString = new StringBuilder();
                         String line = null;
 
                         while ((line = reader.readLine()) != null) {
-                            //Line breaks are omitted and irrelevant
                             jsonString.append(line);
                         }
 
-                        //Parse the JSON using JSONTokener
                         JSONObject object = (JSONObject) new JSONTokener(jsonString.toString()).nextValue();
 
-                        //Build the array of matches from JSONObjects
                         currComp = new CurrentCompetition(object);
-                        Log.d(TAG, "Loaded current competition file: "+file1.toString());
-                    } catch (FileNotFoundException e) {
-                        //ignore this one; it happens when starting fresh
-                        Log.e(TAG, e.toString());
+                        Log.d(TAG, "Loaded current competition file: "+filename);
+                    } catch (FileNotFoundException err) {
+                        Log.e(TAG, "ERROR loading current_competition.json: "+err.toString());
                     } finally {
                         if (reader != null) {
                             reader.close();
+                            // do we need to delete reader ???
                         }
                     }
                     break;

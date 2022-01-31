@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 public class MatchDataSerializer {
     private static final String TAG = "MatchDataSerializer";
+    private static final String DEVICE_DATA_PATH = "/data/user/0/com.frc2135.android.frc_scout/files";
     private final Context m_Context;
     private final String m_FileName;
     private Scouter m_Scouter;
@@ -30,63 +31,81 @@ public class MatchDataSerializer {
         m_FileName = f;
     }
 
-    public void saveData(ArrayList<MatchData> matchHistory) throws JSONException, IOException {
-        Log.d(TAG, "saveData() going to save MatchHistory matches to JSON files");
+    public void saveScouterData() throws JSONException, IOException {
+        Log.d(TAG, "saveScouterData() starting");
 
-        JSONArray arrayS = new JSONArray(); //Creates a JSON array object to hold the Scouter data 
+        JSONArray arrayS = new JSONArray(); // Creates a JSON array object to hold the Scouter data 
         arrayS.put(Scouter.get(m_Context).toJSON());
         Writer writerS = null;
-        try{
-            //This method(openFileOutput) takes a file name and a mode and uses both to create a pathway and a file to open for writing
+        try {
             OutputStream out = m_Context.openFileOutput(m_FileName, Context.MODE_PRIVATE);
-            // This handles converting the written string data to byte code
-            writerS = new OutputStreamWriter(out); 
+            writerS = new OutputStreamWriter(out);
             writerS.write(arrayS.toString());
-            Log.d(TAG, "Wrote Scouter file: "+ m_FileName);
-        }  // ???? Why no catch ???
-        finally{
-            if(writerS != null){
+            Log.d(TAG, "Wrote Scouter file: " + m_FileName);
+        } catch (FileNotFoundException e) {
+            Log.d(TAG, "ERROR writing Scouter file: " + e.toString());
+        } finally {
+            if (writerS != null) {
                 writerS.close();
             }
         }
+    }
+
+    public void saveMatchData(MatchData matchData1) throws JSONException, IOException {
+        // Save this MatchData to JSON file.
+        JSONArray array = new JSONArray(); 
+        array.put(matchData1.toJSON());
+        Writer writerMatches = null;
+        String matchFileName = matchData1.getMatchFileName();
+        String fullPathname = DEVICE_DATA_PATH + "/" + matchFileName;
+        try{
+            File fileM = new File(fullPathname);
+            OutputStream out = new FileOutputStream(fileM);
+            writerMatches = new OutputStreamWriter(out); 
+            writerMatches.write(array.toString());
+            Log.d(TAG, "Wrote match file: "+ fileM.getName());
+        } catch (FileNotFoundException e) {
+            Log.d(TAG, "ERROR writing Match file "+ matchFileName +": "+e.toString());
+        } 
+        finally{
+            if(writerMatches != null){
+                writerMatches.close();
+            }
+        }
+    }
+
+    public void saveAllMatchDatas(ArrayList<MatchData> matchHistory) throws JSONException, IOException {
+        Log.d(TAG, "saveAllMatchDatas() going to save MatchHistory matches to JSON files");
 
         // Write out all matchData files.
-        for(MatchData mdata: matchHistory){
-            JSONArray array = new JSONArray(); // Create a JSON array obj to hold the MatchDatas from MatchHistory
-            array.put(mdata.toJSON());
-            Writer writerMatches = null;
-            try{
-                Log.d(TAG, "Saving match to" + mdata.getMatchFileName());
-                File fileM = new File("/data/user/0/com.frc2135.android.frc_scout/files"+"/"+mdata.getMatchFileName());
-                OutputStream out = new FileOutputStream(fileM);//This method(openFileOutput) takes a file name and a mode and uses both to create a pathway and a file to open for writing
-                writerMatches = new OutputStreamWriter(out); // This handles converting the written string data to byte code
-                writerMatches.write(array.toString());
-                Log.d(TAG, "Wrote match file: "+ fileM.getName());
-            }  // ???? Why no catch???
-            finally{
-                if(writerMatches != null){
-                    writerMatches.close();
-                }
-            }
-
+        for(MatchData matchData1: matchHistory){
+            saveMatchData(matchData1);
         }
+    }
 
+    public void saveAllData(ArrayList<MatchData> matchHistory) throws JSONException, IOException {
+        Log.d(TAG, "saveAllData() going to save Scouter and MatchHistory matches to JSON files");
+        saveScouterData();
+        saveAllMatchDatas(matchHistory);
     }
 
     public ArrayList<MatchData> loadMatchData()throws IOException, JSONException {
        // Create a new MatchHistory obj and load it with all the existing match files.
        ArrayList<MatchData> matchHistory = new ArrayList<MatchData>();
        BufferedReader reader = null;
-       File file = new File("/data/user/0/com.frc2135.android.frc_scout/files"); // dir to use
+       File file = new File(DEVICE_DATA_PATH); // dir to use
 
-       Log.d(TAG, "Going to read in files found at /data/user/0/com.frc2135.android.frc_scout/files");
+       Log.d(TAG, "Going to read in files found at "+DEVICE_DATA_PATH);
        File[] jfilesList = file.listFiles();
        if(jfilesList != null) {
            for(File tfile: jfilesList) {
-               if(tfile.getName().length()>30) {
+               String filename = tfile.getName();
+
+               // Look for 30+ filename length - these are matchData JSON files
+               if(filename.length()>30) {
                    try {
-                       // Open and read the file into a StringBuilder
-                       InputStream in = m_Context.openFileInput(tfile.getName().trim());
+                       // Read in matchData JSON file.
+                       InputStream in = m_Context.openFileInput(filename.trim());
                        reader = new BufferedReader(new InputStreamReader(in));
                        StringBuilder jsonString = new StringBuilder();
                        String line = null;
@@ -95,24 +114,21 @@ public class MatchDataSerializer {
                            //Line breaks are omitted and irrelevant
                            jsonString.append(line);
                        }
-
-                       //Parse the JSON using JSONTokener
                        JSONArray array = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
 
-                       //Build the array of matches from JSONObjects
+                       // Add this match to matchHistory 
                        matchHistory.add(new MatchData(array.getJSONObject(0)));
-                       Log.d(TAG, "Reading in file: "+ tfile.getName());
+                       Log.d(TAG, "Reading in file: "+ filename);
                    } catch (FileNotFoundException e) {
                        //ignore this one; it happens when starting fresh
-                       Log.e(TAG, e.toString());
+                       Log.e(TAG, "ERROR in loading file "+filename+": "+e.toString());
                    } finally {
                        if (reader != null) {
                            reader.close();
                        }
                    }
                }
-               else Log.d(TAG, "Ignoring file: "+ tfile.getName());
-
+               else Log.d(TAG, "Ignoring file: "+ filename);
            }
        }
        return matchHistory;
