@@ -11,8 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -32,6 +30,8 @@ public class PreMatchActivity extends AppCompatActivity {
     private AutoCompleteTextView m_matchNumberField;
     private Button m_startScoutingButton;
     private TextView m_errMsgPM;
+
+    private Button m_prematchCancelButton;
 
     private MatchData m_matchData;
     private ActionBar m_actionBar;
@@ -276,6 +276,17 @@ public class PreMatchActivity extends AppCompatActivity {
                 }
             }
         });
+
+        m_prematchCancelButton = findViewById(R.id.prematch_cancel_button);
+        m_prematchCancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MatchHistory.get(getApplicationContext()).deleteMatch(m_matchData);
+                Intent intent2 = new Intent(PreMatchActivity.this, MatchListActivity.class);
+                startActivityForResult(intent2, 0);
+            }
+        });
+
 
         m_errMsgPM = findViewById(R.id.error_message_pm);
         m_errMsgPM.setVisibility(View.INVISIBLE);

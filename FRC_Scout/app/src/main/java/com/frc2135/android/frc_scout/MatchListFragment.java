@@ -116,6 +116,7 @@ public class MatchListFragment extends ListFragment {
         mListView.setAdapter(mAdapter);
         registerForContextMenu(mListView);
 
+        //Note: Floating Action Button is the + button in a circle to start scouting
         FloatingActionButton fab = v1.findViewById(R.id.fab);
         fab.setVisibility(View.VISIBLE);
 
@@ -132,8 +133,10 @@ public class MatchListFragment extends ListFragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
+
                     MatchHistory.get(getContext()).addMatch(matchA);
-                    mDisplayedMatches.add(matchA);
+//REMOVE            mDisplayedMatches.add(matchA);
                     Log.d(TAG, "Added to mDisplayedMatches: "+matchA.getMatchID());
                     mAdapter.notifyDataSetChanged();
                     Intent intentA = new Intent(getActivity(), PreMatchActivity.class);

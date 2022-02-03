@@ -178,15 +178,14 @@
         </LinearLayout>
 
 
-
-
         <Button
             android:id="@+id/start_scouting_button"
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:layout_marginTop="50dp"
             android:background="#FFC107"
-            android:layout_marginTop="100dp"
             android:text="Start Scouting"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="#3F51B5">
 
         </Button>
@@ -198,6 +197,17 @@
             android:text="***Please fill in the required field***">
 
         </TextView>
+
+        <Button
+            android:id="@+id/prematch_cancel_button"
+            android:layout_width="112dp"
+            android:layout_height="wrap_content"
+            android:background="#DADADA"
+            android:fadingEdge="horizontal|vertical"
+            android:text="cancel"
+            android:textColor="#3F51B5">
+
+        </Button>
 
 
     </LinearLayout>
