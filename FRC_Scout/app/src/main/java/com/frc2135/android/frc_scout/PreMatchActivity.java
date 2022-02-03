@@ -53,7 +53,7 @@ public class PreMatchActivity extends AppCompatActivity {
         final Event finalEvent = new Event(this, m_matchData.getCompetition().trim());
 
         m_actionBar =  getSupportActionBar();
-        m_actionBar.setTitle("Pre-Match: ");
+        m_actionBar.setTitle("Pre-Match");
 
         setContentView(R.layout.prematch_activity);
 

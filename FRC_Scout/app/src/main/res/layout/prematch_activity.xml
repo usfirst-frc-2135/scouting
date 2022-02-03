@@ -35,15 +35,14 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="Team Index"
-                android:textSize="18dp"
-                android:paddingTop="20dp"/>
+                android:textSize="18dp"/>
 
             <AutoCompleteTextView
                 android:id="@+id/team_index_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:paddingTop="20dp"
+                android:paddingTop="25dp"
                 android:layout_marginLeft="16dp">
             </AutoCompleteTextView>
 
@@ -70,15 +69,14 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="Competition"
-                android:textSize="18dp"
-                android:paddingTop="20dp"/>
+                android:textSize="18dp"/>
 
             <AutoCompleteTextView
                 android:id="@+id/comp_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:paddingTop="20dp"
+                android:paddingTop="25dp"
                 android:layout_marginLeft="16dp"></AutoCompleteTextView>
 
         </LinearLayout>
@@ -94,8 +92,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="Name"
-                android:textSize="18dp"
-                android:paddingTop="20dp"/>
+                android:textSize="18dp"/>
 
             <AutoCompleteTextView
                 android:id="@+id/scouter_name"
@@ -103,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:layout_marginLeft="16dp"
-                android:paddingTop="20dp">
+                android:paddingTop="25dp">
 
             </AutoCompleteTextView>
         </LinearLayout>
@@ -130,18 +127,15 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="@string/match_number"
-                android:textSize="18dp"
-                android:paddingTop="20dp"
-                android:layout_marginTop="20dp"/>
+                android:textSize="18dp"/>
 
 
             <AutoCompleteTextView
                 android:id="@+id/match_number_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
+                android:ems="10"
+                android:paddingTop="25dp"
                 android:layout_marginLeft="20dp"
                 >
 
@@ -161,16 +155,14 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="@string/team_number"
-                android:textSize="18dp"
-                android:paddingTop="20dp"/>
+                android:textSize="18dp"/>
 
             <AutoCompleteTextView
                 android:id="@+id/team_number_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
+                android:ems="10"
+                android:paddingTop="25dp"
                 android:layout_marginLeft="20dp"
                 >
 
