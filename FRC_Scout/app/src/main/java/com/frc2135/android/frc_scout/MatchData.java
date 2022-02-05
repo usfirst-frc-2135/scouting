@@ -13,6 +13,8 @@ import java.util.UUID;
 
 public class MatchData {
     private static final String TAG = "MatchData";
+
+    // Keys used for reading/writing match JSON files.
     private static final String JSON_KEY_SCOUTNAME = "scoutname";
     private static final String JSON_KEY_COMPETITION = "competition";
     private static final String JSON_KEY_TEAMNUMBER = "teamnumber";
@@ -29,24 +31,24 @@ public class MatchData {
     private static final String JSON_KEY_DIED = "died";
     private static final String JSON_KEY_MATCHID = "matchid";
 
-    //Creating private variables for all of the match data that is collected 
-    private int m_autonLowPoints;
-    private int m_autonHighPoints;
-    private int m_teleopLowPoints;
-    private int m_teleopHighPoints;
-    private int m_climbed;
-    private int m_startPosition;
+    // Data members 
+    private int     m_autonLowPoints;
+    private int     m_autonHighPoints;
+    private int     m_teleopLowPoints;
+    private int     m_teleopHighPoints;
+    private int     m_climbed;
+    private int     m_startPosition;
     private boolean m_exitedTarmac;
-    private String m_extComments;
+    private String  m_extComments;
     private boolean m_died;
-    private String m_name;
-    private String m_teamNumber;
-    private String m_matchNumber;
-    private String m_matchID;
-    private String m_competition;
-    private Date m_timestamp;
-    private CompetitionDataSerializer m_competitionDataSerializer;
+    private String  m_name;
+    private String  m_teamNumber;
+    private String  m_matchNumber;
+    private String  m_matchID;
+    private String  m_competition;
+    private Date    m_timestamp;
 
+    // Utility to strip off "frc" prefix to team number.
     public String stripTeamNamePrefix(String teamName){
         String newTeamName = "";
         for(int i = 0; i < teamName.length(); i++){
@@ -58,11 +60,9 @@ public class MatchData {
 
 
     ////////////////////////  Default constructor   //////////////////////////////
-    public MatchData(Context c) throws IOException, JSONException {
+    public MatchData(Context context) throws IOException, JSONException {
 
-        //Initializes/constructs everything 
         m_name = "";
-        m_competition = "compX"; //default
         m_teamNumber = "";
         m_matchNumber = "";
         setStartPosition(0);
@@ -77,11 +77,9 @@ public class MatchData {
         setDied(false);
 
         m_matchID = UUID.randomUUID()+"";
-        m_competitionDataSerializer = new CompetitionDataSerializer(c, "current_competition.json");
-        if(null != m_competitionDataSerializer && null != m_competitionDataSerializer.loadCurrentComp()){
-          m_competition = m_competitionDataSerializer.loadCurrentComp().getEventCode();
-        }
-        Log.d(TAG,"MatchData m_competition set to "+m_competition.toString());
+
+        m_competition = CurrentCompetition.get(context).getEventCode();
+        Log.d(TAG,"Default constructor m_competition set to "+m_competition.toString());
     }
 
     //////////////////////// constructor from JSON file  //////////////////////////////

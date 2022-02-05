@@ -28,13 +28,12 @@ public class PreMatchActivity extends AppCompatActivity {
     private AutoCompleteTextView m_scoutNameField;
     private AutoCompleteTextView m_teamNumberField;
     private AutoCompleteTextView m_matchNumberField;
-    private Button m_startScoutingButton;
-    private TextView m_errMsgPM;
-
-    private Button m_prematchCancelButton;
-
-    private MatchData m_matchData;
-    private ActionBar m_actionBar;
+    private Button               m_startScoutingButton;
+    private TextView             m_errMsgPM;
+    private Button               m_prematchCancelButton;
+    private MatchData            m_matchData;
+    private ActionBar            m_actionBar;
+    private CompetitionInfo      m_compInfo;;
 
     public static final String TAG = "PreMatchActivity";
     public static final String EXTRA_DATE = "com.frc2135.android.frc_scout.date";
@@ -50,9 +49,9 @@ public class PreMatchActivity extends AppCompatActivity {
 
         String matchId = getIntent().getStringExtra("match_ID");
         m_matchData = MatchHistory.get(getApplicationContext()).getMatch(matchId);
-        final Event finalEvent = new Event(this, m_matchData.getCompetition().trim());
+        m_compInfo = CompetitionInfo.get(getApplicationContext(),m_matchData.getCompetition().trim());
 
-        m_actionBar =  getSupportActionBar();
+        m_actionBar = getSupportActionBar();
         m_actionBar.setTitle("Pre-Match");
 
         setContentView(R.layout.prematch_activity);
@@ -173,16 +172,16 @@ public class PreMatchActivity extends AppCompatActivity {
         });
 
         ArrayAdapter<String> adapter4 = null;
-        if(finalEvent != null && finalEvent.isEventDataLoaded() && m_matchData != null && m_matchData.getCompetition() != "compX" && !m_matchData.getCompetition().isEmpty() ){
+        if(m_compInfo != null && m_compInfo.isEventDataLoaded() && m_matchData != null && m_matchData.getCompetition() != "COMPX" && !m_matchData.getCompetition().isEmpty() ){
                 try {
-                    String[] matchArray = finalEvent.getEventMatches(m_matchData.getCompetition());
+                    String[] matchArray = m_compInfo.getEventMatches(m_matchData.getCompetition());
                     if(matchArray != null && matchArray.length > 0)
                         adapter4 = new ArrayAdapter<String>(PreMatchActivity.this, android.R.layout.select_dialog_item, matchArray);
                 } catch (JSONException | IOException jsonException) {
-                    Log.d(TAG,"====>> adapter4 catch JSONEexception/IOException - finalEvent.getEventMatches()!");
+                    Log.d(TAG,"====>> adapter4 catch JSONEexception/IOException - m_compInfo.getEventMatches()!");
                     jsonException.printStackTrace();
                 } catch(NullPointerException nullPointerException){
-                    Log.d(TAG,"====>> adapter4 catch NullPointerException - finalEvent.getEventMatches()!");
+                    Log.d(TAG,"====>> adapter4 catch NullPointerException - m_compInfo.getEventMatches()!");
                     nullPointerException.printStackTrace();
                 }
 
@@ -204,15 +203,15 @@ public class PreMatchActivity extends AppCompatActivity {
         String matchNumStr = m_matchNumberField.getText().toString().trim();
         String teamIndexStr = m_teamIndexField.getText().toString().trim();
       
-        if(!matchNumStr.isEmpty() && !teamIndexStr.isEmpty() && m_Scouter.isValidTeamIndexNum(teamIndexStr)  && finalEvent != null && finalEvent.isEventDataLoaded()) {
+        if(!matchNumStr.isEmpty() && !teamIndexStr.isEmpty() && m_Scouter.isValidTeamIndexNum(teamIndexStr)  && m_compInfo != null && m_compInfo.isEventDataLoaded()) {
             try {
-                String[] teams = finalEvent.getTeams(m_matchNumberField.getText().toString().trim());
+                String[] teams = m_compInfo.getTeams(m_matchNumberField.getText().toString().trim());
                 int teamIndx = Integer.parseInt(teamIndexStr);
                 String teamNumStr = teams[teamIndx];
                 Log.d(TAG,"Preloading team number using index "+teamIndexStr+": "+teamNumStr);
                 m_teamNumberField.setText(teamNumStr);
             } catch (JSONException jsonException) {
-                Log.e(TAG, "For preload: couldn't get teams from finalEvent");
+                Log.e(TAG, "For preload: couldn't get teams from m_compInfo");
                 jsonException.printStackTrace();
             }
         }
@@ -239,10 +238,10 @@ public class PreMatchActivity extends AppCompatActivity {
                 if(hasFocus){
                     Log.d(TAG, "m_teamNumberField clicked");
                     String matchNumStr = m_matchNumberField.getText().toString().trim();
-                    if(!matchNumStr.isEmpty() && finalEvent != null && finalEvent.isEventDataLoaded()) {
+                    if(!matchNumStr.isEmpty() && m_compInfo != null && m_compInfo.isEventDataLoaded()) {
                         boolean bTeamsLoadedSuccessfully = false;
                         try {
-                            String[] teams = finalEvent.getTeams(m_matchNumberField.getText().toString().trim());
+                            String[] teams = m_compInfo.getTeams(m_matchNumberField.getText().toString().trim());
                             if(teams[0] != "")
                                 bTeamsLoadedSuccessfully = true;
                             ArrayAdapter<String> adapter3 = new ArrayAdapter<String> (PreMatchActivity.this, android.R.layout.select_dialog_item, teams);

@@ -23,15 +23,17 @@ import java.util.ArrayList;
 public class CompetitionDataSerializer {
     private static final String TAG = "CompetitionDataSerializer";
     private static final String DEVICE_DATA_PATH = "/data/user/0/com.frc2135.android.frc_scout/files";
-    private final Context m_context;
-    private final String  m_filename;
 
-    public CompetitionDataSerializer(Context context, String filename) {
+    // Data members
+    private final Context m_context;
+
+    public CompetitionDataSerializer(Context context) {
         m_context = context;
-        m_filename = filename;
     }
 
+    // Takes the JSONArray data from thebluealliance.com event matches and writes it out to <eventCode>_matches.json file.
     public void saveEventData(JSONArray compData) throws JSONException, IOException {
+
         // Writes out the given compData JSONArray to the '<eventCode>matches.json' file.
         Log.d(TAG, "saveEventData() starting");
         Writer compWriter = null;
@@ -70,37 +72,35 @@ public class CompetitionDataSerializer {
     }
 
     public CurrentCompetition loadCurrentComp() throws IOException, JSONException {
-        // Reads in existing current_competition.json file");
+        // Reads in existing current_competition.json file on the device.
         Log.d(TAG, "loadCurrentComp() starting");
         BufferedReader reader = null;
         CurrentCompetition currComp = null;
-        File file = new File(DEVICE_DATA_PATH);
-        File[] filelist = file.listFiles();
+        File dirpath = new File(DEVICE_DATA_PATH);
+        File[] filelist = dirpath.listFiles();
         if (filelist != null) {
-            // Go thru files to find current_competition.json file, then load it.
-            for (File file1 : filelist) {
-                String filename = file1.getName().trim();
+            // Go thru files to find current_competition.json file, then load it if found.
+            for (File filex : filelist) {
+                String filename = filex.getName().trim();
                 if (filename.equals("current_competition.json")) {
                     try {
                         InputStream in = m_context.openFileInput(filename);
                         reader = new BufferedReader(new InputStreamReader(in));
                         StringBuilder jsonString = new StringBuilder();
                         String line = null;
-
                         while ((line = reader.readLine()) != null) {
                             jsonString.append(line);
                         }
-
                         JSONObject object = (JSONObject) new JSONTokener(jsonString.toString()).nextValue();
-
                         currComp = new CurrentCompetition(object);
                         Log.d(TAG, "Loaded current competition file: "+filename);
                     } catch (FileNotFoundException err) {
                         Log.e(TAG, "ERROR loading current_competition.json: "+err.toString());
+                    } catch (IOException err2) {
+                        err2.printStackTrace();
                     } finally {
                         if (reader != null) {
                             reader.close();
-                            // do we need to delete reader ???
                         }
                     }
                     break;

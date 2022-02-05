@@ -88,24 +88,37 @@ public class LoadEventDialog extends DialogFragment {
         Log.i(TAG, "sendResult() called");
         Intent i = new Intent(getActivity(), MatchListActivity.class);
 
+        // Get the eventCode's list of matches (which has the list of 6 team numbers for each match)
+        // from thebluealliance.com's site and save it as a JSON file named <eventCode>_matches.json.
+        // The file is saved to the device at the path: DEVICE_DATA_PATH.
         Log.d(TAG, "Load data clicked");
         String eventCode = m_eventCodeField.getText().toString();
         Log.d(TAG,"LoadEventDialog: eventCode = '"+eventCode+"'");
         if(!eventCode.isEmpty() && eventCode.length() > 4) {
+
+            // Save the eventCode and competition name in CurrentCompetition object.
             CurrentCompetition.get(getContext()).setCompName(eventCode.substring(4).toUpperCase());
             CurrentCompetition.get(getContext()).setEventCode(eventCode.trim());
+
             m_appContext = getContext();
             m_eventCode = eventCode;
+
             if(getActivity() != null) {
-                m_compSerializer = new CompetitionDataSerializer(getActivity(), m_eventCodeField.getText().toString().trim() + "matches.json");
+                m_compSerializer = new CompetitionDataSerializer(getActivity());
 
                 // Instantiate the RequestQueue.
                 RequestQueue queue = Volley.newRequestQueue(getActivity());
+
+                // Looking for the event matches data at this URL:
                 String urlStr = "https://www.thebluealliance.com/api/v3/event/" + m_eventCodeField.getText().toString().trim() + "/matches";
                 Log.d(TAG, "LoadEventData URL = " + urlStr);
+
+                // Load the data found at the URL into a JsonArrayRequest object.
                 JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlStr, null, new Response.Listener<JSONArray>() {
+
                     @Override
                     public void onResponse(JSONArray response) {
+                        // Going to save the event matches JSONArray data to the device.
                         try {
                             // Look thru existing files on device.
                             String dataFileDir = DEVICE_DATA_PATH;
@@ -113,7 +126,7 @@ public class LoadEventDialog extends DialogFragment {
                             File[] filelist = file.listFiles();
                             if (filelist != null) {
                                 String eventFileName = m_eventCodeField.getText().toString().trim() + "matches.json";
-                                // Remove comp data file if it exists already.
+                                // Remove event matches data file if it exists already.
                                 for (File f1 : filelist) {
                                     if (f1.getName().equals(eventFileName)) {
                                         Log.d(TAG,"Deleting existing competition file on device: "+f1.getName());
@@ -121,25 +134,25 @@ public class LoadEventDialog extends DialogFragment {
                                         break;
                                     }
                                 }
-                                // Save comp data to file 
+
+                                // Save comp data to matches JSON file 
                                 m_compSerializer.saveEventData(response);
-                                Log.d(TAG,"Successfully saved data to file: "+dataFileDir +"/"+eventFileName);
-                                Toast toast1 = Toast.makeText(m_appContext, "Successfully loaded competition match data for event: "+m_eventCode, Toast.LENGTH_LONG);
-                                toast1.setGravity(Gravity.CENTER,0,0);
-                                toast1.show();
+                                Log.d(TAG,"Successfully saved matches.json file: "+dataFileDir +"/"+eventFileName);
+                                // Set up the CompetitionInfo with this event data.
+                                CompetitionInfo.get(m_appContext,m_eventCode);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        // Failed to load the data from the URL.
                         Log.d(TAG, "LoadEventData::sendResult() failed!");
-                        String toastMsg = " Failed to load competition match data for event: '"+m_eventCode+"'. \n Check wifi connections or eventCode string.";
+                        String toastMsg = " Failed to download competition match data for event: '"+m_eventCode+"'. \n Check wifi connections or eventCode string.";
                         Toast toast2 = Toast.makeText(m_appContext, toastMsg, Toast.LENGTH_LONG);
                         View view2 = toast2.getView();
                         view2.setBackgroundColor(Color.RED);
@@ -150,6 +163,7 @@ public class LoadEventDialog extends DialogFragment {
                 ) {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
+                        // These params are used to access the URL data (I think).
                         Map<String, String> params = new HashMap<String, String>();
                         params.put("X-TBA-Auth-Key", "E7akoVihRO2ZbNHtW2nRrjuNTcZaOxWtfeYWwh4XILMsKsqLnH2ZQrKAnbevlWGn");
                         return params;
@@ -158,6 +172,7 @@ public class LoadEventDialog extends DialogFragment {
 
                 queue.add(jsonArrayRequest);
 
+                // Write out the current_competition.json file.
                 m_compSerializer.saveCurrentCompetition(CurrentCompetition.get(getContext()).toJSON());
 
                 startActivity(i);
