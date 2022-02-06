@@ -2,50 +2,49 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="75dp"
+        android:background="#FFC107"
         android:orientation="horizontal"
         android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:background="#FFC107">
+        android:paddingRight="30dp">
 
         <TextView
+            style="?android:actionModeStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Sort By:"
             android:layout_weight="1"
-            android:textSize="20dp"
             android:background="#FFC107"
-            android:textStyle="bold"
-            style="?android:actionModeStyle"
-            android:textColor="#3F51B5"
-            android:textAlignment="center"
             android:gravity="center"
-            >
-        </TextView>
+            android:text="Sort By:"
+            android:textAlignment="center"
+            android:textColor="#3F51B5"
+            android:textSize="20dp"
+            android:textStyle="bold"></TextView>
 
         <Spinner
             android:id="@+id/sort_options"
             android:layout_width="150dp"
             android:layout_height="50dp"
+            android:layout_gravity="center"
             android:layout_weight="0.5"
-            android:scrollbarAlwaysDrawVerticalTrack="true"
-            android:dropDownSelector="#3F51B5"
             android:background="@drawable/spinner_template"
-            android:layout_gravity="center">
-        </Spinner>
+            android:dropDownSelector="#3F51B5"
+            android:scrollbarAlwaysDrawVerticalTrack="true"></Spinner>
 
         <Space
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="8"
+            android:layout_weight="5"
             android:background="#FFC107">
 
         </Space>
@@ -53,23 +52,29 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@android:drawable/ic_menu_search"
-            android:background="#FFC107">
-        </ImageView>
+            android:background="#FFC107"
+            android:src="@android:drawable/ic_menu_search"></ImageView>
 
         <Button
             android:id="@+id/filter_text"
+            style="?android:actionModeStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Filter List"
-            android:textSize="20dp"
             android:layout_weight="1"
             android:background="#FFC107"
-            android:textStyle="bold"
-            style="?android:actionModeStyle"
+            android:text="Filter List"
             android:textColor="#3F51B5"
-            >
-        </Button>
+            android:textSize="20dp"
+            android:textStyle="bold"></Button>
+
+        <Button
+            android:id="@+id/dark_toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#3F51B5"
+            android:text="Dark Mode"
+            android:textColor="#FFFFFF" />
 
 
     </LinearLayout>

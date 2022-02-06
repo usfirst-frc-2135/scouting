@@ -123,11 +123,12 @@
 
             <TextView
                 android:id="@+id/match_number_title"
-                style="?android:listSeparatorTextViewStyle"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="@string/match_number"
-                android:textSize="18dp"/>
+                android:text="MATCH NUMBER"
+                android:textSize="18dp"
+                android:textColor="@color/textSecondary"
+                android:textStyle="bold" />
 
 
             <AutoCompleteTextView

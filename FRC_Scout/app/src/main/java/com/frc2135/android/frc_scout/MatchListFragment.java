@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.ListFragment;
 
@@ -60,6 +61,7 @@ public class MatchListFragment extends ListFragment {
     private Button               m_filterButton;
     private ArrayList<MatchData> m_displayedMatches;
     private MatchAdapter         m_adapter;
+    private Button               m_darkToggle;
 
     private static final int REQUEST_QR = 2;
     public static final String QRTAG = "qr";
@@ -106,6 +108,7 @@ public class MatchListFragment extends ListFragment {
             Log.d(TAG, "Filtered by match: displayedMatches size = "+m_displayedMatches.size()+"");
         }
 
+        //v1 is the name of this view
         View v1 = inflater.inflate(R.layout.match_list, parent, false);
         m_listView = v1.findViewById(android.R.id.list);
         setListAdapter(m_adapter);
@@ -182,6 +185,21 @@ public class MatchListFragment extends ListFragment {
                 dialog.show(fm, "filter_dialog");
             }
         });
+
+        m_darkToggle = v1.findViewById(R.id.dark_toggle);
+        m_darkToggle.setVisibility(View.INVISIBLE);
+        m_darkToggle.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        AppCompatDelegate
+                                .setDefaultNightMode(
+                                        AppCompatDelegate
+                                                .MODE_NIGHT_YES);
+                    }
+                });
+
 
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
@@ -265,7 +283,7 @@ public class MatchListFragment extends ListFragment {
 
             TextView mMatchSummary = convertView.findViewById(R.id.match_tag_display);
             mMatchSummary.setText(m.getCompetition()+"-"+m.getMatchNumber()+"-"+m.getTeamNumber()+ "-" + formattedDate(m.getTimestamp()));
-
+            mMatchSummary.setTextColor(getResources().getColor(R.color.textPrimary));
 
             return convertView;
         }
