@@ -29,7 +29,8 @@ public class PreMatchActivity extends AppCompatActivity {
     private AutoCompleteTextView m_teamNumberField;
     private AutoCompleteTextView m_matchNumberField;
     private Button               m_startScoutingButton;
-    private TextView             m_errMsgPM;
+    private TextView             m_missingFieldErrMsg;
+    private TextView             m_teamIndexErrMsg;
     private Button               m_prematchCancelButton;
     private MatchData            m_matchData;
     private ActionBar            m_actionBar;
@@ -56,6 +57,14 @@ public class PreMatchActivity extends AppCompatActivity {
 
         setContentView(R.layout.prematch_activity);
 
+        m_teamIndexErrMsg = findViewById(R.id.team_index_err);
+        m_teamIndexErrMsg.setVisibility(View.INVISIBLE);
+        m_teamIndexErrMsg.setTextColor(Color.RED);
+
+        m_missingFieldErrMsg = findViewById(R.id.error_message_pm);
+        m_missingFieldErrMsg.setVisibility(View.INVISIBLE);
+        m_missingFieldErrMsg.setTextColor(Color.RED);
+
         m_teamIndexField = findViewById(R.id.team_index_field);
         m_teamIndexField.setHint("Team Number index to use");
         if(m_Scouter != null) {
@@ -77,8 +86,14 @@ public class PreMatchActivity extends AppCompatActivity {
             public void beforeTextChanged(CharSequence c, int start, int count, int after){
             }
             public void afterTextChanged(Editable c){
-               //??? validate entry must be one of expected values ?????? else clear
-                m_errMsgPM.setVisibility(View.INVISIBLE);
+                 // Validate the teamIndex entry.
+                 m_teamIndexErrMsg.setVisibility(View.INVISIBLE); // reset invalid teamIndex msg
+                 if(!m_Scouter.isValidTeamIndexStr(m_teamIndexField.getText().toString().trim())) {
+                     m_teamIndexErrMsg.setVisibility(View.VISIBLE); // show invalid teamIndex msg
+                     m_teamIndexField.setTextColor(Color.RED);
+                 }
+                 else m_teamIndexField.setTextColor(getResources().getColor(R.color.textPrimary));
+                 m_missingFieldErrMsg.setVisibility(View.INVISIBLE);  // reset err msg to be invisible
             }
 
         });
@@ -114,7 +129,7 @@ public class PreMatchActivity extends AppCompatActivity {
             public void beforeTextChanged(CharSequence c, int start, int count, int after){
             }
             public void afterTextChanged(Editable c){
-                m_errMsgPM.setVisibility(View.INVISIBLE);
+                m_missingFieldErrMsg.setVisibility(View.INVISIBLE);
             }
 
         });
@@ -135,7 +150,7 @@ public class PreMatchActivity extends AppCompatActivity {
             public void beforeTextChanged(CharSequence c, int start, int count, int after){
             }
             public void afterTextChanged(Editable c){
-                m_errMsgPM.setVisibility(View.INVISIBLE);
+                m_missingFieldErrMsg.setVisibility(View.INVISIBLE);
             }
 
         });
@@ -219,7 +234,7 @@ public class PreMatchActivity extends AppCompatActivity {
         m_teamNumberField.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                m_errMsgPM.setVisibility(View.INVISIBLE);
+                m_missingFieldErrMsg.setVisibility(View.INVISIBLE);
                 if (parent != null && parent.getItemAtPosition(position) != null) {
                     m_matchData.setTeamNumber(parent.getItemAtPosition(position).toString());
                     // TODO - can we remove keyboard here???
@@ -227,7 +242,7 @@ public class PreMatchActivity extends AppCompatActivity {
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                m_errMsgPM.setVisibility(View.INVISIBLE);
+                m_missingFieldErrMsg.setVisibility(View.INVISIBLE);
                 m_teamNumberField.setSelection(0);
             }
         });
@@ -285,11 +300,6 @@ public class PreMatchActivity extends AppCompatActivity {
                 startActivityForResult(intent2, 0);
             }
         });
-
-
-        m_errMsgPM = findViewById(R.id.error_message_pm);
-        m_errMsgPM.setVisibility(View.INVISIBLE);
-        m_errMsgPM.setTextColor(Color.RED);
     }
 
     public void updatePreMatchData(){
@@ -313,18 +323,22 @@ public class PreMatchActivity extends AppCompatActivity {
     }
 
     private boolean checkValidData(){
-        m_errMsgPM.setVisibility(View.INVISIBLE);
+        m_missingFieldErrMsg.setVisibility(View.INVISIBLE);
+        m_teamIndexErrMsg.setVisibility(View.INVISIBLE); 
 
         // Validate team index 
-        if(!m_Scouter.isValidTeamIndexStr(m_teamIndexField.getText().toString().trim()))
-            m_errMsgPM.setVisibility(View.VISIBLE); ////???? use a different error msg- yes???
-
-        if(m_competitionField.getText().toString().trim().equals("")||m_scoutNameField.getText().toString().trim().equals("")|| m_teamNumberField.getText().toString().trim().equals("")||m_matchNumberField.getText().equals("")){
-            Log.d(TAG,"+++>> checkValidData(): ERROR");
-            m_errMsgPM.setVisibility(View.VISIBLE);
+        if(!m_Scouter.isValidTeamIndexStr(m_teamIndexField.getText().toString().trim())) {
+            m_teamIndexErrMsg.setVisibility(View.VISIBLE); 
+            Log.d(TAG,"+++>> checkValidData(): ERROR: teamIndex is not valid: "+m_teamIndexField.getText().toString().trim());
             return false;
         }
-        m_errMsgPM.setVisibility(View.INVISIBLE);
+
+        // Make sure there are entries for the various fields on this page.
+        if(m_competitionField.getText().toString().trim().equals("")||m_scoutNameField.getText().toString().trim().equals("")|| m_teamNumberField.getText().toString().trim().equals("")||m_matchNumberField.getText().equals("")){
+            m_missingFieldErrMsg.setVisibility(View.VISIBLE);
+            return false;
+        }
+        m_missingFieldErrMsg.setVisibility(View.INVISIBLE);
         return true;
     }
 

@@ -170,26 +170,30 @@
             </AutoCompleteTextView>
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/error_message_pm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please fill in the missing fields!">
+        </TextView>
+        <TextView
+            android:id="@+id/team_index_err"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Team Index entry is not valid!">
+        </TextView>
 
         <Button
             android:id="@+id/start_scouting_button"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:background="#FFC107"
             android:text="Start Scouting"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="#3F51B5">
 
         </Button>
-
-        <TextView
-            android:id="@+id/error_message_pm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="***Please fill in the required field***">
-
-        </TextView>
 
         <Button
             android:id="@+id/prematch_cancel_button"
