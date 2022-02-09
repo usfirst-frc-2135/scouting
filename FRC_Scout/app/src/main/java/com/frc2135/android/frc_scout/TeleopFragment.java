@@ -1,6 +1,7 @@
 package com.frc2135.android.frc_scout;
 
 import android.icu.text.SimpleDateFormat;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,37 +20,52 @@ import java.util.Date;
 
 public class TeleopFragment extends Fragment {
     private static final String TAG = "TeleopFragment";
+    private static final int MAX_POINTS = 20;     // max for valid high or low points total
 
-    private TextView mLowPoints;
-    private TextView mHighPoints;
+    private TextView  m_lowPointsValue;
+    private TextView  m_highPointsValue;
 
-    private Button mLowPointsDec;
-    private Button mLowPointsInc;
-    private Button mHighPointsDec;
-    private Button mHighPointsInc;
-    private MatchData mMatchData;
-    private ActionBar mActionBar;
+    private Button    m_lowDecrButton;
+    private Button    m_lowIncrButton;
+    private Button    m_highDecrButton;
+    private Button    m_highIncrButton;
+
+    private MatchData m_matchData;
+    private ActionBar m_actionBar;
+
+    // Check if pointsTextView field has a valid number, equal or less than MAX_POINTS.
+    private boolean isValidPoints(TextView field) {
+        boolean rtn = false;
+        int num = Integer.parseInt(field.getText().toString());
+        if(num <= MAX_POINTS)
+            rtn = true;
+        return rtn;
+    }
 
     // Sets the new result integer value for the given Button, either decrementing or incrementing it.
-    // If the decrement case falls below zero, returns 0.
+    // If the decrement case falls below zero, returns 0. Sets textView to RED if out of valid range.
     public void updatePointsInt(TextView pointsTextView,boolean bIncr){
-      int result = Integer.parseInt(pointsTextView.getText().toString()); // get current value as int
-      if(bIncr)
-        result += 1;
-      else result -= 1;
-      if(result < 0)
-        result = 0;
-      pointsTextView.setText(result + "");
+        int result = Integer.parseInt(pointsTextView.getText().toString()); // get current value as int
+        if(bIncr)
+            result += 1;
+        else result -= 1;
+        if(result < 0)
+            result = 0;
+        pointsTextView.setText(result + "");
+        if(!isValidPoints(pointsTextView)) {
+            pointsTextView.setTextColor(Color.RED);
+        }
+        else pointsTextView.setTextColor(getResources().getColor(R.color.textPrimary));
     }
  
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-        mMatchData = ((ScoutingActivity)getActivity()).getCurrentMatch();
-        mActionBar =  ((AppCompatActivity)getActivity()).getSupportActionBar();
-        String teamNumber = mMatchData.stripTeamNamePrefix(mMatchData.getTeamNumber());
-        mActionBar.setTitle("Teleoperated                      - scouting Team "+teamNumber);
+        m_matchData = ((ScoutingActivity)getActivity()).getCurrentMatch();
+        m_actionBar =  ((AppCompatActivity)getActivity()).getSupportActionBar();
+        String teamNumber = m_matchData.stripTeamNamePrefix(m_matchData.getTeamNumber());
+        m_actionBar.setTitle("Teleoperated                      - scouting Team "+teamNumber);
     }
 
     @Override
@@ -58,62 +74,68 @@ public class TeleopFragment extends Fragment {
         View v = inflater.inflate(R.layout.teleop_fragment, parent, false);
 
         //Sets up TextView that displays low points, setting 0 as the default
-        mLowPoints = v.findViewById(R.id.lowpoints);
-        mLowPoints.setText(0 + "");
+        m_lowPointsValue = v.findViewById(R.id.lowpoints);
+        m_lowPointsValue.setText(0 + "");
 
         //Sets up TextView that displays high points, setting 0 as the default
-        mHighPoints = v.findViewById(R.id.highpoints);
-        mHighPoints.setText(0+ "");
+        m_highPointsValue = v.findViewById(R.id.highpoints);
+        m_highPointsValue.setText(0+ "");
 
         //Connects the decrement button for low points and sets up a listener that detects when the button is clicked
-        mLowPointsDec = v.findViewById(R.id.lowpointsdec);
-        mLowPointsDec.setOnClickListener(new View.OnClickListener() {
+        m_lowDecrButton = v.findViewById(R.id.lowpointsdec);
+        m_lowDecrButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Decreases displayed point value by 1; sets to 0 if result goes negative.
-                updatePointsInt(mLowPoints,false);
+                updatePointsInt(m_lowPointsValue,false);
             }
         });
 
         //Connects the increment button for low points and sets up a listener that detects when the button is clicked
-        mLowPointsInc = v.findViewById(R.id.lowpointsinc);
-        mLowPointsInc.setOnClickListener(new View.OnClickListener() {
+        m_lowIncrButton = v.findViewById(R.id.lowpointsinc);
+        m_lowIncrButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Increases displayed point value by 1
-                updatePointsInt(mLowPoints,true);
+                updatePointsInt(m_lowPointsValue,true);
             }
         });
 
         //Connects the decrement button for high points and sets up a listener that detects when the button is clicked
-        mHighPointsDec = v.findViewById(R.id.highpointsdec);
-        mHighPointsDec.setOnClickListener(new View.OnClickListener() {
+        m_highDecrButton = v.findViewById(R.id.highpointsdec);
+        m_highDecrButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Decreases displayed point value by 1; sets to 0 if negative result
-                updatePointsInt(mHighPoints,false);
+                updatePointsInt(m_highPointsValue,false);
             }
         });
 
         //Connects the increment button for high points and sets up a listener that detects when the button is clicked
-        mHighPointsInc = v.findViewById(R.id.highpointsinc);
-        mHighPointsInc.setOnClickListener(new View.OnClickListener() {
+        m_highIncrButton = v.findViewById(R.id.highpointsinc);
+        m_highIncrButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Increases displayed point value by 1
-                updatePointsInt(mHighPoints,true);
+                updatePointsInt(m_highPointsValue,true);
             }
         });
 
-        mHighPoints.setText(mMatchData.getTelopHighPoints()+"");
-        mLowPoints.setText(mMatchData.getTeleopLowPoints()+"");
+        m_highPointsValue.setText(m_matchData.getTelopHighPoints()+"");
+        m_lowPointsValue.setText(m_matchData.getTeleopLowPoints()+"");
+        if(!isValidPoints(m_lowPointsValue)) {
+            m_lowPointsValue.setTextColor(Color.RED);
+        }
+        if(!isValidPoints(m_highPointsValue)) {
+            m_highPointsValue.setTextColor(Color.RED);
+        }
 
         return v;
     }
 
     public void updateTeleopData(){
-        mMatchData.setTeleopLowPoints(Integer.parseInt(mLowPoints.getText().toString()));
-        mMatchData.setTeleopHighPoints(Integer.parseInt(mHighPoints.getText().toString()));
+        m_matchData.setTeleopLowPoints(Integer.parseInt(m_lowPointsValue.getText().toString()));
+        m_matchData.setTeleopHighPoints(Integer.parseInt(m_highPointsValue.getText().toString()));
     }
 
     public String formattedDate(Date d){
