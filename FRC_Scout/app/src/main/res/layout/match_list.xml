@@ -13,7 +13,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:background="#FFC107"
+        android:background="@color/colorSecondary"
         android:orientation="horizontal"
         android:paddingLeft="30dp"
         android:paddingRight="30dp">
@@ -23,11 +23,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#FFC107"
+            android:background="@color/colorSecondary"
             android:gravity="center"
             android:text="Sort By:"
             android:textAlignment="center"
-            android:textColor="#3F51B5"
+            android:textColor="@color/matchListFilterText"
             android:textSize="20dp"
             android:textStyle="bold"></TextView>
 
@@ -38,21 +38,21 @@
             android:layout_gravity="center"
             android:layout_weight="0.5"
             android:background="@drawable/spinner_template"
-            android:dropDownSelector="#3F51B5"
+            android:dropDownSelector="@color/matchListFilterText"
             android:scrollbarAlwaysDrawVerticalTrack="true"></Spinner>
 
         <Space
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="5"
-            android:background="#FFC107">
+            android:background="@color/colorSecondary">
 
         </Space>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="#FFC107"
+            android:background="@color/colorSecondary"
             android:src="@android:drawable/ic_menu_search"></ImageView>
 
         <Button
@@ -61,20 +61,24 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#FFC107"
+            android:background="@color/colorSecondary"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:text="Filter List"
-            android:textColor="#3F51B5"
+            android:textColor="@color/matchListFilterText"
             android:textSize="20dp"
             android:textStyle="bold"></Button>
 
-        <Button
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/dark_toggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#3F51B5"
+            android:paddingLeft="10dp"
             android:text="Dark Mode"
-            android:textColor="#FFFFFF" />
+            android:textColor="@color/matchListFilterText"
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
 
     </LinearLayout>

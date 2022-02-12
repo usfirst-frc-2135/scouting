@@ -1,6 +1,7 @@
 package com.frc2135.android.frc_scout;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.ListFragment;
 
@@ -61,7 +64,8 @@ public class MatchListFragment extends ListFragment {
     private Button               m_filterButton;
     private ArrayList<MatchData> m_displayedMatches;
     private MatchAdapter         m_adapter;
-    private Button               m_darkToggle;
+    private SwitchCompat         m_darkToggle;
+    private SharedPreferences    m_sharedPreferences = null;
 
     private static final int REQUEST_QR = 2;
     public static final String QRTAG = "qr";
@@ -114,6 +118,37 @@ public class MatchListFragment extends ListFragment {
         setListAdapter(m_adapter);
         m_listView.setAdapter(m_adapter);
         registerForContextMenu(m_listView);
+
+        m_darkToggle = v1.findViewById(R.id.dark_toggle);
+
+        //shared preferences saves whether the scout chose light or dark mode
+        //the mode they picked is saved, even if the app is reloaded or redownloaded
+        m_sharedPreferences = getActivity().getSharedPreferences("night",0);
+        Boolean booleanValue = m_sharedPreferences.getBoolean("night_mode",true);
+        if (booleanValue){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            m_darkToggle.setChecked(true);
+        }
+
+        m_darkToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    m_darkToggle.setChecked(true);
+                    SharedPreferences.Editor editor = m_sharedPreferences.edit();
+                    editor.putBoolean("night_mode",true);
+                    editor.commit();
+                }
+                else{
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    m_darkToggle.setChecked(false);
+                    SharedPreferences.Editor editor = m_sharedPreferences.edit();
+                    editor.putBoolean("night_mode",false);
+                    editor.commit();
+                }
+            }
+        });
 
         //Note: Floating Action Button is the + button in a circle to start scouting
         FloatingActionButton fab = v1.findViewById(R.id.fab);
@@ -185,21 +220,6 @@ public class MatchListFragment extends ListFragment {
                 dialog.show(fm, "filter_dialog");
             }
         });
-
-        m_darkToggle = v1.findViewById(R.id.dark_toggle);
-        m_darkToggle.setVisibility(View.INVISIBLE);
-        m_darkToggle.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view)
-                    {
-                        AppCompatDelegate
-                                .setDefaultNightMode(
-                                        AppCompatDelegate
-                                                .MODE_NIGHT_YES);
-                    }
-                });
-
 
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
@@ -283,6 +303,7 @@ public class MatchListFragment extends ListFragment {
 
             TextView mMatchSummary = convertView.findViewById(R.id.match_tag_display);
             mMatchSummary.setText(m.getCompetition()+"-"+m.getMatchNumber()+"-"+m.getTeamNumber()+ "-" + formattedDate(m.getTimestamp()));
+            //changes text color of the ListView Match List to fit the light/dark mode theme
             mMatchSummary.setTextColor(getResources().getColor(R.color.textPrimary));
 
             return convertView;

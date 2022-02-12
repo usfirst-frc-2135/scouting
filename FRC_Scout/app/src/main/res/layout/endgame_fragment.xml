@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,9 +28,8 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="Climb"
-                android:textSize="24dp"
-                android:textColor="#000000"
-                />
+                android:textColor="@color/textPrimary"
+                android:textSize="24dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -50,7 +50,8 @@
                         android:layout_height="wrap_content"
                         android:textSize="22sp"
                         android:layout_weight="1"
-                        android:text="@string/level_zero" />
+                        android:text="@string/level_zero"
+                        android:textColor="@color/textPrimary"/>
 
                     <RadioButton
                         android:id="@+id/level_one"
@@ -58,7 +59,8 @@
                         android:layout_height="wrap_content"
                         android:textSize="22sp"
                         android:layout_weight="1"
-                        android:text="@string/level_one" />
+                        android:text="@string/level_one"
+                        android:textColor="@color/textPrimary"/>
 
                     <RadioButton
                         android:id="@+id/level_two"
@@ -66,7 +68,8 @@
                         android:layout_height="wrap_content"
                         android:textSize="22sp"
                         android:layout_weight="1"
-                        android:text="@string/level_two" />
+                        android:text="@string/level_two"
+                        android:textColor="@color/textPrimary"/>
 
                     <RadioButton
                         android:id="@+id/level_three"
@@ -74,7 +77,8 @@
                         android:layout_height="wrap_content"
                         android:textSize="22sp"
                         android:layout_weight="1"
-                        android:text="@string/level_three" />
+                        android:text="@string/level_three"
+                        android:textColor="@color/textPrimary"/>
 
                     <RadioButton
                         android:id="@+id/level_four"
@@ -82,7 +86,8 @@
                         android:layout_height="wrap_content"
                         android:textSize="22sp"
                         android:layout_weight="1"
-                        android:text="@string/level_four" />
+                        android:text="@string/level_four"
+                        android:textColor="@color/textPrimary"/>
                 </RadioGroup>
             </LinearLayout>
 
@@ -100,9 +105,8 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="Died"
-                android:textSize="25dp"
-                android:textColor="#000000"
-                />
+                android:textColor="@color/textPrimary"
+                android:textSize="25dp" />
 
             <CheckBox
                     android:id="@+id/died_checkbox_true"
@@ -110,7 +114,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:text="Robot Died"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:textColor="@color/textPrimary"/>
 
 
 
@@ -129,7 +134,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="@string/comments"
-                android:textColor="#000000"
+                android:textColor="@color/textPrimary"
                 android:textSize="25dp" />
 
             <EditText
@@ -137,7 +142,10 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16dp"
-                android:layout_marginLeft="16dp"></EditText>
+                android:layout_marginLeft="16dp"
+                android:textColor="@color/textPrimary">
+
+            </EditText>
 
         </LinearLayout>
 
@@ -178,7 +186,7 @@
                 android:background="#FFC107"
                 android:focusable="true"
                 android:text="Done"
-                android:textColor="#000000"
+                android:textColor="@color/textPrimary"
                 android:textSize="36dp"></Button>
 
 
