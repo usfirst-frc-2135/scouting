@@ -122,10 +122,12 @@ public class AutonFragment extends Fragment {
         //Sets up TextView that displays low points, setting 0 as the default
         m_lowPointsValue = v.findViewById(R.id.low_points_text);
         m_lowPointsValue.setText(0 + "");
+        m_lowPointsValue.setTextColor(getResources().getColor(R.color.textPrimary));
 
         //Sets up TextView that displays high points, setting 0 as the default
         m_highPointsValue = v.findViewById(R.id.high_points_text);
         m_highPointsValue.setText(0+ "");
+        m_highPointsValue.setTextColor(getResources().getColor(R.color.textPrimary));
 
         //Connects the decrement button for low points and sets up a listener that detects when the button is clicked
         m_lowDecrButton = v.findViewById(R.id.low_points_dec);
