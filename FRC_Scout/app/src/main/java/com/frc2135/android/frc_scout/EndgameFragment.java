@@ -100,7 +100,7 @@ public class EndgameFragment extends Fragment {
         //Sets up an EditText that allows users to input any additional comments
         m_commentText = (EditText)v.findViewById(R.id.comments);
         m_commentText.setHint("Enter any additional comments here");
-        m_commentText.setText(m_matchData.getExtComments());
+        m_commentText.setText(m_matchData.getComment());
         m_commentText.addTextChangedListener(new TextWatcher(){
             public void onTextChanged(CharSequence c, int start, int before, int count){
             }
@@ -167,6 +167,6 @@ public class EndgameFragment extends Fragment {
     public void updateEndgameData(){
         m_matchData.setClimb(getCurrentClimbLevel());
         m_matchData.setDied(m_diedCheckbox.isChecked());
-        m_matchData.setExtComments(m_commentText.getText());
+        m_matchData.setComment(m_commentText.getText().toString());
     }
 }

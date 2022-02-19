@@ -39,7 +39,7 @@ public class MatchData {
     private int     m_climbed;
     private int     m_startPosition;
     private boolean m_exitedTarmac;
-    private String  m_extComments;
+    private String  m_comment;
     private boolean m_died;
     private String  m_name;
     private String  m_teamNumber;
@@ -72,7 +72,7 @@ public class MatchData {
         setTeleopHighPoints(0);
         setTeleopLowPoints(0);
         setClimb(0);
-        setExtComments("");
+        setComment("");
         setTimestamp(Calendar.getInstance().getTime());
         setDied(false);
 
@@ -98,7 +98,7 @@ public class MatchData {
         setTeleopHighPoints(json.getInt(JSON_KEY_TELEOPHIGHPOINTS));
         setTeleopLowPoints(json.getInt(JSON_KEY_TELEOPLOWPOINTS));
         setClimb(json.getInt(JSON_KEY_CLIMBED));
-        setExtComments(json.getString(JSON_KEY_COMMENTS));
+        setComment(json.getString(JSON_KEY_COMMENTS));
         setTimestamp(new Date(json.getString(JSON_KEY_TIMESTAMP)));
         setDied(json.getBoolean(JSON_KEY_DIED));
         m_matchID = json.getString(JSON_KEY_MATCHID);
@@ -120,7 +120,7 @@ public class MatchData {
 
     ////////////  m_competition   /////////////////////
     public void setCompetition(String c){
-        m_competition = c.toUpperCase();
+        m_competition = c;
     }
 
     public String getCompetition(){
@@ -209,23 +209,13 @@ public class MatchData {
         return m_climbed;
     }
 
-    ////////////  m_extComments   /////////////////////
-    public void setExtComments(CharSequence x){
-       String y = "";
-        if(x != null){
-           y = x.toString();
-           for(int i = 0; i < x.length()-2; i++){
-               if(y.charAt(i) == ','){
-                   y = y.substring(0, i)+ y.substring(i+1);
-                   i++;
-               }
-           }
-       }
-       m_extComments = y;
+    ////////////  m_comment   /////////////////////
+    public void setComment(String comment){
+       m_comment = comment;
     }
 
-    public String getExtComments(){
-        return m_extComments;
+    public String getComment(){
+        return m_comment;
     }
 
     ////////////  m_timestamp   /////////////////////
@@ -248,6 +238,7 @@ public class MatchData {
 
     public String encodeToTSV(){
         // NOTE! THE ORDER IS IMPORTANT!
+        // This is the data that goes into the QR code.
         String message = "";
 
         // For teamNumber, strip off 'frc' prefix.
@@ -273,6 +264,9 @@ public class MatchData {
         message += m_matchNumber + "\t";
         message += m_competition + "\t";
 
+        message += m_name + "\t";   // Scout name
+        message += m_comment + "\t";
+
         Log.d(TAG,"MatchData encodeToTSV(): " + message.toString());
         return message;
     }
@@ -282,7 +276,7 @@ public class MatchData {
         JSONObject json = new JSONObject();
 
         json.put("divider", ",");
-        json.put(JSON_KEY_SCOUTNAME, m_name);
+        json.put(JSON_KEY_SCOUTNAME, m_name);  // Scout name
         json.put("divider", ",");
         json.put("divider", ", \n");
 
@@ -309,7 +303,7 @@ public class MatchData {
         json.put("divider", ",");
         json.put(JSON_KEY_DIED, m_died);
         json.put("divider", ",");
-        json.put(JSON_KEY_COMMENTS, m_extComments);
+        json.put(JSON_KEY_COMMENTS, m_comment);
         json.put("divider", ",");
         json.put(JSON_KEY_TIMESTAMP, m_timestamp);
         json.put("divider", ",");
