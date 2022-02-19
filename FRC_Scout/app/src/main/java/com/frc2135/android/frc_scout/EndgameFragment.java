@@ -99,16 +99,19 @@ public class EndgameFragment extends Fragment {
 
         //Sets up an EditText that allows users to input any additional comments
         m_commentText = (EditText)v.findViewById(R.id.comments);
-        m_commentText.setHint("Enter any additional comments here");
+        m_commentText.setHint("Enter comments here");
         m_commentText.setText(m_matchData.getComment());
-        m_commentText.addTextChangedListener(new TextWatcher(){
-            public void onTextChanged(CharSequence c, int start, int before, int count){
-            }
-            public void beforeTextChanged(CharSequence c, int start, int count, int after){
-            }
-            public void afterTextChanged(Editable c){
-            }
-        });
+//REMOVE->
+//        m_commentText.addTextChangedListener(new TextWatcher(){
+//            public void onTextChanged(CharSequence c, int start, int before, int count){
+//            }
+//            public void beforeTextChanged(CharSequence c, int start, int count, int after){
+//            }
+//            public void afterTextChanged(Editable c){
+//                m_matchData.setComment(m_commentText.getText().toString());
+//            }
+//        });
+//<-REMOVE
 
         ImageButton mQRButton = (ImageButton)v.findViewById(R.id.gen_QR);
         mQRButton.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +120,7 @@ public class EndgameFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //Uses intents to start the QR code dialog
+                updateEndgameData();
                 Snackbar.make(view, "Generating QR code", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 Log.d(TAG, "Clicked on QR Code");
                 FragmentManager fm = getActivity().getSupportFragmentManager();
