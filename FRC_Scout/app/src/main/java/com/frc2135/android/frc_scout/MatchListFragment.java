@@ -57,15 +57,14 @@ public class MatchListFragment extends ListFragment {
     private static final int REQUEST_LOADEVENT = 400;
 
     // Data members
-    private ArrayList<MatchData> m_MatchDataList; //??? is this ever used???
-    private Button               m_AddMatchButton;  // ??? is this ever used??
+    private ArrayList<MatchData> m_MatchDataList; 
+    private Button               m_AddMatchButton;  
     private ListView             m_listView;
     private Spinner              m_sortSpinner;
     private Button               m_filterButton;
     private ArrayList<MatchData> m_displayedMatches;
     private MatchAdapter         m_adapter;
     private SwitchCompat         m_darkToggle;
-    private SharedPreferences    m_sharedPreferences = null;
 
     private static final int REQUEST_QR = 2;
     public static final String QRTAG = "qr";
@@ -123,29 +122,28 @@ public class MatchListFragment extends ListFragment {
 
         //shared preferences saves whether the scout chose light or dark mode
         //the mode they picked is saved, even if the app is reloaded or redownloaded
-        m_sharedPreferences = getActivity().getSharedPreferences("night",0);
-        Boolean booleanValue = m_sharedPreferences.getBoolean("night_mode",true);
-        if (booleanValue){
+        boolean bNightMode = ScoutPreferences.get(getActivity()).getNightMode();
+        if (bNightMode){
+            Log.d(TAG,"Setting up dark mode");
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            m_darkToggle.setChecked(true);
+        } 
+        else {
+            Log.d(TAG,"Setting up light mode");
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
         m_darkToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
+                    Log.d(TAG,"m_darkToggle toggled from dark to light");
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    m_darkToggle.setChecked(true);
-                    SharedPreferences.Editor editor = m_sharedPreferences.edit();
-                    editor.putBoolean("night_mode",true);
-                    editor.commit();
+                    ScoutPreferences.get(getActivity()).setNightMode(true);
                 }
                 else{
+                    Log.d(TAG,"m_darkToggle toggled from light to dark");
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    m_darkToggle.setChecked(false);
-                    SharedPreferences.Editor editor = m_sharedPreferences.edit();
-                    editor.putBoolean("night_mode",false);
-                    editor.commit();
+                    ScoutPreferences.get(getActivity()).setNightMode(false);
                 }
             }
         });
