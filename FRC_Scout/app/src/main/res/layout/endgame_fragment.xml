@@ -169,9 +169,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:paddingTop="27dp">
+            android:orientation="vertical"
+            android:paddingTop="20dp"
+            android:gravity="center_horizontal">
 
             <ImageButton
                 android:id="@+id/gen_QR"
@@ -183,7 +183,7 @@
                 android:textColor="#3F51B5"></ImageButton>
 
             <Space
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"></Space>
 
             <Button
@@ -195,10 +195,7 @@
                 android:text="Done"
                 android:textColor="@color/textPrimary"
                 android:textSize="36dp"></Button>
-
-
         </LinearLayout>
-
 
     </LinearLayout>
 
