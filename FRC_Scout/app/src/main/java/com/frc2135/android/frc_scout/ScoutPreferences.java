@@ -43,13 +43,16 @@ public class ScoutPreferences {
     }
 
     public void setNightMode(boolean bMode){
-        m_bNightMode = bMode; 
+        if(m_bNightMode != bMode) {
+            m_bNightMode = bMode; 
 
-        // set in shared preferences
-        SharedPreferences.Editor editor = m_sharedPreferences.edit();
-        Log.d(TAG,"Setting shared preferences night_mode: "+bMode);
-        editor.putBoolean("night_mode",bMode);
-        editor.commit();
+            // set in shared preferences
+            SharedPreferences.Editor editor = m_sharedPreferences.edit();
+            Log.d(TAG,"Setting shared preferences night_mode: "+bMode);
+            editor.putBoolean("night_mode",bMode);
+            editor.commit();
+        }
+        else Log.d(TAG,"Ignoring night_mode setting: "+bMode);
     }
 
 }

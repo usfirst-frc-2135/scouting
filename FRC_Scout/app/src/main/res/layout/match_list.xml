@@ -77,7 +77,7 @@
             android:paddingLeft="10dp"
             android:text="Dark Mode"
             android:textColor="@color/matchListFilterText"
-            android:textSize="18dp"
+            android:textSize="16dp"
             android:textStyle="bold" />
 
 

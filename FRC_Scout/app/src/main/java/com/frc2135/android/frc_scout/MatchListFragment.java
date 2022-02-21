@@ -120,28 +120,30 @@ public class MatchListFragment extends ListFragment {
 
         m_darkToggle = v1.findViewById(R.id.dark_toggle);
 
-        //shared preferences saves whether the scout chose light or dark mode
-        //the mode they picked is saved, even if the app is reloaded or redownloaded
+        // Set light or dark mode based on shared preferences (stored in static ScoutPreferences object).
         boolean bNightMode = ScoutPreferences.get(getActivity()).getNightMode();
         if (bNightMode){
             Log.d(TAG,"Setting up dark mode");
+            m_darkToggle.setChecked(true);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } 
         else {
             Log.d(TAG,"Setting up light mode");
+            m_darkToggle.setChecked(false);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
-        m_darkToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        m_darkToggle.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    Log.d(TAG,"m_darkToggle toggled from dark to light");
+            public void onClick(View v) {
+
+                if (m_darkToggle.isChecked()) {
+                    Log.d(TAG,"m_darkToggle toggled from light to dark");
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     ScoutPreferences.get(getActivity()).setNightMode(true);
                 }
                 else{
-                    Log.d(TAG,"m_darkToggle toggled from light to dark");
+                    Log.d(TAG,"m_darkToggle toggled from dark to light");
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     ScoutPreferences.get(getActivity()).setNightMode(false);
                 }
