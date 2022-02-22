@@ -101,17 +101,6 @@ public class EndgameFragment extends Fragment {
         m_commentText = (EditText)v.findViewById(R.id.comments);
         m_commentText.setHint("Enter comments here");
         m_commentText.setText(m_matchData.getComment());
-//REMOVE->
-//        m_commentText.addTextChangedListener(new TextWatcher(){
-//            public void onTextChanged(CharSequence c, int start, int before, int count){
-//            }
-//            public void beforeTextChanged(CharSequence c, int start, int count, int after){
-//            }
-//            public void afterTextChanged(Editable c){
-//                m_matchData.setComment(m_commentText.getText().toString());
-//            }
-//        });
-//<-REMOVE
 
         ImageButton mQRButton = (ImageButton)v.findViewById(R.id.gen_QR);
         mQRButton.setOnClickListener(new View.OnClickListener() {

@@ -49,6 +49,7 @@
                 android:layout_marginLeft="16dp"
                 android:ems="10"
                 android:paddingTop="25dp"
+                android:textColorHint="@color/hintColor"
                 android:textColor="@color/textPrimary"
                 android:backgroundTint="@color/textSecondary">
             </AutoCompleteTextView>
@@ -89,6 +90,7 @@
                 android:ems="10"
                 android:paddingTop="25dp"
                 android:layout_marginLeft="16dp"
+                android:textColorHint="@color/hintColor"
                 android:textColor="@color/textPrimary"
                 android:backgroundTint="@color/textSecondary"></AutoCompleteTextView>
 
@@ -117,6 +119,7 @@
                 android:ems="10"
                 android:layout_marginLeft="16dp"
                 android:paddingTop="25dp"
+                android:textColorHint="@color/hintColor"
                 android:textColor="@color/textPrimary"
                 android:backgroundTint="@color/textSecondary">
 

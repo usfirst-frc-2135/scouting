@@ -150,6 +150,7 @@
                 android:textSize="16dp"
                 android:maxLength="400"
                 android:layout_marginLeft="16dp"
+                android:textColorHint="@color/hintColor"
                 android:textColor="@color/textPrimary">
 
             </EditText>
