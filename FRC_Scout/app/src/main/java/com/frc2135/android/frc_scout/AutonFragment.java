@@ -61,7 +61,7 @@ public class AutonFragment extends Fragment {
         Log.d(TAG, m_matchData.getMatchID());
         m_actionBar =  ((AppCompatActivity)getActivity()).getSupportActionBar();
         String teamNumber = m_matchData.stripTeamNamePrefix(m_matchData.getTeamNumber());
-        m_actionBar.setTitle("Autonomous                        - scouting Team "+teamNumber);
+        m_actionBar.setTitle("Autonomous                          Scouting Team "+teamNumber);
     }
 
     // Sets the new result integer value for the given Button, either decrementing or incrementing it.
