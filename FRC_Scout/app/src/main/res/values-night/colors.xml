@@ -2,6 +2,7 @@
 <resources>
     <!--dark mode colors-->
     <color name="backgroundColor">#333333</color>
+    <color name="bottomColor">#8e8e8e</color>
     <color name="colorSecondary">#1D275B</color>
     <color name="textPrimary">#FFFFFF</color> <!--%100 opacity-->
     <color name="textSecondary">#B2FFFFFF</color> <!--B2 for %70 opacity-->

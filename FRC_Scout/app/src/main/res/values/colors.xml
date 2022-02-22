@@ -2,6 +2,7 @@
 <resources>
     <!-- for light mode -->
     <color name="backgroundColor">#FCFCFC</color>
+    <color name="bottomColor">#FCFCFC</color>
     <color name="colorSecondary">#FFC107</color>
     <color name="textPrimary">#212121</color> <!--DE for %87 opacity-->
     <color name="textSecondary">#8A000000</color> <!--8A for %54 opacity-->
