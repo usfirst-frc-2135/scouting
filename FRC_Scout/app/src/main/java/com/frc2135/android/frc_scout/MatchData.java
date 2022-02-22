@@ -239,36 +239,40 @@ public class MatchData {
     public String encodeToTSV(){
         // NOTE! THE ORDER IS IMPORTANT!
         // This is the data that goes into the QR code.
-        String message = "";
+        String headers = "TeamNumber StartPos ExitTarmac AutonLow AutonHigh TeleopLow TeleopHigh Climbed Died, MatchNum Competition Scout Comment";
+        String tsvStr = "";
 
         // For teamNumber, strip off 'frc' prefix.
-        message += stripTeamNamePrefix(m_teamNumber) +"\t";
+        tsvStr += stripTeamNamePrefix(m_teamNumber) +"\t";
 
-        message += m_startPosition + "\t";
+        tsvStr += m_startPosition + "\t";
 
         if(m_exitedTarmac)  // bool value: use 1/0 instead of true/false
-            message += "1" + "\t";
-        else message += "0" + "\t";
+            tsvStr += "1" + "\t";
+        else tsvStr += "0" + "\t";
 
-        message += m_autonLowPoints + "\t";
-        message += m_autonHighPoints + "\t";
-        message += m_teleopLowPoints + "\t";
-        message += m_teleopHighPoints + "\t";
+        tsvStr += m_autonLowPoints + "\t";
+        tsvStr += m_autonHighPoints + "\t";
+        tsvStr += m_teleopLowPoints + "\t";
+        tsvStr += m_teleopHighPoints + "\t";
 
-        message += m_climbed + "\t";
+        tsvStr += m_climbed + "\t";
 
         if(m_died)
-            message += "1" + "\t";
-        else message += "0" + "\t";
+            tsvStr += "1" + "\t";
+        else tsvStr += "0" + "\t";
 
-        message += m_matchNumber + "\t";
-        message += m_competition + "\t";
+        tsvStr += m_matchNumber + "\t";
+        tsvStr += m_competition + "\t";
 
-        message += m_name + "\t";   // Scout name
-        message += m_comment + "\t";
+        tsvStr += m_name + "\t";   // Scout name
+        if (!m_comment.equals(""))
+          tsvStr += m_comment + "\t";
+        else tsvStr += "-" + "\t";
 
-        Log.d(TAG,"MatchData encodeToTSV(): " + message.toString());
-        return message;
+        Log.d(TAG,"MatchData encodeToTSV() columns: " + headers.toString());
+        Log.d(TAG,"MatchData encodeToTSV(): " + tsvStr.toString());
+        return tsvStr;
     }
 
     public JSONObject toJSON() throws JSONException {

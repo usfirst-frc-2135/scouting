@@ -110,7 +110,6 @@ public class EndgameFragment extends Fragment {
             public void onClick(View view) {
                 //Uses intents to start the QR code dialog
                 updateEndgameData();
-                Snackbar.make(view, "Generating QR code", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 Log.d(TAG, "Clicked on QR Code");
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 QRFragment dialog = QRFragment.newInstance(m_matchData);
