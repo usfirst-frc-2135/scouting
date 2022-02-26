@@ -102,8 +102,8 @@ public class EndgameFragment extends Fragment {
         m_commentText.setHint("Enter comments here");
         m_commentText.setText(m_matchData.getComment());
 
-        ImageButton mQRButton = (ImageButton)v.findViewById(R.id.gen_QR);
-        mQRButton.setOnClickListener(new View.OnClickListener() {
+        ImageButton qrButton = (ImageButton)v.findViewById(R.id.gen_QR);
+        qrButton.setOnClickListener(new View.OnClickListener() {
             //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
 
             @Override
