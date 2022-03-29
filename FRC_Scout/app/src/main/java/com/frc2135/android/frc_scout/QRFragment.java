@@ -41,7 +41,7 @@ public class QRFragment extends DialogFragment {
 
         ImageView m_imageView = v.findViewById(R.id.matchdata_qr);
 
-        int qrCodeDimension = 500;
+        int qrCodeDimension = 750;
 
         Log.d(TAG, "stats: "+ m_stats);
 
