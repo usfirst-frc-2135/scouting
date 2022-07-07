@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -27,7 +28,7 @@ public class PreMatchActivity extends AppCompatActivity {
     private AutoCompleteTextView m_competitionField;
     private AutoCompleteTextView m_scoutNameField;
     private AutoCompleteTextView m_teamNumberField;
-    private AutoCompleteTextView m_matchNumberField;
+    private EditText             m_matchNumberField;
     private Button               m_startScoutingButton;
     private TextView             m_missingFieldErrMsg;
     private TextView             m_teamIndexErrMsg;
@@ -167,49 +168,12 @@ public class PreMatchActivity extends AppCompatActivity {
             }
         });
 
-        m_matchNumberField = (AutoCompleteTextView)findViewById(R.id.match_number_field);
+        m_matchNumberField = (EditText)findViewById(R.id.match_number_field);
         if(!m_matchData.getMatchNumber().isEmpty())
             m_matchNumberField.setText(m_matchData.getMatchNumber());
         else if(m_Scouter != null && !m_Scouter.getMostRecentMatchNumber().isEmpty())
             m_matchNumberField.setText(m_Scouter.getNextExpectedMatchNumber());
-
-        m_matchNumberField.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(parent != null && parent.getItemAtPosition(position) != null)
-                    m_matchData.setMatchNumber(parent.getItemAtPosition(position).toString());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                m_matchNumberField.setSelection(0);
-            }
-        });
-
-        ArrayAdapter<String> adapter4 = null;
-        if(m_compInfo != null && m_compInfo.isEventDataLoaded() && m_matchData != null && m_matchData.getCompetition() != "COMPX" && !m_matchData.getCompetition().isEmpty() ){
-                try {
-                    String[] matchArray = m_compInfo.getEventMatches(m_matchData.getCompetition());
-                    if(matchArray != null && matchArray.length > 0)
-                        adapter4 = new ArrayAdapter<String>(PreMatchActivity.this, android.R.layout.select_dialog_item, matchArray);
-                } catch (JSONException | IOException jsonException) {
-                    Log.d(TAG,"====>> adapter4 catch JSONEexception/IOException - m_compInfo.getEventMatches()!");
-                    jsonException.printStackTrace();
-                } catch(NullPointerException nullPointerException){
-                    Log.d(TAG,"====>> adapter4 catch NullPointerException - m_compInfo.getEventMatches()!");
-                    nullPointerException.printStackTrace();
-                }
-
-        } 
-        m_matchNumberField.setAdapter(adapter4);
-        m_matchNumberField.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-            @Override
-            public void onFocusChange (View v, boolean hasFocus){
-                if(hasFocus){
-                    m_matchNumberField.showDropDown();
-                }
-            }
-        });
+        else m_matchNumberField.setText("qm1");
 
         m_teamNumberField = findViewById(R.id.team_number_field);
         m_teamNumberField.setText(m_matchData.getTeamNumber());
