@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
+        <TextView
+            android:id="@+id/set_team_index_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Set the team index to use (1-6, or None):"/>
+
+        <EditText
+            android:id="@+id/set_team_index_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:ems="10"
+            android:paddingTop="25dp">
+        </EditText>
+        <TextView
+            android:id="@+id/team_index_err"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Valid values are 1-6 or None">
+        </TextView>
+
+        </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

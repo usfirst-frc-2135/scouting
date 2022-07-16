@@ -24,14 +24,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class PreMatchActivity extends AppCompatActivity {
-    private AutoCompleteTextView m_teamIndexField;
+    private String               m_teamIndexStr;
     private AutoCompleteTextView m_competitionField;
     private AutoCompleteTextView m_scoutNameField;
     private AutoCompleteTextView m_teamNumberField;
     private EditText             m_matchNumberField;
     private Button               m_startScoutingButton;
     private TextView             m_missingFieldErrMsg;
-    private TextView             m_teamIndexErrMsg;
     private Button               m_prematchCancelButton;
     private MatchData            m_matchData;
     private ActionBar            m_actionBar;
@@ -58,67 +57,13 @@ public class PreMatchActivity extends AppCompatActivity {
 
         setContentView(R.layout.prematch_activity);
 
-        m_teamIndexErrMsg = findViewById(R.id.team_index_err);
-        m_teamIndexErrMsg.setVisibility(View.INVISIBLE);
-        m_teamIndexErrMsg.setTextColor(Color.RED);
-
         m_missingFieldErrMsg = findViewById(R.id.error_message_pm);
         m_missingFieldErrMsg.setVisibility(View.INVISIBLE);
         m_missingFieldErrMsg.setTextColor(Color.RED);
 
-        m_teamIndexField = findViewById(R.id.team_index_field);
-        m_teamIndexField.setHint("Team Number index to use");
-        if(m_Scouter != null) {
-            String indexStr = m_Scouter.getTeamIndexStr();
-            Log.d(TAG,"From Scouter: teamFieldIndex = "+indexStr);
-            if(m_Scouter.isValidTeamIndexStr(indexStr)) 
-                m_teamIndexField.setText(m_Scouter.getTeamIndexStr());
-            else m_teamIndexField.setText("None");
-        }
-        else m_teamIndexField.setText("None");
-        m_teamIndexField.addTextChangedListener(new TextWatcher(){
-            public void onTextChanged(CharSequence c, int start, int before, int count){
- //HOLD           String indexStr = m_teamIndexField.getText().toString().trim();
- //HOLD           if(!m_Scouter.isValidTeamIndexStr(indexStr))  {
- //HOLD               m_teamIndexField.setText("None");
- //HOLD               Log.d(TAG,"teamFieldIndex value "+indexStr+" is not valid, so set to None!");
- //HOLD           }
-            }
-            public void beforeTextChanged(CharSequence c, int start, int count, int after){
-            }
-            public void afterTextChanged(Editable c){
-                 // Validate the teamIndex entry.
-                 m_teamIndexErrMsg.setVisibility(View.INVISIBLE); // reset invalid teamIndex msg
-                 if(!m_Scouter.isValidTeamIndexStr(m_teamIndexField.getText().toString().trim())) {
-                     m_teamIndexErrMsg.setVisibility(View.VISIBLE); // show invalid teamIndex msg
-                     m_teamIndexField.setTextColor(Color.RED);
-                 }
-                 else m_teamIndexField.setTextColor(getResources().getColor(R.color.textPrimary));
-                 m_missingFieldErrMsg.setVisibility(View.INVISIBLE);  // reset err msg to be invisible
-            }
-
-        });
-
-        // Set up the dropdown list for the TeamIndex field.
-        String[] teamIndexList = new String[7];
-        teamIndexList[0]="None";
-        teamIndexList[1]="1";
-        teamIndexList[2]="2";
-        teamIndexList[3]="3";
-        teamIndexList[4]="4";
-        teamIndexList[5]="5";
-        teamIndexList[6]="6";
-        ArrayAdapter<String> teamIndexAdapter = new ArrayAdapter<String> (PreMatchActivity.this, android.R.layout.select_dialog_item,teamIndexList );
-        m_teamIndexField.setAdapter(teamIndexAdapter);
-        m_teamIndexField.setThreshold(0);
-        m_teamIndexField.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-            @Override
-            public void onFocusChange (View v, boolean hasFocus){
-                if(hasFocus){
-                    m_teamIndexField.showDropDown();
-                }
-            }
-        });
+        if(m_Scouter != null)
+            m_teamIndexStr = m_Scouter.getTeamIndexStr();
+        else m_teamIndexStr = "None";
 
         m_competitionField = findViewById(R.id.comp_name);
         m_competitionField.setHint("Competition");
@@ -180,14 +125,13 @@ public class PreMatchActivity extends AppCompatActivity {
 
         // If there is a match number and a team index, load that team number from event teams list.
         String matchNumStr = m_matchNumberField.getText().toString().trim();
-        String teamIndexStr = m_teamIndexField.getText().toString().trim();
       
-        if(!matchNumStr.isEmpty() && !teamIndexStr.isEmpty() && m_Scouter.isValidTeamIndexNum(teamIndexStr)  && m_compInfo != null && m_compInfo.isEventDataLoaded()) {
+        if(!matchNumStr.isEmpty() && !m_teamIndexStr.isEmpty() && m_Scouter.isValidTeamIndexNum(m_teamIndexStr)  && m_compInfo != null && m_compInfo.isEventDataLoaded()) {
             try {
                 String[] teams = m_compInfo.getTeams(m_matchNumberField.getText().toString().trim());
-                int teamIndx = Integer.parseInt(teamIndexStr);
+                int teamIndx = Integer.parseInt(m_teamIndexStr);
                 String teamNumStr = teams[teamIndx];
-                Log.d(TAG,"Preloading team number using index "+teamIndexStr+": "+teamNumStr);
+                Log.d(TAG,"Preloading team number using index "+m_teamIndexStr+": "+teamNumStr);
                 m_teamNumberField.setText(teamNumStr);
             } catch (JSONException jsonException) {
                 Log.e(TAG, "For preload: couldn't get teams from m_compInfo");
@@ -275,7 +219,6 @@ public class PreMatchActivity extends AppCompatActivity {
         m_matchData.setCompetition(m_competitionField.getText().toString());
         m_matchData.setMatchNumber(m_matchNumberField.getText().toString().trim());
         m_matchData.setTeamNumber(m_teamNumberField.getText().toString());
-        m_Scouter.setTeamIndexStr(m_teamIndexField.getText().toString());
     }
 
     @Override
@@ -288,14 +231,6 @@ public class PreMatchActivity extends AppCompatActivity {
 
     private boolean checkValidData(){
         m_missingFieldErrMsg.setVisibility(View.INVISIBLE);
-        m_teamIndexErrMsg.setVisibility(View.INVISIBLE); 
-
-        // Validate team index 
-        if(!m_Scouter.isValidTeamIndexStr(m_teamIndexField.getText().toString().trim())) {
-            m_teamIndexErrMsg.setVisibility(View.VISIBLE); 
-            Log.d(TAG,"+++>> checkValidData(): ERROR: teamIndex is not valid: "+m_teamIndexField.getText().toString().trim());
-            return false;
-        }
 
         // Make sure there are entries for the various fields on this page.
         if(m_competitionField.getText().toString().trim().equals("")||m_scoutNameField.getText().toString().trim().equals("")|| m_teamNumberField.getText().toString().trim().equals("")||m_matchNumberField.getText().equals("")){

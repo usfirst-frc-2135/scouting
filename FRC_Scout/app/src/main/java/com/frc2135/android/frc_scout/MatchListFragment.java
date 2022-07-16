@@ -55,6 +55,7 @@ public class MatchListFragment extends ListFragment {
     private static final String TAG = "MatchListFragment";
     private static final int REQUEST_FILTER = 300;
     private static final int REQUEST_LOADEVENT = 400;
+    private static final int REQUEST_SETTEAMINDEX = 500;
 
     // Data members
     private ArrayList<MatchData> m_MatchDataList; 
@@ -352,20 +353,30 @@ public class MatchListFragment extends ListFragment {
             case R.id.clear_preferences:
                 Log.d(TAG, "Clear preferences clicked");
                 Scouter.get(getContext()).clear();
-                Log.d(TAG,"onPause() calling MatchHistory::saveData()");
+                Log.d(TAG,"Clear Preferences: calling Scouter::clear()");
                 return true;
 
             case R.id.about_item:
                 Intent i = new Intent(getActivity(), Splash.class);
                 startActivity(i);
                 getActivity().finish();
+
             case R.id.load_data_over_network:
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 Log.d(TAG, "Going to start LoadEventDialog");
                 LoadEventDialog dialog = LoadEventDialog.newInstance();
                 dialog.setTargetFragment(MatchListFragment.this, REQUEST_LOADEVENT);
-                dialog.show(fm, "filter_dialog");
+                dialog.show(fm, "filter_dialog");  //TODO - change this to "load_event_dialog"?
                 return true;
+
+            case R.id.set_team_index:
+                FragmentManager fm2 = getActivity().getSupportFragmentManager();
+                Log.d(TAG, "Going to start SetTeamIndexDlg");
+                SetTeamIndexDlg tiDlg = SetTeamIndexDlg.newInstance();
+                tiDlg.setTargetFragment(MatchListFragment.this, REQUEST_SETTEAMINDEX);
+                tiDlg.show(fm2, "set_team_index_dialog");
+                return true;
+
             default: return super.onOptionsItemSelected(item);
         }
     }
