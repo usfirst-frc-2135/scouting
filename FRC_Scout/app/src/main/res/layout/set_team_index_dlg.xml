@@ -29,9 +29,7 @@
             android:id="@+id/team_index_err"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Valid values are 1-6 or None">
-        </TextView>
-
+            android:text="Valid values are 1-6 or None"/>
         </LinearLayout>
 
 

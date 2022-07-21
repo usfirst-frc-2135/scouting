@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class PreMatchActivity extends AppCompatActivity {
     private String               m_teamIndexStr;
-    private AutoCompleteTextView m_competitionField;
+    private EditText             m_competitionField;
     private AutoCompleteTextView m_scoutNameField;
     private AutoCompleteTextView m_teamNumberField;
     private EditText             m_matchNumberField;

@@ -43,7 +43,7 @@
                 android:textStyle="bold"
                 android:backgroundTint="@color/textSecondary"/>
 
-            <AutoCompleteTextView
+            <EditText
                 android:id="@+id/comp_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
                 android:textColorHint="@color/hintColor"
                 android:textColor="@color/textPrimary"
                 android:backgroundTint="@color/textSecondary">
-            </AutoCompleteTextView>
+            </EditText>
 
         </LinearLayout>
 

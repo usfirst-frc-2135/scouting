@@ -69,11 +69,6 @@ public class SetTeamIndexDlg extends DialogFragment {
 
         m_teamIndexField.addTextChangedListener(new TextWatcher(){
             public void onTextChanged(CharSequence c, int start, int before, int count){
-            String indexStr = m_teamIndexField.getText().toString().trim();
- //HOLD           if(!m_Scouter.isValidTeamIndexStr(indexStr))  {
- //HOLD               m_teamIndexField.setText("None");
- //HOLD               Log.d(TAG,"teamFieldIndex value "+indexStr+" is not valid, so set to None!");
- //HOLD           }
             }
             public void beforeTextChanged(CharSequence c, int start, int count, int after){
             }
@@ -90,12 +85,22 @@ public class SetTeamIndexDlg extends DialogFragment {
             }
         });
 
-        AlertDialog dialog = new AlertDialog.Builder(getActivity()).setView(v).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+        // OK and Cancel button action handling: 
+        AlertDialog.Builder abd = new AlertDialog.Builder(getActivity());
+        abd.setView(v);
+        abd.setNeutralButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialog, int which){
+                dismiss();
+            }
+        });
+
+        abd.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int which){
+               // If the data is valid, save to Scouter and end 
                if(checkValidData()){
                    if(m_Scouter != null) {
                         m_Scouter.setTeamIndexStr(m_teamIndexField.getText().toString());
-                        Log.d(TAG,"===> setting team index to "+m_teamIndexField.getText().toString());
+                        Log.d(TAG,"onOK: setting team index to "+m_teamIndexField.getText().toString());
                     }
                     try {
                         sendResult(Activity.RESULT_OK);
@@ -106,15 +111,16 @@ public class SetTeamIndexDlg extends DialogFragment {
                     }
                 }
             }
-        }).create();
+        });
 
-        dialog.setTitle("Set Team Index");
-        dialog.show();
-        Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-        button.setBackgroundColor(Color.parseColor("#3F51B5"));
-//HOLD        Button button2 = dialog.getButton(AlertDialog.BUTTON_CANCEL);
-//HOLD        button2.setBackgroundColor(Color.parseColor("#3F51B5"));
-        return dialog;
+        AlertDialog alertDialog = abd.create();
+        alertDialog.setTitle("Set Team Index");
+        alertDialog.show();
+        Button okButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        okButton.setBackgroundColor(Color.parseColor("#3F51B5"));
+        Button cancelButton = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL);
+        cancelButton.setBackgroundColor(Color.parseColor("#3F51B5"));
+        return alertDialog;
     }
 
     public static SetTeamIndexDlg newInstance(){
@@ -131,7 +137,7 @@ public class SetTeamIndexDlg extends DialogFragment {
         // Validate team index
         if(!m_Scouter.isValidTeamIndexStr(m_teamIndexField.getText().toString().trim())) {
             m_teamIndexErrMsg.setVisibility(View.VISIBLE);
-            Log.d(TAG,"+++>> checkValidData(): ERROR: teamIndex is not valid: "+m_teamIndexField.getText().toString().trim());
+            Log.d(TAG,">> checkValidData(): ERROR: teamIndex is not valid: "+m_teamIndexField.getText().toString().trim());
             return false;
         }
         return true;
