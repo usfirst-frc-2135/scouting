@@ -49,7 +49,7 @@ public class EndgameFragment extends Fragment {
 
         m_actionBar =  ((AppCompatActivity)getActivity()).getSupportActionBar();
         String teamNumber = m_matchData.stripTeamNamePrefix(m_matchData.getTeamNumber());
-        m_actionBar.setTitle("Endgame                             Scouting Team "+teamNumber);
+        m_actionBar.setTitle("Endgame               Scouting Team "+teamNumber+"          Match "+m_matchData.getMatchNumber());
     }
 
     @Override
