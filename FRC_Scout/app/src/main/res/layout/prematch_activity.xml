@@ -164,12 +164,6 @@
             android:text="Please fill in the missing fields!"
             android:paddingTop="20dp">
         </TextView>
-        <TextView
-            android:id="@+id/team_index_err"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Team Index entry is not valid!">
-        </TextView>
 
         <Button
             android:id="@+id/start_scouting_button"
