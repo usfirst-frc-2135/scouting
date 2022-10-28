@@ -41,6 +41,22 @@ public class PreMatchActivity extends AppCompatActivity {
 
     private static Scouter m_Scouter;
 
+    private void setTeamNumFromMatchNum() {
+        // If there is a match number and a team index, load that team number from event teams list.
+        String matchNumStr = m_matchNumberField.getText().toString().trim();
+        if (!matchNumStr.isEmpty() && !m_teamIndexStr.isEmpty() && m_Scouter.isValidTeamIndexNum(m_teamIndexStr) && m_compInfo != null && m_compInfo.isEventDataLoaded()) {
+            try {
+                String[] teams = m_compInfo.getTeams(matchNumStr);
+                int teamIndx = Integer.parseInt(m_teamIndexStr);
+                String teamNumStr = teams[teamIndx];
+                Log.d(TAG, "Preloading team number using index " + m_teamIndexStr + ": " + teamNumStr);
+                m_teamNumberField.setText(teamNumStr);
+            } catch (JSONException jsonException) {
+                Log.e(TAG, "For preload: couldn't get teams from m_compInfo");
+                jsonException.printStackTrace();
+            }
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -120,24 +136,22 @@ public class PreMatchActivity extends AppCompatActivity {
             m_matchNumberField.setText(m_Scouter.getNextExpectedMatchNumber());
         else m_matchNumberField.setText("qm1");
 
+        m_matchNumberField.addTextChangedListener(new TextWatcher(){
+            public void onTextChanged(CharSequence c, int start, int before, int count){
+
+            }
+            public void beforeTextChanged(CharSequence c, int start, int count, int after){
+            }
+            public void afterTextChanged(Editable c){
+                setTeamNumFromMatchNum();
+            }
+
+        });
+
         m_teamNumberField = findViewById(R.id.team_number_field);
         m_teamNumberField.setText(m_matchData.getTeamNumber());
 
-        // If there is a match number and a team index, load that team number from event teams list.
-        String matchNumStr = m_matchNumberField.getText().toString().trim();
-      
-        if(!matchNumStr.isEmpty() && !m_teamIndexStr.isEmpty() && m_Scouter.isValidTeamIndexNum(m_teamIndexStr)  && m_compInfo != null && m_compInfo.isEventDataLoaded()) {
-            try {
-                String[] teams = m_compInfo.getTeams(m_matchNumberField.getText().toString().trim());
-                int teamIndx = Integer.parseInt(m_teamIndexStr);
-                String teamNumStr = teams[teamIndx];
-                Log.d(TAG,"Preloading team number using index "+m_teamIndexStr+": "+teamNumStr);
-                m_teamNumberField.setText(teamNumStr);
-            } catch (JSONException jsonException) {
-                Log.e(TAG, "For preload: couldn't get teams from m_compInfo");
-                jsonException.printStackTrace();
-            }
-        }
+        setTeamNumFromMatchNum();
 
         m_teamNumberField.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
