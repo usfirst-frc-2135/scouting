@@ -150,7 +150,7 @@ public class CompetitionInfo {
             JSONArray redTeams = new JSONArray();
             JSONArray blueTeams = new JSONArray();
             for(int i= 0; i < m_jsonData.length(); i++){
-                if((((JSONObject)m_jsonData.get(i)).getString("comp_level") + ((JSONObject)m_jsonData.get(i)).getString("match_number")).equals(matchnum.trim())){
+                if((((JSONObject)m_jsonData.get(i)).getString("comp_level") + ((JSONObject)m_jsonData.get(i)).getString("match_number")).equals(matchnum.trim().toLowerCase())){
                      bMatchNumFound = true;
                      JSONObject alliances = (JSONObject)m_jsonData.get(i);
                      JSONObject color = (JSONObject)alliances.get("alliances");

@@ -174,7 +174,7 @@ public class PreMatchActivity extends AppCompatActivity {
             public void onFocusChange (View v, boolean hasFocus){
                 if(hasFocus){
                     Log.d(TAG, "m_teamNumberField clicked");
-                    String matchNumStr = m_matchNumberField.getText().toString().trim();
+                    String matchNumStr = m_matchNumberField.getText().toString().trim().toLowerCase();
                     if(!matchNumStr.isEmpty() && m_compInfo != null && m_compInfo.isEventDataLoaded()) {
                         boolean bTeamsLoadedSuccessfully = false;
                         try {
@@ -228,10 +228,10 @@ public class PreMatchActivity extends AppCompatActivity {
         m_Scouter = Scouter.get(getApplicationContext());
         m_Scouter.addPastScouter(m_scoutNameField.getText().toString());
         m_Scouter.setMostRecentScoutName(m_scoutNameField.getText().toString());
-        m_Scouter.setMostRecentMatchNumber(m_matchNumberField.getText().toString());
+        m_Scouter.setMostRecentMatchNumber(m_matchNumberField.getText().toString().toLowerCase());
         m_matchData.setName(m_scoutNameField.getText().toString());
         m_matchData.setCompetition(m_competitionField.getText().toString());
-        m_matchData.setMatchNumber(m_matchNumberField.getText().toString().trim());
+        m_matchData.setMatchNumber(m_matchNumberField.getText().toString().trim().toLowerCase());
         m_matchData.setTeamNumber(m_teamNumberField.getText().toString());
     }
 
