@@ -37,10 +37,10 @@ public class CompetitionInfo {
         m_jsonData = null;
     } 
 
-    public static CompetitionInfo get(Context context,String eventCode) {
+    public static CompetitionInfo get(Context context,String eventCode, boolean bForceReload) {
         if(sCompetitionInfo != null) {
             String oldEventCode = sCompetitionInfo.getEventCode();
-            if(!oldEventCode.equals(eventCode)) {
+            if(bForceReload || !oldEventCode.equals(eventCode)) {
                 sCompetitionInfo.setEventCode(eventCode);
                 Log.d(TAG, "Resetting existing "+oldEventCode+" CompetitionInfo for new eventCode "+eventCode);
                 sCompetitionInfo.readEventMatchesJSON(context,true);

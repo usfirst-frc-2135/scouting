@@ -66,7 +66,7 @@ public class PreMatchActivity extends AppCompatActivity {
 
         String matchId = getIntent().getStringExtra("match_ID");
         m_matchData = MatchHistory.get(getApplicationContext()).getMatch(matchId);
-        m_compInfo = CompetitionInfo.get(getApplicationContext(),m_matchData.getCompetition().trim());
+        m_compInfo = CompetitionInfo.get(getApplicationContext(),m_matchData.getCompetition().trim(), false);
 
         m_actionBar = getSupportActionBar();
         m_actionBar.setTitle("Pre-Match");

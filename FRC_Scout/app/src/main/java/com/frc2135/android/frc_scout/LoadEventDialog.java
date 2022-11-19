@@ -139,7 +139,7 @@ public class LoadEventDialog extends DialogFragment {
                                 m_compSerializer.saveEventData(response);
                                 Log.d(TAG,"Successfully saved matches.json file: "+dataFileDir +"/"+eventFileName);
                                 // Set up the CompetitionInfo with this event data.
-                                CompetitionInfo.get(m_appContext,m_eventCode);
+                                CompetitionInfo.get(m_appContext,m_eventCode, true);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
