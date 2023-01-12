@@ -30,6 +30,9 @@ public class TeleopFragment extends Fragment {
     private Button    m_highDecrButton;
     private Button    m_highIncrButton;
 
+    private CheckBox m_pickupCubeCheckbox;
+    private CheckBox m_pickupUprightCheckbox;
+    private CheckBox m_pickupTippedCheckbox;
     private MatchData m_matchData;
     private ActionBar m_actionBar;
 
@@ -123,6 +126,15 @@ public class TeleopFragment extends Fragment {
             }
         });
 
+        m_pickupCubeCheckbox = v.findViewById(R.id.pickup_cube_checkbox);
+        m_pickupCubeCheckbox.setChecked(m_matchData.getPickedUpCube());
+
+        m_pickupUprightCheckbox = v.findViewById(R.id.pickup_upright_checkbox);
+        m_pickupUprightCheckbox.setChecked(m_matchData.getPickedUpUpright());
+
+        m_pickupTippedCheckbox = v.findViewById(R.id.pickup_tipped_checkbox);
+        m_pickupTippedCheckbox.setChecked(m_matchData.getPickedUpTipped());
+
         m_highPointsValue.setText(m_matchData.getTelopHighPoints()+"");
         m_lowPointsValue.setText(m_matchData.getTeleopLowPoints()+"");
         if(!isValidPoints(m_lowPointsValue)) {
@@ -138,6 +150,9 @@ public class TeleopFragment extends Fragment {
     public void updateTeleopData(){
         m_matchData.setTeleopLowPoints(Integer.parseInt(m_lowPointsValue.getText().toString()));
         m_matchData.setTeleopHighPoints(Integer.parseInt(m_highPointsValue.getText().toString()));
+        m_matchData.setPickedUpCube(m_pickupCubeCheckbox.isChecked());
+        m_matchData.setPickedUpUpright(m_pickupUprightCheckbox.isChecked());
+        m_matchData.setPickedUpTipped(m_pickupTippedCheckbox.isChecked());
     }
 
     public String formattedDate(Date d){

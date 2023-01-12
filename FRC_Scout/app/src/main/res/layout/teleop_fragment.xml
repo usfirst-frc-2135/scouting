@@ -134,14 +134,52 @@
 
             </LinearLayout>
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp"></Space>
+
+            <TextView
+                android:id="@+id/hub_scoring_title"
+                style="?android:listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="15dp"
+                android:text="Pickup from Floor"
+                android:textColor="@color/textPrimary"
+                android:textSize="24dp" />
+
+            <CheckBox
+                android:id="@+id/pickup_cube_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cube"
+                android:buttonTint="@color/textPrimary"
+                android:textSize="22dp"
+                android:textColor="@color/textPrimary" />
+
+            <CheckBox
+                android:id="@+id/pickup_upright_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/textPrimary"
+                android:text="Upright cone"
+                android:textColor="@color/textPrimary"
+                android:textSize="22dp" />
+
+            <CheckBox
+                android:id="@+id/pickup_tipped_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/textPrimary"
+                android:text="Tipped over cone"
+                android:textColor="@color/textPrimary"
+                android:textSize="22dp" />
 
         </LinearLayout>
 
 
     </ScrollView>
-
-
-
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

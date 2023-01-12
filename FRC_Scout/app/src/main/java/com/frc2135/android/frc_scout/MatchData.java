@@ -30,6 +30,9 @@ public class MatchData {
     private static final String JSON_KEY_TIMESTAMP = "timestamp";
     private static final String JSON_KEY_DIED = "died";
     private static final String JSON_KEY_MATCHID = "matchid";
+    private static final String JSON_KEY_PICKEDUPCUBE = "pickedupcube";
+    private static final String JSON_KEY_PICKEDUPUPRIGHT = "pickedupupright";
+    private static final String JSON_KEY_PICKEDUPTIPPED = "pickeduptipped";
 
     // Data members 
     private int     m_autonLowPoints;
@@ -47,6 +50,9 @@ public class MatchData {
     private String  m_matchID;
     private String  m_competition;
     private Date    m_timestamp;
+    private boolean m_pickedUpCube;
+    private boolean m_pickedUpUpright;
+    private boolean m_pickedUpTipped;
 
     // Utility to strip off "frc" prefix to team number.
     public String stripTeamNamePrefix(String teamName){
@@ -102,6 +108,9 @@ public class MatchData {
         setTimestamp(new Date(json.getString(JSON_KEY_TIMESTAMP)));
         setDied(json.getBoolean(JSON_KEY_DIED));
         m_matchID = json.getString(JSON_KEY_MATCHID);
+        setPickedUpCube(json.getBoolean(JSON_KEY_PICKEDUPCUBE));
+        setPickedUpUpright(json.getBoolean(JSON_KEY_PICKEDUPUPRIGHT));
+        setPickedUpTipped(json.getBoolean(JSON_KEY_PICKEDUPTIPPED));
     }
 
     ////////////  m_matchID   /////////////////////
@@ -236,10 +245,25 @@ public class MatchData {
         return m_died;
     }
 
+    ////////////  m_pickedUpCube   /////////////////////
+    public void setPickedUpCube(boolean x) { m_pickedUpCube = x; }
+
+    public boolean getPickedUpCube() { return m_pickedUpCube; }
+
+    ////////////  m_pickedUpUpright   /////////////////////
+    public void setPickedUpUpright(boolean x) { m_pickedUpUpright = x; }
+
+    public boolean getPickedUpUpright() { return m_pickedUpUpright; }
+
+    ////////////  m_pickedUpTipped   /////////////////////
+    public void setPickedUpTipped(boolean x) { m_pickedUpTipped = x; }
+
+    public boolean getPickedUpTipped() { return m_pickedUpTipped; }
+
     public String encodeToTSV(){
         // NOTE! THE ORDER IS IMPORTANT!
         // This is the data that goes into the QR code.
-        String headers = "TeamNumber StartPos ExitTarmac AutonLow AutonHigh TeleopLow TeleopHigh Climbed Died, MatchNum Competition Scout Comment";
+        String headers = "TeamNumber StartPos ExitTarmac AutonLow AutonHigh TeleopLow TeleopHigh PickUpCube PickUpUprightCone PickUpTippedCone Climbed Died MatchNum Competition Scout Comment";
         String tsvStr = "";
 
         // For teamNumber, strip off 'frc' prefix.
@@ -255,6 +279,18 @@ public class MatchData {
         tsvStr += m_autonHighPoints + "\t";
         tsvStr += m_teleopLowPoints + "\t";
         tsvStr += m_teleopHighPoints + "\t";
+
+        if(m_pickedUpCube)  // bool value: use 1/0 instead of true/false
+            tsvStr += "1" + "\t";
+        else tsvStr += "0" + "\t";
+
+        if(m_pickedUpUpright)  // bool value: use 1/0 instead of true/false
+            tsvStr += "1" + "\t";
+        else tsvStr += "0" + "\t";
+
+        if(m_pickedUpTipped)  // bool value: use 1/0 instead of true/false
+            tsvStr += "1" + "\t";
+        else tsvStr += "0" + "\t";
 
         tsvStr += m_climbed + "\t";
 
@@ -305,6 +341,12 @@ public class MatchData {
         json.put("divider", ",");
         json.put(JSON_KEY_CLIMBED, m_climbed);
         json.put("divider", ",");
+        json.put(JSON_KEY_TARMAC, m_pickedUpCube);
+        json.put("divider", ",");
+        json.put(JSON_KEY_TARMAC, m_pickedUpUpright);
+        json.put("divider", ",");
+        json.put(JSON_KEY_TARMAC, m_pickedUpTipped);
+        json.put("divider", ",");
         json.put(JSON_KEY_DIED, m_died);
         json.put("divider", ",");
         json.put(JSON_KEY_COMMENTS, m_comment);
@@ -318,4 +360,5 @@ public class MatchData {
     public String getMatchFileName(){
         return m_matchID+".json";
     }
+
 }
