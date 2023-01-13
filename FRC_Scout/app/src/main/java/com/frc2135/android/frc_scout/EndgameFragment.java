@@ -26,11 +26,10 @@ import com.google.android.material.snackbar.Snackbar;
 public class EndgameFragment extends Fragment {
 
     private RadioGroup m_radioGroup;
-    private RadioButton m_radioButton0;
-    private RadioButton m_radioButton1;
-    private RadioButton m_radioButton2;
-    private RadioButton m_radioButton3;
-    private RadioButton m_radioButton4;
+    private RadioButton m_radio_none;
+    private RadioButton m_radio_parked;
+    private RadioButton m_radio_docked;
+    private RadioButton m_radio_engaged;
     private CheckBox m_diedCheckbox;
     private EditText m_commentText;
     private MatchData m_matchData;
@@ -68,32 +67,32 @@ public class EndgameFragment extends Fragment {
             }
         });
 
-        m_radioGroup = (RadioGroup)v.findViewById(R.id.climb_level);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
-        m_radioButton0 = (RadioButton)v.findViewById(R.id.level_zero);//Sets up radio button that corresponds to 0
-        m_radioButton0.setChecked(true);
-        m_radioButton1 = (RadioButton)v.findViewById(R.id.level_one);//Sets up radio button that corresponds to 1
-        m_radioButton2 = (RadioButton)v.findViewById(R.id.level_two);//Sets up radio button that corresponds to 2
-        m_radioButton3 = (RadioButton)v.findViewById(R.id.level_three);//Sets up radio button that corresponds to 3
-        m_radioButton4 = (RadioButton)v.findViewById(R.id.level_four);//Sets up radio button that corresponds to 4
+        m_radioGroup = (RadioGroup)v.findViewById(R.id.endgame_charge_level);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
+        m_radio_none = (RadioButton)v.findViewById(R.id.level_none);//Sets up radio button that corresponds to 0
+        m_radio_none.setChecked(true);
+        m_radio_parked = (RadioButton)v.findViewById(R.id.level_parked);//Sets up radio button that corresponds to 1
+        m_radio_parked.setChecked(false);
+        m_radio_docked = (RadioButton)v.findViewById(R.id.level_docked);//Sets up radio button that corresponds to 2
+        m_radio_docked.setChecked(false);
+        m_radio_engaged = (RadioButton)v.findViewById(R.id.level_engaged);//Sets up radio button that corresponds to 3
+        m_radio_engaged.setChecked(false);
 
-        int x = m_matchData.getClimb();
+        int x = m_matchData.getEndgameChargeLevel();
         if(x==0) 
-            m_radioButton0.setChecked(true);
+            m_radio_none.setChecked(true);
         else if(x==1) 
-            m_radioButton1.setChecked(true);
+            m_radio_parked.setChecked(true);
         else if(x==2) 
-            m_radioButton2.setChecked(true);
+            m_radio_docked.setChecked(true);
         else if(x==3) 
-            m_radioButton3.setChecked(true);
-        else if(x==4) 
-            m_radioButton4.setChecked(true);
+            m_radio_engaged.setChecked(true);
 
         m_radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
                 //Changes m_matchData's climb variable according to which radio button is selected
-                m_matchData.setClimb(getCurrentClimbLevel());
+                m_matchData.setEndgameChargeLevel(getCurrentChargeLevel());
             }
         });
 
@@ -139,25 +138,22 @@ public class EndgameFragment extends Fragment {
 
         return v;
     }
-    public int getCurrentClimbLevel() {
+    public int getCurrentChargeLevel() {
         // Returns the integer climb level that is current checked in the radio buttons
         int rtn = 0;
-        if (m_radioGroup.getCheckedRadioButtonId() == m_radioButton1.getId()) {
+        if (m_radioGroup.getCheckedRadioButtonId() == m_radio_parked.getId()) {
             rtn = 1;
         }
-        else if (m_radioGroup.getCheckedRadioButtonId() == m_radioButton2.getId()) {
+        else if (m_radioGroup.getCheckedRadioButtonId() == m_radio_docked.getId()) {
             rtn = 2;
         }
-        else if (m_radioGroup.getCheckedRadioButtonId() == m_radioButton3.getId()) {
+        else if (m_radioGroup.getCheckedRadioButtonId() == m_radio_engaged.getId()) {
             rtn = 3;
-        }
-        else if (m_radioGroup.getCheckedRadioButtonId() == m_radioButton4.getId()) {
-            rtn = 4;
         }
         return rtn;
     }
     public void updateEndgameData(){
-        m_matchData.setClimb(getCurrentClimbLevel());
+        m_matchData.setEndgameChargeLevel(getCurrentChargeLevel());
         m_matchData.setDied(m_diedCheckbox.isChecked());
         m_matchData.setComment(m_commentText.getText().toString());
     }

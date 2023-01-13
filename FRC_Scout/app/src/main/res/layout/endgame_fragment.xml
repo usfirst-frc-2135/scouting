@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,10 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="-44dp"
-        tools:layout_editor_absoluteY="46dp"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:paddingRight="15dp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="-44dp">
 
 
         <LinearLayout
@@ -25,84 +26,76 @@
             <TextView
                 android:id="@+id/climbTitle"
                 style="?android:listSeparatorTextViewStyle"
-                android:layout_width="150dp"
+                android:layout_width="215dp"
                 android:layout_height="wrap_content"
-                android:text="Climb"
+                android:text="Charge Station"
                 android:textColor="@color/textPrimary"
                 android:textSize="24dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <RadioGroup
-                    android:id="@+id/climb_level"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/level_zero"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="22sp"
-                        android:layout_weight="1"
-                        android:buttonTint="@color/textPrimary"
-                        android:text="@string/level_zero"
-                        android:textColor="@color/textPrimary"/>
-
-                    <RadioButton
-                        android:id="@+id/level_one"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="22sp"
-                        android:buttonTint="@color/textPrimary"
-                        android:layout_weight="1"
-                        android:text="@string/level_one"
-                        android:textColor="@color/textPrimary"/>
-
-                    <RadioButton
-                        android:id="@+id/level_two"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="22sp"
-                        android:buttonTint="@color/textPrimary"
-                        android:layout_weight="1"
-                        android:text="@string/level_two"
-                        android:textColor="@color/textPrimary"/>
-
-                    <RadioButton
-                        android:id="@+id/level_three"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="22sp"
-                        android:buttonTint="@color/textPrimary"
-                        android:layout_weight="1"
-                        android:text="@string/level_three"
-                        android:textColor="@color/textPrimary"/>
-
-                    <RadioButton
-                        android:id="@+id/level_four"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="22sp"
-                        android:layout_weight="1"
-                        android:buttonTint="@color/textPrimary"
-                        android:text="@string/level_four"
-                        android:textColor="@color/textPrimary"/>
-                </RadioGroup>
-            </LinearLayout>
-
         </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp">
+            >
+
+        </Space>
+
+        <RadioGroup
+            android:id="@+id/endgame_charge_level"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:layout_marginRight="50dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/level_none"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="@color/textPrimary"
+                android:text="None"
+                android:textColor="@color/textPrimary"
+                android:textSize="22sp" />
+
+            <RadioButton
+                android:id="@+id/level_parked"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:buttonTint="@color/textPrimary"
+                android:text="Parked"
+                android:textColor="@color/textPrimary"
+                android:textSize="22sp" />
+
+            <RadioButton
+                android:id="@+id/level_docked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="@color/textPrimary"
+                android:text="Docked"
+                android:textColor="@color/textPrimary"
+                android:textSize="22sp" />
+
+            <RadioButton
+                android:id="@+id/level_engaged"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="@color/textPrimary"
+                android:text="Engaged"
+                android:textColor="@color/textPrimary"
+                android:textSize="22sp" />
+
+        </RadioGroup>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="27dp">
+            android:paddingTop="15dp">
 
             <TextView
                 android:id="@+id/died_title"
@@ -114,15 +107,14 @@
                 android:textSize="25dp" />
 
             <CheckBox
-                    android:id="@+id/died_checkbox_true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:buttonTint="@color/textPrimary"
-                    android:text="Robot Died"
-                    android:textSize="20dp"
-                    android:textColor="@color/textPrimary"/>
-
+                android:id="@+id/died_checkbox_true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:buttonTint="@color/textPrimary"
+                android:text="Robot Died"
+                android:textColor="@color/textPrimary"
+                android:textSize="20dp" />
 
 
         </LinearLayout>
@@ -132,7 +124,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="27dp">
+            android:paddingTop="24dp">
 
             <TextView
                 android:id="@+id/comments_title"
@@ -147,32 +139,30 @@
                 android:id="@+id/comments"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
-                android:maxLength="400"
                 android:layout_marginLeft="16dp"
+                android:maxLength="400"
+                android:textColor="@color/textPrimary"
                 android:textColorHint="@color/hintColor"
-                android:textColor="@color/textPrimary">
+                android:textSize="16dp">
 
-            </EditText>
+            </EditText> 
 
         </LinearLayout>
 
 
-
         <Space
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="10dp">
             >
->
 
         </Space>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingTop="20dp"
-            android:gravity="center_horizontal">
+            android:paddingTop="10dp">
 
             <ImageButton
                 android:id="@+id/gen_QR"
@@ -185,7 +175,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="50dp"></Space>
+                android:layout_height="30dp"></Space>
 
             <Button
                 android:id="@+id/nav_to_menu_button"

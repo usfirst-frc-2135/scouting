@@ -25,7 +25,7 @@ public class MatchData {
     private static final String JSON_KEY_TARMAC = "tarmac";
     private static final String JSON_KEY_TELEOPLOWPOINTS = "teleoplowpoints";
     private static final String JSON_KEY_TELEOPHIGHPOINTS = "teleophighpoints";
-    private static final String JSON_KEY_CLIMBED = "climbed";
+    private static final String JSON_KEY_ENDGAMECHARGE = "endgamecharge";
     private static final String JSON_KEY_COMMENTS = "comments";
     private static final String JSON_KEY_TIMESTAMP = "timestamp";
     private static final String JSON_KEY_DIED = "died";
@@ -39,7 +39,7 @@ public class MatchData {
     private int     m_autonHighPoints;
     private int     m_teleopLowPoints;
     private int     m_teleopHighPoints;
-    private int     m_climbed;
+    private int     m_endgameChargeLevel;
     private int     m_startPosition;
     private boolean m_exitedTarmac;
     private String  m_comment;
@@ -77,7 +77,7 @@ public class MatchData {
         setExitedTarmac(false);
         setTeleopHighPoints(0);
         setTeleopLowPoints(0);
-        setClimb(0);
+        setEndgameChargeLevel(0);
         setComment("");
         setTimestamp(Calendar.getInstance().getTime());
         setDied(false);
@@ -103,7 +103,7 @@ public class MatchData {
         setExitedTarmac(json.getBoolean(JSON_KEY_TARMAC));
         setTeleopHighPoints(json.getInt(JSON_KEY_TELEOPHIGHPOINTS));
         setTeleopLowPoints(json.getInt(JSON_KEY_TELEOPLOWPOINTS));
-        setClimb(json.getInt(JSON_KEY_CLIMBED));
+        setEndgameChargeLevel(json.getInt(JSON_KEY_ENDGAMECHARGE));
         setComment(json.getString(JSON_KEY_COMMENTS));
         setTimestamp(new Date(json.getString(JSON_KEY_TIMESTAMP)));
         setDied(json.getBoolean(JSON_KEY_DIED));
@@ -210,12 +210,12 @@ public class MatchData {
 
 
     ////////////  m_climbed   /////////////////////
-    public void setClimb(int x){
-        m_climbed = x;
+    public void setEndgameChargeLevel(int x){
+        m_endgameChargeLevel = x;
     }
 
-    public int getClimb(){
-        return m_climbed;
+    public int getEndgameChargeLevel(){
+        return m_endgameChargeLevel;
     }
 
     ////////////  m_comment   /////////////////////
@@ -263,7 +263,7 @@ public class MatchData {
     public String encodeToTSV(){
         // NOTE! THE ORDER IS IMPORTANT!
         // This is the data that goes into the QR code.
-        String headers = "TeamNumber StartPos ExitTarmac AutonLow AutonHigh TeleopLow TeleopHigh PickUpCube PickUpUprightCone PickUpTippedCone Climbed Died MatchNum Competition Scout Comment";
+        String headers = "TeamNumber StartPos ExitTarmac AutonLow AutonHigh TeleopLow TeleopHigh PickUpCube PickUpUprightCone PickUpTippedCone EndgameChargeLevel Died MatchNum Competition Scout Comment";
         String tsvStr = "";
 
         // For teamNumber, strip off 'frc' prefix.
@@ -292,7 +292,7 @@ public class MatchData {
             tsvStr += "1" + "\t";
         else tsvStr += "0" + "\t";
 
-        tsvStr += m_climbed + "\t";
+        tsvStr += m_endgameChargeLevel + "\t";
 
         if(m_died)
             tsvStr += "1" + "\t";
@@ -339,7 +339,7 @@ public class MatchData {
         json.put("divider", ",");
         json.put(JSON_KEY_TELEOPHIGHPOINTS, m_teleopHighPoints);
         json.put("divider", ",");
-        json.put(JSON_KEY_CLIMBED, m_climbed);
+        json.put(JSON_KEY_ENDGAMECHARGE, m_endgameChargeLevel);
         json.put("divider", ",");
         json.put(JSON_KEY_TARMAC, m_pickedUpCube);
         json.put("divider", ",");
