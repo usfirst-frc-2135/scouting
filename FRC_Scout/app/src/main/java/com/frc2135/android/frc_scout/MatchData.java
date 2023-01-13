@@ -19,9 +19,13 @@ public class MatchData {
     private static final String JSON_KEY_COMPETITION = "competition";
     private static final String JSON_KEY_TEAMNUMBER = "teamnumber";
     private static final String JSON_KEY_MATCHNUMBER = "matchnumber";
-    private static final String JSON_KEY_STARTPOS = "startpos";
-    private static final String JSON_KEY_AUTONLOWPOINTS = "autonlowpoints";
-    private static final String JSON_KEY_AUTONHIGHPOINTS = "autonhighpoints";
+    /* private static final String JSON_KEY_STARTPOS = "startpos"; */
+    private static final String JSON_KEY_AUTONCONESBOTTOMROW = "autonconesbottomrow";
+    private static final String JSON_KEY_AUTONCONESMIDDLEROW = "autonconesmiddlerow";
+    private static final String JSON_KEY_AUTONCONESTOPROW = "autonconestoprow";
+    private static final String JSON_KEY_AUTONCUBESBOTTOMROW = "autoncubesbottomrow";
+    private static final String JSON_KEY_AUTONCUBESMIDDLEROW = "autoncubesmiddlerow";
+    private static final String JSON_KEY_AUTONCUBESTOPROW = "autoncubestoprow";
     private static final String JSON_KEY_TARMAC = "tarmac";
     private static final String JSON_KEY_TELEOPLOWPOINTS = "teleoplowpoints";
     private static final String JSON_KEY_TELEOPHIGHPOINTS = "teleophighpoints";
@@ -35,12 +39,21 @@ public class MatchData {
     private static final String JSON_KEY_PICKEDUPTIPPED = "pickeduptipped";
 
     // Data members 
-    private int     m_autonLowPoints;
-    private int     m_autonHighPoints;
+    private int     m_autonConesBottomRow;
+    private int     m_autonConesMiddleRow;
+    private int     m_autonConesTopRow;
+    private int     m_autonCubesBottomRow;
+    private int     m_autonCubesMiddleRow;
+    private int     m_autonCubesTopRow;
     private int     m_teleopLowPoints;
     private int     m_teleopHighPoints;
+
     private int     m_endgameChargeLevel;
-    private int     m_startPosition;
+    /*private int     m_startPosition;*/
+
+    private int     m_climbed;
+    /* private int  m_startPosition; */
+
     private boolean m_exitedTarmac;
     private String  m_comment;
     private boolean m_died;
@@ -71,9 +84,13 @@ public class MatchData {
         m_name = "";
         m_teamNumber = "";
         m_matchNumber = "";
-        setStartPosition(0);
-        setAutonHighPoints(0);
-        setAutonLowPoints(0);
+        /* setStartPosition(0);*/
+        setAutonConesBottomRow(0);
+        setAutonConesMiddleRow(0);
+        setAutonConesTopRow(0);
+        setAutonCubesBottomRow(0);
+        setAutonCubesMiddleRow(0);
+        setAutonCubesTopRow(0);
         setExitedTarmac(false);
         setTeleopHighPoints(0);
         setTeleopLowPoints(0);
@@ -97,9 +114,13 @@ public class MatchData {
         setCompetition(json.getString(JSON_KEY_COMPETITION));
         setTeamNumber(json.getString(JSON_KEY_TEAMNUMBER));
         setMatchNumber(json.getString(JSON_KEY_MATCHNUMBER));
-        setStartPosition(json.getInt(JSON_KEY_STARTPOS));
-        setAutonHighPoints(json.getInt(JSON_KEY_AUTONHIGHPOINTS));
-        setAutonLowPoints(json.getInt(JSON_KEY_AUTONLOWPOINTS));
+        /* setStartPosition(json.getInt(JSON_KEY_STARTPOS)); */
+        setAutonConesBottomRow(json.getInt(JSON_KEY_AUTONCONESBOTTOMROW));
+        setAutonConesMiddleRow(json.getInt(JSON_KEY_AUTONCONESMIDDLEROW));
+        setAutonConesTopRow(json.getInt(JSON_KEY_AUTONCONESTOPROW));
+        setAutonCubesBottomRow(json.getInt(JSON_KEY_AUTONCUBESBOTTOMROW));
+        setAutonCubesMiddleRow(json.getInt(JSON_KEY_AUTONCUBESMIDDLEROW));
+        setAutonCubesTopRow(json.getInt(JSON_KEY_AUTONCUBESTOPROW));
         setExitedTarmac(json.getBoolean(JSON_KEY_TARMAC));
         setTeleopHighPoints(json.getInt(JSON_KEY_TELEOPHIGHPOINTS));
         setTeleopLowPoints(json.getInt(JSON_KEY_TELEOPLOWPOINTS));
@@ -155,31 +176,71 @@ public class MatchData {
     }
 
     ////////////  m_startPosition   /////////////////////
-    public void setStartPosition(int x){
+    /* public void setStartPosition(int x){
         m_startPosition = x;
     }
 
     public int getStartPosition(){
         return m_startPosition;
+    } */
+
+
+    ////////////  m_autonConesBottomRow   /////////////////////
+    public void setAutonConesBottomRow(int x){
+        m_autonConesBottomRow = x;
     }
 
-    ////////////  m_autonHighPoints   /////////////////////
-    public void setAutonHighPoints(int y){
-        m_autonHighPoints = y;
+    public int getAutonConesBottomRow(){
+        return m_autonConesBottomRow;
     }
 
-    public int getAutonHighPoints(){
-        return m_autonHighPoints;
+    ////////////  m_autonConesMiddle Row   /////////////////////
+    public void setAutonConesMiddleRow(int y){
+        m_autonConesMiddleRow = y;
     }
 
-    ////////////  m_autonLowPoints   /////////////////////
-    public void setAutonLowPoints(int x){
-        m_autonLowPoints = x;
+    public int getAutonConesMiddleRow(){
+        return m_autonConesMiddleRow;
     }
 
-    public int getAutonLowPoints(){
-        return m_autonLowPoints;
+    ////////////  m_autonConesTop Row   /////////////////////
+    public void setAutonConesTopRow(int z){
+        m_autonConesTopRow = z;
     }
+
+    public int getAutonConesTopRow(){
+        return m_autonConesTopRow;
+    }
+
+
+    ////////////  m_autonCubesBottomRow   /////////////////////
+    public void setAutonCubesBottomRow(int a){
+        m_autonCubesBottomRow = a;
+    }
+
+    public int getAutonCubesBottomRow(){
+        return m_autonCubesBottomRow;
+    }
+
+    ////////////  m_autonCubesMiddle Row   /////////////////////
+    public void setAutonCubesMiddleRow(int b){
+        m_autonCubesMiddleRow = b;
+    }
+
+    public int getAutonCubesMiddleRow(){
+        return m_autonCubesMiddleRow;
+    }
+
+    ////////////  m_autonCubesTop Row   /////////////////////
+    public void setAutonCubesTopRow(int c){
+        m_autonCubesTopRow = c;
+    }
+
+    public int getAutonCubesTopRow(){
+        return m_autonCubesTopRow;
+    }
+
+
 
     ////////////  m_exitedTarmac   /////////////////////
     public void setExitedTarmac(boolean x){
@@ -263,20 +324,25 @@ public class MatchData {
     public String encodeToTSV(){
         // NOTE! THE ORDER IS IMPORTANT!
         // This is the data that goes into the QR code.
-        String headers = "TeamNumber StartPos ExitTarmac AutonLow AutonHigh TeleopLow TeleopHigh PickUpCube PickUpUprightCone PickUpTippedCone EndgameChargeLevel Died MatchNum Competition Scout Comment";
+        String headers = "TeamNumber StartPos ExitTarmac AutonConesBottom AutonConesMiddle AutonConesTop AutonCubesBottom AutonCubesMiddle AutonCubesLow TeleopLow TeleopHigh PickUpCube PickUpUprightCone PickUpTippedCone EndgameChargeLevel Died MatchNum Competition Scout Comment";
+
         String tsvStr = "";
 
         // For teamNumber, strip off 'frc' prefix.
         tsvStr += stripTeamNamePrefix(m_teamNumber) +"\t";
 
-        tsvStr += m_startPosition + "\t";
+        /* tsvStr += m_startPosition + "\t"; */
 
         if(m_exitedTarmac)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
         else tsvStr += "0" + "\t";
 
-        tsvStr += m_autonLowPoints + "\t";
-        tsvStr += m_autonHighPoints + "\t";
+        tsvStr += m_autonConesBottomRow + "\t";
+        tsvStr += m_autonConesMiddleRow + "\t";
+        tsvStr += m_autonConesTopRow + "\t";
+        tsvStr += m_autonCubesBottomRow + "\t";
+        tsvStr += m_autonCubesMiddleRow + "\t";
+        tsvStr += m_autonCubesTopRow + "\t";
         tsvStr += m_teleopLowPoints + "\t";
         tsvStr += m_teleopHighPoints + "\t";
 
@@ -320,20 +386,28 @@ public class MatchData {
         json.put("divider", ",");
         json.put("divider", ", \n");
 
-        json.put("headings", "Competition, Team Number, Match Number, Start Position, Auton High Points, Auton Low Points, Exited Tarmac, Teleop Low Port, Teleop Outer Port, Climbed, Died, Comments, Timestamp, MatchID \n");
+        json.put("headings", "Competition, Team Number, Match Number, Auton Cones Bottom Row, Auton Cones Middle Row, Auton Cones Top Row, Auton Cubes Bottom Row, Auton Cubes Middle Row, Auton Cubes Top Row, Exited Tarmac, Teleop Low Port, Teleop Outer Port, Climbed, Died, Comments, Timestamp, MatchID \n");
         json.put(JSON_KEY_COMPETITION, m_competition);
         json.put("divider", ",");
         json.put(JSON_KEY_TEAMNUMBER, m_teamNumber);
         json.put("divider", ",");
         json.put(JSON_KEY_MATCHNUMBER, m_matchNumber);
         json.put("divider", ",");
-        json.put(JSON_KEY_STARTPOS, m_startPosition );
+        /* json.put(JSON_KEY_STARTPOS, m_startPosition ); */
         json.put("divider", ",");
-        json.put(JSON_KEY_AUTONHIGHPOINTS, m_autonHighPoints );
+        json.put(JSON_KEY_AUTONCONESBOTTOMROW, m_autonConesBottomRow);
         json.put("divider", ",");
-        json.put(JSON_KEY_AUTONLOWPOINTS, m_autonLowPoints);
+        json.put(JSON_KEY_AUTONCONESMIDDLEROW, m_autonConesMiddleRow );
         json.put("divider", ",");
-        json.put(JSON_KEY_TARMAC, m_exitedTarmac);
+        json.put(JSON_KEY_AUTONCONESTOPROW, m_autonConesTopRow );
+        json.put("divider", ",");
+        json.put(JSON_KEY_AUTONCUBESBOTTOMROW, m_autonCubesBottomRow);
+        json.put("divider", ",");
+        json.put(JSON_KEY_AUTONCUBESMIDDLEROW, m_autonCubesMiddleRow );
+        json.put("divider", ",");
+        json.put(JSON_KEY_AUTONCUBESTOPROW, m_autonCubesTopRow );
+        json.put("divider", ",");
+        /* json.put(JSON_KEY_TARMAC, m_exitedTarmac);*/
         json.put("divider", ",");
         json.put(JSON_KEY_TELEOPLOWPOINTS, m_teleopLowPoints);
         json.put("divider", ",");

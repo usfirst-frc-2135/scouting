@@ -2,6 +2,8 @@
 <resources>
     <!-- for light mode -->
     <color name="backgroundColor">#FCFCFC</color>
+    <color name="uppercardColor">#c6b5f5</color>
+    <color name="lowercardColor">#b5e2f5</color>
     <color name="bottomColor">#FCFCFC</color>
     <color name="hintColor">#a3a3a3</color>
     <color name="colorSecondary">#FFC107</color>
