@@ -60,7 +60,7 @@
             <TextView
                 android:id="@+id/cone_scoring_title"
                 style="?android:listSeparatorTextViewStyle"
-                android:background="@color/uppercardColor"
+                android:background="@color/autonuppercardColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
@@ -72,14 +72,14 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:background="@color/uppercardColor"
+                android:background="@color/autonuppercardColor"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp">
 
                 <TextView
                     android:id="@+id/cone_top_title"
-                    android:background="@color/uppercardColor"
+                    android:background="@color/autonuppercardColor"
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:text="Top Row"
@@ -88,7 +88,7 @@
                     android:textColor="@color/textSecondary"/>
 
                 <Button
-                    android:id="@+id/cone_top_decr"
+                    android:id="@+id/autoncone_top_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
@@ -99,7 +99,7 @@
                     android:textSize="30dp"></Button>
 
                 <TextView
-                    android:id="@+id/cone_top_text"
+                    android:id="@+id/autoncone_top_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="25dp"
@@ -108,7 +108,7 @@
                 </TextView>
 
                 <Button
-                    android:id="@+id/cone_top_incr"
+                    android:id="@+id/autoncone_top_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="30dp"
@@ -121,7 +121,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:background="@color/uppercardColor"
+                android:background="@color/autonuppercardColor"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="20dp"
@@ -129,7 +129,7 @@
 
                 <TextView
                     android:id="@+id/cone_middle_title"
-                    android:background="@color/uppercardColor"
+                    android:background="@color/autonuppercardColor"
                     style="?android:listSeparatorTextViewStyle"
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
@@ -138,7 +138,7 @@
                     android:textSize="18dp" />
 
                 <Button
-                    android:id="@+id/cone_middle_decr"
+                    android:id="@+id/autoncone_middle_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
@@ -149,7 +149,7 @@
                     android:textSize="30dp"></Button>
 
                 <TextView
-                    android:id="@+id/cone_middle_text"
+                    android:id="@+id/autoncone_middle_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
@@ -157,7 +157,7 @@
                     android:textSize="25dp"></TextView>
 
                 <Button
-                    android:id="@+id/cone_middle_incr"
+                    android:id="@+id/autoncone_middle_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="30dp"
@@ -171,7 +171,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:background="@color/uppercardColor"
+                android:background="@color/autonuppercardColor"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="20dp"
@@ -179,7 +179,7 @@
 
                 <TextView
                     android:id="@+id/cone_bottom_title"
-                    android:background="@color/uppercardColor"
+                    android:background="@color/autonuppercardColor"
                     style="?android:listSeparatorTextViewStyle"
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
@@ -188,7 +188,7 @@
                     android:textSize="18dp" />
 
                 <Button
-                    android:id="@+id/cone_bottom_decr"
+                    android:id="@+id/autoncone_bottom_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
@@ -199,7 +199,7 @@
                     android:textSize="30dp"></Button>
 
                 <TextView
-                    android:id="@+id/cone_bottom_text"
+                    android:id="@+id/autoncone_bottom_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
@@ -207,7 +207,7 @@
                     android:textSize="25dp"></TextView>
 
                 <Button
-                    android:id="@+id/cone_bottom_incr"
+                    android:id="@+id/autoncone_bottom_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="30dp"
@@ -222,7 +222,7 @@
             <TextView
                 android:id="@+id/cube_scoring_title"
                 style="?android:listSeparatorTextViewStyle"
-                android:background="@color/lowercardColor"
+                android:background="@color/autonlowercardColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
@@ -232,7 +232,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:background="@color/lowercardColor"
+                android:background="@color/autonlowercardColor"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="10dp"
@@ -240,7 +240,7 @@
 
                 <TextView
                     android:id="@+id/cube_top_title"
-                    android:background="@color/lowercardColor"
+                    android:background="@color/autonlowercardColor"
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:text="Top Row"
@@ -249,7 +249,7 @@
                     android:textColor="@color/textSecondary"/>
 
                 <Button
-                    android:id="@+id/cube_top_decr"
+                    android:id="@+id/autoncube_top_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
@@ -260,7 +260,7 @@
                     android:textSize="30dp"></Button>
 
                 <TextView
-                    android:id="@+id/cube_top_text"
+                    android:id="@+id/autoncube_top_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="25dp"
@@ -269,7 +269,7 @@
                 </TextView>
 
                 <Button
-                    android:id="@+id/cube_top_incr"
+                    android:id="@+id/autoncube_top_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="30dp"
@@ -282,7 +282,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:background="@color/lowercardColor"
+                android:background="@color/autonlowercardColor"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="20dp"
@@ -290,7 +290,7 @@
 
                 <TextView
                     android:id="@+id/cube_middle_title"
-                    android:background="@color/lowercardColor"
+                    android:background="@color/autonlowercardColor"
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:text="Middle Row"
@@ -300,7 +300,7 @@
                     />
 
                 <Button
-                    android:id="@+id/cube_middle_decr"
+                    android:id="@+id/autoncube_middle_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
@@ -311,7 +311,7 @@
                     android:textSize="30dp"></Button>
 
                 <TextView
-                    android:id="@+id/cube_middle_text"
+                    android:id="@+id/autoncube_middle_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="25dp"
@@ -320,7 +320,7 @@
                 </TextView>
 
                 <Button
-                    android:id="@+id/cube_middle_incr"
+                    android:id="@+id/autoncube_middle_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="30dp"
@@ -333,7 +333,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:background="@color/lowercardColor"
+                android:background="@color/autonlowercardColor"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="20dp"
@@ -341,7 +341,7 @@
 
                 <TextView
                     android:id="@+id/cube_bottom_title"
-                    android:background="@color/lowercardColor"
+                    android:background="@color/autonlowercardColor"
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:text="Bottom Row"
@@ -350,7 +350,7 @@
                     android:textColor="@color/textSecondary"/>
 
                 <Button
-                    android:id="@+id/cube_bottom_decr"
+                    android:id="@+id/autoncube_bottom_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
@@ -361,7 +361,7 @@
                     android:textSize="30dp"></Button>
 
                 <TextView
-                    android:id="@+id/cube_bottom_text"
+                    android:id="@+id/autoncube_bottom_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="25dp"
@@ -370,7 +370,7 @@
                 </TextView>
 
                 <Button
-                    android:id="@+id/cube_bottom_incr"
+                    android:id="@+id/autoncube_bottom_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="30dp"
