@@ -26,7 +26,7 @@ public class MatchData {
     private static final String JSON_KEY_AUTONCUBESBOTTOMROW = "autoncubesbottomrow";
     private static final String JSON_KEY_AUTONCUBESMIDDLEROW = "autoncubesmiddlerow";
     private static final String JSON_KEY_AUTONCUBESTOPROW = "autoncubestoprow";
-    private static final String JSON_KEY_TARMAC = "tarmac";
+    private static final String JSON_KEY_MOBILITY = "mobility";
     private static final String JSON_KEY_TELEOPLOWPOINTS = "teleoplowpoints";
     private static final String JSON_KEY_TELEOPHIGHPOINTS = "teleophighpoints";
     private static final String JSON_KEY_ENDGAMECHARGE = "endgamecharge";
@@ -54,7 +54,7 @@ public class MatchData {
     private int     m_climbed;
     /* private int  m_startPosition; */
 
-    private boolean m_exitedTarmac;
+    private boolean m_exitedCommunity;
     private String  m_comment;
     private boolean m_died;
     private String  m_name;
@@ -91,7 +91,7 @@ public class MatchData {
         setAutonCubesBottomRow(0);
         setAutonCubesMiddleRow(0);
         setAutonCubesTopRow(0);
-        setExitedTarmac(false);
+        setExitedCommunity(false);
         setTeleopHighPoints(0);
         setTeleopLowPoints(0);
         setEndgameChargeLevel(0);
@@ -121,7 +121,7 @@ public class MatchData {
         setAutonCubesBottomRow(json.getInt(JSON_KEY_AUTONCUBESBOTTOMROW));
         setAutonCubesMiddleRow(json.getInt(JSON_KEY_AUTONCUBESMIDDLEROW));
         setAutonCubesTopRow(json.getInt(JSON_KEY_AUTONCUBESTOPROW));
-        setExitedTarmac(json.getBoolean(JSON_KEY_TARMAC));
+        setExitedCommunity(json.getBoolean(JSON_KEY_MOBILITY));
         setTeleopHighPoints(json.getInt(JSON_KEY_TELEOPHIGHPOINTS));
         setTeleopLowPoints(json.getInt(JSON_KEY_TELEOPLOWPOINTS));
         setEndgameChargeLevel(json.getInt(JSON_KEY_ENDGAMECHARGE));
@@ -242,13 +242,13 @@ public class MatchData {
 
 
 
-    ////////////  m_exitedTarmac   /////////////////////
-    public void setExitedTarmac(boolean x){
-        m_exitedTarmac = x;
+    ////////////  m_exitedCommunity   /////////////////////
+    public void setExitedCommunity(boolean x){
+        m_exitedCommunity = x;
     }
 
-    public boolean getExitedTarmac(){
-        return m_exitedTarmac;
+    public boolean getExitedCommunity(){
+        return m_exitedCommunity;
     }
 
     ////////////  m_teleopHighPoints   /////////////////////
@@ -324,7 +324,7 @@ public class MatchData {
     public String encodeToTSV(){
         // NOTE! THE ORDER IS IMPORTANT!
         // This is the data that goes into the QR code.
-        String headers = "TeamNumber StartPos ExitTarmac AutonConesBottom AutonConesMiddle AutonConesTop AutonCubesBottom AutonCubesMiddle AutonCubesLow TeleopLow TeleopHigh PickUpCube PickUpUprightCone PickUpTippedCone EndgameChargeLevel Died MatchNum Competition Scout Comment";
+        String headers = "TeamNumber StartPos ExitCommunity AutonConesBottom AutonConesMiddle AutonConesTop AutonCubesBottom AutonCubesMiddle AutonCubesLow TeleopLow TeleopHigh PickUpCube PickUpUprightCone PickUpTippedCone EndgameChargeLevel Died MatchNum Competition Scout Comment";
 
         String tsvStr = "";
 
@@ -333,7 +333,7 @@ public class MatchData {
 
         /* tsvStr += m_startPosition + "\t"; */
 
-        if(m_exitedTarmac)  // bool value: use 1/0 instead of true/false
+        if(m_exitedCommunity)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
         else tsvStr += "0" + "\t";
 
@@ -386,7 +386,7 @@ public class MatchData {
         json.put("divider", ",");
         json.put("divider", ", \n");
 
-        json.put("headings", "Competition, Team Number, Match Number, Auton Cones Bottom Row, Auton Cones Middle Row, Auton Cones Top Row, Auton Cubes Bottom Row, Auton Cubes Middle Row, Auton Cubes Top Row, Exited Tarmac, Teleop Low Port, Teleop Outer Port, Climbed, Died, Comments, Timestamp, MatchID \n");
+        json.put("headings", "Competition, Team Number, Match Number, Auton Cones Bottom Row, Auton Cones Middle Row, Auton Cones Top Row, Auton Cubes Bottom Row, Auton Cubes Middle Row, Auton Cubes Top Row, Exited Community, Teleop Low Port, Teleop Outer Port, Climbed, Died, Comments, Timestamp, MatchID \n");
         json.put(JSON_KEY_COMPETITION, m_competition);
         json.put("divider", ",");
         json.put(JSON_KEY_TEAMNUMBER, m_teamNumber);
@@ -407,7 +407,7 @@ public class MatchData {
         json.put("divider", ",");
         json.put(JSON_KEY_AUTONCUBESTOPROW, m_autonCubesTopRow );
         json.put("divider", ",");
-        /* json.put(JSON_KEY_TARMAC, m_exitedTarmac);*/
+        /* json.put(JSON_KEY_MOBILITY, m_exitedCommunity);*/
         json.put("divider", ",");
         json.put(JSON_KEY_TELEOPLOWPOINTS, m_teleopLowPoints);
         json.put("divider", ",");
@@ -415,11 +415,11 @@ public class MatchData {
         json.put("divider", ",");
         json.put(JSON_KEY_ENDGAMECHARGE, m_endgameChargeLevel);
         json.put("divider", ",");
-        json.put(JSON_KEY_TARMAC, m_pickedUpCube);
+        json.put(JSON_KEY_MOBILITY, m_pickedUpCube);
         json.put("divider", ",");
-        json.put(JSON_KEY_TARMAC, m_pickedUpUpright);
+        json.put(JSON_KEY_MOBILITY, m_pickedUpUpright);
         json.put("divider", ",");
-        json.put(JSON_KEY_TARMAC, m_pickedUpTipped);
+        json.put(JSON_KEY_MOBILITY, m_pickedUpTipped);
         json.put("divider", ",");
         json.put(JSON_KEY_DIED, m_died);
         json.put("divider", ",");

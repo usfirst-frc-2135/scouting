@@ -32,12 +32,12 @@
 
 
             <CheckBox
-                android:id="@+id/tarmac_checkbox"
+                android:id="@+id/mobility_checkbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:text="@string/tarmac_cross"
+                android:text="Exited Community"
                 android:textSize="18dp"
                 />
 

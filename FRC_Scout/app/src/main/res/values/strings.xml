@@ -18,7 +18,6 @@
     <string name="teleop">Teleoperated</string>
     <string name="teleop_power_port">Power Port</string>
     <string name="teleop_control_panel">Control Panel</string>
-    <string name="tarmac_cross">Exited Tarmac</string>
     <string name="other">Additional Details</string>
     <string name="team_number">Team Number</string>
     <string name="match_number">Match Number</string>

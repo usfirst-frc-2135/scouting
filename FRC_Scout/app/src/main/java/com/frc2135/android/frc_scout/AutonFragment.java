@@ -57,7 +57,7 @@ public class AutonFragment extends Fragment {
     private Button m_cubeTopDecrButton;
     private Button m_cubeTopIncrButton;
 
-    private CheckBox  m_tarmacCheckbox;
+    private CheckBox  m_mobilityCheckbox;
     private MatchData m_matchData;
     private ActionBar m_actionBar;
 
@@ -294,9 +294,9 @@ public class AutonFragment extends Fragment {
             }
         });
 
-        //Connects the checkbox for exiting the tarmac and sets up a listener to detect when the checked status is changed
-        m_tarmacCheckbox = v.findViewById(R.id.tarmac_checkbox);
-        m_tarmacCheckbox.setChecked(m_matchData.getExitedTarmac());
+        //Connects the checkbox for exiting the community and sets up a listener to detect when the checked status is changed
+        m_mobilityCheckbox = v.findViewById(R.id.mobility_checkbox);
+        m_mobilityCheckbox.setChecked(m_matchData.getExitedCommunity());
 
         m_conesBottomRowValue.setText(m_matchData.getAutonConesBottomRow()+"");
         m_conesMiddleRowValue.setText(m_matchData.getAutonConesMiddleRow()+"");
@@ -361,6 +361,6 @@ public class AutonFragment extends Fragment {
         m_matchData.setAutonCubesBottomRow(Integer.parseInt(m_cubesBottomRowValue.getText().toString()));
         m_matchData.setAutonCubesMiddleRow(Integer.parseInt(m_cubesMiddleRowValue.getText().toString()));
         m_matchData.setAutonCubesTopRow(Integer.parseInt(m_cubesTopRowValue.getText().toString()));
-        m_matchData.setExitedTarmac(m_tarmacCheckbox.isChecked());
+        m_matchData.setExitedCommunity(m_mobilityCheckbox.isChecked());
     }
 }
