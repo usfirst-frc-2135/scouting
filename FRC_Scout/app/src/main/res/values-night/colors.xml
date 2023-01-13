@@ -2,8 +2,8 @@
 <resources>
     <!--dark mode colors-->
     <color name="backgroundColor">#333333</color>
-    <color name="uppercardColor">#0de014</color>
-    <color name="lowercardColor">#fa52e9</color>
+    <color name="uppercardColor">#C6B5F5</color>
+    <color name="lowercardColor">#B5E2F5</color>
     <color name="bottomColor">#8e8e8e</color>
     <color name="hintColor">#7c7c7c</color>
     <color name="colorSecondary">#1D275B</color>
