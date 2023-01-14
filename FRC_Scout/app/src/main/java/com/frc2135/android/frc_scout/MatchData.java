@@ -19,6 +19,8 @@ public class MatchData {
     private static final String JSON_KEY_COMPETITION = "competition";
     private static final String JSON_KEY_TEAMNUMBER = "teamnumber";
     private static final String JSON_KEY_MATCHNUMBER = "matchnumber";
+
+    private static final String JSON_KEY_MOBILITY = "mobility";
     private static final String JSON_KEY_AUTONCONESBOTTOMROW = "autonconesbottomrow";
     private static final String JSON_KEY_AUTONCONESMIDDLEROW = "autonconesmiddlerow";
     private static final String JSON_KEY_AUTONCONESTOPROW = "autonconestoprow";
@@ -26,7 +28,6 @@ public class MatchData {
     private static final String JSON_KEY_AUTONCUBESMIDDLEROW = "autoncubesmiddlerow";
     private static final String JSON_KEY_AUTONCUBESTOPROW = "autoncubestoprow";
 
-    private static final String JSON_KEY_MOBILITY = "mobility";
 
     private static final String JSON_KEY_TELEOPCONESBOTTOMROW = "teleopconesbottomrow";
     private static final String JSON_KEY_TELEOPCONESMIDDLEROW = "teleopconesmiddlerow";
@@ -34,10 +35,8 @@ public class MatchData {
     private static final String JSON_KEY_TELEOPCUBESBOTTOMROW = "teleopcubesbottomrow";
     private static final String JSON_KEY_TELEOPCUBESMIDDLEROW = "teleopcubesmiddlerow";
     private static final String JSON_KEY_TELEOPCUBESTOPROW = "teleopcubestoprow";
-    private static final String JSON_KEY_TARMAC = "tarmac";
 
-    private static final String JSON_KEY_TELEOPLOWPOINTS = "teleoplowpoints";
-    private static final String JSON_KEY_TELEOPHIGHPOINTS = "teleophighpoints";
+
     private static final String JSON_KEY_ENDGAMECHARGE = "endgamecharge";
     private static final String JSON_KEY_COMMENTS = "comments";
     private static final String JSON_KEY_TIMESTAMP = "timestamp";
@@ -64,7 +63,6 @@ public class MatchData {
 
 
     private int     m_endgameChargeLevel;
-
 
     private boolean m_exitedCommunity;
     private String  m_comment;
@@ -96,15 +94,13 @@ public class MatchData {
         m_name = "";
         m_teamNumber = "";
         m_matchNumber = "";
+        setExitedCommunity(false);
         setAutonConesBottomRow(0);
         setAutonConesMiddleRow(0);
         setAutonConesTopRow(0);
         setAutonCubesBottomRow(0);
         setAutonCubesMiddleRow(0);
         setAutonCubesTopRow(0);
-
-        setExitedCommunity(false);
-
 
         setTeleopConesBottomRow(0);
         setTeleopConesMiddleRow(0);
@@ -133,15 +129,15 @@ public class MatchData {
         setCompetition(json.getString(JSON_KEY_COMPETITION));
         setTeamNumber(json.getString(JSON_KEY_TEAMNUMBER));
         setMatchNumber(json.getString(JSON_KEY_MATCHNUMBER));
+
+        setExitedCommunity(json.getBoolean(JSON_KEY_MOBILITY));
+
         setAutonConesBottomRow(json.getInt(JSON_KEY_AUTONCONESBOTTOMROW));
         setAutonConesMiddleRow(json.getInt(JSON_KEY_AUTONCONESMIDDLEROW));
         setAutonConesTopRow(json.getInt(JSON_KEY_AUTONCONESTOPROW));
         setAutonCubesBottomRow(json.getInt(JSON_KEY_AUTONCUBESBOTTOMROW));
         setAutonCubesMiddleRow(json.getInt(JSON_KEY_AUTONCUBESMIDDLEROW));
         setAutonCubesTopRow(json.getInt(JSON_KEY_AUTONCUBESTOPROW));
-
-        setExitedCommunity(json.getBoolean(JSON_KEY_MOBILITY));
-
 
         setTeleopConesBottomRow(json.getInt(JSON_KEY_TELEOPCONESBOTTOMROW));
         setTeleopConesMiddleRow(json.getInt(JSON_KEY_TELEOPCONESMIDDLEROW));
@@ -150,14 +146,15 @@ public class MatchData {
         setTeleopCubesMiddleRow(json.getInt(JSON_KEY_TELEOPCUBESMIDDLEROW));
         setTeleopCubesTopRow(json.getInt(JSON_KEY_TELEOPCUBESTOPROW));
 
+        setPickedUpCube(json.getBoolean(JSON_KEY_PICKEDUPCUBE));
+        setPickedUpUpright(json.getBoolean(JSON_KEY_PICKEDUPUPRIGHT));
+        setPickedUpTipped(json.getBoolean(JSON_KEY_PICKEDUPTIPPED));
+
         setEndgameChargeLevel(json.getInt(JSON_KEY_ENDGAMECHARGE));
         setComment(json.getString(JSON_KEY_COMMENTS));
         setTimestamp(new Date(json.getString(JSON_KEY_TIMESTAMP)));
         setDied(json.getBoolean(JSON_KEY_DIED));
         m_matchID = json.getString(JSON_KEY_MATCHID);
-        setPickedUpCube(json.getBoolean(JSON_KEY_PICKEDUPCUBE));
-        setPickedUpUpright(json.getBoolean(JSON_KEY_PICKEDUPUPRIGHT));
-        setPickedUpTipped(json.getBoolean(JSON_KEY_PICKEDUPTIPPED));
     }
 
     ////////////  m_matchID   /////////////////////
@@ -382,7 +379,7 @@ public class MatchData {
         // NOTE! THE ORDER IS IMPORTANT!
         // This is the data that goes into the QR code.
 
-        String headers = "TeamNumber ExitTarmac AutonConesBottom AutonConesMiddle AutonConesTop AutonCubesBottom AutonCubesMiddle AutonCubesTop TeleopConesBottom TeleopConesMiddle TeleopConesTop TeleopCubesBottom TeleopCubesMiddle TeleopCubesTop PickUpCube PickUpUprightCone PickUpTippedCone EndgameChargeLevel Died MatchNum Competition Scout Comment";
+        String headers = "TeamNumber ExitCommunity AutonConesBottom AutonConesMiddle AutonConesTop AutonCubesBottom AutonCubesMiddle AutonCubesTop TeleopConesBottom TeleopConesMiddle TeleopConesTop TeleopCubesBottom TeleopCubesMiddle TeleopCubesTop PickUpCube PickUpUprightCone PickUpTippedCone EndgameChargeLevel Died MatchNum Competition Scout Comment";
 
 
         String tsvStr = "";
@@ -449,13 +446,15 @@ public class MatchData {
         json.put("divider", ",");
         json.put("divider", ", \n");
 
-        json.put("headings", "Competition, Team Number, Match Number, Auton Cones Bottom Row, Auton Cones Middle Row, Auton Cones Top Row, Auton Cubes Bottom Row, Auton Cubes Middle Row, Auton Cubes Top Row, Exited Community, Teleop Low Port, Teleop Outer Port, Climbed, Died, Comments, Timestamp, MatchID \n");
+        json.put("headings", "Competition, Team Number, Match Number, Exit Community, Auton Cones Bottom Row, Auton Cones Middle Row, Auton Cones Top Row, Auton Cubes Bottom Row, Auton Cubes Middle Row, Auton Cubes Top Row, Exited Community, Teleop Low Port, Teleop Outer Port, Climbed, Died, Comments, Timestamp, MatchID \n");
         json.put(JSON_KEY_COMPETITION, m_competition);
         json.put("divider", ",");
         json.put(JSON_KEY_TEAMNUMBER, m_teamNumber);
         json.put("divider", ",");
         json.put(JSON_KEY_MATCHNUMBER, m_matchNumber);
         json.put("divider", ",");
+        json.put("divider", ",");
+        json.put(JSON_KEY_MOBILITY, m_exitedCommunity);
         json.put("divider", ",");
         json.put(JSON_KEY_AUTONCONESBOTTOMROW, m_autonConesBottomRow);
         json.put("divider", ",");
@@ -468,8 +467,6 @@ public class MatchData {
         json.put(JSON_KEY_AUTONCUBESMIDDLEROW, m_autonCubesMiddleRow );
         json.put("divider", ",");
         json.put(JSON_KEY_AUTONCUBESTOPROW, m_autonCubesTopRow );
-        json.put("divider", ",");
-        /* json.put(JSON_KEY_MOBILITY, m_exitedCommunity);*/
         json.put("divider", ",");
         json.put(JSON_KEY_TELEOPCONESBOTTOMROW, m_teleopConesBottomRow);
         json.put("divider", ",");
