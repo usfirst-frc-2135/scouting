@@ -12,7 +12,7 @@
         <entry key="app/src/main/res/drawable/spinner_template.xml" value="0.184375" />
         <entry key="app/src/main/res/drawable/spinner_template2.xml" value="0.184375" />
         <entry key="app/src/main/res/layout/auton_fragment.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/teleop_fragment.xml" value="0.10947712418300654" />
+        <entry key="app/src/main/res/layout/teleop_fragment.xml" value="0.1" />
       </map>
     </option>
   </component>

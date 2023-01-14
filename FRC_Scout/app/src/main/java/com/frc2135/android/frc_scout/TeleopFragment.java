@@ -183,7 +183,7 @@ public class TeleopFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //Decreases displayed point value by 1; sets to 0 if result would be negative
-                updatePointsInt(m_teleopconesTopRowValue,false);
+                updatePointsInt(m_teleopconesTopRowValue,true);
             }
         });
 

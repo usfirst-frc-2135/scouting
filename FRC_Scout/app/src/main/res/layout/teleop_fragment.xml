@@ -66,8 +66,7 @@
                     android:layout_height="match_parent"
                     android:textSize="25dp"
                     android:layout_weight="3"
-                    android:textAlignment="center">
-                </TextView>
+                    android:textAlignment="center"></TextView>
 
                 <Button
                     android:id="@+id/teleopcone_top_incr"

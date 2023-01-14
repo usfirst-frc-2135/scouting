@@ -80,12 +80,12 @@
                 <TextView
                     android:id="@+id/cone_top_title"
                     android:background="@color/autonuppercardColor"
+                    style="?android:listSeparatorTextViewStyle"
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:text="Top Row"
-                    android:textSize="18dp"
-                    style="?android:listSeparatorTextViewStyle"
-                    android:textColor="@color/textSecondary"/>
+                    android:textColor="@color/textSecondary"
+                    android:textSize="18dp"/>
 
                 <Button
                     android:id="@+id/autoncone_top_decr"
@@ -93,7 +93,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
                     android:layout_weight="1"
-                    android:background="#9f3fb5"
+                    android:background="#9F3FB5"
                     android:text="@string/decrease"
                     android:textColor="#FFC107"
                     android:textSize="30dp"></Button>
@@ -102,10 +102,9 @@
                     android:id="@+id/autoncone_top_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textSize="25dp"
                     android:layout_weight="3"
-                    android:textAlignment="center">
-                </TextView>
+                    android:textAlignment="center"
+                    android:textSize="25dp"></TextView>
 
                 <Button
                     android:id="@+id/autoncone_top_incr"
@@ -113,7 +112,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="30dp"
                     android:layout_weight="1"
-                    android:background="#9f3fb5"
+                    android:background="#9F3FB5"
                     android:text="@string/increase"
                     android:textColor="#FFC107"
                     android:textSize="30dp"></Button>

@@ -188,7 +188,7 @@ public class AutonFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //Decreases displayed point value by 1; sets to 0 if result would be negative
-                updatePointsInt(m_autonconesTopRowValue,false);
+                updatePointsInt(m_autonconesTopRowValue,true);
             }
         });
 
@@ -294,7 +294,7 @@ public class AutonFragment extends Fragment {
 
     public void updateAutonData(){
 
-        /* m_matchData.setStartPosition(getCurrentStartPosition()); */
+
         m_matchData.setAutonConesBottomRow(Integer.parseInt(m_autonconesBottomRowValue.getText().toString()));
         m_matchData.setAutonConesMiddleRow(Integer.parseInt(m_autonconesMiddleRowValue.getText().toString()));
         m_matchData.setAutonConesTopRow(Integer.parseInt(m_autonconesTopRowValue.getText().toString()));
