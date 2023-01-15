@@ -2,10 +2,10 @@
 <resources>
     <!-- for light mode -->
     <color name="backgroundColor">#FCFCFC</color>
-    <color name="autonuppercardColor">#c6b5f5</color>
-    <color name="autonlowercardColor">#b5e2f5</color>
-    <color name="teleopuppercardColor">#7fc7fa</color>
-    <color name="teleoplowercardColor">#f0ca24</color>
+    <color name="autonuppercardColor">#fcd9df</color>
+    <color name="autonlowercardColor">#efe2ff</color>
+    <color name="teleopuppercardColor">#dff7d7</color>
+    <color name="teleoplowercardColor">#ceeaf5</color>
     <color name="bottomColor">#FCFCFC</color>
     <color name="hintColor">#a3a3a3</color>
     <color name="colorSecondary">#FFC107</color>

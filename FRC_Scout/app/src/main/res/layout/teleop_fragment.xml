@@ -55,9 +55,9 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
                     android:layout_weight="1"
-                    android:background="#9f3fb5"
+                    android:background="#FFC107"
                     android:text="@string/decrease"
-                    android:textColor="#FFC107"
+                    android:textColor="#9F3FB5"
                     android:textSize="30dp"></Button>
 
                 <TextView
@@ -74,9 +74,9 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="30dp"
                     android:layout_weight="1"
-                    android:background="#9f3fb5"
+                    android:background="#FFC107"
                     android:text="@string/increase"
-                    android:textColor="#FFC107"
+                    android:textColor="#9F3FB5"
                     android:textSize="30dp"></Button>
             </LinearLayout>
 
@@ -104,9 +104,9 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
                     android:layout_weight="1"
-                    android:background="#FFC107"
+                    android:background="#ffdc70"
                     android:text="@string/decrease"
-                    android:textColor="#3F98B5"
+                    android:textColor="#9F3FB5"
                     android:textSize="30dp"></Button>
 
                 <TextView
@@ -123,9 +123,9 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="30dp"
                     android:layout_weight="1"
-                    android:background="#FFC107"
+                    android:background="#ffdc70"
                     android:text="@string/increase"
-                    android:textColor="#3F98B5"
+                    android:textColor="#9F3FB5"
                     android:textSize="30dp"></Button>
             </LinearLayout>
 
@@ -154,9 +154,9 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
                     android:layout_weight="1"
-                    android:background="#9f3fb5"
+                    android:background="#fdefb2"
                     android:text="@string/decrease"
-                    android:textColor="#FFC107"
+                    android:textColor="#9F3FB5"
                     android:textSize="30dp"></Button>
 
                 <TextView
@@ -173,9 +173,9 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="30dp"
                     android:layout_weight="1"
-                    android:background="#9f3fb5"
+                    android:background="#fdefb2"
                     android:text="@string/increase"
-                    android:textColor="#FFC107"
+                    android:textColor="#9F3FB5"
                     android:textSize="30dp"></Button>
             </LinearLayout>
 
@@ -215,7 +215,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
                     android:layout_weight="1"
-                    android:background="#3F98B5"
+                    android:background="#9F3FB5"
                     android:text="@string/decrease"
                     android:textColor="#FFC107"
                     android:textSize="30dp"></Button>
@@ -235,7 +235,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="30dp"
                     android:layout_weight="1"
-                    android:background="#3F98B5"
+                    android:background="#9F3FB5"
                     android:text="@string/increase"
                     android:textColor="#FFC107"
                     android:textSize="30dp"></Button>
@@ -266,9 +266,9 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
                     android:layout_weight="1"
-                    android:background="#fc9fe5"
+                    android:background="#d779ed"
                     android:text="@string/decrease"
-                    android:textColor="#3F98B5"
+                    android:textColor="#FFC107"
                     android:textSize="30dp"></Button>
 
                 <TextView
@@ -286,9 +286,9 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="30dp"
                     android:layout_weight="1"
-                    android:background="#fc9fe5"
+                    android:background="#d779ed"
                     android:text="@string/increase"
-                    android:textColor="#3F98B5"
+                    android:textColor="#FFC107"
                     android:textSize="30dp"></Button>
             </LinearLayout>
 
@@ -316,7 +316,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
                     android:layout_weight="1"
-                    android:background="#3F98B5"
+                    android:background="#e6a4f5"
                     android:text="@string/decrease"
                     android:textColor="#FFC107"
                     android:textSize="30dp"></Button>
@@ -336,7 +336,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="30dp"
                     android:layout_weight="1"
-                    android:background="#3F98B5"
+                    android:background="#e6a4f5"
                     android:text="@string/increase"
                     android:textColor="#FFC107"
                     android:textSize="30dp"></Button>
@@ -348,8 +348,8 @@
                 style="?android:listSeparatorTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="15dp"
+                android:paddingTop="11dp"
+                android:paddingBottom="7dp"
                 android:text="Pickup from Floor"
                 android:textColor="@color/textPrimary"
                 android:textSize="24dp" />
