@@ -26,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="20dp"
+                android:paddingBottom="10dp"
             android:text="CONE SCORING"
             android:textColor="@color/textPrimary"
             android:textSize="24dp" />
@@ -36,8 +37,7 @@
                 android:background="@color/teleopuppercardColor"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:layout_marginTop="10dp">
+                android:paddingBottom="10dp">
 
                 <TextView
                     android:id="@+id/cone_top_title"
@@ -84,8 +84,8 @@
                 android:layout_width="match_parent"
                 android:background="@color/teleopuppercardColor"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:orientation="horizontal"
+                android:paddingTop="20dp"
                 android:paddingBottom="10dp">
 
                 <TextView
@@ -134,8 +134,8 @@
                 android:layout_width="match_parent"
                 android:background="@color/teleopuppercardColor"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:orientation="horizontal"
+                android:paddingTop="20dp"
                 android:paddingBottom="20dp">
 
                 <TextView
@@ -187,6 +187,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
+                android:paddingBottom="10dp"
                 android:text="CUBE SCORING"
                 android:textColor="@color/textPrimary"
                 android:textSize="24dp" />
@@ -196,8 +197,7 @@
                 android:background="@color/teleoplowercardColor"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:layout_marginTop="10dp">
+                android:paddingBottom="10dp">
 
                 <TextView
                     android:id="@+id/cube_top_title"
@@ -246,8 +246,8 @@
                 android:background="@color/teleoplowercardColor"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:layout_marginTop="20dp">
+                android:paddingTop="20dp"
+                android:paddingBottom="10dp">
 
                 <TextView
                     android:id="@+id/cube_middle_title"
@@ -297,8 +297,8 @@
                 android:background="@color/teleoplowercardColor"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="20dp"
-                android:layout_marginTop="20dp">
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp">
 
                 <TextView
                     android:id="@+id/cube_bottom_title"
