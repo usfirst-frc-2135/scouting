@@ -63,10 +63,11 @@
                 android:background="@color/autonuppercardColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:paddingTop="20dp"
                 android:paddingBottom="1dp"
                 android:text="CONE SCORING"
-                android:textColor="@color/textPrimary"
+                android:textColor="@color/specialTextPrimary"
                 android:textSize="24dp" />
 
 
@@ -84,7 +85,7 @@
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:text="Top Row"
-                    android:textColor="@color/textSecondary"
+                    android:textColor="@color/specialTextSecondary"
                     android:textSize="18dp"/>
 
                 <Button
@@ -133,7 +134,7 @@
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:text="Middle Row"
-                    android:textColor="@color/textSecondary"
+                    android:textColor="@color/specialTextSecondary"
                     android:textSize="18dp" />
 
                 <Button
@@ -183,7 +184,7 @@
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:text="Bottom Row"
-                    android:textColor="@color/textSecondary"
+                    android:textColor="@color/specialTextSecondary"
                     android:textSize="18dp" />
 
                 <Button
@@ -226,7 +227,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
                 android:text="CUBE SCORING"
-                android:textColor="@color/textPrimary"
+                android:textColor="@color/specialTextPrimary"
                 android:textSize="24dp" />
 
             <LinearLayout
@@ -245,7 +246,7 @@
                     android:text="Top Row"
                     android:textSize="18dp"
                     style="?android:listSeparatorTextViewStyle"
-                    android:textColor="@color/textSecondary"/>
+                    android:textColor="@color/specialTextSecondary"/>
 
                 <Button
                     android:id="@+id/autoncube_top_decr"
@@ -262,10 +263,9 @@
                     android:id="@+id/autoncube_top_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textSize="25dp"
                     android:layout_weight="3"
-                    android:textAlignment="center">
-                </TextView>
+                    android:textAlignment="center"
+                    android:textSize="25dp"></TextView>
 
                 <Button
                     android:id="@+id/autoncube_top_incr"
@@ -295,7 +295,7 @@
                     android:text="Middle Row"
                     android:textSize="18dp"
                     style="?android:listSeparatorTextViewStyle"
-                    android:textColor="@color/textSecondary"
+                    android:textColor="@color/specialTextSecondary"
                     />
 
                 <Button
@@ -313,9 +313,9 @@
                     android:id="@+id/autoncube_middle_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textSize="25dp"
                     android:layout_weight="3"
-                    android:textAlignment="center">
+                    android:textAlignment="center"
+                    android:textSize="25dp">
                 </TextView>
 
                 <Button
@@ -346,7 +346,7 @@
                     android:text="Bottom Row"
                     android:textSize="18dp"
                     style="?android:listSeparatorTextViewStyle"
-                    android:textColor="@color/textSecondary"/>
+                    android:textColor="@color/specialTextSecondary"/>
 
                 <Button
                     android:id="@+id/autoncube_bottom_decr"
@@ -363,9 +363,9 @@
                     android:id="@+id/autoncube_bottom_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textSize="25dp"
                     android:layout_weight="3"
-                    android:textAlignment="center">
+                    android:textAlignment="center"
+                    android:textSize="25dp">
                 </TextView>
 
                 <Button
