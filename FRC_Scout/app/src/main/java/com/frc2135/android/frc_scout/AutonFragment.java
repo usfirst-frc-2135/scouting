@@ -109,32 +109,32 @@ public class AutonFragment extends Fragment {
         //Sets up TextView that displays cones bottom row points, setting 0 as the default
         m_autonconesBottomRowValue = v.findViewById(R.id.autoncone_bottom_text);
         m_autonconesBottomRowValue.setText(0 + "");
-        m_autonconesBottomRowValue.setTextColor(getResources().getColor(R.color.textPrimary));
+        m_autonconesBottomRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
 
         //Sets up TextView that displays cones middle row points, setting 0 as the default
         m_autonconesMiddleRowValue = v.findViewById(R.id.autoncone_middle_text);
         m_autonconesMiddleRowValue.setText(0+ "");
-        m_autonconesMiddleRowValue.setTextColor(getResources().getColor(R.color.textPrimary));
+        m_autonconesMiddleRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
 
         //Sets up TextView that displays cones top row points, setting 0 as the default
         m_autonconesTopRowValue = v.findViewById(R.id.autoncone_top_text);
         m_autonconesTopRowValue.setText(0+ "");
-        m_autonconesTopRowValue.setTextColor(getResources().getColor(R.color.textPrimary));
+        m_autonconesTopRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
 
         //Sets up TextView that displays cubes bottom row points, setting 0 as the default
         m_autoncubesBottomRowValue = v.findViewById(R.id.autoncube_bottom_text);
         m_autoncubesBottomRowValue.setText(0 + "");
-        m_autoncubesBottomRowValue.setTextColor(getResources().getColor(R.color.textPrimary));
+        m_autoncubesBottomRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
 
         //Sets up TextView that displays cubes middle row points, setting 0 as the default
         m_autoncubesMiddleRowValue = v.findViewById(R.id.autoncube_middle_text);
         m_autoncubesMiddleRowValue.setText(0+ "");
-        m_autoncubesMiddleRowValue.setTextColor(getResources().getColor(R.color.textPrimary));
+        m_autoncubesMiddleRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
 
         //Sets up TextView that displays cubes top row points, setting 0 as the default
         m_autoncubesTopRowValue = v.findViewById(R.id.autoncube_top_text);
         m_autoncubesTopRowValue.setText(0+ "");
-        m_autoncubesTopRowValue.setTextColor(getResources().getColor(R.color.textPrimary));
+        m_autoncubesTopRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
 
 
 
