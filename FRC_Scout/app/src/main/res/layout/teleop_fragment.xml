@@ -15,131 +15,336 @@
             android:paddingRight="15dp">
 
 
-            <TextView
-                android:id="@+id/hub_scoring_title"
+            <Space
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Hub Scoring"
-                android:textSize="24dp"
-                style="?android:listSeparatorTextViewStyle"
-                android:textColor="@color/textPrimary"
-                android:paddingTop="10dp"
-                android:paddingBottom="15dp"/>
+                android:layout_height="20dp"></Space>
+
+            <TextView
+            android:id="@+id/cone_scoring_title"
+            style="?android:listSeparatorTextViewStyle"
+            android:background="@color/teleopuppercardColor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:text="CONE SCORING"
+            android:textColor="@color/textPrimary"
+            android:textSize="24dp" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:background="@color/teleopuppercardColor"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/cone_top_title"
+                    android:background="@color/teleopuppercardColor"
+                    android:layout_width="190dp"
+                    android:layout_height="match_parent"
+                    android:text="Top Row"
+                    android:textSize="18dp"
+                    style="?android:listSeparatorTextViewStyle"
+                    android:textColor="@color/textSecondary"/>
+
+                <Button
+                    android:id="@+id/teleopcone_top_decr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:background="#9f3fb5"
+                    android:text="@string/decrease"
+                    android:textColor="#FFC107"
+                    android:textSize="30dp"></Button>
+
+                <TextView
+                    android:id="@+id/teleopcone_top_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="25dp"
+                    android:layout_weight="3"
+                    android:textAlignment="center"></TextView>
+
+                <Button
+                    android:id="@+id/teleopcone_top_incr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="30dp"
+                    android:layout_weight="1"
+                    android:background="#9f3fb5"
+                    android:text="@string/increase"
+                    android:textColor="#FFC107"
+                    android:textSize="30dp"></Button>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:background="@color/teleopuppercardColor"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:id="@+id/cone_middle_title"
+                    android:background="@color/teleopuppercardColor"
+                    style="?android:listSeparatorTextViewStyle"
+                    android:layout_width="190dp"
+                    android:layout_height="match_parent"
+                    android:text="Middle Row"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="18dp" />
+
+                <Button
+                    android:id="@+id/teleopcone_middle_decr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:background="#FFC107"
+                    android:text="@string/decrease"
+                    android:textColor="#3F98B5"
+                    android:textSize="30dp"></Button>
+
+                <TextView
+                    android:id="@+id/teleopcone_middle_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:textAlignment="center"
+                    android:textSize="25dp"></TextView>
+
+                <Button
+                    android:id="@+id/teleopcone_middle_incr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="30dp"
+                    android:layout_weight="1"
+                    android:background="#FFC107"
+                    android:text="@string/increase"
+                    android:textColor="#3F98B5"
+                    android:textSize="30dp"></Button>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:background="@color/teleopuppercardColor"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:id="@+id/cone_bottom_title"
+                    android:background="@color/teleopuppercardColor"
+                    style="?android:listSeparatorTextViewStyle"
+                    android:layout_width="190dp"
+                    android:layout_height="match_parent"
+                    android:text="Bottom Row"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="18dp" />
+
+                <Button
+                    android:id="@+id/teleopcone_bottom_decr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:background="#9f3fb5"
+                    android:text="@string/decrease"
+                    android:textColor="#FFC107"
+                    android:textSize="30dp"></Button>
+
+                <TextView
+                    android:id="@+id/teleopcone_bottom_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:textAlignment="center"
+                    android:textSize="25dp"></TextView>
+
+                <Button
+                    android:id="@+id/teleopcone_bottom_incr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="30dp"
+                    android:layout_weight="1"
+                    android:background="#9f3fb5"
+                    android:text="@string/increase"
+                    android:textColor="#FFC107"
+                    android:textSize="30dp"></Button>
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/cube_scoring_title"
+                style="?android:listSeparatorTextViewStyle"
+                android:background="@color/teleoplowercardColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:text="CUBE SCORING"
+                android:textColor="@color/textPrimary"
+                android:textSize="24dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:background="@color/teleoplowercardColor"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/cube_top_title"
+                    android:background="@color/teleoplowercardColor"
+                    android:layout_width="190dp"
+                    android:layout_height="match_parent"
+                    android:text="Top Row"
+                    android:textSize="18dp"
+                    style="?android:listSeparatorTextViewStyle"
+                    android:textColor="@color/textSecondary"/>
+
+                <Button
+                    android:id="@+id/teleopcube_top_decr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:background="#3F98B5"
+                    android:text="@string/decrease"
+                    android:textColor="#FFC107"
+                    android:textSize="30dp"></Button>
+
+                <TextView
+                    android:id="@+id/teleopcube_top_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="25dp"
+                    android:layout_weight="3"
+                    android:textAlignment="center">
+                </TextView>
+
+                <Button
+                    android:id="@+id/teleopcube_top_incr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="30dp"
+                    android:layout_weight="1"
+                    android:background="#3F98B5"
+                    android:text="@string/increase"
+                    android:textColor="#FFC107"
+                    android:textSize="30dp"></Button>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:background="@color/teleoplowercardColor"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
                 android:layout_marginTop="20dp">
 
                 <TextView
-                    android:id="@+id/highTitle"
+                    android:id="@+id/cube_middle_title"
+                    android:background="@color/teleoplowercardColor"
                     android:layout_width="190dp"
-                    android:layout_height="wrap_content"
-                    android:text="Upper Hub"
+                    android:layout_height="match_parent"
+                    android:text="Middle Row"
                     android:textSize="18dp"
                     style="?android:listSeparatorTextViewStyle"
-                    android:textColor="@color/textSecondary"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:textColor="@color/textSecondary"
+                    />
 
-                    <Button
-                        android:id="@+id/highpointsdec"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="30dp"
-                        android:layout_weight="1"
-                        android:background="#3F98B5"
-                        android:text="@string/decrease"
-                        android:textColor="#FFC107"
-                        android:textSize="30dp"></Button>
+                <Button
+                    android:id="@+id/teleopcube_middle_decr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:background="#fc9fe5"
+                    android:text="@string/decrease"
+                    android:textColor="#3F98B5"
+                    android:textSize="30dp"></Button>
 
-                    <TextView
-                        android:id="@+id/highpoints"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:textSize="25dp"
-                        android:layout_weight="3"
-                        android:textAlignment="center">
-                    </TextView>
+                <TextView
+                    android:id="@+id/teleopcube_middle_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="25dp"
+                    android:layout_weight="3"
+                    android:textAlignment="center">
+                </TextView>
 
-                    <Button
-                        android:id="@+id/highpointsinc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="30dp"
-                        android:layout_weight="1"
-                        android:background="#3F98B5"
-                        android:text="@string/increase"
-                        android:textColor="#FFC107"
-                        android:textSize="30dp"></Button>
-                </LinearLayout>
-
+                <Button
+                    android:id="@+id/teleopcube_middle_incr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="30dp"
+                    android:layout_weight="1"
+                    android:background="#fc9fe5"
+                    android:text="@string/increase"
+                    android:textColor="#3F98B5"
+                    android:textSize="30dp"></Button>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:background="@color/teleoplowercardColor"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:paddingBottom="20dp"
                 android:layout_marginTop="20dp">
 
                 <TextView
-                    android:id="@+id/lowTitle"
+                    android:id="@+id/cube_bottom_title"
+                    android:background="@color/teleoplowercardColor"
                     android:layout_width="190dp"
-                    android:layout_height="wrap_content"
-                    android:text="Lower Hub"
+                    android:layout_height="match_parent"
+                    android:text="Bottom Row"
                     android:textSize="18dp"
                     style="?android:listSeparatorTextViewStyle"
                     android:textColor="@color/textSecondary"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
 
-                    <Button
-                        android:id="@+id/lowpointsdec"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="30dp"
-                        android:layout_weight="1"
-                        android:background="#FFC107"
-                        android:text="@string/decrease"
-                        android:textColor="#3F98B5"
-                        android:textSize="30dp"></Button>
+                <Button
+                    android:id="@+id/teleopcube_bottom_decr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:background="#3F98B5"
+                    android:text="@string/decrease"
+                    android:textColor="#FFC107"
+                    android:textSize="30dp"></Button>
 
-                    <TextView
-                        android:id="@+id/lowpoints"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:textSize="25dp"
-                        android:layout_weight="3"
-                        android:textAlignment="center">
-                    </TextView>
+                <TextView
+                    android:id="@+id/teleopcube_bottom_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="25dp"
+                    android:layout_weight="3"
+                    android:textAlignment="center">
+                </TextView>
 
-                    <Button
-                        android:id="@+id/lowpointsinc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="30dp"
-                        android:layout_weight="1"
-                        android:background="#FFC107"
-                        android:text="@string/increase"
-                        android:textColor="#3F98B5"
-                        android:textSize="30dp"></Button>
-                </LinearLayout>
-
+                <Button
+                    android:id="@+id/teleopcube_bottom_incr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="30dp"
+                    android:layout_weight="1"
+                    android:background="#3F98B5"
+                    android:text="@string/increase"
+                    android:textColor="#FFC107"
+                    android:textSize="30dp"></Button>
             </LinearLayout>
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="20dp"></Space>
 
             <TextView
-                android:id="@+id/hub_scoring_title"
+                android:id="@+id/floorpickup_scoring_title"
                 style="?android:listSeparatorTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
