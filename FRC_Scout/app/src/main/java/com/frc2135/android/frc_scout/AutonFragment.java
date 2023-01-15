@@ -11,6 +11,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 /* import android.widget.RadioButton;
 import android.widget.RadioGroup; */
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -49,6 +51,11 @@ public class AutonFragment extends Fragment {
 
     private Button m_autoncubeTopDecrButton;
     private Button m_autoncubeTopIncrButton;
+
+    private RadioGroup m_autonradioGroup;
+    private RadioButton m_radio_autonnone;
+    private RadioButton m_radio_autondocked;
+    private RadioButton m_radio_autonengaged;
 
     private CheckBox  m_mobilityCheckbox;
     private MatchData m_matchData;
@@ -260,6 +267,31 @@ public class AutonFragment extends Fragment {
         m_mobilityCheckbox = v.findViewById(R.id.mobility_checkbox);
         m_mobilityCheckbox.setChecked(m_matchData.getExitedCommunity());
 
+        m_autonradioGroup = (RadioGroup)v.findViewById(R.id.auton_charge_level);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
+        m_radio_autonnone = (RadioButton)v.findViewById(R.id.level_autonnone);//Sets up radio button that corresponds to 0
+        m_radio_autonnone.setChecked(true);
+        m_radio_autondocked = (RadioButton)v.findViewById(R.id.level_autondocked);//Sets up radio button that corresponds to 1
+        m_radio_autondocked.setChecked(false);
+        m_radio_autonengaged = (RadioButton)v.findViewById(R.id.level_autonengaged);//Sets up radio button that corresponds to 2
+        m_radio_autonengaged.setChecked(false);
+
+        int x = m_matchData.getAutonChargeLevel();
+        if(x==0)
+            m_radio_autonnone.setChecked(true);
+        else if(x==1)
+            m_radio_autondocked.setChecked(true);
+        else if(x==2)
+            m_radio_autonengaged.setChecked(true);
+
+        m_autonradioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                //Changes m_matchData's climb variable according to which radio button is selected
+                m_matchData.setAutonChargeLevel(getCurrentAutonChargeLevel());
+            }
+        });
+
         m_autonconesBottomRowValue.setText(m_matchData.getAutonConesBottomRow()+"");
         m_autonconesMiddleRowValue.setText(m_matchData.getAutonConesMiddleRow()+"");
         m_autonconesTopRowValue.setText(m_matchData.getAutonConesTopRow()+"");
@@ -289,6 +321,19 @@ public class AutonFragment extends Fragment {
 
 
 
+    public int getCurrentAutonChargeLevel() {
+        // Returns the integer climb level that is current checked in the radio buttons
+        int rtn = 0;
+
+        if (m_autonradioGroup.getCheckedRadioButtonId() == m_radio_autondocked.getId()) {
+            rtn = 1;
+        }
+        else if (m_autonradioGroup.getCheckedRadioButtonId() == m_radio_autonengaged.getId()) {
+            rtn = 2;
+        }
+        return rtn;
+    }
+
 
 
 
@@ -309,6 +354,8 @@ public class AutonFragment extends Fragment {
         m_matchData.setAutonCubesBottomRow(Integer.parseInt(m_autoncubesBottomRowValue.getText().toString()));
         m_matchData.setAutonCubesMiddleRow(Integer.parseInt(m_autoncubesMiddleRowValue.getText().toString()));
         m_matchData.setAutonCubesTopRow(Integer.parseInt(m_autoncubesTopRowValue.getText().toString()));
+
+        m_matchData.setAutonChargeLevel(getCurrentAutonChargeLevel());
 
 
     }
