@@ -26,9 +26,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="20dp"
-                android:paddingBottom="10dp"
+                android:paddingBottom="1dp"
             android:text="CONE SCORING"
-            android:textColor="@color/textPrimary"
+            android:textColor="@color/specialTextPrimary"
             android:textSize="24dp" />
 
 
@@ -37,7 +37,7 @@
                 android:background="@color/teleopuppercardColor"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="10dp">
+                android:paddingBottom="1dp">
 
                 <TextView
                     android:id="@+id/cone_top_title"
@@ -47,7 +47,7 @@
                     android:text="Top Row"
                     android:textSize="18dp"
                     style="?android:listSeparatorTextViewStyle"
-                    android:textColor="@color/textSecondary"/>
+                    android:textColor="@color/specialTextSecondary"/>
 
                 <Button
                     android:id="@+id/teleopcone_top_decr"
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="20dp"
-                android:paddingBottom="10dp">
+                android:paddingBottom="1dp">
 
                 <TextView
                     android:id="@+id/cone_middle_title"
@@ -95,7 +95,7 @@
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:text="Middle Row"
-                    android:textColor="@color/textSecondary"
+                    android:textColor="@color/specialTextSecondary"
                     android:textSize="18dp" />
 
                 <Button
@@ -145,7 +145,7 @@
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:text="Bottom Row"
-                    android:textColor="@color/textSecondary"
+                    android:textColor="@color/specialTextSecondary"
                     android:textSize="18dp" />
 
                 <Button
@@ -187,9 +187,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
-                android:paddingBottom="10dp"
+                android:paddingBottom="1dp"
                 android:text="CUBE SCORING"
-                android:textColor="@color/textPrimary"
+                android:textColor="@color/specialTextPrimary"
                 android:textSize="24dp" />
 
             <LinearLayout
@@ -197,7 +197,7 @@
                 android:background="@color/teleoplowercardColor"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="10dp">
+                android:paddingBottom="1dp">
 
                 <TextView
                     android:id="@+id/cube_top_title"
@@ -207,7 +207,7 @@
                     android:text="Top Row"
                     android:textSize="18dp"
                     style="?android:listSeparatorTextViewStyle"
-                    android:textColor="@color/textSecondary"/>
+                    android:textColor="@color/specialTextSecondary"/>
 
                 <Button
                     android:id="@+id/teleopcube_top_decr"
@@ -247,7 +247,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="20dp"
-                android:paddingBottom="10dp">
+                android:paddingBottom="1dp">
 
                 <TextView
                     android:id="@+id/cube_middle_title"
@@ -257,7 +257,7 @@
                     android:text="Middle Row"
                     android:textSize="18dp"
                     style="?android:listSeparatorTextViewStyle"
-                    android:textColor="@color/textSecondary"
+                    android:textColor="@color/specialTextSecondary"
                     />
 
                 <Button
@@ -308,7 +308,7 @@
                     android:text="Bottom Row"
                     android:textSize="18dp"
                     style="?android:listSeparatorTextViewStyle"
-                    android:textColor="@color/textSecondary"/>
+                    android:textColor="@color/specialTextSecondary"/>
 
                 <Button
                     android:id="@+id/teleopcube_bottom_decr"
@@ -348,8 +348,9 @@
                 style="?android:listSeparatorTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="11dp"
-                android:paddingBottom="7dp"
+                android:layout_marginTop="10dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="10dp"
                 android:text="Pickup from Floor"
                 android:textColor="@color/textPrimary"
                 android:textSize="24dp" />

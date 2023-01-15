@@ -11,6 +11,8 @@
     <color name="colorSecondary">#FFC107</color>
     <color name="textPrimary">#212121</color> <!--DE for %87 opacity-->
     <color name="textSecondary">#8A000000</color> <!--8A for %54 opacity-->
+    <color name="specialTextPrimary">#363636</color> <!--text color for scoring sections in auton and teleop in night mode-->
+    <color name="specialTextSecondary">#8A000000</color> <!--text color for scoring sections in auton and teleop in night mode-->
 
     <color name="button1">#FFC107</color>
     <color name="button2">#DADADA</color>

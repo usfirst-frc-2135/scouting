@@ -97,32 +97,32 @@ public class TeleopFragment extends Fragment {
         //Sets up TextView that displays cones bottom row points, setting 0 as the default
         m_teleopconesBottomRowValue = v.findViewById(R.id.teleopcone_bottom_text);
         m_teleopconesBottomRowValue.setText(0 + "");
-        m_teleopconesBottomRowValue.setTextColor(getResources().getColor(R.color.textPrimary));
+        m_teleopconesBottomRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
 
         //Sets up TextView that displays cones middle row points, setting 0 as the default
         m_teleopconesMiddleRowValue = v.findViewById(R.id.teleopcone_middle_text);
         m_teleopconesMiddleRowValue.setText(0+ "");
-        m_teleopconesMiddleRowValue.setTextColor(getResources().getColor(R.color.textPrimary));
+        m_teleopconesMiddleRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
 
         //Sets up TextView that displays cones top row points, setting 0 as the default
         m_teleopconesTopRowValue = v.findViewById(R.id.teleopcone_top_text);
         m_teleopconesTopRowValue.setText(0+ "");
-        m_teleopconesTopRowValue.setTextColor(getResources().getColor(R.color.textPrimary));
+        m_teleopconesTopRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
 
         //Sets up TextView that displays cubes bottom row points, setting 0 as the default
         m_teleopcubesBottomRowValue = v.findViewById(R.id.teleopcube_bottom_text);
         m_teleopcubesBottomRowValue.setText(0 + "");
-        m_teleopcubesBottomRowValue.setTextColor(getResources().getColor(R.color.textPrimary));
+        m_teleopcubesBottomRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
 
         //Sets up TextView that displays cubes middle row points, setting 0 as the default
         m_teleopcubesMiddleRowValue = v.findViewById(R.id.teleopcube_middle_text);
         m_teleopcubesMiddleRowValue.setText(0+ "");
-        m_teleopcubesMiddleRowValue.setTextColor(getResources().getColor(R.color.textPrimary));
+        m_teleopcubesMiddleRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
 
         //Sets up TextView that displays cubes top row points, setting 0 as the default
         m_teleopcubesTopRowValue = v.findViewById(R.id.teleopcube_top_text);
         m_teleopcubesTopRowValue.setText(0+ "");
-        m_teleopcubesTopRowValue.setTextColor(getResources().getColor(R.color.textPrimary));
+        m_teleopcubesTopRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
 
 
 
