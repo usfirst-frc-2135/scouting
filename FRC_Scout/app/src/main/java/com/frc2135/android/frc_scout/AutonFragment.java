@@ -95,7 +95,7 @@ public class AutonFragment extends Fragment {
         if(!isValidPoints(pointsTextView)) {
             pointsTextView.setTextColor(Color.RED);
         }
-        else pointsTextView.setTextColor(getResources().getColor(R.color.textPrimary));
+        else pointsTextView.setTextColor(getResources().getColor(R.color.specialTextPrimary));
     }
  
     @Override
