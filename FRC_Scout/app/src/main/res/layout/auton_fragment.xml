@@ -145,7 +145,7 @@
                     android:layout_weight="1"
                     android:background="#ffdc70"
                     android:text="@string/decrease"
-                    android:textColor="#9F3FB5"
+                    android:textColor="#d779ed"
                     android:textSize="30dp"></Button>
 
                 <TextView
@@ -164,7 +164,7 @@
                     android:layout_weight="1"
                     android:background="#ffdc70"
                     android:text="@string/increase"
-                    android:textColor="#9F3FB5"
+                    android:textColor="#d779ed"
                     android:textSize="30dp"></Button>
             </LinearLayout>
 
@@ -195,7 +195,7 @@
                     android:layout_weight="1"
                     android:background="#fdefb2"
                     android:text="@string/decrease"
-                    android:textColor="#9F3FB5"
+                    android:textColor="#e6a4f5"
                     android:textSize="30dp"></Button>
 
                 <TextView
@@ -214,7 +214,7 @@
                     android:layout_weight="1"
                     android:background="#fdefb2"
                     android:text="@string/increase"
-                    android:textColor="#9F3FB5"
+                    android:textColor="#e6a4f5"
                     android:textSize="30dp"></Button>
             </LinearLayout>
 
@@ -306,7 +306,7 @@
                     android:layout_weight="1"
                     android:background="#d779ed"
                     android:text="@string/decrease"
-                    android:textColor="#FFC107"
+                    android:textColor="#ffdc70"
                     android:textSize="30dp"></Button>
 
                 <TextView
@@ -326,7 +326,7 @@
                     android:layout_weight="1"
                     android:background="#d779ed"
                     android:text="@string/increase"
-                    android:textColor="#FFC107"
+                    android:textColor="#ffdc70"
                     android:textSize="30dp"></Button>
             </LinearLayout>
 
@@ -356,7 +356,7 @@
                     android:layout_weight="1"
                     android:background="#e6a4f5"
                     android:text="@string/decrease"
-                    android:textColor="#FFC107"
+                    android:textColor="#fdefb2"
                     android:textSize="30dp"></Button>
 
                 <TextView
@@ -376,7 +376,7 @@
                     android:layout_weight="1"
                     android:background="#e6a4f5"
                     android:text="@string/increase"
-                    android:textColor="#FFC107"
+                    android:textColor="#fdefb2"
                     android:textSize="30dp"></Button>
             </LinearLayout>
             <LinearLayout
