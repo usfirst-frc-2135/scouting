@@ -6,7 +6,7 @@
     <color name="autonlowercardColor">#efe2ff</color>
     <color name="teleopuppercardColor">#dff7d7</color>
     <color name="teleoplowercardColor">#ceeaf5</color>
-    <color name="endgamecardColor">#fafabe</color>
+    <color name="endgamecardColor">#CEEAF5</color>
 
     <color name="bottomColor">#FCFCFC</color>
     <color name="hintColor">#a3a3a3</color>
