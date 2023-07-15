@@ -26,7 +26,7 @@ public class CompetitionInfo {
     // Data members
     private String    m_eventCode;
     private String    m_eventName;
-    private JSONArray m_jsonData;;
+    private JSONArray m_jsonData;
     private boolean   m_bEventDataLoaded;
 
     private static CompetitionInfo sCompetitionInfo;
@@ -99,7 +99,7 @@ public class CompetitionInfo {
             } catch (FileNotFoundException err) {
                 if(!bSilent) {
                     // Show error Toast msg 
-                    String errMsg = "ERROR reading event matches file: \n" + err.toString();
+                    String errMsg = "ERROR reading event matches file: \n" + err;
                     Log.e(TAG, errMsg);
                     Toast toastM = Toast.makeText(context, errMsg, Toast.LENGTH_LONG);
                     View view2 = toastM.getView();

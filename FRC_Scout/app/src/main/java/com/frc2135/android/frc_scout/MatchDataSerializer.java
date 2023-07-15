@@ -43,7 +43,7 @@ public class MatchDataSerializer {
             writerS.write(arrayS.toString());
             Log.d(TAG, "Wrote Scouter file: " + m_FileName);
         } catch (FileNotFoundException e) {
-            Log.d(TAG, "ERROR writing Scouter file: " + e.toString());
+            Log.d(TAG, "ERROR writing Scouter file: " + e);
         } finally {
             if (writerS != null) {
                 writerS.close();
@@ -65,7 +65,7 @@ public class MatchDataSerializer {
             writerMatches.write(array.toString());
             Log.d(TAG, "Wrote match file: "+ fileM.getName());
         } catch (FileNotFoundException e) {
-            Log.d(TAG, "ERROR writing Match file "+ matchFileName +": "+e.toString());
+            Log.d(TAG, "ERROR writing Match file "+ matchFileName +": "+ e);
         } 
         finally{
             if(writerMatches != null){
@@ -121,7 +121,7 @@ public class MatchDataSerializer {
                        Log.d(TAG, "Reading in file: "+ filename);
                    } catch (FileNotFoundException e) {
                        //ignore this one; it happens when starting fresh
-                       Log.e(TAG, "ERROR in loading file "+filename+": "+e.toString());
+                       Log.e(TAG, "ERROR in loading file "+filename+": "+ e);
                    } finally {
                        if (reader != null) {
                            reader.close();
@@ -135,7 +135,7 @@ public class MatchDataSerializer {
     }
 
     public Scouter loadScouterData()throws IOException, JSONException {
-        Log.d(TAG, "loadScouterData(): m_FileName = "+m_FileName.toString());
+        Log.d(TAG, "loadScouterData(): m_FileName = "+ m_FileName);
         ArrayList<MatchData> matchHistory = new ArrayList<MatchData>();
         BufferedReader reader = null;
         try {

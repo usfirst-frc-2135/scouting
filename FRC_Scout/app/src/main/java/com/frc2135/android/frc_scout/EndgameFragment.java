@@ -58,7 +58,7 @@ public class EndgameFragment extends Fragment {
 
 
         //Connects the checkbox for if the robot dies and sets up a listener to detect when the checked status is changed
-        m_diedCheckbox = (CheckBox)v.findViewById(R.id.died_checkbox_true);
+        m_diedCheckbox = v.findViewById(R.id.died_checkbox_true);
         m_diedCheckbox.setChecked(m_matchData.getDied());// Default is unchecked
         m_diedCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -67,14 +67,14 @@ public class EndgameFragment extends Fragment {
             }
         });
 
-        m_endgameradioGroup = (RadioGroup)v.findViewById(R.id.endgame_charge_level);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
-        m_radio_endgamenone = (RadioButton)v.findViewById(R.id.level_endgamenone);//Sets up radio button that corresponds to 0
+        m_endgameradioGroup = v.findViewById(R.id.endgame_charge_level);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
+        m_radio_endgamenone = v.findViewById(R.id.level_endgamenone);//Sets up radio button that corresponds to 0
         m_radio_endgamenone.setChecked(true);
-        m_radio_endgameparked = (RadioButton)v.findViewById(R.id.level_endgameparked);//Sets up radio button that corresponds to 1
+        m_radio_endgameparked = v.findViewById(R.id.level_endgameparked);//Sets up radio button that corresponds to 1
         m_radio_endgameparked.setChecked(false);
-        m_radio_endgamedocked = (RadioButton)v.findViewById(R.id.level_endgamedocked);//Sets up radio button that corresponds to 2
+        m_radio_endgamedocked = v.findViewById(R.id.level_endgamedocked);//Sets up radio button that corresponds to 2
         m_radio_endgamedocked.setChecked(false);
-        m_radio_endgameengaged = (RadioButton)v.findViewById(R.id.level_endgameengaged);//Sets up radio button that corresponds to 3
+        m_radio_endgameengaged = v.findViewById(R.id.level_endgameengaged);//Sets up radio button that corresponds to 3
         m_radio_endgameengaged.setChecked(false);
 
         int x = m_matchData.getEndgameChargeLevel();
@@ -97,11 +97,11 @@ public class EndgameFragment extends Fragment {
         });
 
         //Sets up an EditText that allows users to input any additional comments
-        m_commentText = (EditText)v.findViewById(R.id.comments);
+        m_commentText = v.findViewById(R.id.comments);
         m_commentText.setHint("Enter comments here");
         m_commentText.setText(m_matchData.getComment());
 
-        ImageButton qrButton = (ImageButton)v.findViewById(R.id.gen_QR);
+        ImageButton qrButton = v.findViewById(R.id.gen_QR);
         qrButton.setOnClickListener(new View.OnClickListener() {
             //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
 
@@ -117,7 +117,7 @@ public class EndgameFragment extends Fragment {
             }
         });
 
-        Button mNextButton  = (Button)v.findViewById(R.id.nav_to_menu_button);
+        Button mNextButton  = v.findViewById(R.id.nav_to_menu_button);
         mNextButton.setOnClickListener(new View.OnClickListener() {
 
             @Override

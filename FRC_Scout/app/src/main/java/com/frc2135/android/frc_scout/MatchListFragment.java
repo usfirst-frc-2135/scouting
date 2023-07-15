@@ -247,24 +247,20 @@ public class MatchListFragment extends ListFragment {
 
                 @Override
                 public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                    switch(item.getItemId()){
-                        case R.id.menu_item_delete_match:
-                            MatchAdapter adapter = (MatchAdapter)getListAdapter();
-                            MatchHistory matchHistory = MatchHistory.get(getActivity());
-                            for(int i = adapter.getCount()-1; i>=0; i--){
-                                if(getListView().isItemChecked(i)){
-                                    matchHistory.deleteMatch(adapter.getItem(i));
-                                    //Deletes all selected matches
-                                }
+                    if (item.getItemId() == R.id.menu_item_delete_match) {
+                        MatchAdapter adapter = (MatchAdapter) getListAdapter();
+                        MatchHistory matchHistory = MatchHistory.get(getActivity());
+                        for (int i = adapter.getCount() - 1; i >= 0; i--) {
+                            if (getListView().isItemChecked(i)) {
+                                matchHistory.deleteMatch(adapter.getItem(i));
+                                //Deletes all selected matches
                             }
-                            mode.finish();
-                            adapter.notifyDataSetChanged();
-                            return true;
-
-
-                        default:
-                            return false;
+                        }
+                        mode.finish();
+                        adapter.notifyDataSetChanged();
+                        return true;
                     }
+                    return false;
                 }
 
                 @Override

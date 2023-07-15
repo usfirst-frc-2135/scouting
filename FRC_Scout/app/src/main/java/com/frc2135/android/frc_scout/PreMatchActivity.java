@@ -34,7 +34,7 @@ public class PreMatchActivity extends AppCompatActivity {
     private Button               m_prematchCancelButton;
     private MatchData            m_matchData;
     private ActionBar            m_actionBar;
-    private CompetitionInfo      m_compInfo;;
+    private CompetitionInfo      m_compInfo;
 
     public static final String TAG = "PreMatchActivity";
     public static final String EXTRA_DATE = "com.frc2135.android.frc_scout.date";
@@ -129,7 +129,7 @@ public class PreMatchActivity extends AppCompatActivity {
             }
         });
 
-        m_matchNumberField = (EditText)findViewById(R.id.match_number_field);
+        m_matchNumberField = findViewById(R.id.match_number_field);
         if(!m_matchData.getMatchNumber().isEmpty())
             m_matchNumberField.setText(m_matchData.getMatchNumber());
         else if(m_Scouter != null && !m_Scouter.getMostRecentMatchNumber().isEmpty())

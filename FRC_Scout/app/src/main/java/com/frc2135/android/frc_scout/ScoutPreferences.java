@@ -10,7 +10,7 @@ public class ScoutPreferences {
 
     // Data members
     private boolean           m_bNightMode;
-    private SharedPreferences m_sharedPreferences;
+    private final SharedPreferences m_sharedPreferences;
 
     private static ScoutPreferences sScoutPreferences;
 

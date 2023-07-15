@@ -95,7 +95,7 @@ public class CompetitionDataSerializer {
                         currComp = new CurrentCompetition(object);
                         Log.d(TAG, "Loaded current competition file: "+filename);
                     } catch (FileNotFoundException err) {
-                        Log.e(TAG, "ERROR loading current_competition.json: "+err.toString());
+                        Log.e(TAG, "ERROR loading current_competition.json: "+ err);
                     } catch (IOException err2) {
                         err2.printStackTrace();
                     } finally {

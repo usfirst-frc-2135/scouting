@@ -72,7 +72,7 @@ public class MatchData {
     private String  m_name;
     private String  m_teamNumber;
     private String  m_matchNumber;
-    private String  m_matchID;
+    private final String  m_matchID;
     private String  m_competition;
     private Date    m_timestamp;
     private boolean m_pickedUpCube;
@@ -120,7 +120,7 @@ public class MatchData {
         m_matchID = UUID.randomUUID()+"";
 
         m_competition = CurrentCompetition.get(context).getEventCode();
-        Log.d(TAG,"Default constructor m_competition set to "+m_competition.toString());
+        Log.d(TAG,"Default constructor m_competition set to "+ m_competition);
     }
 
     //////////////////////// constructor from JSON file  //////////////////////////////
@@ -448,8 +448,8 @@ public class MatchData {
           tsvStr += m_comment + "\t";
         else tsvStr += "-" + "\t";
 
-        Log.d(TAG,"MatchData encodeToTSV() columns: " + headers.toString());
-        Log.d(TAG,"MatchData encodeToTSV(): " + tsvStr.toString());
+        Log.d(TAG,"MatchData encodeToTSV() columns: " + headers);
+        Log.d(TAG,"MatchData encodeToTSV(): " + tsvStr);
         return tsvStr;
     }
 

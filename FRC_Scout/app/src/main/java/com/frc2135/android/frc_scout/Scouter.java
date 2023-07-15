@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Scouter {
 
@@ -37,9 +38,7 @@ public class Scouter {
                Log.d(TAG, "Loading scouter");
                Scouter tmpScouter = m_Serializer.loadScouterData();
                if(tmpScouter != null) {
-                   for (String pastScout : tmpScouter.getPastScouts()) {
-                       m_pastScouters.add(pastScout);
-                   }
+                   Collections.addAll(m_pastScouters, tmpScouter.getPastScouts());
                    m_teamIndexStr = tmpScouter.getTeamIndexStr();
                }
            }
@@ -116,18 +115,12 @@ public class Scouter {
 
     // Returns true if given indexStr is a number: 1, 2, 3, 4, 5, or 6
     public boolean isValidTeamIndexNum(String indexStr){
-        if(indexStr.equals("1") || indexStr.equals("2") || indexStr.equals("3") || indexStr.equals("4") || indexStr.equals("5") || indexStr.equals("6")) {
-            return true;
-        }
-        return false;
+        return indexStr.equals("1") || indexStr.equals("2") || indexStr.equals("3") || indexStr.equals("4") || indexStr.equals("5") || indexStr.equals("6");
     }
 
     // Returns true if given indexStr is None, 1, 2, 3, 4, 5, or 6
     public boolean isValidTeamIndexStr(String indexStr){
-        if(indexStr.equals("1") || indexStr.equals("2") || indexStr.equals("3") || indexStr.equals("4") || indexStr.equals("5") || indexStr.equals("6") || indexStr.equals("None"))  {
-            return true;
-        }
-        return false;
+        return indexStr.equals("1") || indexStr.equals("2") || indexStr.equals("3") || indexStr.equals("4") || indexStr.equals("5") || indexStr.equals("6") || indexStr.equals("None");
     }
 
 

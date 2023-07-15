@@ -58,7 +58,7 @@ public class Event {
             m_bEventDataLoaded = true;
 
         } catch (FileNotFoundException err) {
-            String errMsg = "ERROR reading event matches file: \n" + err.toString();
+            String errMsg = "ERROR reading event matches file: \n" + err;
             Log.e(TAG, errMsg);
             Toast.makeText(m_appContext, errMsg, Toast.LENGTH_LONG);
             Toast toastM = Toast.makeText(m_appContext, errMsg, Toast.LENGTH_LONG);
