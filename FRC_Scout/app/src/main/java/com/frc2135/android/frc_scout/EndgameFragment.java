@@ -2,8 +2,6 @@ package com.frc2135.android.frc_scout;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,9 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.google.android.material.snackbar.Snackbar;
-
-public class EndgameFragment extends Fragment {
+public class EndgameFragment extends Fragment
+{
 
     private RadioGroup m_endgameradioGroup;
     private RadioButton m_radio_endgamenone;
@@ -39,30 +36,32 @@ public class EndgameFragment extends Fragment {
     public static final String QRTAG = "qr";
     private static final String TAG = "EndgameFragment";
 
-
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
-        m_matchData = ((ScoutingActivity)getActivity()).getCurrentMatch();
+        m_matchData = ((ScoutingActivity) getActivity()).getCurrentMatch();
 
-        m_actionBar =  ((AppCompatActivity)getActivity()).getSupportActionBar();
+        m_actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         String teamNumber = m_matchData.stripTeamNamePrefix(m_matchData.getTeamNumber());
-        m_actionBar.setTitle("Endgame               Scouting Team "+teamNumber+"          Match "+m_matchData.getMatchNumber());
+        m_actionBar.setTitle("Endgame               Scouting Team " + teamNumber + "          Match " + m_matchData.getMatchNumber());
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
+    {
         //Creates a view using the specific fragment layout, match_data_fragment
         View v = inflater.inflate(R.layout.endgame_fragment, parent, false);
-
 
         //Connects the checkbox for if the robot dies and sets up a listener to detect when the checked status is changed
         m_diedCheckbox = v.findViewById(R.id.died_checkbox_true);
         m_diedCheckbox.setChecked(m_matchData.getDied());// Default is unchecked
-        m_diedCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        m_diedCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
                 updateEndgameData();
             }
         });
@@ -78,18 +77,20 @@ public class EndgameFragment extends Fragment {
         m_radio_endgameengaged.setChecked(false);
 
         int x = m_matchData.getEndgameChargeLevel();
-        if(x==0) 
+        if (x == 0)
             m_radio_endgamenone.setChecked(true);
-        else if(x==1) 
+        else if (x == 1)
             m_radio_endgameparked.setChecked(true);
-        else if(x==2) 
+        else if (x == 2)
             m_radio_endgamedocked.setChecked(true);
-        else if(x==3) 
+        else if (x == 3)
             m_radio_endgameengaged.setChecked(true);
 
-        m_endgameradioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+        m_endgameradioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
 
                 //Changes m_matchData's climb variable according to which radio button is selected
                 m_matchData.setEndgameChargeLevel(getCurrentEndgameChargeLevel());
@@ -102,11 +103,13 @@ public class EndgameFragment extends Fragment {
         m_commentText.setText(m_matchData.getComment());
 
         ImageButton qrButton = v.findViewById(R.id.gen_QR);
-        qrButton.setOnClickListener(new View.OnClickListener() {
+        qrButton.setOnClickListener(new View.OnClickListener()
+        {
             //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
 
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 //Uses intents to start the QR code dialog
                 updateEndgameData();
                 Log.d(TAG, "Clicked on QR Code");
@@ -117,13 +120,15 @@ public class EndgameFragment extends Fragment {
             }
         });
 
-        Button mNextButton  = v.findViewById(R.id.nav_to_menu_button);
-        mNextButton.setOnClickListener(new View.OnClickListener() {
+        Button mNextButton = v.findViewById(R.id.nav_to_menu_button);
+        mNextButton.setOnClickListener(new View.OnClickListener()
+        {
 
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 // Save the latest Scouter and MatchData JSON files.
-                Log.d(TAG,"EndgameFragment DONE onClick() saving latest match and Scouter files");
+                Log.d(TAG, "EndgameFragment DONE onClick() saving latest match and Scouter files");
                 MatchHistory.get(getActivity()).saveScouterData();
                 MatchHistory.get(getActivity()).saveMatchData(m_matchData);
 
@@ -138,21 +143,28 @@ public class EndgameFragment extends Fragment {
 
         return v;
     }
-    public int getCurrentEndgameChargeLevel() {
+
+    public int getCurrentEndgameChargeLevel()
+    {
         // Returns the integer climb level that is current checked in the radio buttons
         int rtn = 0;
-        if (m_endgameradioGroup.getCheckedRadioButtonId() == m_radio_endgameparked.getId()) {
+        if (m_endgameradioGroup.getCheckedRadioButtonId() == m_radio_endgameparked.getId())
+        {
             rtn = 1;
         }
-        else if (m_endgameradioGroup.getCheckedRadioButtonId() == m_radio_endgamedocked.getId()) {
+        else if (m_endgameradioGroup.getCheckedRadioButtonId() == m_radio_endgamedocked.getId())
+        {
             rtn = 2;
         }
-        else if (m_endgameradioGroup.getCheckedRadioButtonId() == m_radio_endgameengaged.getId()) {
+        else if (m_endgameradioGroup.getCheckedRadioButtonId() == m_radio_endgameengaged.getId())
+        {
             rtn = 3;
         }
         return rtn;
     }
-    public void updateEndgameData(){
+
+    public void updateEndgameData()
+    {
         m_matchData.setEndgameChargeLevel(getCurrentEndgameChargeLevel());
         m_matchData.setDied(m_diedCheckbox.isChecked());
         m_matchData.setComment(m_commentText.getText().toString());
