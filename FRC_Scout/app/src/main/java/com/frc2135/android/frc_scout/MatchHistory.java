@@ -3,7 +3,6 @@ package com.frc2135.android.frc_scout;
 import android.content.Context;
 import android.util.Log;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -17,7 +16,6 @@ public class MatchHistory
 
     private static MatchHistory sMatchHistory;
     private final Context mAppContext;
-    private File externalFilesDir;
 
     private MatchHistory(Context appContext)
     {
@@ -105,6 +103,7 @@ public class MatchHistory
         }
     }
 
+/*-->REMOVE - this is never used
     public boolean saveAllData()
     {
         try
@@ -119,6 +118,7 @@ public class MatchHistory
             return false;
         }
     }
+<---REMOVE*/
 
     public ArrayList sortByTimestamp1(ArrayList<MatchData> mdList)
     {
@@ -150,11 +150,11 @@ public class MatchHistory
         return sorted;
     }
 
-    public ArrayList sortByTimestamp2(ArrayList<MatchData> mdlist)
+    public ArrayList sortByTimestamp2(ArrayList<MatchData> mdList)
     {
         ArrayList sorted = new ArrayList<MatchData>();
         ArrayList temp = new ArrayList<MatchData>();
-        temp = sortByTimestamp1(mdlist);
+        temp = sortByTimestamp1(mdList);
         for (Object mData : temp)
         {
             sorted.add(0, mData);
@@ -162,10 +162,10 @@ public class MatchHistory
         return sorted;
     }
 
-    public ArrayList filterByTeam(ArrayList<MatchData> mdlist, String teamNumber)
+    public ArrayList filterByTeam(ArrayList<MatchData> mdList, String teamNumber)
     {
         ArrayList sorted = new ArrayList<MatchData>();
-        for (MatchData mData : mdlist)
+        for (MatchData mData : mdList)
         {
             if (mData.getTeamNumber().equals(teamNumber))
             {
@@ -175,10 +175,10 @@ public class MatchHistory
         return sorted;
     }
 
-    public ArrayList filterByCompetition(ArrayList<MatchData> mdlist, String comp)
+    public ArrayList filterByCompetition(ArrayList<MatchData> mdList, String comp)
     {
         ArrayList sorted = new ArrayList<MatchData>();
-        for (MatchData mData : mdlist)
+        for (MatchData mData : mdList)
         {
             if (mData.getCompetition().equals(comp))
             {
@@ -188,10 +188,10 @@ public class MatchHistory
         return sorted;
     }
 
-    public ArrayList filterByScout(ArrayList<MatchData> mdlist, String scoutName)
+    public ArrayList filterByScout(ArrayList<MatchData> mdList, String scoutName)
     {
         ArrayList sorted = new ArrayList<MatchData>();
-        for (MatchData mData : mdlist)
+        for (MatchData mData : mdList)
         {
             if (mData.getName().equals(scoutName))
             {
@@ -201,10 +201,10 @@ public class MatchHistory
         return sorted;
     }
 
-    public ArrayList filterByMatchNumber(ArrayList<MatchData> mdlist, String matchNum)
+    public ArrayList filterByMatchNumber(ArrayList<MatchData> mdList, String matchNum)
     {
         ArrayList sorted = new ArrayList<MatchData>();
-        for (MatchData mData : mdlist)
+        for (MatchData mData : mdList)
         {
             if (mData.getMatchNumber().equals(matchNum))
             {

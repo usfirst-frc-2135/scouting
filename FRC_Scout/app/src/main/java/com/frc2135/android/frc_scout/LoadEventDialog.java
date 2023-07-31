@@ -96,7 +96,7 @@ public class LoadEventDialog extends DialogFragment
         Intent i = new Intent(getActivity(), MatchListActivity.class);
 
         // Get the eventCode's list of matches (which has the list of 6 team numbers for each match)
-        // from thebluealliance.com's site and save it as a JSON file named <eventCode>_matches.json.
+        // from thebluealliance.com site and save it as a JSON file named <eventCode>_matches.json.
         // The file is saved to the device.
         Log.d(TAG, "Load data clicked");
         String eventCode = m_eventCodeField.getText().toString();
@@ -137,12 +137,12 @@ public class LoadEventDialog extends DialogFragment
                             String dataFileDir = m_appContext.getFilesDir().getPath();
                             Log.d(TAG,"Data files path = " + dataFileDir);   
                             File file = new File(dataFileDir);
-                            File[] filelist = file.listFiles();
-                            if (filelist != null)
+                            File[] fileList = file.listFiles();
+                            if (fileList != null)
                             {
                                 String eventFileName = m_eventCodeField.getText().toString().trim() + "matches.json";
                                 // Remove event matches data file if it exists already.
-                                for (File f1 : filelist)
+                                for (File f1 : fileList)
                                 {
                                     if (f1.getName().equals(eventFileName))
                                     {

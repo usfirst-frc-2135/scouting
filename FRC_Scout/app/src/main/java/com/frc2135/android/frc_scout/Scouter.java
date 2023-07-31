@@ -178,16 +178,16 @@ public class Scouter
         // Writes the Scouter data to Scouter.json file.
         JSONObject json = new JSONObject();
 
-        String logmsg = "";
+        String logMsg = "";
         for (int i = 0; i < m_pastScouters.size(); i++)
         {
             json.put("scoutername" + i, m_pastScouters.get(i));
-            logmsg += "scoutername" + i + "=" + m_pastScouters.get(i) + "; ";
+            logMsg += "scoutername" + i + "=" + m_pastScouters.get(i) + "; ";
         }
         json.put("teamindex", m_teamIndexStr);
-        logmsg += "teamindex" + "=" + m_teamIndexStr;
+        logMsg += "teamindex" + "=" + m_teamIndexStr;
 
-        Log.d(TAG, "Writing to Scouter.json: " + logmsg);
+        Log.d(TAG, "Writing to Scouter.json: " + logMsg);
         return json;
     }
 }

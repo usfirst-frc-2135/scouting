@@ -46,7 +46,6 @@ public class MatchListFragment extends ListFragment
 
     // Data members
     private ArrayList<MatchData> m_MatchDataList;
-    private Button m_AddMatchButton;
     private ListView m_listView;
     private Spinner m_sortSpinner;
     private Button m_filterButton;
@@ -316,8 +315,6 @@ public class MatchListFragment extends ListFragment
         {
             super(getActivity(), 0, matchData);
         }
-
-        private Button m_AddMatchButton;
 
         @RequiresApi ( api = Build.VERSION_CODES.N )
         @Override

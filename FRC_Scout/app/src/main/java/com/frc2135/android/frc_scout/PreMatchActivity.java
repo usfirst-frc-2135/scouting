@@ -29,13 +29,12 @@ public class PreMatchActivity extends AppCompatActivity
     private EditText m_matchNumberField;
     private Button m_startScoutingButton;
     private TextView m_missingFieldErrMsg;
-    private Button m_prematchCancelButton;
+    private Button m_preMatchCancelButton;
     private MatchData m_matchData;
     private ActionBar m_actionBar;
     private CompetitionInfo m_compInfo;
 
     public static final String TAG = "PreMatchActivity";
-    public static final String EXTRA_DATE = "com.frc2135.android.frc_scout.date";
 
     private static Scouter m_Scouter;
 
@@ -48,8 +47,8 @@ public class PreMatchActivity extends AppCompatActivity
             try
             {
                 String[] teams = m_compInfo.getTeams(matchNumStr);
-                int teamIndx = Integer.parseInt(m_teamIndexStr);
-                String teamNumStr = teams[teamIndx];
+                int teamIndex = Integer.parseInt(m_teamIndexStr);
+                String teamNumStr = teams[teamIndex];
                 Log.d(TAG, "Preloading team number using index " + m_teamIndexStr + ": " + teamNumStr);
                 m_teamNumberField.setText(teamNumStr);
             }
@@ -215,7 +214,7 @@ public class PreMatchActivity extends AppCompatActivity
                         try
                         {
                             String[] teams = m_compInfo.getTeams(m_matchNumberField.getText().toString().trim());
-                            if (teams[0] != "")
+                            if (!teams[0].equals(""))
                                 bTeamsLoadedSuccessfully = true;
                             ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(PreMatchActivity.this, android.R.layout.select_dialog_item, teams);
                             m_teamNumberField.setAdapter(adapter3);
@@ -256,8 +255,8 @@ public class PreMatchActivity extends AppCompatActivity
             }
         });
 
-        m_prematchCancelButton = findViewById(R.id.prematch_cancel_button);
-        m_prematchCancelButton.setOnClickListener(new View.OnClickListener()
+        m_preMatchCancelButton = findViewById(R.id.prematch_cancel_button);
+        m_preMatchCancelButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
@@ -295,7 +294,7 @@ public class PreMatchActivity extends AppCompatActivity
         m_missingFieldErrMsg.setVisibility(View.INVISIBLE);
 
         // Make sure there are entries for the various fields on this page.
-        if (m_competitionField.getText().toString().trim().equals("") || m_scoutNameField.getText().toString().trim().equals("") || m_teamNumberField.getText().toString().trim().equals("") || m_matchNumberField.getText().equals(""))
+        if (m_competitionField.getText().toString().trim().equals("") || m_scoutNameField.getText().toString().trim().equals("") || m_teamNumberField.getText().toString().trim().equals("") || m_matchNumberField.getText().toString().trim().equals(""))
         {
             m_missingFieldErrMsg.setVisibility(View.VISIBLE);
             return false;

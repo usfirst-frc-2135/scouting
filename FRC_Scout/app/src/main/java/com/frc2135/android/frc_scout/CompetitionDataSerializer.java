@@ -96,14 +96,14 @@ public class CompetitionDataSerializer
         Log.d(TAG, "loadCurrentComp() starting");
         BufferedReader reader = null;
         CurrentCompetition currComp = null;
-        File dirpath = new File(m_dataPath);
-        File[] filelist = dirpath.listFiles();
-        if (filelist != null)
+        File dirPath = new File(m_dataPath);
+        File[] fileList = dirPath.listFiles();
+        if (fileList != null)
         {
             // Go thru files to find current_competition.json file, then load it if found.
-            for (File filex : filelist)
+            for (File fileX : fileList)
             {
-                String filename = filex.getName().trim();
+                String filename = fileX.getName().trim();
                 if (filename.equals("current_competition.json"))
                 {
                     try

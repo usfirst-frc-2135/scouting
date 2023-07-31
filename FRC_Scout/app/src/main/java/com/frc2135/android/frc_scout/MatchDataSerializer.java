@@ -22,16 +22,15 @@ import java.util.ArrayList;
 public class MatchDataSerializer
 {
     private static final String TAG = "MatchDataSerializer";
-//REMOVE    private static final String DEVICE_DATA_PATH = "/data/user/0/com.frc2135.android.frc_scout/files";
     private final Context m_Context;
     private final String  m_FileName;
     private String        m_dataPath;
     private Scouter       m_Scouter;
 
-    public MatchDataSerializer(Context context, String fname)
+    public MatchDataSerializer(Context context, String fName)
     {
         m_Context = context;
-        m_FileName = fname;
+        m_FileName = fName;
         m_dataPath = m_Context.getFilesDir().getPath();
         Log.d(TAG,"Data files path = " + m_dataPath);  
     }
@@ -92,6 +91,7 @@ public class MatchDataSerializer
         }
     }
 
+/*---> REMOVE - this is never used
     public void saveAllMatchDatas(ArrayList<MatchData> matchHistory) throws JSONException, IOException
     {
         Log.d(TAG, "saveAllMatchDatas() going to save MatchHistory matches to JSON files");
@@ -102,13 +102,16 @@ public class MatchDataSerializer
             saveMatchData(matchData1);
         }
     }
+<--- REMOVE*/
 
+/*---> REMOVE - this is never used
     public void saveAllData(ArrayList<MatchData> matchHistory) throws JSONException, IOException
     {
         Log.d(TAG, "saveAllData() going to save Scouter and MatchHistory matches to JSON files");
         saveScouterData();
         saveAllMatchDatas(matchHistory);
     }
+<--- REMOVE*/
 
     public ArrayList<MatchData> loadMatchData() throws IOException, JSONException
     {
@@ -118,12 +121,12 @@ public class MatchDataSerializer
         File file = new File(m_dataPath); // dir to use
 
         Log.d(TAG, "Going to read in existing match files found at " + m_dataPath);
-        File[] jfilesList = file.listFiles();
-        if (jfilesList != null)
+        File[] jFilesList = file.listFiles();
+        if (jFilesList != null)
         {
-            for (File tfile : jfilesList)
+            for (File tFile : jFilesList)
             {
-                String filename = tfile.getName();
+                String filename = tFile.getName();
 
                 // Look for 30+ filename length - these are matchData JSON files
                 if (filename.length() > 30)
