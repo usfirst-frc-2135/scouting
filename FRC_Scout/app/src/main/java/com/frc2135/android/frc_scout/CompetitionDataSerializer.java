@@ -18,34 +18,38 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.file.Files;
 
 public class CompetitionDataSerializer
 {
     private static final String TAG = "CompetitionDataSerializer";
-    private static final String DEVICE_DATA_PATH = "/data/user/0/com.frc2135.android.frc_scout/files";
 
     // Data members
     private final Context m_context;
+    private String        m_dataPath;
 
     public CompetitionDataSerializer(Context context)
     {
         m_context = context;
+        m_dataPath = m_context.getFilesDir().getPath();  
+        Log.d(TAG,"Data files dir = " + m_dataPath); 
     }
 
     // Takes the JSONArray data from thebluealliance.com event matches and writes it out to <eventCode>_matches.json file.
     public void saveEventData(JSONArray compData) throws JSONException, IOException
     {
 
-        // Writes out the given compData JSONArray to the '<eventCode>matches.json' file.
+        // Writes out the given compData JSONArray to '<eventCode>matches.json' file.
         Log.d(TAG, "saveEventData() starting");
         Writer compWriter = null;
         try
         {
-            File file1 = new File(DEVICE_DATA_PATH + "/" + CurrentCompetition.get(m_context).getEventCode() + "matches.json");
-            OutputStream out = new FileOutputStream(file1);
+            File file1 = new File(m_dataPath + "/" + CurrentCompetition.get(m_context).getEventCode() + "matches.json");
+
+            OutputStream out = Files.newOutputStream(file1.toPath());
             compWriter = new OutputStreamWriter(out);
             compWriter.write(compData.toString());
-            Log.d(TAG, "File created: " + DEVICE_DATA_PATH + "/" + CurrentCompetition.get(m_context).getEventCode() + "matches.json");
+            Log.d(TAG, "Device Data File created: " + file1);
         }
         finally
         {
@@ -63,11 +67,11 @@ public class CompetitionDataSerializer
         Writer compWriter = null;
         try
         {
-            File fileC = new File(DEVICE_DATA_PATH + "/current_competition.json");
+            File fileC = new File(m_dataPath + "/current_competition.json");
             OutputStream out = new FileOutputStream(fileC);
             compWriter = new OutputStreamWriter(out);
             compWriter.write(compJSON.toString());
-            Log.d(TAG, "File created: " + DEVICE_DATA_PATH + "/current_competition.json");
+            Log.d(TAG, "Device Data File created: " + fileC);
         }
         catch (FileNotFoundException err)
         {
@@ -92,7 +96,7 @@ public class CompetitionDataSerializer
         Log.d(TAG, "loadCurrentComp() starting");
         BufferedReader reader = null;
         CurrentCompetition currComp = null;
-        File dirpath = new File(DEVICE_DATA_PATH);
+        File dirpath = new File(m_dataPath);
         File[] filelist = dirpath.listFiles();
         if (filelist != null)
         {
@@ -107,7 +111,7 @@ public class CompetitionDataSerializer
                         InputStream in = m_context.openFileInput(filename);
                         reader = new BufferedReader(new InputStreamReader(in));
                         StringBuilder jsonString = new StringBuilder();
-                        String line = null;
+                        String line;
                         while ((line = reader.readLine()) != null)
                         {
                             jsonString.append(line);

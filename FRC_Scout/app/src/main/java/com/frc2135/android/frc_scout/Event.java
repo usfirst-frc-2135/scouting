@@ -23,7 +23,6 @@ public class Event
 {
 
     public static final String TAG = "Event";
-    private static final String DEVICE_DATA_PATH = "/data/user/0/com.frc2135.android.frc_scout/files";
     private final String m_eventCode;
     private String m_eventName;
     private JSONArray m_array;
@@ -36,8 +35,10 @@ public class Event
         m_eventCode = eventCode;
         m_bEventDataLoaded = false;
         m_array = null;
+        String dataPath = context.getFilesDir().getPath();  
+        Log.d(TAG,"Data files path = " + dataPath);  
 
-        String filename = DEVICE_DATA_PATH + "/" + m_eventCode.trim().toLowerCase() + "matches.json";
+        String filename = dataPath + "/" + m_eventCode.trim().toLowerCase() + "matches.json";
         Log.d(TAG, "Event constructor: going to read in file: " + filename);
         File file = new File(filename);
         BufferedReader reader = null;

@@ -70,7 +70,7 @@ public class MatchListFragment extends ListFragment
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Recorded Matches");
 
-        Log.i(TAG, "files directory = " + getContext().getFilesDir() + "");
+        Log.i(TAG, "Device files directory = " + getContext().getFilesDir() + "");
     }
 
     @Override

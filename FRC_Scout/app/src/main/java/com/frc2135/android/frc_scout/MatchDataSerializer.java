@@ -22,15 +22,18 @@ import java.util.ArrayList;
 public class MatchDataSerializer
 {
     private static final String TAG = "MatchDataSerializer";
-    private static final String DEVICE_DATA_PATH = "/data/user/0/com.frc2135.android.frc_scout/files";
+//REMOVE    private static final String DEVICE_DATA_PATH = "/data/user/0/com.frc2135.android.frc_scout/files";
     private final Context m_Context;
-    private final String m_FileName;
-    private Scouter m_Scouter;
+    private final String  m_FileName;
+    private String        m_dataPath;
+    private Scouter       m_Scouter;
 
-    public MatchDataSerializer(Context c, String f)
+    public MatchDataSerializer(Context context, String fname)
     {
-        m_Context = c;
-        m_FileName = f;
+        m_Context = context;
+        m_FileName = fname;
+        m_dataPath = m_Context.getFilesDir().getPath();
+        Log.d(TAG,"Data files path = " + m_dataPath);  
     }
 
     public void saveScouterData() throws JSONException, IOException
@@ -67,7 +70,7 @@ public class MatchDataSerializer
         array.put(matchData1.toJSON());
         Writer writerMatches = null;
         String matchFileName = matchData1.getMatchFileName();
-        String fullPathname = DEVICE_DATA_PATH + "/" + matchFileName;
+        String fullPathname = m_dataPath + "/" + matchFileName;
         try
         {
             File fileM = new File(fullPathname);
@@ -112,9 +115,9 @@ public class MatchDataSerializer
         // Create a new MatchHistory obj and load it with all the existing match files.
         ArrayList<MatchData> matchHistory = new ArrayList<MatchData>();
         BufferedReader reader = null;
-        File file = new File(DEVICE_DATA_PATH); // dir to use
+        File file = new File(m_dataPath); // dir to use
 
-        Log.d(TAG, "Going to read in files found at " + DEVICE_DATA_PATH);
+        Log.d(TAG, "Going to read in existing match files found at " + m_dataPath);
         File[] jfilesList = file.listFiles();
         if (jfilesList != null)
         {

@@ -22,11 +22,9 @@ import java.io.InputStreamReader;
 public class CompetitionInfo
 {
     private static final String TAG = "CompetitionInfo";
-    private static final String DEVICE_DATA_PATH = "/data/user/0/com.frc2135.android.frc_scout/files";
 
     // Data members
     private String m_eventCode;
-    private String m_eventName;
     private JSONArray m_jsonData;
     private boolean m_bEventDataLoaded;
 
@@ -51,7 +49,7 @@ public class CompetitionInfo
                 sCompetitionInfo.readEventMatchesJSON(context, true);
             }
         }
-        else if (sCompetitionInfo == null)
+        else 
         {
             Log.d(TAG, "Creating a new sCompetitionInfo for eventCode " + eventCode);
             sCompetitionInfo = new CompetitionInfo(eventCode);
@@ -75,28 +73,28 @@ public class CompetitionInfo
 
     public boolean readEventMatchesJSON(Context context, boolean bSilent)
     {
-        String filename = DEVICE_DATA_PATH + "/" + m_eventCode.trim().toLowerCase() + "matches.json";
+        String filename = context.getFilesDir().getPath() + "/" + m_eventCode.trim().toLowerCase() + "matches.json";
         Log.d(TAG, "Looking for matches JSON file: " + filename);
         File file = new File(filename);
 
         // Check if file exists before trying to read it.
         if (file.exists())
         {
-            Log.d(TAG, "Reading in matches JSON file");
-            BufferedReader reader = null;
+            Log.d(TAG, "Attempting to read in matches JSON file");
+            BufferedReader reader;
             try
             {
                 // Open and read the file into a StringBuilder.
                 InputStream in = context.openFileInput(file.getName().trim());
                 reader = new BufferedReader(new InputStreamReader(in));
                 StringBuilder jsonString = new StringBuilder();
-                String line = null;
+                String line;
                 while ((line = reader.readLine()) != null)
                 {
                     jsonString.append(line);
                 }
 
-                // Parse the JSON using JSONTokener.
+                // Parse the JSON using JSONTokener class.
                 m_jsonData = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
                 Log.d(TAG, "setting m_bEventDataLoaded = true");
                 m_bEventDataLoaded = true;
@@ -107,6 +105,7 @@ public class CompetitionInfo
                 Toast toastS = Toast.makeText(context, msg, Toast.LENGTH_LONG);
                 toastS.setGravity(Gravity.CENTER, 0, 0);
                 toastS.show();
+                reader.close();
             }
             catch (FileNotFoundException err)
             {
@@ -124,10 +123,12 @@ public class CompetitionInfo
             }
             catch (JSONException jsonException)
             {
+                Log.e(TAG, "ERROR (jsonException) reading event matches file\n");
                 jsonException.printStackTrace();
             }
             catch (IOException ioException)
             {
+                Log.e(TAG, "ERROR (ioException) reading event matches file\n");
                 ioException.printStackTrace();
             }
         }
@@ -140,25 +141,7 @@ public class CompetitionInfo
         return m_bEventDataLoaded;
     }
 
-    public String[] getEventMatches(String ec) throws JSONException, IOException
-    {
-        if (m_jsonData != null)
-        {
-            String[] matches = new String[m_jsonData.length() + 1];
-            matches[0] = "No match selected";
-            if (ec.equals(m_eventCode))
-            {
-                for (int i = 1; i < m_jsonData.length(); i++)
-                {
-                    matches[i] = ((JSONObject) m_jsonData.get(i)).getString("comp_level") + ((JSONObject) m_jsonData.get(i)).getString("match_number");
-                }
-                return matches;
-            }
-        }
-        return null;
-    }
-
-    public String[] getTeams(String matchnum) throws JSONException
+    public String[] getTeams(String matchNum) throws JSONException
     {
         String[] teams = new String[7];
         teams[0] = "";   // initialize with empty strings
@@ -171,13 +154,13 @@ public class CompetitionInfo
         boolean bMatchNumFound = false;
         if (m_jsonData != null)
         {
-            JSONObject tempB = new JSONObject();
-            JSONObject tempR = new JSONObject();
+            JSONObject tempB;
+            JSONObject tempR;
             JSONArray redTeams = new JSONArray();
             JSONArray blueTeams = new JSONArray();
             for (int i = 0; i < m_jsonData.length(); i++)
             {
-                if ((((JSONObject) m_jsonData.get(i)).getString("comp_level") + ((JSONObject) m_jsonData.get(i)).getString("match_number")).equals(matchnum.trim().toLowerCase()))
+                if ((((JSONObject) m_jsonData.get(i)).getString("comp_level") + ((JSONObject) m_jsonData.get(i)).getString("match_number")).equals(matchNum.trim().toLowerCase()))
                 {
                     bMatchNumFound = true;
                     JSONObject alliances = (JSONObject) m_jsonData.get(i);
@@ -202,7 +185,7 @@ public class CompetitionInfo
                 }
             }
             else
-                Log.d(TAG, "getTeams(): matchnum '" + matchnum + "' NOT found!");
+                Log.d(TAG, "getTeams(): matchNum '" + matchNum + "' NOT found!");
         }
         return teams;
     }

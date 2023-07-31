@@ -36,8 +36,6 @@ import java.util.Map;
 public class LoadEventDialog extends DialogFragment
 {
     private static final String TAG = "LoadEventDialog";
-    private static final String DEVICE_DATA_PATH = "/data/user/0/com.frc2135.android.frc_scout/files";
-
     private CompetitionDataSerializer m_compSerializer;
     private EditText m_eventCodeField;
     private String m_eventCode = "myEventCode";
@@ -99,7 +97,7 @@ public class LoadEventDialog extends DialogFragment
 
         // Get the eventCode's list of matches (which has the list of 6 team numbers for each match)
         // from thebluealliance.com's site and save it as a JSON file named <eventCode>_matches.json.
-        // The file is saved to the device at the path: DEVICE_DATA_PATH.
+        // The file is saved to the device.
         Log.d(TAG, "Load data clicked");
         String eventCode = m_eventCodeField.getText().toString();
         Log.d(TAG, "LoadEventDialog: eventCode = '" + eventCode + "'");
@@ -135,7 +133,9 @@ public class LoadEventDialog extends DialogFragment
                         try
                         {
                             // Look thru existing files on device.
-                            String dataFileDir = DEVICE_DATA_PATH;
+                            // File will be saved to this path on the device.
+                            String dataFileDir = m_appContext.getFilesDir().getPath();
+                            Log.d(TAG,"Data files path = " + dataFileDir);   
                             File file = new File(dataFileDir);
                             File[] filelist = file.listFiles();
                             if (filelist != null)
@@ -146,7 +146,7 @@ public class LoadEventDialog extends DialogFragment
                                 {
                                     if (f1.getName().equals(eventFileName))
                                     {
-                                        Log.d(TAG, "Deleting existing competition file on device: " + f1.getName());
+                                        Log.d(TAG, "DELETING existing competition file on device: " + f1.getName());
                                         f1.delete();
                                         break;
                                     }
@@ -154,7 +154,7 @@ public class LoadEventDialog extends DialogFragment
 
                                 // Save comp data to matches JSON file 
                                 m_compSerializer.saveEventData(response);
-                                Log.d(TAG, "Successfully saved matches.json file: " + dataFileDir + "/" + eventFileName);
+                                Log.d(TAG, "SUCCESSFULLY saved matches.json file: " + dataFileDir + "/" + eventFileName);
                                 // Set up the CompetitionInfo with this event data.
                                 CompetitionInfo.get(m_appContext, m_eventCode, true);
                             }

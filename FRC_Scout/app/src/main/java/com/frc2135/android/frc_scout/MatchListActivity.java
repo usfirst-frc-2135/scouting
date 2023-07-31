@@ -17,7 +17,7 @@ public class MatchListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        Log.i(TAG, "Activity created.");
+        Log.i(TAG, "MatchListActivity created.");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.match_list_activity);
