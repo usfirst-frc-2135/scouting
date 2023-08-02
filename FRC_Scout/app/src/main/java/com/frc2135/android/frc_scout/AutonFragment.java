@@ -1,5 +1,6 @@
 package com.frc2135.android.frc_scout;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,8 +15,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 public class AutonFragment extends Fragment
 {
@@ -30,32 +31,12 @@ public class AutonFragment extends Fragment
     private TextView m_autonCubesMiddleRowValue;
     private TextView m_autonCubesTopRowValue;
 
-    private Button m_autonConeBottomDecrButton;
-    private Button m_autonConeBottomIncrButton;
-
-    private Button m_autonConeMiddleDecrButton;
-    private Button m_autonConeMiddleIncrButton;
-
-    private Button m_autonConeTopDecrButton;
-    private Button m_autonConeTopIncrButton;
-
-    private Button m_autonCubeBottomDecrButton;
-    private Button m_autonCubeBottomIncrButton;
-
-    private Button m_autonCubeMiddleDecrButton;
-    private Button m_autonCubeMiddleIncrButton;
-
-    private Button m_autonCubeTopDecrButton;
-    private Button m_autonCubeTopIncrButton;
-
     private RadioGroup m_autonRadioGroup;
-    private RadioButton m_radio_autonNone;
     private RadioButton m_radio_autonDocked;
     private RadioButton m_radio_autonEngaged;
 
     private CheckBox m_mobilityCheckbox;
     private MatchData m_matchData;
-    private ActionBar m_actionBar;
 
     // Check if pointsTextView field has a valid number, greater than MAX_POINTS.
     private boolean isNotValidPoints(TextView field)
@@ -71,12 +52,23 @@ public class AutonFragment extends Fragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
-        m_matchData = ((ScoutingActivity) getActivity()).getCurrentMatch();
-        Log.d(TAG, "New match ID = " + m_matchData.getMatchID());
-        m_actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        String teamNumber = m_matchData.stripTeamNamePrefix(m_matchData.getTeamNumber());
-        m_actionBar.setTitle("Autonomous          Scouting Team " + teamNumber + "         Match " + m_matchData.getMatchNumber());
+        ScoutingActivity activity = (ScoutingActivity) getActivity();
+        if(activity != null) {
+            try {
+                m_matchData = activity.getCurrentMatch();
+                if(m_matchData != null) {
+                    Log.d(TAG, "New match ID = " + m_matchData.getMatchID());
+                    ActionBar m_actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+                    String teamNumber = m_matchData.stripTeamNamePrefix(m_matchData.getTeamNumber());
+                    if (m_actionBar != null) {
+                        m_actionBar.setTitle("Autonomous          Scouting Team " + teamNumber + "         Match " + m_matchData.getMatchNumber());
+                    }
+                }
+            }
+            catch (Exception e) {
+                Log.d(TAG,"AutonFragment::onCreate(): getCurrentMatch() threw exception!\n");
+            }
+        }
     }
 
     // Sets the new result integer value for the given Button, either decrementing or incrementing it.
@@ -90,13 +82,17 @@ public class AutonFragment extends Fragment
             result -= 1;
         if (result < 0)
             result = 0;
-        pointsTextView.setText(result+"");
+        pointsTextView.setText(String.valueOf(result));
         if (isNotValidPoints(pointsTextView))
         {
             pointsTextView.setTextColor(Color.RED);
         }
-        else
-            pointsTextView.setTextColor(getResources().getColor(R.color.specialTextPrimary));
+        else {
+            Context context = getContext();
+            if(context != null)  {
+               pointsTextView.setTextColor(ContextCompat.getColor(context,R.color.specialTextPrimary));
+            }
+        }
     }
 
     @Override
@@ -104,41 +100,45 @@ public class AutonFragment extends Fragment
     {
         // Creates a view using the specific fragment layout, match_data_fragment
         View v = inflater.inflate(R.layout.auton_fragment, parent, false);
-        FragmentManager fm = getActivity().getSupportFragmentManager();
+        Context context = getContext();
+        if(context != null)  {
+            int specialTextPrimaryColor = ContextCompat.getColor(context,R.color.specialTextPrimary);
 
-        //Sets up TextView that displays cones bottom row points, setting 0 as the default
-        m_autonConesBottomRowValue = v.findViewById(R.id.autoncone_bottom_text);
-        m_autonConesBottomRowValue.setText(0+"");
-        m_autonConesBottomRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
+            // Sets up TextView that displays cones bottom row points, setting 0 as the default
+            m_autonConesBottomRowValue = v.findViewById(R.id.autoncone_bottom_text);
+            m_autonConesBottomRowValue.setText("0");
+            m_autonConesBottomRowValue.setTextColor(specialTextPrimaryColor);
 
-        //Sets up TextView that displays cones middle row points, setting 0 as the default
-        m_autonConesMiddleRowValue = v.findViewById(R.id.autoncone_middle_text);
-        m_autonConesMiddleRowValue.setText(0+"");
-        m_autonConesMiddleRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
+            // Sets up TextView that displays cones middle row points, setting 0 as the default
+            m_autonConesMiddleRowValue = v.findViewById(R.id.autoncone_middle_text);
+            m_autonConesMiddleRowValue.setText("0");
+            m_autonConesMiddleRowValue.setTextColor(specialTextPrimaryColor);
 
-        //Sets up TextView that displays cones top row points, setting 0 as the default
-        m_autonConesTopRowValue = v.findViewById(R.id.autoncone_top_text);
-        m_autonConesTopRowValue.setText(0+"");
-        m_autonConesTopRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
+            // Sets up TextView that displays cones top row points, setting 0 as the default
+            m_autonConesTopRowValue = v.findViewById(R.id.autoncone_top_text);
+            m_autonConesTopRowValue.setText("0");
+            m_autonConesTopRowValue.setTextColor(specialTextPrimaryColor);
 
-        //Sets up TextView that displays cubes bottom row points, setting 0 as the default
-        m_autonCubesBottomRowValue = v.findViewById(R.id.autoncube_bottom_text);
-        m_autonCubesBottomRowValue.setText(0+"");
-        m_autonCubesBottomRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
+            // Sets up TextView that displays cubes bottom row points, setting 0 as the default
+            m_autonCubesBottomRowValue = v.findViewById(R.id.autoncube_bottom_text);
+            m_autonCubesBottomRowValue.setText("0");
+            m_autonCubesBottomRowValue.setTextColor(specialTextPrimaryColor);
 
-        //Sets up TextView that displays cubes middle row points, setting 0 as the default
-        m_autonCubesMiddleRowValue = v.findViewById(R.id.autoncube_middle_text);
-        m_autonCubesMiddleRowValue.setText(0+"");
-        m_autonCubesMiddleRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
+            // Sets up TextView that displays cubes middle row points, setting 0 as the default
+            m_autonCubesMiddleRowValue = v.findViewById(R.id.autoncube_middle_text);
+            m_autonCubesMiddleRowValue.setText("0");
+            m_autonCubesMiddleRowValue.setTextColor(specialTextPrimaryColor);
 
-        //Sets up TextView that displays cubes top row points, setting 0 as the default
-        m_autonCubesTopRowValue = v.findViewById(R.id.autoncube_top_text);
-        m_autonCubesTopRowValue.setText(0+"");
-        m_autonCubesTopRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
+            // Sets up TextView that displays cubes top row points, setting 0 as the default
+            m_autonCubesTopRowValue = v.findViewById(R.id.autoncube_top_text);
+            m_autonCubesTopRowValue.setText("0");
+            m_autonCubesTopRowValue.setTextColor(specialTextPrimaryColor);
+        }
 
         //Connects the decrement button for cones bottom row points and sets up a listener that detects when the button is clicked
-        m_autonConeBottomDecrButton = v.findViewById(R.id.autoncone_bottom_decr);
-        m_autonConeBottomDecrButton.setOnClickListener(new View.OnClickListener()
+        Button autonConeBottomDecrButton = v.findViewById(R.id.autoncone_bottom_decr);
+        //noinspection Convert2Lambda
+        autonConeBottomDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -149,8 +149,9 @@ public class AutonFragment extends Fragment
         });
 
         //Connects the increment button for cones bottom row points and sets up a listener that detects when the button is clicked
-        m_autonConeBottomIncrButton = v.findViewById(R.id.autoncone_bottom_incr);
-        m_autonConeBottomIncrButton.setOnClickListener(new View.OnClickListener()
+        Button autonConeBottomIncrButton = v.findViewById(R.id.autoncone_bottom_incr);
+        //noinspection Convert2Lambda
+        autonConeBottomIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -161,8 +162,8 @@ public class AutonFragment extends Fragment
         });
 
         //Connects the decrement button for cones middle row points and sets up a listener that detects when the button is clicked
-        m_autonConeMiddleDecrButton = v.findViewById(R.id.autoncone_middle_decr);
-        m_autonConeMiddleDecrButton.setOnClickListener(new View.OnClickListener()
+        Button autonConeMiddleDecrButton = v.findViewById(R.id.autoncone_middle_decr);
+        autonConeMiddleDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -173,8 +174,8 @@ public class AutonFragment extends Fragment
         });
 
         //Connects the increment button for cones middle row points and sets up a listener that detects when the button is clicked
-        m_autonConeMiddleIncrButton = v.findViewById(R.id.autoncone_middle_incr);
-        m_autonConeMiddleIncrButton.setOnClickListener(new View.OnClickListener()
+        Button autonConeMiddleIncrButton = v.findViewById(R.id.autoncone_middle_incr);
+        autonConeMiddleIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -185,8 +186,8 @@ public class AutonFragment extends Fragment
         });
 
         //Connects the decrement button for cones top row points and sets up a listener that detects when the button is clicked
-        m_autonConeTopDecrButton = v.findViewById(R.id.autoncone_top_decr);
-        m_autonConeTopDecrButton.setOnClickListener(new View.OnClickListener()
+        Button autonConeTopDecrButton = v.findViewById(R.id.autoncone_top_decr);
+        autonConeTopDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -197,8 +198,8 @@ public class AutonFragment extends Fragment
         });
 
         //Connects the increment button for cones top row points and sets up a listener that detects when the button is clicked
-        m_autonConeTopIncrButton = v.findViewById(R.id.autoncone_top_incr);
-        m_autonConeTopIncrButton.setOnClickListener(new View.OnClickListener()
+        Button autonConeTopIncrButton = v.findViewById(R.id.autoncone_top_incr);
+        autonConeTopIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -209,8 +210,8 @@ public class AutonFragment extends Fragment
         });
 
         //Connects the decrement button for cubes bottom row points and sets up a listener that detects when the button is clicked
-        m_autonCubeBottomDecrButton = v.findViewById(R.id.autoncube_bottom_decr);
-        m_autonCubeBottomDecrButton.setOnClickListener(new View.OnClickListener()
+        Button autonCubeBottomDecrButton = v.findViewById(R.id.autoncube_bottom_decr);
+        autonCubeBottomDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -221,8 +222,8 @@ public class AutonFragment extends Fragment
         });
 
         //Connects the increment button for cubes bottom row points and sets up a listener that detects when the button is clicked
-        m_autonCubeBottomIncrButton = v.findViewById(R.id.autoncube_bottom_incr);
-        m_autonCubeBottomIncrButton.setOnClickListener(new View.OnClickListener()
+        Button autonCubeBottomIncrButton = v.findViewById(R.id.autoncube_bottom_incr);
+        autonCubeBottomIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -233,8 +234,8 @@ public class AutonFragment extends Fragment
         });
 
         //Connects the decrement button for cubes middle row points and sets up a listener that detects when the button is clicked
-        m_autonCubeMiddleDecrButton = v.findViewById(R.id.autoncube_middle_decr);
-        m_autonCubeMiddleDecrButton.setOnClickListener(new View.OnClickListener()
+        Button autonCubeMiddleDecrButton = v.findViewById(R.id.autoncube_middle_decr);
+        autonCubeMiddleDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -245,8 +246,8 @@ public class AutonFragment extends Fragment
         });
 
         //Connects the increment button for cubes middle row points and sets up a listener that detects when the button is clicked
-        m_autonCubeMiddleIncrButton = v.findViewById(R.id.autoncube_middle_incr);
-        m_autonCubeMiddleIncrButton.setOnClickListener(new View.OnClickListener()
+        Button autonCubeMiddleIncrButton = v.findViewById(R.id.autoncube_middle_incr);
+        autonCubeMiddleIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -257,8 +258,8 @@ public class AutonFragment extends Fragment
         });
 
         //Connects the decrement button for cubes top row points and sets up a listener that detects when the button is clicked
-        m_autonCubeTopDecrButton = v.findViewById(R.id.autoncube_top_decr);
-        m_autonCubeTopDecrButton.setOnClickListener(new View.OnClickListener()
+        Button autonCubeTopDecrButton = v.findViewById(R.id.autoncube_top_decr);
+        autonCubeTopDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -269,8 +270,8 @@ public class AutonFragment extends Fragment
         });
 
         //Connects the increment button for cubes top row points and sets up a listener that detects when the button is clicked
-        m_autonCubeTopIncrButton = v.findViewById(R.id.autoncube_top_incr);
-        m_autonCubeTopIncrButton.setOnClickListener(new View.OnClickListener()
+        Button autonCubeTopIncrButton = v.findViewById(R.id.autoncube_top_incr);
+        autonCubeTopIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -285,8 +286,8 @@ public class AutonFragment extends Fragment
         m_mobilityCheckbox.setChecked(m_matchData.getExitedCommunity());
 
         m_autonRadioGroup = v.findViewById(R.id.auton_charge_level);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
-        m_radio_autonNone = v.findViewById(R.id.level_autonnone);//Sets up radio button that corresponds to 0
-        m_radio_autonNone.setChecked(true);
+        RadioButton radio_autonNone = v.findViewById(R.id.level_autonnone);//Sets up radio button that corresponds to 0
+        radio_autonNone.setChecked(true);
         m_radio_autonDocked = v.findViewById(R.id.level_autondocked);//Sets up radio button that corresponds to 1
         m_radio_autonDocked.setChecked(false);
         m_radio_autonEngaged = v.findViewById(R.id.level_autonengaged);//Sets up radio button that corresponds to 2
@@ -294,7 +295,7 @@ public class AutonFragment extends Fragment
 
         int x = m_matchData.getAutonChargeLevel();
         if (x == 0)
-            m_radio_autonNone.setChecked(true);
+            radio_autonNone.setChecked(true);
         else if (x == 1)
             m_radio_autonDocked.setChecked(true);
         else if (x == 2)
@@ -311,12 +312,12 @@ public class AutonFragment extends Fragment
             }
         });
 
-        m_autonConesBottomRowValue.setText(m_matchData.getAutonConesBottomRow()+"");
-        m_autonConesMiddleRowValue.setText(m_matchData.getAutonConesMiddleRow()+"");
-        m_autonConesTopRowValue.setText(m_matchData.getAutonConesTopRow()+"");
-        m_autonCubesBottomRowValue.setText(m_matchData.getAutonCubesBottomRow()+"");
-        m_autonCubesMiddleRowValue.setText(m_matchData.getAutonCubesMiddleRow()+"");
-        m_autonCubesTopRowValue.setText(m_matchData.getAutonCubesTopRow()+"");
+        m_autonConesBottomRowValue.setText(String.valueOf(m_matchData.getAutonConesBottomRow()));
+        m_autonConesMiddleRowValue.setText(String.valueOf(m_matchData.getAutonConesMiddleRow()));
+        m_autonConesTopRowValue.setText(String.valueOf(m_matchData.getAutonConesTopRow()));
+        m_autonCubesBottomRowValue.setText(String.valueOf(m_matchData.getAutonCubesBottomRow()));
+        m_autonCubesMiddleRowValue.setText(String.valueOf(m_matchData.getAutonCubesMiddleRow()));
+        m_autonCubesTopRowValue.setText(String.valueOf(m_matchData.getAutonCubesTopRow()));
         if (isNotValidPoints(m_autonConesBottomRowValue))
         {
             m_autonConesBottomRowValue.setTextColor(Color.RED);
