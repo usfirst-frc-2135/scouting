@@ -38,6 +38,20 @@
             android:textSize="18dp"
             android:textColor="#FF0F396B">
         </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="          "
+            android:textSize="18dp"
+            android:textColor="#FF0F396B">
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Created by Nandita Jayanthi, 2020"
+            android:textSize="18dp"
+            android:textColor="#FF0F396B">
+        </TextView>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
