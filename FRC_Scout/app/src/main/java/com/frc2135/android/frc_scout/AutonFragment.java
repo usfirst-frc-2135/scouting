@@ -54,19 +54,14 @@ public class AutonFragment extends Fragment
         super.onCreate(savedInstanceState);
         ScoutingActivity activity = (ScoutingActivity) getActivity();
         if(activity != null) {
-            try {
-                m_matchData = activity.getCurrentMatch();
-                if(m_matchData != null) {
-                    Log.d(TAG, "New match ID = " + m_matchData.getMatchID());
-                    ActionBar m_actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-                    String teamNumber = m_matchData.stripTeamNamePrefix(m_matchData.getTeamNumber());
-                    if (m_actionBar != null) {
-                        m_actionBar.setTitle("Autonomous          Scouting Team " + teamNumber + "         Match " + m_matchData.getMatchNumber());
-                    }
+            m_matchData = activity.getCurrentMatch();
+            if(m_matchData != null) {
+                Log.d(TAG, "New match ID = " + m_matchData.getMatchID());
+                ActionBar m_actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+                String teamNumber = m_matchData.stripTeamNamePrefix(m_matchData.getTeamNumber());
+                if (m_actionBar != null) {
+                    m_actionBar.setTitle("Autonomous          Scouting Team " + teamNumber + "         Match " + m_matchData.getMatchNumber());
                 }
-            }
-            catch (Exception e) {
-                Log.d(TAG,"AutonFragment::onCreate(): getCurrentMatch() threw exception!\n");
             }
         }
     }

@@ -17,22 +17,20 @@ import android.widget.RadioGroup;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 public class EndgameFragment extends Fragment
 {
 
     private RadioGroup m_endGameRadioGroup;
-    private RadioButton m_radio_endGameNone;
     private RadioButton m_radio_endGameParked;
     private RadioButton m_radio_endGameDocked;
     private RadioButton m_radio_endGameEngaged;
     private CheckBox m_diedCheckbox;
     private EditText m_commentText;
     private MatchData m_matchData;
-    private ActionBar m_actionBar;
 
-    private static final int REQUEST_QR = 2;
     public static final String QRTAG = "qr";
     private static final String TAG = "EndgameFragment";
 
@@ -40,12 +38,17 @@ public class EndgameFragment extends Fragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
-        m_matchData = ((ScoutingActivity) getActivity()).getCurrentMatch();
-
-        m_actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        String teamNumber = m_matchData.stripTeamNamePrefix(m_matchData.getTeamNumber());
-        m_actionBar.setTitle("Endgame               Scouting Team " + teamNumber + "          Match " + m_matchData.getMatchNumber());
+        ScoutingActivity activity = (ScoutingActivity) getActivity();
+        if(activity != null) {
+            m_matchData = activity.getCurrentMatch();
+            if(m_matchData != null) {
+                String teamNumber = m_matchData.stripTeamNamePrefix(m_matchData.getTeamNumber());
+                ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+                if( actionBar != null) {
+                    actionBar.setTitle("Endgame               Scouting Team " + teamNumber + "          Match " + m_matchData.getMatchNumber());
+                }
+            }
+        }
     }
 
     @Override
@@ -67,8 +70,8 @@ public class EndgameFragment extends Fragment
         });
 
         m_endGameRadioGroup = v.findViewById(R.id.endgame_charge_level);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
-        m_radio_endGameNone = v.findViewById(R.id.level_endgamenone);//Sets up radio button that corresponds to 0
-        m_radio_endGameNone.setChecked(true);
+        RadioButton radio_endGameNone = v.findViewById(R.id.level_endgamenone);//Sets up radio button that corresponds to 0
+        radio_endGameNone.setChecked(true);
         m_radio_endGameParked = v.findViewById(R.id.level_endgameparked);//Sets up radio button that corresponds to 1
         m_radio_endGameParked.setChecked(false);
         m_radio_endGameDocked = v.findViewById(R.id.level_endgamedocked);//Sets up radio button that corresponds to 2
@@ -78,7 +81,7 @@ public class EndgameFragment extends Fragment
 
         int x = m_matchData.getEndgameChargeLevel();
         if (x == 0)
-            m_radio_endGameNone.setChecked(true);
+            radio_endGameNone.setChecked(true);
         else if (x == 1)
             m_radio_endGameParked.setChecked(true);
         else if (x == 2)
@@ -113,10 +116,12 @@ public class EndgameFragment extends Fragment
                 //Uses intents to start the QR code dialog
                 updateEndgameData();
                 Log.d(TAG, "Clicked on QR Code");
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                QRFragment dialog = QRFragment.newInstance(m_matchData);
-                dialog.setTargetFragment(EndgameFragment.this, REQUEST_QR);
-                dialog.show(fm, QRTAG);
+                FragmentActivity fActivity = getActivity();
+                if(fActivity != null) {
+                    FragmentManager fm = fActivity.getSupportFragmentManager();
+                    QRFragment dialog = QRFragment.newInstance(m_matchData);
+                    dialog.show(fm, QRTAG);
+                }
             }
         });
 
@@ -128,16 +133,15 @@ public class EndgameFragment extends Fragment
             public void onClick(View view)
             {
                 // Save the latest Scouter and MatchData JSON files.
-                Log.d(TAG, "EndgameFragment DONE onClick() saving latest match and Scouter files");
+                Log.d(TAG, "EndgameFragment DONE onClick() saving latest match and Scouter files\n");
                 MatchHistory.get(getActivity()).saveScouterData();
                 MatchHistory.get(getActivity()).saveMatchData(m_matchData);
 
                 // Go back to MatchListActivity page
                 Intent i = new Intent(getActivity(), MatchListActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivityForResult(i, 0);
-                getActivity().finish();
-                Log.d(TAG, "Sent intent");
+                startActivity(i);
+                requireActivity().finish();
             }
         });
 
