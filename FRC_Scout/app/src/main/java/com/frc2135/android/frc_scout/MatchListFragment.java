@@ -2,7 +2,6 @@ package com.frc2135.android.frc_scout;
 
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ActionMode;
@@ -22,12 +21,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.ListFragment;
 
@@ -59,8 +58,6 @@ public class MatchListFragment extends ListFragment
         // For the 3-dot options menu
         setHasOptionsMenu(true); //alerts the fragment manager that the it should receive options menu callbacks
 
-        setRetainInstance(true);
-
         ActionBar aBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         if(aBar != null) {
             aBar.setTitle("Recorded Matches");
@@ -71,7 +68,7 @@ public class MatchListFragment extends ListFragment
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
         m_displayedMatches = MatchHistory.get(getActivity()).sortByTimestamp2(MatchHistory.get(getContext()).getMatches());
-        Log.d(TAG, "Initial file search: displayedMatches size = " + m_displayedMatches.size() + "");
+        Log.d(TAG, "OnCreateView(): displayedMatches size = " + m_displayedMatches.size() + "");
         m_adapter = new MatchAdapter(m_displayedMatches);
         Intent intent = requireActivity().getIntent();
         if (intent.hasExtra("team"))
@@ -225,69 +222,64 @@ public class MatchListFragment extends ListFragment
             }
         });
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        listView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener()
         {
-            listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-            listView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener()
+            @Override
+            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked)
             {
-                @Override
-                public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked)
-                {
-                    //Not necessary in our implementation
-                }
+                //Not necessary in our implementation
+            }
 
-                ////// Set up the match's context menu (Edit match / Delete).
-                @Override
-                public boolean onCreateActionMode(ActionMode mode, Menu menu)
-                {
-                    //The action mode configures the contextual action bar, not the activity
-                    MenuInflater inflater = mode.getMenuInflater();
-                    inflater.inflate(R.menu.match_list_item_context, menu);
-                    return true;
-                }
+            ////// Set up the match's context menu (Edit match / Delete).
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu)
+            {
+                //The action mode configures the contextual action bar, not the activity
+                MenuInflater inflater = mode.getMenuInflater();
+                inflater.inflate(R.menu.match_list_item_context, menu);
+                return true;
+            }
 
-                @Override
-                public boolean onPrepareActionMode(ActionMode mode, Menu menu)
-                {
-                    //Not necessary in our implementation
-                    return false;
-                }
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu)
+            {
+                //Not necessary in our implementation
+                return false;
+            }
 
-                @Override
-                public boolean onActionItemClicked(ActionMode mode, MenuItem item)
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item)
+            {
+                if (item.getItemId() == R.id.menu_item_delete_match)
                 {
-                    if (item.getItemId() == R.id.menu_item_delete_match)
+                    // Delete all selected matches.
+                    MatchAdapter adapter = (MatchAdapter) getListAdapter();
+                    if(adapter != null)
                     {
-                        MatchAdapter adapter = (MatchAdapter) getListAdapter();
-                        if(adapter != null)
+                        MatchHistory matchHistory = MatchHistory.get(getActivity());
+                        int aCount = adapter.getCount();
+                        for (int i = aCount - 1; i >= 0; i--) 
                         {
-                            MatchHistory matchHistory = MatchHistory.get(getActivity());
-                            int aCount = adapter.getCount();
-                            for (int i = aCount - 1; i >= 0; i--) {
-                                if (getListView().isItemChecked(i)) {
-                                    matchHistory.deleteMatch(adapter.getItem(i));
-                                    //Deletes all selected matches
-                                }
+                            if (getListView().isItemChecked(i)) 
+                            {
+                                matchHistory.deleteMatch(adapter.getItem(i));
                             }
-                            mode.finish();
-                            adapter.notifyDataSetChanged();
-                            return true;
                         }
+                        mode.finish();
+                        adapter.notifyDataSetChanged();
+                        return true;
                     }
-                    return false;
                 }
+                return false;
+            }
 
-                @Override
-                public void onDestroyActionMode(ActionMode mode)
-                {
-                    //Not necessary in our implementation
-                }
-            });
-        }
-        else
-        {
-            registerForContextMenu(listView);
-        }
+            @Override
+            public void onDestroyActionMode(ActionMode mode)
+            {
+                //Not necessary in our implementation
+            }
+        });
         return v1;
     }
 
@@ -312,7 +304,6 @@ public class MatchListFragment extends ListFragment
             super(getActivity(), 0, matchData);
         }
 
-        @RequiresApi ( api = Build.VERSION_CODES.N )
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
@@ -430,27 +421,28 @@ public class MatchListFragment extends ListFragment
         int position = info.position;
         MatchData m = m_adapter.getItem(position);
 
-        switch (item.getItemId())
+        int itemID = item.getItemId();
+        if(itemID == R.id.menu_item_delete_match)
         {
-            case R.id.menu_item_delete_match:
-                Log.d(TAG, "Delete match button clicked");
-                m_displayedMatches.remove(m);
-                MatchHistory.get(getActivity()).deleteMatch(m);
-                m_adapter.notifyDataSetChanged();
-                return true;
-            case R.id.edit_match_button:
-                Log.d(TAG, "Edit match button clicked");
-
-                m_adapter = (MatchAdapter) getListAdapter();
-
-                Intent data = new Intent(getActivity(), PreMatchActivity.class);
-                data.putExtra("match_ID", m.getMatchID());
-                getListView().clearFocus();
-
-                startActivity(data);
-                //Makes data editable once more
-                return true;
+            Log.d(TAG, "Delete match button clicked");
+            m_displayedMatches.remove(m);
+            MatchHistory.get(getActivity()).deleteMatch(m);
+            m_adapter.notifyDataSetChanged();
         }
-        return super.onContextItemSelected(item);
+        else if(itemID == R.id.edit_match_button)
+        {
+            Log.d(TAG, "Edit match button clicked");
+
+            m_adapter = (MatchAdapter) getListAdapter();
+
+            Intent data = new Intent(getActivity(), PreMatchActivity.class);
+            data.putExtra("match_ID", m.getMatchID());
+            getListView().clearFocus();
+
+            startActivity(data);
+            //Makes data editable once more
+        }
+        else return super.onContextItemSelected(item);
+        return true;
     }
 }
