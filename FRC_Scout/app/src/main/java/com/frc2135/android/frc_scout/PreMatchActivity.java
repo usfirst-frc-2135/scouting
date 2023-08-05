@@ -27,11 +27,8 @@ public class PreMatchActivity extends AppCompatActivity
     private AutoCompleteTextView m_scoutNameField;
     private AutoCompleteTextView m_teamNumberField;
     private EditText m_matchNumberField;
-    private Button m_startScoutingButton;
     private TextView m_missingFieldErrMsg;
-    private Button m_preMatchCancelButton;
     private MatchData m_matchData;
-    private ActionBar m_actionBar;
     private CompetitionInfo m_compInfo;
 
     public static final String TAG = "PreMatchActivity";
@@ -71,8 +68,9 @@ public class PreMatchActivity extends AppCompatActivity
         m_matchData = MatchHistory.get(getApplicationContext()).getMatch(matchId);
         m_compInfo = CompetitionInfo.get(getApplicationContext(), m_matchData.getCompetition().trim(), false);
 
-        m_actionBar = getSupportActionBar();
-        m_actionBar.setTitle("Pre-Match");
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null)
+            actionBar.setTitle("Pre-Match");
 
         setContentView(R.layout.prematch_activity);
 
@@ -153,8 +151,10 @@ public class PreMatchActivity extends AppCompatActivity
             m_matchNumberField.setText(m_matchData.getMatchNumber());
         else if (m_Scouter != null && !m_Scouter.getMostRecentMatchNumber().isEmpty())
             m_matchNumberField.setText(m_Scouter.getNextExpectedMatchNumber());
-        else
-            m_matchNumberField.setText("qm1");
+        else {
+            String str1 = "qm1";
+            m_matchNumberField.setText(str1);
+        }
 
         m_matchNumberField.addTextChangedListener(new TextWatcher()
         {
@@ -238,8 +238,8 @@ public class PreMatchActivity extends AppCompatActivity
             }
         });
 
-        m_startScoutingButton = findViewById(R.id.start_scouting_button);
-        m_startScoutingButton.setOnClickListener(new View.OnClickListener()
+        Button startScoutingButton = findViewById(R.id.start_scouting_button);
+        startScoutingButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
@@ -250,20 +250,20 @@ public class PreMatchActivity extends AppCompatActivity
                     updatePreMatchData();
                     Intent intent1 = new Intent(PreMatchActivity.this, ScoutingActivity.class);
                     intent1.putExtra("match_ID", m_matchData.getMatchID());
-                    startActivityForResult(intent1, 0);
+                    startActivity(intent1);
                 }
             }
         });
 
-        m_preMatchCancelButton = findViewById(R.id.prematch_cancel_button);
-        m_preMatchCancelButton.setOnClickListener(new View.OnClickListener()
+        Button preMatchCancelButton = findViewById(R.id.prematch_cancel_button);
+        preMatchCancelButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
                 MatchHistory.get(getApplicationContext()).deleteMatch(m_matchData);
                 Intent intent2 = new Intent(PreMatchActivity.this, MatchListActivity.class);
-                startActivityForResult(intent2, 0);
+                startActivity(intent2);
             }
         });
     }
@@ -284,9 +284,6 @@ public class PreMatchActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        //if(requestCode == 0){
-        //finish();
-        //}
     }
 
     private boolean checkValidData()

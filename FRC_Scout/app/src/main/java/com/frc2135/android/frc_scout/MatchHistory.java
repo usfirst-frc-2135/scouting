@@ -122,7 +122,7 @@ public class MatchHistory
 
     public ArrayList<MatchData> sortByTimestamp1(ArrayList<MatchData> mdList)
     {
-        ArrayList sorted = new ArrayList<MatchData>();
+        ArrayList<MatchData> sorted = new ArrayList<MatchData>();
         boolean isAdded = false;
         if (mdList.size() > 0)
         {
@@ -132,7 +132,7 @@ public class MatchHistory
                 for (int ctr2 = 0; ctr2 < sorted.size(); ctr2++)
                 {
                     Date d1 = mdList.get(ctr1).getTimestamp();
-                    Date d2 = ((MatchData) sorted.get(ctr2)).getTimestamp();
+                    Date d2 = (sorted.get(ctr2)).getTimestamp();
                     if (d1.before(d2))
                     {
                         sorted.add(ctr2, mdList.get(ctr1));
@@ -152,10 +152,10 @@ public class MatchHistory
 
     public ArrayList<MatchData> sortByTimestamp2(ArrayList<MatchData> mdList)
     {
-        ArrayList sorted = new ArrayList<MatchData>();
-        ArrayList temp = new ArrayList<MatchData>();
+        ArrayList<MatchData> sorted = new ArrayList<MatchData>();
+        ArrayList<MatchData> temp;
         temp = sortByTimestamp1(mdList);
-        for (Object mData : temp)
+        for (MatchData mData : temp)
         {
             sorted.add(0, mData);
         }
@@ -177,7 +177,7 @@ public class MatchHistory
 
     public ArrayList<MatchData> filterByCompetition(ArrayList<MatchData> mdList, String comp)
     {
-        ArrayList sorted = new ArrayList<MatchData>();
+        ArrayList<MatchData> sorted = new ArrayList<MatchData>();
         for (MatchData mData : mdList)
         {
             if (mData.getCompetition().equals(comp))
@@ -216,7 +216,7 @@ public class MatchHistory
 
     public String[] listTeams()
     {
-        ArrayList teams = new ArrayList<String>();
+        ArrayList<String> teams = new ArrayList<String>();
         for (MatchData mData : m_TotalMatchHistory)
         {
             String team = mData.getTeamNumber();
@@ -229,14 +229,14 @@ public class MatchHistory
         array[0] = "Select team";
         for (int i = 1; i < array.length; i++)
         {
-            array[i] = teams.get(i - 1).toString();
+            array[i] = teams.get(i - 1);
         }
         return array;
     }
 
     public String[] listCompetitions()
     {
-        ArrayList competitions = new ArrayList<String>();
+        ArrayList<String> competitions = new ArrayList<String>();
         for (MatchData mData : m_TotalMatchHistory)
         {
             String competition = mData.getCompetition();
@@ -249,14 +249,14 @@ public class MatchHistory
         array[0] = "Select competition";
         for (int i = 1; i < array.length; i++)
         {
-            array[i] = competitions.get(i - 1).toString();
+            array[i] = competitions.get(i - 1);
         }
         return array;
     }
 
     public String[] listScouts()
     {
-        ArrayList scouts = new ArrayList<String>();
+        ArrayList<String> scouts = new ArrayList<String>();
         for (MatchData mData : m_TotalMatchHistory)
         {
             String scout = mData.getName();
@@ -269,7 +269,7 @@ public class MatchHistory
         array[0] = "Select scout";
         for (int i = 1; i < array.length; i++)
         {
-            array[i] = scouts.get(i - 1).toString();
+            array[i] = scouts.get(i - 1);
         }
         return array;
     }

@@ -80,13 +80,14 @@ public class MatchData
     // Utility to strip off "frc" prefix to team number.
     public String stripTeamNamePrefix(String teamName)
     {
-        String newTeamName = "";
+        StringBuilder newTeamName = new StringBuilder();
         for (int i = 0; i < teamName.length(); i++)
         {
-            if (Character.isDigit(teamName.charAt(i)))
-                newTeamName += teamName.charAt(i);
+            if (i < 3 && !Character.isDigit(teamName.charAt(i)))
+                continue;  // skip the first 3 chars that are not digits
+            newTeamName.append(teamName.charAt(i));
         }
-        return newTeamName;
+        return newTeamName.toString();
     }
 
     ////////////////////////  Default constructor   //////////////////////////////
@@ -213,9 +214,9 @@ public class MatchData
     }
 
     ////////////  m_autonConesBottomRow   /////////////////////
-    public void setAutonConesBottomRow(int x)
+    public void setAutonConesBottomRow(int numCones)
     {
-        m_autonConesBottomRow = x;
+        m_autonConesBottomRow = numCones;
     }
 
     public int getAutonConesBottomRow()
@@ -301,9 +302,9 @@ public class MatchData
     }
 
     ////////////  m_teleopConesBottomRow   /////////////////////
-    public void setTeleopConesBottomRow(int x)
+    public void setTeleopConesBottomRow(int numCones)
     {
-        m_teleopConesBottomRow = x;
+        m_teleopConesBottomRow = numCones;
     }
 
     public int getTeleopConesBottomRow()

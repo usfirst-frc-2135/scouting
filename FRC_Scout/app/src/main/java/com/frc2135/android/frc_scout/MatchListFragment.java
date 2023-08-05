@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-@SuppressWarnings("Convert2Lambda")
 public class MatchListFragment extends ListFragment
 {
 

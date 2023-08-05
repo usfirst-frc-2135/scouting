@@ -134,8 +134,16 @@ public class EndgameFragment extends Fragment
             {
                 // Save the latest Scouter and MatchData JSON files.
                 Log.d(TAG, "EndgameFragment DONE onClick() saving latest match and Scouter files\n");
-                MatchHistory.get(getActivity()).saveScouterData();
-                MatchHistory.get(getActivity()).saveMatchData(m_matchData);
+                if(!MatchHistory.get(getActivity()).saveScouterData())
+                {
+                    Log.d(TAG, "ERROR - unable to save Scouter Data!");
+                    // TODO - issue a toast msg here??
+                }
+                if(!MatchHistory.get(getActivity()).saveMatchData(m_matchData))
+                {
+                    Log.d(TAG, "ERROR - unable to save Match Data!");
+                    // TODO - issue a toast msg here??
+                }
 
                 // Go back to MatchListActivity page
                 Intent i = new Intent(getActivity(), MatchListActivity.class);

@@ -1,6 +1,5 @@
 package com.frc2135.android.frc_scout;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -16,115 +15,109 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 public class FilterDialog extends DialogFragment
 {
 
     private static final String TAG = "FilterDialog";
-    private CheckBox mTeamCheckbox;
-    private CheckBox mCompetitionCheckbox;
-    private CheckBox mScoutCheckbox;
-    private CheckBox mMatchCheckbox;
 
-    private boolean filterTeam;
-    private boolean filterCompetition;
-    private boolean filterScout;
-    private boolean filterMatch;
+    private boolean m_bFilterTeam;
+    private boolean m_bFilterCompetition;
+    private boolean m_bFilterScout;
+    private boolean m_bFilterMatch;
+    private Spinner m_TeamSpinner;
+    private Spinner m_CompetitionSpinner;
+    private Spinner m_ScoutSpinner;
+    private EditText m_MatchEditText;
 
-    private Spinner mTeamSpinner;
-    private Spinner mCompetitionSpinner;
-    private Spinner mScoutSpinner;
-
-    private EditText mMatchEditText;
-
-    private Bundle b;
-
+    @NonNull
     public Dialog onCreateDialog(Bundle SavedInstanceState)
     {
         setCancelable(false);
 
         Log.i(TAG, "onCreateDialog called");
 
-        View v = getActivity().getLayoutInflater().inflate(R.layout.filter_dialog, null);
+        View v = requireActivity().getLayoutInflater().inflate(R.layout.filter_dialog, null);
 
-        filterTeam = false;
-        filterCompetition = false;
-        filterScout = false;
-        filterMatch = false;
+        m_bFilterTeam = false;
+        m_bFilterCompetition = false;
+        m_bFilterScout = false;
+        m_bFilterMatch = false;
 
-        mTeamCheckbox = v.findViewById(R.id.team_select);
-        mTeamCheckbox.setChecked(false);
-        mTeamCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        CheckBox teamCheckbox = v.findViewById(R.id.team_select);
+        teamCheckbox.setChecked(false);
+        teamCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
-                filterTeam = isChecked;
-                mTeamSpinner.setEnabled(filterTeam);
+                m_bFilterTeam = isChecked;
+                m_TeamSpinner.setEnabled(m_bFilterTeam);
             }
         });
 
-        mTeamSpinner = v.findViewById(R.id.team_options);
-        mTeamSpinner.setEnabled(filterTeam);
+        m_TeamSpinner = v.findViewById(R.id.team_options);
+        m_TeamSpinner.setEnabled(m_bFilterTeam);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.select_dialog_item, MatchHistory.get(getActivity()).listTeams());
-        mTeamSpinner.setAdapter(adapter);
+        m_TeamSpinner.setAdapter(adapter);
 
-        mMatchCheckbox = v.findViewById(R.id.match_select);
-        mMatchCheckbox.setChecked(false);
-        mMatchCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        CheckBox matchCheckbox = v.findViewById(R.id.match_select);
+        matchCheckbox.setChecked(false);
+        matchCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
-                filterMatch = isChecked;
-                mMatchEditText.setEnabled(filterMatch);
+                m_bFilterMatch = isChecked;
+                m_MatchEditText.setEnabled(m_bFilterMatch);
             }
         });
 
-        mMatchEditText = v.findViewById(R.id.match_entry);
-        mMatchEditText.setEnabled(filterMatch);
-        mMatchEditText.setHint("Enter match number");
+        m_MatchEditText = v.findViewById(R.id.match_entry);
+        m_MatchEditText.setEnabled(m_bFilterMatch);
+        m_MatchEditText.setHint("Enter match number");
 
-        mCompetitionCheckbox = v.findViewById(R.id.competition_select);
-        mCompetitionCheckbox.setChecked(false);
-        mCompetitionCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        CheckBox competitionCheckbox = v.findViewById(R.id.competition_select);
+        competitionCheckbox.setChecked(false);
+        competitionCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
-                filterCompetition = isChecked;
-                mCompetitionSpinner.setEnabled(filterCompetition);
+                m_bFilterCompetition = isChecked;
+                m_CompetitionSpinner.setEnabled(m_bFilterCompetition);
             }
         });
 
-        mCompetitionSpinner = v.findViewById(R.id.competition_options);
-        mCompetitionSpinner.setEnabled(filterCompetition);
+        m_CompetitionSpinner = v.findViewById(R.id.competition_options);
+        m_CompetitionSpinner.setEnabled(m_bFilterCompetition);
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.select_dialog_item, MatchHistory.get(getActivity()).listCompetitions());
-        mCompetitionSpinner.setAdapter(adapter1);
+        m_CompetitionSpinner.setAdapter(adapter1);
 
-        mScoutCheckbox = v.findViewById(R.id.scout_select);
-        mScoutCheckbox.setChecked(false);
-        mScoutCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        CheckBox scoutCheckbox = v.findViewById(R.id.scout_select);
+        scoutCheckbox.setChecked(false);
+        scoutCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
-                filterScout = isChecked;
-                mScoutSpinner.setEnabled(filterScout);
+                m_bFilterScout = isChecked;
+                m_ScoutSpinner.setEnabled(m_bFilterScout);
             }
         });
 
-        mScoutSpinner = v.findViewById(R.id.scout_options);
-        mScoutSpinner.setEnabled(filterScout);
+        m_ScoutSpinner = v.findViewById(R.id.scout_options);
+        m_ScoutSpinner.setEnabled(m_bFilterScout);
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getActivity(), android.R.layout.select_dialog_item, MatchHistory.get(getActivity()).listScouts());
-        mScoutSpinner.setAdapter(adapter2);
+        m_ScoutSpinner.setAdapter(adapter2);
 
         AlertDialog dialog = new AlertDialog.Builder(getActivity()).setView(v).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
         {
             public void onClick(DialogInterface dialog, int which)
             {
-                sendResult(Activity.RESULT_OK);
+                sendResult();
             }
         }).create();
 
@@ -148,34 +141,34 @@ public class FilterDialog extends DialogFragment
         return dialog;
     }
 
-    private void sendResult(int resultCode)
+    private void sendResult()
     {
         Log.i(TAG, "sendResult() called");
-        Intent i = new Intent(getActivity(), MatchListActivity.class);
-        if (filterTeam)
+        Intent intent = new Intent(getActivity(), MatchListActivity.class);
+        if (m_bFilterTeam)
         {
-            Log.d(TAG, mTeamSpinner.getSelectedItem().toString());
-            i.putExtra("team", mTeamSpinner.getSelectedItem().toString());
+            Log.d(TAG, m_TeamSpinner.getSelectedItem().toString());
+            intent.putExtra("team", m_TeamSpinner.getSelectedItem().toString());
             Log.d(TAG, "I want to filter by team");
         }
-        if (filterScout)
+        if (m_bFilterScout)
         {
-            i.putExtra("scout", mScoutSpinner.getSelectedItem().toString());
+            intent.putExtra("scout", m_ScoutSpinner.getSelectedItem().toString());
             Log.d(TAG, "I want to filter by scout");
         }
-        if (filterCompetition)
+        if (m_bFilterCompetition)
         {
-            Log.d(TAG, mCompetitionSpinner.getSelectedItem().toString());
-            i.putExtra("competition", mCompetitionSpinner.getSelectedItem().toString());
+            Log.d(TAG, m_CompetitionSpinner.getSelectedItem().toString());
+            intent.putExtra("competition", m_CompetitionSpinner.getSelectedItem().toString());
             Log.d(TAG, "I want to filter by competition");
         }
-        if (filterMatch)
+        if (m_bFilterMatch)
         {
-            i.putExtra("match", mMatchEditText.getText().toString());
+            intent.putExtra("match", m_MatchEditText.getText().toString());
             Log.d(TAG, "I want to filter by match");
         }
-        startActivity(i);
-        getTargetFragment().getActivity().finish();
+        startActivity(intent);
+        getTargetFragment().requireActivity().finish();
     }
 }
 

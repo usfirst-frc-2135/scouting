@@ -1,6 +1,5 @@
 package com.frc2135.android.frc_scout;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -15,9 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
-
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -41,13 +39,14 @@ public class LoadEventDialog extends DialogFragment
     private String m_eventCode = "myEventCode";
     private Context m_appContext;
 
+    @NonNull
     public Dialog onCreateDialog(Bundle SavedInstanceState)
     {
         setCancelable(true);
 
         Log.i(TAG, "onCreateDialog called");
 
-        View v = getActivity().getLayoutInflater().inflate(R.layout.load_event_data_dialog, null);
+        View v = requireActivity().getLayoutInflater().inflate(R.layout.load_event_data_dialog, null);
         m_eventCodeField = v.findViewById(R.id.event_code_field);
         m_eventCodeField.setHint("Enter event code");
 
@@ -57,13 +56,9 @@ public class LoadEventDialog extends DialogFragment
             {
                 try
                 {
-                    sendResult(Activity.RESULT_OK);
+                    sendResult();
                 }
-                catch (JSONException e)
-                {
-                    e.printStackTrace();
-                }
-                catch (IOException e)
+                catch (JSONException | IOException e)
                 {
                     e.printStackTrace();
                 }
@@ -90,7 +85,7 @@ public class LoadEventDialog extends DialogFragment
         return dialog;
     }
 
-    private void sendResult(int resultCode) throws JSONException, IOException
+    private void sendResult() throws JSONException, IOException
     {
         Log.i(TAG, "sendResult() called");
         Intent i = new Intent(getActivity(), MatchListActivity.class);
@@ -159,11 +154,7 @@ public class LoadEventDialog extends DialogFragment
                                 CompetitionInfo.get(m_appContext, m_eventCode, true);
                             }
                         }
-                        catch (JSONException e)
-                        {
-                            e.printStackTrace();
-                        }
-                        catch (IOException e)
+                        catch (JSONException | IOException e)
                         {
                             e.printStackTrace();
                         }
@@ -185,7 +176,7 @@ public class LoadEventDialog extends DialogFragment
                 })
                 {
                     @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError
+                    public Map<String, String> getHeaders()
                     {
                         // These params are used to access the URL data (I think).
                         Map<String, String> params = new HashMap<String, String>();

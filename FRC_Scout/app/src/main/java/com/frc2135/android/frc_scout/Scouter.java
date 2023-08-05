@@ -14,7 +14,6 @@ public class Scouter
 
     private final ArrayList<String> m_pastScouters;
     private static Scouter sScouter;
-    private MatchDataSerializer m_Serializer;
     private String m_teamIndexStr;
     private String m_mostRecentScoutName;
     private String m_mostRecentMatchNumber;
@@ -29,7 +28,7 @@ public class Scouter
         m_mostRecentMatchNumber = "";
         m_teamIndexStr = "None";
 
-        m_Serializer = new MatchDataSerializer(mAppContext, FILENAME);
+        MatchDataSerializer serializer = new MatchDataSerializer(mAppContext, FILENAME);
 
         // Load the previously saved Scouter data from Scouter.json file.
         if (m_pastScouters.size() == 0)
@@ -37,7 +36,7 @@ public class Scouter
             try
             {
                 Log.d(TAG, "Loading scouter");
-                Scouter tmpScouter = m_Serializer.loadScouterData();
+                Scouter tmpScouter = serializer.loadScouterData();
                 if (tmpScouter != null)
                 {
                     Collections.addAll(m_pastScouters, tmpScouter.getPastScouts());
@@ -51,7 +50,7 @@ public class Scouter
         }
     }
 
-    public Scouter(JSONObject json) throws JSONException
+    public Scouter(JSONObject json)
     {
         Log.d(TAG, "Scouter being created using json data");
         m_pastScouters = new ArrayList<String>();
@@ -107,19 +106,19 @@ public class Scouter
     public String getNextExpectedMatchNumber()
     {
         String newMatchNumber = "";
-        if (m_mostRecentMatchNumber != "")
+        if (!m_mostRecentMatchNumber.equals(""))
         {
-            String prefix = "";
-            String numStr = "";
+            StringBuilder prefix = new StringBuilder();
+            StringBuilder numStr = new StringBuilder();
             for (int i = 0; i < m_mostRecentMatchNumber.length(); i++)
             {
                 if (Character.isDigit(m_mostRecentMatchNumber.charAt(i)))
-                    numStr += m_mostRecentMatchNumber.charAt(i);
+                    numStr.append(m_mostRecentMatchNumber.charAt(i));
                 else
-                    prefix += m_mostRecentMatchNumber.charAt(i);
+                    prefix.append(m_mostRecentMatchNumber.charAt(i));
             }
-            newMatchNumber = prefix;
-            int newNum = Integer.parseInt(numStr);
+            newMatchNumber = prefix.toString();
+            int newNum = Integer.parseInt(numStr.toString());
             newNum++;
             newMatchNumber += Integer.toString(newNum);
         }
@@ -178,14 +177,14 @@ public class Scouter
         // Writes the Scouter data to Scouter.json file.
         JSONObject json = new JSONObject();
 
-        String logMsg = "";
+        StringBuilder logMsg = new StringBuilder();
         for (int i = 0; i < m_pastScouters.size(); i++)
         {
             json.put("scoutername" + i, m_pastScouters.get(i));
-            logMsg += "scoutername" + i + "=" + m_pastScouters.get(i) + "; ";
+            logMsg.append("scoutername").append(i).append("=").append(m_pastScouters.get(i)).append("; ");
         }
         json.put("teamindex", m_teamIndexStr);
-        logMsg += "teamindex" + "=" + m_teamIndexStr;
+        logMsg.append("teamindex" + "=").append(m_teamIndexStr);
 
         Log.d(TAG, "Writing to Scouter.json: " + logMsg);
         return json;

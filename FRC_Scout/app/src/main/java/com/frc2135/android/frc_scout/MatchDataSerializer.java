@@ -137,7 +137,7 @@ public class MatchDataSerializer
                         InputStream in = m_Context.openFileInput(filename.trim());
                         reader = new BufferedReader(new InputStreamReader(in));
                         StringBuilder jsonString = new StringBuilder();
-                        String line = null;
+                        String line;
 
                         while ((line = reader.readLine()) != null)
                         {
@@ -173,7 +173,6 @@ public class MatchDataSerializer
     public Scouter loadScouterData() throws IOException, JSONException
     {
         Log.d(TAG, "loadScouterData(): m_FileName = " + m_FileName);
-        ArrayList<MatchData> matchHistory = new ArrayList<MatchData>();
         BufferedReader reader = null;
         try
         {
@@ -181,7 +180,7 @@ public class MatchDataSerializer
             InputStream in = m_Context.openFileInput(m_FileName);
             reader = new BufferedReader(new InputStreamReader(in));
             StringBuilder jsonString = new StringBuilder();
-            String line = null;
+            String line;
 
             while ((line = reader.readLine()) != null)
             {

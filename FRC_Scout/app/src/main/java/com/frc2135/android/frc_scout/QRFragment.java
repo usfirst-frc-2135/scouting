@@ -12,12 +12,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 
 import java.util.Date;
+import java.util.Locale;
 
 import zxing.Contents;
 import zxing.QRCodeEncoder;
@@ -25,37 +27,36 @@ import zxing.QRCodeEncoder;
 public class QRFragment extends DialogFragment
 {
     private static final String TAG = "QRFragment";
-    private ImageView m_imageView;
-    private String m_label;
-    private String m_stats;
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        View v = getActivity().getLayoutInflater().inflate(R.layout.qr_fragment, null);
+        String stats = "";
+        View v = requireActivity().getLayoutInflater().inflate(R.layout.qr_fragment, null);
+        Bundle args = getArguments();
+        if(args != null)
+            stats = args.getString("stats");
 
-        m_label = getArguments().getString("match label");
-        m_stats = getArguments().getString("stats");
-
-        ImageView m_imageView = v.findViewById(R.id.matchdata_qr);
+        ImageView imageView = v.findViewById(R.id.matchdata_qr);
 
         int qrCodeDimension = 750;
 
-        Log.d(TAG, "stats: " + m_stats);
+        Log.d(TAG, "stats: " + stats);
 
-        QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(m_stats, null, Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), qrCodeDimension);
+        QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(stats, null, Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), qrCodeDimension);
 
         try
         {
             Bitmap bitmap = qrCodeEncoder.encodeAsBitmap();
-            m_imageView.setImageBitmap(bitmap);
+            imageView.setImageBitmap(bitmap);
         }
         catch (WriterException e)
         {
             Log.d(TAG, "qrCodeEncoder Error: " + e + "");
         }
 
-        AlertDialog dialog = new AlertDialog.Builder(getActivity()).setView(v).setTitle(m_stats).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+        AlertDialog dialog = new AlertDialog.Builder(getActivity()).setView(v).setTitle(stats).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
         {
             public void onClick(DialogInterface dialog, int which)
             {
@@ -84,7 +85,7 @@ public class QRFragment extends DialogFragment
 
     public static String formattedDate(Date d)
     {
-        SimpleDateFormat dt = new SimpleDateFormat("E MMM dd hh:mm:ss z yyyy");
+        SimpleDateFormat dt = new SimpleDateFormat("E MMM dd hh:mm:ss z yyyy", Locale.US);
         Date date = null;
         try
         {
@@ -94,7 +95,7 @@ public class QRFragment extends DialogFragment
         {
             Log.d("SignInFragment", e.getMessage());
         }
-        SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-M-dd hh:mm:ss");
+        SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-M-dd hh:mm:ss",Locale.US);
 
         if (date == null)
         {
