@@ -1,9 +1,8 @@
 package com.frc2135.android.frc_scout;
 
+import android.content.Context;
 import android.graphics.Color;
-import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +12,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import java.util.Date;
 
 public class TeleopFragment extends Fragment
 {
-    private static final String TAG = "TeleopFragment";
     private static final int MAX_POINTS = 30;     // max for valid high or low points total
 
     private TextView m_teleopConesBottomRowValue;
@@ -30,36 +28,17 @@ public class TeleopFragment extends Fragment
     private TextView m_teleopCubesMiddleRowValue;
     private TextView m_teleopCubesTopRowValue;
 
-    private Button m_teleopConeBottomDecrButton;
-    private Button m_teleopConeBottomIncrButton;
-
-    private Button m_teleopConeMiddleDecrButton;
-    private Button m_teleopConeMiddleIncrButton;
-
-    private Button m_teleopConeTopDecrButton;
-    private Button m_teleopConeTopIncrButton;
-
-    private Button m_teleopCubeBottomDecrButton;
-    private Button m_teleopCubeBottomIncrButton;
-
-    private Button m_teleopCubeMiddleDecrButton;
-    private Button m_teleopCubeMiddleIncrButton;
-
-    private Button m_teleopCubeTopDecrButton;
-    private Button m_teleopCubeTopIncrButton;
-
     private CheckBox m_pickupCubeCheckbox;
     private CheckBox m_pickupUprightCheckbox;
     private CheckBox m_pickupTippedCheckbox;
     private MatchData m_matchData;
-    private ActionBar m_actionBar;
 
-    // Check if pointsTextView field has a valid number, equal or less than MAX_POINTS.
-    private boolean isValidPoints(TextView field)
+    // Check if pointsTextView field is greater than the MAX_POINTS.
+    private boolean isNotValidPoints(TextView field)
     {
         boolean rtn = false;
         int num = Integer.parseInt(field.getText().toString());
-        if (num <= MAX_POINTS)
+        if (num > MAX_POINTS)
             rtn = true;
         return rtn;
     }
@@ -75,13 +54,19 @@ public class TeleopFragment extends Fragment
             result -= 1;
         if (result < 0)
             result = 0;
-        pointsTextView.setText(result + "");
-        if (!isValidPoints(pointsTextView))
+        pointsTextView.setText(String.valueOf(result));
+
+        if (isNotValidPoints(pointsTextView))
         {
             pointsTextView.setTextColor(Color.RED);
         }
         else
-            pointsTextView.setTextColor(getResources().getColor(R.color.specialTextPrimary));
+        {
+            Context context = getContext();
+            if(context != null)  {
+              pointsTextView.setTextColor(ContextCompat.getColor(context,R.color.specialTextPrimary));
+            }
+        }
     }
 
     @Override
@@ -89,10 +74,13 @@ public class TeleopFragment extends Fragment
     {
         super.onCreate(savedInstanceState);
 
-        m_matchData = ((ScoutingActivity) getActivity()).getCurrentMatch();
-        m_actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        String teamNumber = m_matchData.stripTeamNamePrefix(m_matchData.getTeamNumber());
-        m_actionBar.setTitle("Teleoperated          Scouting Team " + teamNumber + "         Match " + m_matchData.getMatchNumber());
+        m_matchData = ((ScoutingActivity) requireActivity()).getCurrentMatch();
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        if(actionBar != null)
+        {
+            String teamNumber = m_matchData.stripTeamNamePrefix(m_matchData.getTeamNumber());
+            actionBar.setTitle("Teleoperated          Scouting Team " + teamNumber + "         Match " + m_matchData.getMatchNumber());
+        }
     }
 
     @Override
@@ -100,40 +88,38 @@ public class TeleopFragment extends Fragment
     {
         //Creates a view using the specific fragment layout, match_data_fragment
         View v = inflater.inflate(R.layout.teleop_fragment, parent, false);
+        Context context = getContext();
+        if(context != null)  
+        {
+            // Setup TextViews that displays points, setting 0 as the default.
+            m_teleopConesBottomRowValue = v.findViewById(R.id.teleopcone_bottom_text);
+            m_teleopConesBottomRowValue.setText("0");
+            m_teleopConesBottomRowValue.setTextColor(ContextCompat.getColor(context,R.color.specialTextPrimary));
 
-        //Sets up TextView that displays cones bottom row points, setting 0 as the default
-        m_teleopConesBottomRowValue = v.findViewById(R.id.teleopcone_bottom_text);
-        m_teleopConesBottomRowValue.setText(0 + "");
-        m_teleopConesBottomRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
+            m_teleopConesMiddleRowValue = v.findViewById(R.id.teleopcone_middle_text);
+            m_teleopConesMiddleRowValue.setText("0");
+            m_teleopConesMiddleRowValue.setTextColor(ContextCompat.getColor(context,R.color.specialTextPrimary));
 
-        //Sets up TextView that displays cones middle row points, setting 0 as the default
-        m_teleopConesMiddleRowValue = v.findViewById(R.id.teleopcone_middle_text);
-        m_teleopConesMiddleRowValue.setText(0 + "");
-        m_teleopConesMiddleRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
+            m_teleopConesTopRowValue = v.findViewById(R.id.teleopcone_top_text);
+            m_teleopConesTopRowValue.setText("0");
+            m_teleopConesTopRowValue.setTextColor(ContextCompat.getColor(context,R.color.specialTextPrimary));
+    
+            m_teleopCubesBottomRowValue = v.findViewById(R.id.teleopcube_bottom_text);
+            m_teleopCubesBottomRowValue.setText("0");
+            m_teleopCubesBottomRowValue.setTextColor(ContextCompat.getColor(context,R.color.specialTextPrimary));
 
-        //Sets up TextView that displays cones top row points, setting 0 as the default
-        m_teleopConesTopRowValue = v.findViewById(R.id.teleopcone_top_text);
-        m_teleopConesTopRowValue.setText(0 + "");
-        m_teleopConesTopRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
+            m_teleopCubesMiddleRowValue = v.findViewById(R.id.teleopcube_middle_text);
+            m_teleopCubesMiddleRowValue.setText("0");
+            m_teleopCubesMiddleRowValue.setTextColor(ContextCompat.getColor(context,R.color.specialTextPrimary));
 
-        //Sets up TextView that displays cubes bottom row points, setting 0 as the default
-        m_teleopCubesBottomRowValue = v.findViewById(R.id.teleopcube_bottom_text);
-        m_teleopCubesBottomRowValue.setText(0 + "");
-        m_teleopCubesBottomRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
-
-        //Sets up TextView that displays cubes middle row points, setting 0 as the default
-        m_teleopCubesMiddleRowValue = v.findViewById(R.id.teleopcube_middle_text);
-        m_teleopCubesMiddleRowValue.setText(0 + "");
-        m_teleopCubesMiddleRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
-
-        //Sets up TextView that displays cubes top row points, setting 0 as the default
-        m_teleopCubesTopRowValue = v.findViewById(R.id.teleopcube_top_text);
-        m_teleopCubesTopRowValue.setText(0 + "");
-        m_teleopCubesTopRowValue.setTextColor(getResources().getColor(R.color.specialTextPrimary));
+            m_teleopCubesTopRowValue = v.findViewById(R.id.teleopcube_top_text);
+            m_teleopCubesTopRowValue.setText("0");
+            m_teleopCubesTopRowValue.setTextColor(ContextCompat.getColor(context,R.color.specialTextPrimary));
+        }
 
         //Connects the decrement button for cones bottom row points and sets up a listener that detects when the button is clicked
-        m_teleopConeBottomDecrButton = v.findViewById(R.id.teleopcone_bottom_decr);
-        m_teleopConeBottomDecrButton.setOnClickListener(new View.OnClickListener()
+        Button teleopConeBottomDecrButton = v.findViewById(R.id.teleopcone_bottom_decr);
+        teleopConeBottomDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -144,8 +130,8 @@ public class TeleopFragment extends Fragment
         });
 
         //Connects the increment button for cones bottom row points and sets up a listener that detects when the button is clicked
-        m_teleopConeBottomIncrButton = v.findViewById(R.id.teleopcone_bottom_incr);
-        m_teleopConeBottomIncrButton.setOnClickListener(new View.OnClickListener()
+        Button teleopConeBottomIncrButton = v.findViewById(R.id.teleopcone_bottom_incr);
+        teleopConeBottomIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -156,8 +142,8 @@ public class TeleopFragment extends Fragment
         });
 
         //Connects the decrement button for cones middle row points and sets up a listener that detects when the button is clicked
-        m_teleopConeMiddleDecrButton = v.findViewById(R.id.teleopcone_middle_decr);
-        m_teleopConeMiddleDecrButton.setOnClickListener(new View.OnClickListener()
+        Button teleopConeMiddleDecrButton = v.findViewById(R.id.teleopcone_middle_decr);
+        teleopConeMiddleDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -168,8 +154,8 @@ public class TeleopFragment extends Fragment
         });
 
         //Connects the increment button for cones middle row points and sets up a listener that detects when the button is clicked
-        m_teleopConeMiddleIncrButton = v.findViewById(R.id.teleopcone_middle_incr);
-        m_teleopConeMiddleIncrButton.setOnClickListener(new View.OnClickListener()
+        Button teleopConeMiddleIncrButton = v.findViewById(R.id.teleopcone_middle_incr);
+        teleopConeMiddleIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -180,8 +166,8 @@ public class TeleopFragment extends Fragment
         });
 
         //Connects the decrement button for cones top row points and sets up a listener that detects when the button is clicked
-        m_teleopConeTopDecrButton = v.findViewById(R.id.teleopcone_top_decr);
-        m_teleopConeTopDecrButton.setOnClickListener(new View.OnClickListener()
+        Button teleopConeTopDecrButton = v.findViewById(R.id.teleopcone_top_decr);
+        teleopConeTopDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -192,8 +178,8 @@ public class TeleopFragment extends Fragment
         });
 
         //Connects the increment button for cones top row points and sets up a listener that detects when the button is clicked
-        m_teleopConeTopIncrButton = v.findViewById(R.id.teleopcone_top_incr);
-        m_teleopConeTopIncrButton.setOnClickListener(new View.OnClickListener()
+        Button teleopConeTopIncrButton = v.findViewById(R.id.teleopcone_top_incr);
+        teleopConeTopIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -204,8 +190,8 @@ public class TeleopFragment extends Fragment
         });
 
         //Connects the decrement button for cubes bottom row points and sets up a listener that detects when the button is clicked
-        m_teleopCubeBottomDecrButton = v.findViewById(R.id.teleopcube_bottom_decr);
-        m_teleopCubeBottomDecrButton.setOnClickListener(new View.OnClickListener()
+        Button teleopCubeBottomDecrButton = v.findViewById(R.id.teleopcube_bottom_decr);
+        teleopCubeBottomDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -216,8 +202,8 @@ public class TeleopFragment extends Fragment
         });
 
         //Connects the increment button for cubes bottom row points and sets up a listener that detects when the button is clicked
-        m_teleopCubeBottomIncrButton = v.findViewById(R.id.teleopcube_bottom_incr);
-        m_teleopCubeBottomIncrButton.setOnClickListener(new View.OnClickListener()
+        Button teleopCubeBottomIncrButton = v.findViewById(R.id.teleopcube_bottom_incr);
+        teleopCubeBottomIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -228,8 +214,8 @@ public class TeleopFragment extends Fragment
         });
 
         //Connects the decrement button for cubes middle row points and sets up a listener that detects when the button is clicked
-        m_teleopCubeMiddleDecrButton = v.findViewById(R.id.teleopcube_middle_decr);
-        m_teleopCubeMiddleDecrButton.setOnClickListener(new View.OnClickListener()
+        Button teleopCubeMiddleDecrButton = v.findViewById(R.id.teleopcube_middle_decr);
+        teleopCubeMiddleDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -240,8 +226,8 @@ public class TeleopFragment extends Fragment
         });
 
         //Connects the increment button for cubes middle row points and sets up a listener that detects when the button is clicked
-        m_teleopCubeMiddleIncrButton = v.findViewById(R.id.teleopcube_middle_incr);
-        m_teleopCubeMiddleIncrButton.setOnClickListener(new View.OnClickListener()
+        Button teleopCubeMiddleIncrButton = v.findViewById(R.id.teleopcube_middle_incr);
+        teleopCubeMiddleIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -252,8 +238,8 @@ public class TeleopFragment extends Fragment
         });
 
         //Connects the decrement button for cubes top row points and sets up a listener that detects when the button is clicked
-        m_teleopCubeTopDecrButton = v.findViewById(R.id.teleopcube_top_decr);
-        m_teleopCubeTopDecrButton.setOnClickListener(new View.OnClickListener()
+        Button teleopCubeTopDecrButton = v.findViewById(R.id.teleopcube_top_decr);
+        teleopCubeTopDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -264,8 +250,8 @@ public class TeleopFragment extends Fragment
         });
 
         //Connects the increment button for cubes top row points and sets up a listener that detects when the button is clicked
-        m_teleopCubeTopIncrButton = v.findViewById(R.id.teleopcube_top_incr);
-        m_teleopCubeTopIncrButton.setOnClickListener(new View.OnClickListener()
+        Button teleopCubeTopIncrButton = v.findViewById(R.id.teleopcube_top_incr);
+        teleopCubeTopIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -284,33 +270,33 @@ public class TeleopFragment extends Fragment
         m_pickupTippedCheckbox = v.findViewById(R.id.pickup_tipped_checkbox);
         m_pickupTippedCheckbox.setChecked(m_matchData.getPickedUpTipped());
 
-        m_teleopConesBottomRowValue.setText(m_matchData.getTeleopConesBottomRow() + "");
-        m_teleopConesMiddleRowValue.setText(m_matchData.getTeleopConesMiddleRow() + "");
-        m_teleopConesTopRowValue.setText(m_matchData.getTeleopConesTopRow() + "");
-        m_teleopCubesBottomRowValue.setText(m_matchData.getTeleopCubesBottomRow() + "");
-        m_teleopCubesMiddleRowValue.setText(m_matchData.getTeleopCubesMiddleRow() + "");
-        m_teleopCubesTopRowValue.setText(m_matchData.getTeleopCubesTopRow() + "");
-        if (!isValidPoints(m_teleopConesBottomRowValue))
+        m_teleopConesBottomRowValue.setText(String.valueOf(m_matchData.getTeleopConesBottomRow()));
+        m_teleopConesMiddleRowValue.setText(String.valueOf(m_matchData.getTeleopConesMiddleRow()));
+        m_teleopConesTopRowValue.setText(String.valueOf(m_matchData.getTeleopConesTopRow()));
+        m_teleopCubesBottomRowValue.setText(String.valueOf(m_matchData.getTeleopCubesBottomRow()));
+        m_teleopCubesMiddleRowValue.setText(String.valueOf(m_matchData.getTeleopCubesMiddleRow()));
+        m_teleopCubesTopRowValue.setText(String.valueOf(m_matchData.getTeleopCubesTopRow()));
+        if (isNotValidPoints(m_teleopConesBottomRowValue))
         {
             m_teleopConesBottomRowValue.setTextColor(Color.RED);
         }
-        if (!isValidPoints(m_teleopConesMiddleRowValue))
+        if (isNotValidPoints(m_teleopConesMiddleRowValue))
         {
             m_teleopConesMiddleRowValue.setTextColor(Color.RED);
         }
-        if (!isValidPoints(m_teleopConesTopRowValue))
+        if (isNotValidPoints(m_teleopConesTopRowValue))
         {
             m_teleopConesTopRowValue.setTextColor(Color.RED);
         }
-        if (!isValidPoints(m_teleopCubesBottomRowValue))
+        if (isNotValidPoints(m_teleopCubesBottomRowValue))
         {
             m_teleopCubesBottomRowValue.setTextColor(Color.RED);
         }
-        if (!isValidPoints(m_teleopCubesMiddleRowValue))
+        if (isNotValidPoints(m_teleopCubesMiddleRowValue))
         {
             m_teleopCubesMiddleRowValue.setTextColor(Color.RED);
         }
-        if (!isValidPoints(m_teleopCubesTopRowValue))
+        if (isNotValidPoints(m_teleopCubesTopRowValue))
         {
             m_teleopCubesTopRowValue.setTextColor(Color.RED);
         }
@@ -331,6 +317,7 @@ public class TeleopFragment extends Fragment
         m_matchData.setPickedUpTipped(m_pickupTippedCheckbox.isChecked());
     }
 
+/*REMOVE->
     public String formattedDate(Date d)
     {
         SimpleDateFormat dt = new SimpleDateFormat("E MMM dd hh:mm:ss z yyyy");
@@ -341,7 +328,7 @@ public class TeleopFragment extends Fragment
         }
         catch (Exception e)
         {
-            Log.d("SignInFragment", e.getMessage());
+            Log.d(TAG, e.getMessage());
         }
         SimpleDateFormat dt1 = new SimpleDateFormat("hh:mm:ss");
 
@@ -354,4 +341,5 @@ public class TeleopFragment extends Fragment
             return (dt1.format(date));
         }
     }
+<-REMOVE*/
 }

@@ -1,11 +1,8 @@
 package com.frc2135.android.frc_scout;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,11 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
-import org.json.JSONException;
-
-import java.io.IOException;
 
 public class SetTeamIndexDlg extends DialogFragment
 {
@@ -29,15 +24,14 @@ public class SetTeamIndexDlg extends DialogFragment
     private Scouter m_Scouter;
     private EditText m_teamIndexField;
     private TextView m_teamIndexErrMsg;
-    private Context m_appContext;
 
+    @NonNull
     public Dialog onCreateDialog(Bundle SavedInstanceState)
     {
         setCancelable(true);
         Log.d(TAG, "onCreateDialog called");
-        m_appContext = getContext();
 
-        View v = getActivity().getLayoutInflater().inflate(R.layout.set_team_index_dlg, null);
+        View v = requireActivity().getLayoutInflater().inflate(R.layout.set_team_index_dlg, null);
         m_teamIndexField = v.findViewById(R.id.set_team_index_field);
         m_teamIndexField.setHint("Enter team index number (1-6 or 'None')");
         m_teamIndexErrMsg = v.findViewById(R.id.team_index_err);
@@ -46,17 +40,17 @@ public class SetTeamIndexDlg extends DialogFragment
 
         // Get the existing index from Scouter, if any.
         m_Scouter = Scouter.get(getContext());
+        String str1 = "None";
         if (m_Scouter != null)
         {
             String indexStr = m_Scouter.getTeamIndexStr();
             Log.d(TAG, "From Scouter: teamFieldIndex = " + indexStr);
             if (m_Scouter.isValidTeamIndexStr(indexStr))
                 m_teamIndexField.setText(m_Scouter.getTeamIndexStr());
-            else
-                m_teamIndexField.setText("None");
+            else m_teamIndexField.setText(str1);
         }
         else
-            m_teamIndexField.setText("None");
+            m_teamIndexField.setText(str1);
 
         m_teamIndexField.addTextChangedListener(new TextWatcher()
         {
@@ -108,18 +102,6 @@ public class SetTeamIndexDlg extends DialogFragment
                         m_Scouter.setTeamIndexStr(m_teamIndexField.getText().toString());
                         Log.d(TAG, "onOK: setting team index to " + m_teamIndexField.getText().toString());
                     }
-                    try
-                    {
-                        sendResult(Activity.RESULT_OK);
-                    }
-                    catch (JSONException e)
-                    {
-                        e.printStackTrace();
-                    }
-                    catch (IOException e)
-                    {
-                        e.printStackTrace();
-                    }
                 }
             }
         });
@@ -155,12 +137,6 @@ public class SetTeamIndexDlg extends DialogFragment
             return false;
         }
         return true;
-    }
-
-    private void sendResult(int resultCode) throws JSONException, IOException
-    {
-        Log.d(TAG, "sendResult() called");
-        Intent i = new Intent(getActivity(), MatchListActivity.class);
     }
 }
 
