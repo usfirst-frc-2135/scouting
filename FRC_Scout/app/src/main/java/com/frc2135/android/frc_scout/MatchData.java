@@ -5,10 +5,11 @@ import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.text.SimpleDateFormat;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 public class MatchData
@@ -158,7 +159,20 @@ public class MatchData
 
         setEndgameChargeLevel(json.getInt(JSON_KEY_ENDGAMECHARGE));
         setComment(json.getString(JSON_KEY_COMMENTS));
-        setTimestamp(new Date(json.getString(JSON_KEY_TIMESTAMP)));
+
+        String dateStr = json.getString(JSON_KEY_TIMESTAMP);
+        SimpleDateFormat dt = new SimpleDateFormat("E MMM dd hh:mm:ss z yyyy", Locale.US);
+        Date date = null;
+        try
+        {
+            date = dt.parse(dateStr);
+        }
+        catch (Exception err)
+        {
+            Log.d("timestamp Date string error: ", err.getMessage());
+        }
+        setTimestamp(date);
+
         setDied(json.getBoolean(JSON_KEY_DIED));
         m_matchID = json.getString(JSON_KEY_MATCHID);
     }

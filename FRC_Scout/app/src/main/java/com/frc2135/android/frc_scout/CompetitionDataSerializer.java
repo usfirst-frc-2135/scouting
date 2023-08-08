@@ -73,13 +73,9 @@ public class CompetitionDataSerializer
             compWriter.write(compJSON.toString());
             Log.d(TAG, "Device Data File created: " + fileC);
         }
-        catch (FileNotFoundException err)
+        catch (IOException err)
         {
             err.printStackTrace();
-        }
-        catch (IOException err2)
-        {
-            err2.printStackTrace();
         }
         finally
         {

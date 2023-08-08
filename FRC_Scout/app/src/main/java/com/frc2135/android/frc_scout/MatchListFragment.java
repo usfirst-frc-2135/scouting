@@ -322,20 +322,19 @@ public class MatchListFragment extends ListFragment
         }
     }
 
-    public String formattedDate(Date d)
+    public String formattedDate(Date myDate)
     {
         SimpleDateFormat dt = new SimpleDateFormat("E MMM dd hh:mm:ss z yyyy", Locale.US);
         Date date = null;
         try
         {
-            date = dt.parse(d.toString());
+            date = dt.parse(myDate.toString());
         }
-        catch (Exception e)
+        catch (Exception err)
         {
-            Log.d("SignInFragment", e.getMessage());
+            Log.d("formattedDate() error: ", err.getMessage());
         }
         SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-M-dd hh:mm:ss",Locale.US);
-
         if (date == null)
         {
             return null;

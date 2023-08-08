@@ -38,7 +38,7 @@ public class ScoutingActivity extends AppCompatActivity
         // Passing each menu ID as a set of Ids because each menu should be considered as top level destinations.
   //REMOVE      AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_auton, R.id.navigation_teleop, R.id.navigation_endgame).build();
 
-        navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener()
+        navView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener()
         {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item)

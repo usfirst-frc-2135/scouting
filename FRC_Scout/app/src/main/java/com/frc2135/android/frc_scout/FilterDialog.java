@@ -168,7 +168,6 @@ public class FilterDialog extends DialogFragment
             Log.d(TAG, "I want to filter by match");
         }
         startActivity(intent);
-        getTargetFragment().requireActivity().finish();
     }
 }
 
