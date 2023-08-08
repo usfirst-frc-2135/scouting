@@ -54,13 +54,11 @@ public class MatchListFragment extends ListFragment
     {
         super.onCreate(savedInstanceState);
 
-        // For the 3-dot options menu
-        setHasOptionsMenu(true); //alerts the fragment manager that the it should receive options menu callbacks
-
         ActionBar aBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         if(aBar != null) {
             aBar.setTitle("Recorded Matches");
         }
+        setMenuProvider();
     }
 
     @Override
@@ -296,6 +294,47 @@ public class MatchListFragment extends ListFragment
         }
     }
 
+    ////// Set up the 3-dot options menu in right hand top corner.
+    private void setMenuProvider() {
+        requireActivity().addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+                inflater.inflate(R.menu.settings_context_menu,menu);
+            }
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem item)
+            {
+                int itemID = item.getItemId();
+                if(itemID == R.id.clear_preferences)
+                {
+                    Log.d(TAG, "Clear preferences clicked");
+                    Scouter.get(getContext()).clear();
+                    Log.d(TAG, "Clear Preferences: calling Scouter::clear()");
+                }
+                else if(itemID == R.id.about_item)
+                {
+                    Intent i = new Intent(getActivity(), Splash.class);
+                    startActivity(i);
+                    requireActivity().finish();
+                }
+                else if(itemID == R.id.load_data_over_network)
+                {
+                    FragmentManager fm = requireActivity().getSupportFragmentManager();
+                    Log.d(TAG, "Going to start LoadEventDialog");
+                    LoadEventDialog dialog = LoadEventDialog.newInstance();
+                    dialog.show(fm, "filter_dialog");  //TODO - change this to "load_event_dialog"?
+                }
+                else if(itemID == R.id.set_team_index)
+                {
+                    FragmentManager fm2 = requireActivity().getSupportFragmentManager();
+                    Log.d(TAG, "Going to start SetTeamIndexDlg");
+                    SetTeamIndexDlg tiDlg = SetTeamIndexDlg.newInstance();
+                    tiDlg.show(fm2, "set_team_index_dialog");
+                }
+                return true;
+            }
+        });
+    }
     private class MatchAdapter extends ArrayAdapter<MatchData>
     {
         public MatchAdapter(ArrayList<MatchData> matchData)
@@ -357,52 +396,6 @@ public class MatchListFragment extends ListFragment
     {
         Log.d(TAG, "onPause()");
         super.onPause();
-    }
-
-    ////// Set up the 3-dot options menu in right hand top corner.
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
-    {
-        super.onCreateOptionsMenu(menu, inflater);
-        // Inflate the view for the 3-dots menu.
-        inflater.inflate(R.menu.settings_context_menu, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        int itemID = item.getItemId();
-        if(itemID == R.id.clear_preferences)
-        {
-            Log.d(TAG, "Clear preferences clicked");
-            Scouter.get(getContext()).clear();
-            Log.d(TAG, "Clear Preferences: calling Scouter::clear()");
-        }
-        else if(itemID == R.id.about_item)
-        {
-            Intent i = new Intent(getActivity(), Splash.class);
-            startActivity(i);
-            requireActivity().finish();
-        }
-        else if(itemID == R.id.load_data_over_network)
-        {
-            FragmentManager fm = requireActivity().getSupportFragmentManager();
-            Log.d(TAG, "Going to start LoadEventDialog");
-            LoadEventDialog dialog = LoadEventDialog.newInstance();
-            dialog.show(fm, "filter_dialog");  //TODO - change this to "load_event_dialog"?
-        }
-        else if(itemID == R.id.set_team_index)
-        {
-            FragmentManager fm2 = requireActivity().getSupportFragmentManager();
-            Log.d(TAG, "Going to start SetTeamIndexDlg");
-            SetTeamIndexDlg tiDlg = SetTeamIndexDlg.newInstance();
-            tiDlg.show(fm2, "set_team_index_dialog");
-        }
-        else
-        {
-            return super.onOptionsItemSelected(item);
-        }
-        return true;
     }
 
     ////// Set up the match's context menu (Edit match / Delete).
