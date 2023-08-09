@@ -22,14 +22,14 @@ import org.json.JSONException;
 
 public class PreMatchActivity extends AppCompatActivity
 {
-    private String m_teamIndexStr;
-    private EditText m_competitionField;
+    private String               m_teamIndexStr;
+    private EditText             m_competitionField;
     private AutoCompleteTextView m_scoutNameField;
     private AutoCompleteTextView m_teamNumberField;
-    private EditText m_matchNumberField;
-    private TextView m_missingFieldErrMsg;
-    private MatchData m_matchData;
-    private CompetitionInfo m_compInfo;
+    private EditText             m_matchNumberField;
+    private TextView             m_missingFieldErrMsg;
+    private MatchData            m_matchData;
+    private CompetitionInfo      m_compInfo;
 
     public static final String TAG = "PreMatchActivity";
 

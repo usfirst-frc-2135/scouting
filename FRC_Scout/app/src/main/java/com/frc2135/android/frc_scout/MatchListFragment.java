@@ -1,11 +1,13 @@
 package com.frc2135.android.frc_scout;
 
+import android.content.Context;
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +21,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -31,9 +34,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.ListFragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import org.json.JSONException;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,8 +48,8 @@ public class MatchListFragment extends ListFragment
     private static final String TAG = "MatchListFragment";
 
     private ArrayList<MatchData> m_displayedMatches;
-    private MatchAdapter m_adapter;
-    private SwitchCompat m_darkToggle;
+    private MatchAdapter         m_adapter;
+    private SwitchCompat         m_darkToggle;
     public static final String QRTAG = "qr";
 
     @Override
@@ -305,17 +308,55 @@ public class MatchListFragment extends ListFragment
             public boolean onMenuItemSelected(@NonNull MenuItem item)
             {
                 int itemID = item.getItemId();
-                if(itemID == R.id.clear_preferences)
+                if(itemID == R.id.clear_scout_names)
                 {
-                    Log.d(TAG, "Clear preferences clicked");
+                    Log.d(TAG, "Clear Scout Names clicked");
                     Scouter.get(getContext()).clear();
-                    Log.d(TAG, "Clear Preferences: calling Scouter::clear()");
                 }
                 else if(itemID == R.id.about_item)
                 {
                     Intent i = new Intent(getActivity(), Splash.class);
                     startActivity(i);
                     requireActivity().finish();
+                }
+                else if(itemID == R.id.delete_tba_matches_file)
+                {
+                    Log.d(TAG, "Delete TBA matches files clicked");
+                    Context context = getContext();
+
+                    // Look thru existing files on device to find any TBA matches json files.
+                    int tbaFilesCnt = 0;
+                    StringBuilder toastMsg = new StringBuilder();
+                    toastMsg.append("Deleted existing TBA matches.json files:\n");
+                    String dataFileDir = context.getFilesDir().getPath();
+                    Log.d(TAG,"Data files path = " + dataFileDir);   
+                    String MATCHES_JSON = "matches.json";
+                    File dataDir = new File(dataFileDir);
+                    File[] fileList = dataDir.listFiles();
+                    if (fileList != null)
+                    {
+                        // Remove any event matches data files found.
+                        for (File f1 : fileList)
+                        {
+                            if (f1.getName().contains(MATCHES_JSON))
+                            {
+                                 Log.d(TAG, "DELETING existing TBA matches file on device: " + f1.getName());
+                                 toastMsg.append(f1.getName());
+                                 toastMsg.append("\n");
+                                 tbaFilesCnt += 1;
+                                 f1.delete();
+                            }
+                        }
+                    }
+                    if( tbaFilesCnt > 0)
+                        CompetitionInfo.clear(); // clear existing CompetitionInfo 
+                    else toastMsg.replace(0,toastMsg.length(),"No existing TBA matches files found");
+
+                    // Issue toast msg
+                    Log.d(TAG, toastMsg.toString());
+                    Toast toast1 = Toast.makeText(context, toastMsg.toString(), Toast.LENGTH_LONG);
+                    toast1.setGravity(Gravity.CENTER, 0, 0);
+                    toast1.show();
                 }
                 else if(itemID == R.id.load_data_over_network)
                 {

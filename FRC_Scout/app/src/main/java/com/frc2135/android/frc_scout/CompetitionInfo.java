@@ -24,9 +24,9 @@ public class CompetitionInfo
     private static final String TAG = "CompetitionInfo";
 
     // Data members
-    private String m_eventCode;
+    private String    m_eventCode;
     private JSONArray m_jsonData;
-    private boolean m_bEventDataLoaded;
+    private boolean   m_bEventDataLoaded;
 
     private static CompetitionInfo sCompetitionInfo;
 
@@ -57,6 +57,19 @@ public class CompetitionInfo
             sCompetitionInfo.readEventMatchesJSON(context, true);
         }
         return sCompetitionInfo;
+    }
+
+    public static void clear()
+    {
+        if (sCompetitionInfo != null)
+        {
+            Log.d(TAG, "Deleting existing sCompetitionInfo");
+            m_eventCode = "";
+            m_bEventDataLoaded = false;
+            m_jsonData = null;
+            sCompetitionInfo = null;
+        }
+        else Log.d(TAG, "No action needed: no existing sCompetitionInfo");
     }
 
     public String getEventCode()

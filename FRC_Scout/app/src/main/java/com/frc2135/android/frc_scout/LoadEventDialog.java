@@ -34,10 +34,11 @@ import java.util.Map;
 public class LoadEventDialog extends DialogFragment
 {
     private static final String TAG = "LoadEventDialog";
+ 
     private CompetitionDataSerializer m_compSerializer;
-    private EditText m_eventCodeField;
-    private String m_eventCode = "myEventCode";
-    private Context m_appContext;
+    private EditText                  m_eventCodeField;
+    private String                    m_eventCode = "myEventCode";
+    private Context                   m_appContext;
 
     @NonNull
     public Dialog onCreateDialog(Bundle SavedInstanceState)
