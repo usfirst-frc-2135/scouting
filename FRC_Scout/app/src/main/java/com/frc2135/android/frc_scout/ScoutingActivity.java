@@ -35,9 +35,6 @@ public class ScoutingActivity extends AppCompatActivity
         fm.beginTransaction().add(R.id.fragmentContainer, fragment[0]).commit();
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
-        // Passing each menu ID as a set of Ids because each menu should be considered as top level destinations.
-  //REMOVE      AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_auton, R.id.navigation_teleop, R.id.navigation_endgame).build();
-
         navView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener()
         {
             @Override

@@ -6,9 +6,9 @@
     <item android:id="@+id/load_data_over_network"
         android:title="Load Competition Data" />
     <item android:id="@+id/clear_scout_names"
-        android:title="Clear Existing Scout Names" />
+        android:title="Clear Scout Names" />
     <item android:id="@+id/delete_tba_matches_file"
-        android:title="Delete Existing TBA Matches Files" />
+        android:title="Delete TBA Event Files" />
     <item android:id="@+id/about_item"
         android:title="About" />
 
