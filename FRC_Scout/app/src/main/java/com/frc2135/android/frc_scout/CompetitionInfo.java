@@ -64,9 +64,6 @@ public class CompetitionInfo
         if (sCompetitionInfo != null)
         {
             Log.d(TAG, "Deleting existing sCompetitionInfo");
-            m_eventCode = "";
-            m_bEventDataLoaded = false;
-            m_jsonData = null;
             sCompetitionInfo = null;
         }
         else Log.d(TAG, "No action needed: no existing sCompetitionInfo");
