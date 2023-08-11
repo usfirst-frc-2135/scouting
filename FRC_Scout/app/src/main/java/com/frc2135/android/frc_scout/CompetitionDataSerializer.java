@@ -11,7 +11,6 @@ import org.json.JSONTokener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -68,7 +67,7 @@ public class CompetitionDataSerializer
         try
         {
             File fileC = new File(m_dataPath + "/current_competition.json");
-            OutputStream out = new FileOutputStream(fileC);
+            OutputStream out = Files.newOutputStream(fileC.toPath());
             compWriter = new OutputStreamWriter(out);
             compWriter.write(compJSON.toString());
             Log.d(TAG, "Device Data File created: " + fileC);
