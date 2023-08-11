@@ -369,7 +369,7 @@ public class MatchListFragment extends ListFragment
                 {
                     FragmentManager fm2 = requireActivity().getSupportFragmentManager();
                     Log.d(TAG, "Going to start SetTeamIndexDlg");
-                    SetTeamIndexDlg tiDlg = SetTeamIndexDlg.newInstance();
+                    SetTeamIndexDialog tiDlg = SetTeamIndexDialog.newInstance();
                     tiDlg.show(fm2, "set_team_index_dialog");
                 }
                 return true;
@@ -393,7 +393,7 @@ public class MatchListFragment extends ListFragment
             MatchData m = getItem(position);
 
             TextView mMatchSummary = convertView.findViewById(R.id.match_tag_display);
-            String tStr = m.getCompetition() + "-" + m.getMatchNumber() + "-" + m.getTeamNumber() + "-" + formattedDate(m.getTimestamp());
+            String tStr = m.getEventCode() + "-" + m.getMatchNumber() + "-" + m.getTeamNumber() + "-" + formattedDate(m.getTimestamp());
             mMatchSummary.setText(tStr);
             // Changes text color of the ListView Match List to fit the light/dark mode theme.
             mMatchSummary.setTextColor(ContextCompat.getColor(getContext(),R.color.textPrimary));

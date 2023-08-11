@@ -180,7 +180,7 @@ public class MatchHistory
         ArrayList<MatchData> sorted = new ArrayList<>();
         for (MatchData mData : mdList)
         {
-            if (mData.getCompetition().equals(comp))
+            if (mData.getEventCode().equals(comp))
             {
                 sorted.add(mData);
             }
@@ -239,7 +239,7 @@ public class MatchHistory
         ArrayList<String> competitions = new ArrayList<>();
         for (MatchData mData : m_TotalMatchHistory)
         {
-            String competition = mData.getCompetition();
+            String competition = mData.getEventCode();
             if (!competitions.contains(competition))
             {
                 competitions.add(competition);

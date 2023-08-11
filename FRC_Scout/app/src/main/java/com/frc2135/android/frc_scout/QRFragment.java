@@ -76,7 +76,7 @@ public class QRFragment extends DialogFragment
         QRFragment fragment = new QRFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putString("match label", matchData.getCompetition() + "-" + matchData.getMatchNumber() + "-" + matchData.getTeamNumber() + "-" + formattedDate(matchData.getTimestamp()));
+        bundle.putString("match label", matchData.getEventCode() + "-" + matchData.getMatchNumber() + "-" + matchData.getTeamNumber() + "-" + formattedDate(matchData.getTimestamp()));
         bundle.putString("stats", matchData.encodeToTSV());
         fragment.setArguments(bundle);
 

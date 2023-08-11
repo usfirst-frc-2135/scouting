@@ -17,7 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 
-public class SetTeamIndexDlg extends DialogFragment
+public class SetTeamIndexDialog extends DialogFragment
 {
     private static final String TAG = "SetTeamIndexDlg";
 
@@ -116,11 +116,11 @@ public class SetTeamIndexDlg extends DialogFragment
         return alertDialog;
     }
 
-    public static SetTeamIndexDlg newInstance()
+    public static SetTeamIndexDialog newInstance()
     {
         Log.d(TAG, "newInstance() called");
         Bundle args = new Bundle();
-        SetTeamIndexDlg dialog = new SetTeamIndexDlg();
+        SetTeamIndexDialog dialog = new SetTeamIndexDialog();
         dialog.setArguments(args);
         return dialog;
     }

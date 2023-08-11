@@ -18,7 +18,7 @@ public class MatchData
 
     // Keys used for reading/writing match JSON files.
     private static final String JSON_KEY_SCOUT_NAME = "scoutName";
-    private static final String JSON_KEY_COMPETITION_ID = "competitionId";
+    private static final String JSON_KEY_EVENT_CODE = "eventCode";
     private static final String JSON_KEY_TEAM_NUMBER = "teamNumber";
     private static final String JSON_KEY_MATCH_NUMBER = "matchNumber";
 
@@ -72,7 +72,7 @@ public class MatchData
     private String m_teamNumber;
     private String m_matchNumber;
     private final String m_matchID;
-    private String m_competitionId;
+    private String m_eventCode;
     private Date m_timestamp;
     private boolean m_pickedUpCube;
     private boolean m_pickedUpUpright;
@@ -121,8 +121,8 @@ public class MatchData
 
         m_matchID = UUID.randomUUID() + "";
 
-        m_competitionId = CurrentCompetition.get(context).getEventCode();
-        Log.d(TAG, "Default constructor m_competitionId set to " + m_competitionId);
+        m_eventCode = CurrentCompetition.get(context).getEventCode();
+        Log.d(TAG, "Default constructor m_eventCode set to " + m_eventCode);
     }
 
     //////////////////////// constructor from JSON file  //////////////////////////////
@@ -132,7 +132,7 @@ public class MatchData
         Log.d(TAG, "MatchData being created using json data");
 
         setName(json.getString(JSON_KEY_SCOUT_NAME));
-        setCompetition(json.getString(JSON_KEY_COMPETITION_ID));
+        setEventCode(json.getString(JSON_KEY_EVENT_CODE));
         setTeamNumber(json.getString(JSON_KEY_TEAM_NUMBER));
         setMatchNumber(json.getString(JSON_KEY_MATCH_NUMBER));
 
@@ -194,15 +194,15 @@ public class MatchData
         return m_name;
     }
 
-    ////////////  m_competitionId   /////////////////////
-    public void setCompetition(String c)
+    ////////////  m_eventCode   /////////////////////
+    public void setEventCode(String c)
     {
-        m_competitionId = c;
+        m_eventCode = c;
     }
 
-    public String getCompetition()
+    public String getEventCode()
     {
-        return m_competitionId;
+        return m_eventCode;
     }
 
     ////////////  m_teamNumber   /////////////////////
@@ -514,7 +514,7 @@ public class MatchData
             tsvStr += "0" + "\t";
 
         tsvStr += m_matchNumber + "\t";
-        tsvStr += m_competitionId + "\t";
+        tsvStr += m_eventCode + "\t";
 
         tsvStr += m_name + "\t";   // Scout name
         if (!m_comment.equals(""))
@@ -538,7 +538,7 @@ public class MatchData
         json.put("divider", ", \n");
 
         json.put("headings", "Competition, Team Number, Match Number, Exit Community, Auton Cones Bottom Row, Auton Cones Middle Row, Auton Cones Top Row, Auton Cubes Bottom Row, Auton Cubes Middle Row, Auton Cubes Top Row, Auton Charge Station, Teleop Cones Bottom Row, Teleop Cones Middle Row, Teleop Cones Top Row, Teleop Cubes Bottom Row, Teleop Cubes Middle Row, Teleop Cubes Top Row, Picked Up Cube, Picked Up Upright Cone, Picked Up Tipped Cone, Endgame Charge Station, Died, Comments, Timestamp, MatchID \n");
-        json.put(JSON_KEY_COMPETITION_ID, m_competitionId);
+        json.put(JSON_KEY_EVENT_CODE, m_eventCode);
         json.put("divider", ",");
         json.put(JSON_KEY_TEAM_NUMBER, m_teamNumber);
         json.put("divider", ",");

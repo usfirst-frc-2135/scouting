@@ -66,7 +66,7 @@ public class PreMatchActivity extends AppCompatActivity
 
         String matchId = getIntent().getStringExtra("match_ID");
         m_matchData = MatchHistory.get(getApplicationContext()).getMatch(matchId);
-        m_compInfo = CompetitionInfo.get(getApplicationContext(), m_matchData.getCompetition().trim(), false);
+        m_compInfo = CompetitionInfo.get(getApplicationContext(), m_matchData.getEventCode().trim(), false);
 
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null)
@@ -85,7 +85,7 @@ public class PreMatchActivity extends AppCompatActivity
 
         m_competitionField = findViewById(R.id.comp_name);
         m_competitionField.setHint("Competition");
-        m_competitionField.setText(m_matchData.getCompetition());
+        m_competitionField.setText(m_matchData.getEventCode());
         m_competitionField.addTextChangedListener(new TextWatcher()
         {
             public void onTextChanged(CharSequence c, int start, int before, int count)
@@ -275,7 +275,7 @@ public class PreMatchActivity extends AppCompatActivity
         m_Scouter.setMostRecentScoutName(m_scoutNameField.getText().toString());
         m_Scouter.setMostRecentMatchNumber(m_matchNumberField.getText().toString().toLowerCase());
         m_matchData.setName(m_scoutNameField.getText().toString());
-        m_matchData.setCompetition(m_competitionField.getText().toString());
+        m_matchData.setEventCode(m_competitionField.getText().toString());
         m_matchData.setMatchNumber(m_matchNumberField.getText().toString().trim().toLowerCase());
         m_matchData.setTeamNumber(m_teamNumberField.getText().toString());
     }

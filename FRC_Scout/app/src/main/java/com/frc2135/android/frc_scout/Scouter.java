@@ -56,14 +56,14 @@ public class Scouter
         m_pastScouters = new ArrayList<>();
         try
         {
-            String tag = "scoutername";
+            String tag = "scouterName";
             int i = 0;
             while (json.has(tag + i))
             {
                 m_pastScouters.add(json.getString(tag + i + ""));
                 i++;
             }
-            setTeamIndexStr(json.getString("teamindex"));
+            setTeamIndexStr(json.getString("teamIndex"));
         }
         catch (Exception e)
         {
@@ -180,11 +180,11 @@ public class Scouter
         StringBuilder logMsg = new StringBuilder();
         for (int i = 0; i < m_pastScouters.size(); i++)
         {
-            json.put("scoutername" + i, m_pastScouters.get(i));
-            logMsg.append("scoutername").append(i).append("=").append(m_pastScouters.get(i)).append("; ");
+            json.put("scouterName" + i, m_pastScouters.get(i));
+            logMsg.append("scouterName").append(i).append("=").append(m_pastScouters.get(i)).append("; ");
         }
-        json.put("teamindex", m_teamIndexStr);
-        logMsg.append("teamindex" + "=").append(m_teamIndexStr);
+        json.put("teamIndex", m_teamIndexStr);
+        logMsg.append("teamIndex" + "=").append(m_teamIndexStr);
 
         Log.d(TAG, "Writing to Scouter.json: " + logMsg);
         return json;
