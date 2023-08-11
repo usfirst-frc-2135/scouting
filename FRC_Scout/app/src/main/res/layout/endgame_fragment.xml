@@ -29,7 +29,7 @@
             android:paddingBottom="10dp">
 
             <TextView
-                android:id="@+id/endgamechargeStationTitle"
+                android:id="@+id/end_game_charge_station_title"
                 style="?android:listSeparatorTextViewStyle"
                 android:layout_width="215dp"
                 android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
                 android:layout_height="56dp" />
 
             <RadioButton
-                android:id="@+id/level_endgamenone"
+                android:id="@+id/level_end_game_none"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -65,7 +65,7 @@
                 android:textSize="22sp" />
 
             <RadioButton
-                android:id="@+id/level_endgameparked"
+                android:id="@+id/level_end_game_parked"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -75,7 +75,7 @@
                 android:textSize="22sp" />
 
             <RadioButton
-                android:id="@+id/level_endgamedocked"
+                android:id="@+id/level_end_game_docked"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -85,7 +85,7 @@
                 android:textSize="22sp" />
 
             <RadioButton
-                android:id="@+id/level_endgameengaged"
+                android:id="@+id/level_end_game_engaged"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

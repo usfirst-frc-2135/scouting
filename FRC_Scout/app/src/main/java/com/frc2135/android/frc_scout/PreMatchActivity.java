@@ -255,7 +255,7 @@ public class PreMatchActivity extends AppCompatActivity
             }
         });
 
-        Button preMatchCancelButton = findViewById(R.id.prematch_cancel_button);
+        Button preMatchCancelButton = findViewById(R.id.pre_match_cancel_button);
         preMatchCancelButton.setOnClickListener(new View.OnClickListener()
         {
             @Override

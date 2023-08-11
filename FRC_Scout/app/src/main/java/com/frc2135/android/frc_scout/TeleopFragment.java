@@ -92,33 +92,33 @@ public class TeleopFragment extends Fragment
         if(context != null)  
         {
             // Setup TextViews that displays points, setting 0 as the default.
-            m_teleopConesBottomRowValue = v.findViewById(R.id.teleopcone_bottom_text);
+            m_teleopConesBottomRowValue = v.findViewById(R.id.teleop_cone_bottom_text);
             m_teleopConesBottomRowValue.setText("0");
             m_teleopConesBottomRowValue.setTextColor(ContextCompat.getColor(context,R.color.specialTextPrimary));
 
-            m_teleopConesMiddleRowValue = v.findViewById(R.id.teleopcone_middle_text);
+            m_teleopConesMiddleRowValue = v.findViewById(R.id.teleop_cone_middle_text);
             m_teleopConesMiddleRowValue.setText("0");
             m_teleopConesMiddleRowValue.setTextColor(ContextCompat.getColor(context,R.color.specialTextPrimary));
 
-            m_teleopConesTopRowValue = v.findViewById(R.id.teleopcone_top_text);
+            m_teleopConesTopRowValue = v.findViewById(R.id.teleop_cone_top_text);
             m_teleopConesTopRowValue.setText("0");
             m_teleopConesTopRowValue.setTextColor(ContextCompat.getColor(context,R.color.specialTextPrimary));
     
-            m_teleopCubesBottomRowValue = v.findViewById(R.id.teleopcube_bottom_text);
+            m_teleopCubesBottomRowValue = v.findViewById(R.id.teleop_cube_bottom_text);
             m_teleopCubesBottomRowValue.setText("0");
             m_teleopCubesBottomRowValue.setTextColor(ContextCompat.getColor(context,R.color.specialTextPrimary));
 
-            m_teleopCubesMiddleRowValue = v.findViewById(R.id.teleopcube_middle_text);
+            m_teleopCubesMiddleRowValue = v.findViewById(R.id.teleop_cube_middle_text);
             m_teleopCubesMiddleRowValue.setText("0");
             m_teleopCubesMiddleRowValue.setTextColor(ContextCompat.getColor(context,R.color.specialTextPrimary));
 
-            m_teleopCubesTopRowValue = v.findViewById(R.id.teleopcube_top_text);
+            m_teleopCubesTopRowValue = v.findViewById(R.id.teleop_cube_top_text);
             m_teleopCubesTopRowValue.setText("0");
             m_teleopCubesTopRowValue.setTextColor(ContextCompat.getColor(context,R.color.specialTextPrimary));
         }
 
         //Connects the decrement button for cones bottom row points and sets up a listener that detects when the button is clicked
-        Button teleopConeBottomDecrButton = v.findViewById(R.id.teleopcone_bottom_decr);
+        Button teleopConeBottomDecrButton = v.findViewById(R.id.teleop_cone_bottom_decr);
         teleopConeBottomDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -130,7 +130,7 @@ public class TeleopFragment extends Fragment
         });
 
         //Connects the increment button for cones bottom row points and sets up a listener that detects when the button is clicked
-        Button teleopConeBottomIncrButton = v.findViewById(R.id.teleopcone_bottom_incr);
+        Button teleopConeBottomIncrButton = v.findViewById(R.id.teleop_cone_bottom_incr);
         teleopConeBottomIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -142,7 +142,7 @@ public class TeleopFragment extends Fragment
         });
 
         //Connects the decrement button for cones middle row points and sets up a listener that detects when the button is clicked
-        Button teleopConeMiddleDecrButton = v.findViewById(R.id.teleopcone_middle_decr);
+        Button teleopConeMiddleDecrButton = v.findViewById(R.id.teleop_cone_middle_decr);
         teleopConeMiddleDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -154,7 +154,7 @@ public class TeleopFragment extends Fragment
         });
 
         //Connects the increment button for cones middle row points and sets up a listener that detects when the button is clicked
-        Button teleopConeMiddleIncrButton = v.findViewById(R.id.teleopcone_middle_incr);
+        Button teleopConeMiddleIncrButton = v.findViewById(R.id.teleop_cone_middle_incr);
         teleopConeMiddleIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -166,7 +166,7 @@ public class TeleopFragment extends Fragment
         });
 
         //Connects the decrement button for cones top row points and sets up a listener that detects when the button is clicked
-        Button teleopConeTopDecrButton = v.findViewById(R.id.teleopcone_top_decr);
+        Button teleopConeTopDecrButton = v.findViewById(R.id.teleop_cone_top_decr);
         teleopConeTopDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -178,7 +178,7 @@ public class TeleopFragment extends Fragment
         });
 
         //Connects the increment button for cones top row points and sets up a listener that detects when the button is clicked
-        Button teleopConeTopIncrButton = v.findViewById(R.id.teleopcone_top_incr);
+        Button teleopConeTopIncrButton = v.findViewById(R.id.teleop_cone_top_incr);
         teleopConeTopIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -190,7 +190,7 @@ public class TeleopFragment extends Fragment
         });
 
         //Connects the decrement button for cubes bottom row points and sets up a listener that detects when the button is clicked
-        Button teleopCubeBottomDecrButton = v.findViewById(R.id.teleopcube_bottom_decr);
+        Button teleopCubeBottomDecrButton = v.findViewById(R.id.teleop_cube_bottom_decr);
         teleopCubeBottomDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -202,7 +202,7 @@ public class TeleopFragment extends Fragment
         });
 
         //Connects the increment button for cubes bottom row points and sets up a listener that detects when the button is clicked
-        Button teleopCubeBottomIncrButton = v.findViewById(R.id.teleopcube_bottom_incr);
+        Button teleopCubeBottomIncrButton = v.findViewById(R.id.teleop_cube_bottom_incr);
         teleopCubeBottomIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -214,7 +214,7 @@ public class TeleopFragment extends Fragment
         });
 
         //Connects the decrement button for cubes middle row points and sets up a listener that detects when the button is clicked
-        Button teleopCubeMiddleDecrButton = v.findViewById(R.id.teleopcube_middle_decr);
+        Button teleopCubeMiddleDecrButton = v.findViewById(R.id.teleop_cube_middle_decr);
         teleopCubeMiddleDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -226,7 +226,7 @@ public class TeleopFragment extends Fragment
         });
 
         //Connects the increment button for cubes middle row points and sets up a listener that detects when the button is clicked
-        Button teleopCubeMiddleIncrButton = v.findViewById(R.id.teleopcube_middle_incr);
+        Button teleopCubeMiddleIncrButton = v.findViewById(R.id.teleop_cube_middle_incr);
         teleopCubeMiddleIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -238,7 +238,7 @@ public class TeleopFragment extends Fragment
         });
 
         //Connects the decrement button for cubes top row points and sets up a listener that detects when the button is clicked
-        Button teleopCubeTopDecrButton = v.findViewById(R.id.teleopcube_top_decr);
+        Button teleopCubeTopDecrButton = v.findViewById(R.id.teleop_cube_top_decr);
         teleopCubeTopDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -250,7 +250,7 @@ public class TeleopFragment extends Fragment
         });
 
         //Connects the increment button for cubes top row points and sets up a listener that detects when the button is clicked
-        Button teleopCubeTopIncrButton = v.findViewById(R.id.teleopcube_top_incr);
+        Button teleopCubeTopIncrButton = v.findViewById(R.id.teleop_cube_top_incr);
         teleopCubeTopIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override

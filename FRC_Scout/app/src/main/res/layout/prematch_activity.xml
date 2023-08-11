@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/prematch_title_comp"
+            android:id="@+id/pre_match_title_comp"
             style="?android:listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
 
 
         <TextView
-            android:id="@+id/prematch_title_match"
+            android:id="@+id/pre_match_title_match"
             style="?android:listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -180,7 +180,7 @@
         </Button>
 
         <Button
-            android:id="@+id/prematch_cancel_button"
+            android:id="@+id/pre_match_cancel_button"
             android:layout_width="112dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"

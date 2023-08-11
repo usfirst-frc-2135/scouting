@@ -49,7 +49,7 @@
                     android:textColor="@color/specialTextSecondary"/>
 
                 <Button
-                    android:id="@+id/teleopcone_top_decr"
+                    android:id="@+id/teleop_cone_top_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
@@ -60,7 +60,7 @@
                     android:textSize="30sp" />
 
                 <TextView
-                    android:id="@+id/teleopcone_top_text"
+                    android:id="@+id/teleop_cone_top_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="25sp"
@@ -68,7 +68,7 @@
                     android:textAlignment="center" />
 
                 <Button
-                    android:id="@+id/teleopcone_top_incr"
+                    android:id="@+id/teleop_cone_top_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="30dp"
@@ -98,7 +98,7 @@
                     android:textSize="18sp" />
 
                 <Button
-                    android:id="@+id/teleopcone_middle_decr"
+                    android:id="@+id/teleop_cone_middle_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
@@ -109,7 +109,7 @@
                     android:textSize="30sp" />
 
                 <TextView
-                    android:id="@+id/teleopcone_middle_text"
+                    android:id="@+id/teleop_cone_middle_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
@@ -117,7 +117,7 @@
                     android:textSize="25sp" />
 
                 <Button
-                    android:id="@+id/teleopcone_middle_incr"
+                    android:id="@+id/teleop_cone_middle_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="30dp"
@@ -148,7 +148,7 @@
                     android:textSize="18sp" />
 
                 <Button
-                    android:id="@+id/teleopcone_bottom_decr"
+                    android:id="@+id/teleop_cone_bottom_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
@@ -159,7 +159,7 @@
                     android:textSize="30sp" />
 
                 <TextView
-                    android:id="@+id/teleopcone_bottom_text"
+                    android:id="@+id/teleop_cone_bottom_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
@@ -167,7 +167,7 @@
                     android:textSize="25sp" />
 
                 <Button
-                    android:id="@+id/teleopcone_bottom_incr"
+                    android:id="@+id/teleop_cone_bottom_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="30dp"
@@ -209,7 +209,7 @@
                     android:textColor="@color/specialTextSecondary"/>
 
                 <Button
-                    android:id="@+id/teleopcube_top_decr"
+                    android:id="@+id/teleop_cube_top_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
@@ -220,7 +220,7 @@
                     android:textSize="30sp" />
 
                 <TextView
-                    android:id="@+id/teleopcube_top_text"
+                    android:id="@+id/teleop_cube_top_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="25sp"
@@ -229,7 +229,7 @@
                 </TextView>
 
                 <Button
-                    android:id="@+id/teleopcube_top_incr"
+                    android:id="@+id/teleop_cube_top_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="30dp"
@@ -260,7 +260,7 @@
                     />
 
                 <Button
-                    android:id="@+id/teleopcube_middle_decr"
+                    android:id="@+id/teleop_cube_middle_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
@@ -271,7 +271,7 @@
                     android:textSize="30sp" />
 
                 <TextView
-                    android:id="@+id/teleopcube_middle_text"
+                    android:id="@+id/teleop_cube_middle_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="25sp"
@@ -280,7 +280,7 @@
                 </TextView>
 
                 <Button
-                    android:id="@+id/teleopcube_middle_incr"
+                    android:id="@+id/teleop_cube_middle_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="30dp"
@@ -310,7 +310,7 @@
                     android:textColor="@color/specialTextSecondary"/>
 
                 <Button
-                    android:id="@+id/teleopcube_bottom_decr"
+                    android:id="@+id/teleop_cube_bottom_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
@@ -321,7 +321,7 @@
                     android:textSize="30sp" />
 
                 <TextView
-                    android:id="@+id/teleopcube_bottom_text"
+                    android:id="@+id/teleop_cube_bottom_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="25sp"
@@ -330,7 +330,7 @@
                 </TextView>
 
                 <Button
-                    android:id="@+id/teleopcube_bottom_incr"
+                    android:id="@+id/teleop_cube_bottom_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="30dp"
@@ -343,7 +343,7 @@
 
 
             <TextView
-                android:id="@+id/floorpickup_scoring_title"
+                android:id="@+id/floor_pickup_scoring_title"
                 style="?android:listSeparatorTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

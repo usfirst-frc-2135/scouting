@@ -100,38 +100,38 @@ public class AutonFragment extends Fragment
             int specialTextPrimaryColor = ContextCompat.getColor(context,R.color.specialTextPrimary);
 
             // Sets up TextView that displays cones bottom row points, setting 0 as the default
-            m_autonConesBottomRowValue = v.findViewById(R.id.autoncone_bottom_text);
+            m_autonConesBottomRowValue = v.findViewById(R.id.auton_cone_bottom_text);
             m_autonConesBottomRowValue.setText("0");
             m_autonConesBottomRowValue.setTextColor(specialTextPrimaryColor);
 
             // Sets up TextView that displays cones middle row points, setting 0 as the default
-            m_autonConesMiddleRowValue = v.findViewById(R.id.autoncone_middle_text);
+            m_autonConesMiddleRowValue = v.findViewById(R.id.auton_cone_middle_text);
             m_autonConesMiddleRowValue.setText("0");
             m_autonConesMiddleRowValue.setTextColor(specialTextPrimaryColor);
 
             // Sets up TextView that displays cones top row points, setting 0 as the default
-            m_autonConesTopRowValue = v.findViewById(R.id.autoncone_top_text);
+            m_autonConesTopRowValue = v.findViewById(R.id.auton_cone_top_text);
             m_autonConesTopRowValue.setText("0");
             m_autonConesTopRowValue.setTextColor(specialTextPrimaryColor);
 
             // Sets up TextView that displays cubes bottom row points, setting 0 as the default
-            m_autonCubesBottomRowValue = v.findViewById(R.id.autoncube_bottom_text);
+            m_autonCubesBottomRowValue = v.findViewById(R.id.auton_cube_bottom_text);
             m_autonCubesBottomRowValue.setText("0");
             m_autonCubesBottomRowValue.setTextColor(specialTextPrimaryColor);
 
             // Sets up TextView that displays cubes middle row points, setting 0 as the default
-            m_autonCubesMiddleRowValue = v.findViewById(R.id.autoncube_middle_text);
+            m_autonCubesMiddleRowValue = v.findViewById(R.id.auton_cube_middle_text);
             m_autonCubesMiddleRowValue.setText("0");
             m_autonCubesMiddleRowValue.setTextColor(specialTextPrimaryColor);
 
             // Sets up TextView that displays cubes top row points, setting 0 as the default
-            m_autonCubesTopRowValue = v.findViewById(R.id.autoncube_top_text);
+            m_autonCubesTopRowValue = v.findViewById(R.id.auton_cube_top_text);
             m_autonCubesTopRowValue.setText("0");
             m_autonCubesTopRowValue.setTextColor(specialTextPrimaryColor);
         }
 
         //Connects the decrement button for cones bottom row points and sets up a listener that detects when the button is clicked
-        Button autonConeBottomDecrButton = v.findViewById(R.id.autoncone_bottom_decr);
+        Button autonConeBottomDecrButton = v.findViewById(R.id.auton_cone_bottom_decr);
         //noinspection Convert2Lambda
         autonConeBottomDecrButton.setOnClickListener(new View.OnClickListener()
         {
@@ -144,7 +144,7 @@ public class AutonFragment extends Fragment
         });
 
         //Connects the increment button for cones bottom row points and sets up a listener that detects when the button is clicked
-        Button autonConeBottomIncrButton = v.findViewById(R.id.autoncone_bottom_incr);
+        Button autonConeBottomIncrButton = v.findViewById(R.id.auton_cone_bottom_incr);
         //noinspection Convert2Lambda
         autonConeBottomIncrButton.setOnClickListener(new View.OnClickListener()
         {
@@ -157,7 +157,7 @@ public class AutonFragment extends Fragment
         });
 
         //Connects the decrement button for cones middle row points and sets up a listener that detects when the button is clicked
-        Button autonConeMiddleDecrButton = v.findViewById(R.id.autoncone_middle_decr);
+        Button autonConeMiddleDecrButton = v.findViewById(R.id.auton_cone_middle_decr);
         autonConeMiddleDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -169,7 +169,7 @@ public class AutonFragment extends Fragment
         });
 
         //Connects the increment button for cones middle row points and sets up a listener that detects when the button is clicked
-        Button autonConeMiddleIncrButton = v.findViewById(R.id.autoncone_middle_incr);
+        Button autonConeMiddleIncrButton = v.findViewById(R.id.auton_cone_middle_incr);
         autonConeMiddleIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -181,7 +181,7 @@ public class AutonFragment extends Fragment
         });
 
         //Connects the decrement button for cones top row points and sets up a listener that detects when the button is clicked
-        Button autonConeTopDecrButton = v.findViewById(R.id.autoncone_top_decr);
+        Button autonConeTopDecrButton = v.findViewById(R.id.auton_cone_top_decr);
         autonConeTopDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -193,7 +193,7 @@ public class AutonFragment extends Fragment
         });
 
         //Connects the increment button for cones top row points and sets up a listener that detects when the button is clicked
-        Button autonConeTopIncrButton = v.findViewById(R.id.autoncone_top_incr);
+        Button autonConeTopIncrButton = v.findViewById(R.id.auton_cone_top_incr);
         autonConeTopIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -205,7 +205,7 @@ public class AutonFragment extends Fragment
         });
 
         //Connects the decrement button for cubes bottom row points and sets up a listener that detects when the button is clicked
-        Button autonCubeBottomDecrButton = v.findViewById(R.id.autoncube_bottom_decr);
+        Button autonCubeBottomDecrButton = v.findViewById(R.id.auton_cube_bottom_decr);
         autonCubeBottomDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -217,7 +217,7 @@ public class AutonFragment extends Fragment
         });
 
         //Connects the increment button for cubes bottom row points and sets up a listener that detects when the button is clicked
-        Button autonCubeBottomIncrButton = v.findViewById(R.id.autoncube_bottom_incr);
+        Button autonCubeBottomIncrButton = v.findViewById(R.id.auton_cube_bottom_incr);
         autonCubeBottomIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -229,7 +229,7 @@ public class AutonFragment extends Fragment
         });
 
         //Connects the decrement button for cubes middle row points and sets up a listener that detects when the button is clicked
-        Button autonCubeMiddleDecrButton = v.findViewById(R.id.autoncube_middle_decr);
+        Button autonCubeMiddleDecrButton = v.findViewById(R.id.auton_cube_middle_decr);
         autonCubeMiddleDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -241,7 +241,7 @@ public class AutonFragment extends Fragment
         });
 
         //Connects the increment button for cubes middle row points and sets up a listener that detects when the button is clicked
-        Button autonCubeMiddleIncrButton = v.findViewById(R.id.autoncube_middle_incr);
+        Button autonCubeMiddleIncrButton = v.findViewById(R.id.auton_cube_middle_incr);
         autonCubeMiddleIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -253,7 +253,7 @@ public class AutonFragment extends Fragment
         });
 
         //Connects the decrement button for cubes top row points and sets up a listener that detects when the button is clicked
-        Button autonCubeTopDecrButton = v.findViewById(R.id.autoncube_top_decr);
+        Button autonCubeTopDecrButton = v.findViewById(R.id.auton_cube_top_decr);
         autonCubeTopDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -265,7 +265,7 @@ public class AutonFragment extends Fragment
         });
 
         //Connects the increment button for cubes top row points and sets up a listener that detects when the button is clicked
-        Button autonCubeTopIncrButton = v.findViewById(R.id.autoncube_top_incr);
+        Button autonCubeTopIncrButton = v.findViewById(R.id.auton_cube_top_incr);
         autonCubeTopIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -281,11 +281,11 @@ public class AutonFragment extends Fragment
         m_mobilityCheckbox.setChecked(m_matchData.getExitedCommunity());
 
         m_autonRadioGroup = v.findViewById(R.id.auton_charge_level);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
-        RadioButton radio_autonNone = v.findViewById(R.id.level_autonnone);//Sets up radio button that corresponds to 0
+        RadioButton radio_autonNone = v.findViewById(R.id.level_auton_none);//Sets up radio button that corresponds to 0
         radio_autonNone.setChecked(true);
-        m_radio_autonDocked = v.findViewById(R.id.level_autondocked);//Sets up radio button that corresponds to 1
+        m_radio_autonDocked = v.findViewById(R.id.level_auton_docked);//Sets up radio button that corresponds to 1
         m_radio_autonDocked.setChecked(false);
-        m_radio_autonEngaged = v.findViewById(R.id.level_autonengaged);//Sets up radio button that corresponds to 2
+        m_radio_autonEngaged = v.findViewById(R.id.level_auton_engaged);//Sets up radio button that corresponds to 2
         m_radio_autonEngaged.setChecked(false);
 
         int x = m_matchData.getAutonChargeLevel();

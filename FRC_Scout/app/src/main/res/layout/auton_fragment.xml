@@ -78,7 +78,7 @@
                     android:textSize="18sp"/>
 
                 <Button
-                    android:id="@+id/autoncone_top_decr"
+                    android:id="@+id/auton_cone_top_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
@@ -89,7 +89,7 @@
                     android:textSize="30sp" />
 
                 <TextView
-                    android:id="@+id/autoncone_top_text"
+                    android:id="@+id/auton_cone_top_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
@@ -97,7 +97,7 @@
                     android:textSize="25sp" />
 
                 <Button
-                    android:id="@+id/autoncone_top_incr"
+                    android:id="@+id/auton_cone_top_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="30dp"
@@ -127,7 +127,7 @@
                     android:textSize="18sp" />
 
                 <Button
-                    android:id="@+id/autoncone_middle_decr"
+                    android:id="@+id/auton_cone_middle_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
@@ -138,7 +138,7 @@
                     android:textSize="30sp" />
 
                 <TextView
-                    android:id="@+id/autoncone_middle_text"
+                    android:id="@+id/auton_cone_middle_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
@@ -146,7 +146,7 @@
                     android:textSize="25sp" />
 
                 <Button
-                    android:id="@+id/autoncone_middle_incr"
+                    android:id="@+id/auton_cone_middle_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="30dp"
@@ -177,7 +177,7 @@
                     android:textSize="18sp" />
 
                 <Button
-                    android:id="@+id/autoncone_bottom_decr"
+                    android:id="@+id/auton_cone_bottom_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
@@ -188,7 +188,7 @@
                     android:textSize="30sp" />
 
                 <TextView
-                    android:id="@+id/autoncone_bottom_text"
+                    android:id="@+id/auton_cone_bottom_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
@@ -196,7 +196,7 @@
                     android:textSize="25sp" />
 
                 <Button
-                    android:id="@+id/autoncone_bottom_incr"
+                    android:id="@+id/auton_cone_bottom_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="30dp"
@@ -238,7 +238,7 @@
                     android:textColor="@color/specialTextSecondary"/>
 
                 <Button
-                    android:id="@+id/autoncube_top_decr"
+                    android:id="@+id/auton_cube_top_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
@@ -249,7 +249,7 @@
                     android:textSize="30sp" />
 
                 <TextView
-                    android:id="@+id/autoncube_top_text"
+                    android:id="@+id/auton_cube_top_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
@@ -257,7 +257,7 @@
                     android:textSize="25sp" />
 
                 <Button
-                    android:id="@+id/autoncube_top_incr"
+                    android:id="@+id/auton_cube_top_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="30dp"
@@ -288,7 +288,7 @@
                     />
 
                 <Button
-                    android:id="@+id/autoncube_middle_decr"
+                    android:id="@+id/auton_cube_middle_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
@@ -299,7 +299,7 @@
                     android:textSize="30sp" />
 
                 <TextView
-                    android:id="@+id/autoncube_middle_text"
+                    android:id="@+id/auton_cube_middle_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
@@ -308,7 +308,7 @@
                 </TextView>
 
                 <Button
-                    android:id="@+id/autoncube_middle_incr"
+                    android:id="@+id/auton_cube_middle_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="30dp"
@@ -338,7 +338,7 @@
                     android:textColor="@color/specialTextSecondary"/>
 
                 <Button
-                    android:id="@+id/autoncube_bottom_decr"
+                    android:id="@+id/auton_cube_bottom_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
@@ -349,7 +349,7 @@
                     android:textSize="30sp" />
 
                 <TextView
-                    android:id="@+id/autoncube_bottom_text"
+                    android:id="@+id/auton_cube_bottom_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
@@ -358,7 +358,7 @@
                 </TextView>
 
                 <Button
-                    android:id="@+id/autoncube_bottom_incr"
+                    android:id="@+id/auton_cube_bottom_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="30dp"
@@ -376,7 +376,7 @@
                 android:paddingBottom="10dp">
 
                 <TextView
-                    android:id="@+id/autonchargeStationTitle"
+                    android:id="@+id/auton_charge_station_title"
                     style="?android:listSeparatorTextViewStyle"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
@@ -395,7 +395,7 @@
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/level_autonnone"
+                    android:id="@+id/level_auton_none"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -406,7 +406,7 @@
 
 
                 <RadioButton
-                    android:id="@+id/level_autondocked"
+                    android:id="@+id/level_auton_docked"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -416,7 +416,7 @@
                     android:textSize="22sp" />
 
                 <RadioButton
-                    android:id="@+id/level_autonengaged"
+                    android:id="@+id/level_auton_engaged"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

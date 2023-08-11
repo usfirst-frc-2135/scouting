@@ -70,13 +70,13 @@ public class EndgameFragment extends Fragment
         });
 
         m_endGameRadioGroup = v.findViewById(R.id.endgame_charge_level);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
-        RadioButton radio_endGameNone = v.findViewById(R.id.level_endgamenone);//Sets up radio button that corresponds to 0
+        RadioButton radio_endGameNone = v.findViewById(R.id.level_end_game_none);//Sets up radio button that corresponds to 0
         radio_endGameNone.setChecked(true);
-        m_radio_endGameParked = v.findViewById(R.id.level_endgameparked);//Sets up radio button that corresponds to 1
+        m_radio_endGameParked = v.findViewById(R.id.level_end_game_parked);//Sets up radio button that corresponds to 1
         m_radio_endGameParked.setChecked(false);
-        m_radio_endGameDocked = v.findViewById(R.id.level_endgamedocked);//Sets up radio button that corresponds to 2
+        m_radio_endGameDocked = v.findViewById(R.id.level_end_game_docked);//Sets up radio button that corresponds to 2
         m_radio_endGameDocked.setChecked(false);
-        m_radio_endGameEngaged = v.findViewById(R.id.level_endgameengaged);//Sets up radio button that corresponds to 3
+        m_radio_endGameEngaged = v.findViewById(R.id.level_end_game_engaged);//Sets up radio button that corresponds to 3
         m_radio_endGameEngaged.setChecked(false);
 
         int x = m_matchData.getEndgameChargeLevel();
