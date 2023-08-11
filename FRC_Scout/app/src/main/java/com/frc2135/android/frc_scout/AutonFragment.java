@@ -93,7 +93,7 @@ public class AutonFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
-        // Creates a view using the specific fragment layout, match_data_fragment
+        // Creates a view using the specific fragment layout
         View v = inflater.inflate(R.layout.auton_fragment, parent, false);
         Context context = getContext();
         if(context != null)  {

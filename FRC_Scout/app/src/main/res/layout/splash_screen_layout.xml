@@ -14,7 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="FRC Scout 2023"
-            android:textSize="48dp"
+            android:textSize="48sp"
             android:textColor="#FF0F396B"
             android:textStyle="bold">
         </TextView>
@@ -23,33 +23,34 @@
             android:layout_width="440dp"
             android:layout_height="378dp"
             android:layout_gravity="center"
-            android:src="@drawable/t2135_logo"></ImageView>
+            android:contentDescription="2135 Logo"
+            android:src="@drawable/t2135_logo" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Team 2135 Presentation Invasion"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textColor="#FF0F396B">
         </TextView>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="San Jose, CA"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textColor="#FF0F396B">
         </TextView>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="          "
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textColor="#FF0F396B">
         </TextView>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Created by Nandita Jayanthi, 2020"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textColor="#FF0F396B">
         </TextView>
     </LinearLayout>

@@ -5,26 +5,16 @@
     android:background="@drawable/background_activated"
     android:visibility="visible">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
        <TextView
            android:id="@+id/match_tag_display"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:textSize="24dp"
+           android:textSize="24sp"
            android:paddingTop="15dp"
-           android:paddingLeft="30dp"
+           android:paddingStart="30dp"
+           android:paddingEnd="15dp"
            android:paddingBottom="15dp">
-
        </TextView>
-
-
-
-
-    </LinearLayout>
-
 
 </RelativeLayout>

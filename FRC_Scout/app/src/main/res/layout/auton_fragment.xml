@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -11,22 +11,11 @@
         <LinearLayout
             android:background="@color/backgroundColor"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingTop="20dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-
-            </LinearLayout>
-
-
-
 
             <LinearLayout
             android:layout_width="match_parent"
@@ -42,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:text="Mobility"
                     android:textColor="@color/textPrimary"
-                    android:textSize="24dp" />
+                    android:textSize="24sp" />
 
             <CheckBox
                 android:id="@+id/mobility_checkbox"
@@ -52,7 +41,7 @@
                 android:layout_marginRight="16dp"
                 android:text="Exited Community"
                 android:buttonTint="@color/textPrimary"
-                android:textSize="22dp"
+                android:textSize="22sp"
                 android:textColor="@color/textPrimary"/>
 
         </LinearLayout>
@@ -68,7 +57,7 @@
                 android:paddingBottom="1dp"
                 android:text="CONE SCORING"
                 android:textColor="@color/specialTextPrimary"
-                android:textSize="24dp" />
+                android:textSize="24sp" />
 
 
             <LinearLayout
@@ -86,18 +75,18 @@
                     android:layout_height="match_parent"
                     android:text="Top Row"
                     android:textColor="@color/specialTextSecondary"
-                    android:textSize="18dp"/>
+                    android:textSize="18sp"/>
 
                 <Button
                     android:id="@+id/autoncone_top_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
                     android:layout_weight="1"
                     android:background="#FFC107"
                     android:text="@string/decrease"
                     android:textColor="#9F3FB5"
-                    android:textSize="30dp"></Button>
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/autoncone_top_text"
@@ -105,18 +94,18 @@
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:textAlignment="center"
-                    android:textSize="25dp"></TextView>
+                    android:textSize="25sp" />
 
                 <Button
                     android:id="@+id/autoncone_top_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginEnd="30dp"
                     android:layout_weight="1"
                     android:background="#FFC107"
                     android:text="@string/increase"
                     android:textColor="#9F3FB5"
-                    android:textSize="30dp"></Button>
+                    android:textSize="30sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -135,18 +124,18 @@
                     android:layout_height="match_parent"
                     android:text="Middle Row"
                     android:textColor="@color/specialTextSecondary"
-                    android:textSize="18dp" />
+                    android:textSize="18sp" />
 
                 <Button
                     android:id="@+id/autoncone_middle_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
                     android:layout_weight="1"
                     android:background="#ffdc70"
                     android:text="@string/decrease"
                     android:textColor="#d779ed"
-                    android:textSize="30dp"></Button>
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/autoncone_middle_text"
@@ -154,18 +143,18 @@
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:textAlignment="center"
-                    android:textSize="25dp"></TextView>
+                    android:textSize="25sp" />
 
                 <Button
                     android:id="@+id/autoncone_middle_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginEnd="30dp"
                     android:layout_weight="1"
                     android:background="#ffdc70"
                     android:text="@string/increase"
                     android:textColor="#d779ed"
-                    android:textSize="30dp"></Button>
+                    android:textSize="30sp" />
             </LinearLayout>
 
 
@@ -185,18 +174,18 @@
                     android:layout_height="match_parent"
                     android:text="Bottom Row"
                     android:textColor="@color/specialTextSecondary"
-                    android:textSize="18dp" />
+                    android:textSize="18sp" />
 
                 <Button
                     android:id="@+id/autoncone_bottom_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
                     android:layout_weight="1"
                     android:background="#fdefb2"
                     android:text="@string/decrease"
                     android:textColor="#e6a4f5"
-                    android:textSize="30dp"></Button>
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/autoncone_bottom_text"
@@ -204,18 +193,18 @@
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:textAlignment="center"
-                    android:textSize="25dp"></TextView>
+                    android:textSize="25sp" />
 
                 <Button
                     android:id="@+id/autoncone_bottom_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginEnd="30dp"
                     android:layout_weight="1"
                     android:background="#fdefb2"
                     android:text="@string/increase"
                     android:textColor="#e6a4f5"
-                    android:textSize="30dp"></Button>
+                    android:textSize="30sp" />
             </LinearLayout>
 
 
@@ -228,7 +217,7 @@
                 android:paddingTop="20dp"
                 android:text="CUBE SCORING"
                 android:textColor="@color/specialTextPrimary"
-                android:textSize="24dp" />
+                android:textSize="24sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -244,7 +233,7 @@
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:text="Top Row"
-                    android:textSize="18dp"
+                    android:textSize="18sp"
                     style="?android:listSeparatorTextViewStyle"
                     android:textColor="@color/specialTextSecondary"/>
 
@@ -252,12 +241,12 @@
                     android:id="@+id/autoncube_top_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
                     android:layout_weight="1"
                     android:background="#9F3FB5"
                     android:text="@string/decrease"
                     android:textColor="#FFC107"
-                    android:textSize="30dp"></Button>
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/autoncube_top_text"
@@ -265,18 +254,18 @@
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:textAlignment="center"
-                    android:textSize="25dp"></TextView>
+                    android:textSize="25sp" />
 
                 <Button
                     android:id="@+id/autoncube_top_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginEnd="30dp"
                     android:layout_weight="1"
                     android:background="#9F3FB5"
                     android:text="@string/increase"
                     android:textColor="#FFC107"
-                    android:textSize="30dp"></Button>
+                    android:textSize="30sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -293,7 +282,7 @@
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:text="Middle Row"
-                    android:textSize="18dp"
+                    android:textSize="18sp"
                     style="?android:listSeparatorTextViewStyle"
                     android:textColor="@color/specialTextSecondary"
                     />
@@ -302,12 +291,12 @@
                     android:id="@+id/autoncube_middle_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
                     android:layout_weight="1"
                     android:background="#d779ed"
                     android:text="@string/decrease"
                     android:textColor="#ffdc70"
-                    android:textSize="30dp"></Button>
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/autoncube_middle_text"
@@ -315,19 +304,19 @@
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:textAlignment="center"
-                    android:textSize="25dp">
+                    android:textSize="25sp">
                 </TextView>
 
                 <Button
                     android:id="@+id/autoncube_middle_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginEnd="30dp"
                     android:layout_weight="1"
                     android:background="#d779ed"
                     android:text="@string/increase"
                     android:textColor="#ffdc70"
-                    android:textSize="30dp"></Button>
+                    android:textSize="30sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -344,7 +333,7 @@
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:text="Bottom Row"
-                    android:textSize="18dp"
+                    android:textSize="18sp"
                     style="?android:listSeparatorTextViewStyle"
                     android:textColor="@color/specialTextSecondary"/>
 
@@ -352,12 +341,12 @@
                     android:id="@+id/autoncube_bottom_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
                     android:layout_weight="1"
                     android:background="#e6a4f5"
                     android:text="@string/decrease"
                     android:textColor="#fdefb2"
-                    android:textSize="30dp"></Button>
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/autoncube_bottom_text"
@@ -365,19 +354,19 @@
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:textAlignment="center"
-                    android:textSize="25dp">
+                    android:textSize="25sp">
                 </TextView>
 
                 <Button
                     android:id="@+id/autoncube_bottom_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginEnd="30dp"
                     android:layout_weight="1"
                     android:background="#e6a4f5"
                     android:text="@string/increase"
                     android:textColor="#fdefb2"
-                    android:textSize="30dp"></Button>
+                    android:textSize="30sp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -394,15 +383,15 @@
                     android:paddingTop="0dp"
                     android:text="CHARGE STATION"
                     android:textColor="@color/textPrimary"
-                    android:textSize="24dp" />
+                    android:textSize="24sp" />
 
             </LinearLayout>
             <RadioGroup
                 android:id="@+id/auton_charge_level"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="11dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginStart="11dp"
+                android:layout_marginEnd="50dp"
                 android:orientation="horizontal">
 
                 <RadioButton

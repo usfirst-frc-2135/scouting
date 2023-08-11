@@ -54,7 +54,7 @@ public class EndgameFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
-        //Creates a view using the specific fragment layout, match_data_fragment
+        //Creates a view using the specific fragment layout.
         View v = inflater.inflate(R.layout.endgame_fragment, parent, false);
 
         //Connects the checkbox for if the robot dies and sets up a listener to detect when the checked status is changed

@@ -28,8 +28,8 @@
             android:text="Sort By:"
             android:textAlignment="center"
             android:textColor="@color/matchListFilterText"
-            android:textSize="20dp"
-            android:textStyle="bold"></TextView>
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/sort_options"
@@ -39,21 +39,22 @@
             android:layout_weight="0.5"
             android:background="@drawable/spinner_template"
             android:dropDownSelector="@color/matchListFilterText"
-            android:scrollbarAlwaysDrawVerticalTrack="true"></Spinner>
+            android:scrollbarAlwaysDrawVerticalTrack="true" />
 
-        <Space
+        <android.widget.Space
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="5"
             android:background="@color/colorSecondary">
 
-        </Space>
+        </android.widget.Space>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@color/colorSecondary"
-            android:src="@android:drawable/ic_menu_search"></ImageView>
+            android:contentDescription="IC Menu Search"
+            android:src="@android:drawable/ic_menu_search" />
 
         <Button
             android:id="@+id/filter_text"
@@ -66,18 +67,19 @@
             android:paddingRight="10dp"
             android:text="Filter List"
             android:textColor="@color/matchListFilterText"
-            android:textSize="20dp"
-            android:textStyle="bold"></Button>
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/dark_toggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:text="Dark Mode"
             android:textColor="@color/matchListFilterText"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
 
@@ -106,6 +108,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/add_icon_blue"
+        android:contentDescription="fab"
         app:fabCustomSize="80dp"
         app:maxImageSize="30dp" />
 

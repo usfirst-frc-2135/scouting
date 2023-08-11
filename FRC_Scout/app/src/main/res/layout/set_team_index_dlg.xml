@@ -21,8 +21,11 @@
             android:id="@+id/set_team_index_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:ems="10"
+            android:autofillHints="team index"
+            android:hint="team index"
+            android:inputType="text"
             android:paddingTop="25dp">
         </EditText>
         <TextView

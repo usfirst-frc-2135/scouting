@@ -12,10 +12,13 @@
         android:paddingLeft="30dp"
         android:paddingRight="30dp">
 
-       <EditText
-           android:id="@+id/event_code_field"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"></EditText>
+        <EditText
+            android:id="@+id/event_code_field"
+            android:layout_width="match_parent"
+            android:autofillHints="Event Code"
+            android:hint="eventCode"
+            android:inputType="text"
+            android:layout_height="wrap_content" />
 
         </LinearLayout>
 

@@ -25,7 +25,7 @@
             android:paddingTop="50dp"
             android:text="Competition Info"
             android:textColor="@color/textPrimary"
-            android:textSize="24dp" />
+            android:textSize="24sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="COMPETITION"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textColor="@color/textSecondary"
                 android:textStyle="bold"
                 android:backgroundTint="@color/textSecondary"/>
@@ -49,7 +49,10 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:paddingTop="25dp"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:hint="competition"
+                android:inputType="text"
+                android:autofillHints="competition"
                 android:textColorHint="@color/hintColor"
                 android:textColor="@color/textPrimary"
                 android:backgroundTint="@color/textSecondary">
@@ -68,7 +71,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="NAME"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textColor="@color/textSecondary"
                 android:textStyle="bold"
                 android:backgroundTint="@color/textSecondary"/>
@@ -78,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:paddingTop="25dp"
                 android:textColorHint="@color/hintColor"
                 android:textColor="@color/textPrimary"
@@ -96,7 +99,7 @@
             android:paddingTop="50dp"
             android:text="Match Info"
             android:textColor="@color/textPrimary"
-            android:textSize="24dp"
+            android:textSize="24sp"
             android:backgroundTint="@color/textPrimary"/>
 
         <LinearLayout
@@ -110,7 +113,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="MATCH NUMBER"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textColor="@color/textSecondary"
                 android:textStyle="bold"
                 android:backgroundTint="@color/textSecondary"/>
@@ -121,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:paddingTop="25dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:textColor="@color/textPrimary"
                 android:backgroundTint="@color/textSecondary">
             </AutoCompleteTextView>
@@ -139,7 +142,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="TEAM NUMBER"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textColor="@color/textSecondary"
                 android:textStyle="bold"
                 android:backgroundTint="@color/textSecondary"/>
@@ -150,7 +153,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:paddingTop="25dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:textColor="@color/textPrimary"
                 android:backgroundTint="@color/textSecondary">
 
