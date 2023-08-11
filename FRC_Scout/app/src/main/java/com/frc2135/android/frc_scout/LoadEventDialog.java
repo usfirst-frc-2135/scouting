@@ -180,7 +180,7 @@ public class LoadEventDialog extends DialogFragment
                     public Map<String, String> getHeaders()
                     {
                         // These params are used to access the URL data (I think).
-                        Map<String, String> params = new HashMap<String, String>();
+                        Map<String, String> params = new HashMap<>();
                         params.put("X-TBA-Auth-Key", "E7akoVihRO2ZbNHtW2nRrjuNTcZaOxWtfeYWwh4XILMsKsqLnH2ZQrKAnbevlWGn");
                         return params;
                     }

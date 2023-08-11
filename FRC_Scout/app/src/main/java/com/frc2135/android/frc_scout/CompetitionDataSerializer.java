@@ -25,7 +25,7 @@ public class CompetitionDataSerializer
 
     // Data members
     private final Context m_context;
-    private String        m_dataPath;
+    private final String  m_dataPath;
 
     public CompetitionDataSerializer(Context context)
     {

@@ -23,7 +23,7 @@ public class Scouter
     private Scouter(Context mAppContext)
     {
 
-        m_pastScouters = new ArrayList<String>();
+        m_pastScouters = new ArrayList<>();
         m_mostRecentScoutName = "";
         m_mostRecentMatchNumber = "";
         m_teamIndexStr = "None";
@@ -53,7 +53,7 @@ public class Scouter
     public Scouter(JSONObject json)
     {
         Log.d(TAG, "Scouter being created using json data");
-        m_pastScouters = new ArrayList<String>();
+        m_pastScouters = new ArrayList<>();
         try
         {
             String tag = "scoutername";

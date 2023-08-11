@@ -131,7 +131,7 @@ public class PreMatchActivity extends AppCompatActivity
             }
         });
 
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(PreMatchActivity.this, android.R.layout.select_dialog_item, Scouter.get(getApplicationContext()).getPastScouts());
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(PreMatchActivity.this, android.R.layout.select_dialog_item, Scouter.get(getApplicationContext()).getPastScouts());
         m_scoutNameField.setAdapter(adapter2);
         m_scoutNameField.setThreshold(0);
         m_scoutNameField.setOnFocusChangeListener(new View.OnFocusChangeListener()
@@ -216,7 +216,7 @@ public class PreMatchActivity extends AppCompatActivity
                             String[] teams = m_compInfo.getTeams(m_matchNumberField.getText().toString().trim());
                             if (!teams[0].equals(""))
                                 bTeamsLoadedSuccessfully = true;
-                            ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(PreMatchActivity.this, android.R.layout.select_dialog_item, teams);
+                            ArrayAdapter<String> adapter3 = new ArrayAdapter<>(PreMatchActivity.this, android.R.layout.select_dialog_item, teams);
                             m_teamNumberField.setAdapter(adapter3);
                         }
                         catch (JSONException jsonException)

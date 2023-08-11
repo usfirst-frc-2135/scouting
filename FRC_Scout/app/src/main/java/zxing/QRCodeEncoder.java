@@ -137,13 +137,13 @@ public final class QRCodeEncoder {
                 }
                 for (String phone : uniquePhones) {
                     newContents.append("TEL:").append(escapeMECARD(phone)).append(';');
-                    newDisplayContents.append('\n').append(PhoneNumberUtils.formatNumber(phone, Locale.getDefault().getCountry()));
-                }
+                        newDisplayContents.append('\n').append(PhoneNumberUtils.formatNumber(phone, Locale.getDefault().getCountry()));
+                    }
 
-                Collection<String> uniqueEmails = new HashSet<String>(Contents.EMAIL_KEYS.length);
-                for (int x = 0; x < Contents.EMAIL_KEYS.length; x++) {
-                    String email = trim(bundle.getString(Contents.EMAIL_KEYS[x]));
-                    if (email != null) {
+                    Collection<String> uniqueEmails = new HashSet<>(Contents.EMAIL_KEYS.length);
+                    for (int x = 0; x < Contents.EMAIL_KEYS.length; x++) {
+                        String email = trim(bundle.getString(Contents.EMAIL_KEYS[x]));
+                        if (email != null) {
                         uniqueEmails.add(email);
                     }
                 }
@@ -197,7 +197,7 @@ public final class QRCodeEncoder {
         Map<EncodeHintType, Object> hints = null;
         String encoding = guessAppropriateEncoding(contents);
         if (encoding != null) {
-            hints = new HashMap< EncodeHintType, Object>();
+            hints = new HashMap<>();
             hints.put(EncodeHintType.CHARACTER_SET, encoding);
         }
         MultiFormatWriter writer = new MultiFormatWriter();

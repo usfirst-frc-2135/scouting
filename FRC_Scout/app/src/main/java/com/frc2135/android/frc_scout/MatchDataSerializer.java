@@ -24,7 +24,7 @@ public class MatchDataSerializer
     private static final String TAG = "MatchDataSerializer";
     private final Context m_Context;
     private final String  m_FileName;
-    private String        m_dataPath;
+    private final String  m_dataPath;
     private Scouter       m_Scouter;
 
     public MatchDataSerializer(Context context, String fName)
@@ -116,7 +116,7 @@ public class MatchDataSerializer
     public ArrayList<MatchData> loadMatchData() throws IOException, JSONException
     {
         // Create a new MatchHistory obj and load it with all the existing match files.
-        ArrayList<MatchData> matchHistory = new ArrayList<MatchData>();
+        ArrayList<MatchData> matchHistory = new ArrayList<>();
         BufferedReader reader = null;
         File file = new File(m_dataPath); // dir to use
 

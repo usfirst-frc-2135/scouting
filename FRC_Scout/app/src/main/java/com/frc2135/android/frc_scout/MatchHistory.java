@@ -29,7 +29,7 @@ public class MatchHistory
         }
         catch (Exception e)
         {
-            m_TotalMatchHistory = new ArrayList<MatchData>();
+            m_TotalMatchHistory = new ArrayList<>();
             Log.e(TAG, "Error loading matchHistory: ", e);
         }
     }
@@ -122,7 +122,7 @@ public class MatchHistory
 
     public ArrayList<MatchData> sortByTimestamp1(ArrayList<MatchData> mdList)
     {
-        ArrayList<MatchData> sorted = new ArrayList<MatchData>();
+        ArrayList<MatchData> sorted = new ArrayList<>();
         boolean isAdded = false;
         if (mdList.size() > 0)
         {
@@ -152,7 +152,7 @@ public class MatchHistory
 
     public ArrayList<MatchData> sortByTimestamp2(ArrayList<MatchData> mdList)
     {
-        ArrayList<MatchData> sorted = new ArrayList<MatchData>();
+        ArrayList<MatchData> sorted = new ArrayList<>();
         ArrayList<MatchData> temp;
         temp = sortByTimestamp1(mdList);
         for (MatchData mData : temp)
@@ -164,7 +164,7 @@ public class MatchHistory
 
     public ArrayList<MatchData> filterByTeam(ArrayList<MatchData> mdList, String teamNumber)
     {
-        ArrayList<MatchData> sorted = new ArrayList<MatchData>();
+        ArrayList<MatchData> sorted = new ArrayList<>();
         for (MatchData mData : mdList)
         {
             if (mData.getTeamNumber().equals(teamNumber))
@@ -177,7 +177,7 @@ public class MatchHistory
 
     public ArrayList<MatchData> filterByCompetition(ArrayList<MatchData> mdList, String comp)
     {
-        ArrayList<MatchData> sorted = new ArrayList<MatchData>();
+        ArrayList<MatchData> sorted = new ArrayList<>();
         for (MatchData mData : mdList)
         {
             if (mData.getCompetition().equals(comp))
@@ -190,7 +190,7 @@ public class MatchHistory
 
     public ArrayList<MatchData> filterByScout(ArrayList<MatchData> mdList, String scoutName)
     {
-        ArrayList<MatchData> sorted = new ArrayList<MatchData>();
+        ArrayList<MatchData> sorted = new ArrayList<>();
         for (MatchData mData : mdList)
         {
             if (mData.getName().equals(scoutName))
@@ -203,7 +203,7 @@ public class MatchHistory
 
     public ArrayList<MatchData> filterByMatchNumber(ArrayList<MatchData> mdList, String matchNum)
     {
-        ArrayList<MatchData> sorted = new ArrayList<MatchData>();
+        ArrayList<MatchData> sorted = new ArrayList<>();
         for (MatchData mData : mdList)
         {
             if (mData.getMatchNumber().equals(matchNum))
@@ -216,7 +216,7 @@ public class MatchHistory
 
     public String[] listTeams()
     {
-        ArrayList<String> teams = new ArrayList<String>();
+        ArrayList<String> teams = new ArrayList<>();
         for (MatchData mData : m_TotalMatchHistory)
         {
             String team = mData.getTeamNumber();
@@ -236,7 +236,7 @@ public class MatchHistory
 
     public String[] listCompetitions()
     {
-        ArrayList<String> competitions = new ArrayList<String>();
+        ArrayList<String> competitions = new ArrayList<>();
         for (MatchData mData : m_TotalMatchHistory)
         {
             String competition = mData.getCompetition();
@@ -256,7 +256,7 @@ public class MatchHistory
 
     public String[] listScouts()
     {
-        ArrayList<String> scouts = new ArrayList<String>();
+        ArrayList<String> scouts = new ArrayList<>();
         for (MatchData mData : m_TotalMatchHistory)
         {
             String scout = mData.getName();

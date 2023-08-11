@@ -60,7 +60,7 @@ public class FilterDialog extends DialogFragment
 
         m_TeamSpinner = v.findViewById(R.id.team_options);
         m_TeamSpinner.setEnabled(m_bFilterTeam);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.select_dialog_item, MatchHistory.get(getActivity()).listTeams());
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item, MatchHistory.get(getActivity()).listTeams());
         m_TeamSpinner.setAdapter(adapter);
 
         CheckBox matchCheckbox = v.findViewById(R.id.match_select);
@@ -93,7 +93,7 @@ public class FilterDialog extends DialogFragment
 
         m_CompetitionSpinner = v.findViewById(R.id.competition_options);
         m_CompetitionSpinner.setEnabled(m_bFilterCompetition);
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.select_dialog_item, MatchHistory.get(getActivity()).listCompetitions());
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item, MatchHistory.get(getActivity()).listCompetitions());
         m_CompetitionSpinner.setAdapter(adapter1);
 
         CheckBox scoutCheckbox = v.findViewById(R.id.scout_select);
@@ -110,7 +110,7 @@ public class FilterDialog extends DialogFragment
 
         m_ScoutSpinner = v.findViewById(R.id.scout_options);
         m_ScoutSpinner.setEnabled(m_bFilterScout);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getActivity(), android.R.layout.select_dialog_item, MatchHistory.get(getActivity()).listScouts());
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item, MatchHistory.get(getActivity()).listScouts());
         m_ScoutSpinner.setAdapter(adapter2);
 
         AlertDialog dialog = new AlertDialog.Builder(getActivity()).setView(v).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
