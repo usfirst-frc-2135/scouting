@@ -92,9 +92,9 @@ public class MatchDataSerializer
     }
 
 /*---> REMOVE - this is never used
-    public void saveAllMatchDatas(ArrayList<MatchData> matchHistory) throws JSONException, IOException
+    public void saveAllMatchData(ArrayList<MatchData> matchHistory) throws JSONException, IOException
     {
-        Log.d(TAG, "saveAllMatchDatas() going to save MatchHistory matches to JSON files");
+        Log.d(TAG, "saveAllMatchData() going to save MatchHistory matches to JSON files");
 
         // Write out all matchData files.
         for (MatchData matchData1 : matchHistory)
@@ -109,7 +109,7 @@ public class MatchDataSerializer
     {
         Log.d(TAG, "saveAllData() going to save Scouter and MatchHistory matches to JSON files");
         saveScouterData();
-        saveAllMatchDatas(matchHistory);
+        saveAllMatchData(matchHistory);
     }
 <--- REMOVE*/
 
@@ -187,7 +187,7 @@ public class MatchDataSerializer
                 //Line breaks are omitted and irrelevant
                 jsonString.append(line);
             }
-            //Parse the JSON using JSONTokener
+            //Parse the JSON.
             JSONArray array = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
 
             //Build the array of matches from JSONObjects

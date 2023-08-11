@@ -104,7 +104,7 @@ public class CompetitionInfo
                     jsonString.append(line);
                 }
 
-                // Parse the JSON using JSONTokener class.
+                // Parse the JSON.
                 m_jsonData = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
                 Log.d(TAG, "setting m_bEventDataLoaded = true");
                 m_bEventDataLoaded = true;
