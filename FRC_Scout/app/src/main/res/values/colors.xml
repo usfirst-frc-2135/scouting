@@ -2,11 +2,11 @@
 <resources>
     <!-- for light mode -->
     <color name="backgroundColor">#FCFCFC</color>
-    <color name="autonuppercardColor">#fcd9df</color>
-    <color name="autonlowercardColor">#efe2ff</color>
-    <color name="teleopuppercardColor">#dff7d7</color>
-    <color name="teleoplowercardColor">#ceeaf5</color>
-    <color name="endgamecardColor">#CEEAF5</color>
+    <color name="autonUpperCardColor">#fcd9df</color>
+    <color name="autonLowerCardColor">#efe2ff</color>
+    <color name="teleopUpperCardColor">#dff7d7</color>
+    <color name="teleopLowerCardColor">#ceeaf5</color>
+    <color name="endGameCardColor">#CEEAF5</color>
 
     <color name="bottomColor">#FCFCFC</color>
     <color name="hintColor">#a3a3a3</color>

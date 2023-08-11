@@ -49,7 +49,7 @@
             <TextView
                 android:id="@+id/cone_scoring_title"
                 style="?android:listSeparatorTextViewStyle"
-                android:background="@color/autonuppercardColor"
+                android:background="@color/autonUpperCardColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -62,14 +62,14 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:background="@color/autonuppercardColor"
+                android:background="@color/autonUpperCardColor"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingBottom="1dp">
 
                 <TextView
                     android:id="@+id/cone_top_title"
-                    android:background="@color/autonuppercardColor"
+                    android:background="@color/autonUpperCardColor"
                     style="?android:listSeparatorTextViewStyle"
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
@@ -110,7 +110,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:background="@color/autonuppercardColor"
+                android:background="@color/autonUpperCardColor"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="20dp"
@@ -118,7 +118,7 @@
 
                 <TextView
                     android:id="@+id/cone_middle_title"
-                    android:background="@color/autonuppercardColor"
+                    android:background="@color/autonUpperCardColor"
                     style="?android:listSeparatorTextViewStyle"
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
@@ -160,7 +160,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:background="@color/autonuppercardColor"
+                android:background="@color/autonUpperCardColor"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="20dp"
@@ -168,7 +168,7 @@
 
                 <TextView
                     android:id="@+id/cone_bottom_title"
-                    android:background="@color/autonuppercardColor"
+                    android:background="@color/autonUpperCardColor"
                     style="?android:listSeparatorTextViewStyle"
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
@@ -211,7 +211,7 @@
             <TextView
                 android:id="@+id/cube_scoring_title"
                 style="?android:listSeparatorTextViewStyle"
-                android:background="@color/autonlowercardColor"
+                android:background="@color/autonLowerCardColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
@@ -221,7 +221,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:background="@color/autonlowercardColor"
+                android:background="@color/autonLowerCardColor"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="1dp"
@@ -229,7 +229,7 @@
 
                 <TextView
                     android:id="@+id/cube_top_title"
-                    android:background="@color/autonlowercardColor"
+                    android:background="@color/autonLowerCardColor"
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:text="Top Row"
@@ -270,7 +270,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:background="@color/autonlowercardColor"
+                android:background="@color/autonLowerCardColor"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="20dp"
@@ -278,7 +278,7 @@
 
                 <TextView
                     android:id="@+id/cube_middle_title"
-                    android:background="@color/autonlowercardColor"
+                    android:background="@color/autonLowerCardColor"
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:text="Middle Row"
@@ -321,7 +321,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:background="@color/autonlowercardColor"
+                android:background="@color/autonLowerCardColor"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="20dp"
@@ -329,7 +329,7 @@
 
                 <TextView
                     android:id="@+id/cube_bottom_title"
-                    android:background="@color/autonlowercardColor"
+                    android:background="@color/autonLowerCardColor"
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:text="Bottom Row"

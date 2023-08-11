@@ -17,35 +17,35 @@ public class MatchData
     private static final String TAG = "MatchData";
 
     // Keys used for reading/writing match JSON files.
-    private static final String JSON_KEY_SCOUT_NAME = "scoutname";
-    private static final String JSON_KEY_COMPETITION = "competition";
-    private static final String JSON_KEY_TEAM_NUMBER = "teamnumber";
-    private static final String JSON_KEY_MATCH_NUMBER = "matchnumber";
+    private static final String JSON_KEY_SCOUT_NAME = "scoutName";
+    private static final String JSON_KEY_COMPETITION_ID = "competitionId";
+    private static final String JSON_KEY_TEAM_NUMBER = "teamNumber";
+    private static final String JSON_KEY_MATCH_NUMBER = "matchNumber";
 
     private static final String JSON_KEY_MOBILITY = "mobility";
-    private static final String JSON_KEY_AUTON_CONES_BOTTOM_ROW = "autonconesbottomrow";
-    private static final String JSON_KEY_AUTON_CONES_MIDDLE_ROW = "autonconesmiddlerow";
-    private static final String JSON_KEY_AUTON_CONES_TOP_ROW = "autonconestoprow";
-    private static final String JSON_KEY_AUTON_CUBES_BOTTOM_ROW = "autoncubesbottomrow";
-    private static final String JSON_KEY_AUTON_CUBES_MIDDLE_ROW = "autoncubesmiddlerow";
-    private static final String JSON_KEY_AUTON_CUBES_TOP_ROW = "autoncubestoprow";
-    private static final String JSON_KEY_AUTON_CHARGE = "autoncharge";
+    private static final String JSON_KEY_AUTON_CONES_BOTTOM_ROW = "autonConesBottomRow";
+    private static final String JSON_KEY_AUTON_CONES_MIDDLE_ROW = "autonConesMiddleRow";
+    private static final String JSON_KEY_AUTON_CONES_TOP_ROW = "autonConesTopRow";
+    private static final String JSON_KEY_AUTON_CUBES_BOTTOM_ROW = "autonCubesBottomRow";
+    private static final String JSON_KEY_AUTON_CUBES_MIDDLE_ROW = "autonCubesMiddleRow";
+    private static final String JSON_KEY_AUTON_CUBES_TOP_ROW = "autonCubesTopRow";
+    private static final String JSON_KEY_AUTON_CHARGE = "autonCharge";
 
-    private static final String JSON_KEY_TELEOP_CONES_BOTTOM_ROW = "teleopconesbottomrow";
-    private static final String JSON_KEY_TELEOP_CONES_MIDDLE_ROW = "teleopconesmiddlerow";
-    private static final String JSON_KEY_TELEOP_CONES_TOP_ROW = "teleopconestoprow";
-    private static final String JSON_KEY_TELEOP_CUBES_BOTTOM_ROW = "teleopcubesbottomrow";
-    private static final String JSON_KEY_TELEOP_CUBES_MIDDLE_ROW = "teleopcubesmiddlerow";
-    private static final String JSON_KEY_TELEOP_CUBES_TOP_ROW = "teleopcubestoprow";
+    private static final String JSON_KEY_TELEOP_CONES_BOTTOM_ROW = "teleopConesBottomRow";
+    private static final String JSON_KEY_TELEOP_CONES_MIDDLE_ROW = "teleopConesMiddleRow";
+    private static final String JSON_KEY_TELEOP_CONES_TOP_ROW = "teleopConesTopRow";
+    private static final String JSON_KEY_TELEOP_CUBES_BOTTOM_ROW = "teleopCubesBottomRow";
+    private static final String JSON_KEY_TELEOP_CUBES_MIDDLE_ROW = "teleopCubesMiddleRow";
+    private static final String JSON_KEY_TELEOP_CUBES_TOP_ROW = "teleopCubesTopRow";
 
-    private static final String JSON_KEY_END_GAME_CHARGE = "endgamecharge";
+    private static final String JSON_KEY_END_GAME_CHARGE = "endGameCharge";
     private static final String JSON_KEY_COMMENTS = "comments";
     private static final String JSON_KEY_TIMESTAMP = "timestamp";
     private static final String JSON_KEY_DIED = "died";
-    private static final String JSON_KEY_MATCH_ID = "matchid";
-    private static final String JSON_KEY_PICKED_UP_CUBE = "pickedupcube";
-    private static final String JSON_KEY_PICKED_UP_UPRIGHT = "pickedupupright";
-    private static final String JSON_KEY_PICKED_UP_TIPPED = "pickeduptipped";
+    private static final String JSON_KEY_MATCH_ID = "matchId";
+    private static final String JSON_KEY_PICKED_UP_CUBE = "pickedUpCube";
+    private static final String JSON_KEY_PICKED_UP_UPRIGHT = "pickedUpUpright";
+    private static final String JSON_KEY_PICKED_UP_TIPPED = "pickedUpTipped";
 
     // Data members 
     private int m_autonConesBottomRow;
@@ -72,7 +72,7 @@ public class MatchData
     private String m_teamNumber;
     private String m_matchNumber;
     private final String m_matchID;
-    private String m_competition;
+    private String m_competitionId;
     private Date m_timestamp;
     private boolean m_pickedUpCube;
     private boolean m_pickedUpUpright;
@@ -121,8 +121,8 @@ public class MatchData
 
         m_matchID = UUID.randomUUID() + "";
 
-        m_competition = CurrentCompetition.get(context).getEventCode();
-        Log.d(TAG, "Default constructor m_competition set to " + m_competition);
+        m_competitionId = CurrentCompetition.get(context).getEventCode();
+        Log.d(TAG, "Default constructor m_competitionId set to " + m_competitionId);
     }
 
     //////////////////////// constructor from JSON file  //////////////////////////////
@@ -132,7 +132,7 @@ public class MatchData
         Log.d(TAG, "MatchData being created using json data");
 
         setName(json.getString(JSON_KEY_SCOUT_NAME));
-        setCompetition(json.getString(JSON_KEY_COMPETITION));
+        setCompetition(json.getString(JSON_KEY_COMPETITION_ID));
         setTeamNumber(json.getString(JSON_KEY_TEAM_NUMBER));
         setMatchNumber(json.getString(JSON_KEY_MATCH_NUMBER));
 
@@ -194,15 +194,15 @@ public class MatchData
         return m_name;
     }
 
-    ////////////  m_competition   /////////////////////
+    ////////////  m_competitionId   /////////////////////
     public void setCompetition(String c)
     {
-        m_competition = c;
+        m_competitionId = c;
     }
 
     public String getCompetition()
     {
-        return m_competition;
+        return m_competitionId;
     }
 
     ////////////  m_teamNumber   /////////////////////
@@ -238,7 +238,7 @@ public class MatchData
         return m_autonConesBottomRow;
     }
 
-    ////////////  m_autonConesMiddle Row   /////////////////////
+    ////////////  m_autonConesMiddleRow   /////////////////////
     public void setAutonConesMiddleRow(int y)
     {
         m_autonConesMiddleRow = y;
@@ -249,7 +249,7 @@ public class MatchData
         return m_autonConesMiddleRow;
     }
 
-    ////////////  m_autonConesTop Row   /////////////////////
+    ////////////  m_autonConesTopRow   /////////////////////
     public void setAutonConesTopRow(int z)
     {
         m_autonConesTopRow = z;
@@ -271,7 +271,7 @@ public class MatchData
         return m_autonCubesBottomRow;
     }
 
-    ////////////  m_autonCubesMiddle Row   /////////////////////
+    ////////////  m_autonCubesMiddleRow   /////////////////////
     public void setAutonCubesMiddleRow(int b)
     {
         m_autonCubesMiddleRow = b;
@@ -282,7 +282,7 @@ public class MatchData
         return m_autonCubesMiddleRow;
     }
 
-    ////////////  m_autonCubesTop Row   /////////////////////
+    ////////////  m_autonCubesTopRow   /////////////////////
     public void setAutonCubesTopRow(int c)
     {
         m_autonCubesTopRow = c;
@@ -304,7 +304,7 @@ public class MatchData
         return m_exitedCommunity;
     }
 
-    ////////////  m_autonchargestation   /////////////////////
+    ////////////  m_autonChargeStation   /////////////////////
     public void setAutonChargeLevel(int x)
     {
         m_autonChargeLevel = x;
@@ -326,7 +326,7 @@ public class MatchData
         return m_teleopConesBottomRow;
     }
 
-    ////////////  m_teleopConesMiddle Row   /////////////////////
+    ////////////  m_teleopConesMiddleRow   /////////////////////
     public void setTeleopConesMiddleRow(int y)
     {
         m_teleopConesMiddleRow = y;
@@ -337,7 +337,7 @@ public class MatchData
         return m_teleopConesMiddleRow;
     }
 
-    ////////////  m_TeleopConesTop Row   /////////////////////
+    ////////////  m_TeleopConesTopRow   /////////////////////
     public void setTeleopConesTopRow(int z)
     {
         m_teleopConesTopRow = z;
@@ -359,7 +359,7 @@ public class MatchData
         return m_teleopCubesBottomRow;
     }
 
-    ////////////  m_teleopCubesMiddle Row   /////////////////////
+    ////////////  m_teleopCubesMiddleRow   /////////////////////
     public void setTeleopCubesMiddleRow(int b)
     {
         m_teleopCubesMiddleRow = b;
@@ -370,7 +370,7 @@ public class MatchData
         return m_teleopCubesMiddleRow;
     }
 
-    ////////////  m_teleopCubesTop Row   /////////////////////
+    ////////////  m_teleopCubesTopRow   /////////////////////
     public void setTeleopCubesTopRow(int c)
     {
         m_teleopCubesTopRow = c;
@@ -381,7 +381,7 @@ public class MatchData
         return m_teleopCubesTopRow;
     }
 
-    ////////////  m_endgamechargestation   /////////////////////
+    ////////////  m_endGameChargeStation   /////////////////////
     public void setEndgameChargeLevel(int x)
     {
         m_endgameChargeLevel = x;
@@ -514,7 +514,7 @@ public class MatchData
             tsvStr += "0" + "\t";
 
         tsvStr += m_matchNumber + "\t";
-        tsvStr += m_competition + "\t";
+        tsvStr += m_competitionId + "\t";
 
         tsvStr += m_name + "\t";   // Scout name
         if (!m_comment.equals(""))
@@ -538,7 +538,7 @@ public class MatchData
         json.put("divider", ", \n");
 
         json.put("headings", "Competition, Team Number, Match Number, Exit Community, Auton Cones Bottom Row, Auton Cones Middle Row, Auton Cones Top Row, Auton Cubes Bottom Row, Auton Cubes Middle Row, Auton Cubes Top Row, Auton Charge Station, Teleop Cones Bottom Row, Teleop Cones Middle Row, Teleop Cones Top Row, Teleop Cubes Bottom Row, Teleop Cubes Middle Row, Teleop Cubes Top Row, Picked Up Cube, Picked Up Upright Cone, Picked Up Tipped Cone, Endgame Charge Station, Died, Comments, Timestamp, MatchID \n");
-        json.put(JSON_KEY_COMPETITION, m_competition);
+        json.put(JSON_KEY_COMPETITION_ID, m_competitionId);
         json.put("divider", ",");
         json.put(JSON_KEY_TEAM_NUMBER, m_teamNumber);
         json.put("divider", ",");
