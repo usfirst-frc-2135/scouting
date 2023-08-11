@@ -20,7 +20,7 @@ public class ScoutPreferences
 
         // Get from shared preferences           
         m_sharedPreferences = activity.getSharedPreferences("night", 0);
-        Boolean booleanValue = m_sharedPreferences.getBoolean("night_mode", true);
+        boolean booleanValue = m_sharedPreferences.getBoolean("night_mode", true);
         if (booleanValue)
         {
             Log.d(TAG, "From shared preferences: dark mode");
@@ -58,7 +58,7 @@ public class ScoutPreferences
             SharedPreferences.Editor editor = m_sharedPreferences.edit();
             Log.d(TAG, "Setting shared preferences night_mode: " + bMode);
             editor.putBoolean("night_mode", bMode);
-            editor.commit();
+            editor.apply();
         }
         else
             Log.d(TAG, "Ignoring night_mode setting: " + bMode);
