@@ -20,11 +20,10 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
 
-import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Hashtable;
+import java.util.Locale;
 import java.util.Map;
 
 import com.google.zxing.BarcodeFormat;
@@ -100,14 +99,14 @@ public final class QRCodeEncoder {
             data = trim(data);
             if (data != null) {
                 contents = "tel:" + data;
-                displayContents = PhoneNumberUtils.formatNumber(data);
+                displayContents = PhoneNumberUtils.formatNumber(data, Locale.getDefault().getCountry());
                 title = "Phone";
             }
         } else if (type.equals(Contents.Type.SMS)) {
             data = trim(data);
             if (data != null) {
                 contents = "sms:" + data;
-                displayContents = PhoneNumberUtils.formatNumber(data);
+                displayContents = PhoneNumberUtils.formatNumber(data, Locale.getDefault().getCountry());
                 title = "SMS";
             }
         } else if (type.equals(Contents.Type.CONTACT)) {
@@ -138,7 +137,7 @@ public final class QRCodeEncoder {
                 }
                 for (String phone : uniquePhones) {
                     newContents.append("TEL:").append(escapeMECARD(phone)).append(';');
-                    newDisplayContents.append('\n').append(PhoneNumberUtils.formatNumber(phone));
+                    newDisplayContents.append('\n').append(PhoneNumberUtils.formatNumber(phone, Locale.getDefault().getCountry()));
                 }
 
                 Collection<String> uniqueEmails = new HashSet<String>(Contents.EMAIL_KEYS.length);
