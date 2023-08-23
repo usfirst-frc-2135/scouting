@@ -48,8 +48,7 @@ public class SetTeamIndexDialog extends DialogFragment
             if (m_Scouter.isValidTeamIndexStr(indexStr))
                 m_teamIndexField.setText(m_Scouter.getTeamIndexStr());
             else m_teamIndexField.setText(str1);
-        }
-        else
+        } else
             m_teamIndexField.setText(str1);
 
         m_teamIndexField.addTextChangedListener(new TextWatcher()
@@ -72,8 +71,7 @@ public class SetTeamIndexDialog extends DialogFragment
                     {
                         m_teamIndexErrMsg.setVisibility(View.VISIBLE); // show invalid teamIndex msg
                         m_teamIndexField.setTextColor(Color.RED);
-                    }
-                    else
+                    } else
                         m_teamIndexField.setTextColor(Color.BLACK);
                 }
             }

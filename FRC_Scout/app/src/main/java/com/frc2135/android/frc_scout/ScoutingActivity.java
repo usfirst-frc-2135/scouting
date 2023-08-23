@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ScoutingActivity extends AppCompatActivity
@@ -28,7 +29,7 @@ public class ScoutingActivity extends AppCompatActivity
 
         // Initializes FragmentManager so that we can host a fragment within our activity.
         final FragmentManager fm = getSupportFragmentManager();
-        final Fragment[] fragment = { fm.findFragmentById(R.id.fragmentContainer) };
+        final Fragment[] fragment = {fm.findFragmentById(R.id.fragmentContainer)};
         fragment[0] = createFragment();
 
         // Designates that chosen fragment will be housed within fragmentContainer, a frame layout in the activity's XML.
@@ -40,7 +41,7 @@ public class ScoutingActivity extends AppCompatActivity
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item)
             {
-                if(item.getItemId() == R.id.navigation_teleop)
+                if (item.getItemId() == R.id.navigation_teleop)
                 {
                     Fragment f = (ScoutingActivity.this).getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
                     if (f instanceof AutonFragment)
@@ -62,8 +63,7 @@ public class ScoutingActivity extends AppCompatActivity
                     fragmentTransaction.replace(R.id.fragmentContainer, fragment1);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
-                }
-                else if(item.getItemId() == R.id.navigation_auton)
+                } else if (item.getItemId() == R.id.navigation_auton)
                 {
                     Fragment f1 = (ScoutingActivity.this).getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
                     if (f1 instanceof AutonFragment)
@@ -83,8 +83,7 @@ public class ScoutingActivity extends AppCompatActivity
                     fragmentTransaction.replace(R.id.fragmentContainer, fragment2);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
-                }
-                else if(item.getItemId() == R.id.navigation_endgame)
+                } else if (item.getItemId() == R.id.navigation_endgame)
                 {
                     Fragment f3 = (ScoutingActivity.this).getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
                     if (f3 instanceof AutonFragment)
@@ -124,6 +123,7 @@ public class ScoutingActivity extends AppCompatActivity
     @Override
     public void onBackPressed()
     {
+        Log.d(TAG, "onBack Pressed");
         super.onBackPressed();
     }
 
@@ -141,7 +141,7 @@ public class ScoutingActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long

@@ -25,8 +25,7 @@ public class ScoutPreferences
         {
             Log.d(TAG, "From shared preferences: dark mode");
             m_bNightMode = true;
-        }
-        else
+        } else
         {
             Log.d(TAG, "From shared preferences: light mode");
             m_bNightMode = false;
@@ -59,8 +58,7 @@ public class ScoutPreferences
             Log.d(TAG, "Setting shared preferences night_mode: " + bMode);
             editor.putBoolean("night_mode", bMode);
             editor.apply();
-        }
-        else
+        } else
             Log.d(TAG, "Ignoring night_mode setting: " + bMode);
     }
 }

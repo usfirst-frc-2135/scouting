@@ -39,12 +39,15 @@ public class EndgameFragment extends Fragment
     {
         super.onCreate(savedInstanceState);
         ScoutingActivity activity = (ScoutingActivity) getActivity();
-        if(activity != null) {
+        if (activity != null)
+        {
             m_matchData = activity.getCurrentMatch();
-            if(m_matchData != null) {
+            if (m_matchData != null)
+            {
                 String teamNumber = m_matchData.stripTeamNamePrefix(m_matchData.getTeamNumber());
                 ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-                if( actionBar != null) {
+                if (actionBar != null)
+                {
                     actionBar.setTitle("Endgame               Scouting Team " + teamNumber + "          Match " + m_matchData.getMatchNumber());
                 }
             }
@@ -117,7 +120,8 @@ public class EndgameFragment extends Fragment
                 updateEndgameData();
                 Log.d(TAG, "Clicked on QR Code");
                 FragmentActivity fActivity = getActivity();
-                if(fActivity != null) {
+                if (fActivity != null)
+                {
                     FragmentManager fm = fActivity.getSupportFragmentManager();
                     QRFragment dialog = QRFragment.newInstance(m_matchData);
                     dialog.show(fm, QRTAG);
@@ -134,12 +138,12 @@ public class EndgameFragment extends Fragment
             {
                 // Save the latest Scouter and MatchData JSON files.
                 Log.d(TAG, "EndgameFragment DONE onClick() saving latest match and Scouter files\n");
-                if(!MatchHistory.get(getActivity()).saveScouterData())
+                if (!MatchHistory.get(getActivity()).saveScouterData())
                 {
                     Log.d(TAG, "ERROR - unable to save Scouter Data!");
                     // TODO - issue a toast msg here??
                 }
-                if(!MatchHistory.get(getActivity()).saveMatchData(m_matchData))
+                if (!MatchHistory.get(getActivity()).saveMatchData(m_matchData))
                 {
                     Log.d(TAG, "ERROR - unable to save Match Data!");
                     // TODO - issue a toast msg here??
@@ -163,12 +167,10 @@ public class EndgameFragment extends Fragment
         if (m_endGameRadioGroup.getCheckedRadioButtonId() == m_radio_endGameParked.getId())
         {
             rtn = 1;
-        }
-        else if (m_endGameRadioGroup.getCheckedRadioButtonId() == m_radio_endGameDocked.getId())
+        } else if (m_endGameRadioGroup.getCheckedRadioButtonId() == m_radio_endGameDocked.getId())
         {
             rtn = 2;
-        }
-        else if (m_endGameRadioGroup.getCheckedRadioButtonId() == m_radio_endGameEngaged.getId())
+        } else if (m_endGameRadioGroup.getCheckedRadioButtonId() == m_radio_endGameEngaged.getId())
         {
             rtn = 3;
         }

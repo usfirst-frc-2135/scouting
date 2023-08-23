@@ -23,16 +23,16 @@ public class MatchDataSerializer
 {
     private static final String TAG = "MatchDataSerializer";
     private final Context m_Context;
-    private final String  m_FileName;
-    private final String  m_dataPath;
-    private Scouter       m_Scouter;
+    private final String m_FileName;
+    private final String m_dataPath;
+    private Scouter m_Scouter;
 
     public MatchDataSerializer(Context context, String fName)
     {
         m_Context = context;
         m_FileName = fName;
         m_dataPath = m_Context.getFilesDir().getPath();
-        Log.d(TAG,"Data files path = " + m_dataPath);  
+        Log.d(TAG, "Data files path = " + m_dataPath);
     }
 
     public void saveScouterData() throws JSONException, IOException
@@ -48,12 +48,10 @@ public class MatchDataSerializer
             writerS = new OutputStreamWriter(out);
             writerS.write(arrayS.toString());
             Log.d(TAG, "Wrote Scouter file: " + m_FileName);
-        }
-        catch (FileNotFoundException e)
+        } catch (FileNotFoundException e)
         {
             Log.d(TAG, "ERROR writing Scouter file: " + e);
-        }
-        finally
+        } finally
         {
             if (writerS != null)
             {
@@ -77,12 +75,10 @@ public class MatchDataSerializer
             writerMatches = new OutputStreamWriter(out);
             writerMatches.write(array.toString());
             Log.d(TAG, "Wrote match file: " + fileM.getName());
-        }
-        catch (FileNotFoundException e)
+        } catch (FileNotFoundException e)
         {
             Log.d(TAG, "ERROR writing Match file " + matchFileName + ": " + e);
-        }
-        finally
+        } finally
         {
             if (writerMatches != null)
             {
@@ -149,21 +145,18 @@ public class MatchDataSerializer
                         // Add this match to matchHistory
                         matchHistory.add(new MatchData(array.getJSONObject(0)));
                         Log.d(TAG, "Reading in file: " + filename);
-                    }
-                    catch (FileNotFoundException e)
+                    } catch (FileNotFoundException e)
                     {
                         //ignore this one; it happens when starting fresh
                         Log.e(TAG, "ERROR in loading file " + filename + ": " + e);
-                    }
-                    finally
+                    } finally
                     {
                         if (reader != null)
                         {
                             reader.close();
                         }
                     }
-                }
-                else
+                } else
                     Log.d(TAG, "Ignoring file: " + filename);
             }
         }
@@ -198,12 +191,10 @@ public class MatchDataSerializer
                 Log.d(TAG, "Most recent past scout = " + m_Scouter.getPastScouts()[0]);
                 Log.d(TAG, "Past teamIndexStr = " + m_Scouter.getTeamIndexStr());
             }
-        }
-        catch (FileNotFoundException e)
+        } catch (FileNotFoundException e)
         {
             //ignore this one; it happens when starting fresh
-        }
-        finally
+        } finally
         {
             if (reader != null)
             {

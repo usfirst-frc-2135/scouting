@@ -35,7 +35,7 @@ public class QRFragment extends DialogFragment
         String stats = "";
         View v = requireActivity().getLayoutInflater().inflate(R.layout.qr_fragment, null);
         Bundle args = getArguments();
-        if(args != null)
+        if (args != null)
             stats = args.getString("stats");
 
         ImageView imageView = v.findViewById(R.id.match_data_qr);
@@ -50,8 +50,7 @@ public class QRFragment extends DialogFragment
         {
             Bitmap bitmap = qrCodeEncoder.encodeAsBitmap();
             imageView.setImageBitmap(bitmap);
-        }
-        catch (WriterException e)
+        } catch (WriterException e)
         {
             Log.d(TAG, "qrCodeEncoder Error: " + e + "");
         }
@@ -90,18 +89,16 @@ public class QRFragment extends DialogFragment
         try
         {
             date = dt.parse(d.toString());
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             Log.d("SignInFragment", e.getMessage());
         }
-        SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-M-dd hh:mm:ss",Locale.US);
+        SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-M-dd hh:mm:ss", Locale.US);
 
         if (date == null)
         {
             return null;
-        }
-        else
+        } else
         {
             return (dt1.format(date).substring(0, 9) + "T" + dt1.format(date).substring(10));
         }

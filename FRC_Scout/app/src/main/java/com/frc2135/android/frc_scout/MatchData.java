@@ -5,8 +5,9 @@ import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.text.SimpleDateFormat;
+
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -166,8 +167,7 @@ public class MatchData
         try
         {
             date = dt.parse(dateStr);
-        }
-        catch (Exception err)
+        } catch (Exception err)
         {
             Log.d("timestamp Date string error: ", err.getMessage());
         }

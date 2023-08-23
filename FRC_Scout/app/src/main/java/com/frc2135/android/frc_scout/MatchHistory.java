@@ -26,8 +26,7 @@ public class MatchHistory
             Log.d(TAG, "m_Serializer loading MatchHistory");
             m_TotalMatchHistory = m_Serializer.loadMatchData();
             Log.d(TAG, "Number of matches loaded from m_Serializer: " + m_TotalMatchHistory.size());
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             m_TotalMatchHistory = new ArrayList<>();
             Log.e(TAG, "Error loading matchHistory: ", e);
@@ -80,8 +79,7 @@ public class MatchHistory
             Log.d(TAG, "Saving scouter data to JSON file");
             m_Serializer.saveScouterData();
             return true;
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             Log.e(TAG, "saveScouterData(): Error saving data:", e);
             return false;
@@ -95,8 +93,7 @@ public class MatchHistory
             Log.d(TAG, "Saving saveMatchData data to JSON files");
             m_Serializer.saveMatchData(matchData);
             return true;
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             Log.e(TAG, "saveMatchData(): Error saving data:", e);
             return false;

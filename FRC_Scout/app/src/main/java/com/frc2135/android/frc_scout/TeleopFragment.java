@@ -59,12 +59,12 @@ public class TeleopFragment extends Fragment
         if (isNotValidPoints(pointsTextView))
         {
             pointsTextView.setTextColor(Color.RED);
-        }
-        else
+        } else
         {
             Context context = getContext();
-            if(context != null)  {
-              pointsTextView.setTextColor(ContextCompat.getColor(context,R.color.specialTextPrimary));
+            if (context != null)
+            {
+                pointsTextView.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
             }
         }
     }
@@ -76,7 +76,7 @@ public class TeleopFragment extends Fragment
 
         m_matchData = ((ScoutingActivity) requireActivity()).getCurrentMatch();
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
-        if(actionBar != null)
+        if (actionBar != null)
         {
             String teamNumber = m_matchData.stripTeamNamePrefix(m_matchData.getTeamNumber());
             actionBar.setTitle("Teleoperated          Scouting Team " + teamNumber + "         Match " + m_matchData.getMatchNumber());
@@ -89,32 +89,32 @@ public class TeleopFragment extends Fragment
         //Creates a view using the specific fragment layout.
         View v = inflater.inflate(R.layout.teleop_fragment, parent, false);
         Context context = getContext();
-        if(context != null)  
+        if (context != null)
         {
             // Setup TextViews that displays points, setting 0 as the default.
             m_teleopConesBottomRowValue = v.findViewById(R.id.teleop_cone_bottom_text);
             m_teleopConesBottomRowValue.setText("0");
-            m_teleopConesBottomRowValue.setTextColor(ContextCompat.getColor(context,R.color.specialTextPrimary));
+            m_teleopConesBottomRowValue.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
 
             m_teleopConesMiddleRowValue = v.findViewById(R.id.teleop_cone_middle_text);
             m_teleopConesMiddleRowValue.setText("0");
-            m_teleopConesMiddleRowValue.setTextColor(ContextCompat.getColor(context,R.color.specialTextPrimary));
+            m_teleopConesMiddleRowValue.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
 
             m_teleopConesTopRowValue = v.findViewById(R.id.teleop_cone_top_text);
             m_teleopConesTopRowValue.setText("0");
-            m_teleopConesTopRowValue.setTextColor(ContextCompat.getColor(context,R.color.specialTextPrimary));
-    
+            m_teleopConesTopRowValue.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
+
             m_teleopCubesBottomRowValue = v.findViewById(R.id.teleop_cube_bottom_text);
             m_teleopCubesBottomRowValue.setText("0");
-            m_teleopCubesBottomRowValue.setTextColor(ContextCompat.getColor(context,R.color.specialTextPrimary));
+            m_teleopCubesBottomRowValue.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
 
             m_teleopCubesMiddleRowValue = v.findViewById(R.id.teleop_cube_middle_text);
             m_teleopCubesMiddleRowValue.setText("0");
-            m_teleopCubesMiddleRowValue.setTextColor(ContextCompat.getColor(context,R.color.specialTextPrimary));
+            m_teleopCubesMiddleRowValue.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
 
             m_teleopCubesTopRowValue = v.findViewById(R.id.teleop_cube_top_text);
             m_teleopCubesTopRowValue.setText("0");
-            m_teleopCubesTopRowValue.setTextColor(ContextCompat.getColor(context,R.color.specialTextPrimary));
+            m_teleopCubesTopRowValue.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
         }
 
         //Connects the decrement button for cones bottom row points and sets up a listener that detects when the button is clicked

@@ -24,9 +24,9 @@ public class CompetitionInfo
     private static final String TAG = "CompetitionInfo";
 
     // Data members
-    private String    m_eventCode;
+    private String m_eventCode;
     private JSONArray m_jsonData;
-    private boolean   m_bEventDataLoaded;
+    private boolean m_bEventDataLoaded;
 
     private static CompetitionInfo sCompetitionInfo;
 
@@ -48,8 +48,7 @@ public class CompetitionInfo
                 Log.d(TAG, "Resetting existing " + oldEventCode + " CompetitionInfo for new eventCode " + eventCode);
                 sCompetitionInfo.readEventMatchesJSON(context, true);
             }
-        }
-        else 
+        } else
         {
             Log.d(TAG, "Creating a new sCompetitionInfo for eventCode " + eventCode);
             sCompetitionInfo = new CompetitionInfo(eventCode);
@@ -65,8 +64,7 @@ public class CompetitionInfo
         {
             Log.d(TAG, "Deleting existing sCompetitionInfo");
             sCompetitionInfo = null;
-        }
-        else Log.d(TAG, "No action needed: no existing sCompetitionInfo");
+        } else Log.d(TAG, "No action needed: no existing sCompetitionInfo");
     }
 
     public String getEventCode()
@@ -116,8 +114,7 @@ public class CompetitionInfo
                 toastS.setGravity(Gravity.CENTER, 0, 0);
                 toastS.show();
                 reader.close();
-            }
-            catch (FileNotFoundException err)
+            } catch (FileNotFoundException err)
             {
                 if (!bSilent)
                 {
@@ -130,13 +127,11 @@ public class CompetitionInfo
                     toastM.setGravity(Gravity.CENTER, 0, 0);
                     toastM.show();
                 }
-            }
-            catch (JSONException jsonException)
+            } catch (JSONException jsonException)
             {
                 Log.e(TAG, "ERROR (jsonException) reading event matches file\n");
                 jsonException.printStackTrace();
-            }
-            catch (IOException ioException)
+            } catch (IOException ioException)
             {
                 Log.e(TAG, "ERROR (ioException) reading event matches file\n");
                 ioException.printStackTrace();
@@ -193,8 +188,7 @@ public class CompetitionInfo
                 {
                     teams[i] = blueTeams.getString(i - 4);
                 }
-            }
-            else
+            } else
                 Log.d(TAG, "getTeams(): matchNum '" + matchNum + "' NOT found!");
         }
         return teams;

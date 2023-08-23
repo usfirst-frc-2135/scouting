@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -34,11 +35,11 @@ import java.util.Map;
 public class LoadEventDialog extends DialogFragment
 {
     private static final String TAG = "LoadEventDialog";
- 
+
     private CompetitionDataSerializer m_compSerializer;
-    private EditText                  m_eventCodeField;
-    private String                    m_eventCode = "myEventCode";
-    private Context                   m_appContext;
+    private EditText m_eventCodeField;
+    private String m_eventCode = "myEventCode";
+    private Context m_appContext;
 
     @NonNull
     public Dialog onCreateDialog(Bundle SavedInstanceState)
@@ -58,8 +59,7 @@ public class LoadEventDialog extends DialogFragment
                 try
                 {
                     sendResult();
-                }
-                catch (JSONException | IOException e)
+                } catch (JSONException | IOException e)
                 {
                     e.printStackTrace();
                 }
@@ -131,7 +131,7 @@ public class LoadEventDialog extends DialogFragment
                             // Look thru existing files on device.
                             // File will be saved to this path on the device.
                             String dataFileDir = m_appContext.getFilesDir().getPath();
-                            Log.d(TAG,"Data files path = " + dataFileDir);   
+                            Log.d(TAG, "Data files path = " + dataFileDir);
                             File file = new File(dataFileDir);
                             File[] fileList = file.listFiles();
                             if (fileList != null)
@@ -143,7 +143,9 @@ public class LoadEventDialog extends DialogFragment
                                     if (f1.getName().equals(eventFileName))
                                     {
                                         Log.d(TAG, "DELETING existing competition file on device: " + f1.getName());
-                                        f1.delete();
+                                        boolean deleted = f1.delete();
+                                        if (!deleted)
+                                            Log.d(TAG, "DELETING existing competition file: failed");
                                         break;
                                     }
                                 }
@@ -154,8 +156,7 @@ public class LoadEventDialog extends DialogFragment
                                 // Set up the CompetitionInfo with this event data.
                                 CompetitionInfo.get(m_appContext, m_eventCode, true);
                             }
-                        }
-                        catch (JSONException | IOException e)
+                        } catch (JSONException | IOException e)
                         {
                             e.printStackTrace();
                         }
@@ -181,6 +182,7 @@ public class LoadEventDialog extends DialogFragment
                     {
                         // These params are used to access the URL data (I think).
                         Map<String, String> params = new HashMap<>();
+                        //noinspection SpellCheckingInspection
                         params.put("X-TBA-Auth-Key", "E7akoVihRO2ZbNHtW2nRrjuNTcZaOxWtfeYWwh4XILMsKsqLnH2ZQrKAnbevlWGn");
                         return params;
                     }
@@ -193,8 +195,7 @@ public class LoadEventDialog extends DialogFragment
 
                 startActivity(i);
             }
-        }
-        else
+        } else
             Log.d(TAG, "LoadEventDialog: no event code entered!");
     }
 }

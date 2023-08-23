@@ -53,13 +53,16 @@ public class AutonFragment extends Fragment
     {
         super.onCreate(savedInstanceState);
         ScoutingActivity activity = (ScoutingActivity) getActivity();
-        if(activity != null) {
+        if (activity != null)
+        {
             m_matchData = activity.getCurrentMatch();
-            if(m_matchData != null) {
+            if (m_matchData != null)
+            {
                 Log.d(TAG, "New match ID = " + m_matchData.getMatchID());
                 ActionBar m_actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
                 String teamNumber = m_matchData.stripTeamNamePrefix(m_matchData.getTeamNumber());
-                if (m_actionBar != null) {
+                if (m_actionBar != null)
+                {
                     m_actionBar.setTitle("Autonomous          Scouting Team " + teamNumber + "         Match " + m_matchData.getMatchNumber());
                 }
             }
@@ -75,17 +78,17 @@ public class AutonFragment extends Fragment
             result += 1;
         else
             result -= 1;
-        if (result < 0)
-            result = 0;
+        if (result < 0) result = 0;
         pointsTextView.setText(String.valueOf(result));
         if (isNotValidPoints(pointsTextView))
         {
             pointsTextView.setTextColor(Color.RED);
-        }
-        else {
+        } else
+        {
             Context context = getContext();
-            if(context != null)  {
-               pointsTextView.setTextColor(ContextCompat.getColor(context,R.color.specialTextPrimary));
+            if (context != null)
+            {
+                pointsTextView.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
             }
         }
     }
@@ -96,8 +99,9 @@ public class AutonFragment extends Fragment
         // Creates a view using the specific fragment layout
         View v = inflater.inflate(R.layout.auton_fragment, parent, false);
         Context context = getContext();
-        if(context != null)  {
-            int specialTextPrimaryColor = ContextCompat.getColor(context,R.color.specialTextPrimary);
+        if (context != null)
+        {
+            int specialTextPrimaryColor = ContextCompat.getColor(context, R.color.specialTextPrimary);
 
             // Sets up TextView that displays cones bottom row points, setting 0 as the default
             m_autonConesBottomRowValue = v.findViewById(R.id.auton_cone_bottom_text);
@@ -348,8 +352,7 @@ public class AutonFragment extends Fragment
         if (m_autonRadioGroup.getCheckedRadioButtonId() == m_radio_autonDocked.getId())
         {
             rtn = 1;
-        }
-        else if (m_autonRadioGroup.getCheckedRadioButtonId() == m_radio_autonEngaged.getId())
+        } else if (m_autonRadioGroup.getCheckedRadioButtonId() == m_radio_autonEngaged.getId())
         {
             rtn = 2;
         }

@@ -16,11 +16,14 @@ package zxing;//
 
 import android.provider.ContactsContract;
 
-public final class Contents {
-    private Contents() {
+public final class Contents
+{
+    private Contents()
+    {
     }
 
-    public static final class Type {
+    public static final class Type
+    {
 
         // Plain text. Use Intent.putExtra(DATA, string). This can be used for URLs too, but string
         // must include "http://" or "https://".
@@ -39,7 +42,8 @@ public final class Contents {
 
         public static final String LOCATION = "LOCATION_TYPE";
 
-        private Type() {
+        private Type()
+        {
         }
     }
 

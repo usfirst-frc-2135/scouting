@@ -34,6 +34,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.ListFragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import org.json.JSONException;
 
 import java.io.File;
@@ -48,8 +49,8 @@ public class MatchListFragment extends ListFragment
     private static final String TAG = "MatchListFragment";
 
     private ArrayList<MatchData> m_displayedMatches;
-    private MatchAdapter         m_adapter;
-    private SwitchCompat         m_darkToggle;
+    private MatchAdapter m_adapter;
+    private SwitchCompat m_darkToggle;
     public static final String QRTAG = "qr";
 
     @Override
@@ -58,7 +59,8 @@ public class MatchListFragment extends ListFragment
         super.onCreate(savedInstanceState);
 
         ActionBar aBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
-        if(aBar != null) {
+        if (aBar != null)
+        {
             aBar.setTitle("Recorded Matches");
         }
         setMenuProvider();
@@ -112,8 +114,7 @@ public class MatchListFragment extends ListFragment
             Log.d(TAG, "Setting up dark mode");
             m_darkToggle.setChecked(true);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }
-        else
+        } else
         {
             Log.d(TAG, "Setting up light mode");
             m_darkToggle.setChecked(false);
@@ -131,8 +132,7 @@ public class MatchListFragment extends ListFragment
                     Log.d(TAG, "m_darkToggle toggled from light to dark");
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     ScoutPreferences.get(getActivity()).setNightMode(true);
-                }
-                else
+                } else
                 {
                     Log.d(TAG, "m_darkToggle toggled from dark to light");
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -162,8 +162,7 @@ public class MatchListFragment extends ListFragment
                     Intent intentA = new Intent(getActivity(), PreMatchActivity.class);
                     intentA.putExtra("match_ID", matchA.getMatchID());
                     startActivity(intentA);
-                }
-                catch (IOException | JSONException e)
+                } catch (IOException | JSONException e)
                 {
                     e.printStackTrace();
                 }
@@ -255,13 +254,13 @@ public class MatchListFragment extends ListFragment
                 {
                     // Delete all selected matches.
                     MatchAdapter adapter = (MatchAdapter) getListAdapter();
-                    if(adapter != null)
+                    if (adapter != null)
                     {
                         MatchHistory matchHistory = MatchHistory.get(getActivity());
                         int aCount = adapter.getCount();
-                        for (int i = aCount - 1; i >= 0; i--) 
+                        for (int i = aCount - 1; i >= 0; i--)
                         {
-                            if (getListView().isItemChecked(i)) 
+                            if (getListView().isItemChecked(i))
                             {
                                 matchHistory.deleteMatch(adapter.getItem(i));
                             }
@@ -288,7 +287,8 @@ public class MatchListFragment extends ListFragment
     public void onListItemClick(@NonNull ListView lView, @NonNull View view, int position, long id)
     {
         MatchAdapter mAdapter = (MatchAdapter) getListAdapter();
-        if(mAdapter != null) {
+        if (mAdapter != null)
+        {
             MatchData mData = mAdapter.getItem(position);
             FragmentManager fm = requireActivity().getSupportFragmentManager();
             view.setActivated(false);
@@ -298,28 +298,30 @@ public class MatchListFragment extends ListFragment
     }
 
     ////// Set up the 3-dot options menu in right hand top corner.
-    private void setMenuProvider() {
-        requireActivity().addMenuProvider(new MenuProvider() {
+    private void setMenuProvider()
+    {
+        requireActivity().addMenuProvider(new MenuProvider()
+        {
             @Override
-            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-                inflater.inflate(R.menu.settings_context_menu,menu);
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
+            {
+                inflater.inflate(R.menu.settings_context_menu, menu);
             }
+
             @Override
             public boolean onMenuItemSelected(@NonNull MenuItem item)
             {
                 int itemID = item.getItemId();
-                if(itemID == R.id.clear_scout_names)
+                if (itemID == R.id.clear_scout_names)
                 {
                     Log.d(TAG, "Clear Scout Names clicked");
                     Scouter.get(getContext()).clear();
-                }
-                else if(itemID == R.id.about_item)
+                } else if (itemID == R.id.about_item)
                 {
                     Intent i = new Intent(getActivity(), Splash.class);
                     startActivity(i);
                     requireActivity().finish();
-                }
-                else if(itemID == R.id.delete_tba_matches_file)
+                } else if (itemID == R.id.delete_tba_matches_file)
                 {
                     Log.d(TAG, "Delete TBA matches files clicked");
                     Context context = getContext();
@@ -329,7 +331,7 @@ public class MatchListFragment extends ListFragment
                     StringBuilder toastMsg = new StringBuilder();
                     toastMsg.append("Deleted existing TBA matches.json files:\n");
                     String dataFileDir = context.getFilesDir().getPath();
-                    Log.d(TAG,"Data files path = " + dataFileDir);   
+                    Log.d(TAG, "Data files path = " + dataFileDir);
                     String MATCHES_JSON = "matches.json";
                     File dataDir = new File(dataFileDir);
                     File[] fileList = dataDir.listFiles();
@@ -340,32 +342,33 @@ public class MatchListFragment extends ListFragment
                         {
                             if (f1.getName().contains(MATCHES_JSON))
                             {
-                                 Log.d(TAG, "DELETING existing TBA matches file on device: " + f1.getName());
-                                 toastMsg.append(f1.getName());
-                                 toastMsg.append("\n");
-                                 tbaFilesCnt += 1;
-                                 f1.delete();
+                                Log.d(TAG, "DELETING existing TBA matches file on device: " + f1.getName());
+                                toastMsg.append(f1.getName());
+                                toastMsg.append("\n");
+                                tbaFilesCnt += 1;
+                                boolean deleted = f1.delete();
+                                if (!deleted)
+                                    Log.d(TAG, "DELETING existing competition file: failed");
                             }
                         }
                     }
-                    if( tbaFilesCnt > 0)
+                    if (tbaFilesCnt > 0)
                         CompetitionInfo.clear(); // clear existing CompetitionInfo 
-                    else toastMsg.replace(0,toastMsg.length(),"No existing TBA matches files found");
+                    else
+                        toastMsg.replace(0, toastMsg.length(), "No existing TBA matches files found");
 
                     // Issue toast msg
                     Log.d(TAG, toastMsg.toString());
                     Toast toast1 = Toast.makeText(context, toastMsg.toString(), Toast.LENGTH_LONG);
                     toast1.setGravity(Gravity.CENTER, 0, 0);
                     toast1.show();
-                }
-                else if(itemID == R.id.load_data_over_network)
+                } else if (itemID == R.id.load_data_over_network)
                 {
                     FragmentManager fm = requireActivity().getSupportFragmentManager();
                     Log.d(TAG, "Going to start LoadEventDialog");
                     LoadEventDialog dialog = LoadEventDialog.newInstance();
                     dialog.show(fm, "filter_dialog");  //TODO - change this to "load_event_dialog"?
-                }
-                else if(itemID == R.id.set_team_index)
+                } else if (itemID == R.id.set_team_index)
                 {
                     FragmentManager fm2 = requireActivity().getSupportFragmentManager();
                     Log.d(TAG, "Going to start SetTeamIndexDlg");
@@ -376,6 +379,7 @@ public class MatchListFragment extends ListFragment
             }
         });
     }
+
     private class MatchAdapter extends ArrayAdapter<MatchData>
     {
         public MatchAdapter(ArrayList<MatchData> matchData)
@@ -383,8 +387,9 @@ public class MatchListFragment extends ListFragment
             super(getActivity(), 0, matchData);
         }
 
+        @NonNull
         @Override
-        public View getView(int position, View convertView, ViewGroup parent)
+        public View getView(int position, View convertView, @NonNull ViewGroup parent)
         {
             if (convertView == null)
             {
@@ -396,7 +401,7 @@ public class MatchListFragment extends ListFragment
             String tStr = m.getEventCode() + "-" + m.getMatchNumber() + "-" + m.getTeamNumber() + "-" + formattedDate(m.getTimestamp());
             mMatchSummary.setText(tStr);
             // Changes text color of the ListView Match List to fit the light/dark mode theme.
-            mMatchSummary.setTextColor(ContextCompat.getColor(getContext(),R.color.textPrimary));
+            mMatchSummary.setTextColor(ContextCompat.getColor(getContext(), R.color.textPrimary));
 
             return convertView;
         }
@@ -409,17 +414,15 @@ public class MatchListFragment extends ListFragment
         try
         {
             date = dt.parse(myDate.toString());
-        }
-        catch (Exception err)
+        } catch (Exception err)
         {
             Log.d("formattedDate() error: ", err.getMessage());
         }
-        SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-M-dd hh:mm:ss",Locale.US);
+        SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-M-dd hh:mm:ss", Locale.US);
         if (date == null)
         {
             return null;
-        }
-        else
+        } else
         {
             return (dt1.format(date).substring(0, 9) + "T" + dt1.format(date).substring(10));
         }
@@ -454,14 +457,13 @@ public class MatchListFragment extends ListFragment
         MatchData m = m_adapter.getItem(position);
 
         int itemID = item.getItemId();
-        if(itemID == R.id.menu_item_delete_match)
+        if (itemID == R.id.menu_item_delete_match)
         {
             Log.d(TAG, "Delete match button clicked");
             m_displayedMatches.remove(m);
             MatchHistory.get(getActivity()).deleteMatch(m);
             m_adapter.notifyDataSetChanged();
-        }
-        else if(itemID == R.id.edit_match_button)
+        } else if (itemID == R.id.edit_match_button)
         {
             Log.d(TAG, "Edit match button clicked");
 
@@ -473,8 +475,7 @@ public class MatchListFragment extends ListFragment
 
             startActivity(data);
             //Makes data editable once more
-        }
-        else return super.onContextItemSelected(item);
+        } else return super.onContextItemSelected(item);
         return true;
     }
 }

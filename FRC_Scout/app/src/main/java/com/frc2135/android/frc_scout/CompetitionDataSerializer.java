@@ -25,13 +25,13 @@ public class CompetitionDataSerializer
 
     // Data members
     private final Context m_context;
-    private final String  m_dataPath;
+    private final String m_dataPath;
 
     public CompetitionDataSerializer(Context context)
     {
         m_context = context;
-        m_dataPath = m_context.getFilesDir().getPath();  
-        Log.d(TAG,"Data files dir = " + m_dataPath); 
+        m_dataPath = m_context.getFilesDir().getPath();
+        Log.d(TAG, "Data files dir = " + m_dataPath);
     }
 
     // Takes the JSONArray data from thebluealliance.com event matches and writes it out to <eventCode>_matches.json file.
@@ -49,8 +49,7 @@ public class CompetitionDataSerializer
             compWriter = new OutputStreamWriter(out);
             compWriter.write(compData.toString());
             Log.d(TAG, "Device Data File created: " + file1);
-        }
-        finally
+        } finally
         {
             if (compWriter != null)
             {
@@ -71,12 +70,10 @@ public class CompetitionDataSerializer
             compWriter = new OutputStreamWriter(out);
             compWriter.write(compJSON.toString());
             Log.d(TAG, "Device Data File created: " + fileC);
-        }
-        catch (IOException err)
+        } catch (IOException err)
         {
             err.printStackTrace();
-        }
-        finally
+        } finally
         {
             if (compWriter != null)
             {
@@ -114,16 +111,13 @@ public class CompetitionDataSerializer
                         JSONObject object = (JSONObject) new JSONTokener(jsonString.toString()).nextValue();
                         currComp = new CurrentCompetition(object);
                         Log.d(TAG, "Loaded current competition file: " + filename);
-                    }
-                    catch (FileNotFoundException err)
+                    } catch (FileNotFoundException err)
                     {
                         Log.e(TAG, "ERROR loading current_competition.json: " + err);
-                    }
-                    catch (IOException err2)
+                    } catch (IOException err2)
                     {
                         err2.printStackTrace();
-                    }
-                    finally
+                    } finally
                     {
                         if (reader != null)
                         {

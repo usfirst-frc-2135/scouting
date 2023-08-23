@@ -7,11 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-public class MatchListActivity extends AppCompatActivity {
-    private static final String TAG =  "MatchListActivity";
+public class MatchListActivity extends AppCompatActivity
+{
+    private static final String TAG = "MatchListActivity";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
 
         Log.i(TAG, "MatchListActivity created.");
 
@@ -21,14 +23,16 @@ public class MatchListActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
 
-        if(fragment == null){
+        if (fragment == null)
+        {
             fragment = createMatchListFragment();
             fm.beginTransaction().add(R.id.fragmentContainer, fragment).commit();
         }
 
     }
 
-    protected Fragment createMatchListFragment(){
+    protected Fragment createMatchListFragment()
+    {
         setContentView(R.layout.match_list_activity);
         return new MatchListFragment();
     }

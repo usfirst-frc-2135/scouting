@@ -42,8 +42,7 @@ public class Scouter
                     Collections.addAll(m_pastScouters, tmpScouter.getPastScouts());
                     m_teamIndexStr = tmpScouter.getTeamIndexStr();
                 }
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 Log.e(TAG, "Error loading scouter: ", e);
             }
@@ -64,8 +63,7 @@ public class Scouter
                 i++;
             }
             setTeamIndexStr(json.getString("teamIndex"));
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             Log.d(TAG, "Error loading past scout data");
             Log.e(TAG, e.toString());

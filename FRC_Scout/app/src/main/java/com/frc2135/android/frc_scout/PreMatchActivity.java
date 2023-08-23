@@ -22,14 +22,14 @@ import org.json.JSONException;
 
 public class PreMatchActivity extends AppCompatActivity
 {
-    private String               m_teamIndexStr;
-    private EditText             m_competitionField;
+    private String m_teamIndexStr;
+    private EditText m_competitionField;
     private AutoCompleteTextView m_scoutNameField;
     private AutoCompleteTextView m_teamNumberField;
-    private EditText             m_matchNumberField;
-    private TextView             m_missingFieldErrMsg;
-    private MatchData            m_matchData;
-    private CompetitionInfo      m_compInfo;
+    private EditText m_matchNumberField;
+    private TextView m_missingFieldErrMsg;
+    private MatchData m_matchData;
+    private CompetitionInfo m_compInfo;
 
     public static final String TAG = "PreMatchActivity";
 
@@ -48,8 +48,7 @@ public class PreMatchActivity extends AppCompatActivity
                 String teamNumStr = teams[teamIndex];
                 Log.d(TAG, "Preloading team number using index " + m_teamIndexStr + ": " + teamNumStr);
                 m_teamNumberField.setText(teamNumStr);
-            }
-            catch (JSONException jsonException)
+            } catch (JSONException jsonException)
             {
                 Log.e(TAG, "For preload: couldn't get teams from m_compInfo");
                 jsonException.printStackTrace();
@@ -69,7 +68,7 @@ public class PreMatchActivity extends AppCompatActivity
         m_compInfo = CompetitionInfo.get(getApplicationContext(), m_matchData.getEventCode().trim(), false);
 
         ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null)
+        if (actionBar != null)
             actionBar.setTitle("Pre-Match");
 
         setContentView(R.layout.prematch_activity);
@@ -151,7 +150,8 @@ public class PreMatchActivity extends AppCompatActivity
             m_matchNumberField.setText(m_matchData.getMatchNumber());
         else if (m_Scouter != null && !m_Scouter.getMostRecentMatchNumber().isEmpty())
             m_matchNumberField.setText(m_Scouter.getNextExpectedMatchNumber());
-        else {
+        else
+        {
             String str1 = "qm1";
             m_matchNumberField.setText(str1);
         }
@@ -218,13 +218,11 @@ public class PreMatchActivity extends AppCompatActivity
                                 bTeamsLoadedSuccessfully = true;
                             ArrayAdapter<String> adapter3 = new ArrayAdapter<>(PreMatchActivity.this, android.R.layout.select_dialog_item, teams);
                             m_teamNumberField.setAdapter(adapter3);
-                        }
-                        catch (JSONException jsonException)
+                        } catch (JSONException jsonException)
                         {
                             Log.e(TAG, "finding teams failed");
                             jsonException.printStackTrace();
-                        }
-                        catch (NullPointerException nullPointerException)
+                        } catch (NullPointerException nullPointerException)
                         {
                             nullPointerException.printStackTrace();
                         }
@@ -303,6 +301,7 @@ public class PreMatchActivity extends AppCompatActivity
     @Override
     public void onBackPressed()
     {
+        Log.d(TAG, "onBack Pressed");
         super.onBackPressed();
     }
 }
