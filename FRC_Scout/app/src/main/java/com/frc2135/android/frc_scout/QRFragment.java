@@ -98,7 +98,8 @@ public class QRFragment extends DialogFragment
         if (date == null)
         {
             return null;
-        } else
+        }
+        else
         {
             return (dt1.format(date).substring(0, 9) + "T" + dt1.format(date).substring(10));
         }

@@ -114,7 +114,8 @@ public class MatchListFragment extends ListFragment
             Log.d(TAG, "Setting up dark mode");
             m_darkToggle.setChecked(true);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else
+        }
+        else
         {
             Log.d(TAG, "Setting up light mode");
             m_darkToggle.setChecked(false);
@@ -132,7 +133,8 @@ public class MatchListFragment extends ListFragment
                     Log.d(TAG, "m_darkToggle toggled from light to dark");
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     ScoutPreferences.get(getActivity()).setNightMode(true);
-                } else
+                }
+                else
                 {
                     Log.d(TAG, "m_darkToggle toggled from dark to light");
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -316,12 +318,14 @@ public class MatchListFragment extends ListFragment
                 {
                     Log.d(TAG, "Clear Scout Names clicked");
                     Scouter.get(getContext()).clear();
-                } else if (itemID == R.id.about_item)
+                }
+                else if (itemID == R.id.about_item)
                 {
                     Intent i = new Intent(getActivity(), Splash.class);
                     startActivity(i);
                     requireActivity().finish();
-                } else if (itemID == R.id.delete_tba_matches_file)
+                }
+                else if (itemID == R.id.delete_tba_matches_file)
                 {
                     Log.d(TAG, "Delete TBA matches files clicked");
                     Context context = getContext();
@@ -362,13 +366,15 @@ public class MatchListFragment extends ListFragment
                     Toast toast1 = Toast.makeText(context, toastMsg.toString(), Toast.LENGTH_LONG);
                     toast1.setGravity(Gravity.CENTER, 0, 0);
                     toast1.show();
-                } else if (itemID == R.id.load_data_over_network)
+                }
+                else if (itemID == R.id.load_data_over_network)
                 {
                     FragmentManager fm = requireActivity().getSupportFragmentManager();
                     Log.d(TAG, "Going to start LoadEventDialog");
                     LoadEventDialog dialog = LoadEventDialog.newInstance();
                     dialog.show(fm, "filter_dialog");  //TODO - change this to "load_event_dialog"?
-                } else if (itemID == R.id.set_team_index)
+                }
+                else if (itemID == R.id.set_team_index)
                 {
                     FragmentManager fm2 = requireActivity().getSupportFragmentManager();
                     Log.d(TAG, "Going to start SetTeamIndexDlg");
@@ -422,7 +428,8 @@ public class MatchListFragment extends ListFragment
         if (date == null)
         {
             return null;
-        } else
+        }
+        else
         {
             return (dt1.format(date).substring(0, 9) + "T" + dt1.format(date).substring(10));
         }
@@ -463,7 +470,8 @@ public class MatchListFragment extends ListFragment
             m_displayedMatches.remove(m);
             MatchHistory.get(getActivity()).deleteMatch(m);
             m_adapter.notifyDataSetChanged();
-        } else if (itemID == R.id.edit_match_button)
+        }
+        else if (itemID == R.id.edit_match_button)
         {
             Log.d(TAG, "Edit match button clicked");
 
@@ -475,7 +483,9 @@ public class MatchListFragment extends ListFragment
 
             startActivity(data);
             //Makes data editable once more
-        } else return super.onContextItemSelected(item);
+        }
+        else
+            return super.onContextItemSelected(item);
         return true;
     }
 }

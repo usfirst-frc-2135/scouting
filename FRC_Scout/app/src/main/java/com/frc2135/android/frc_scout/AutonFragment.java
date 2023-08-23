@@ -83,7 +83,8 @@ public class AutonFragment extends Fragment
         if (isNotValidPoints(pointsTextView))
         {
             pointsTextView.setTextColor(Color.RED);
-        } else
+        }
+        else
         {
             Context context = getContext();
             if (context != null)
@@ -352,7 +353,8 @@ public class AutonFragment extends Fragment
         if (m_autonRadioGroup.getCheckedRadioButtonId() == m_radio_autonDocked.getId())
         {
             rtn = 1;
-        } else if (m_autonRadioGroup.getCheckedRadioButtonId() == m_radio_autonEngaged.getId())
+        }
+        else if (m_autonRadioGroup.getCheckedRadioButtonId() == m_radio_autonEngaged.getId())
         {
             rtn = 2;
         }
