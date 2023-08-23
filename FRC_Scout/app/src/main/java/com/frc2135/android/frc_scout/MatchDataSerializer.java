@@ -156,7 +156,7 @@ public class MatchDataSerializer
                             reader.close();
                         }
                     }
-                } 
+                }
                 else
                     Log.d(TAG, "Ignoring file: " + filename);
             }
