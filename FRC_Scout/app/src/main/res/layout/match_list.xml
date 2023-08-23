@@ -5,101 +5,100 @@
     android:background="@color/backgroundColor"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:background="@color/colorSecondary"
-        android:orientation="horizontal"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp">
-
-        <TextView
-            style="?android:actionModeStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/colorSecondary"
-            android:gravity="center"
-            android:text="Sort By:"
-            android:textAlignment="center"
-            android:textColor="@color/matchListFilterText"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/sort_options"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_weight="0.5"
-            android:background="@drawable/spinner_template"
-            android:dropDownSelector="@color/matchListFilterText"
-            android:scrollbarAlwaysDrawVerticalTrack="true" />
-
-        <android.widget.Space
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:background="@color/colorSecondary">
-
-        </android.widget.Space>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@color/colorSecondary"
-            android:contentDescription="IC Menu Search"
-            android:src="@android:drawable/ic_menu_search" />
-
-        <Button
-            android:id="@+id/filter_text"
-            style="?android:actionModeStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/colorSecondary"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="Filter List"
-            android:textColor="@color/matchListFilterText"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/dark_toggle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:text="Dark Mode"
-            android:textColor="@color/matchListFilterText"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ListView
-            android:id="@android:id/list"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </ListView>
+            android:layout_height="75dp"
+            android:background="@color/colorSecondary"
+            android:orientation="horizontal"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp">
+
+            <TextView
+                style="?android:actionModeStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorSecondary"
+                android:gravity="center"
+                android:text="Sort By:"
+                android:textAlignment="center"
+                android:textColor="@color/matchListFilterText"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/sort_options"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:background="@drawable/spinner_template"
+                android:dropDownSelector="@color/matchListFilterText"
+                android:scrollbarAlwaysDrawVerticalTrack="true" />
+
+            <android.widget.Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:background="@color/colorSecondary">
+
+            </android.widget.Space>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/colorSecondary"
+                android:contentDescription="IC Menu Search"
+                android:src="@android:drawable/ic_menu_search" />
+
+            <Button
+                android:id="@+id/filter_text"
+                style="?android:actionModeStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorSecondary"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="Filter List"
+                android:textColor="@color/matchListFilterText"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/dark_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="Dark Mode"
+                android:textColor="@color/matchListFilterText"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@android:id/list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></ListView>
+
+        </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -111,9 +110,6 @@
         android:contentDescription="fab"
         app:fabCustomSize="80dp"
         app:maxImageSize="30dp" />
-
-
-
 
 
 </FrameLayout>

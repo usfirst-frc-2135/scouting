@@ -3,9 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -19,16 +21,16 @@
                 android:layout_height="20dp" />
 
             <TextView
-            android:id="@+id/cone_scoring_title"
-            style="?android:listSeparatorTextViewStyle"
-            android:background="@color/teleopUpperCardColor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="20dp"
+                android:id="@+id/cone_scoring_title"
+                style="?android:listSeparatorTextViewStyle"
+                android:background="@color/teleopUpperCardColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
                 android:paddingBottom="1dp"
-            android:text="CONE SCORING"
-            android:textColor="@color/specialTextPrimary"
-            android:textSize="24sp" />
+                android:text="CONE SCORING"
+                android:textColor="@color/specialTextPrimary"
+                android:textSize="24sp" />
 
 
             <LinearLayout
@@ -46,7 +48,7 @@
                     android:text="Top Row"
                     android:textSize="18sp"
                     style="?android:listSeparatorTextViewStyle"
-                    android:textColor="@color/specialTextSecondary"/>
+                    android:textColor="@color/specialTextSecondary" />
 
                 <Button
                     android:id="@+id/teleop_cone_top_decr"
@@ -206,7 +208,7 @@
                     android:text="Top Row"
                     android:textSize="18sp"
                     style="?android:listSeparatorTextViewStyle"
-                    android:textColor="@color/specialTextSecondary"/>
+                    android:textColor="@color/specialTextSecondary" />
 
                 <Button
                     android:id="@+id/teleop_cube_top_decr"
@@ -225,8 +227,7 @@
                     android:layout_height="match_parent"
                     android:textSize="25sp"
                     android:layout_weight="3"
-                    android:textAlignment="center">
-                </TextView>
+                    android:textAlignment="center"></TextView>
 
                 <Button
                     android:id="@+id/teleop_cube_top_incr"
@@ -256,8 +257,7 @@
                     android:text="Middle Row"
                     android:textSize="18sp"
                     style="?android:listSeparatorTextViewStyle"
-                    android:textColor="@color/specialTextSecondary"
-                    />
+                    android:textColor="@color/specialTextSecondary" />
 
                 <Button
                     android:id="@+id/teleop_cube_middle_decr"
@@ -276,8 +276,7 @@
                     android:layout_height="match_parent"
                     android:textSize="25sp"
                     android:layout_weight="3"
-                    android:textAlignment="center">
-                </TextView>
+                    android:textAlignment="center"></TextView>
 
                 <Button
                     android:id="@+id/teleop_cube_middle_incr"
@@ -307,7 +306,7 @@
                     android:text="Bottom Row"
                     android:textSize="18sp"
                     style="?android:listSeparatorTextViewStyle"
-                    android:textColor="@color/specialTextSecondary"/>
+                    android:textColor="@color/specialTextSecondary" />
 
                 <Button
                     android:id="@+id/teleop_cube_bottom_decr"
@@ -326,8 +325,7 @@
                     android:layout_height="match_parent"
                     android:textSize="25sp"
                     android:layout_weight="3"
-                    android:textAlignment="center">
-                </TextView>
+                    android:textAlignment="center"></TextView>
 
                 <Button
                     android:id="@+id/teleop_cube_bottom_incr"

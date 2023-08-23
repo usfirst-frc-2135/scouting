@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-
 
 
     <LinearLayout
@@ -20,8 +19,7 @@
             <CheckBox
                 android:id="@+id/team_select"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-            </CheckBox>
+                android:layout_height="match_parent"></CheckBox>
 
             <TextView
                 android:paddingTop="20dp"
@@ -29,14 +27,12 @@
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:text="Team"
-                android:textSize="20sp">
-            </TextView>
+                android:textSize="20sp"></TextView>
 
             <Spinner
                 android:id="@+id/team_options"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-            </Spinner>
+                android:layout_height="match_parent"></Spinner>
 
         </LinearLayout>
 
@@ -48,8 +44,7 @@
             <CheckBox
                 android:id="@+id/competition_select"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-            </CheckBox>
+                android:layout_height="match_parent"></CheckBox>
 
             <TextView
                 android:paddingTop="20dp"
@@ -57,14 +52,12 @@
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:text="Competition"
-                android:textSize="20sp">
-            </TextView>
+                android:textSize="20sp"></TextView>
 
             <Spinner
                 android:id="@+id/competition_options"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-            </Spinner>
+                android:layout_height="match_parent"></Spinner>
         </LinearLayout>
 
         <LinearLayout
@@ -75,8 +68,7 @@
             <CheckBox
                 android:id="@+id/scout_select"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-            </CheckBox>
+                android:layout_height="match_parent"></CheckBox>
 
             <TextView
                 android:paddingTop="20dp"
@@ -84,14 +76,12 @@
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:text="Scout"
-                android:textSize="20sp">
-            </TextView>
+                android:textSize="20sp"></TextView>
 
             <Spinner
                 android:id="@+id/scout_options"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-            </Spinner>
+                android:layout_height="match_parent"></Spinner>
         </LinearLayout>
 
         <LinearLayout
@@ -102,8 +92,7 @@
             <CheckBox
                 android:id="@+id/match_select"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-            </CheckBox>
+                android:layout_height="match_parent"></CheckBox>
 
             <TextView
                 android:paddingTop="10dp"
@@ -111,8 +100,7 @@
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:text="Specific Match"
-                android:textSize="20sp">
-            </TextView>
+                android:textSize="20sp"></TextView>
 
             <EditText
                 android:id="@+id/match_entry"
@@ -121,13 +109,8 @@
                 android:textSize="20sp"
                 android:hint="Filter for this match"
                 android:inputType="text"
-                android:autofillHints="Match#">
-            </EditText>
+                android:autofillHints="Match#"></EditText>
         </LinearLayout>
-
-
-
-
 
 
     </LinearLayout>

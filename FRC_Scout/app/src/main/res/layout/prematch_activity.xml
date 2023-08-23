@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -41,7 +40,7 @@
                 android:textSize="18sp"
                 android:textColor="@color/textSecondary"
                 android:textStyle="bold"
-                android:backgroundTint="@color/textSecondary"/>
+                android:backgroundTint="@color/textSecondary" />
 
             <EditText
                 android:id="@+id/comp_name"
@@ -55,8 +54,7 @@
                 android:autofillHints="competition"
                 android:textColorHint="@color/hintColor"
                 android:textColor="@color/textPrimary"
-                android:backgroundTint="@color/textSecondary">
-            </EditText>
+                android:backgroundTint="@color/textSecondary"></EditText>
 
         </LinearLayout>
 
@@ -74,7 +72,7 @@
                 android:textSize="18sp"
                 android:textColor="@color/textSecondary"
                 android:textStyle="bold"
-                android:backgroundTint="@color/textSecondary"/>
+                android:backgroundTint="@color/textSecondary" />
 
             <AutoCompleteTextView
                 android:id="@+id/scouter_name"
@@ -100,7 +98,7 @@
             android:text="Match Info"
             android:textColor="@color/textPrimary"
             android:textSize="24sp"
-            android:backgroundTint="@color/textPrimary"/>
+            android:backgroundTint="@color/textPrimary" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -116,7 +114,7 @@
                 android:textSize="18sp"
                 android:textColor="@color/textSecondary"
                 android:textStyle="bold"
-                android:backgroundTint="@color/textSecondary"/>
+                android:backgroundTint="@color/textSecondary" />
 
             <AutoCompleteTextView
                 android:id="@+id/match_number_field"
@@ -126,10 +124,9 @@
                 android:paddingTop="25dp"
                 android:layout_marginStart="20dp"
                 android:textColor="@color/textPrimary"
-                android:backgroundTint="@color/textSecondary">
-            </AutoCompleteTextView>
+                android:backgroundTint="@color/textSecondary"></AutoCompleteTextView>
 
-            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -145,7 +142,7 @@
                 android:textSize="18sp"
                 android:textColor="@color/textSecondary"
                 android:textStyle="bold"
-                android:backgroundTint="@color/textSecondary"/>
+                android:backgroundTint="@color/textSecondary" />
 
             <AutoCompleteTextView
                 android:id="@+id/team_number_field"
@@ -165,8 +162,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Please fill in the missing fields!"
-            android:paddingTop="20dp">
-        </TextView>
+            android:paddingTop="20dp"></TextView>
 
         <Button
             android:id="@+id/start_scouting_button"

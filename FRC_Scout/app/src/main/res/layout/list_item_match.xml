@@ -6,15 +6,14 @@
     android:visibility="visible">
 
 
-       <TextView
-           android:id="@+id/match_tag_display"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:textSize="24sp"
-           android:paddingTop="15dp"
-           android:paddingStart="30dp"
-           android:paddingEnd="15dp"
-           android:paddingBottom="15dp">
-       </TextView>
+    <TextView
+        android:id="@+id/match_tag_display"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:paddingTop="15dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="15dp"></TextView>
 
 </RelativeLayout>

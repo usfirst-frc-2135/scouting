@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/popup_menu">
-    <item android:id="@+id/set_team_index"
+    <item
+        android:id="@+id/set_team_index"
         android:title="Set Team Index" />
-    <item android:id="@+id/load_data_over_network"
+    <item
+        android:id="@+id/load_data_over_network"
         android:title="Load Competition Data" />
-    <item android:id="@+id/clear_scout_names"
+    <item
+        android:id="@+id/clear_scout_names"
         android:title="Clear Scout Names" />
-    <item android:id="@+id/delete_tba_matches_file"
+    <item
+        android:id="@+id/delete_tba_matches_file"
         android:title="Delete TBA Event Files" />
-    <item android:id="@+id/about_item"
+    <item
+        android:id="@+id/about_item"
         android:title="About" />
 
 </menu>

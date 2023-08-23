@@ -2,12 +2,12 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor"
-    >
+    android:background="@color/backgroundColor">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:background="@color/backgroundColor"
             android:layout_width="match_parent"
@@ -18,11 +18,11 @@
             android:paddingTop="20dp">
 
             <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="2dp"
-            android:paddingBottom="15dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="2dp"
+                android:paddingBottom="15dp">
 
                 <TextView
                     android:id="@+id/mobility_title"
@@ -33,18 +33,18 @@
                     android:textColor="@color/textPrimary"
                     android:textSize="24sp" />
 
-            <CheckBox
-                android:id="@+id/mobility_checkbox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:text="Exited Community"
-                android:buttonTint="@color/textPrimary"
-                android:textSize="22sp"
-                android:textColor="@color/textPrimary"/>
+                <CheckBox
+                    android:id="@+id/mobility_checkbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:text="Exited Community"
+                    android:buttonTint="@color/textPrimary"
+                    android:textSize="22sp"
+                    android:textColor="@color/textPrimary" />
 
-        </LinearLayout>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/cone_scoring_title"
@@ -75,7 +75,7 @@
                     android:layout_height="match_parent"
                     android:text="Top Row"
                     android:textColor="@color/specialTextSecondary"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" />
 
                 <Button
                     android:id="@+id/auton_cone_top_decr"
@@ -235,7 +235,7 @@
                     android:text="Top Row"
                     android:textSize="18sp"
                     style="?android:listSeparatorTextViewStyle"
-                    android:textColor="@color/specialTextSecondary"/>
+                    android:textColor="@color/specialTextSecondary" />
 
                 <Button
                     android:id="@+id/auton_cube_top_decr"
@@ -284,8 +284,7 @@
                     android:text="Middle Row"
                     android:textSize="18sp"
                     style="?android:listSeparatorTextViewStyle"
-                    android:textColor="@color/specialTextSecondary"
-                    />
+                    android:textColor="@color/specialTextSecondary" />
 
                 <Button
                     android:id="@+id/auton_cube_middle_decr"
@@ -304,8 +303,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:textAlignment="center"
-                    android:textSize="25sp">
-                </TextView>
+                    android:textSize="25sp"></TextView>
 
                 <Button
                     android:id="@+id/auton_cube_middle_incr"
@@ -335,7 +333,7 @@
                     android:text="Bottom Row"
                     android:textSize="18sp"
                     style="?android:listSeparatorTextViewStyle"
-                    android:textColor="@color/specialTextSecondary"/>
+                    android:textColor="@color/specialTextSecondary" />
 
                 <Button
                     android:id="@+id/auton_cube_bottom_decr"
@@ -354,8 +352,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:textAlignment="center"
-                    android:textSize="25sp">
-                </TextView>
+                    android:textSize="25sp"></TextView>
 
                 <Button
                     android:id="@+id/auton_cube_bottom_incr"
@@ -368,6 +365,7 @@
                     android:textColor="#fdefb2"
                     android:textSize="30sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -386,6 +384,7 @@
                     android:textSize="24sp" />
 
             </LinearLayout>
+
             <RadioGroup
                 android:id="@+id/auton_charge_level"
                 android:layout_width="match_parent"
@@ -429,7 +428,6 @@
 
         </LinearLayout>
     </ScrollView>
-
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
