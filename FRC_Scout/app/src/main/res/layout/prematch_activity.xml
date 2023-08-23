@@ -54,7 +54,7 @@
                 android:autofillHints="competition"
                 android:textColorHint="@color/hintColor"
                 android:textColor="@color/textPrimary"
-                android:backgroundTint="@color/textSecondary"></EditText>
+                android:backgroundTint="@color/textSecondary" />
 
         </LinearLayout>
 
@@ -124,7 +124,7 @@
                 android:paddingTop="25dp"
                 android:layout_marginStart="20dp"
                 android:textColor="@color/textPrimary"
-                android:backgroundTint="@color/textSecondary"></AutoCompleteTextView>
+                android:backgroundTint="@color/textSecondary" />
 
         </LinearLayout>
 
@@ -162,7 +162,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Please fill in the missing fields!"
-            android:paddingTop="20dp"></TextView>
+            android:paddingTop="20dp" />
 
         <Button
             android:id="@+id/start_scouting_button"

@@ -16,7 +16,7 @@
             android:text="FRC Scout 2023"
             android:textSize="48sp"
             android:textColor="#FF0F396B"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold" />
 
         <ImageView
             android:layout_width="440dp"
@@ -30,28 +30,28 @@
             android:layout_height="wrap_content"
             android:text="Team 2135 Presentation Invasion"
             android:textSize="18sp"
-            android:textColor="#FF0F396B"></TextView>
+            android:textColor="#FF0F396B" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="San Jose, CA"
             android:textSize="18sp"
-            android:textColor="#FF0F396B"></TextView>
+            android:textColor="#FF0F396B" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="          "
             android:textSize="18sp"
-            android:textColor="#FF0F396B"></TextView>
+            android:textColor="#FF0F396B" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Created by Nandita Jayanthi, 2020"
             android:textSize="18sp"
-            android:textColor="#FF0F396B"></TextView>
+            android:textColor="#FF0F396B" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

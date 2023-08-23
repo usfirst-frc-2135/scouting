@@ -26,7 +26,7 @@
             android:autofillHints="team index"
             android:hint="team index"
             android:inputType="text"
-            android:paddingTop="25dp"></EditText>
+            android:paddingTop="25dp" />
 
         <TextView
             android:id="@+id/team_index_err"

@@ -10,11 +10,6 @@ public class Splash extends AppCompatActivity
 {
 
     /**
-     * Duration of wait
-     **/
-    private final int SPLASH_DISPLAY_LENGTH = 1475;
-
-    /**
      * Called when the activity is first created.
      */
     @Override
@@ -25,6 +20,8 @@ public class Splash extends AppCompatActivity
 
         /* New Handler to start the Menu-Activity
          * and close this Splash-Screen after some seconds.*/
+
+        int SPLASH_DISPLAY_LENGTH = 1475;   // Duration of wait
         new Handler().postDelayed(new Runnable()
         {
             @Override

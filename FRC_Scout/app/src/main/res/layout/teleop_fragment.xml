@@ -227,7 +227,7 @@
                     android:layout_height="match_parent"
                     android:textSize="25sp"
                     android:layout_weight="3"
-                    android:textAlignment="center"></TextView>
+                    android:textAlignment="center" />
 
                 <Button
                     android:id="@+id/teleop_cube_top_incr"
@@ -276,7 +276,7 @@
                     android:layout_height="match_parent"
                     android:textSize="25sp"
                     android:layout_weight="3"
-                    android:textAlignment="center"></TextView>
+                    android:textAlignment="center" />
 
                 <Button
                     android:id="@+id/teleop_cube_middle_incr"
@@ -325,7 +325,7 @@
                     android:layout_height="match_parent"
                     android:textSize="25sp"
                     android:layout_weight="3"
-                    android:textAlignment="center"></TextView>
+                    android:textAlignment="center" />
 
                 <Button
                     android:id="@+id/teleop_cube_bottom_incr"
