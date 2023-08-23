@@ -59,7 +59,8 @@ public class TeleopFragment extends Fragment
         if (isNotValidPoints(pointsTextView))
         {
             pointsTextView.setTextColor(Color.RED);
-        } else
+        }
+        else
         {
             Context context = getContext();
             if (context != null)

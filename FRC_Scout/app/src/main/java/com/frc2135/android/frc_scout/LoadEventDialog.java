@@ -195,7 +195,8 @@ public class LoadEventDialog extends DialogFragment
 
                 startActivity(i);
             }
-        } else
+        }
+        else
             Log.d(TAG, "LoadEventDialog: no event code entered!");
     }
 }

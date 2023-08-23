@@ -167,10 +167,12 @@ public class EndgameFragment extends Fragment
         if (m_endGameRadioGroup.getCheckedRadioButtonId() == m_radio_endGameParked.getId())
         {
             rtn = 1;
-        } else if (m_endGameRadioGroup.getCheckedRadioButtonId() == m_radio_endGameDocked.getId())
+        }
+        else if (m_endGameRadioGroup.getCheckedRadioButtonId() == m_radio_endGameDocked.getId())
         {
             rtn = 2;
-        } else if (m_endGameRadioGroup.getCheckedRadioButtonId() == m_radio_endGameEngaged.getId())
+        }
+        else if (m_endGameRadioGroup.getCheckedRadioButtonId() == m_radio_endGameEngaged.getId())
         {
             rtn = 3;
         }

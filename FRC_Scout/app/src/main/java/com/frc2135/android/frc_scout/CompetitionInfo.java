@@ -48,7 +48,8 @@ public class CompetitionInfo
                 Log.d(TAG, "Resetting existing " + oldEventCode + " CompetitionInfo for new eventCode " + eventCode);
                 sCompetitionInfo.readEventMatchesJSON(context, true);
             }
-        } else
+        }
+        else
         {
             Log.d(TAG, "Creating a new sCompetitionInfo for eventCode " + eventCode);
             sCompetitionInfo = new CompetitionInfo(eventCode);
@@ -64,7 +65,9 @@ public class CompetitionInfo
         {
             Log.d(TAG, "Deleting existing sCompetitionInfo");
             sCompetitionInfo = null;
-        } else Log.d(TAG, "No action needed: no existing sCompetitionInfo");
+        }
+        else
+            Log.d(TAG, "No action needed: no existing sCompetitionInfo");
     }
 
     public String getEventCode()
@@ -188,7 +191,8 @@ public class CompetitionInfo
                 {
                     teams[i] = blueTeams.getString(i - 4);
                 }
-            } else
+            }
+            else
                 Log.d(TAG, "getTeams(): matchNum '" + matchNum + "' NOT found!");
         }
         return teams;

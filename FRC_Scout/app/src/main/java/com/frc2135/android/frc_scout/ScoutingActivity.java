@@ -63,7 +63,8 @@ public class ScoutingActivity extends AppCompatActivity
                     fragmentTransaction.replace(R.id.fragmentContainer, fragment1);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
-                } else if (item.getItemId() == R.id.navigation_auton)
+                }
+                else if (item.getItemId() == R.id.navigation_auton)
                 {
                     Fragment f1 = (ScoutingActivity.this).getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
                     if (f1 instanceof AutonFragment)
@@ -83,7 +84,8 @@ public class ScoutingActivity extends AppCompatActivity
                     fragmentTransaction.replace(R.id.fragmentContainer, fragment2);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
-                } else if (item.getItemId() == R.id.navigation_endgame)
+                }
+                else if (item.getItemId() == R.id.navigation_endgame)
                 {
                     Fragment f3 = (ScoutingActivity.this).getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
                     if (f3 instanceof AutonFragment)
