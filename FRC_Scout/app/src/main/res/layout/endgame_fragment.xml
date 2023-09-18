@@ -20,7 +20,8 @@
             android:layout_height="20dp" />
 
         <LinearLayout
-            android:background="@color/endGameCardColor"
+            android:background="@drawable/top_rounded_rect"
+            android:backgroundTint="#CEEAF5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -44,7 +45,8 @@
 
         <RadioGroup
             android:id="@+id/endgame_charge_level"
-            android:background="@color/endGameCardColor"
+            android:background="@drawable/bottom_rounded_rect"
+            android:backgroundTint="#CEEAF5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">

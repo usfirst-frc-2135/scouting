@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:text="Mobility"
                     android:textColor="@color/textPrimary"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"/>
 
                 <CheckBox
                     android:id="@+id/mobility_checkbox"
@@ -49,7 +49,7 @@
             <TextView
                 android:id="@+id/cone_scoring_title"
                 style="?android:listSeparatorTextViewStyle"
-                android:background="@color/autonUpperCardColor"
+                android:background="@drawable/top_rounded_rect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -68,6 +68,7 @@
                 android:paddingBottom="1dp">
 
                 <TextView
+                    android:layout_marginStart="8dp"
                     android:id="@+id/cone_top_title"
                     android:background="@color/autonUpperCardColor"
                     style="?android:listSeparatorTextViewStyle"
@@ -83,7 +84,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
-                    android:background="#FFC107"
+                    android:background="@drawable/rounded_rect"
                     android:text="@string/decrease"
                     android:textColor="#9F3FB5"
                     android:textSize="30sp" />
@@ -102,7 +103,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="30dp"
                     android:layout_weight="1"
-                    android:background="#FFC107"
+                    android:background="@drawable/rounded_rect"
                     android:text="@string/increase"
                     android:textColor="#9F3FB5"
                     android:textSize="30sp" />
@@ -117,6 +118,7 @@
                 android:paddingBottom="1dp">
 
                 <TextView
+                    android:layout_marginStart="8dp"
                     android:id="@+id/cone_middle_title"
                     android:background="@color/autonUpperCardColor"
                     style="?android:listSeparatorTextViewStyle"
@@ -132,7 +134,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
-                    android:background="#ffdc70"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#FFDC70"
                     android:text="@string/decrease"
                     android:textColor="#d779ed"
                     android:textSize="30sp" />
@@ -151,7 +154,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="30dp"
                     android:layout_weight="1"
-                    android:background="#ffdc70"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#FFDC70"
                     android:text="@string/increase"
                     android:textColor="#d779ed"
                     android:textSize="30sp" />
@@ -160,13 +164,14 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:background="@color/autonUpperCardColor"
+                android:background="#FCD9DF"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp">
 
                 <TextView
+                    android:layout_marginStart="8dp"
                     android:id="@+id/cone_bottom_title"
                     android:background="@color/autonUpperCardColor"
                     style="?android:listSeparatorTextViewStyle"
@@ -182,7 +187,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
-                    android:background="#fdefb2"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#FDEFB2"
                     android:text="@string/decrease"
                     android:textColor="#e6a4f5"
                     android:textSize="30sp" />
@@ -201,7 +207,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="30dp"
                     android:layout_weight="1"
-                    android:background="#fdefb2"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#FDEFB2"
                     android:text="@string/increase"
                     android:textColor="#e6a4f5"
                     android:textSize="30sp" />
@@ -211,7 +218,7 @@
             <TextView
                 android:id="@+id/cube_scoring_title"
                 style="?android:listSeparatorTextViewStyle"
-                android:background="@color/autonLowerCardColor"
+                android:background="#EFE2FF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
@@ -228,6 +235,7 @@
                 android:paddingBottom="1dp">
 
                 <TextView
+                    android:layout_marginStart="8dp"
                     android:id="@+id/cube_top_title"
                     android:background="@color/autonLowerCardColor"
                     android:layout_width="190dp"
@@ -243,7 +251,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
-                    android:background="#9F3FB5"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#9F3FB5"
                     android:text="@string/decrease"
                     android:textColor="#FFC107"
                     android:textSize="30sp" />
@@ -262,7 +271,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="30dp"
                     android:layout_weight="1"
-                    android:background="#9F3FB5"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#9F3FB5"
                     android:text="@string/increase"
                     android:textColor="#FFC107"
                     android:textSize="30sp" />
@@ -277,6 +287,7 @@
                 android:paddingBottom="1dp">
 
                 <TextView
+                    android:layout_marginStart="8dp"
                     android:id="@+id/cube_middle_title"
                     android:background="@color/autonLowerCardColor"
                     android:layout_width="190dp"
@@ -292,7 +303,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
-                    android:background="#d779ed"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#d779ed"
                     android:text="@string/decrease"
                     android:textColor="#ffdc70"
                     android:textSize="30sp" />
@@ -311,7 +323,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="30dp"
                     android:layout_weight="1"
-                    android:background="#d779ed"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#d779ed"
                     android:text="@string/increase"
                     android:textColor="#ffdc70"
                     android:textSize="30sp" />
@@ -319,13 +332,15 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:background="@color/autonLowerCardColor"
+                android:background="@drawable/bottom_rounded_rect"
+                android:backgroundTint="#EFE2FF"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp">
 
                 <TextView
+                    android:layout_marginStart="8dp"
                     android:id="@+id/cube_bottom_title"
                     android:background="@color/autonLowerCardColor"
                     android:layout_width="190dp"
@@ -341,7 +356,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
-                    android:background="#e6a4f5"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#e6a4f5"
                     android:text="@string/decrease"
                     android:textColor="#fdefb2"
                     android:textSize="30sp" />
@@ -360,7 +376,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="30dp"
                     android:layout_weight="1"
-                    android:background="#e6a4f5"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#e6a4f5"
                     android:text="@string/increase"
                     android:textColor="#fdefb2"
                     android:textSize="30sp" />
