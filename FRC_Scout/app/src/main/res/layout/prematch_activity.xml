@@ -168,7 +168,8 @@
             android:id="@+id/start_scouting_button"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:background="@color/button1"
+            android:background="@drawable/rounded_rect"
+            android:backgroundTint="@color/button1"
             android:text="Start Scouting"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@color/buttonText">
@@ -180,7 +181,8 @@
             android:layout_width="112dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:background="@color/button2"
+            android:background="@drawable/rounded_rect"
+            android:backgroundTint="@color/button2"
             android:fadingEdge="horizontal|vertical"
             android:text="cancel"
             android:textColor="@color/buttonText">

@@ -127,6 +127,17 @@ public class Scouter
     {
         return m_teamIndexStr;
     }
+    //returns "red", "blue", or "" based on current team index
+    public String getTeamIndexColor()
+    {
+        String currentTeamIndex = getTeamIndexStr();
+        if (currentTeamIndex.equals("1") || currentTeamIndex.equals("2") || currentTeamIndex.equals("3")) {
+            return "red";
+        } else if (currentTeamIndex.equals("4") || currentTeamIndex.equals("5") || currentTeamIndex.equals("6")) {
+            return "blue";
+    }
+        return "";
+    }
 
     public void setTeamIndexStr(String indexStr)
     {
@@ -187,4 +198,5 @@ public class Scouter
         Log.d(TAG, "Writing to Scouter.json: " + logMsg);
         return json;
     }
+
 }

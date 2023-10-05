@@ -2,6 +2,7 @@ package com.frc2135.android.frc_scout;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -64,6 +65,16 @@ public class AutonFragment extends Fragment
                 if (m_actionBar != null)
                 {
                     m_actionBar.setTitle("Autonomous          Scouting Team " + teamNumber + "         Match " + m_matchData.getMatchNumber());
+                    Scouter myScouter = Scouter.get(getContext());
+                    if (myScouter != null){
+                        String color = myScouter.getTeamIndexColor();
+                        if (color.equals("red")) {
+                            m_actionBar.setBackgroundDrawable(new ColorDrawable(Color.RED));
+                        }
+                        else if (color.equals("blue")) {
+                            m_actionBar.setBackgroundDrawable(new ColorDrawable(Color.BLUE));
+                        }
+                    }
                 }
             }
         }
