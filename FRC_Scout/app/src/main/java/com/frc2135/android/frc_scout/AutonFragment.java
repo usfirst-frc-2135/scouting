@@ -293,7 +293,7 @@ public class AutonFragment extends Fragment
         });
 
         //Connects the checkbox for exiting the community and sets up a listener to detect when the checked status is changed
-        m_mobilityCheckbox = v.findViewById(R.id.mobility_checkbox);
+        m_mobilityCheckbox = v.findViewById(R.id.leave_checkbox);
         m_mobilityCheckbox.setChecked(m_matchData.getExitedCommunity());
 
         m_autonRadioGroup = v.findViewById(R.id.auton_charge_level);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
