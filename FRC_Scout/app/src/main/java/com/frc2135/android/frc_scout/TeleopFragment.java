@@ -20,17 +20,8 @@ public class TeleopFragment extends Fragment
 {
     private static final int MAX_POINTS = 30;     // max for valid high or low points total
 
-    private TextView m_teleopConesBottomRowValue;
-    private TextView m_teleopConesMiddleRowValue;
-    private TextView m_teleopConesTopRowValue;
-
-    private TextView m_teleopCubesBottomRowValue;
-    private TextView m_teleopCubesMiddleRowValue;
-    private TextView m_teleopCubesTopRowValue;
-
-    private CheckBox m_pickupCubeCheckbox;
-    private CheckBox m_pickupUprightCheckbox;
-    private CheckBox m_pickupTippedCheckbox;
+    private TextView m_teleopAmpNotes;
+    private TextView m_teleopSpeakerNotes;
     private MatchData m_matchData;
 
     // Check if pointsTextView field is greater than the MAX_POINTS.
@@ -93,229 +84,80 @@ public class TeleopFragment extends Fragment
         if (context != null)
         {
             // Setup TextViews that displays points, setting 0 as the default.
-            m_teleopConesBottomRowValue = v.findViewById(R.id.teleop_cone_bottom_text);
-            m_teleopConesBottomRowValue.setText("0");
-            m_teleopConesBottomRowValue.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
+            m_teleopAmpNotes = v.findViewById(R.id.teleop_amp_scoring_text);
+            m_teleopAmpNotes.setText("0");
+            m_teleopAmpNotes.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
 
-            m_teleopConesMiddleRowValue = v.findViewById(R.id.teleop_cone_middle_text);
-            m_teleopConesMiddleRowValue.setText("0");
-            m_teleopConesMiddleRowValue.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
-
-            m_teleopConesTopRowValue = v.findViewById(R.id.teleop_cone_top_text);
-            m_teleopConesTopRowValue.setText("0");
-            m_teleopConesTopRowValue.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
-
-            m_teleopCubesBottomRowValue = v.findViewById(R.id.teleop_cube_bottom_text);
-            m_teleopCubesBottomRowValue.setText("0");
-            m_teleopCubesBottomRowValue.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
-
-            m_teleopCubesMiddleRowValue = v.findViewById(R.id.teleop_cube_middle_text);
-            m_teleopCubesMiddleRowValue.setText("0");
-            m_teleopCubesMiddleRowValue.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
-
-            m_teleopCubesTopRowValue = v.findViewById(R.id.teleop_cube_top_text);
-            m_teleopCubesTopRowValue.setText("0");
-            m_teleopCubesTopRowValue.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
+            m_teleopSpeakerNotes = v.findViewById(R.id.teleop_speaker_scoring_text);
+            m_teleopSpeakerNotes.setText("0");
+            m_teleopSpeakerNotes.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
         }
 
         //Connects the decrement button for cones bottom row points and sets up a listener that detects when the button is clicked
-        Button teleopConeBottomDecrButton = v.findViewById(R.id.teleop_cone_bottom_decr);
-        teleopConeBottomDecrButton.setOnClickListener(new View.OnClickListener()
+        Button teleopAmpDecrButton = v.findViewById(R.id.teleop_amp_scoring_decr);
+        teleopAmpDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 // Decreases displayed point value by 1; sets to 0 if result would be negative.
-                updatePointsInt(m_teleopConesBottomRowValue, false);
+                updatePointsInt(m_teleopAmpNotes, false);
             }
         });
 
         //Connects the increment button for cones bottom row points and sets up a listener that detects when the button is clicked
-        Button teleopConeBottomIncrButton = v.findViewById(R.id.teleop_cone_bottom_incr);
-        teleopConeBottomIncrButton.setOnClickListener(new View.OnClickListener()
+        Button teleopAmpIncrButton = v.findViewById(R.id.teleop_amp_scoring_incr);
+        teleopAmpIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 //Increases displayed point value by 1
-                updatePointsInt(m_teleopConesBottomRowValue, true);
-            }
-        });
-
-        //Connects the decrement button for cones middle row points and sets up a listener that detects when the button is clicked
-        Button teleopConeMiddleDecrButton = v.findViewById(R.id.teleop_cone_middle_decr);
-        teleopConeMiddleDecrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Decreases displayed point value by 1; sets to 0 if result would be negative
-                updatePointsInt(m_teleopConesMiddleRowValue, false);
-            }
-        });
-
-        //Connects the increment button for cones middle row points and sets up a listener that detects when the button is clicked
-        Button teleopConeMiddleIncrButton = v.findViewById(R.id.teleop_cone_middle_incr);
-        teleopConeMiddleIncrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Increases displayed point value by 1
-                updatePointsInt(m_teleopConesMiddleRowValue, true);
-            }
-        });
-
-        //Connects the decrement button for cones top row points and sets up a listener that detects when the button is clicked
-        Button teleopConeTopDecrButton = v.findViewById(R.id.teleop_cone_top_decr);
-        teleopConeTopDecrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Decreases displayed point value by 1; sets to 0 if result would be negative
-                updatePointsInt(m_teleopConesTopRowValue, false);
-            }
-        });
-
-        //Connects the increment button for cones top row points and sets up a listener that detects when the button is clicked
-        Button teleopConeTopIncrButton = v.findViewById(R.id.teleop_cone_top_incr);
-        teleopConeTopIncrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Decreases displayed point value by 1; sets to 0 if result would be negative
-                updatePointsInt(m_teleopConesTopRowValue, true);
+                updatePointsInt(m_teleopAmpNotes, true);
             }
         });
 
         //Connects the decrement button for cubes bottom row points and sets up a listener that detects when the button is clicked
-        Button teleopCubeBottomDecrButton = v.findViewById(R.id.teleop_cube_bottom_decr);
-        teleopCubeBottomDecrButton.setOnClickListener(new View.OnClickListener()
+        Button teleopSpeakerDecrButton = v.findViewById(R.id.teleop_speaker_scoring_decr);
+        teleopSpeakerDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 // Decreases displayed point value by 1; sets to 0 if result would be negative.
-                updatePointsInt(m_teleopCubesBottomRowValue, false);
+                updatePointsInt(m_teleopSpeakerNotes, false);
             }
         });
 
         //Connects the increment button for cubes bottom row points and sets up a listener that detects when the button is clicked
-        Button teleopCubeBottomIncrButton = v.findViewById(R.id.teleop_cube_bottom_incr);
-        teleopCubeBottomIncrButton.setOnClickListener(new View.OnClickListener()
+        Button teleopSpeakerIncrButton = v.findViewById(R.id.teleop_speaker_scoring_incr);
+        teleopSpeakerIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 //Increases displayed point value by 1
-                updatePointsInt(m_teleopCubesBottomRowValue, true);
+                updatePointsInt(m_teleopSpeakerNotes, true);
             }
         });
 
-        //Connects the decrement button for cubes middle row points and sets up a listener that detects when the button is clicked
-        Button teleopCubeMiddleDecrButton = v.findViewById(R.id.teleop_cube_middle_decr);
-        teleopCubeMiddleDecrButton.setOnClickListener(new View.OnClickListener()
+        m_teleopAmpNotes.setText(String.valueOf(m_matchData.getTeleopAmpNotes()));
+        m_teleopSpeakerNotes.setText(String.valueOf(m_matchData.getTeleopSpeakerNotes()));
+        if (isNotValidPoints(m_teleopAmpNotes))
         {
-            @Override
-            public void onClick(View v)
-            {
-                //Decreases displayed point value by 1; sets to 0 if result would be negative
-                updatePointsInt(m_teleopCubesMiddleRowValue, false);
-            }
-        });
-
-        //Connects the increment button for cubes middle row points and sets up a listener that detects when the button is clicked
-        Button teleopCubeMiddleIncrButton = v.findViewById(R.id.teleop_cube_middle_incr);
-        teleopCubeMiddleIncrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Increases displayed point value by 1
-                updatePointsInt(m_teleopCubesMiddleRowValue, true);
-            }
-        });
-
-        //Connects the decrement button for cubes top row points and sets up a listener that detects when the button is clicked
-        Button teleopCubeTopDecrButton = v.findViewById(R.id.teleop_cube_top_decr);
-        teleopCubeTopDecrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Decreases displayed point value by 1; sets to 0 if result would be negative
-                updatePointsInt(m_teleopCubesTopRowValue, false);
-            }
-        });
-
-        //Connects the increment button for cubes top row points and sets up a listener that detects when the button is clicked
-        Button teleopCubeTopIncrButton = v.findViewById(R.id.teleop_cube_top_incr);
-        teleopCubeTopIncrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Increases displayed point value by 1
-                updatePointsInt(m_teleopCubesTopRowValue, true);
-            }
-        });
-
-        m_pickupCubeCheckbox = v.findViewById(R.id.pickup_cube_checkbox);
-        m_pickupCubeCheckbox.setChecked(m_matchData.getPickedUpCube());
-
-        m_pickupUprightCheckbox = v.findViewById(R.id.pickup_upright_checkbox);
-        m_pickupUprightCheckbox.setChecked(m_matchData.getPickedUpUpright());
-
-        m_pickupTippedCheckbox = v.findViewById(R.id.pickup_tipped_checkbox);
-        m_pickupTippedCheckbox.setChecked(m_matchData.getPickedUpTipped());
-
-        m_teleopConesBottomRowValue.setText(String.valueOf(m_matchData.getTeleopConesBottomRow()));
-        m_teleopConesMiddleRowValue.setText(String.valueOf(m_matchData.getTeleopConesMiddleRow()));
-        m_teleopConesTopRowValue.setText(String.valueOf(m_matchData.getTeleopConesTopRow()));
-        m_teleopCubesBottomRowValue.setText(String.valueOf(m_matchData.getTeleopCubesBottomRow()));
-        m_teleopCubesMiddleRowValue.setText(String.valueOf(m_matchData.getTeleopCubesMiddleRow()));
-        m_teleopCubesTopRowValue.setText(String.valueOf(m_matchData.getTeleopCubesTopRow()));
-        if (isNotValidPoints(m_teleopConesBottomRowValue))
-        {
-            m_teleopConesBottomRowValue.setTextColor(Color.RED);
+            m_teleopAmpNotes.setTextColor(Color.RED);
         }
-        if (isNotValidPoints(m_teleopConesMiddleRowValue))
+        if (isNotValidPoints(m_teleopSpeakerNotes))
         {
-            m_teleopConesMiddleRowValue.setTextColor(Color.RED);
-        }
-        if (isNotValidPoints(m_teleopConesTopRowValue))
-        {
-            m_teleopConesTopRowValue.setTextColor(Color.RED);
-        }
-        if (isNotValidPoints(m_teleopCubesBottomRowValue))
-        {
-            m_teleopCubesBottomRowValue.setTextColor(Color.RED);
-        }
-        if (isNotValidPoints(m_teleopCubesMiddleRowValue))
-        {
-            m_teleopCubesMiddleRowValue.setTextColor(Color.RED);
-        }
-        if (isNotValidPoints(m_teleopCubesTopRowValue))
-        {
-            m_teleopCubesTopRowValue.setTextColor(Color.RED);
+            m_teleopSpeakerNotes.setTextColor(Color.RED);
         }
         return v;
     }
 
     public void updateTeleopData()
     {
-        m_matchData.setTeleopConesBottomRow(Integer.parseInt(m_teleopConesBottomRowValue.getText().toString()));
-        m_matchData.setTeleopConesMiddleRow(Integer.parseInt(m_teleopConesMiddleRowValue.getText().toString()));
-        m_matchData.setTeleopConesTopRow(Integer.parseInt(m_teleopConesTopRowValue.getText().toString()));
-        m_matchData.setTeleopCubesBottomRow(Integer.parseInt(m_teleopCubesBottomRowValue.getText().toString()));
-        m_matchData.setTeleopCubesMiddleRow(Integer.parseInt(m_teleopCubesMiddleRowValue.getText().toString()));
-        m_matchData.setTeleopCubesTopRow(Integer.parseInt(m_teleopCubesTopRowValue.getText().toString()));
-
-        m_matchData.setPickedUpCube(m_pickupCubeCheckbox.isChecked());
-        m_matchData.setPickedUpUpright(m_pickupUprightCheckbox.isChecked());
-        m_matchData.setPickedUpTipped(m_pickupTippedCheckbox.isChecked());
+        m_matchData.setTeleopAmpNotes(Integer.parseInt(m_teleopAmpNotes.getText().toString()));
+        m_matchData.setTeleopSpeakerNotes(Integer.parseInt(m_teleopSpeakerNotes.getText().toString()));
     }
 
 /*REMOVE->
