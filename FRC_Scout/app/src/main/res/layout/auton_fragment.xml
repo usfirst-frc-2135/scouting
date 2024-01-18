@@ -9,13 +9,13 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:background="@color/backgroundColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/backgroundColor"
             android:orientation="vertical"
             android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="20dp">
+            android:paddingTop="20dp"
+            android:paddingRight="15dp">
 
             <LinearLayout
                 android:layout_width="500dp"
@@ -47,39 +47,38 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/cone_scoring_title"
+                android:id="@+id/amp_scoring_title"
                 style="?android:listSeparatorTextViewStyle"
-                android:background="@drawable/top_rounded_rect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:background="@drawable/top_rounded_rect"
                 android:paddingTop="20dp"
                 android:paddingBottom="1dp"
-                android:text="CONE SCORING"
+                android:text="AMP SCORING"
                 android:textColor="@color/specialTextPrimary"
                 android:textSize="24sp" />
 
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:background="@color/autonUpperCardColor"
                 android:layout_height="wrap_content"
+                android:background="@color/autonUpperCardColor"
                 android:orientation="horizontal"
                 android:paddingBottom="1dp">
 
                 <TextView
-                    android:layout_marginStart="8dp"
-                    android:id="@+id/cone_top_title"
-                    android:background="@color/autonUpperCardColor"
+                    android:id="@+id/amp_notes_title"
                     style="?android:listSeparatorTextViewStyle"
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
-                    android:text="Top Row"
+                    android:layout_marginStart="8dp"
+                    android:background="@color/autonUpperCardColor"
+                    android:text="# OF NOTES"
                     android:textColor="@color/specialTextSecondary"
                     android:textSize="18sp" />
 
                 <Button
-                    android:id="@+id/auton_cone_top_decr"
+                    android:id="@+id/auton_amp_scoring_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
@@ -90,7 +89,7 @@
                     android:textSize="30sp" />
 
                 <TextView
-                    android:id="@+id/auton_cone_top_text"
+                    android:id="@+id/auton_amp_scoring_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
@@ -98,7 +97,7 @@
                     android:textSize="25sp" />
 
                 <Button
-                    android:id="@+id/auton_cone_top_incr"
+                    android:id="@+id/auton_amp_scoring_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="30dp"
@@ -111,142 +110,46 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:background="@color/autonUpperCardColor"
                 android:layout_height="wrap_content"
+                android:background="@color/autonUpperCardColor"
                 android:orientation="horizontal"
                 android:paddingTop="20dp"
                 android:paddingBottom="1dp">
 
-                <TextView
-                    android:layout_marginStart="8dp"
-                    android:id="@+id/cone_middle_title"
-                    android:background="@color/autonUpperCardColor"
-                    style="?android:listSeparatorTextViewStyle"
-                    android:layout_width="190dp"
-                    android:layout_height="match_parent"
-                    android:text="Middle Row"
-                    android:textColor="@color/specialTextSecondary"
-                    android:textSize="18sp" />
-
-                <Button
-                    android:id="@+id/auton_cone_middle_decr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#FFDC70"
-                    android:text="@string/decrease"
-                    android:textColor="#d779ed"
-                    android:textSize="30sp" />
-
-                <TextView
-                    android:id="@+id/auton_cone_middle_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:textAlignment="center"
-                    android:textSize="25sp" />
-
-                <Button
-                    android:id="@+id/auton_cone_middle_incr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="30dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#FFDC70"
-                    android:text="@string/increase"
-                    android:textColor="#d779ed"
-                    android:textSize="30sp" />
             </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:background="#FCD9DF"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
-
-                <TextView
-                    android:layout_marginStart="8dp"
-                    android:id="@+id/cone_bottom_title"
-                    android:background="@color/autonUpperCardColor"
-                    style="?android:listSeparatorTextViewStyle"
-                    android:layout_width="190dp"
-                    android:layout_height="match_parent"
-                    android:text="Bottom Row"
-                    android:textColor="@color/specialTextSecondary"
-                    android:textSize="18sp" />
-
-                <Button
-                    android:id="@+id/auton_cone_bottom_decr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#FDEFB2"
-                    android:text="@string/decrease"
-                    android:textColor="#e6a4f5"
-                    android:textSize="30sp" />
-
-                <TextView
-                    android:id="@+id/auton_cone_bottom_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:textAlignment="center"
-                    android:textSize="25sp" />
-
-                <Button
-                    android:id="@+id/auton_cone_bottom_incr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="30dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#FDEFB2"
-                    android:text="@string/increase"
-                    android:textColor="#e6a4f5"
-                    android:textSize="30sp" />
-            </LinearLayout>
-
 
             <TextView
-                android:id="@+id/cube_scoring_title"
+                android:id="@+id/auton_speaker_scoring_title"
                 style="?android:listSeparatorTextViewStyle"
-                android:background="#EFE2FF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#EFE2FF"
                 android:paddingTop="20dp"
-                android:text="CUBE SCORING"
+                android:text="SPEAKER SCORING"
                 android:textColor="@color/specialTextPrimary"
                 android:textSize="24sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:background="@color/autonLowerCardColor"
                 android:layout_height="wrap_content"
+                android:background="@color/autonLowerCardColor"
                 android:orientation="horizontal"
                 android:paddingTop="1dp"
                 android:paddingBottom="1dp">
 
                 <TextView
-                    android:layout_marginStart="8dp"
-                    android:id="@+id/cube_top_title"
-                    android:background="@color/autonLowerCardColor"
+                    android:id="@+id/auton_speaker_title"
+                    style="?android:listSeparatorTextViewStyle"
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
-                    android:text="Top Row"
-                    android:textSize="18sp"
-                    style="?android:listSeparatorTextViewStyle"
-                    android:textColor="@color/specialTextSecondary" />
+                    android:layout_marginStart="8dp"
+                    android:background="@color/autonLowerCardColor"
+                    android:text="# OF NOTES"
+                    android:textColor="@color/specialTextSecondary"
+                    android:textSize="18sp" />
 
                 <Button
-                    android:id="@+id/auton_cube_top_decr"
+                    android:id="@+id/auton_speaker_scoring_decr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
@@ -258,7 +161,7 @@
                     android:textSize="30sp" />
 
                 <TextView
-                    android:id="@+id/auton_cube_top_text"
+                    android:id="@+id/auton_speaker_scoring_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
@@ -266,7 +169,7 @@
                     android:textSize="25sp" />
 
                 <Button
-                    android:id="@+id/auton_cube_top_incr"
+                    android:id="@+id/auton_speaker_scoring_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="30dp"
@@ -280,171 +183,17 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:background="@color/autonLowerCardColor"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bottom_rounded_rect"
+                android:backgroundTint="@color/autonLowerCardColor"
                 android:orientation="horizontal"
                 android:paddingTop="20dp"
                 android:paddingBottom="1dp">
 
-                <TextView
-                    android:layout_marginStart="8dp"
-                    android:id="@+id/cube_middle_title"
-                    android:background="@color/autonLowerCardColor"
-                    android:layout_width="190dp"
-                    android:layout_height="match_parent"
-                    android:text="Middle Row"
-                    android:textSize="18sp"
-                    style="?android:listSeparatorTextViewStyle"
-                    android:textColor="@color/specialTextSecondary" />
-
-                <Button
-                    android:id="@+id/auton_cube_middle_decr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#d779ed"
-                    android:text="@string/decrease"
-                    android:textColor="#ffdc70"
-                    android:textSize="30sp" />
-
-                <TextView
-                    android:id="@+id/auton_cube_middle_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:textAlignment="center"
-                    android:textSize="25sp" />
-
-                <Button
-                    android:id="@+id/auton_cube_middle_incr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="30dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#d779ed"
-                    android:text="@string/increase"
-                    android:textColor="#ffdc70"
-                    android:textSize="30sp" />
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:background="@drawable/bottom_rounded_rect"
-                android:backgroundTint="#EFE2FF"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
-
-                <TextView
-                    android:layout_marginStart="8dp"
-                    android:id="@+id/cube_bottom_title"
-                    android:background="@color/autonLowerCardColor"
-                    android:layout_width="190dp"
-                    android:layout_height="match_parent"
-                    android:text="Bottom Row"
-                    android:textSize="18sp"
-                    style="?android:listSeparatorTextViewStyle"
-                    android:textColor="@color/specialTextSecondary" />
-
-                <Button
-                    android:id="@+id/auton_cube_bottom_decr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#e6a4f5"
-                    android:text="@string/decrease"
-                    android:textColor="#fdefb2"
-                    android:textSize="30sp" />
-
-                <TextView
-                    android:id="@+id/auton_cube_bottom_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:textAlignment="center"
-                    android:textSize="25sp" />
-
-                <Button
-                    android:id="@+id/auton_cube_bottom_incr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="30dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#e6a4f5"
-                    android:text="@string/increase"
-                    android:textColor="#fdefb2"
-                    android:textSize="30sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="30dp"
-                android:paddingBottom="10dp">
-
-                <TextView
-                    android:id="@+id/auton_charge_station_title"
-                    style="?android:listSeparatorTextViewStyle"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="0dp"
-                    android:text="CHARGE STATION"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="24sp" />
-
-            </LinearLayout>
-
-            <RadioGroup
-                android:id="@+id/auton_charge_level"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="11dp"
-                android:layout_marginEnd="50dp"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/level_auton_none"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:buttonTint="@color/textPrimary"
-                    android:text="None"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="22sp" />
-
-
-                <RadioButton
-                    android:id="@+id/level_auton_docked"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:buttonTint="@color/textPrimary"
-                    android:text="Docked"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="22sp" />
-
-                <RadioButton
-                    android:id="@+id/level_auton_engaged"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:buttonTint="@color/textPrimary"
-                    android:text="Engaged"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="22sp" />
-
-            </RadioGroup>
 
         </LinearLayout>
-    </ScrollView>
 
+    </ScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
