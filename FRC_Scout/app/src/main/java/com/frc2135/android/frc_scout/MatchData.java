@@ -30,7 +30,6 @@ public class MatchData
 
 
     private static final String JSON_KEY_TELEOP_AMP_NOTES = "teleopAmpNotes";
-    private static final String JSON_KEY_TELEOP_CUBES_TOP_ROW = "teleopCubesTopRow";
     private static final String JSON_KEY_TELEOP_SPEAKER_NOTES = "teleopSpeakerNotes";
 
 
@@ -45,9 +44,6 @@ public class MatchData
     private static final String JSON_KEY_TIMESTAMP = "timestamp";
     private static final String JSON_KEY_DIED = "died";
     private static final String JSON_KEY_MATCH_ID = "matchId";
-    private static final String JSON_KEY_PICKED_UP_CUBE = "pickedUpCube";
-    private static final String JSON_KEY_PICKED_UP_UPRIGHT = "pickedUpUpright";
-    private static final String JSON_KEY_PICKED_UP_TIPPED = "pickedUpTipped";
 
     // Data members 
 
@@ -76,9 +72,7 @@ public class MatchData
     private final String m_matchID;
     private String m_eventCode;
     private Date m_timestamp;
-    private boolean m_pickedUpCube;
-    private boolean m_pickedUpUpright;
-    private boolean m_pickedUpTipped;
+
 
     // Utility to strip off "frc" prefix to team number.
     public String stripTeamNamePrefix(String teamName)
