@@ -184,7 +184,7 @@ public class AutonFragment extends Fragment
 
         //Connects the checkbox for exiting the community and sets up a listener to detect when the checked status is changed
         m_leaveCheckbox = v.findViewById(R.id.leave_checkbox);
-        m_leaveCheckbox.setChecked(m_matchData.getExitedCommunity());
+        m_leaveCheckbox.setChecked(m_matchData.getAutonLeave());
         m_autonAmpNotes.setText(String.valueOf(m_matchData.getAutonAmpNotes()));
         m_autonSpeakerNotes.setText(String.valueOf(m_matchData.getAutonSpeakerNotes()));
 
