@@ -23,28 +23,16 @@ public class MatchData
     private static final String JSON_KEY_TEAM_NUMBER = "teamNumber";
     private static final String JSON_KEY_MATCH_NUMBER = "matchNumber";
 
-    private static final String JSON_KEY_MOBILITY = "mobility"; //REMOVE
     private static final String JSON_KEY_LEAVE = "leave";
-    private static final String JSON_KEY_AUTON_CONES_BOTTOM_ROW = "autonConesBottomRow";//REMOVE
-    private static final String JSON_KEY_AUTON_CONES_MIDDLE_ROW = "autonConesMiddleRow";//REMOVE
-    private static final String JSON_KEY_AUTON_CONES_TOP_ROW = "autonConesTopRow";//REMOVE
     private static final String JSON_KEY_AUTON_AMP_NOTES = "autonAmpNotes";
-    private static final String JSON_KEY_AUTON_CUBES_BOTTOM_ROW = "autonCubesBottomRow"; //REMOVE
-    private static final String JSON_KEY_AUTON_CUBES_MIDDLE_ROW = "autonCubesMiddleRow"; //REMOVE
-    private static final String JSON_KEY_AUTON_CUBES_TOP_ROW = "autonCubesTopRow"; //REMOVE
     private static final String JSON_KEY_AUTON_SPEAKER_NOTES = "autonSpeakerNotes";
-    private static final String JSON_KEY_AUTON_CHARGE = "autonCharge"; //REMOVE
 
-    private static final String JSON_KEY_TELEOP_CONES_BOTTOM_ROW = "teleopConesBottomRow"; //REMOVE
-    private static final String JSON_KEY_TELEOP_CONES_MIDDLE_ROW = "teleopConesMiddleRow"; //REMOVE
-    private static final String JSON_KEY_TELEOP_CONES_TOP_ROW = "teleopConesTopRow"; //REMOVE
+
+
     private static final String JSON_KEY_TELEOP_AMP_NOTES = "teleopAmpNotes";
-    private static final String JSON_KEY_TELEOP_CUBES_BOTTOM_ROW = "teleopCubesBottomRow"; //REMOVE
-    private static final String JSON_KEY_TELEOP_CUBES_MIDDLE_ROW = "teleopCubesMiddleRow"; //REMOVE
-    private static final String JSON_KEY_TELEOP_CUBES_TOP_ROW = "teleopCubesTopRow";
     private static final String JSON_KEY_TELEOP_SPEAKER_NOTES = "teleopSpeakerNotes";
 
-    private static final String JSON_KEY_END_GAME_CHARGE = "endGameCharge"; //REMOVE
+
     private static final String JSON_KEY_END_GAME_STAGE = "endGameStage";
     //ADD HARMONY
     private static final String JSON_KEY_END_GAME_HARMONY = "endGameHarmony";
@@ -56,39 +44,26 @@ public class MatchData
     private static final String JSON_KEY_TIMESTAMP = "timestamp";
     private static final String JSON_KEY_DIED = "died";
     private static final String JSON_KEY_MATCH_ID = "matchId";
-    private static final String JSON_KEY_PICKED_UP_CUBE = "pickedUpCube";
-    private static final String JSON_KEY_PICKED_UP_UPRIGHT = "pickedUpUpright";
-    private static final String JSON_KEY_PICKED_UP_TIPPED = "pickedUpTipped";
 
     // Data members 
-    private int m_autonConesBottomRow; //REMOVE
-    private int m_autonConesMiddleRow; //REMOVE
-    private int m_autonConesTopRow; //REMOVE
+
     private int m_autonAmpNotes;
-    private int m_autonCubesBottomRow; //REMOVE
-    private int m_autonCubesMiddleRow; //REMOVE
-    private int m_autonCubesTopRow;  //REMOVE
-    private int m_autonChargeLevel; //REMOVE
+
     private int m_autonSpeakerNotes;
     private boolean m_autonLeaveStartingZone;
 
-    private int m_teleopConesBottomRow; //REMOVE
-    private int m_teleopConesMiddleRow; //REMOVE
-    private int m_teleopConesTopRow; //REMOVE
-    private int m_teleopCubesBottomRow; //REMOVE
-    private int m_teleopCubesMiddleRow; //REMOVE
-    private int m_teleopCubesTopRow; //REMOVE
+
     private int m_teleopAmpNotes;
     private int m_teleopSpeakerNotes;
 
 
-    private int m_endgameChargeLevel; //REMOVE
+
     private int m_endgameStage;
     private int m_endgameHarmony; //new
     private boolean m_endgameSpotLit; //new
     private boolean m_endgameTrap; //new
 
-    private boolean m_exitedCommunity; //DELETE
+
     private String m_comment;
     private boolean m_died;
     private String m_name;
@@ -97,9 +72,7 @@ public class MatchData
     private final String m_matchID;
     private String m_eventCode;
     private Date m_timestamp;
-    private boolean m_pickedUpCube;
-    private boolean m_pickedUpUpright;
-    private boolean m_pickedUpTipped;
+
 
     // Utility to strip off "frc" prefix to team number.
     public String stripTeamNamePrefix(String teamName)
@@ -122,28 +95,14 @@ public class MatchData
         m_teamNumber = "";
         m_matchNumber = "";
         setAutonLeave(false);
-        setExitedCommunity(false); //REMOVE
 
         setAutonAmpNotes(0);
         setAutonSpeakerNotes(0);
-        setAutonConesBottomRow(0); //REMOVE
-        setAutonConesMiddleRow(0); //REMOVE
-        setAutonConesTopRow(0); //REMOVE
-        setAutonCubesBottomRow(0); //REMOVE
-        setAutonCubesMiddleRow(0); //REMOVE
-        setAutonCubesTopRow(0); //REMOVE
-        setAutonChargeLevel(0); //REMOVE
 
         setTeleopAmpNotes(0);
         setTeleopSpeakerNotes(0);
-        setTeleopConesBottomRow(0); //REMOVE
-        setTeleopConesMiddleRow(0); //REMOVE
-        setTeleopConesTopRow(0); //REMOVE
-        setTeleopCubesBottomRow(0); //REMOVE
-        setTeleopCubesMiddleRow(0); //REMOVE
-        setTeleopCubesTopRow(0); //REMOVE
 
-        setEndgameChargeLevel(0); //REMOVE
+
         setEndgameStage(0);
         setEndgameHarmony(0);
         setEndgameSpotLit(false);
@@ -169,34 +128,16 @@ public class MatchData
         setTeamNumber(json.getString(JSON_KEY_TEAM_NUMBER));
         setMatchNumber(json.getString(JSON_KEY_MATCH_NUMBER));
 
-        setExitedCommunity(json.getBoolean(JSON_KEY_MOBILITY)); //REMOVE
         setAutonLeave(json.getBoolean(JSON_KEY_LEAVE));
 
         setAutonAmpNotes(json.getInt(JSON_KEY_AUTON_AMP_NOTES));
-        setAutonConesBottomRow(json.getInt(JSON_KEY_AUTON_CONES_BOTTOM_ROW)); //REMOVE
-        setAutonConesMiddleRow(json.getInt(JSON_KEY_AUTON_CONES_MIDDLE_ROW)); //REMOVE
-        setAutonConesTopRow(json.getInt(JSON_KEY_AUTON_CONES_TOP_ROW)); //REMOVE
         setAutonSpeakerNotes(json.getInt(JSON_KEY_AUTON_SPEAKER_NOTES));
-        setAutonCubesBottomRow(json.getInt(JSON_KEY_AUTON_CUBES_BOTTOM_ROW)); //REMOVE
-        setAutonCubesMiddleRow(json.getInt(JSON_KEY_AUTON_CUBES_MIDDLE_ROW)); //REMOVE
-        setAutonCubesTopRow(json.getInt(JSON_KEY_AUTON_CUBES_TOP_ROW)); //REMOVE
-        setAutonChargeLevel(json.getInt(JSON_KEY_AUTON_CHARGE)); //REMOVE
 
         setTeleopAmpNotes(json.getInt(JSON_KEY_TELEOP_AMP_NOTES));
-        setTeleopConesBottomRow(json.getInt(JSON_KEY_TELEOP_CONES_BOTTOM_ROW)); //REMOVE
-        setTeleopConesMiddleRow(json.getInt(JSON_KEY_TELEOP_CONES_MIDDLE_ROW)); //REMOVE
-        setTeleopConesTopRow(json.getInt(JSON_KEY_TELEOP_CONES_TOP_ROW)); //REMOVE
         setTeleopSpeakerNotes(json.getInt(JSON_KEY_TELEOP_SPEAKER_NOTES));
-        setTeleopCubesBottomRow(json.getInt(JSON_KEY_TELEOP_CUBES_BOTTOM_ROW)); //REMOVE
-        setTeleopCubesMiddleRow(json.getInt(JSON_KEY_TELEOP_CUBES_MIDDLE_ROW)); //REMOVE
-        setTeleopCubesTopRow(json.getInt(JSON_KEY_TELEOP_CUBES_TOP_ROW)); //REMOVE
-
-        setPickedUpCube(json.getBoolean(JSON_KEY_PICKED_UP_CUBE)); //REMOVE
-        setPickedUpUpright(json.getBoolean(JSON_KEY_PICKED_UP_UPRIGHT)); //REMOVE
-        setPickedUpTipped(json.getBoolean(JSON_KEY_PICKED_UP_TIPPED)); //REMOVE
 
         setEndgameStage(json.getInt(JSON_KEY_END_GAME_STAGE));
-        setEndgameChargeLevel(json.getInt(JSON_KEY_END_GAME_CHARGE)); //REMOVE
+
         setEndgameHarmony(json.getInt(JSON_KEY_END_GAME_HARMONY));
         setEndgameSpotLit(json.getBoolean(JSON_KEY_END_GAME_SPOTLIT));
         setEndgameTrap(json.getBoolean(JSON_KEY_END_GAME_TRAP));
@@ -268,17 +209,9 @@ public class MatchData
         return m_matchNumber;
     }
 
-    ////////////  m_autonConesBottomRow   /////////////////////
 
-    public void setAutonConesBottomRow(int numCones) //REMOVE
-    {
-        m_autonConesBottomRow = numCones;
-    }
 
-    public int getAutonConesBottomRow() //REMOVE
-    {
-        return m_autonConesBottomRow;
-    }
+
     public void setAutonAmpNotes(int numNotes)
     {
         m_autonAmpNotes = numNotes;
@@ -289,38 +222,6 @@ public class MatchData
         return m_autonAmpNotes;
     }
 
-    ////////////  m_autonConesMiddleRow   /////////////////////
-    public void setAutonConesMiddleRow(int y) //REMOVE
-    {
-        m_autonConesMiddleRow = y;
-    }
-
-    public int getAutonConesMiddleRow() //REMOVE
-    {
-        return m_autonConesMiddleRow;
-    }
-
-    ////////////  m_autonConesTopRow   /////////////////////
-    public void setAutonConesTopRow(int z) //REMOVE
-    {
-        m_autonConesTopRow = z;
-    }
-
-    public int getAutonConesTopRow() //REMOVE
-    {
-        return m_autonConesTopRow;
-    }
-
-    ////////////  m_autonCubesBottomRow   /////////////////////
-    public void setAutonCubesBottomRow(int a) //REMOVE
-    {
-        m_autonCubesBottomRow = a;
-    }
-
-    public int getAutonCubesBottomRow() //REMOVE
-    {
-        return m_autonCubesBottomRow;
-    }
 
     public void setAutonSpeakerNotes(int a)
     {
@@ -332,38 +233,8 @@ public class MatchData
         return m_autonSpeakerNotes;
     }
 
-    ////////////  m_autonCubesMiddleRow   /////////////////////
-    public void setAutonCubesMiddleRow(int b) //REMOVE
-    {
-        m_autonCubesMiddleRow = b;
-    }
 
-    public int getAutonCubesMiddleRow() //REMOVE
-    {
-        return m_autonCubesMiddleRow;
-    }
-
-    ////////////  m_autonCubesTopRow   /////////////////////
-    public void setAutonCubesTopRow(int c) //REMOVE
-    {
-        m_autonCubesTopRow = c;
-    }
-
-    public int getAutonCubesTopRow() //REMOVE
-    {
-        return m_autonCubesTopRow;
-    }
-
-    ////////////  m_exitedCommunity   /////////////////////
-    public void setExitedCommunity(boolean x) //REMOVE
-    {
-        m_exitedCommunity = x;
-    }
-
-    public boolean getExitedCommunity() //REMOVE
-    {
-        return m_exitedCommunity;
-    }
+    ////////////  m_autonLeaveStartingZone   /////////////////////
 
     public void setAutonLeave(boolean x)
     {
@@ -376,27 +247,6 @@ public class MatchData
         return m_autonLeaveStartingZone;
     }
 
-    ////////////  m_autonChargeStation   /////////////////////
-    public void setAutonChargeLevel(int x) //REMOVE
-    {
-        m_autonChargeLevel = x;
-    }
-
-    public int getAutonChargeLevel() //REMOVE
-    {
-        return m_autonChargeLevel;
-    }
-
-    ////////////  m_teleopConesBottomRow   /////////////////////
-    public void setTeleopConesBottomRow(int numCones) //REMOVE
-    {
-        m_teleopConesBottomRow = numCones;
-    }
-
-    public int getTeleopConesBottomRow() //REMOVE
-    {
-        return m_teleopConesBottomRow;
-    }
 
     public void setTeleopAmpNotes(int numNotes)
     {
@@ -409,37 +259,6 @@ public class MatchData
     }
 
     ////////////  m_teleopConesMiddleRow   /////////////////////
-    public void setTeleopConesMiddleRow(int y) //REMOVE
-    {
-        m_teleopConesMiddleRow = y;
-    }
-
-    public int getTeleopConesMiddleRow() //REMOVE
-    {
-        return m_teleopConesMiddleRow;
-    }
-
-    ////////////  m_TeleopConesTopRow   /////////////////////
-    public void setTeleopConesTopRow(int z) //REMOVE
-    {
-        m_teleopConesTopRow = z;
-    }
-
-    public int getTeleopConesTopRow() //REMOVE
-    {
-        return m_teleopConesTopRow;
-    }
-
-    ////////////  m_teleopCubesBottomRow   /////////////////////
-    public void setTeleopCubesBottomRow(int a) //REMOVE
-    {
-        m_teleopCubesBottomRow = a;
-    }
-
-    public int getTeleopCubesBottomRow() //REMOVE
-    {
-        return m_teleopCubesBottomRow;
-    }
 
     public void setTeleopSpeakerNotes(int a)
     {
@@ -451,38 +270,6 @@ public class MatchData
         return m_teleopSpeakerNotes;
     }
 
-    ////////////  m_teleopCubesMiddleRow   /////////////////////
-    public void setTeleopCubesMiddleRow(int b) //REMOVE
-    {
-        m_teleopCubesMiddleRow = b;
-    }
-
-    public int getTeleopCubesMiddleRow() //REMOVE
-    {
-        return m_teleopCubesMiddleRow;
-    }
-
-    ////////////  m_teleopCubesTopRow   /////////////////////
-    public void setTeleopCubesTopRow(int c) //REMOVE
-    {
-        m_teleopCubesTopRow = c;
-    }
-
-    public int getTeleopCubesTopRow() //REMOVE
-    {
-        return m_teleopCubesTopRow;
-    }
-
-    ////////////  m_endgameStage   /////////////////////
-    public void setEndgameChargeLevel(int x) //REMOVE
-    {
-        m_endgameChargeLevel = x;
-    }
-
-    public int getEndgameChargeLevel() //REMOVE
-    {
-        return m_endgameChargeLevel;
-    }
 
     public void setEndgameStage(int x)
     {
@@ -560,38 +347,6 @@ public class MatchData
         return m_died;
     }
 
-    ////////////  m_pickedUpCube   /////////////////////
-    public void setPickedUpCube(boolean x) //REMOVE
-    {
-        m_pickedUpCube = x;
-    }
-
-    public boolean getPickedUpCube() //REMOVE
-    {
-        return m_pickedUpCube;
-    }
-
-    ////////////  m_pickedUpUpright   /////////////////////
-    public void setPickedUpUpright(boolean x) //REMOVE
-    {
-        m_pickedUpUpright = x;
-    }
-
-    public boolean getPickedUpUpright() //REMOVE
-    {
-        return m_pickedUpUpright;
-    }
-
-    ////////////  m_pickedUpTipped   /////////////////////
-    public void setPickedUpTipped(boolean x) //REMOVE
-    {
-        m_pickedUpTipped = x;
-    }
-
-    public boolean getPickedUpTipped() //REMOVE
-    {
-        return m_pickedUpTipped;
-    }
 
     public String encodeToTSV()
     {
