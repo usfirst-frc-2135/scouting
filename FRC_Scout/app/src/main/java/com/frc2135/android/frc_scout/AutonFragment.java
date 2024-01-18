@@ -207,7 +207,7 @@ public class AutonFragment extends Fragment
 
         m_matchData.setAutonSpeakerNotes(Integer.parseInt(m_autonSpeakerNotes.getText().toString()));
 
-        m_matchData.setExitedCommunity(m_leaveCheckbox.isChecked());
+        m_matchData.setAutonLeave(m_leaveCheckbox.isChecked());
 
 
     }
