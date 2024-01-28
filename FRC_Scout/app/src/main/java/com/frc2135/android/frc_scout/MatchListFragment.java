@@ -163,6 +163,7 @@ public class MatchListFragment extends ListFragment
                     m_adapter.notifyDataSetChanged();
                     Intent intentA = new Intent(getActivity(), PreMatchActivity.class);
                     intentA.putExtra("match_ID", matchA.getMatchID());
+                    intentA.putExtra("in_edit", "no");
                     startActivity(intentA);
                 } catch (IOException | JSONException e)
                 {
@@ -479,6 +480,7 @@ public class MatchListFragment extends ListFragment
 
             Intent data = new Intent(getActivity(), PreMatchActivity.class);
             data.putExtra("match_ID", m.getMatchID());
+            data.putExtra("in_edit", "yes");
             getListView().clearFocus();
 
             startActivity(data);
