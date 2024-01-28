@@ -106,13 +106,50 @@ public class EndgameFragment extends Fragment
         m_radio_endGameOnstage = v.findViewById(R.id.level_end_game_onstage);//Sets up radio button that corresponds to 2
         m_radio_endGameOnstage.setChecked(false);
 
+        //Harmony groups set disabled by default
+        m_endGameRadioGroupHarmony = v.findViewById(R.id.endgame_harmony);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
+        RadioButton radio_endGame0 = v.findViewById(R.id.end_game_harmony_default);//Sets up radio button that corresponds to 0
+        radio_endGame0.setChecked(true);
+        radio_endGame0.setEnabled(false);
+        m_radio_endGame1 = v.findViewById(R.id.level_end_game_harmony_1);//Sets up radio button that corresponds to 1
+        m_radio_endGame1.setChecked(false);
+        m_radio_endGame1.setEnabled(false);
+        m_radio_endGame2 = v.findViewById(R.id.level_end_game_harmony_2);//Sets up radio button that corresponds to 2
+        m_radio_endGame2.setChecked(false);
+        m_radio_endGame2.setEnabled(false);
+
+        int y = m_matchData.getEndgameHarmony();
+        if (y == 0)
+            radio_endGame0.setChecked(true);
+        else if (y == 1)
+            m_radio_endGame1.setChecked(true);
+        else if (y == 2)
+            m_radio_endGame2.setChecked(true);
+
         int x = m_matchData.getEndgameStage();
         if (x == 0)
+        {
             radio_endGameNone.setChecked(true);
+            radio_endGame0.setEnabled(false);
+            m_radio_endGame1.setEnabled(false);
+            m_radio_endGame2.setEnabled(false);
+            radio_endGame0.setChecked(true);
+        }
         else if (x == 1)
+        {
             m_radio_endGameParked.setChecked(true);
+            radio_endGame0.setEnabled(false);
+            m_radio_endGame1.setEnabled(false);
+            m_radio_endGame2.setEnabled(false);
+            radio_endGame0.setChecked(true);
+        }
         else if (x == 2)
+        {
             m_radio_endGameOnstage.setChecked(true);
+            radio_endGame0.setEnabled(true);
+            m_radio_endGame1.setEnabled(true);
+            m_radio_endGame2.setEnabled(true);
+        }
 
         m_endGameRadioGroupStage.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
@@ -122,24 +159,28 @@ public class EndgameFragment extends Fragment
 
                 //Changes m_matchData's climb variable according to which radio button is selected
                 m_matchData.setEndgameStage(getCurrentEndgameStageLevel());
+                if (getCurrentEndgameStageLevel() == 0) //none
+                {
+                    radio_endGame0.setChecked(true);
+                    radio_endGame0.setEnabled(false);
+                    m_radio_endGame1.setEnabled(false);
+                    m_radio_endGame2.setEnabled(false);
+                }
+                else if (getCurrentEndgameStageLevel() == 1) //parked
+                {
+                    radio_endGame0.setChecked(true);
+                    radio_endGame0.setEnabled(false);
+                    m_radio_endGame1.setEnabled(false);
+                    m_radio_endGame2.setEnabled(false);
+                }
+                else if (getCurrentEndgameStageLevel() == 2) //onstage
+                {
+                    radio_endGame0.setEnabled(true);
+                    m_radio_endGame1.setEnabled(true);
+                    m_radio_endGame2.setEnabled(true);
+                }
             }
         });
-
-        m_endGameRadioGroupHarmony = v.findViewById(R.id.endgame_harmony);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
-        RadioButton radio_endGame0 = v.findViewById(R.id.end_game_harmony_default);//Sets up radio button that corresponds to 0
-        radio_endGame0.setChecked(true);
-        m_radio_endGame1 = v.findViewById(R.id.level_end_game_harmony_1);//Sets up radio button that corresponds to 1
-        m_radio_endGame1.setChecked(false);
-        m_radio_endGame2 = v.findViewById(R.id.level_end_game_harmony_2);//Sets up radio button that corresponds to 2
-        m_radio_endGame2.setChecked(false);
-
-        int y = m_matchData.getEndgameHarmony();
-        if (y == 0)
-            radio_endGame0.setChecked(true);
-        else if (y == 1)
-            m_radio_endGame1.setChecked(true);
-        else if (y == 2)
-            m_radio_endGame2.setChecked(true);
 
         m_endGameRadioGroupHarmony.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
