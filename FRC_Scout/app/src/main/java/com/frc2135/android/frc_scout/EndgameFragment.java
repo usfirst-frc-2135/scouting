@@ -1,6 +1,9 @@
 package com.frc2135.android.frc_scout;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -106,49 +109,92 @@ public class EndgameFragment extends Fragment
         m_radio_endGameOnstage = v.findViewById(R.id.level_end_game_onstage);//Sets up radio button that corresponds to 2
         m_radio_endGameOnstage.setChecked(false);
 
+        ColorStateList ColorStateList = new ColorStateList( //used for changing radio button only
+                new int[][]
+                        {
+                                new int[]{-android.R.attr.state_enabled}, // Disabled
+                                new int[]{android.R.attr.state_enabled}   // Enabled
+                        },
+                new int[]
+                        {
+                                Color.parseColor("#999999"), // disabled
+                                Color.parseColor("#363636")   // enabled
+                        }
+        );
         //Harmony groups set disabled by default
         m_endGameRadioGroupHarmony = v.findViewById(R.id.endgame_harmony);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
+        m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#d5e5ee")); //sets background to this color
         RadioButton radio_endGame0 = v.findViewById(R.id.end_game_harmony_default);//Sets up radio button that corresponds to 0
         radio_endGame0.setChecked(true);
         radio_endGame0.setEnabled(false);
+        radio_endGame0.setTextColor(Color.parseColor("#999999")); //sets text to this color
+        radio_endGame0.setButtonTintList(ColorStateList);
         m_radio_endGame1 = v.findViewById(R.id.level_end_game_harmony_1);//Sets up radio button that corresponds to 1
         m_radio_endGame1.setChecked(false);
         m_radio_endGame1.setEnabled(false);
+        m_radio_endGame1.setTextColor(Color.parseColor("#999999")); //sets text to this color
+        m_radio_endGame1.setButtonTintList(ColorStateList);
         m_radio_endGame2 = v.findViewById(R.id.level_end_game_harmony_2);//Sets up radio button that corresponds to 2
         m_radio_endGame2.setChecked(false);
         m_radio_endGame2.setEnabled(false);
+        m_radio_endGame2.setTextColor(Color.parseColor("#999999")); //sets text to this color
+        m_radio_endGame2.setButtonTintList(ColorStateList);
 
         int y = m_matchData.getEndgameHarmony();
         if (y == 0)
+        {
             radio_endGame0.setChecked(true);
+            radio_endGame0.setTextColor(Color.parseColor("#999999")); //sets default color
+            m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#d5e5ee")); //ensures background remains this color
+        }
         else if (y == 1)
+        {
             m_radio_endGame1.setChecked(true);
+            m_radio_endGame1.setTextColor(Color.parseColor("#999999")); //sets default color
+            m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#d5e5ee")); //ensures that background remains this color
+        }
         else if (y == 2)
+        {
             m_radio_endGame2.setChecked(true);
+            m_radio_endGame2.setTextColor(Color.parseColor("#999999")); //sets default color
+            m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#CEEAF5"));
+        }
 
         int x = m_matchData.getEndgameStage();
         if (x == 0)
         {
             radio_endGameNone.setChecked(true);
             radio_endGame0.setEnabled(false);
+            radio_endGame0.setTextColor(Color.parseColor("#999999")); //ensures that it remains gray when not onstage
             m_radio_endGame1.setEnabled(false);
+            m_radio_endGame1.setTextColor(Color.parseColor("#999999")); //ensures that it remains gray when not onstage
             m_radio_endGame2.setEnabled(false);
+            m_radio_endGame2.setTextColor(Color.parseColor("#999999")); //ensures that it remains gray when not onstage
             radio_endGame0.setChecked(true);
+            m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#d5e5ee")); //ensures background remains gray when not onstage
         }
         else if (x == 1)
         {
             m_radio_endGameParked.setChecked(true);
             radio_endGame0.setEnabled(false);
+            radio_endGame0.setTextColor(Color.parseColor("#999999")); //ensrues text remains gray
             m_radio_endGame1.setEnabled(false);
+            m_radio_endGame1.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
             m_radio_endGame2.setEnabled(false);
+            m_radio_endGame2.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
             radio_endGame0.setChecked(true);
+            m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#d5e5ee")); //ensures background remains gray
         }
         else if (x == 2)
         {
             m_radio_endGameOnstage.setChecked(true);
             radio_endGame0.setEnabled(true);
+            radio_endGame0.setTextColor(Color.parseColor("#363636")); //changes text color when onstage
             m_radio_endGame1.setEnabled(true);
+            m_radio_endGame1.setTextColor(Color.parseColor("#363636")); //changes text color when onstage
             m_radio_endGame2.setEnabled(true);
+            m_radio_endGame2.setTextColor(Color.parseColor("#363636")); //changes text color when onstage
+            m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#CEEAF5")); //changes background color when onstage
         }
 
         m_endGameRadioGroupStage.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
@@ -162,22 +208,34 @@ public class EndgameFragment extends Fragment
                 if (getCurrentEndgameStageLevel() == 0) //none
                 {
                     radio_endGame0.setChecked(true);
+                    radio_endGame0.setTextColor(Color.parseColor("#999999")); //ensures that text remains gray
                     radio_endGame0.setEnabled(false);
                     m_radio_endGame1.setEnabled(false);
+                    m_radio_endGame1.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
                     m_radio_endGame2.setEnabled(false);
+                    m_radio_endGame2.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
+                    m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#d5e5ee")); //ensures that background remains this color
                 }
                 else if (getCurrentEndgameStageLevel() == 1) //parked
                 {
                     radio_endGame0.setChecked(true);
                     radio_endGame0.setEnabled(false);
+                    radio_endGame0.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
                     m_radio_endGame1.setEnabled(false);
+                    m_radio_endGame1.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
                     m_radio_endGame2.setEnabled(false);
+                    m_radio_endGame2.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
+                    m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#d5e5ee")); //ensures background remains this color
                 }
                 else if (getCurrentEndgameStageLevel() == 2) //onstage
                 {
                     radio_endGame0.setEnabled(true);
+                    radio_endGame0.setTextColor(Color.parseColor("#363636")); //changes text color when stage level is 2
                     m_radio_endGame1.setEnabled(true);
+                    m_radio_endGame1.setTextColor(Color.parseColor("#363636")); //changes text color when stage level is 2
                     m_radio_endGame2.setEnabled(true);
+                    m_radio_endGame2.setTextColor(Color.parseColor("#363636")); //changes text color when stage level is 2
+                    m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#CEEAF5")); //changes background color when stage level is 2
                 }
             }
         });
