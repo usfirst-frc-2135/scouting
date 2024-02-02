@@ -18,7 +18,7 @@ import androidx.fragment.app.Fragment;
 
 public class TeleopFragment extends Fragment
 {
-    private static final int MAX_POINTS = 30;     // max for valid high or low points total
+    private static final int MAX_POINTS = 15;     // max for valid high or low points total
 
     private TextView m_teleopAmpNotes;
     private TextView m_teleopSpeakerNotes;

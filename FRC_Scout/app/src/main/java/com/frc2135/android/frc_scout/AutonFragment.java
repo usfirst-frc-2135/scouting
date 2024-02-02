@@ -119,7 +119,18 @@ public class AutonFragment extends Fragment
         }
 
 
+        //Connects the increment button for cubes top row points and sets up a listener that detects when the button is clicked
+        Button autonAmpIncrButton = v.findViewById(R.id.auton_amp_scoring_incr);
+        autonAmpIncrButton.setOnClickListener(new View.OnClickListener()
 
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //Increases displayed point value by 1
+                updatePointsInt(m_autonAmpNotes, true);
+            }
+        });
 
 
         //Connects the decrement button for cones top row points and sets up a listener that detects when the button is clicked
@@ -166,21 +177,6 @@ public class AutonFragment extends Fragment
             }
         });
 
-        //Connects the increment button for cubes top row points and sets up a listener that detects when the button is clicked
-        Button autonAmpIncrButton = v.findViewById(R.id.auton_amp_scoring_incr);
-        autonAmpIncrButton.setOnClickListener(new View.OnClickListener()
-
-
-
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Increases displayed point value by 1
-                updatePointsInt(m_autonAmpNotes, true);
-            }
-        });
-
 
         //Connects the checkbox for exiting the community and sets up a listener to detect when the checked status is changed
         m_leaveCheckbox = v.findViewById(R.id.leave_checkbox);
@@ -188,7 +184,10 @@ public class AutonFragment extends Fragment
         m_autonAmpNotes.setText(String.valueOf(m_matchData.getAutonAmpNotes()));
         m_autonSpeakerNotes.setText(String.valueOf(m_matchData.getAutonSpeakerNotes()));
 
-
+        if (isNotValidPoints(m_autonAmpNotes))
+        {
+            m_autonAmpNotes.setTextColor(Color.RED);
+        }
         if (isNotValidPoints(m_autonSpeakerNotes))
         {
             m_autonSpeakerNotes.setTextColor(Color.RED);
