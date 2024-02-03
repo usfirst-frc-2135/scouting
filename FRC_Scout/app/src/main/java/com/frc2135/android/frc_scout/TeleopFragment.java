@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -16,6 +15,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 
+/** @noinspection SpellCheckingInspection*/
 public class TeleopFragment extends Fragment
 {
     private static final int MAX_POINTS = 15;     // max for valid high or low points total
@@ -75,6 +75,7 @@ public class TeleopFragment extends Fragment
         }
     }
 
+    /** @noinspection Convert2Lambda*/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {

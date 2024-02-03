@@ -25,6 +25,7 @@ public class SetTeamIndexDialog extends DialogFragment
     private EditText m_teamIndexField;
     private TextView m_teamIndexErrMsg;
 
+    /** @noinspection Convert2Lambda*/
     @NonNull
     public Dialog onCreateDialog(Bundle SavedInstanceState)
     {

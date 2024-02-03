@@ -61,11 +61,6 @@ public class CurrentCompetition
         m_compName = cn;
     }
 
-    public String getCompName()
-    {
-        return m_compName;
-    }
-
     public JSONObject toJSON() throws JSONException
     {
         JSONObject json = new JSONObject();

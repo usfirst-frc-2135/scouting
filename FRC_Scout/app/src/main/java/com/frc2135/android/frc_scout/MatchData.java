@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
 
+/** @noinspection DataFlowIssue*/
 public class MatchData
 {
     private static final String TAG = "MatchData";
@@ -151,7 +152,7 @@ public class MatchData
             date = dt.parse(dateStr);
         } catch (Exception err)
         {
-            Log.d("timestamp Date string error: ", err.getMessage());
+            Log.d("timestamp Date string error: ",err.getMessage());
         }
         setTimestamp(date);
 
@@ -408,7 +409,6 @@ public class MatchData
     public JSONObject toJSON() throws JSONException
     {
         //This code uses the JSON class to convert the aspects of each match into data that can be saved to a file as JSON
-        //TODO Work on this with new data
         JSONObject json = new JSONObject();
 
         json.put("divider", ",");

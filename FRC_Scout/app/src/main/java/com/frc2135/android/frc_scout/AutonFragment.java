@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -19,10 +17,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+/** @noinspection ALL*/
 public class AutonFragment extends Fragment
 {
     private static final String TAG = "AutonFragment";
-    private static final int MAX_POINTS = 5;     // TODO: need to update max points - max for valid high or low points total
+    private static final int MAX_POINTS = 5;     // make sure to update max points - max for valid high or low points total
 
     private TextView m_autonAmpNotes;
 

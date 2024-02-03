@@ -18,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Objects;
 
 public class CompetitionInfo
 {
@@ -82,7 +83,7 @@ public class CompetitionInfo
         m_jsonData = null;
     }
 
-    public boolean readEventMatchesJSON(Context context, boolean bSilent)
+    public void readEventMatchesJSON(Context context, boolean bSilent)
     {
         String filename = context.getFilesDir().getPath() + "/" + m_eventCode.trim().toLowerCase() + "matches.json";
         Log.d(TAG, "Looking for matches JSON file: " + filename);
@@ -126,7 +127,7 @@ public class CompetitionInfo
                     Log.e(TAG, errMsg);
                     Toast toastM = Toast.makeText(context, errMsg, Toast.LENGTH_LONG);
                     View view2 = toastM.getView();
-                    view2.setBackgroundColor(Color.RED);
+                    Objects.requireNonNull(view2).setBackgroundColor(Color.RED);
                     toastM.setGravity(Gravity.CENTER, 0, 0);
                     toastM.show();
                 }
@@ -140,7 +141,6 @@ public class CompetitionInfo
                 ioException.printStackTrace();
             }
         }
-        return m_bEventDataLoaded;
     }
 
     public boolean isEventDataLoaded()

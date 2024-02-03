@@ -1,5 +1,6 @@
 package com.frc2135.android.frc_scout;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
@@ -42,7 +43,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
+/** @noinspection Convert2Lambda, SpellCheckingInspection */
 public class MatchListFragment extends ListFragment
 {
 
@@ -173,7 +176,7 @@ public class MatchListFragment extends ListFragment
         });
 
         Spinner sortSpinner = v1.findViewById(R.id.sort_options);
-        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this.getContext(), R.array.sort_array, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this.requireContext(), R.array.sort_array, android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sortSpinner.setAdapter(adapter1);
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
@@ -295,7 +298,7 @@ public class MatchListFragment extends ListFragment
             MatchData mData = mAdapter.getItem(position);
             FragmentManager fm = requireActivity().getSupportFragmentManager();
             view.setActivated(false);
-            QRFragment dialog = QRFragment.newInstance(mData);
+            QRFragment dialog = QRFragment.newInstance(Objects.requireNonNull(mData));
             dialog.show(fm, QRTAG);
         }
     }
@@ -335,7 +338,7 @@ public class MatchListFragment extends ListFragment
                     int tbaFilesCnt = 0;
                     StringBuilder toastMsg = new StringBuilder();
                     toastMsg.append("Deleted existing TBA matches.json files:\n");
-                    String dataFileDir = context.getFilesDir().getPath();
+                    String dataFileDir = Objects.requireNonNull(context).getFilesDir().getPath();
                     Log.d(TAG, "Data files path = " + dataFileDir);
                     String MATCHES_JSON = "matches.json";
                     File dataDir = new File(dataFileDir);
@@ -373,7 +376,7 @@ public class MatchListFragment extends ListFragment
                     FragmentManager fm = requireActivity().getSupportFragmentManager();
                     Log.d(TAG, "Going to start LoadEventDialog");
                     LoadEventDialog dialog = LoadEventDialog.newInstance();
-                    dialog.show(fm, "filter_dialog");  //TODO - change this to "load_event_dialog"?
+                    dialog.show(fm, "load_event_dialog");
                 }
                 else if (itemID == R.id.set_team_index)
                 {
@@ -391,9 +394,10 @@ public class MatchListFragment extends ListFragment
     {
         public MatchAdapter(ArrayList<MatchData> matchData)
         {
-            super(getActivity(), 0, matchData);
+            super(requireActivity(), 0, matchData);
         }
 
+        @SuppressLint("InflateParams")
         @NonNull
         @Override
         public View getView(int position, View convertView, @NonNull ViewGroup parent)
@@ -405,7 +409,7 @@ public class MatchListFragment extends ListFragment
             MatchData m = getItem(position);
 
             TextView mMatchSummary = convertView.findViewById(R.id.match_tag_display);
-            String tStr = m.getEventCode() + "-" + m.getMatchNumber() + "-" + m.getTeamNumber() + "-" + formattedDate(m.getTimestamp());
+            String tStr = Objects.requireNonNull(m).getEventCode() + "-" + m.getMatchNumber() + "-" + m.getTeamNumber() + "-" + formattedDate(m.getTimestamp());
             mMatchSummary.setText(tStr);
             // Changes text color of the ListView Match List to fit the light/dark mode theme.
             mMatchSummary.setTextColor(ContextCompat.getColor(getContext(), R.color.textPrimary));
@@ -423,7 +427,7 @@ public class MatchListFragment extends ListFragment
             date = dt.parse(myDate.toString());
         } catch (Exception err)
         {
-            Log.d("formattedDate() error: ", err.getMessage());
+            Log.d("formattedDate() error: ", Objects.requireNonNull(err.getMessage()));
         }
         SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-M-dd hh:mm:ss", Locale.US);
         if (date == null)
@@ -461,7 +465,8 @@ public class MatchListFragment extends ListFragment
     public boolean onContextItemSelected(MenuItem item)
     {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        int position = info.position;
+        int position;
+        position = Objects.requireNonNull(info).position;
         MatchData m = m_adapter.getItem(position);
 
         int itemID = item.getItemId();
@@ -479,7 +484,7 @@ public class MatchListFragment extends ListFragment
             m_adapter = (MatchAdapter) getListAdapter();
 
             Intent data = new Intent(getActivity(), PreMatchActivity.class);
-            data.putExtra("match_ID", m.getMatchID());
+            data.putExtra("match_ID", Objects.requireNonNull(m).getMatchID());
             data.putExtra("in_edit", "yes");
             getListView().clearFocus();
 

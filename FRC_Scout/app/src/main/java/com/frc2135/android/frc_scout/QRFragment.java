@@ -20,6 +20,7 @@ import com.google.zxing.WriterException;
 
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 import zxing.Contents;
 import zxing.QRCodeEncoder;
@@ -28,6 +29,7 @@ public class QRFragment extends DialogFragment
 {
     private static final String TAG = "QRFragment";
 
+    /** @noinspection Convert2Lambda*/
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -91,7 +93,7 @@ public class QRFragment extends DialogFragment
             date = dt.parse(d.toString());
         } catch (Exception e)
         {
-            Log.d("SignInFragment", e.getMessage());
+            Log.d("SignInFragment", Objects.requireNonNull(e.getMessage()));
         }
         SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-M-dd hh:mm:ss", Locale.US);
 

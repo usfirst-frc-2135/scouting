@@ -3,7 +3,6 @@ package com.frc2135.android.frc_scout;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
+/** @noinspection ALL*/
 public class EndgameFragment extends Fragment
 {
 
@@ -177,7 +177,7 @@ public class EndgameFragment extends Fragment
         {
             m_radio_endGameParked.setChecked(true);
             radio_endGame0.setEnabled(false);
-            radio_endGame0.setTextColor(Color.parseColor("#999999")); //ensrues text remains gray
+            radio_endGame0.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
             m_radio_endGame1.setEnabled(false);
             m_radio_endGame1.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
             m_radio_endGame2.setEnabled(false);

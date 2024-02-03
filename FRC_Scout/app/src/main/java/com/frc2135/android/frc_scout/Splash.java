@@ -11,6 +11,7 @@ public class Splash extends AppCompatActivity
 
     /**
      * Called when the activity is first created.
+     * @noinspection Convert2Lambda
      */
     @Override
     public void onCreate(Bundle icicle)

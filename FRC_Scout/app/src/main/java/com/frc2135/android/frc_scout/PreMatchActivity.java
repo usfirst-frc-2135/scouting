@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONException;
 
+/** @noinspection Convert2Lambda*/
 public class PreMatchActivity extends AppCompatActivity
 {
     public static final String TAG = "PreMatchActivity";
@@ -188,7 +189,7 @@ public class PreMatchActivity extends AppCompatActivity
                 if (parent != null && parent.getItemAtPosition(position) != null)
                 {
                     m_matchData.setTeamNumber(parent.getItemAtPosition(position).toString());
-                    // TODO - can we remove keyboard here???
+
                 }
             }
 

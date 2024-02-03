@@ -19,6 +19,7 @@ public class ScoutingActivity extends AppCompatActivity
 
     private MatchData m_matchData;
 
+    /** @noinspection Convert2Lambda*/
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
