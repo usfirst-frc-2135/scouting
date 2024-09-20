@@ -21,6 +21,8 @@ public class TeleopFragment extends Fragment
     private static final int MAX_POINTS = 15;     // max for valid high or low points total
 
     private TextView m_teleopAmpNotes;
+    private TextView m_teleopAmpMisses;
+    private TextView m_teleopSpeakerMisses;
     private TextView m_teleopSpeakerNotes;
     private MatchData m_matchData;
 
@@ -89,12 +91,21 @@ public class TeleopFragment extends Fragment
             m_teleopAmpNotes.setText("0");
             m_teleopAmpNotes.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
 
+            m_teleopAmpMisses = v.findViewById(R.id.teleop_amp_missing_text);
+            m_teleopAmpMisses.setText("0");
+            m_teleopAmpMisses.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
+
             m_teleopSpeakerNotes = v.findViewById(R.id.teleop_speaker_scoring_text);
             m_teleopSpeakerNotes.setText("0");
             m_teleopSpeakerNotes.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
+
+            m_teleopSpeakerMisses = v.findViewById(R.id.teleop_speaker_missing_text);
+            m_teleopSpeakerMisses.setText("0");
+            m_teleopSpeakerMisses.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
+
         }
 
-        //Connects the decrement button for cones bottom row points and sets up a listener that detects when the button is clicked
+        //Connects the decrement button for amp scoring and sets up a listener that detects when the button is clicked
         Button teleopAmpDecrButton = v.findViewById(R.id.teleop_amp_scoring_decr);
         teleopAmpDecrButton.setOnClickListener(new View.OnClickListener()
         {
@@ -106,7 +117,7 @@ public class TeleopFragment extends Fragment
             }
         });
 
-        //Connects the increment button for cones bottom row points and sets up a listener that detects when the button is clicked
+        //Connects the increment button for amp scoring and sets up a listener that detects when the button is clicked
         Button teleopAmpIncrButton = v.findViewById(R.id.teleop_amp_scoring_incr);
         teleopAmpIncrButton.setOnClickListener(new View.OnClickListener()
         {
@@ -118,7 +129,34 @@ public class TeleopFragment extends Fragment
             }
         });
 
-        //Connects the decrement button for cubes bottom row points and sets up a listener that detects when the button is clicked
+
+
+        //Connects the increment button for amp misses and sets up a listener that detects when the button is clicked
+        Button AmpMissesIncrButton = v.findViewById(R.id.teleop_amp_missing_incr);
+        AmpMissesIncrButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //Increases displayed point value by 1
+                updatePointsInt(m_teleopAmpMisses, true);
+            }
+        });
+
+
+        //Connects the decr button for amp misses and sets up a listener that detects when the button is clicked
+        Button AmpMissesDecrButton = v.findViewById(R.id.teleop_amp_missing_decr);
+        AmpMissesDecrButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                // Decreases displayed point value by 1; sets to 0 if result would be negative.
+                updatePointsInt(m_teleopAmpMisses, false);
+            }
+        });
+
+        //Connects the decrement button for speaker scoring and sets up a listener that detects when the button is clicked
         Button teleopSpeakerDecrButton = v.findViewById(R.id.teleop_speaker_scoring_decr);
         teleopSpeakerDecrButton.setOnClickListener(new View.OnClickListener()
         {
@@ -130,7 +168,7 @@ public class TeleopFragment extends Fragment
             }
         });
 
-        //Connects the increment button for cubes bottom row points and sets up a listener that detects when the button is clicked
+        //Connects the increment button for speaker scoring and sets up a listener that detects when the button is clicked
         Button teleopSpeakerIncrButton = v.findViewById(R.id.teleop_speaker_scoring_incr);
         teleopSpeakerIncrButton.setOnClickListener(new View.OnClickListener()
         {
@@ -142,8 +180,36 @@ public class TeleopFragment extends Fragment
             }
         });
 
+        //Connects the decrement button for speaker scoring and sets up a listener that detects when the button is clicked
+        Button teleopSpeakerMissesDecrButton = v.findViewById(R.id.teleop_speaker_missing_decr);
+        teleopSpeakerMissesDecrButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                // Decreases displayed point value by 1; sets to 0 if result would be negative.
+                updatePointsInt(m_teleopSpeakerMisses, false);
+            }
+        });
+
+        //Connects the increment button for speaker scoring and sets up a listener that detects when the button is clicked
+        Button teleopSpeakerMissesIncrButton = v.findViewById(R.id.teleop_speaker_missing_incr);
+        teleopSpeakerMissesIncrButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //Increases displayed point value by 1
+                updatePointsInt(m_teleopSpeakerMisses, true);
+            }
+        });
+
+
+
         m_teleopAmpNotes.setText(String.valueOf(m_matchData.getTeleopAmpNotes()));
         m_teleopSpeakerNotes.setText(String.valueOf(m_matchData.getTeleopSpeakerNotes()));
+        m_teleopSpeakerMisses. setText(String.valueOf(m_matchData.getTeleopSpeakerMisses()));
+        m_teleopAmpMisses.setText(String.valueOf(m_matchData.getTeleopAmpMisses()));
         if (isNotValidPoints(m_teleopAmpNotes))
         {
             m_teleopAmpNotes.setTextColor(Color.RED);
@@ -152,6 +218,14 @@ public class TeleopFragment extends Fragment
         {
             m_teleopSpeakerNotes.setTextColor(Color.RED);
         }
+        if (isNotValidPoints(m_teleopAmpMisses))
+        {
+            m_teleopAmpMisses.setTextColor(Color.RED);
+        }
+        if (isNotValidPoints(m_teleopSpeakerMisses))
+        {
+            m_teleopSpeakerMisses.setTextColor(Color.RED);
+        }
         return v;
     }
 
@@ -159,6 +233,8 @@ public class TeleopFragment extends Fragment
     {
         m_matchData.setTeleopAmpNotes(Integer.parseInt(m_teleopAmpNotes.getText().toString()));
         m_matchData.setTeleopSpeakerNotes(Integer.parseInt(m_teleopSpeakerNotes.getText().toString()));
+        m_matchData.setTeleopAmpMisses(Integer.parseInt(m_teleopAmpMisses.getText().toString()));
+        m_matchData.setTeleopSpeakerMisses(Integer.parseInt(m_teleopSpeakerMisses.getText().toString()));
     }
 
 /*REMOVE->
