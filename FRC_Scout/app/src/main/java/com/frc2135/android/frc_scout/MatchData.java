@@ -32,6 +32,9 @@ public class MatchData
 
     private static final String JSON_KEY_TELEOP_AMP_NOTES = "teleopAmpNotes";
     private static final String JSON_KEY_TELEOP_SPEAKER_NOTES = "teleopSpeakerNotes";
+    private static final String JSON_KEY_TELEOP_AMP_MISSES = "teleopAmpMisses";
+    private static final String JSON_KEY_TELEOP_SPEAKER_MISSES = "teleopSpeakerMisses";
+    private static final String JSON_KEY_TELEOP_PASSES = "teleopPasses";
 
 
     private static final String JSON_KEY_END_GAME_STAGE = "endGameStage";
@@ -56,7 +59,9 @@ public class MatchData
 
     private int m_teleopAmpNotes;
     private int m_teleopSpeakerNotes;
-
+    private int m_teleopAmpMisses;
+    private int m_teleopSpeakerMisses;
+    private int m_teleopPasses;
 
 
     private int m_endgameStage;
@@ -135,7 +140,10 @@ public class MatchData
         setAutonSpeakerNotes(json.getInt(JSON_KEY_AUTON_SPEAKER_NOTES));
 
         setTeleopAmpNotes(json.getInt(JSON_KEY_TELEOP_AMP_NOTES));
+        setTeleopAmpMisses(json.getInt(JSON_KEY_TELEOP_AMP_MISSES));
         setTeleopSpeakerNotes(json.getInt(JSON_KEY_TELEOP_SPEAKER_NOTES));
+        setTeleopSpeakerMisses(json.getInt(JSON_KEY_TELEOP_SPEAKER_MISSES));
+        setTeleopPasses(json.getInt(JSON_KEY_TELEOP_PASSES));
 
         setEndgameStage(json.getInt(JSON_KEY_END_GAME_STAGE));
 
@@ -259,7 +267,17 @@ public class MatchData
         return m_teleopAmpNotes;
     }
 
-    ////////////  m_teleopConesMiddleRow   /////////////////////
+
+    public void setTeleopAmpMisses(int numNotes)
+    {
+        m_teleopAmpMisses = numNotes;
+    }
+
+    public int getTeleopAmpMisses()
+    {
+        return m_teleopAmpMisses;
+    }
+
 
     public void setTeleopSpeakerNotes(int a)
     {
@@ -269,6 +287,27 @@ public class MatchData
     public int getTeleopSpeakerNotes()
     {
         return m_teleopSpeakerNotes;
+    }
+
+
+    public void setTeleopSpeakerMisses(int a)
+    {
+        m_teleopSpeakerMisses = a;
+    }
+
+    public int getTeleopSpeakerMisses()
+    {
+        return m_teleopSpeakerMisses;
+    }
+
+    public void setTeleopPasses(int numPasses)
+    {
+        m_teleopPasses = numPasses;
+    }
+
+    public int getTeleopPasses()
+    {
+        return m_teleopPasses;
     }
 
 
@@ -354,7 +393,7 @@ public class MatchData
         // NOTE! THE ORDER IS IMPORTANT!
         // This is the data that goes into the QR code.
 
-        String headers = "TeamNumber AutonLeaveStartingZone AutonAmpNotes AutonSpeakerNotes TeleopAmpNotes TeleopSpeakerNotes EndgameStage EndgameHarmony EndgameSpotlit EndgameTrap Died MatchNum Competition Scout Comment"; 
+        String headers = "TeamNumber AutonLeaveStartingZone AutonAmpNotes AutonSpeakerNotes TeleopAmpNotes TeleopAmpMisses TeleopSpeakerNotes TeleopSpeakerMisses  TeleopPasses EndgameStage EndgameHarmony EndgameSpotlit EndgameTrap Died MatchNum Competition Scout Comment";
 
         String tsvStr = "";
 
@@ -371,7 +410,10 @@ public class MatchData
         tsvStr += m_autonSpeakerNotes + "\t";
 
         tsvStr += m_teleopAmpNotes + "\t";
+        tsvStr += m_teleopAmpMisses + "\t";
         tsvStr += m_teleopSpeakerNotes + "\t";
+        tsvStr += m_teleopSpeakerMisses + "\t";
+        tsvStr += m_teleopPasses + "\t";
 
         tsvStr += m_endgameStage + "\t";
         tsvStr += m_endgameHarmony + "\t";
@@ -432,7 +474,13 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_TELEOP_AMP_NOTES, m_teleopAmpNotes);
         json.put("divider", ",");
+        json.put(JSON_KEY_TELEOP_AMP_MISSES, m_teleopAmpMisses);
+        json.put("divider", ",");
         json.put(JSON_KEY_TELEOP_SPEAKER_NOTES, m_teleopSpeakerNotes);
+        json.put("divider", ",");
+        json.put(JSON_KEY_TELEOP_SPEAKER_MISSES, m_teleopSpeakerMisses);
+        json.put("divider", ",");
+        json.put(JSON_KEY_TELEOP_PASSES, m_teleopPasses);
         json.put("divider", ",");
         json.put(JSON_KEY_END_GAME_STAGE, m_endgameStage);
         json.put("divider", ",");
