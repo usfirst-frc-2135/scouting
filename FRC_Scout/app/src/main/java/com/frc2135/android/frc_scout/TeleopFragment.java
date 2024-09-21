@@ -24,6 +24,7 @@ public class TeleopFragment extends Fragment
     private TextView m_teleopAmpMisses;
     private TextView m_teleopSpeakerMisses;
     private TextView m_teleopSpeakerNotes;
+    private TextView m_teleopPasses;
     private MatchData m_matchData;
 
     // Check if pointsTextView field is greater than the MAX_POINTS.
@@ -102,6 +103,10 @@ public class TeleopFragment extends Fragment
             m_teleopSpeakerMisses = v.findViewById(R.id.teleop_speaker_missing_text);
             m_teleopSpeakerMisses.setText("0");
             m_teleopSpeakerMisses.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
+
+            m_teleopPasses = v.findViewById(R.id.teleop_passes_text);
+            m_teleopPasses.setText("0");
+            m_teleopPasses.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
 
         }
 
@@ -204,12 +209,38 @@ public class TeleopFragment extends Fragment
             }
         });
 
+        //Connects the increment button for passes and sets up a listener that detects when the button is clicked
+        Button PassesIncrButton = v.findViewById(R.id.teleop_passes_incr);
+        PassesIncrButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //Increases displayed point value by 1
+                updatePointsInt(m_teleopPasses, true);
+            }
+        });
+
+
+        //Connects the decr button for amp misses and sets up a listener that detects when the button is clicked
+        Button PassesDecrButton = v.findViewById(R.id.teleop_passes_decr);
+        PassesDecrButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                // Decreases displayed point value by 1; sets to 0 if result would be negative.
+                updatePointsInt(m_teleopPasses, false);
+            }
+        });
+
 
 
         m_teleopAmpNotes.setText(String.valueOf(m_matchData.getTeleopAmpNotes()));
         m_teleopSpeakerNotes.setText(String.valueOf(m_matchData.getTeleopSpeakerNotes()));
         m_teleopSpeakerMisses. setText(String.valueOf(m_matchData.getTeleopSpeakerMisses()));
         m_teleopAmpMisses.setText(String.valueOf(m_matchData.getTeleopAmpMisses()));
+        m_teleopPasses.setText(String.valueOf(m_matchData.getTeleopPasses()));
         if (isNotValidPoints(m_teleopAmpNotes))
         {
             m_teleopAmpNotes.setTextColor(Color.RED);
@@ -226,6 +257,10 @@ public class TeleopFragment extends Fragment
         {
             m_teleopSpeakerMisses.setTextColor(Color.RED);
         }
+        if (isNotValidPoints(m_teleopPasses))
+        {
+            m_teleopPasses.setTextColor(Color.RED);
+        }
         return v;
     }
 
@@ -235,6 +270,7 @@ public class TeleopFragment extends Fragment
         m_matchData.setTeleopSpeakerNotes(Integer.parseInt(m_teleopSpeakerNotes.getText().toString()));
         m_matchData.setTeleopAmpMisses(Integer.parseInt(m_teleopAmpMisses.getText().toString()));
         m_matchData.setTeleopSpeakerMisses(Integer.parseInt(m_teleopSpeakerMisses.getText().toString()));
+        m_matchData.setTeleopPasses(Integer.parseInt(m_teleopPasses.getText().toString()));
     }
 
 /*REMOVE->
