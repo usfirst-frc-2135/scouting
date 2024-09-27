@@ -26,6 +26,7 @@ public class MatchData
 
     private static final String JSON_KEY_LEAVE = "leave";
     private static final String JSON_KEY_AUTON_AMP_NOTES = "autonAmpNotes";
+    private static final String JSON_KEY_AUTON_AMP_MISSES = "autonAmpMisses";
     private static final String JSON_KEY_AUTON_SPEAKER_NOTES = "autonSpeakerNotes";
 
 
@@ -52,7 +53,7 @@ public class MatchData
     // Data members 
 
     private int m_autonAmpNotes;
-
+    private int m_autonAmpMisses;
     private int m_autonSpeakerNotes;
     private boolean m_autonLeaveStartingZone;
 
@@ -103,6 +104,7 @@ public class MatchData
         setAutonLeave(false);
 
         setAutonAmpNotes(0);
+        setAutonAmpMisses(0);
         setAutonSpeakerNotes(0);
 
         setTeleopAmpNotes(0);
@@ -137,6 +139,7 @@ public class MatchData
         setAutonLeave(json.getBoolean(JSON_KEY_LEAVE));
 
         setAutonAmpNotes(json.getInt(JSON_KEY_AUTON_AMP_NOTES));
+        setAutonAmpMisses(json.getInt(JSON_KEY_AUTON_AMP_MISSES));
         setAutonSpeakerNotes(json.getInt(JSON_KEY_AUTON_SPEAKER_NOTES));
 
         setTeleopAmpNotes(json.getInt(JSON_KEY_TELEOP_AMP_NOTES));
@@ -230,7 +233,15 @@ public class MatchData
     {
         return m_autonAmpNotes;
     }
+    public void setAutonAmpMisses(int numMisses)
+    {
+        m_autonAmpMisses = numMisses;
+    }
 
+    public int getAutonAmpMisses()
+    {
+        return m_autonAmpMisses;
+    }
 
     public void setAutonSpeakerNotes(int a)
     {
@@ -393,7 +404,7 @@ public class MatchData
         // NOTE! THE ORDER IS IMPORTANT!
         // This is the data that goes into the QR code.
 
-        String headers = "TeamNumber AutonLeaveStartingZone AutonAmpNotes AutonSpeakerNotes TeleopAmpNotes TeleopAmpMisses TeleopSpeakerNotes TeleopSpeakerMisses  TeleopPasses EndgameStage EndgameHarmony EndgameSpotlit EndgameTrap Died MatchNum Competition Scout Comment";
+        String headers = "TeamNumber AutonLeaveStartingZone AutonAmpNotes AutonAmpMisses AutonSpeakerNotes TeleopAmpNotes TeleopAmpMisses TeleopSpeakerNotes TeleopSpeakerMisses  TeleopPasses EndgameStage EndgameHarmony EndgameSpotlit EndgameTrap Died MatchNum Competition Scout Comment";
 
         String tsvStr = "";
 
@@ -407,6 +418,7 @@ public class MatchData
             tsvStr += "0" + "\t";
 
         tsvStr += m_autonAmpNotes + "\t";
+        tsvStr += m_autonAmpMisses + "\t";
         tsvStr += m_autonSpeakerNotes + "\t";
 
         tsvStr += m_teleopAmpNotes + "\t";
@@ -469,6 +481,8 @@ public class MatchData
         json.put(JSON_KEY_LEAVE, m_autonLeaveStartingZone);
         json.put("divider", ",");
         json.put(JSON_KEY_AUTON_AMP_NOTES, m_autonAmpNotes);
+        json.put("divider", ",");
+        json.put(JSON_KEY_AUTON_AMP_MISSES, m_autonAmpMisses);
         json.put("divider", ",");
         json.put(JSON_KEY_AUTON_SPEAKER_NOTES, m_autonSpeakerNotes);
         json.put("divider", ",");
