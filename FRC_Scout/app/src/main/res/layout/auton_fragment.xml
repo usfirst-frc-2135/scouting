@@ -73,7 +73,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
                     android:background="@color/autonUpperCardColor"
-                    android:text="# OF NOTES"
+                    android:text="# GOALS"
                     android:textColor="@color/specialTextSecondary"
                     android:textSize="18sp" />
 
@@ -98,6 +98,54 @@
 
                 <Button
                     android:id="@+id/auton_amp_scoring_incr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="30dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_rect"
+                    android:text="@string/increase"
+                    android:textColor="#9F3FB5"
+                    android:textSize="30sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/autonUpperCardColor"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp">
+
+                <TextView
+                    android:id="@+id/amp_misses_title"
+                    style="?android:listSeparatorTextViewStyle"
+                    android:layout_width="190dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:background="@color/autonUpperCardColor"
+                    android:text="# MISSES"
+                    android:textColor="@color/specialTextSecondary"
+                    android:textSize=" 18sp" />
+
+                <Button
+                    android:id="@+id/auton_amp_misses_decr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_rect"
+                    android:text="@string/decrease"
+                    android:textColor="#9F3FB5"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/auton_amp_misses_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:textAlignment="center"
+                    android:textSize="25sp" />
+
+                <Button
+                    android:id="@+id/auton_amp_misses_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="30dp"
@@ -144,7 +192,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
                     android:background="@color/autonLowerCardColor"
-                    android:text="# OF NOTES"
+                    android:text="# Goals"
                     android:textColor="@color/specialTextSecondary"
                     android:textSize="18sp" />
 
@@ -170,6 +218,58 @@
 
                 <Button
                     android:id="@+id/auton_speaker_scoring_incr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="30dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#9F3FB5"
+                    android:text="@string/increase"
+                    android:textColor="#FFC107"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/autonLowerCardColor"
+                android:orientation="horizontal"
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp">
+
+                <TextView
+                    android:id="@+id/auton_speaker_misses_title"
+                    style="?android:listSeparatorTextViewStyle"
+                    android:layout_width="190dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:background="@color/autonLowerCardColor"
+                    android:text="# Misses"
+                    android:textColor="@color/specialTextSecondary"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/auton_speaker_misses_decr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#9F3FB5"
+                    android:text="@string/decrease"
+                    android:textColor="#FFC107"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/auton_speaker_misses_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:textAlignment="center"
+                    android:textSize="25sp" />
+
+                <Button
+                    android:id="@+id/auton_speaker_misses_incr"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="30dp"
