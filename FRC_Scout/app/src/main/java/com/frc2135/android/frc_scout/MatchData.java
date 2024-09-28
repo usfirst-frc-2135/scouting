@@ -29,8 +29,7 @@ public class MatchData
     private static final String JSON_KEY_AUTON_AMP_MISSES = "autonAmpMisses";
     private static final String JSON_KEY_AUTON_SPEAKER_NOTES = "autonSpeakerNotes";
 
-
-
+    private static final String JSON_KEY_AMP_USED = "ampUsed";
     private static final String JSON_KEY_TELEOP_AMP_NOTES = "teleopAmpNotes";
     private static final String JSON_KEY_TELEOP_SPEAKER_NOTES = "teleopSpeakerNotes";
     private static final String JSON_KEY_TELEOP_AMP_MISSES = "teleopAmpMisses";
@@ -58,6 +57,7 @@ public class MatchData
     private boolean m_autonLeaveStartingZone;
 
 
+    private boolean m_AmpUsed;
     private int m_teleopAmpNotes;
     private int m_teleopSpeakerNotes;
     private int m_teleopAmpMisses;
@@ -107,8 +107,13 @@ public class MatchData
         setAutonAmpMisses(0);
         setAutonSpeakerNotes(0);
 
+
+        setAmpUsed(false);
         setTeleopAmpNotes(0);
+        setTeleopAmpMisses(0);
         setTeleopSpeakerNotes(0);
+        setTeleopSpeakerMisses(0);
+        setTeleopPasses(0);
 
 
         setEndgameStage(0);
@@ -142,6 +147,7 @@ public class MatchData
         setAutonAmpMisses(json.getInt(JSON_KEY_AUTON_AMP_MISSES));
         setAutonSpeakerNotes(json.getInt(JSON_KEY_AUTON_SPEAKER_NOTES));
 
+        setAmpUsed(json.getBoolean(JSON_KEY_AMP_USED));
         setTeleopAmpNotes(json.getInt(JSON_KEY_TELEOP_AMP_NOTES));
         setTeleopAmpMisses(json.getInt(JSON_KEY_TELEOP_AMP_MISSES));
         setTeleopSpeakerNotes(json.getInt(JSON_KEY_TELEOP_SPEAKER_NOTES));
@@ -265,6 +271,18 @@ public class MatchData
     public boolean getAutonLeave()
     {
         return m_autonLeaveStartingZone;
+    }
+
+
+    public void setAmpUsed(boolean ampUsed)
+    {
+
+        m_AmpUsed = ampUsed;
+    }
+
+    public boolean getAmpUsed()
+    {
+        return m_AmpUsed;
     }
 
 
@@ -421,6 +439,11 @@ public class MatchData
         tsvStr += m_autonAmpMisses + "\t";
         tsvStr += m_autonSpeakerNotes + "\t";
 
+        if (m_AmpUsed)  // bool value: use 1/0 instead of true/false
+            tsvStr += "1" + "\t";
+        else
+            tsvStr += "0" + "\t";
+
         tsvStr += m_teleopAmpNotes + "\t";
         tsvStr += m_teleopAmpMisses + "\t";
         tsvStr += m_teleopSpeakerNotes + "\t";
@@ -470,7 +493,7 @@ public class MatchData
         json.put("divider", ",");
         json.put("divider", ", \n");
 
-        json.put("headings", "Competition, Team Number, Match Number, Leave Starting Zone, Auton Amp Notes, Auton Speaker Notes, Teleop Amp Notes, Teleop Speaker Notes, Endgame Stage, Endgame Harmony, Endgame Spotlit, Endgame Trap, Died, Comments, Timestamp, MatchID \n");
+        json.put("headings", "Competition, Team Number, Match Number, Leave Starting Zone, Auton Amp Notes, Auton Amp Misses, Auton Speaker Notes, Amplification Used, Teleop Amp Notes, Teleop Amp Misses, Teleop Speaker Notes, Teleop Speaker Misses, Teleop Passes, Endgame Stage, Endgame Harmony, Endgame Spotlit, Endgame Trap, Died, Comments, Timestamp, MatchID \n");
         json.put(JSON_KEY_EVENT_CODE, m_eventCode);
         json.put("divider", ",");
         json.put(JSON_KEY_TEAM_NUMBER, m_teamNumber);
@@ -485,6 +508,8 @@ public class MatchData
         json.put(JSON_KEY_AUTON_AMP_MISSES, m_autonAmpMisses);
         json.put("divider", ",");
         json.put(JSON_KEY_AUTON_SPEAKER_NOTES, m_autonSpeakerNotes);
+        json.put("divider", ",");
+        json.put(JSON_KEY_AMP_USED, m_AmpUsed);
         json.put("divider", ",");
         json.put(JSON_KEY_TELEOP_AMP_NOTES, m_teleopAmpNotes);
         json.put("divider", ",");

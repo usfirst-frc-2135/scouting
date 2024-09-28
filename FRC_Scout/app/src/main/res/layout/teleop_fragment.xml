@@ -21,7 +21,7 @@
                 android:textSize="24sp" />
 
             <CheckBox
-                android:id="@+id/teleop_amplification_used"
+                android:id="@+id/ampused_checkbox"
                 android:layout_width="262dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -35,7 +35,6 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="15dp"
