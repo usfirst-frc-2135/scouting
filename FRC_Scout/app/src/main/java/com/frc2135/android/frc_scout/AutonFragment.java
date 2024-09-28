@@ -24,7 +24,7 @@ public class AutonFragment extends Fragment
     private static final int MAX_POINTS = 5;     // make sure to update max points - max for valid high or low points total
 
     private TextView m_autonAmpNotes;
-
+    private TextView m_autonAmpMisses;
     private TextView m_autonSpeakerNotes;
     private CheckBox m_leaveCheckbox;
     private MatchData m_matchData;
@@ -111,6 +111,11 @@ public class AutonFragment extends Fragment
             m_autonAmpNotes.setText("0");
             m_autonAmpNotes.setTextColor(specialTextPrimaryColor);
 
+            // Sets up TextView that displays amp misses, setting 0 as the default
+            m_autonAmpMisses = v.findViewById(R.id.auton_amp_misses_text);
+            m_autonAmpMisses.setText("0");
+            m_autonAmpMisses.setTextColor(specialTextPrimaryColor);
+
             // Sets up TextView that displays speaker note points, setting 0 as the default
             m_autonSpeakerNotes = v.findViewById(R.id.auton_speaker_scoring_text);
             m_autonSpeakerNotes.setText("0");
@@ -142,6 +147,33 @@ public class AutonFragment extends Fragment
             {
                 //Decreases displayed point value by 1; sets to 0 if result would be negative
                 updatePointsInt(m_autonAmpNotes, false);
+            }
+        });
+
+        //Connects the increment button for misses and sets up a listener that detects when the button is clicked
+        Button autonAmpMissesIncrButton = v.findViewById(R.id.auton_amp_misses_incr);
+        autonAmpMissesIncrButton.setOnClickListener(new View.OnClickListener()
+
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //Increases displayed point value by 1
+                updatePointsInt(m_autonAmpMisses, true);
+            }
+        });
+
+
+        //Connects the decrement button for misses and sets up a listener that detects when the button is clicked
+        Button autonAmpMissesDecrButton = v.findViewById(R.id.auton_amp_misses_decr);
+        autonAmpMissesDecrButton.setOnClickListener(new View.OnClickListener()
+
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //Decreases displayed point value by 1; sets to 0 if result would be negative
+                updatePointsInt(m_autonAmpMisses, false);
             }
         });
 
@@ -181,11 +213,16 @@ public class AutonFragment extends Fragment
         m_leaveCheckbox = v.findViewById(R.id.leave_checkbox);
         m_leaveCheckbox.setChecked(m_matchData.getAutonLeave());
         m_autonAmpNotes.setText(String.valueOf(m_matchData.getAutonAmpNotes()));
+        m_autonAmpMisses.setText(String.valueOf(m_matchData.getAutonAmpMisses()));
         m_autonSpeakerNotes.setText(String.valueOf(m_matchData.getAutonSpeakerNotes()));
 
         if (isNotValidPoints(m_autonAmpNotes))
         {
             m_autonAmpNotes.setTextColor(Color.RED);
+        }
+        if (isNotValidPoints(m_autonAmpMisses))
+        {
+            m_autonAmpMisses.setTextColor(Color.RED);
         }
         if (isNotValidPoints(m_autonSpeakerNotes))
         {
@@ -202,6 +239,8 @@ public class AutonFragment extends Fragment
     {
 
         m_matchData.setAutonAmpNotes(Integer.parseInt(m_autonAmpNotes.getText().toString()));
+
+        m_matchData.setAutonAmpMisses(Integer.parseInt(m_autonAmpMisses.getText().toString()));
 
         m_matchData.setAutonSpeakerNotes(Integer.parseInt(m_autonSpeakerNotes.getText().toString()));
 
