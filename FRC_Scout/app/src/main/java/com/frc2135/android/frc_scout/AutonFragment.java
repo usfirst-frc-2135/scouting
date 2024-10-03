@@ -26,6 +26,7 @@ public class AutonFragment extends Fragment
     private TextView m_autonAmpNotes;
     private TextView m_autonAmpMisses;
     private TextView m_autonSpeakerNotes;
+    private TextView m_autonSpeakerMisses;
     private CheckBox m_leaveCheckbox;
     private MatchData m_matchData;
 
@@ -120,6 +121,11 @@ public class AutonFragment extends Fragment
             m_autonSpeakerNotes = v.findViewById(R.id.auton_speaker_scoring_text);
             m_autonSpeakerNotes.setText("0");
             m_autonSpeakerNotes.setTextColor(specialTextPrimaryColor);
+
+            // Sets up TextView that displays speaker misses, setting 0 as the default
+            m_autonSpeakerMisses = v.findViewById(R.id.auton_speaker_misses_text);
+            m_autonSpeakerMisses.setText("0");
+            m_autonSpeakerMisses.setTextColor(specialTextPrimaryColor);
         }
 
 
@@ -208,6 +214,32 @@ public class AutonFragment extends Fragment
             }
         });
 
+        //Connects the increment button for cones top row points and sets up a listener that detects when the button is clicked
+        Button autonSpeakerMissesIncrButton = v.findViewById(R.id.auton_speaker_misses_incr);
+        autonSpeakerMissesIncrButton.setOnClickListener(new View.OnClickListener()
+        {
+
+            @Override
+            public void onClick(View v)
+            {
+                //Decreases displayed point value by 1; sets to 0 if result would be negative
+                updatePointsInt(m_autonSpeakerMisses, true);
+            }
+        });
+
+        //Connects the decrement button for cubes top row points and sets up a listener that detects when the button is clicked
+        Button autonSpeakerMissesDecrButton = v.findViewById(R.id.auton_speaker_misses_decr);
+        autonSpeakerMissesDecrButton.setOnClickListener(new View.OnClickListener()
+
+
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //Decreases displayed point value by 1; sets to 0 if result would be negative
+                updatePointsInt(m_autonSpeakerMisses, false);
+            }
+        });
 
         //Connects the checkbox for exiting the community and sets up a listener to detect when the checked status is changed
         m_leaveCheckbox = v.findViewById(R.id.leave_checkbox);
@@ -215,6 +247,7 @@ public class AutonFragment extends Fragment
         m_autonAmpNotes.setText(String.valueOf(m_matchData.getAutonAmpNotes()));
         m_autonAmpMisses.setText(String.valueOf(m_matchData.getAutonAmpMisses()));
         m_autonSpeakerNotes.setText(String.valueOf(m_matchData.getAutonSpeakerNotes()));
+        m_autonSpeakerMisses.setText(String.valueOf(m_matchData.getAutonSpeakerMisses()));
 
         if (isNotValidPoints(m_autonAmpNotes))
         {
@@ -227,6 +260,10 @@ public class AutonFragment extends Fragment
         if (isNotValidPoints(m_autonSpeakerNotes))
         {
             m_autonSpeakerNotes.setTextColor(Color.RED);
+        }
+        if (isNotValidPoints(m_autonSpeakerMisses))
+        {
+            m_autonSpeakerMisses.setTextColor(Color.RED);
         }
         return v;
 
@@ -243,6 +280,8 @@ public class AutonFragment extends Fragment
         m_matchData.setAutonAmpMisses(Integer.parseInt(m_autonAmpMisses.getText().toString()));
 
         m_matchData.setAutonSpeakerNotes(Integer.parseInt(m_autonSpeakerNotes.getText().toString()));
+
+        m_matchData.setAutonSpeakerMisses(Integer.parseInt(m_autonSpeakerMisses.getText().toString()));
 
         m_matchData.setAutonLeave(m_leaveCheckbox.isChecked());
 
