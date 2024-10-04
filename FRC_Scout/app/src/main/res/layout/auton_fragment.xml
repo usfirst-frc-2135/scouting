@@ -123,7 +123,7 @@
                     android:background="@color/autonUpperCardColor"
                     android:text="# MISSES"
                     android:textColor="@color/specialTextSecondary"
-                    android:textSize=" 18sp" />
+                    android:textSize="18sp" />
 
                 <Button
                     android:id="@+id/auton_amp_misses_decr"
