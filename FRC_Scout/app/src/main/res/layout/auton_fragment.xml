@@ -64,7 +64,8 @@
                 android:layout_height="wrap_content"
                 android:background="@color/autonUpperCardColor"
                 android:orientation="horizontal"
-                android:paddingBottom="1dp">
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp">
 
                 <TextView
                     android:id="@+id/amp_notes_title"
@@ -75,7 +76,8 @@
                     android:background="@color/autonUpperCardColor"
                     android:text="# GOALS"
                     android:textColor="@color/specialTextSecondary"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    />
 
                 <Button
                     android:id="@+id/auton_amp_scoring_decr"
@@ -110,8 +112,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/autonUpperCardColor"
+                android:background="#facec5"
                 android:orientation="horizontal"
+                android:paddingTop="20dp"
                 android:paddingBottom="1dp">
 
                 <TextView
@@ -120,7 +123,7 @@
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
-                    android:background="@color/autonUpperCardColor"
+                    android:background="#facec5"
                     android:text="# MISSES"
                     android:textColor="@color/specialTextSecondary"
                     android:textSize="18sp" />
@@ -159,7 +162,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/autonUpperCardColor"
+                android:background="#facec5"
                 android:orientation="horizontal"
                 android:paddingTop="20dp"
                 android:paddingBottom="1dp">
@@ -182,8 +185,8 @@
                 android:layout_height="wrap_content"
                 android:background="@color/autonLowerCardColor"
                 android:orientation="horizontal"
-                android:paddingTop="1dp"
-                android:paddingBottom="1dp">
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp">
 
                 <TextView
                     android:id="@+id/auton_speaker_title"
@@ -232,9 +235,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/autonLowerCardColor"
+                android:background="#e6d1ff"
                 android:orientation="horizontal"
-                android:paddingTop="1dp"
+                android:paddingTop="20dp"
                 android:paddingBottom="1dp">
 
                 <TextView
@@ -243,7 +246,7 @@
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
-                    android:background="@color/autonLowerCardColor"
+                    android:background="#e6d1ff"
                     android:text="# Misses"
                     android:textColor="@color/specialTextSecondary"
                     android:textSize="18sp" />
@@ -285,7 +288,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bottom_rounded_rect"
-                android:backgroundTint="@color/autonLowerCardColor"
+                android:backgroundTint="#e6d1ff"
                 android:orientation="horizontal"
                 android:paddingTop="20dp"
                 android:paddingBottom="1dp">
