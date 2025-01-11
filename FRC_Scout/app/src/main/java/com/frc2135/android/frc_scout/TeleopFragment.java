@@ -22,12 +22,16 @@ public class TeleopFragment extends Fragment
     private static final String TAG = "TeleopFragment";
     private static final int MAX_POINTS = 15;     // max for valid high or low points total
 
-    private CheckBox m_ampUsedCheckBox;
+    private CheckBox m_pickUpCoral;
+    private CheckBox m_pickUpAlgae;
+    private CheckBox m_knockAlgaeOff;
+    private CheckBox m_algaeFromReef;
+    private CheckBox m_holdBothElements;
+    private CheckBox m_playedDefense;
     private TextView m_teleopAmpNotes;
     private TextView m_teleopAmpMisses;
     private TextView m_teleopSpeakerMisses;
     private TextView m_teleopSpeakerNotes;
-    private TextView m_teleopPasses;
     private MatchData m_matchData;
 
     // Check if pointsTextView field is greater than the MAX_POINTS.
@@ -42,7 +46,7 @@ public class TeleopFragment extends Fragment
 
     // Sets the new result integer value for the given Button, either decrementing or incrementing it.
     // If the decrement case falls below zero, returns 0. Sets textView to RED if out of valid range.
-    public void updatePointsInt(TextView pointsTextView, boolean bIncr)
+   /* public void updatePointsInt(TextView pointsTextView, boolean bIncr)
     {
         int result = Integer.parseInt(pointsTextView.getText().toString()); // get current value as int
         if (bIncr)
@@ -66,7 +70,7 @@ public class TeleopFragment extends Fragment
             }
         }
     }
-
+*/
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -81,7 +85,9 @@ public class TeleopFragment extends Fragment
         }
     }
 
-    /** @noinspection Convert2Lambda*/
+    /**
+     * @noinspection Convert2Lambda
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
@@ -89,6 +95,12 @@ public class TeleopFragment extends Fragment
         View v = inflater.inflate(R.layout.teleop_fragment, parent, false);
         Context context = getContext();
         if (context != null)
+
+
+
+
+
+        /*
         {
             // Setup TextViews that displays points, setting 0 as the default.
             m_teleopAmpNotes = v.findViewById(R.id.teleop_amp_scoring_text);
@@ -107,11 +119,9 @@ public class TeleopFragment extends Fragment
             m_teleopSpeakerMisses.setText("0");
             m_teleopSpeakerMisses.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
 
-            m_teleopPasses = v.findViewById(R.id.teleop_passes_text);
-            m_teleopPasses.setText("0");
-            m_teleopPasses.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
-
         }
+        */
+     /*
         //Connects the decrement button for amp scoring and sets up a listener that detects when the button is clicked
         Button teleopAmpDecrButton = v.findViewById(R.id.teleop_amp_scoring_decr);
         teleopAmpDecrButton.setOnClickListener(new View.OnClickListener()
@@ -212,71 +222,72 @@ public class TeleopFragment extends Fragment
             }
         });
 
-        //Connects the increment button for passes and sets up a listener that detects when the button is clicked
-        Button PassesIncrButton = v.findViewById(R.id.teleop_passes_incr);
-        PassesIncrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
+        */
+        m_pickUpCoral =v.findViewById(R.id.pickup_coral);
+        m_pickUpCoral.setChecked(m_matchData.getPickUpCoral());
+
+        m_pickUpAlgae =v.findViewById(R.id.pickup_algae);
+        m_pickUpAlgae.setChecked(m_matchData.getPickUpAlgae());
+
+        m_knockAlgaeOff =v.findViewById(R.id.knock_algae_off);
+        m_knockAlgaeOff.setChecked(m_matchData.getKnockOffAlgae());
+
+        m_algaeFromReef =v.findViewById(R.id.algae_from_reef);
+        m_algaeFromReef.setChecked(m_matchData.getAlgaeFromReef());
+
+        m_holdBothElements =v.findViewById(R.id.hold_both_elements);
+        m_holdBothElements.setChecked(m_matchData.getHoldBothElements());
+
+        m_playedDefense =v.findViewById(R.id.played_defense);
+        m_playedDefense.setChecked(m_matchData.getPlayedDefense());
+
+            //m_teleopAmpNotes.setText(String.valueOf(m_matchData.getTeleopAmpNotes()));
+           // m_teleopSpeakerNotes.setText(String.valueOf(m_matchData.getTeleopSpeakerNotes()));
+           // m_teleopSpeakerMisses. setText(String.valueOf(m_matchData.getTeleopSpeakerMisses()));
+           // m_teleopAmpMisses.setText(String.valueOf(m_matchData.getTeleopAmpMisses()));
+            /*if (isNotValidPoints(m_teleopAmpNotes))
             {
-                //Increases displayed point value by 1
-                updatePointsInt(m_teleopPasses, true);
+                m_teleopAmpNotes.setTextColor(Color.RED);
             }
-        });
-
-        //Connects the decr button for passes and sets up a listener that detects when the button is clicked
-        Button PassesDecrButton = v.findViewById(R.id.teleop_passes_decr);
-        PassesDecrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
+            if (isNotValidPoints(m_teleopSpeakerNotes))
             {
-                // Decreases displayed point value by 1; sets to 0 if result would be negative.
-                updatePointsInt(m_teleopPasses, false);
+                m_teleopSpeakerNotes.setTextColor(Color.RED);
             }
-        });
+            if (isNotValidPoints(m_teleopAmpMisses))
+            {
+                m_teleopAmpMisses.setTextColor(Color.RED);
+            }
+            if (isNotValidPoints(m_teleopSpeakerMisses))
+            {
+                m_teleopSpeakerMisses.setTextColor(Color.RED);
+            }
 
+             */
 
-        m_ampUsedCheckBox = v.findViewById(R.id.ampused_checkbox);
-        m_ampUsedCheckBox.setChecked(m_matchData.getAmpUsed());
-
-        m_teleopAmpNotes.setText(String.valueOf(m_matchData.getTeleopAmpNotes()));
-        m_teleopSpeakerNotes.setText(String.valueOf(m_matchData.getTeleopSpeakerNotes()));
-        m_teleopSpeakerMisses. setText(String.valueOf(m_matchData.getTeleopSpeakerMisses()));
-        m_teleopAmpMisses.setText(String.valueOf(m_matchData.getTeleopAmpMisses()));
-        m_teleopPasses.setText(String.valueOf(m_matchData.getTeleopPasses()));
-        if (isNotValidPoints(m_teleopAmpNotes))
-        {
-            m_teleopAmpNotes.setTextColor(Color.RED);
+            return v;
         }
-        if (isNotValidPoints(m_teleopSpeakerNotes))
-        {
-            m_teleopSpeakerNotes.setTextColor(Color.RED);
-        }
-        if (isNotValidPoints(m_teleopAmpMisses))
-        {
-            m_teleopAmpMisses.setTextColor(Color.RED);
-        }
-        if (isNotValidPoints(m_teleopSpeakerMisses))
-        {
-            m_teleopSpeakerMisses.setTextColor(Color.RED);
-        }
-        if (isNotValidPoints(m_teleopPasses))
-        {
-            m_teleopPasses.setTextColor(Color.RED);
-        }
-
-        return v;
-    }
 
     public void updateTeleopData()
     {
-        m_matchData.setTeleopAmpNotes(Integer.parseInt(m_teleopAmpNotes.getText().toString()));
-        m_matchData.setTeleopSpeakerNotes(Integer.parseInt(m_teleopSpeakerNotes.getText().toString()));
-        m_matchData.setTeleopAmpMisses(Integer.parseInt(m_teleopAmpMisses.getText().toString()));
-        m_matchData.setTeleopSpeakerMisses(Integer.parseInt(m_teleopSpeakerMisses.getText().toString()));
-        m_matchData.setTeleopPasses(Integer.parseInt(m_teleopPasses.getText().toString()));
-        m_matchData.setAmpUsed(m_ampUsedCheckBox.isChecked());
+        //m_matchData.setTeleopAmpNotes(Integer.parseInt(m_teleopAmpNotes.getText().toString()));
+
+        //        m_matchData.setTeleopSpeakerNotes(Integer.parseInt(m_teleopSpeakerNotes.getText().toString()));
+
+        //      m_matchData.setTeleopAmpMisses(Integer.parseInt(m_teleopAmpMisses.getText().toString()));
+
+        //    m_matchData.setTeleopSpeakerMisses(Integer.parseInt(m_teleopSpeakerMisses.getText().toString()));
+
+        m_matchData.setPickUpCoral(m_pickUpCoral.isChecked());
+
+        m_matchData.setPickUpAlgae(m_pickUpAlgae.isChecked());
+
+        m_matchData.setKnockOffAlgae(m_knockAlgaeOff.isChecked());
+
+        m_matchData.setAlgaeFromReef(m_algaeFromReef.isChecked());
+
+        m_matchData.setHoldBothElements(m_holdBothElements.isChecked());
+
+        m_matchData.setPlayedDefense(m_playedDefense.isChecked());
 
     }
 

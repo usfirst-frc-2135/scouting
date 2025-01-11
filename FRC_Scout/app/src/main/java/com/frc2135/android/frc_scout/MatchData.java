@@ -31,12 +31,17 @@ public class MatchData
     private static final String JSON_KEY_AUTON_SPEAKER_MISSES = "autonSpeakerMisses";
 
 
-    private static final String JSON_KEY_AMP_USED = "ampUsed";
+    private static final String JSON_KEY_PICK_UP_CORAL = "pickUpCoral";
     private static final String JSON_KEY_TELEOP_AMP_NOTES = "teleopAmpNotes";
     private static final String JSON_KEY_TELEOP_SPEAKER_NOTES = "teleopSpeakerNotes";
     private static final String JSON_KEY_TELEOP_AMP_MISSES = "teleopAmpMisses";
     private static final String JSON_KEY_TELEOP_SPEAKER_MISSES = "teleopSpeakerMisses";
     private static final String JSON_KEY_TELEOP_PASSES = "teleopPasses";
+    private static final String JSON_KEY_PICK_UP_ALGAE = "pickUpAlgae";
+    private static final String JSON_KEY_KNOCK_OFF_ALGAE = "knockOffAlgae";
+    private static final String JSON_KEY_ALGAE_FROM_REEF = "algaeFromReef";
+    private static final String JSON_KEY_HOLD_BOTH_ELEMENTS = "holdBothElements";
+    private static final String JSON_KEY_PLAYED_DEFENSE = "playedDefense";
 
 
     private static final String JSON_KEY_END_GAME_STAGE = "endGameStage";
@@ -60,7 +65,12 @@ public class MatchData
     private boolean m_autonLeaveStartingZone;
 
 
-    private boolean m_AmpUsed;
+    private boolean m_pickUpCoral;
+    private boolean m_pickUpAlgae;
+    private boolean m_playedDefense;
+    private boolean m_knockAlgaeOff;
+    private boolean m_algaeFromReef;
+    private boolean m_holdBothElements;
     private int m_teleopAmpNotes;
     private int m_teleopSpeakerNotes;
     private int m_teleopAmpMisses;
@@ -112,7 +122,8 @@ public class MatchData
         setAutonSpeakerMisses(0);
 
 
-        setAmpUsed(false);
+        setPickUpCoral(false);
+        setPickUpAlgae(false);
         setTeleopAmpNotes(0);
         setTeleopAmpMisses(0);
         setTeleopSpeakerNotes(0);
@@ -152,7 +163,8 @@ public class MatchData
         setAutonSpeakerNotes(json.getInt(JSON_KEY_AUTON_SPEAKER_NOTES));
         setAutonSpeakerMisses(json.getInt(JSON_KEY_AUTON_SPEAKER_MISSES));
 
-        setAmpUsed(json.getBoolean(JSON_KEY_AMP_USED));
+        setPickUpCoral(json.getBoolean(JSON_KEY_PICK_UP_CORAL));
+        setPickUpAlgae(json.getBoolean(JSON_KEY_PICK_UP_CORAL));
         setTeleopAmpNotes(json.getInt(JSON_KEY_TELEOP_AMP_NOTES));
         setTeleopAmpMisses(json.getInt(JSON_KEY_TELEOP_AMP_MISSES));
         setTeleopSpeakerNotes(json.getInt(JSON_KEY_TELEOP_SPEAKER_NOTES));
@@ -288,17 +300,69 @@ public class MatchData
     }
 
 
-    public void setAmpUsed(boolean ampUsed)
+    public void setPickUpCoral(boolean pickUpCoral)
     {
 
-        m_AmpUsed = ampUsed;
+        m_pickUpCoral = pickUpCoral;
     }
 
-    public boolean getAmpUsed()
+    public boolean getPickUpCoral()
     {
-        return m_AmpUsed;
+        return m_pickUpCoral;
     }
 
+    public void setPickUpAlgae(boolean pickUpAlgae)
+    {
+
+        m_pickUpAlgae = pickUpAlgae;
+    }
+
+    public boolean getPickUpAlgae()
+    {
+        return m_pickUpAlgae;
+    }
+
+    public void setKnockOffAlgae(boolean KnockOffAlgae)
+    {
+
+        m_knockAlgaeOff = KnockOffAlgae;
+    }
+
+    public boolean getKnockOffAlgae()
+    {
+        return m_knockAlgaeOff;
+    }
+    public void setAlgaeFromReef(boolean AlgaeFromReef)
+    {
+
+        m_algaeFromReef = AlgaeFromReef;
+    }
+
+    public boolean getAlgaeFromReef()
+    {
+        return m_algaeFromReef;
+    }
+
+    public void setHoldBothElements(boolean holdBothElements)
+    {
+
+        m_holdBothElements = holdBothElements;
+    }
+
+    public boolean getHoldBothElements()
+    {
+        return m_holdBothElements;
+    }
+    public void setPlayedDefense(boolean playedDefense)
+    {
+
+        m_playedDefense = playedDefense;
+    }
+
+    public boolean getPlayedDefense()
+    {
+        return m_playedDefense;
+    }
 
     public void setTeleopAmpNotes(int numNotes)
     {
@@ -436,7 +500,7 @@ public class MatchData
         // NOTE! THE ORDER IS IMPORTANT!
         // This is the data that goes into the QR code.
 
-        String headers = "TeamNumber AutonLeaveStartingZone AutonAmpNotes AutonAmpMisses AutonSpeakerNotes AutonSpeakerMisses TeleopAmpNotes TeleopAmpMisses TeleopSpeakerNotes TeleopSpeakerMisses  TeleopPasses EndgameStage EndgameHarmony EndgameSpotlit EndgameTrap Died MatchNum Competition Scout Comment";
+        String headers = "TeamNumber AutonLeaveStartingZone AutonAmpNotes AutonAmpMisses AutonSpeakerNotes AutonSpeakerMisses Pick Up Coral TeleopAmpNotes TeleopAmpMisses TeleopSpeakerNotes TeleopSpeakerMisses  TeleopPasses EndgameStage EndgameHarmony EndgameSpotlit EndgameTrap Died MatchNum Competition Scout Comment";
 
         String tsvStr = "";
 
@@ -454,7 +518,32 @@ public class MatchData
         tsvStr += m_autonSpeakerNotes + "\t";
         tsvStr += m_autonSpeakerMisses + "\t";
 
-        if (m_AmpUsed)  // bool value: use 1/0 instead of true/false
+        if (m_pickUpCoral)  // bool value: use 1/0 instead of true/false
+            tsvStr += "1" + "\t";
+        else
+            tsvStr += "0" + "\t";
+
+        if (m_pickUpAlgae)  // bool value: use 1/0 instead of true/false
+            tsvStr += "1" + "\t";
+        else
+            tsvStr += "0" + "\t";
+
+        if (m_knockAlgaeOff)  // bool value: use 1/0 instead of true/false
+            tsvStr += "1" + "\t";
+        else
+            tsvStr += "0" + "\t";
+
+        if (m_algaeFromReef)  // bool value: use 1/0 instead of true/false
+            tsvStr += "1" + "\t";
+        else
+            tsvStr += "0" + "\t";
+
+        if (m_holdBothElements)  // bool value: use 1/0 instead of true/false
+            tsvStr += "1" + "\t";
+        else
+            tsvStr += "0" + "\t";
+
+        if (m_playedDefense)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
         else
             tsvStr += "0" + "\t";
@@ -508,7 +597,7 @@ public class MatchData
         json.put("divider", ",");
         json.put("divider", ", \n");
 
-        json.put("headings", "Competition, Team Number, Match Number, Leave Starting Zone, Auton Amp Notes, Auton Amp Misses, Auton Speaker Notes, Amplification Used, Teleop Amp Notes, Teleop Amp Misses, Teleop Speaker Notes, Teleop Speaker Misses, Teleop Passes, Endgame Stage, Endgame Harmony, Endgame Spotlit, Endgame Trap, Died, Comments, Timestamp, MatchID \n");
+        json.put("headings", "Competition, Team Number, Match Number, Leave Starting Zone, Auton Amp Notes, Auton Amp Misses, Auton Speaker Notes, Pick Up Coral, Teleop Amp Notes, Teleop Amp Misses, Teleop Speaker Notes, Teleop Speaker Misses, Teleop Passes, Endgame Stage, Endgame Harmony, Endgame Spotlit, Endgame Trap, Died, Comments, Timestamp, MatchID \n");
         json.put(JSON_KEY_EVENT_CODE, m_eventCode);
         json.put("divider", ",");
         json.put(JSON_KEY_TEAM_NUMBER, m_teamNumber);
@@ -526,7 +615,17 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_AUTON_SPEAKER_MISSES, m_autonSpeakerMisses);
         json.put("divider", ",");
-        json.put(JSON_KEY_AMP_USED, m_AmpUsed);
+        json.put(JSON_KEY_PICK_UP_CORAL, m_pickUpCoral);
+        json.put("divider", ",");
+        json.put(JSON_KEY_PICK_UP_ALGAE, m_pickUpAlgae);
+        json.put("divider", ",");
+        json.put(JSON_KEY_KNOCK_OFF_ALGAE, m_knockAlgaeOff);
+        json.put("divider", ",");
+        json.put(JSON_KEY_ALGAE_FROM_REEF, m_algaeFromReef);
+        json.put("divider", ",");
+        json.put(JSON_KEY_HOLD_BOTH_ELEMENTS, m_holdBothElements);
+        json.put("divider", ",");
+        json.put(JSON_KEY_PLAYED_DEFENSE, m_playedDefense);
         json.put("divider", ",");
         json.put(JSON_KEY_TELEOP_AMP_NOTES, m_teleopAmpNotes);
         json.put("divider", ",");

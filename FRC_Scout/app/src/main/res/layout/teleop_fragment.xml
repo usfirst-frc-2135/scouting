@@ -1,339 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor">
 
     <LinearLayout
-            android:layout_width="500dp"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/amp_scoring_title"
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="15dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="15dp">
-
-            <TextView
-                style="?android:listSeparatorTextViewStyle"
-                android:layout_width="220dp"
-                android:layout_height="wrap_content"
-                android:text="AMPLIFICATION"
-                android:textColor="@color/textPrimary"
-                android:textSize="24sp" />
-
-            <CheckBox
-                android:id="@+id/ampused_checkbox"
-                android:layout_width="262dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="16dp"
-                android:buttonTint="@color/textPrimary"
-                android:text="Amplification Used"
-                android:textColor="@color/textPrimary"
-                android:textSize="22sp" />
-
-    </LinearLayout>
+            android:layout_marginTop="10dp"
+            android:background="@drawable/top_rounded_rect"
+            android:paddingTop="20dp"
+            android:paddingBottom="1dp"
+            android:text="Pick up from floor"
+            android:backgroundTint="#faccc8"
+            android:textColor="@color/specialTextPrimary"
+            android:textSize="24sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
+            android:background="#FCD9DF"
+            android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/pickup_coral"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textSize="20sp"
+            android:text="Algae" />
 
 
-            <android.widget.Space
-                android:layout_width="match_parent"
-                android:layout_height="70dp" />
-
-            <TextView
-                android:id="@+id/amp_scoring_title"
-                style="?android:listSeparatorTextViewStyle"
-                android:background="@drawable/top_rounded_rect"
-                android:backgroundTint="#DFF7DF"
-                android:layout_width="match_parent"
+            <CheckBox
+                android:id="@+id/pickup_algae"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="20dp"
-                android:paddingBottom="1dp"
-                android:text="AMP SCORING"
-                android:textColor="@color/specialTextPrimary"
-                android:textSize="24sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:background="@color/teleopUpperCardColor"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
-
-                <TextView
-                    android:layout_marginStart="8dp"
-                    android:background="#DFF7D7"
-                    style="?android:listSeparatorTextViewStyle"
-                    android:layout_width="190dp"
-                    android:layout_height="match_parent"
-                    android:text="# Goals"
-                    android:textColor="@color/specialTextSecondary"
-                    android:textSize="18sp" />
-
-                <Button
-                    android:id="@+id/teleop_amp_scoring_decr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:text="@string/decrease"
-                    android:textColor="#9F3FB5"
-                    android:textSize="30sp" />
-
-                <TextView
-                    android:id="@+id/teleop_amp_scoring_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="25sp"
-                    android:layout_weight="3"
-                    android:textAlignment="center" />
-
-                <Button
-                    android:id="@+id/teleop_amp_scoring_incr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="30dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:text="@string/increase"
-                    android:textColor="#9F3FB5"
-                    android:textSize="30sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:background="#b6edb6"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
-
-                <TextView
-                    android:layout_marginStart="8dp"
-                    android:background="#b6edb6"
-                    style="?android:listSeparatorTextViewStyle"
-                    android:layout_width="190dp"
-                    android:layout_height="match_parent"
-                    android:text="# Misses"
-                    android:textColor="@color/specialTextSecondary"
-                    android:textSize="18sp" />
-
-                <Button
-                    android:id="@+id/teleop_amp_missing_decr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:text="@string/decrease"
-                    android:textColor="#9F3FB5"
-                    android:textSize="30sp" />
-
-                <TextView
-                    android:id="@+id/teleop_amp_missing_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:textAlignment="center"
-                    android:textSize="25sp" />
-
-                <Button
-                    android:id="@+id/teleop_amp_missing_incr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="30dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:text="@string/increase"
-                    android:textColor="#9F3FB5"
-                    android:textSize="30sp" />
-            </LinearLayout>
-
-
-            <TextView
-                android:id="@+id/speaker_scoring_title"
-                style="?android:listSeparatorTextViewStyle"
-                android:background="#CEEAF5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="20dp"
-                android:paddingBottom="1dp"
-                android:text="SPEAKER SCORING"
-                android:textColor="@color/specialTextPrimary"
-                android:textSize="24sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:background="#CEEAF5"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
-
-                <TextView
-                    android:layout_marginStart="8dp"
-                    style="?android:listSeparatorTextViewStyle"
-                    android:background="#CEEAF5"
-                    android:layout_width="190dp"
-                    android:layout_height="match_parent"
-                    android:text="# goals"
-                    android:textColor="@color/specialTextSecondary"
-                    android:textSize="18sp" />
-
-                <Button
-                    android:id="@+id/teleop_speaker_scoring_decr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#9F3FB5"
-                    android:text="@string/decrease"
-                    android:textColor="#FFC107"
-                    android:textSize="30sp" />
-
-                <TextView
-                    android:id="@+id/teleop_speaker_scoring_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="25sp"
-                    android:layout_weight="3"
-                    android:textAlignment="center" />
-
-                <Button
-                    android:id="@+id/teleop_speaker_scoring_incr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="30dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#9F3FB5"
-                    android:text="@string/increase"
-                    android:textColor="#FFC107"
-                    android:textSize="30sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bottom_rounded_rect"
-                android:backgroundTint="#b9e1f1"
-                android:orientation="horizontal"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
-
-                <TextView
-                    style="?android:listSeparatorTextViewStyle"
-                    android:layout_width="190dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="8dp"
-                    android:background="#b9e1f1"
-                    android:text="# misses"
-                    android:textColor="@color/specialTextSecondary"
-                    android:textSize="18sp" />
-
-                <Button
-                    android:id="@+id/teleop_speaker_missing_decr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#9F3FB5"
-                    android:text="@string/decrease"
-                    android:textColor="#FFC107"
-                    android:textSize="30sp" />
-
-                <TextView
-                    android:id="@+id/teleop_speaker_missing_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:textAlignment="center"
-                    android:textSize="25sp" />
-
-                <Button
-                    android:id="@+id/teleop_speaker_missing_incr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="30dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#9F3FB5"
-                    android:text="@string/increase"
-                    android:textColor="#FFC107"
-                    android:textSize="30sp" />
-            </LinearLayout>
-
-            <android.widget.Space
-                android:layout_width="match_parent"
-                android:layout_height="20dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:background="@drawable/rounded_rect"
-                android:backgroundTint="#b6edb6"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
-
-
-                <TextView
-                    android:layout_marginStart="8dp"
-                    style="?android:listSeparatorTextViewStyle"
-                    android:background="#b6edb6"
-                    android:layout_width="190dp"
-                    android:layout_height="match_parent"
-                    android:text="Passes"
-                    android:textColor="@color/specialTextSecondary"
-                    android:textSize="18sp" />
-
-                <Button
-                    android:id="@+id/teleop_passes_decr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#c4fdf0"
-                    android:text="@string/decrease"
-                    android:textColor="#9F3FB5"
-                    android:textSize="30sp" />
-
-                <TextView
-                    android:id="@+id/teleop_passes_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="25sp"
-                    android:layout_weight="3"
-                    android:textAlignment="center" />
-
-                <Button
-                    android:id="@+id/teleop_passes_incr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="30dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#c4fdf0"
-                    android:text="@string/increase"
-                    android:textColor="#9F3FB5"
-                    android:textSize="30sp" />
-            </LinearLayout>
-
-
-
-
+                android:textSize="20sp"
+                android:text="Coral" />
 
         </LinearLayout>
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <TextView
+            android:id="@+id/textView2"
+            style="?android:listSeparatorTextViewStyle"
+            android:textColor="#000000"
+            android:background="#CEEAF5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Handling game pieces"
+            android:textSize="24sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="#b3E5f2"
+            android:background="@drawable/bottom_rounded_rect"
+            android:orientation="vertical">
+
+
+            <CheckBox
+                android:id="@+id/knock_algae_off"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textSize="20sp"
+                android:text="Knock off algae from reef" />
+
+            <CheckBox
+                android:id="@+id/algae_from_reef"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textSize="20sp"
+                android:text="Acquire Algae froom reef" />
+
+            <CheckBox
+                android:id="@+id/hold_both_elements"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textSize="20sp"
+                android:text="Can hold both game pieces at once" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:backgroundTint="#FCD9DF"
+                android:background="@drawable/bottom_rounded_rect"
+                >
+            <TextView
+                android:id="@+id/textView3"
+                style="?android:listSeparatorTextViewStyle"
+                android:textColor="#000000"
+                android:background="#faccc8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="defense"
+                android:textSize="24sp" />
+
+            <CheckBox
+                android:id="@+id/played_defense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+
+                android:textSize="20sp"
+                android:text="played defense" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
