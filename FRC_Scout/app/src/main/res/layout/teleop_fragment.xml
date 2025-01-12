@@ -12,17 +12,127 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/acquire_game_piece"
+                style="?android:listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="1dp"
+                android:text="Acquire Game Piece"
+                android:backgroundTint="#CEEAF5"
+                android:textColor="@color/specialTextPrimary"
+                android:background="@drawable/top_rounded_rect"
+                android:textSize="24sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#b3E5f2">
+
+                <TextView
+                    android:id="@+id/coral_text"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:textSize="20sp"
+                    android:paddingBottom="15dp"
+                    android:background="#b3E5f2"
+                    android:textColor="#000000"
+                    android:text="Coral" />
+
+                <Button
+                    android:id="@+id/coral_acquire_decr"
+                    android:layout_width="45dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#faccc8"
+                    android:text="@string/decrease"
+                    android:textColor="#9F3FB5"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/coral_acquire_text"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:textAlignment="center"
+                    android:textSize="25sp" />
+
+                <Button
+                    android:id="@+id/coral_acquire_incr"
+                    android:layout_width="45dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/rounded_rect"
+                    android:text="@string/increase"
+                    android:backgroundTint="#faccc8"
+                    android:textColor="#9F3FB5"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/algae_text"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:paddingBottom="15dp"
+                    android:background="#b3E5f2"
+                    android:textColor="#000000"
+                    android:text="Algae" />
+
+
+                <Button
+                    android:id="@+id/algae_acquire_decr"
+                    android:layout_width="45dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#faccc8"
+                    android:text="@string/decrease"
+                    android:textColor="#9F3FB5"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/algae_acquire_text"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:textAlignment="center"
+                    android:textSize="25sp" />
+
+                <Button
+                    android:id="@+id/algae_acquire_incr"
+                    android:layout_width="45dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/rounded_rect"
+                    android:text="@string/increase"
+                    android:backgroundTint="#faccc8"
+                    android:textColor="#9F3FB5"
+                    android:textSize="20dp" />
+
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/amp_scoring_title"
             style="?android:listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/top_rounded_rect"
-            android:paddingTop="20dp"
+            android:paddingTop="2dp"
             android:paddingBottom="1dp"
             android:text="Pick up from floor"
-            android:backgroundTint="#faccc8"
+            android:background="#faccc8"
             android:textColor="@color/specialTextPrimary"
             android:textSize="24sp" />
 
@@ -97,8 +207,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:backgroundTint="#FCD9DF"
                 android:background="@drawable/bottom_rounded_rect"
+                android:backgroundTint="#FCD9DF"
                 >
             <TextView
                 android:id="@+id/textView3"
@@ -115,10 +225,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-
                 android:textSize="20sp"
-                android:text="played defense" />
-
+                android:text="played defense"
+                />
 
             </LinearLayout>
 

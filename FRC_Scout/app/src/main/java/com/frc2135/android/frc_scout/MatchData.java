@@ -32,8 +32,8 @@ public class MatchData
 
 
     private static final String JSON_KEY_PICK_UP_CORAL = "pickUpCoral";
-    private static final String JSON_KEY_TELEOP_AMP_NOTES = "teleopAmpNotes";
-    private static final String JSON_KEY_TELEOP_SPEAKER_NOTES = "teleopSpeakerNotes";
+    private static final String JSON_KEY_CORAL_ACQUIRE= "coralAcquire";
+    private static final String JSON_KEY_ALGAE_ACQUIRE = "algaeAcquire";
     private static final String JSON_KEY_TELEOP_AMP_MISSES = "teleopAmpMisses";
     private static final String JSON_KEY_TELEOP_SPEAKER_MISSES = "teleopSpeakerMisses";
     private static final String JSON_KEY_TELEOP_PASSES = "teleopPasses";
@@ -71,8 +71,8 @@ public class MatchData
     private boolean m_knockAlgaeOff;
     private boolean m_algaeFromReef;
     private boolean m_holdBothElements;
-    private int m_teleopAmpNotes;
-    private int m_teleopSpeakerNotes;
+    private int m_coralAcquire;
+    private int m_algaeAcquire;
     private int m_teleopAmpMisses;
     private int m_teleopSpeakerMisses;
     private int m_teleopPasses;
@@ -124,9 +124,9 @@ public class MatchData
 
         setPickUpCoral(false);
         setPickUpAlgae(false);
-        setTeleopAmpNotes(0);
+        setCoralAcquire(0);
         setTeleopAmpMisses(0);
-        setTeleopSpeakerNotes(0);
+        setAlgaeAcquire(0);
         setTeleopSpeakerMisses(0);
         setTeleopPasses(0);
 
@@ -165,9 +165,9 @@ public class MatchData
 
         setPickUpCoral(json.getBoolean(JSON_KEY_PICK_UP_CORAL));
         setPickUpAlgae(json.getBoolean(JSON_KEY_PICK_UP_CORAL));
-        setTeleopAmpNotes(json.getInt(JSON_KEY_TELEOP_AMP_NOTES));
+        setCoralAcquire(json.getInt(JSON_KEY_CORAL_ACQUIRE));
         setTeleopAmpMisses(json.getInt(JSON_KEY_TELEOP_AMP_MISSES));
-        setTeleopSpeakerNotes(json.getInt(JSON_KEY_TELEOP_SPEAKER_NOTES));
+        setAlgaeAcquire(json.getInt(JSON_KEY_ALGAE_ACQUIRE));
         setTeleopSpeakerMisses(json.getInt(JSON_KEY_TELEOP_SPEAKER_MISSES));
         setTeleopPasses(json.getInt(JSON_KEY_TELEOP_PASSES));
 
@@ -364,14 +364,14 @@ public class MatchData
         return m_playedDefense;
     }
 
-    public void setTeleopAmpNotes(int numNotes)
+    public void setCoralAcquire(int coralAcquire)
     {
-        m_teleopAmpNotes = numNotes;
+        m_coralAcquire = coralAcquire;
     }
 
-    public int getTeleopAmpNotes()
+    public int getCoralAcquire()
     {
-        return m_teleopAmpNotes;
+        return m_coralAcquire;
     }
 
 
@@ -386,14 +386,14 @@ public class MatchData
     }
 
 
-    public void setTeleopSpeakerNotes(int a)
+    public void setAlgaeAcquire(int algaeAcquire)
     {
-        m_teleopSpeakerNotes = a;
+        m_algaeAcquire = algaeAcquire;
     }
 
-    public int getTeleopSpeakerNotes()
+    public int getAlgaeAcquire()
     {
-        return m_teleopSpeakerNotes;
+        return m_algaeAcquire;
     }
 
 
@@ -548,9 +548,9 @@ public class MatchData
         else
             tsvStr += "0" + "\t";
 
-        tsvStr += m_teleopAmpNotes + "\t";
+        tsvStr += m_coralAcquire + "\t";
         tsvStr += m_teleopAmpMisses + "\t";
-        tsvStr += m_teleopSpeakerNotes + "\t";
+        tsvStr += m_algaeAcquire + "\t";
         tsvStr += m_teleopSpeakerMisses + "\t";
         tsvStr += m_teleopPasses + "\t";
 
@@ -627,11 +627,11 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_PLAYED_DEFENSE, m_playedDefense);
         json.put("divider", ",");
-        json.put(JSON_KEY_TELEOP_AMP_NOTES, m_teleopAmpNotes);
+        json.put(JSON_KEY_CORAL_ACQUIRE, m_coralAcquire);
         json.put("divider", ",");
         json.put(JSON_KEY_TELEOP_AMP_MISSES, m_teleopAmpMisses);
         json.put("divider", ",");
-        json.put(JSON_KEY_TELEOP_SPEAKER_NOTES, m_teleopSpeakerNotes);
+        json.put(JSON_KEY_ALGAE_ACQUIRE, m_algaeAcquire);
         json.put("divider", ",");
         json.put(JSON_KEY_TELEOP_SPEAKER_MISSES, m_teleopSpeakerMisses);
         json.put("divider", ",");
