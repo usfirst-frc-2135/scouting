@@ -20,7 +20,8 @@ import androidx.fragment.app.Fragment;
 public class TeleopFragment extends Fragment
 {
     private static final String TAG = "TeleopFragment";
-    private static final int MAX_POINTS = 12;     // max for valid high or low points total
+    private static final int MAX_POINTS_ALGAE = 7;     // max for valid high or low points total
+    private static final int MAX_POINTS_CORAL= 11;     // max for valid high or low points total
 
     private CheckBox m_pickUpCoral;
     private CheckBox m_pickUpAlgae;
@@ -30,23 +31,29 @@ public class TeleopFragment extends Fragment
     private CheckBox m_playedDefense;
     private TextView m_coralAcquire;
     private TextView m_algaeAcquire;
-    private TextView m_teleopSpeakerMisses;
-    private TextView m_teleopSpeakerNotes;
     private MatchData m_matchData;
 
     // Check if pointsTextView field is greater than the MAX_POINTS.
-    private boolean isNotValidPoints(TextView field)
+    private boolean isGreaterThanMax(TextView field,boolean bIsCoral)
     {
         boolean rtn = false;
         int num = Integer.parseInt(field.getText().toString());
-        if (num > MAX_POINTS)
-            rtn = true;
+        if (bIsCoral == true) {
+            if (num > MAX_POINTS_CORAL)  // for coral number
+                rtn = true;
+        } else  // for algae number
+        {
+            if (num > MAX_POINTS_ALGAE)
+                rtn = true;
+        }
         return rtn;
     }
 
+
+
     // Sets the new result integer value for the given Button, either decrementing or incrementing it.
     // If the decrement case falls below zero, returns 0. Sets textView to RED if out of valid range.
-    public void updatePointsInt(TextView pointsTextView, boolean bIncr)
+    public void updatePointsInt(TextView pointsTextView, boolean bIncr, boolean bIsCoral)
     {
         int result = Integer.parseInt(pointsTextView.getText().toString()); // get current value as int
         if (bIncr)
@@ -57,7 +64,7 @@ public class TeleopFragment extends Fragment
             result = 0;
         pointsTextView.setText(String.valueOf(result));
 
-        if (isNotValidPoints(pointsTextView))
+        if (isGreaterThanMax(pointsTextView,bIsCoral))
         {
             pointsTextView.setTextColor(Color.RED);
         }
@@ -101,24 +108,16 @@ public class TeleopFragment extends Fragment
             int specialTextPrimaryColor = ContextCompat.getColor(context, R.color.specialTextPrimary);
 
             // Setup TextViews that displays points, setting 0 as the default.
-            m_coralAcquire = v.findViewById(R.id.coral_acquire_text);
-            m_coralAcquire.setText("0");
-            m_coralAcquire.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
 
             m_algaeAcquire = v.findViewById(R.id.algae_acquire_text);
             m_algaeAcquire.setText("0");
             m_algaeAcquire.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
-/*
-            m_teleopSpeakerNotes = v.findViewById(R.id.teleop_speaker_scoring_text);
-            m_teleopSpeakerNotes.setText("0");
-            m_teleopSpeakerNotes.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
 
-            m_teleopSpeakerMisses = v.findViewById(R.id.teleop_speaker_missing_text);
-            m_teleopSpeakerMisses.setText("0");
-            m_teleopSpeakerMisses.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
+            m_coralAcquire = v.findViewById(R.id.coral_acquire_text);
+            m_coralAcquire.setText("0");
+            m_coralAcquire.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
 
-        }
-        */
+
             //Connects the decrement button for amp scoring and sets up a listener that detects when the button is clicked
             Button coralAcquireDecrButton = v.findViewById(R.id.coral_acquire_decr);
             coralAcquireDecrButton.setOnClickListener(new View.OnClickListener()
@@ -127,7 +126,7 @@ public class TeleopFragment extends Fragment
                 public void onClick(View v)
                 {
                     // Decreases displayed point value by 1; sets to 0 if result would be negative.
-                    updatePointsInt(m_coralAcquire, false);
+                    updatePointsInt(m_coralAcquire, false, true);
                 }
             });
 
@@ -140,7 +139,7 @@ public class TeleopFragment extends Fragment
                 public void onClick(View v)
                 {
                     //Increases displayed point value by 1
-                    updatePointsInt(m_coralAcquire, true);
+                    updatePointsInt(m_coralAcquire, true, true);
                 }
             });
 
@@ -154,7 +153,7 @@ public class TeleopFragment extends Fragment
             public void onClick(View v)
             {
                 //Increases displayed point value by 1
-                updatePointsInt(m_algaeAcquire, true);
+                updatePointsInt(m_algaeAcquire, true, false) ;
             }
         });
 
@@ -166,60 +165,10 @@ public class TeleopFragment extends Fragment
             public void onClick(View v)
             {
                 // Decreases displayed point value by 1; sets to 0 if result would be negative.
-                updatePointsInt(m_algaeAcquire, false);
-            }
-        });
-/*
-        //Connects the decrement button for speaker scoring and sets up a listener that detects when the button is clicked
-        Button teleopSpeakerDecrButton = v.findViewById(R.id.teleop_speaker_scoring_decr);
-        teleopSpeakerDecrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                // Decreases displayed point value by 1; sets to 0 if result would be negative.
-                updatePointsInt(m_teleopSpeakerNotes, false);
+                updatePointsInt(m_algaeAcquire, false, false);
             }
         });
 
-        //Connects the increment button for speaker scoring and sets up a listener that detects when the button is clicked
-        Button teleopSpeakerIncrButton = v.findViewById(R.id.teleop_speaker_scoring_incr);
-        teleopSpeakerIncrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Increases displayed point value by 1
-                updatePointsInt(m_teleopSpeakerNotes, true);
-            }
-        });
-
-
-        //Connects the decrement button for speaker missing and sets up a listener that detects when the button is clicked
-        Button teleopSpeakerMissesDecrButton = v.findViewById(R.id.teleop_speaker_missing_decr);
-        teleopSpeakerMissesDecrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                // Decreases displayed point value by 1; sets to 0 if result would be negative.
-                updatePointsInt(m_teleopSpeakerMisses, false);
-            }
-        });
-
-        //Connects the increment button for speaker missing and sets up a listener that detects when the button is clicked
-        Button teleopSpeakerMissesIncrButton = v.findViewById(R.id.teleop_speaker_missing_incr);
-        teleopSpeakerMissesIncrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Increases displayed point value by 1
-                updatePointsInt(m_teleopSpeakerMisses, true);
-            }
-        });
-
-        */
             m_pickUpCoral = v.findViewById(R.id.pickup_coral);
             m_pickUpCoral.setChecked(m_matchData.getPickUpCoral());
 
@@ -240,29 +189,19 @@ public class TeleopFragment extends Fragment
 
             m_coralAcquire.setText(String.valueOf(m_matchData.getCoralAcquire()));
             m_algaeAcquire.setText(String.valueOf(m_matchData.getAlgaeAcquire()));
-            // m_teleopSpeakerMisses. setText(String.valueOf(m_matchData.getTeleopSpeakerMisses()));
-            // m_teleopAmpMisses.setText(String.valueOf(m_matchData.getTeleopAmpMisses()));
-            if (isNotValidPoints(m_coralAcquire))
+
+            if (isGreaterThanMax(m_coralAcquire,true))
             {
                 m_coralAcquire.setTextColor(Color.RED);
             }
-            if (isNotValidPoints(m_algaeAcquire))
+            if (isGreaterThanMax(m_algaeAcquire,false))
             {
                 m_algaeAcquire.setTextColor(Color.RED);
             }
-            /*
-            if (isNotValidPoints(m_teleopAmpMisses))
-            {
-                m_teleopAmpMisses.setTextColor(Color.RED);
-            }
-            if (isNotValidPoints(m_teleopSpeakerMisses))
-            {
-                m_teleopSpeakerMisses.setTextColor(Color.RED);
-            }
 
-             */
         }
-            return v;
+        return v;
+
     }
 
     public void updateTeleopData()
@@ -270,10 +209,6 @@ public class TeleopFragment extends Fragment
         m_matchData.setCoralAcquire(Integer.parseInt(m_coralAcquire.getText().toString()));
 
         m_matchData.setAlgaeAcquire(Integer.parseInt(m_algaeAcquire.getText().toString()));
-
-        //      m_matchData.setTeleopAmpMisses(Integer.parseInt(m_teleopAmpMisses.getText().toString()));
-
-        //    m_matchData.setTeleopSpeakerMisses(Integer.parseInt(m_teleopSpeakerMisses.getText().toString()));
 
         m_matchData.setPickUpCoral(m_pickUpCoral.isChecked());
 
