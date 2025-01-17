@@ -55,116 +55,319 @@
                 android:background="@drawable/top_rounded_rect"
                 android:paddingTop="20dp"
                 android:paddingBottom="1dp"
-                android:text="AMP SCORING"
+                android:text="CORAL SCORING"
                 android:textColor="@color/specialTextPrimary"
                 android:textSize="24sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/autonUpperCardColor"
+            android:orientation="horizontal"
+            android:paddingBottom="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/autonUpperCardColor"
+                android:orientation="vertical"
+                android:paddingBottom="10dp">
+
+                <RadioGroup
+                    android:id="@+id/auton_coral_radio_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/amp_notes_title"
+                        style="?android:listSeparatorTextViewStyle"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:background="@color/autonUpperCardColor"
+                        android:text="LEVEL:"
+                        android:textColor="@color/specialTextSecondary"
+                        android:textSize="20sp" />
+
+                    <RadioButton
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/auton_coral_L1"
+                        android:layout_marginStart="16dp"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/specialTextPrimary"
+                        android:text="1"
+                        android:textColor="@color/specialTextPrimary"
+                        android:textSize="20sp" />
+
+                    <RadioButton
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/auton_coral_L2"
+                        android:layout_marginStart="16dp"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/specialTextPrimary"
+                        android:text="2"
+                        android:textColor="@color/specialTextPrimary"
+                        android:textSize="20sp" />
+
+                    <RadioButton
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/auton_coral_L3"
+                        android:layout_marginStart="16dp"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/specialTextPrimary"
+                        android:text="3"
+                        android:textColor="@color/specialTextPrimary"
+                        android:textSize="20sp" />
+
+                    <RadioButton
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/auton_coral_L4"
+                        android:layout_marginStart="16dp"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/specialTextPrimary"
+                        android:text="4"
+                        android:textColor="@color/specialTextPrimary"
+                        android:textSize="20sp" />
+
+                    <RadioButton
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/auton_coral_none"
+                        android:layout_marginStart="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/specialTextPrimary"
+                        android:text="None"
+                        android:textColor="@color/specialTextPrimary"
+                        android:textSize="20sp" />
+
+                </RadioGroup>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/autonUpperCardColor"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="80dp"
+                    android:layout_marginTop="10dp"
+                    android:paddingBottom="1dp">
+
+                    <Button
+                        android:id="@+id/auton_coral_scoring_decr"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="16dp"
+                        android:background="@drawable/rounded_rect"
+                        android:text="@string/decrease"
+                        android:textColor="#9F3FB5"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:id="@+id/auton_coral_scoring_text"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:textAlignment="center"
+                        android:layout_toRightOf="@+id/auton_coral_scoring_decr"
+                        android:textSize="25sp" />
+
+                    <Button
+                        android:id="@+id/auton_coral_scoring_incr"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/rounded_rect"
+                        android:text="@string/increase"
+                        android:layout_toRightOf="@+id/auton_coral_scoring_text"
+                        android:textColor="#9F3FB5"
+                        android:textSize="30sp" />
+
+                    <Button
+                        android:id="@+id/auton_coral_scoring_decr_disabled"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="16dp"
+                        android:background="@drawable/rounded_rect"
+                        android:text="@string/decrease"
+                        android:textColor="#9F3FB5"
+                        android:backgroundTint="#E8B61E"
+                        android:layout_alignRight="@+id/auton_coral_scoring_decr"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:id="@+id/auton_coral_scoring_text_disabled"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:textAlignment="center"
+                        android:textSize="25sp" />
+
+                    <Button
+                        android:id="@+id/auton_coral_scoring_incr_disabled"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#E8B61E"
+                        android:text="@string/increase"
+                        android:textColor="#9F3FB5"
+                        android:layout_alignLeft="@+id/auton_coral_scoring_incr"
+                        android:textSize="30sp" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/autonUpperCardColor"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp">
+
+                    <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/autonUpperCardColor"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="1dp"
+                    android:paddingBottom="1dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/autonUpperCardColor"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="4"
+                        android:paddingBottom="1dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="L1:"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="16dp"
+                            android:textSize="22dp"
+                            android:textColor="@color/specialTextPrimary"
+                            />
+
+                        <TextView
+                            android:id="@+id/auton_coral_scoring_text_L1"
+                            android:layout_width="100dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="6dp"
+                            android:textSize="25sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/autonUpperCardColor"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="4"
+                        android:paddingBottom="1dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="4dp"
+                            android:text="L2:"
+                            android:layout_marginStart="16dp"
+                            android:textSize="22dp"
+                            android:textColor="@color/specialTextPrimary"
+                            />
+
+                        <TextView
+                            android:layout_marginTop="2dp"
+                            android:id="@+id/auton_coral_scoring_text_L2"
+                            android:layout_width="100dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="16dp"
+                            android:textSize="25sp" />
+
+                    </LinearLayout>
+
+                        <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/autonUpperCardColor"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="4"
+                        android:paddingBottom="1dp">
+
+                        <TextView
+                            android:layout_marginTop="4dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="L3:"
+                            android:layout_marginStart="16dp"
+                            android:textSize="22dp"
+                            android:textColor="@color/specialTextPrimary"
+                            />
+
+                        <TextView
+                            android:layout_marginTop="2dp"
+                            android:id="@+id/auton_coral_scoring_text_L3"
+                            android:layout_width="100dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="16dp"
+                            android:textSize="25sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/autonUpperCardColor"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="4"
+                        android:paddingBottom="1dp">
+
+                        <TextView
+                            android:layout_marginTop="4dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="L4:"
+                            android:layout_marginStart="16dp"
+                            android:textSize="22dp"
+                            android:textColor="@color/specialTextPrimary"
+                            />
+
+                        <TextView
+                            android:id="@+id/auton_coral_scoring_text_L4"
+                            android:layout_width="100dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="16dp"
+                            android:textSize="25sp" />
+
+                    </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/autonUpperCardColor"
                 android:orientation="horizontal"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
-
-                <TextView
-                    android:id="@+id/amp_notes_title"
-                    style="?android:listSeparatorTextViewStyle"
-                    android:layout_width="190dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="8dp"
-                    android:background="@color/autonUpperCardColor"
-                    android:text="# GOALS"
-                    android:textColor="@color/specialTextSecondary"
-                    android:textSize="18sp"
-                    />
-
-                <Button
-                    android:id="@+id/auton_amp_scoring_decr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:text="@string/decrease"
-                    android:textColor="#9F3FB5"
-                    android:textSize="30sp" />
-
-                <TextView
-                    android:id="@+id/auton_amp_scoring_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:textAlignment="center"
-                    android:textSize="25sp" />
-
-                <Button
-                    android:id="@+id/auton_amp_scoring_incr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="30dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:text="@string/increase"
-                    android:textColor="#9F3FB5"
-                    android:textSize="30sp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#facec5"
-                android:orientation="horizontal"
-                android:paddingTop="20dp"
-                android:paddingBottom="1dp">
-
-                <TextView
-                    android:id="@+id/amp_misses_title"
-                    style="?android:listSeparatorTextViewStyle"
-                    android:layout_width="190dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="8dp"
-                    android:background="#facec5"
-                    android:text="# MISSES"
-                    android:textColor="@color/specialTextSecondary"
-                    android:textSize="18sp" />
-
-                <Button
-                    android:id="@+id/auton_amp_misses_decr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:text="@string/decrease"
-                    android:textColor="#9F3FB5"
-                    android:textSize="30sp" />
-
-                <TextView
-                    android:id="@+id/auton_amp_misses_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:textAlignment="center"
-                    android:textSize="25sp" />
-
-                <Button
-                    android:id="@+id/auton_amp_misses_incr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="30dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:text="@string/increase"
-                    android:textColor="#9F3FB5"
-                    android:textSize="30sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#facec5"
-                android:orientation="horizontal"
-                android:paddingTop="20dp"
+                android:paddingTop="2dp"
                 android:paddingBottom="1dp">
 
             </LinearLayout>
@@ -185,8 +388,8 @@
                 android:layout_height="wrap_content"
                 android:background="@color/autonLowerCardColor"
                 android:orientation="horizontal"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp">
 
                 <TextView
                     android:id="@+id/auton_speaker_title"
@@ -195,7 +398,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
                     android:background="@color/autonLowerCardColor"
-                    android:text="# Goals"
+                    android:text="# OF NOTES"
                     android:textColor="@color/specialTextSecondary"
                     android:textSize="18sp" />
 
@@ -235,60 +438,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#e6d1ff"
-                android:orientation="horizontal"
-                android:paddingTop="20dp"
-                android:paddingBottom="1dp">
-
-                <TextView
-                    android:id="@+id/auton_speaker_misses_title"
-                    style="?android:listSeparatorTextViewStyle"
-                    android:layout_width="190dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="8dp"
-                    android:background="#e6d1ff"
-                    android:text="# Misses"
-                    android:textColor="@color/specialTextSecondary"
-                    android:textSize="18sp" />
-
-                <Button
-                    android:id="@+id/auton_speaker_misses_decr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#9F3FB5"
-                    android:text="@string/decrease"
-                    android:textColor="#FFC107"
-                    android:textSize="30sp" />
-
-                <TextView
-                    android:id="@+id/auton_speaker_misses_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:textAlignment="center"
-                    android:textSize="25sp" />
-
-                <Button
-                    android:id="@+id/auton_speaker_misses_incr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="30dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#9F3FB5"
-                    android:text="@string/increase"
-                    android:textColor="#FFC107"
-                    android:textSize="30sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:background="@drawable/bottom_rounded_rect"
-                android:backgroundTint="#e6d1ff"
+                android:backgroundTint="@color/autonLowerCardColor"
                 android:orientation="horizontal"
                 android:paddingTop="20dp"
                 android:paddingBottom="1dp">

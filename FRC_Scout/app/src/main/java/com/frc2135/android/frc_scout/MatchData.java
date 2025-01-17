@@ -25,8 +25,10 @@ public class MatchData
     private static final String JSON_KEY_MATCH_NUMBER = "matchNumber";
 
     private static final String JSON_KEY_LEAVE = "leave";
-    private static final String JSON_KEY_AUTON_AMP_NOTES = "autonAmpNotes";
-    private static final String JSON_KEY_AUTON_AMP_MISSES = "autonAmpMisses";
+    private static final String JSON_KEY_AUTON_CORAL_L1 = "autonCoralL1";
+    private static final String JSON_KEY_AUTON_CORAL_L2 = "autonCoralL2";
+    private static final String JSON_KEY_AUTON_CORAL_L3 = "autonCoralL3";
+    private static final String JSON_KEY_AUTON_CORAL_L4 = "autonCoralL4";
     private static final String JSON_KEY_AUTON_SPEAKER_NOTES = "autonSpeakerNotes";
     private static final String JSON_KEY_AUTON_SPEAKER_MISSES = "autonSpeakerMisses";
 
@@ -58,8 +60,10 @@ public class MatchData
 
     // Data members 
 
-    private int m_autonAmpNotes;
-    private int m_autonAmpMisses;
+    private int m_autonCoralL1;
+    private int m_autonCoralL2;
+    private int m_autonCoralL3;
+    private int m_autonCoralL4;
     private int m_autonSpeakerNotes;
     private int m_autonSpeakerMisses;
     private boolean m_autonLeaveStartingZone;
@@ -116,8 +120,10 @@ public class MatchData
         m_matchNumber = "";
         setAutonLeave(false);
 
-        setAutonAmpNotes(0);
-        setAutonAmpMisses(0);
+        setAutonCoralL1(0);
+        setAutonCoralL2(0);
+        setAutonCoralL3(0);
+        setAutonCoralL4(0);
         setAutonSpeakerNotes(0);
         setAutonSpeakerMisses(0);
 
@@ -158,8 +164,10 @@ public class MatchData
 
         setAutonLeave(json.getBoolean(JSON_KEY_LEAVE));
 
-        setAutonAmpNotes(json.getInt(JSON_KEY_AUTON_AMP_NOTES));
-        setAutonAmpMisses(json.getInt(JSON_KEY_AUTON_AMP_MISSES));
+        setAutonCoralL1(json.getInt(JSON_KEY_AUTON_CORAL_L1));
+        setAutonCoralL2(json.getInt(JSON_KEY_AUTON_CORAL_L2));
+        setAutonCoralL3(json.getInt(JSON_KEY_AUTON_CORAL_L3));
+        setAutonCoralL4(json.getInt(JSON_KEY_AUTON_CORAL_L4));
         setAutonSpeakerNotes(json.getInt(JSON_KEY_AUTON_SPEAKER_NOTES));
         setAutonSpeakerMisses(json.getInt(JSON_KEY_AUTON_SPEAKER_MISSES));
 
@@ -247,23 +255,32 @@ public class MatchData
 
 
 
-    public void setAutonAmpNotes(int numNotes)
+    public void setAutonCoralL1(int numCoral) { m_autonCoralL1 = numCoral; }
+
+    public int getAutonCoralL1()
     {
-        m_autonAmpNotes = numNotes;
+        return m_autonCoralL1;
     }
 
-    public int getAutonAmpNotes()
+    public void setAutonCoralL2(int numCoral) { m_autonCoralL2 = numCoral;}
+
+    public int getAutonCoralL2()
     {
-        return m_autonAmpNotes;
-    }
-    public void setAutonAmpMisses(int numMisses)
-    {
-        m_autonAmpMisses = numMisses;
+        return m_autonCoralL2;
     }
 
-    public int getAutonAmpMisses()
+    public void setAutonCoralL3(int numCoral) {m_autonCoralL3 = numCoral;}
+
+    public int getAutonCoralL3()
     {
-        return m_autonAmpMisses;
+        return m_autonCoralL3;
+    }
+
+    public void setAutonCoralL4(int numCoral) { m_autonCoralL4 = numCoral; }
+
+    public int getAutonCoralL4()
+    {
+        return m_autonCoralL4;
     }
 
     public void setAutonSpeakerNotes(int a)
@@ -500,7 +517,7 @@ public class MatchData
         // NOTE! THE ORDER IS IMPORTANT!
         // This is the data that goes into the QR code.
 
-        String headers = "TeamNumber AutonLeaveStartingZone AutonAmpNotes AutonAmpMisses AutonSpeakerNotes AutonSpeakerMisses Pick Up Coral TeleopAmpNotes TeleopAmpMisses TeleopSpeakerNotes TeleopSpeakerMisses  TeleopPasses EndgameStage EndgameHarmony EndgameSpotlit EndgameTrap Died MatchNum Competition Scout Comment";
+        String headers = "TeamNumber AutonLeaveStartingZone AutonCoralL1 AutonCoralL2 AutonCoralL3 AutonCoralL4 AutonSpeakerNotes AutonSpeakerMisses Pick Up Coral TeleopAmpNotes TeleopAmpMisses TeleopSpeakerNotes TeleopSpeakerMisses  TeleopPasses EndgameStage EndgameHarmony EndgameSpotlit EndgameTrap Died MatchNum Competition Scout Comment";
 
         String tsvStr = "";
 
@@ -513,8 +530,10 @@ public class MatchData
         else
             tsvStr += "0" + "\t";
 
-        tsvStr += m_autonAmpNotes + "\t";
-        tsvStr += m_autonAmpMisses + "\t";
+        tsvStr += m_autonCoralL1 + "\t";
+        tsvStr += m_autonCoralL2 + "\t";
+        tsvStr += m_autonCoralL3 + "\t";
+        tsvStr += m_autonCoralL4 + "\t";
         tsvStr += m_autonSpeakerNotes + "\t";
         tsvStr += m_autonSpeakerMisses + "\t";
 
@@ -597,7 +616,7 @@ public class MatchData
         json.put("divider", ",");
         json.put("divider", ", \n");
 
-        json.put("headings", "Competition, Team Number, Match Number, Leave Starting Zone, Auton Amp Notes, Auton Amp Misses, Auton Speaker Notes, Pick Up Coral, Teleop Amp Notes, Teleop Amp Misses, Teleop Speaker Notes, Teleop Speaker Misses, Teleop Passes, Endgame Stage, Endgame Harmony, Endgame Spotlit, Endgame Trap, Died, Comments, Timestamp, MatchID \n");
+        json.put("headings", "Competition, Team Number, Match Number, Leave Starting Zone, Auton Coral L1, Auton Coral L2, Auton Coral L3, Auton Coral L4, Auton Speaker Notes, Pick Up Coral, Teleop Amp Notes, Teleop Amp Misses, Teleop Speaker Notes, Teleop Speaker Misses, Teleop Passes, Endgame Stage, Endgame Harmony, Endgame Spotlit, Endgame Trap, Died, Comments, Timestamp, MatchID \n");
         json.put(JSON_KEY_EVENT_CODE, m_eventCode);
         json.put("divider", ",");
         json.put(JSON_KEY_TEAM_NUMBER, m_teamNumber);
@@ -607,9 +626,13 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_LEAVE, m_autonLeaveStartingZone);
         json.put("divider", ",");
-        json.put(JSON_KEY_AUTON_AMP_NOTES, m_autonAmpNotes);
+        json.put(JSON_KEY_AUTON_CORAL_L1, m_autonCoralL1);
         json.put("divider", ",");
-        json.put(JSON_KEY_AUTON_AMP_MISSES, m_autonAmpMisses);
+        json.put(JSON_KEY_AUTON_CORAL_L2, m_autonCoralL2);
+        json.put("divider", ",");
+        json.put(JSON_KEY_AUTON_CORAL_L3, m_autonCoralL3);
+        json.put("divider", ",");
+        json.put(JSON_KEY_AUTON_CORAL_L4, m_autonCoralL4);
         json.put("divider", ",");
         json.put(JSON_KEY_AUTON_SPEAKER_NOTES, m_autonSpeakerNotes);
         json.put("divider", ",");
