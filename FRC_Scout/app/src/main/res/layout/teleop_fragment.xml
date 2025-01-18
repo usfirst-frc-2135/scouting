@@ -197,7 +197,7 @@
                 android:layout_marginStart="16dp"
                 android:textSize="20sp"
                 android:buttonTint="#8957A1"
-                android:text="Acquire Algae froom reef" />
+                android:text="Acquire Algae from reef" />
 
             <CheckBox
                 android:id="@+id/hold_both_elements"
@@ -210,7 +210,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="70dp"
                 android:orientation="vertical"
                 android:background="@drawable/bottom_rounded_rect"
                 android:backgroundTint="#FCD9DF"
@@ -225,15 +225,51 @@
                 android:text="defense"
                 android:textSize="24sp" />
 
-            <CheckBox
-                android:id="@+id/played_defense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:textSize="20sp"
-                android:buttonTint="#8957A1"
-                android:text="played defense"
-                />
+
+                <RadioGroup
+                    android:id="@+id/defense_buttons"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/defense_none"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:textSize="20sp"
+                        android:buttonTint="#8957A1"
+                        android:text="N/A" />
+
+                    <RadioButton
+                        android:id="@+id/defense_low"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:textSize="20sp"
+                        android:buttonTint="#8957A1"
+                        android:text="Low"/>
+
+                    <RadioButton
+                        android:id="@+id/defense_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:textSize="20sp"
+                        android:buttonTint="#8957A1"
+                        android:text="Medium"/>
+
+                    <RadioButton
+                        android:id="@+id/defense_high"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:textSize="20sp"
+                        android:buttonTint="#8957A1"
+                        android:text="High"/>
+
+
+                </RadioGroup>
 
             </LinearLayout>
 

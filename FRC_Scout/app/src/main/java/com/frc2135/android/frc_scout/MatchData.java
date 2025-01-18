@@ -71,7 +71,7 @@ public class MatchData
 
     private boolean m_pickUpCoral;
     private boolean m_pickUpAlgae;
-    private boolean m_playedDefense;
+    private int m_playedDefense;
     private boolean m_knockAlgaeOff;
     private boolean m_algaeFromReef;
     private boolean m_holdBothElements;
@@ -130,6 +130,7 @@ public class MatchData
 
         setPickUpCoral(false);
         setPickUpAlgae(false);
+        setPlayedDefense(0);
         setCoralAcquire(0);
         setTeleopAmpMisses(0);
         setAlgaeAcquire(0);
@@ -253,8 +254,6 @@ public class MatchData
     }
 
 
-
-
     public void setAutonCoralL1(int numCoral) { m_autonCoralL1 = numCoral; }
 
     public int getAutonCoralL1()
@@ -370,16 +369,17 @@ public class MatchData
     {
         return m_holdBothElements;
     }
-    public void setPlayedDefense(boolean playedDefense)
+    public void setPlayedDefense(int playedDefense)
     {
 
         m_playedDefense = playedDefense;
     }
 
-    public boolean getPlayedDefense()
+    public int getPlayedDefense()
     {
         return m_playedDefense;
     }
+
 
     public void setCoralAcquire(int coralAcquire)
     {
@@ -562,11 +562,7 @@ public class MatchData
         else
             tsvStr += "0" + "\t";
 
-        if (m_playedDefense)  // bool value: use 1/0 instead of true/false
-            tsvStr += "1" + "\t";
-        else
-            tsvStr += "0" + "\t";
-
+        tsvStr += m_playedDefense + "\t";
         tsvStr += m_coralAcquire + "\t";
         tsvStr += m_teleopAmpMisses + "\t";
         tsvStr += m_algaeAcquire + "\t";

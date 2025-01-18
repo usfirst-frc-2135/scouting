@@ -14,6 +14,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 
 /** @noinspection SpellCheckingInspection*/
@@ -28,9 +30,13 @@ public class TeleopFragment extends Fragment
     private CheckBox m_knockAlgaeOff;
     private CheckBox m_algaeFromReef;
     private CheckBox m_holdBothElements;
-    private CheckBox m_playedDefense;
     private TextView m_coralAcquire;
     private TextView m_algaeAcquire;
+    private RadioGroup m_defenseButtonGroup;
+    private RadioButton m_defenseNone;
+    private RadioButton m_defenseLow;
+    private RadioButton m_defenseMedium;
+    private RadioButton m_defenseHigh;
     private MatchData m_matchData;
 
     // Check if pointsTextView field is greater than the MAX_POINTS.
@@ -109,10 +115,33 @@ public class TeleopFragment extends Fragment
 
             // Setup TextViews that displays points, setting 0 as the default.
 
+            m_defenseButtonGroup = v.findViewById(R.id.defense_buttons);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
+            m_defenseNone = v.findViewById(R.id.defense_none);//Sets up radio button that corresponds to 0
+            m_defenseLow = v.findViewById(R.id.defense_low);//Sets up radio button that corresponds to 1
+            m_defenseMedium  = v.findViewById(R.id.defense_medium);//Sets up radio button that corresponds to 2
+            m_defenseHigh  = v.findViewById(R.id.defense_high);//Sets up radio button that corresponds to 3
+            m_defenseNone.setChecked(false);
+            m_defenseLow.setChecked(false);
+            m_defenseMedium .setChecked(false);
+            m_defenseHigh .setChecked(false);
+
+            int defValue = m_matchData.getPlayedDefense();
+            if (defValue == 0)
+                m_defenseNone.setChecked(true);
+            else if(defValue == 1)
+              m_defenseLow.setChecked(true);
+            else if(defValue == 2)
+                m_defenseMedium.setChecked(true);
+            else if(defValue == 3)
+                m_defenseHigh.setChecked(true);
+
+
+
+            // TODO set defense value from matchData
+
             m_algaeAcquire = v.findViewById(R.id.algae_acquire_text);
             m_algaeAcquire.setText("0");
             m_algaeAcquire.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
-
             m_coralAcquire = v.findViewById(R.id.coral_acquire_text);
             m_coralAcquire.setText("0");
             m_coralAcquire.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
@@ -184,9 +213,6 @@ public class TeleopFragment extends Fragment
             m_holdBothElements = v.findViewById(R.id.hold_both_elements);
             m_holdBothElements.setChecked(m_matchData.getHoldBothElements());
 
-            m_playedDefense = v.findViewById(R.id.played_defense);
-            m_playedDefense.setChecked(m_matchData.getPlayedDefense());
-
             m_coralAcquire.setText(String.valueOf(m_matchData.getCoralAcquire()));
             m_algaeAcquire.setText(String.valueOf(m_matchData.getAlgaeAcquire()));
 
@@ -204,6 +230,32 @@ public class TeleopFragment extends Fragment
 
     }
 
+    public int getCurrentDefenseLevel()
+    {
+        // Returns the integer climb level that is current checked in the radio buttons
+        int rtn = 0;
+        if (m_defenseButtonGroup.getCheckedRadioButtonId() == m_defenseNone.getId())
+        {
+            rtn = 0;
+        }
+        if (m_defenseButtonGroup.getCheckedRadioButtonId() == m_defenseLow.getId())
+        {
+            rtn = 1;
+        }
+        if (m_defenseButtonGroup.getCheckedRadioButtonId() == m_defenseMedium.getId())
+        {
+            rtn = 2;
+        }
+        if (m_defenseButtonGroup.getCheckedRadioButtonId() == m_defenseHigh .getId())
+        {
+            rtn = 3;
+        }
+        return rtn;
+    }
+
+
+
+
     public void updateTeleopData()
     {
         m_matchData.setCoralAcquire(Integer.parseInt(m_coralAcquire.getText().toString()));
@@ -220,7 +272,7 @@ public class TeleopFragment extends Fragment
 
         m_matchData.setHoldBothElements(m_holdBothElements.isChecked());
 
-        m_matchData.setPlayedDefense(m_playedDefense.isChecked());
+        m_matchData.setPlayedDefense(getCurrentDefenseLevel());
 
     }
 
