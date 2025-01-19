@@ -32,11 +32,38 @@ public class TeleopFragment extends Fragment
     private CheckBox m_holdBothElements;
     private TextView m_coralAcquire;
     private TextView m_algaeAcquire;
+
     private RadioGroup m_defenseButtonGroup;
     private RadioButton m_defenseNone;
     private RadioButton m_defenseLow;
     private RadioButton m_defenseMedium;
     private RadioButton m_defenseHigh;
+
+    private RadioGroup m_foulPin;
+    private RadioButton m_zeroPin;
+    private RadioButton m_onePin;
+    private RadioButton m_twoPin;
+
+    private RadioGroup m_foulAnchor;
+    private RadioButton m_zeroAnchor;
+    private RadioButton m_oneAnchor;
+    private RadioButton m_twoAnchor;
+
+    private RadioGroup m_foulCage;
+    private RadioButton m_zeroCage;
+    private RadioButton m_oneCage;
+    private RadioButton m_twoCage;
+
+    private RadioGroup m_teleopFoulBarge;
+    private RadioButton m_teleopZeroBarge;
+    private RadioButton m_teleopOneBarge;
+    private RadioButton m_teleopTwoBarge;
+
+    private RadioGroup m_teleopFoulReef;
+    private RadioButton m_teleopZeroReef;
+    private RadioButton m_teleopOneReef;
+    private RadioButton m_teleopTwoReef;
+
     private MatchData m_matchData;
 
     // Check if pointsTextView field is greater than the MAX_POINTS.
@@ -114,7 +141,7 @@ public class TeleopFragment extends Fragment
             int specialTextPrimaryColor = ContextCompat.getColor(context, R.color.specialTextPrimary);
 
             // Setup TextViews that displays points, setting 0 as the default.
-
+            // defense buttons
             m_defenseButtonGroup = v.findViewById(R.id.defense_buttons);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
             m_defenseNone = v.findViewById(R.id.defense_none);//Sets up radio button that corresponds to 0
             m_defenseLow = v.findViewById(R.id.defense_low);//Sets up radio button that corresponds to 1
@@ -135,6 +162,92 @@ public class TeleopFragment extends Fragment
             else if(defValue == 3)
                 m_defenseHigh.setChecked(true);
 
+            //foul pin radio buttons
+            m_foulPin = v.findViewById(R.id.foul_pin);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
+            m_zeroPin = v.findViewById(R.id.zero_pin);//Sets up radio button that corresponds to 0
+            m_onePin  = v.findViewById(R.id.one_pin );//Sets up radio button that corresponds to 1
+            m_twoPin  = v.findViewById(R.id.two_pin);//Sets up radio button that corresponds to 2
+            m_zeroPin.setChecked(false);
+            m_onePin.setChecked(false);
+            m_twoPin.setChecked(false);
+
+            int defValuePin = m_matchData.getFoulPin();
+            if (defValuePin == 0)
+                m_zeroPin.setChecked(true);
+            else if(defValuePin == 1)
+                m_onePin.setChecked(true);
+            else if(defValuePin == 2)
+                m_twoPin.setChecked(true);
+
+            //foul touching anchor radio buttons
+            m_foulAnchor = v.findViewById(R.id.foul_anchor);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
+            m_zeroAnchor = v.findViewById(R.id.zero_anchor);//Sets up radio button that corresponds to 0
+            m_oneAnchor  = v.findViewById(R.id.one_anchor);//Sets up radio button that corresponds to 1
+            m_twoAnchor  = v.findViewById(R.id.two_anchor);//Sets up radio button that corresponds to 2
+            m_zeroAnchor.setChecked(false);
+            m_oneAnchor.setChecked(false);
+            m_twoAnchor.setChecked(false);
+
+            int defValueAnc = m_matchData.getFoulAnchor();
+            if (defValueAnc == 0)
+                m_zeroAnchor.setChecked(true);
+            else if(defValueAnc == 1)
+                m_oneAnchor.setChecked(true);
+            else if(defValueAnc == 2)
+                m_twoAnchor.setChecked(true);
+
+            //foul touching opponents cage radio buttons
+            m_foulCage = v.findViewById(R.id.foul_cage);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
+            m_zeroCage = v.findViewById(R.id.zero_cage);//Sets up radio button that corresponds to 0
+            m_oneCage  = v.findViewById(R.id.one_cage);//Sets up radio button that corresponds to 1
+            m_twoCage  = v.findViewById(R.id.two_cage);//Sets up radio button that corresponds to 2
+            m_zeroCage.setChecked(false);
+            m_oneCage.setChecked(false);
+            m_twoCage.setChecked(false);
+
+            int defValueCage = m_matchData.getFoulCage();
+            if (defValueCage == 0)
+                m_zeroCage.setChecked(true);
+            else if(defValueCage == 1)
+                m_oneCage.setChecked(true);
+            else if(defValueCage == 2)
+                m_twoCage.setChecked(true);
+
+
+            //foul touching oppent while in barge radio buttons
+            m_teleopFoulBarge = v.findViewById(R.id.teleop_foul_barge);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
+            m_teleopZeroBarge = v.findViewById(R.id.teleop_zero_barge);//Sets up radio button that corresponds to 0
+            m_teleopOneBarge  = v.findViewById(R.id.teleop_one_barge);//Sets up radio button that corresponds to 1
+            m_teleopTwoBarge  = v.findViewById(R.id.teleop_two_barge);//Sets up radio button that corresponds to 2
+            m_teleopZeroBarge.setChecked(false);
+            m_teleopOneBarge.setChecked(false);
+            m_teleopTwoBarge.setChecked(false);
+
+            int defValueBarg = m_matchData.getFoulBarge();
+            if (defValueBarg == 0)
+                m_teleopZeroBarge.setChecked(true);
+            else if(defValueBarg == 1)
+                m_teleopOneBarge.setChecked(true);
+            else if(defValueBarg == 2)
+                m_teleopTwoBarge.setChecked(true);
+
+
+            //foul touching oppent while in reef safe zone radio buttons
+            m_teleopFoulReef = v.findViewById(R.id.teleop_foul_reef);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
+            m_teleopZeroReef = v.findViewById(R.id.teleop_zero_reef);//Sets up radio button that corresponds to 0
+            m_teleopOneReef  = v.findViewById(R.id.teleop_one_reef);//Sets up radio button that corresponds to 1
+            m_teleopTwoReef  = v.findViewById(R.id.teleop_two_reef);//Sets up radio button that corresponds to 2
+            m_teleopZeroReef.setChecked(false);
+            m_teleopOneReef.setChecked(false);
+            m_teleopTwoReef.setChecked(false);
+
+            int defValueReef = m_matchData.getFoulReef();
+            if (defValueReef == 0)
+                m_teleopZeroReef.setChecked(true);
+            else if(defValueReef == 1)
+                m_teleopOneReef.setChecked(true);
+            else if(defValueReef == 2)
+                m_teleopTwoReef.setChecked(true);
 
 
             // TODO set defense value from matchData
@@ -229,7 +342,7 @@ public class TeleopFragment extends Fragment
         return v;
 
     }
-
+//used for defense radio buttons
     public int getCurrentDefenseLevel()
     {
         // Returns the integer climb level that is current checked in the radio buttons
@@ -249,6 +362,102 @@ public class TeleopFragment extends Fragment
         if (m_defenseButtonGroup.getCheckedRadioButtonId() == m_defenseHigh .getId())
         {
             rtn = 3;
+        }
+        return rtn;
+    }
+
+    //used for pin foul radio buttons
+    public int getCurrentNumberPin()
+    {
+        // Returns the integer climb level that is current checked in the radio buttons
+        int rtn = 0;
+        if (m_foulPin.getCheckedRadioButtonId() == m_zeroPin.getId())
+        {
+            rtn = 0;
+        }
+        if (m_foulPin.getCheckedRadioButtonId() == m_onePin.getId())
+        {
+            rtn = 1;
+        }
+        if (m_foulPin.getCheckedRadioButtonId() == m_twoPin.getId())
+        {
+            rtn = 2;
+        }
+        return rtn;
+    }
+
+    public int getCurrentNumberAnchor()
+    {
+        // Returns the integer climb level that is current checked in the radio buttons
+        int rtn = 0;
+        if (m_foulAnchor.getCheckedRadioButtonId() == m_zeroAnchor.getId())
+        {
+            rtn = 0;
+        }
+        if (m_foulAnchor.getCheckedRadioButtonId() == m_oneAnchor.getId())
+        {
+            rtn = 1;
+        }
+        if (m_foulAnchor.getCheckedRadioButtonId() == m_twoAnchor.getId())
+        {
+            rtn = 2;
+        }
+        return rtn;
+    }
+
+    public int getCurrentNumberCage()
+    {
+        // Returns the integer climb level that is current checked in the radio buttons
+        int rtn = 0;
+        if (m_foulCage.getCheckedRadioButtonId() == m_zeroCage.getId())
+        {
+            rtn = 0;
+        }
+        if (m_foulCage.getCheckedRadioButtonId() == m_oneCage.getId())
+        {
+            rtn = 1;
+        }
+        if (m_foulCage.getCheckedRadioButtonId() == m_twoCage.getId())
+        {
+            rtn = 2;
+        }
+        return rtn;
+    }
+
+    public int getCurrentTeleopNumberBarge()
+    {
+        // Returns the integer climb level that is current checked in the radio buttons
+        int rtn = 0;
+        if (m_teleopFoulBarge.getCheckedRadioButtonId() == m_teleopZeroBarge.getId())
+        {
+            rtn = 0;
+        }
+        if (m_teleopFoulBarge.getCheckedRadioButtonId() == m_teleopOneBarge.getId())
+        {
+            rtn = 1;
+        }
+        if (m_teleopFoulBarge.getCheckedRadioButtonId() == m_teleopTwoBarge.getId())
+        {
+            rtn = 2;
+        }
+        return rtn;
+    }
+
+    public int getCurrentTeleopNumberReef()
+    {
+        // Returns the integer climb level that is current checked in the radio buttons
+        int rtn = 0;
+        if (m_teleopFoulReef.getCheckedRadioButtonId() == m_teleopZeroReef.getId())
+        {
+            rtn = 0;
+        }
+        if (m_teleopFoulReef.getCheckedRadioButtonId() == m_teleopOneReef.getId())
+        {
+            rtn = 1;
+        }
+        if (m_teleopFoulReef.getCheckedRadioButtonId() == m_teleopTwoReef.getId())
+        {
+            rtn = 2;
         }
         return rtn;
     }
@@ -273,6 +482,17 @@ public class TeleopFragment extends Fragment
         m_matchData.setHoldBothElements(m_holdBothElements.isChecked());
 
         m_matchData.setPlayedDefense(getCurrentDefenseLevel());
+
+        m_matchData.setFoulPin(getCurrentNumberPin());
+
+        m_matchData.setFoulAnchor(getCurrentNumberAnchor());
+
+        m_matchData.setFoulCage(getCurrentNumberCage());
+
+        m_matchData.setFoulBarge(getCurrentTeleopNumberBarge());
+
+        m_matchData.setFoulReef(getCurrentTeleopNumberReef());
+
 
     }
 

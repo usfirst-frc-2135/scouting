@@ -44,6 +44,11 @@ public class MatchData
     private static final String JSON_KEY_ALGAE_FROM_REEF = "algaeFromReef";
     private static final String JSON_KEY_HOLD_BOTH_ELEMENTS = "holdBothElements";
     private static final String JSON_KEY_PLAYED_DEFENSE = "playedDefense";
+    private static final String JSON_KEY_NUMBER_PINS = "numberPins";
+    private static final String JSON_KEY_NUMBER_ANCHOR = "numberAnchor";
+    private static final String JSON_KEY_NUMBER_CAGE = "numberCage";
+    private static final String JSON_KEY_NUMBER_BARGE = "numberBarge";
+    private static final String JSON_KEY_NUMBER_REEF = "numberReef";
 
 
     private static final String JSON_KEY_END_GAME_STAGE = "endGameStage";
@@ -72,6 +77,11 @@ public class MatchData
     private boolean m_pickUpCoral;
     private boolean m_pickUpAlgae;
     private int m_playedDefense;
+    private int m_pinFoul;
+    private int m_anchorFoul;
+    private int m_cageFoul;
+    private int m_bargeFoul;
+    private int m_teleopReefFoul;
     private boolean m_knockAlgaeOff;
     private boolean m_algaeFromReef;
     private boolean m_holdBothElements;
@@ -131,6 +141,8 @@ public class MatchData
         setPickUpCoral(false);
         setPickUpAlgae(false);
         setPlayedDefense(0);
+        setFoulPin(0);
+        setFoulAnchor(0);
         setCoralAcquire(0);
         setTeleopAmpMisses(0);
         setAlgaeAcquire(0);
@@ -179,6 +191,12 @@ public class MatchData
         setAlgaeAcquire(json.getInt(JSON_KEY_ALGAE_ACQUIRE));
         setTeleopSpeakerMisses(json.getInt(JSON_KEY_TELEOP_SPEAKER_MISSES));
         setTeleopPasses(json.getInt(JSON_KEY_TELEOP_PASSES));
+        setFoulPin(json.getInt(JSON_KEY_NUMBER_PINS));
+        setFoulAnchor(json.getInt(JSON_KEY_NUMBER_ANCHOR));
+        setFoulCage(json.getInt(JSON_KEY_NUMBER_CAGE));
+        setFoulBarge(json.getInt(JSON_KEY_NUMBER_BARGE));
+        setFoulReef(json.getInt(JSON_KEY_NUMBER_REEF));
+
 
         setEndgameStage(json.getInt(JSON_KEY_END_GAME_STAGE));
 
@@ -380,6 +398,62 @@ public class MatchData
         return m_playedDefense;
     }
 
+    public void setFoulPin(int numberPins)
+    {
+
+        m_pinFoul = numberPins;
+    }
+
+    public int getFoulPin()
+    {
+        return m_pinFoul;
+    }
+
+    public void setFoulAnchor(int numberAnchor)
+    {
+
+        m_anchorFoul = numberAnchor;
+    }
+
+    public int getFoulAnchor()
+    {
+        return m_anchorFoul;
+    }
+
+    public void setFoulCage(int numberCage)
+    {
+
+        m_cageFoul = numberCage;
+    }
+
+    public int getFoulCage()
+    {
+        return m_cageFoul;
+    }
+
+    public void setFoulBarge(int numberBarge)
+    {
+
+        m_bargeFoul= numberBarge;
+    }
+
+    public int getFoulBarge()
+    {
+        return m_teleopReefFoul;
+    }
+
+    public void setFoulReef(int numberReef)
+    {
+
+        m_teleopReefFoul= numberReef;
+    }
+
+    public int getFoulReef()
+    {
+        return m_teleopReefFoul;
+    }
+
+
 
     public void setCoralAcquire(int coralAcquire)
     {
@@ -563,6 +637,11 @@ public class MatchData
             tsvStr += "0" + "\t";
 
         tsvStr += m_playedDefense + "\t";
+        tsvStr += m_pinFoul + "\t";
+        tsvStr += m_anchorFoul + "\t";
+        tsvStr += m_bargeFoul + "\t";
+        tsvStr += m_teleopReefFoul + "\t";
+        tsvStr += m_cageFoul + "\t";
         tsvStr += m_coralAcquire + "\t";
         tsvStr += m_teleopAmpMisses + "\t";
         tsvStr += m_algaeAcquire + "\t";
@@ -645,6 +724,16 @@ public class MatchData
         json.put(JSON_KEY_HOLD_BOTH_ELEMENTS, m_holdBothElements);
         json.put("divider", ",");
         json.put(JSON_KEY_PLAYED_DEFENSE, m_playedDefense);
+        json.put("divider", ",");
+        json.put(JSON_KEY_NUMBER_PINS, m_pinFoul);
+        json.put("divider", ",");
+        json.put(JSON_KEY_NUMBER_ANCHOR, m_anchorFoul);
+        json.put("divider", ",");
+        json.put(JSON_KEY_NUMBER_BARGE, m_bargeFoul);
+        json.put("divider", ",");
+        json.put(JSON_KEY_NUMBER_REEF, m_teleopReefFoul);
+        json.put("divider", ",");
+        json.put(JSON_KEY_NUMBER_CAGE, m_cageFoul);
         json.put("divider", ",");
         json.put(JSON_KEY_CORAL_ACQUIRE, m_coralAcquire);
         json.put("divider", ",");
