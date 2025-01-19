@@ -29,8 +29,8 @@ public class MatchData
     private static final String JSON_KEY_AUTON_CORAL_L2 = "autonCoralL2";
     private static final String JSON_KEY_AUTON_CORAL_L3 = "autonCoralL3";
     private static final String JSON_KEY_AUTON_CORAL_L4 = "autonCoralL4";
-    private static final String JSON_KEY_AUTON_SPEAKER_NOTES = "autonSpeakerNotes";
-    private static final String JSON_KEY_AUTON_SPEAKER_MISSES = "autonSpeakerMisses";
+    private static final String JSON_KEY_AUTON_ALGAE_NET = "autonAlgaeNet";
+    private static final String JSON_KEY_AUTON_ALGAE_PROCESSOR = "autonAlgaeProcessor";
 
 
     private static final String JSON_KEY_PICK_UP_CORAL = "pickUpCoral";
@@ -69,8 +69,8 @@ public class MatchData
     private int m_autonCoralL2;
     private int m_autonCoralL3;
     private int m_autonCoralL4;
-    private int m_autonSpeakerNotes;
-    private int m_autonSpeakerMisses;
+    private int m_autonAlgaeNet;
+    private int m_autonAlgaeProcessor;
     private boolean m_autonLeaveStartingZone;
 
 
@@ -134,8 +134,8 @@ public class MatchData
         setAutonCoralL2(0);
         setAutonCoralL3(0);
         setAutonCoralL4(0);
-        setAutonSpeakerNotes(0);
-        setAutonSpeakerMisses(0);
+        setAutonAlgaeNet(0);
+        setAutonAlgaeProcessor(0);
 
 
         setPickUpCoral(false);
@@ -181,8 +181,8 @@ public class MatchData
         setAutonCoralL2(json.getInt(JSON_KEY_AUTON_CORAL_L2));
         setAutonCoralL3(json.getInt(JSON_KEY_AUTON_CORAL_L3));
         setAutonCoralL4(json.getInt(JSON_KEY_AUTON_CORAL_L4));
-        setAutonSpeakerNotes(json.getInt(JSON_KEY_AUTON_SPEAKER_NOTES));
-        setAutonSpeakerMisses(json.getInt(JSON_KEY_AUTON_SPEAKER_MISSES));
+        setAutonAlgaeNet(json.getInt(JSON_KEY_AUTON_ALGAE_NET));
+        setAutonAlgaeProcessor(json.getInt(JSON_KEY_AUTON_ALGAE_PROCESSOR));
 
         setPickUpCoral(json.getBoolean(JSON_KEY_PICK_UP_CORAL));
         setPickUpAlgae(json.getBoolean(JSON_KEY_PICK_UP_CORAL));
@@ -300,24 +300,24 @@ public class MatchData
         return m_autonCoralL4;
     }
 
-    public void setAutonSpeakerNotes(int a)
+    public void setAutonAlgaeNet(int numNet)
     {
-        m_autonSpeakerNotes = a;
+        m_autonAlgaeNet = numNet;
     }
 
-    public int getAutonSpeakerNotes()
+    public int getAutonAlgaeNet()
     {
-        return m_autonSpeakerNotes;
+        return m_autonAlgaeNet;
     }
 
-    public void setAutonSpeakerMisses(int aMisses)
+    public void setAutonAlgaeProcessor(int numProcessor)
     {
-        m_autonSpeakerMisses = aMisses;
+        m_autonAlgaeProcessor = numProcessor;
     }
 
-    public int getAutonSpeakerMisses()
+    public int getAutonAlgaeProcessor()
     {
-        return m_autonSpeakerMisses;
+        return m_autonAlgaeProcessor;
     }
 
     ////////////  m_autonLeaveStartingZone   /////////////////////
@@ -608,8 +608,8 @@ public class MatchData
         tsvStr += m_autonCoralL2 + "\t";
         tsvStr += m_autonCoralL3 + "\t";
         tsvStr += m_autonCoralL4 + "\t";
-        tsvStr += m_autonSpeakerNotes + "\t";
-        tsvStr += m_autonSpeakerMisses + "\t";
+        tsvStr += m_autonAlgaeNet + "\t";
+        tsvStr += m_autonAlgaeProcessor + "\t";
 
         if (m_pickUpCoral)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
@@ -709,9 +709,9 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_AUTON_CORAL_L4, m_autonCoralL4);
         json.put("divider", ",");
-        json.put(JSON_KEY_AUTON_SPEAKER_NOTES, m_autonSpeakerNotes);
+        json.put(JSON_KEY_AUTON_ALGAE_NET, m_autonAlgaeNet);
         json.put("divider", ",");
-        json.put(JSON_KEY_AUTON_SPEAKER_MISSES, m_autonSpeakerMisses);
+        json.put(JSON_KEY_AUTON_ALGAE_PROCESSOR, m_autonAlgaeProcessor);
         json.put("divider", ",");
         json.put(JSON_KEY_PICK_UP_CORAL, m_pickUpCoral);
         json.put("divider", ",");
