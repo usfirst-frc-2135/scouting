@@ -26,13 +26,6 @@ import androidx.fragment.app.FragmentManager;
 public class EndgameFragment extends Fragment
 {
 
-    private RadioGroup m_endGameRadioGroupStage;
-    private RadioButton m_radio_endGameParked;
-    private RadioButton m_radio_endGameOnstage;
-    private RadioGroup m_endGameRadioGroupHarmony;
-    private RadioButton m_radio_endGame1;
-    private RadioButton m_radio_endGame2;
-
     private RadioGroup m_climbGroup;
     private RadioButton m_climbParked;
     private RadioButton m_climbFell;
@@ -49,9 +42,6 @@ public class EndgameFragment extends Fragment
     private RadioButton m_zeroContact;
     private RadioButton m_oneContact;
     private RadioButton m_twoContact;
-
-    private CheckBox m_spotlitCheckbox;
-    private CheckBox m_trapCheckbox;
     private CheckBox m_diedCheckbox;
     private EditText m_commentText;
     private MatchData m_matchData;
@@ -89,28 +79,6 @@ public class EndgameFragment extends Fragment
         m_diedCheckbox = v.findViewById(R.id.died_checkbox_true);
         m_diedCheckbox.setChecked(m_matchData.getDied());// Default is unchecked
         m_diedCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
-                updateEndgameData();
-            }
-        });
-
-        m_spotlitCheckbox = v.findViewById(R.id.spotlit_checkbox_true);
-        m_spotlitCheckbox.setChecked(m_matchData.getEndgameSpotLit());// Default is unchecked
-        m_spotlitCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
-                updateEndgameData();
-            }
-        });
-
-        m_trapCheckbox = v.findViewById(R.id.trap_checkbox_true);
-        m_trapCheckbox.setChecked(m_matchData.getEndgameTrap());// Default is unchecked
-        m_trapCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
@@ -312,8 +280,6 @@ public class EndgameFragment extends Fragment
 
     public void updateEndgameData()
     {
-        m_matchData.setEndgameSpotLit(m_spotlitCheckbox.isChecked());
-        m_matchData.setEndgameTrap(m_trapCheckbox.isChecked());
         m_matchData.setEndgameStartClimbing(getCurrentStartClimbing());
         m_matchData.setEndgameBarge(getCurrentEndgameBargeLevel());
         m_matchData.setFoulNumber(getCurrentFoulNumber());

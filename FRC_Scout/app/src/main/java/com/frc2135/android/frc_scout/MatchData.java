@@ -53,11 +53,9 @@ public class MatchData
 
     private static final String JSON_KEY_END_GAME_BARGE = "endGameBarge";
     private static final String JSON_KEY_END_GAME_START_CLIMB = "endGameStartClimb";
-    private static final String JSON_KEY_END_GAME_SPOTLIT = "endGameSpotlit";
     private static final String JSON_KEY_ROBOT_FOUL = "robotFoul";
 
 
-    private static final String JSON_KEY_END_GAME_TRAP = "endGameTrap";
     private static final String JSON_KEY_COMMENTS = "comments";
     private static final String JSON_KEY_TIMESTAMP = "timestamp";
     private static final String JSON_KEY_DIED = "died";
@@ -97,12 +95,6 @@ public class MatchData
     private int m_bargeClimb;
     private int m_startClimb;
     private int m_robotFoul;
-
-    private int m_endgameStage;
-    private int m_endgameHarmony; //new
-    private boolean m_endgameSpotLit; //new
-    private boolean m_endgameTrap; //new
-
 
     private String m_comment;
     private boolean m_died;
@@ -158,8 +150,6 @@ public class MatchData
 
         setEndgameBarge(0);
         setEndgameStartClimbing(0);
-        setEndgameSpotLit(false);
-        setEndgameTrap(false);
         setComment("");
         setTimestamp(Calendar.getInstance().getTime());
         setDied(false);
@@ -193,22 +183,15 @@ public class MatchData
         setPickUpCoral(json.getBoolean(JSON_KEY_PICK_UP_CORAL));
         setPickUpAlgae(json.getBoolean(JSON_KEY_PICK_UP_CORAL));
         setCoralAcquire(json.getInt(JSON_KEY_CORAL_ACQUIRE));
-        setTeleopAmpMisses(json.getInt(JSON_KEY_TELEOP_AMP_MISSES));
         setAlgaeAcquire(json.getInt(JSON_KEY_ALGAE_ACQUIRE));
-        setTeleopSpeakerMisses(json.getInt(JSON_KEY_TELEOP_SPEAKER_MISSES));
-        setTeleopPasses(json.getInt(JSON_KEY_TELEOP_PASSES));
         setFoulPin(json.getInt(JSON_KEY_NUMBER_PINS));
         setFoulAnchor(json.getInt(JSON_KEY_NUMBER_ANCHOR));
         setFoulCage(json.getInt(JSON_KEY_NUMBER_CAGE));
         setFoulBarge(json.getInt(JSON_KEY_NUMBER_BARGE));
         setFoulReef(json.getInt(JSON_KEY_NUMBER_REEF));
         setFoulNumber(json.getInt(JSON_KEY_ROBOT_FOUL));
-
-
         setEndgameBarge(json.getInt(JSON_KEY_END_GAME_BARGE));
         setEndgameStartClimbing(json.getInt(JSON_KEY_END_GAME_START_CLIMB));
-        setEndgameSpotLit(json.getBoolean(JSON_KEY_END_GAME_SPOTLIT));
-        setEndgameTrap(json.getBoolean(JSON_KEY_END_GAME_TRAP));
         setComment(json.getString(JSON_KEY_COMMENTS));
 
         String dateStr = json.getString(JSON_KEY_TIMESTAMP);
@@ -445,7 +428,7 @@ public class MatchData
 
     public int getFoulBarge()
     {
-        return m_teleopReefFoul;
+        return m_bargeFoul;
     }
 
     public void setFoulReef(int numberReef)
@@ -536,16 +519,7 @@ public class MatchData
         return m_startClimb;
     }
 
-    ////////////  m_endgameSpotLit   /////////////////////
-    public void setEndgameSpotLit(boolean z)
-    {
-        m_endgameSpotLit = z;
-    }
-
-    public boolean getEndgameSpotLit()
-    {
-        return m_endgameSpotLit;
-    }
+    ////////////  m_endgame   /////////////////////
 
     public void setFoulNumber(int foulNumber)
     {
@@ -557,15 +531,6 @@ public class MatchData
         return m_robotFoul;
     }
     ////////////  m_endgameTrap   /////////////////////
-    public void setEndgameTrap(boolean a)
-    {
-        m_endgameTrap = a;
-    }
-
-    public boolean getEndgameTrap()
-    {
-        return m_endgameTrap;
-    }
 
     ////////////  m_comment   /////////////////////
     public void setComment(String comment)
@@ -667,16 +632,6 @@ public class MatchData
         tsvStr += m_startClimb + "\t";
         tsvStr += m_robotFoul + "\t";
 
-        if (m_endgameSpotLit)  // bool value: use 1/0 instead of true/false
-            tsvStr += "1" + "\t";
-        else
-            tsvStr += "0" + "\t";
-
-        if (m_endgameTrap)  // bool value: use 1/0 instead of true/false
-            tsvStr += "1" + "\t";
-        else
-            tsvStr += "0" + "\t";
-
 
         if (m_died)
             tsvStr += "1" + "\t";
@@ -766,11 +721,6 @@ public class MatchData
         json.put(JSON_KEY_ROBOT_FOUL, m_robotFoul);
         json.put("divider", ",");
         json.put(JSON_KEY_END_GAME_START_CLIMB, m_startClimb);
-        json.put("divider", ",");
-        json.put(JSON_KEY_END_GAME_SPOTLIT, m_endgameSpotLit);
-        json.put("divider", ",");
-        json.put(JSON_KEY_END_GAME_TRAP, m_endgameTrap);
-        json.put("divider", ",");
         json.put("divider", ",");
         json.put(JSON_KEY_DIED, m_died);
         json.put("divider", ",");

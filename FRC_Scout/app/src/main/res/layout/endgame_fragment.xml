@@ -161,9 +161,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="65dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="#FCD9DF"
+            android:backgroundTint="#FCD9DF"
+            android:background="@drawable/bottom_rounded_rect"
             >
 
             <TextView
@@ -213,50 +214,6 @@
 
 
             </RadioGroup>
-
-        </LinearLayout>
-
-        <TextView
-            android:textColor="#000000"
-            android:paddingTop="20dp"
-            android:background="@color/autonUpperCardColor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="STAGE NOTE SCORING"
-            style="?android:listSeparatorTextViewStyle"
-            android:textSize="24sp"/>
-
-        <LinearLayout
-            android:paddingTop="10dp"
-            android:padding="20dp"
-            android:backgroundTint="@color/autonUpperCardColor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/bottom_rounded_rect">
-
-            <CheckBox
-                android:layout_marginBottom="10dp"
-                android:id="@+id/spotlit_checkbox_true"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:buttonTint="#000000"
-                android:text="High Note on Mic"
-                android:textColor="#000000"
-                android:textSize="20sp" />
-
-            <CheckBox
-                android:id="@+id/trap_checkbox_true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:buttonTint="#000000"
-                android:text="Note in Trap"
-                android:textColor="#000000"
-                android:textSize="20sp" />
-
-
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
