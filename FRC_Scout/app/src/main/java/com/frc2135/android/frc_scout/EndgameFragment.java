@@ -45,6 +45,11 @@ public class EndgameFragment extends Fragment
     private RadioButton m_startTen;
     private RadioButton m_startFive;
 
+    private RadioGroup m_foulRobot;
+    private RadioButton m_zeroContact;
+    private RadioButton m_oneContact;
+    private RadioButton m_twoContact;
+
     private CheckBox m_spotlitCheckbox;
     private CheckBox m_trapCheckbox;
     private CheckBox m_diedCheckbox;
@@ -160,6 +165,24 @@ public class EndgameFragment extends Fragment
             m_startFive.setChecked(true);
 
 
+        m_foulRobot = v.findViewById(R.id.foul_robot);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
+        m_zeroContact = v.findViewById(R.id.zero_contact);//Sets up radio button that corresponds to 0
+        m_oneContact = v.findViewById(R.id.one_contact);//Sets up radio button that corresponds to 1
+        m_twoContact = v.findViewById(R.id.two_contact);//Sets up radio button that corresponds to 2
+        m_zeroContact.setChecked(false);
+        m_oneContact.setChecked(false);
+        m_twoContact.setChecked(false);
+
+        int defValueFoul = m_matchData.getCurrentFoulNumber();
+        if (defValueFoul == 0)
+            m_zeroContact.setChecked(true);
+        else if(defValueFoul == 1)
+            m_oneContact.setChecked(true);
+        else if(defValueFoul == 2)
+            m_twoContact.setChecked(true);
+
+
+
         //Sets up an EditText that allows users to input any additional comments
         m_commentText = v.findViewById(R.id.comments);
         m_commentText.setHint("Enter comments here");
@@ -265,13 +288,37 @@ public class EndgameFragment extends Fragment
         return rtn;
     }
 
+
+    public int getCurrentFoulNumber()
+    {
+        // Returns the integer climb level that is current checked in the radio buttons
+        int rtn = 0;
+        if (m_foulRobot.getCheckedRadioButtonId() == m_zeroContact.getId())
+        {
+            rtn = 0;
+        }
+        if (m_foulRobot.getCheckedRadioButtonId() == m_oneContact.getId())
+        {
+            rtn = 1;
+        }
+        else if (m_foulRobot.getCheckedRadioButtonId() == m_twoContact.getId())
+        {
+            rtn = 2;
+        }
+        return rtn;
+    }
+
+
+
     public void updateEndgameData()
     {
         m_matchData.setEndgameSpotLit(m_spotlitCheckbox.isChecked());
         m_matchData.setEndgameTrap(m_trapCheckbox.isChecked());
         m_matchData.setEndgameStartClimbing(getCurrentStartClimbing());
         m_matchData.setEndgameBarge(getCurrentEndgameBargeLevel());
+        m_matchData.setFoulNumber(getCurrentFoulNumber());
         m_matchData.setDied(m_diedCheckbox.isChecked());
         m_matchData.setComment(m_commentText.getText().toString());
+
     }
 }

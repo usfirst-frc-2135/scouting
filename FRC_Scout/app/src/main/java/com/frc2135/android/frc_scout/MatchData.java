@@ -52,11 +52,11 @@ public class MatchData
 
 
     private static final String JSON_KEY_END_GAME_BARGE = "endGameBarge";
-    //ADD HARMONY
     private static final String JSON_KEY_END_GAME_START_CLIMB = "endGameStartClimb";
-    //ADD SPOTLIT
     private static final String JSON_KEY_END_GAME_SPOTLIT = "endGameSpotlit";
-    //ADD TRAP
+    private static final String JSON_KEY_ROBOT_FOUL = "robotFoul";
+
+
     private static final String JSON_KEY_END_GAME_TRAP = "endGameTrap";
     private static final String JSON_KEY_COMMENTS = "comments";
     private static final String JSON_KEY_TIMESTAMP = "timestamp";
@@ -96,6 +96,7 @@ public class MatchData
 
     private int m_bargeClimb;
     private int m_startClimb;
+    private int m_robotFoul;
 
     private int m_endgameStage;
     private int m_endgameHarmony; //new
@@ -201,10 +202,10 @@ public class MatchData
         setFoulCage(json.getInt(JSON_KEY_NUMBER_CAGE));
         setFoulBarge(json.getInt(JSON_KEY_NUMBER_BARGE));
         setFoulReef(json.getInt(JSON_KEY_NUMBER_REEF));
+        setFoulNumber(json.getInt(JSON_KEY_ROBOT_FOUL));
 
 
         setEndgameBarge(json.getInt(JSON_KEY_END_GAME_BARGE));
-
         setEndgameStartClimbing(json.getInt(JSON_KEY_END_GAME_START_CLIMB));
         setEndgameSpotLit(json.getBoolean(JSON_KEY_END_GAME_SPOTLIT));
         setEndgameTrap(json.getBoolean(JSON_KEY_END_GAME_TRAP));
@@ -546,6 +547,15 @@ public class MatchData
         return m_endgameSpotLit;
     }
 
+    public void setFoulNumber(int foulNumber)
+    {
+        m_robotFoul = foulNumber;
+    }
+
+    public int getCurrentFoulNumber()
+    {
+        return m_robotFoul;
+    }
     ////////////  m_endgameTrap   /////////////////////
     public void setEndgameTrap(boolean a)
     {
@@ -655,6 +665,7 @@ public class MatchData
 
         tsvStr += m_bargeClimb + "\t";
         tsvStr += m_startClimb + "\t";
+        tsvStr += m_robotFoul + "\t";
 
         if (m_endgameSpotLit)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
@@ -751,6 +762,8 @@ public class MatchData
         json.put(JSON_KEY_TELEOP_PASSES, m_teleopPasses);
         json.put("divider", ",");
         json.put(JSON_KEY_END_GAME_BARGE, m_bargeClimb);
+        json.put("divider", ",");
+        json.put(JSON_KEY_ROBOT_FOUL, m_robotFoul);
         json.put("divider", ",");
         json.put(JSON_KEY_END_GAME_START_CLIMB, m_startClimb);
         json.put("divider", ",");
