@@ -32,6 +32,19 @@ public class EndgameFragment extends Fragment
     private RadioGroup m_endGameRadioGroupHarmony;
     private RadioButton m_radio_endGame1;
     private RadioButton m_radio_endGame2;
+
+    private RadioGroup m_climbGroup;
+    private RadioButton m_climbParked;
+    private RadioButton m_climbFell;
+    private RadioButton m_climbShallow;
+    private RadioButton m_climbDeep;
+
+    private RadioGroup m_startGroup;
+    private RadioButton m_startNone;
+    private RadioButton m_startBell;
+    private RadioButton m_startTen;
+    private RadioButton m_startFive;
+
     private CheckBox m_spotlitCheckbox;
     private CheckBox m_trapCheckbox;
     private CheckBox m_diedCheckbox;
@@ -101,155 +114,51 @@ public class EndgameFragment extends Fragment
             }
         });
 
-        m_endGameRadioGroupStage = v.findViewById(R.id.endgame_stage);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
-        RadioButton radio_endGameNone = v.findViewById(R.id.level_end_game_none);//Sets up radio button that corresponds to 0
-        radio_endGameNone.setChecked(true);
-        m_radio_endGameParked = v.findViewById(R.id.level_end_game_parked);//Sets up radio button that corresponds to 1
-        m_radio_endGameParked.setChecked(false);
-        m_radio_endGameOnstage = v.findViewById(R.id.level_end_game_onstage);//Sets up radio button that corresponds to 2
-        m_radio_endGameOnstage.setChecked(false);
+        m_climbGroup = v.findViewById(R.id.climb_group);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
+        RadioButton radio_climbNone = v.findViewById(R.id.climb_none);//Sets up radio button that corresponds to 0
+        m_climbParked = v.findViewById(R.id.climb_parked);//Sets up radio button that corresponds to 1
+        m_climbFell = v.findViewById(R.id.climb_fell);//Sets up radio button that corresponds to 2
+        m_climbShallow = v.findViewById(R.id.climb_shallow);//Sets up radio button that corresponds to 3
+        m_climbDeep = v.findViewById(R.id.climb_deep);//Sets up radio button that corresponds to 4
+        radio_climbNone.setChecked(false);
+        m_climbParked.setChecked(false);
+        m_climbFell.setChecked(false);
+        m_climbShallow.setChecked(false);
+        m_climbDeep.setChecked(false);
 
-        ColorStateList ColorStateList = new ColorStateList( //used for changing radio button only
-                new int[][]
-                        {
-                                new int[]{-android.R.attr.state_enabled}, // Disabled
-                                new int[]{android.R.attr.state_enabled}   // Enabled
-                        },
-                new int[]
-                        {
-                                Color.parseColor("#999999"), // disabled
-                                Color.parseColor("#363636")   // enabled
-                        }
-        );
-        //Harmony groups set disabled by default
-        m_endGameRadioGroupHarmony = v.findViewById(R.id.endgame_harmony);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
-        m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#d5e5ee")); //sets background to this color
-        RadioButton radio_endGame0 = v.findViewById(R.id.end_game_harmony_default);//Sets up radio button that corresponds to 0
-        radio_endGame0.setChecked(true);
-        radio_endGame0.setEnabled(false);
-        radio_endGame0.setTextColor(Color.parseColor("#999999")); //sets text to this color
-        radio_endGame0.setButtonTintList(ColorStateList);
-        m_radio_endGame1 = v.findViewById(R.id.level_end_game_harmony_1);//Sets up radio button that corresponds to 1
-        m_radio_endGame1.setChecked(false);
-        m_radio_endGame1.setEnabled(false);
-        m_radio_endGame1.setTextColor(Color.parseColor("#999999")); //sets text to this color
-        m_radio_endGame1.setButtonTintList(ColorStateList);
-        m_radio_endGame2 = v.findViewById(R.id.level_end_game_harmony_2);//Sets up radio button that corresponds to 2
-        m_radio_endGame2.setChecked(false);
-        m_radio_endGame2.setEnabled(false);
-        m_radio_endGame2.setTextColor(Color.parseColor("#999999")); //sets text to this color
-        m_radio_endGame2.setButtonTintList(ColorStateList);
+        int defValueClimb = m_matchData.getEndgameBarge();
+        if (defValueClimb == 0)
+            radio_climbNone.setChecked(true);
+        else if (defValueClimb == 1)
+            m_climbParked.setChecked(true);
+        else if(defValueClimb == 2)
+            m_climbFell.setChecked(true);
+        else if(defValueClimb == 3)
+            m_climbShallow.setChecked(true);
+        else if(defValueClimb == 4)
+        m_climbDeep.setChecked(true);
 
-        int y = m_matchData.getEndgameHarmony();
-        if (y == 0)
-        {
-            radio_endGame0.setChecked(true);
-            radio_endGame0.setTextColor(Color.parseColor("#999999")); //sets default color
-            m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#d5e5ee")); //ensures background remains this color
-        }
-        else if (y == 1)
-        {
-            m_radio_endGame1.setChecked(true);
-            m_radio_endGame1.setTextColor(Color.parseColor("#999999")); //sets default color
-            m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#d5e5ee")); //ensures that background remains this color
-        }
-        else if (y == 2)
-        {
-            m_radio_endGame2.setChecked(true);
-            m_radio_endGame2.setTextColor(Color.parseColor("#999999")); //sets default color
-            m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#CEEAF5"));
-        }
+        m_startGroup = v.findViewById(R.id.start_text);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
+        m_startNone = v.findViewById(R.id.start_none);//Sets up radio button that corresponds to 0
+        m_startBell = v.findViewById(R.id.start_bell);//Sets up radio button that corresponds to 1
+        m_startTen = v.findViewById(R.id.start_ten);//Sets up radio button that corresponds to 2
+        m_startFive = v.findViewById(R.id.start_five);//Sets up radio button that corresponds to 3
+        m_startTen.setChecked(false);
+        m_startBell.setChecked(false);
+        m_startNone.setChecked(false);
+        m_startFive.setChecked(false);
 
-        int x = m_matchData.getEndgameStage();
-        if (x == 0)
-        {
-            radio_endGameNone.setChecked(true);
-            radio_endGame0.setEnabled(false);
-            radio_endGame0.setTextColor(Color.parseColor("#999999")); //ensures that it remains gray when not onstage
-            m_radio_endGame1.setEnabled(false);
-            m_radio_endGame1.setTextColor(Color.parseColor("#999999")); //ensures that it remains gray when not onstage
-            m_radio_endGame2.setEnabled(false);
-            m_radio_endGame2.setTextColor(Color.parseColor("#999999")); //ensures that it remains gray when not onstage
-            radio_endGame0.setChecked(true);
-            m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#d5e5ee")); //ensures background remains gray when not onstage
-        }
-        else if (x == 1)
-        {
-            m_radio_endGameParked.setChecked(true);
-            radio_endGame0.setEnabled(false);
-            radio_endGame0.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
-            m_radio_endGame1.setEnabled(false);
-            m_radio_endGame1.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
-            m_radio_endGame2.setEnabled(false);
-            m_radio_endGame2.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
-            radio_endGame0.setChecked(true);
-            m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#d5e5ee")); //ensures background remains gray
-        }
-        else if (x == 2)
-        {
-            m_radio_endGameOnstage.setChecked(true);
-            radio_endGame0.setEnabled(true);
-            radio_endGame0.setTextColor(Color.parseColor("#363636")); //changes text color when onstage
-            m_radio_endGame1.setEnabled(true);
-            m_radio_endGame1.setTextColor(Color.parseColor("#363636")); //changes text color when onstage
-            m_radio_endGame2.setEnabled(true);
-            m_radio_endGame2.setTextColor(Color.parseColor("#363636")); //changes text color when onstage
-            m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#CEEAF5")); //changes background color when onstage
-        }
 
-        m_endGameRadioGroupStage.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId)
-            {
+        int defValueStartClimb = m_matchData.getEndgameStartClimbing();
+        if (defValueStartClimb == 0)
+            m_startNone.setChecked(true);
+        else if(defValueStartClimb == 1)
+            m_startBell.setChecked(true);
+        else if(defValueStartClimb == 2)
+            m_startTen.setChecked(true);
+        else if(defValueStartClimb == 3)
+            m_startFive.setChecked(true);
 
-                //Changes m_matchData's climb variable according to which radio button is selected
-                m_matchData.setEndgameStage(getCurrentEndgameStageLevel());
-                if (getCurrentEndgameStageLevel() == 0) //none
-                {
-                    radio_endGame0.setChecked(true);
-                    radio_endGame0.setTextColor(Color.parseColor("#999999")); //ensures that text remains gray
-                    radio_endGame0.setEnabled(false);
-                    m_radio_endGame1.setEnabled(false);
-                    m_radio_endGame1.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
-                    m_radio_endGame2.setEnabled(false);
-                    m_radio_endGame2.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
-                    m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#d5e5ee")); //ensures that background remains this color
-                }
-                else if (getCurrentEndgameStageLevel() == 1) //parked
-                {
-                    radio_endGame0.setChecked(true);
-                    radio_endGame0.setEnabled(false);
-                    radio_endGame0.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
-                    m_radio_endGame1.setEnabled(false);
-                    m_radio_endGame1.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
-                    m_radio_endGame2.setEnabled(false);
-                    m_radio_endGame2.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
-                    m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#d5e5ee")); //ensures background remains this color
-                }
-                else if (getCurrentEndgameStageLevel() == 2) //onstage
-                {
-                    radio_endGame0.setEnabled(true);
-                    radio_endGame0.setTextColor(Color.parseColor("#363636")); //changes text color when stage level is 2
-                    m_radio_endGame1.setEnabled(true);
-                    m_radio_endGame1.setTextColor(Color.parseColor("#363636")); //changes text color when stage level is 2
-                    m_radio_endGame2.setEnabled(true);
-                    m_radio_endGame2.setTextColor(Color.parseColor("#363636")); //changes text color when stage level is 2
-                    m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#CEEAF5")); //changes background color when stage level is 2
-                }
-            }
-        });
-
-        m_endGameRadioGroupHarmony.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId)
-            {
-
-                //Changes m_matchData's climb variable according to which radio button is selected
-                m_matchData.setEndgameHarmony(getCurrentEndgameHarmony());
-            }
-        });
 
         //Sets up an EditText that allows users to input any additional comments
         m_commentText = v.findViewById(R.id.comments);
@@ -284,6 +193,8 @@ public class EndgameFragment extends Fragment
             @Override
             public void onClick(View view)
             {
+                updateEndgameData();  // save current endgame values in matchdata
+
                 // Save the latest Scouter and MatchData JSON files.
                 Log.d(TAG, "EndgameFragment DONE onClick() saving latest match and Scouter files\n");
                 if (!MatchHistory.get(getActivity()).saveScouterData())
@@ -308,32 +219,48 @@ public class EndgameFragment extends Fragment
         return v;
     }
 
-    public int getCurrentEndgameStageLevel()
+    public int getCurrentEndgameBargeLevel()
     {
         // Returns the integer climb level that is current checked in the radio buttons
         int rtn = 0;
-        if (m_endGameRadioGroupStage.getCheckedRadioButtonId() == m_radio_endGameParked.getId())
+        if (m_climbGroup.getCheckedRadioButtonId() == m_climbParked.getId())
         {
             rtn = 1;
         }
-        else if (m_endGameRadioGroupStage.getCheckedRadioButtonId() == m_radio_endGameOnstage.getId())
+        else if (m_climbGroup.getCheckedRadioButtonId() == m_climbFell.getId())
         {
             rtn = 2;
+        }
+        else if (m_climbGroup.getCheckedRadioButtonId() == m_climbShallow.getId())
+        {
+            rtn = 3;
+        }
+        else if (m_climbGroup.getCheckedRadioButtonId() == m_climbDeep.getId())
+        {
+            rtn = 4;
         }
         return rtn;
     }
 
-    public int getCurrentEndgameHarmony()
+    public int getCurrentStartClimbing()
     {
         // Returns the integer climb level that is current checked in the radio buttons
         int rtn = 0;
-        if (m_endGameRadioGroupHarmony.getCheckedRadioButtonId() == m_radio_endGame1.getId())
+        if (m_startGroup.getCheckedRadioButtonId() == m_startNone.getId())
+        {
+            rtn = 0;
+        }
+        if (m_startGroup.getCheckedRadioButtonId() == m_startBell.getId())
         {
             rtn = 1;
         }
-        else if (m_endGameRadioGroupHarmony.getCheckedRadioButtonId() == m_radio_endGame2.getId())
+        else if (m_startGroup.getCheckedRadioButtonId() == m_startTen.getId())
         {
             rtn = 2;
+        }
+        else if (m_startGroup.getCheckedRadioButtonId() == m_startFive.getId())
+        {
+            rtn = 3;
         }
         return rtn;
     }
@@ -342,8 +269,8 @@ public class EndgameFragment extends Fragment
     {
         m_matchData.setEndgameSpotLit(m_spotlitCheckbox.isChecked());
         m_matchData.setEndgameTrap(m_trapCheckbox.isChecked());
-        m_matchData.setEndgameHarmony(getCurrentEndgameHarmony());
-        m_matchData.setEndgameStage(getCurrentEndgameStageLevel());
+        m_matchData.setEndgameStartClimbing(getCurrentStartClimbing());
+        m_matchData.setEndgameBarge(getCurrentEndgameBargeLevel());
         m_matchData.setDied(m_diedCheckbox.isChecked());
         m_matchData.setComment(m_commentText.getText().toString());
     }

@@ -51,9 +51,9 @@ public class MatchData
     private static final String JSON_KEY_NUMBER_REEF = "numberReef";
 
 
-    private static final String JSON_KEY_END_GAME_STAGE = "endGameStage";
+    private static final String JSON_KEY_END_GAME_BARGE = "endGameBarge";
     //ADD HARMONY
-    private static final String JSON_KEY_END_GAME_HARMONY = "endGameHarmony";
+    private static final String JSON_KEY_END_GAME_START_CLIMB = "endGameStartClimb";
     //ADD SPOTLIT
     private static final String JSON_KEY_END_GAME_SPOTLIT = "endGameSpotlit";
     //ADD TRAP
@@ -77,20 +77,25 @@ public class MatchData
     private boolean m_pickUpCoral;
     private boolean m_pickUpAlgae;
     private int m_playedDefense;
+
     private int m_pinFoul;
     private int m_anchorFoul;
     private int m_cageFoul;
     private int m_bargeFoul;
     private int m_teleopReefFoul;
+
     private boolean m_knockAlgaeOff;
     private boolean m_algaeFromReef;
     private boolean m_holdBothElements;
     private int m_coralAcquire;
     private int m_algaeAcquire;
+
     private int m_teleopAmpMisses;
     private int m_teleopSpeakerMisses;
     private int m_teleopPasses;
 
+    private int m_bargeClimb;
+    private int m_startClimb;
 
     private int m_endgameStage;
     private int m_endgameHarmony; //new
@@ -150,8 +155,8 @@ public class MatchData
         setTeleopPasses(0);
 
 
-        setEndgameStage(0);
-        setEndgameHarmony(0);
+        setEndgameBarge(0);
+        setEndgameStartClimbing(0);
         setEndgameSpotLit(false);
         setEndgameTrap(false);
         setComment("");
@@ -198,9 +203,9 @@ public class MatchData
         setFoulReef(json.getInt(JSON_KEY_NUMBER_REEF));
 
 
-        setEndgameStage(json.getInt(JSON_KEY_END_GAME_STAGE));
+        setEndgameBarge(json.getInt(JSON_KEY_END_GAME_BARGE));
 
-        setEndgameHarmony(json.getInt(JSON_KEY_END_GAME_HARMONY));
+        setEndgameStartClimbing(json.getInt(JSON_KEY_END_GAME_START_CLIMB));
         setEndgameSpotLit(json.getBoolean(JSON_KEY_END_GAME_SPOTLIT));
         setEndgameTrap(json.getBoolean(JSON_KEY_END_GAME_TRAP));
         setComment(json.getString(JSON_KEY_COMMENTS));
@@ -509,25 +514,25 @@ public class MatchData
     }
 
 
-    public void setEndgameStage(int x)
+    public void setEndgameBarge(int x)
     {
-        m_endgameStage = x;
+        m_bargeClimb = x;
     }
 
-    public int getEndgameStage()
+    public int getEndgameBarge()
     {
-        return m_endgameStage;
+        return m_bargeClimb;
     }
 
     ////////////  m_endgameHarmony   /////////////////////
-    public void setEndgameHarmony(int y)
+    public void setEndgameStartClimbing(int y)
     {
-        m_endgameHarmony = y;
+        m_startClimb = y;
     }
 
-    public int getEndgameHarmony()
+    public int getEndgameStartClimbing()
     {
-        return m_endgameHarmony;
+        return m_startClimb;
     }
 
     ////////////  m_endgameSpotLit   /////////////////////
@@ -648,8 +653,8 @@ public class MatchData
         tsvStr += m_teleopSpeakerMisses + "\t";
         tsvStr += m_teleopPasses + "\t";
 
-        tsvStr += m_endgameStage + "\t";
-        tsvStr += m_endgameHarmony + "\t";
+        tsvStr += m_bargeClimb + "\t";
+        tsvStr += m_startClimb + "\t";
 
         if (m_endgameSpotLit)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
@@ -745,9 +750,9 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_TELEOP_PASSES, m_teleopPasses);
         json.put("divider", ",");
-        json.put(JSON_KEY_END_GAME_STAGE, m_endgameStage);
+        json.put(JSON_KEY_END_GAME_BARGE, m_bargeClimb);
         json.put("divider", ",");
-        json.put(JSON_KEY_END_GAME_HARMONY, m_endgameHarmony);
+        json.put(JSON_KEY_END_GAME_START_CLIMB, m_startClimb);
         json.put("divider", ",");
         json.put(JSON_KEY_END_GAME_SPOTLIT, m_endgameSpotLit);
         json.put("divider", ",");
