@@ -277,13 +277,8 @@ public class AutonFragment extends Fragment
                 public void onCheckedChanged(RadioGroup group, int checkedId)
                 {
 
-                    //Changes m_matchData's climb variable according to which radio button is selected
-                    //REMOVE --> m_matchData.setEndgameStage(getCurrentCoralLevel());
                     if (getCurrentCoralLevel() == 0) //none
                     {
-                        //radio_endGame0.setChecked(true);
-                        //radio_endGame0.setTextColor(Color.parseColor("#999999")); //ensures that text remains gray
-                        //radio_endGame0.setEnabled(false);
                         m_autonCoralButtonL1.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
                         m_autonCoralButtonL1.setChecked(false);
                         m_autonCoralButtonL2.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
@@ -298,15 +293,11 @@ public class AutonFragment extends Fragment
                         m_autonCoralDecr.setEnabled(false);
                         m_autonCoralDecrDisabled.setVisibility(View.VISIBLE);
                         m_autonCoralIncrDisabled.setVisibility(View.VISIBLE);
-                        //m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#d5e5ee")); //ensures that background remains this color
                     }
                     else if (getCurrentCoralLevel() == 1) //parked
                     {
-                        //radio_endGame0.setChecked(true);
-                        //radio_endGame0.setEnabled(false);
-                        //radio_endGame0.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
                         m_autonCoralButtonL1.setChecked(true);
-                        m_autonCoralButtonL1.setTextColor(Color.parseColor("#49B6A9")); //ensures text remains gray
+                        m_autonCoralButtonL1.setTextColor(Color.parseColor("#A9FFCB")); //ensures text remains gray
                         m_autonCoralButtonL2.setChecked(false);
                         m_autonCoralButtonL2.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
                         m_autonCoralButtonL3.setChecked(false);
@@ -331,18 +322,15 @@ public class AutonFragment extends Fragment
                         m_autonCoralIncrL3.setVisibility(View.INVISIBLE);
                         m_autonCoralDecrL4.setVisibility(View.INVISIBLE);
                         m_autonCoralIncrL4.setVisibility(View.INVISIBLE);
-                        //m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#d5e5ee")); //ensures background remains this color
                     }
-                    else if (getCurrentCoralLevel() == 2) //onstage
+                    else if (getCurrentCoralLevel() == 2)
                     {
-                        //radio_endGame0.setEnabled(true);
-                        //radio_endGame0.setTextColor(Color.parseColor("#363636")); //changes text color when stage level is 2
                         m_autonCoralButtonL1.setChecked(false);
-                        m_autonCoralButtonL1.setTextColor(Color.parseColor("#363636")); //changes text color when stage level is 2
+                        m_autonCoralButtonL1.setTextColor(Color.parseColor("#363636"));
                         m_autonCoralButtonL2.setChecked(true);
-                        m_autonCoralButtonL2.setTextColor(Color.parseColor("#49B6A9")); //changes text color when stage level is 2
+                        m_autonCoralButtonL2.setTextColor(Color.parseColor("#49B6A9"));
                         m_autonCoralButtonL3.setChecked(false);
-                        m_autonCoralButtonL3.setTextColor(Color.parseColor("#363636")); //changes text color when stage level is 2
+                        m_autonCoralButtonL3.setTextColor(Color.parseColor("#363636"));
                         m_autonCoralButtonL4.setChecked(false);
                         m_autonCoralButtonL4.setTextColor(Color.parseColor("#363636"));
                         m_autonCoralButtonNone.setChecked(false);
@@ -363,18 +351,15 @@ public class AutonFragment extends Fragment
                         m_autonCoralIncrL3.setVisibility(View.INVISIBLE);
                         m_autonCoralDecrL4.setVisibility(View.INVISIBLE);
                         m_autonCoralIncrL4.setVisibility(View.INVISIBLE);
-                        //m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#CEEAF5")); //changes background color when stage level is 2
                     }
                     else if (getCurrentCoralLevel() == 3) //onstage
                     {
-                        //radio_endGame0.setEnabled(true);
-                        //radio_endGame0.setTextColor(Color.parseColor("#363636")); //changes text color when stage level is 2
                         m_autonCoralButtonL1.setChecked(false);
-                        m_autonCoralButtonL1.setTextColor(Color.parseColor("#363636")); //changes text color when stage level is 2
+                        m_autonCoralButtonL1.setTextColor(Color.parseColor("#363636"));
                         m_autonCoralButtonL2.setChecked(false);
-                        m_autonCoralButtonL2.setTextColor(Color.parseColor("#363636")); //changes text color when stage level is 2
+                        m_autonCoralButtonL2.setTextColor(Color.parseColor("#363636"));
                         m_autonCoralButtonL3.setChecked(true);
-                        m_autonCoralButtonL3.setTextColor(Color.parseColor("#49B6A9")); //changes text color when stage level is 2
+                        m_autonCoralButtonL3.setTextColor(Color.parseColor("#5B37C8"));
                         m_autonCoralButtonL4.setEnabled(false);
                         m_autonCoralButtonL4.setTextColor(Color.parseColor("#363636"));
                         m_autonCoralButtonNone.setEnabled(false);
@@ -395,12 +380,9 @@ public class AutonFragment extends Fragment
                         m_autonCoralIncrL3.setVisibility(View.VISIBLE);
                         m_autonCoralDecrL4.setVisibility(View.INVISIBLE);
                         m_autonCoralIncrL4.setVisibility(View.INVISIBLE);
-                        //m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#CEEAF5")); //changes background color when stage level is 2
                     }
-                    else if (getCurrentCoralLevel() == 4) //onstage
+                    else if (getCurrentCoralLevel() == 4)
                     {
-                        //radio_endGame0.setEnabled(true);
-                        //radio_endGame0.setTextColor(Color.parseColor("#363636")); //changes text color when stage level is 2
                         m_autonCoralButtonL1.setChecked(false);
                         m_autonCoralButtonL1.setTextColor(Color.parseColor("#363636")); //changes text color when stage level is 2
                         m_autonCoralButtonL2.setChecked(false);
@@ -408,7 +390,7 @@ public class AutonFragment extends Fragment
                         m_autonCoralButtonL3.setChecked(false);
                         m_autonCoralButtonL3.setTextColor(Color.parseColor("#363636")); //changes text color when stage level is 2
                         m_autonCoralButtonL4.setChecked(true);
-                        m_autonCoralButtonL4.setTextColor(Color.parseColor("#49B6A9"));
+                        m_autonCoralButtonL4.setTextColor(Color.parseColor("#9C1DE2"));
                         m_autonCoralButtonNone.setChecked(false);
                         m_autonCoralButtonNone.setTextColor(Color.parseColor("#363636"));
                         m_autonCoralTextL4.setText(String.valueOf(m_matchData.getAutonCoralL4()));
@@ -427,7 +409,6 @@ public class AutonFragment extends Fragment
                         m_autonCoralIncrL3.setVisibility(View.INVISIBLE);
                         m_autonCoralDecrL4.setVisibility(View.VISIBLE);
                         m_autonCoralIncrL4.setVisibility(View.VISIBLE);
-                        //m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#CEEAF5")); //changes background color when stage level is 2
                     }
                 }
             });
@@ -444,8 +425,6 @@ public class AutonFragment extends Fragment
                         m_autonCoralDecr.setEnabled(true);
                         m_autonCoralDecrDisabled.setVisibility(View.INVISIBLE);
                         m_autonCoralIncrDisabled.setVisibility(View.INVISIBLE);
-                        //m_autonCoralDecr.setVisibility(View.VISIBLE);
-                        //m_autonCoralIncr.setVisibility(View.VISIBLE);
                     }
                     else
                     {
@@ -496,11 +475,11 @@ public class AutonFragment extends Fragment
                         m_autonCoralIncrL3.setVisibility(View.INVISIBLE);
                         m_autonCoralDecrL4.setVisibility(View.INVISIBLE);
                         m_autonCoralIncrL4.setVisibility(View.INVISIBLE);
-                        m_autonCoralL1.setTextColor(Color.parseColor("#49B6A9"));
+                        m_autonCoralL1.setTextColor(Color.parseColor("#A9FFCB"));
                         m_autonCoralL2.setTextColor(Color.parseColor("#363636"));
                         m_autonCoralL3.setTextColor(Color.parseColor("#363636"));
                         m_autonCoralL4.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonL1.setTextColor(Color.parseColor("#49B6A9"));
+                        m_autonCoralButtonL1.setTextColor(Color.parseColor("#A9FFCB"));
                         m_autonCoralButtonL2.setTextColor(Color.parseColor("#363636"));
                         m_autonCoralButtonL3.setTextColor(Color.parseColor("#363636"));
                         m_autonCoralButtonL4.setTextColor(Color.parseColor("#363636"));
@@ -548,11 +527,11 @@ public class AutonFragment extends Fragment
                         m_autonCoralIncrL4.setVisibility(View.INVISIBLE);
                         m_autonCoralL1.setTextColor(Color.parseColor("#363636"));
                         m_autonCoralL2.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralL3.setTextColor(Color.parseColor("#49B6A9"));
+                        m_autonCoralL3.setTextColor(Color.parseColor("#5B37C8"));
                         m_autonCoralL4.setTextColor(Color.parseColor("#363636"));
                         m_autonCoralButtonL1.setTextColor(Color.parseColor("#363636"));
                         m_autonCoralButtonL2.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonL3.setTextColor(Color.parseColor("#49B6A9"));
+                        m_autonCoralButtonL3.setTextColor(Color.parseColor("#5B37C8"));
                         m_autonCoralButtonL4.setTextColor(Color.parseColor("#363636"));
                         m_autonCoralButtonNone.setTextColor(Color.parseColor("#363636"));
                     }
@@ -574,11 +553,11 @@ public class AutonFragment extends Fragment
                         m_autonCoralL1.setTextColor(Color.parseColor("#363636"));
                         m_autonCoralL2.setTextColor(Color.parseColor("#363636"));
                         m_autonCoralL3.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralL4.setTextColor(Color.parseColor("#49B6A9"));
+                        m_autonCoralL4.setTextColor(Color.parseColor("#9C1DE2"));
                         m_autonCoralButtonL1.setTextColor(Color.parseColor("#363636"));
                         m_autonCoralButtonL2.setTextColor(Color.parseColor("#363636"));
                         m_autonCoralButtonL3.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonL4.setTextColor(Color.parseColor("#49B6A9"));
+                        m_autonCoralButtonL4.setTextColor(Color.parseColor("#9C1DE2"));
                         m_autonCoralButtonNone.setTextColor(Color.parseColor("#363636"));
                     }
                     if (Integer.parseInt(m_autonCoralText.getText().toString()) <= MAX_POINTS)
@@ -886,12 +865,8 @@ public class AutonFragment extends Fragment
             {
 
                 //Changes m_matchData's climb variable according to which radio button is selected
-                //REMOVE --> m_matchData.setEndgameStage(getCurrentCoralLevel());
                 if (getCurrentAlgaeLevel() == 0) //none
                 {
-                    //radio_endGame0.setChecked(true);
-                    //radio_endGame0.setTextColor(Color.parseColor("#999999")); //ensures that text remains gray
-                    //radio_endGame0.setEnabled(false);
                     m_autonAlgaeButtonNet.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
                     m_autonAlgaeButtonNet.setChecked(false);
                     m_autonAlgaeButtonProcessor.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
@@ -902,15 +877,11 @@ public class AutonFragment extends Fragment
                     m_autonAlgaeDecr.setEnabled(false);
                     m_autonAlgaeDecrDisabled.setVisibility(View.VISIBLE);
                     m_autonAlgaeIncrDisabled.setVisibility(View.VISIBLE);
-                    //m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#d5e5ee")); //ensures that background remains this color
                 }
                 else if (getCurrentAlgaeLevel() == 1) //parked
                 {
-                    //radio_endGame0.setChecked(true);
-                    //radio_endGame0.setEnabled(false);
-                    //radio_endGame0.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
                     m_autonAlgaeButtonNet.setChecked(true);
-                    m_autonAlgaeButtonNet.setTextColor(Color.parseColor("#49B6A9")); //ensures text remains gray
+                    m_autonAlgaeButtonNet.setTextColor(Color.parseColor("#A9FFCB")); //ensures text remains gray
                     m_autonAlgaeButtonProcessor.setChecked(false);
                     m_autonAlgaeButtonProcessor.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
                     m_autonAlgaeButtonNone.setChecked(false);
@@ -927,12 +898,9 @@ public class AutonFragment extends Fragment
                     m_autonAlgaeIncrNet.setVisibility(View.VISIBLE);
                     m_autonAlgaeDecrProcessor.setVisibility(View.INVISIBLE);
                     m_autonAlgaeIncrProcessor.setVisibility(View.INVISIBLE);
-                    //m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#d5e5ee")); //ensures background remains this color
                 }
                 else if (getCurrentCoralLevel() == 2) //onstage
                 {
-                    //radio_endGame0.setEnabled(true);
-                    //radio_endGame0.setTextColor(Color.parseColor("#363636")); //changes text color when stage level is 2
                     m_autonAlgaeButtonNet.setChecked(false);
                     m_autonAlgaeButtonNet.setTextColor(Color.parseColor("#363636")); //changes text color when stage level is 2
                     m_autonAlgaeButtonProcessor.setChecked(true);
@@ -951,7 +919,6 @@ public class AutonFragment extends Fragment
                     m_autonAlgaeIncrNet.setVisibility(View.INVISIBLE);
                     m_autonAlgaeIncrProcessor.setVisibility(View.VISIBLE);
                     m_autonAlgaeDecrProcessor.setVisibility(View.VISIBLE);
-                    //m_endGameRadioGroupHarmony.setBackgroundColor(Color.parseColor("#CEEAF5")); //changes background color when stage level is 2
                 }
             }
         });
@@ -968,8 +935,6 @@ public class AutonFragment extends Fragment
                     m_autonAlgaeDecr.setEnabled(true);
                     m_autonAlgaeDecrDisabled.setVisibility(View.INVISIBLE);
                     m_autonAlgaeIncrDisabled.setVisibility(View.INVISIBLE);
-                    //m_autonCoralDecr.setVisibility(View.VISIBLE);
-                    //m_autonCoralIncr.setVisibility(View.VISIBLE);
                 }
                 else
                 {
@@ -1008,9 +973,9 @@ public class AutonFragment extends Fragment
                     m_autonAlgaeDecrNet.setVisibility(View.VISIBLE);
                     m_autonAlgaeDecrProcessor.setVisibility(View.INVISIBLE);
                     m_autonAlgaeIncrProcessor.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeNet.setTextColor(Color.parseColor("#49B6A9"));
+                    m_autonAlgaeNet.setTextColor(Color.parseColor("#A9FFCB"));
                     m_autonAlgaeProcessor.setTextColor(Color.parseColor("#363636"));
-                    m_autonAlgaeButtonNet.setTextColor(Color.parseColor("#49B6A9"));
+                    m_autonAlgaeButtonNet.setTextColor(Color.parseColor("#A9FFCB"));
                     m_autonAlgaeButtonProcessor.setTextColor(Color.parseColor("#363636"));
                     m_autonAlgaeButtonNone.setTextColor(Color.parseColor("#363636"));
                 }
@@ -1039,9 +1004,6 @@ public class AutonFragment extends Fragment
                 {
                     m_autonAlgaeText.setTextColor(Color.RED);
                 }
-
-                //Changes m_matchData's climb variable according to which radio button is selected
-                //m_matchData.setEndgameHarmony(getCurrentCoralLevel());
             }
         });
 
@@ -1150,33 +1112,7 @@ public class AutonFragment extends Fragment
             }
         });
 
-        //Connects the increment button for cones top row points and sets up a listener that detects when the button is clicked
-        /*Button autonSpeakerIncrButton = v.findViewById(R.id.auton_speaker_scoring_incr);
-        autonSpeakerIncrButton.setOnClickListener(new View.OnClickListener()
-        {
-
-            @Override
-            public void onClick(View v)
-            {
-                //Decreases displayed point value by 1; sets to 0 if result would be negative
-               updatePointsInt(m_autonAlgaeText, true);
-            }
-        });*/
-
-        //Connects the decrement button for cubes top row points and sets up a listener that detects when the button is clicked
-        /*Button autonSpeakerDecrButton = v.findViewById(R.id.auton_speaker_scoring_decr);
-        autonSpeakerDecrButton.setOnClickListener(new View.OnClickListener()
-
-
-       {
-           @Override
-            public void onClick(View v)
-            {
-                //Decreases displayed point value by 1; sets to 0 if result would be negative
-                updatePointsInt(m_autonAlgaeText, false);
-            }
-        });*/
-        //Connects the checkbox for exiting the community and sets up a listener to detect when the checked status is changed
+        //Connects the checkbox for leaving starting zone and sets up a listener to detect when the checked status is changed
         m_leaveCheckbox = v.findViewById(R.id.leave_checkbox);
         m_leaveCheckbox.setChecked(m_matchData.getAutonLeave());
         m_autonCoralTextL1.setText(String.valueOf(m_matchData.getAutonCoralL1()));
@@ -1201,7 +1137,7 @@ public class AutonFragment extends Fragment
 
     public int getCurrentCoralLevel()
     {
-        // Returns the integer climb level that is current checked in the radio buttons
+        // Returns the integer level that is current checked in the radio buttons
         int rtn = 0;
         if (m_autonCoralButtonGroup.getCheckedRadioButtonId() == m_autonCoralButtonL1.getId())
         {
@@ -1224,7 +1160,7 @@ public class AutonFragment extends Fragment
 
     public int getCurrentAlgaeLevel()
     {
-        // Returns the integer climb level that is current checked in the radio buttons
+        // Returns the integer level that is current checked in the radio buttons
         int rtn = 0;
         if (m_autonAlgaeButtonGroup.getCheckedRadioButtonId() == m_autonAlgaeButtonNet.getId())
         {
