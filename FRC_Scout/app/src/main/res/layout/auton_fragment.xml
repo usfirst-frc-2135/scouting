@@ -1,20 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#CEEAF5"
+    android:orientation="horizontal">
+        <TextView
+            android:id="@+id/acquire_game_piece"
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="1dp"
+            android:text="Starting Pos"
+            android:textColor="@color/specialTextPrimary"
+            android:textSize="22sp" />
+
+        <RadioGroup
+            android:id="@+id/starting_position"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="1dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/right_start"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="#8957A1"
+                android:textSize="22sp"
+                android:text="Right"/>
+
+            <RadioButton
+                android:id="@+id/middle_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="#8957A1"
+                android:textSize="22sp"
+                android:text="Middle"/>
+
+            <RadioButton
+                android:id="@+id/left_start"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="#8957A1"
+                android:textSize="22sp"
+                android:text="Left"/>
+
+
+        </RadioGroup>
+    </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/backgroundColor"
             android:orientation="vertical"
             android:paddingLeft="15dp"
-            android:paddingTop="20dp"
+            android:paddingTop="22dp"
             android:paddingRight="15dp">
 
             <LinearLayout
@@ -31,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:text="Leave"
                     android:textColor="@color/textPrimary"
-                    android:textSize="24sp" />
+                    android:textSize="22sp" />
 
                 <CheckBox
                     android:id="@+id/leave_checkbox"
@@ -99,7 +158,7 @@
                     <TextView
                         android:id="@+id/auton_coral_scoring_L1"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="L1:"
                         android:layout_marginTop="8dp"
                         android:textSize="22dp"
@@ -109,7 +168,7 @@
                     <TextView
                         android:id="@+id/auton_coral_scoring_text_L1"
                         android:layout_width="100dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="6dp"
                         android:textSize="25sp" />
@@ -129,7 +188,7 @@
                     <TextView
                         android:id="@+id/auton_coral_scoring_L2"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="L2:"
                         android:layout_marginStart="16dp"
@@ -141,7 +200,7 @@
                         android:layout_marginTop="2dp"
                         android:id="@+id/auton_coral_scoring_text_L2"
                         android:layout_width="100dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:textSize="25sp" />
 
@@ -161,7 +220,7 @@
                         android:id="@+id/auton_coral_scoring_L3"
                         android:layout_marginTop="4dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="L3:"
                         android:layout_marginStart="16dp"
                         android:textSize="22dp"
@@ -172,7 +231,7 @@
                         android:layout_marginTop="1dp"
                         android:id="@+id/auton_coral_scoring_text_L3"
                         android:layout_width="100dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:textSize="25sp" />
 
@@ -193,7 +252,7 @@
                         android:id="@+id/auton_coral_scoring_L4"
                         android:layout_marginTop="4dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="L4:"
                         android:layout_marginStart="16dp"
                         android:textSize="22dp"
@@ -204,7 +263,7 @@
                         android:id="@+id/auton_coral_scoring_text_L4"
                         android:layout_width="100dp"
                         android:layout_marginTop="2dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:background="@drawable/top_rounded_rect"
                         android:backgroundTint="#FEEFF2"
@@ -244,7 +303,7 @@
                     <Button
                         android:id="@+id/auton_coral_scoring_decr"
                         android:layout_width="120dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:background="@drawable/rounded_rect"
                         android:text="@string/decrease"
@@ -254,7 +313,7 @@
                     <TextView
                         android:id="@+id/auton_coral_scoring_text"
                         android:layout_width="120dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:textAlignment="center"
                         android:layout_toRightOf="@+id/auton_coral_scoring_decr"
                         android:textSize="25sp" />
@@ -262,7 +321,7 @@
                     <Button
                         android:id="@+id/auton_coral_scoring_incr"
                         android:layout_width="120dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginEnd="30dp"
                         android:background="@drawable/rounded_rect"
                         android:text="@string/increase"
@@ -273,7 +332,7 @@
                     <Button
                         android:id="@+id/auton_coral_scoring_decr_disabled"
                         android:layout_width="120dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:background="@drawable/rounded_rect"
                         android:text="@string/decrease"
@@ -285,14 +344,14 @@
                     <TextView
                         android:id="@+id/auton_coral_scoring_text_disabled"
                         android:layout_width="120dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:textAlignment="center"
                         android:textSize="25sp" />
 
                     <Button
                         android:id="@+id/auton_coral_scoring_incr_disabled"
                         android:layout_width="120dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginEnd="30dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#BEBEBE"
@@ -304,7 +363,7 @@
                     <Button
                         android:id="@+id/auton_coral_scoring_decr_L1"
                         android:layout_width="120dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:background="@drawable/rounded_rect"
                         android:text="@string/decrease"
@@ -316,14 +375,14 @@
                     <TextView
                         android:id="@+id/auton_coral_scoring_button_text_L1"
                         android:layout_width="120dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:textAlignment="center"
                         android:textSize="25sp" />
 
                     <Button
                         android:id="@+id/auton_coral_scoring_incr_L1"
                         android:layout_width="120dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginEnd="30dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#A9FFCB"
@@ -335,7 +394,7 @@
                     <Button
                         android:id="@+id/auton_coral_scoring_decr_L2"
                         android:layout_width="120dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:background="@drawable/rounded_rect"
                         android:text="@string/decrease"
@@ -347,14 +406,14 @@
                     <TextView
                         android:id="@+id/auton_coral_scoring_button_text_L2"
                         android:layout_width="120dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:textAlignment="center"
                         android:textSize="25sp" />
 
                     <Button
                         android:id="@+id/auton_coral_scoring_incr_L2"
                         android:layout_width="120dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginEnd="30dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#5EDAEA"
@@ -366,7 +425,7 @@
                     <Button
                         android:id="@+id/auton_coral_scoring_decr_L3"
                         android:layout_width="120dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:background="@drawable/rounded_rect"
                         android:text="@string/decrease"
@@ -378,14 +437,14 @@
                     <TextView
                         android:id="@+id/auton_coral_scoring_button_text_L3"
                         android:layout_width="120dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:textAlignment="center"
                         android:textSize="25sp" />
 
                     <Button
                         android:id="@+id/auton_coral_scoring_incr_L3"
                         android:layout_width="120dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginEnd="30dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#5B37C8"
@@ -397,7 +456,7 @@
                     <Button
                         android:id="@+id/auton_coral_scoring_decr_L4"
                         android:layout_width="120dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:background="@drawable/rounded_rect"
                         android:text="@string/decrease"
@@ -410,14 +469,14 @@
                     <TextView
                         android:id="@+id/auton_coral_scoring_button_text_L4"
                         android:layout_width="120dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:textAlignment="center"
                         android:textSize="25sp" />
 
                     <Button
                         android:id="@+id/auton_coral_scoring_incr_L4"
                         android:layout_width="120dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginEnd="30dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#9C1DE2"
@@ -446,7 +505,7 @@
                         android:id="@+id/amp_notes_title"
                         style="?android:listSeparatorTextViewStyle"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:background="@drawable/rounded_side"
                         android:backgroundTint="#FBCDD5"
                         android:text="LEVEL:"
@@ -463,7 +522,7 @@
                         android:buttonTint="@color/specialTextPrimary"
                         android:text="1"
                         android:textColor="@color/specialTextPrimary"
-                        android:textSize="20sp" />
+                        android:textSize="22sp" />
 
                     <RadioButton
                         android:layout_marginTop="5dp"
@@ -475,7 +534,7 @@
                         android:buttonTint="@color/specialTextPrimary"
                         android:text="2"
                         android:textColor="@color/specialTextPrimary"
-                        android:textSize="20sp" />
+                        android:textSize="22sp" />
 
                     <RadioButton
                         android:layout_marginTop="5dp"
@@ -487,7 +546,7 @@
                         android:buttonTint="@color/specialTextPrimary"
                         android:text="3"
                         android:textColor="@color/specialTextPrimary"
-                        android:textSize="20sp" />
+                        android:textSize="22sp" />
 
                     <RadioButton
                         android:layout_marginTop="5dp"
@@ -499,7 +558,7 @@
                         android:buttonTint="@color/specialTextPrimary"
                         android:text="4"
                         android:textColor="@color/specialTextPrimary"
-                        android:textSize="20sp" />
+                        android:textSize="22sp" />
 
                     <RadioButton
                         android:layout_marginTop="5dp"
@@ -511,7 +570,7 @@
                         android:buttonTint="@color/specialTextPrimary"
                         android:text="None"
                         android:textColor="@color/specialTextPrimary"
-                        android:textSize="20sp" />
+                        android:textSize="22sp" />
 
                 </RadioGroup>
                 </LinearLayout>
@@ -581,7 +640,7 @@
                         <TextView
                             android:id="@+id/auton_algae_net"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:text="Net:"
                             android:layout_marginTop="8dp"
                             android:layout_marginStart="16dp"
@@ -592,7 +651,7 @@
                         <TextView
                             android:id="@+id/auton_algae_net_scoring"
                             android:layout_width="100dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="6dp"
                             android:textSize="25sp" />
@@ -623,7 +682,7 @@
                             android:layout_marginTop="2dp"
                             android:id="@+id/auton_algae_processor_scoring"
                             android:layout_width="100dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:textSize="25sp" />
 
@@ -655,7 +714,7 @@
                         <Button
                             android:id="@+id/auton_algae_scoring_decr"
                             android:layout_width="120dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:background="@drawable/rounded_rect"
                             android:text="@string/decrease"
@@ -665,7 +724,7 @@
                         <TextView
                             android:id="@+id/auton_algae_scoring_text"
                             android:layout_width="120dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:textAlignment="center"
                             android:layout_toRightOf="@+id/auton_algae_scoring_decr"
                             android:textSize="25sp" />
@@ -673,7 +732,7 @@
                         <Button
                             android:id="@+id/auton_algae_scoring_incr"
                             android:layout_width="120dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginEnd="30dp"
                             android:background="@drawable/rounded_rect"
                             android:text="@string/increase"
@@ -684,7 +743,7 @@
                         <Button
                             android:id="@+id/auton_algae_scoring_decr_disabled"
                             android:layout_width="120dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:background="@drawable/rounded_rect"
                             android:text="@string/decrease"
@@ -696,14 +755,14 @@
                         <TextView
                             android:id="@+id/auton_algae_scoring_text_disabled"
                             android:layout_width="120dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:textAlignment="center"
                             android:textSize="25sp" />
 
                         <Button
                             android:id="@+id/auton_algae_scoring_incr_disabled"
                             android:layout_width="120dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginEnd="30dp"
                             android:background="@drawable/rounded_rect"
                             android:backgroundTint="#BEBEBE"
@@ -715,7 +774,7 @@
                         <Button
                             android:id="@+id/auton_algae_scoring_decr_net"
                             android:layout_width="120dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:background="@drawable/rounded_rect"
                             android:text="@string/decrease"
@@ -727,14 +786,14 @@
                         <TextView
                             android:id="@+id/auton_algae_scoring_button_text_net"
                             android:layout_width="120dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:textAlignment="center"
                             android:textSize="25sp" />
 
                         <Button
                             android:id="@+id/auton_algae_scoring_incr_net"
                             android:layout_width="120dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginEnd="30dp"
                             android:background="@drawable/rounded_rect"
                             android:backgroundTint="#A9FFCB"
@@ -746,7 +805,7 @@
                         <Button
                             android:id="@+id/auton_algae_scoring_decr_processor"
                             android:layout_width="120dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:background="@drawable/rounded_rect"
                             android:text="@string/decrease"
@@ -759,14 +818,14 @@
                         <TextView
                             android:id="@+id/auton_algae_scoring_button_text_processor"
                             android:layout_width="120dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:textAlignment="center"
                             android:textSize="25sp" />
 
                         <Button
                             android:id="@+id/auton_algae_scoring_incr_processor"
                             android:layout_width="120dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginEnd="30dp"
                             android:background="@drawable/rounded_rect"
                             android:backgroundTint="#5EDAEA"
@@ -789,7 +848,7 @@
                     <RadioGroup
                         android:id="@+id/auton_algae_radio_group"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:background="@drawable/bottom_rounded_rect"
                         android:backgroundTint="#E6D1FF"
                         android:orientation="horizontal">
@@ -804,7 +863,7 @@
                             android:buttonTint="@color/specialTextPrimary"
                             android:text="Net"
                             android:textColor="@color/specialTextPrimary"
-                            android:textSize="20sp" />
+                            android:textSize="22sp" />
 
                         <RadioButton
                             android:layout_marginTop="5dp"
@@ -816,7 +875,7 @@
                             android:buttonTint="@color/specialTextPrimary"
                             android:text="Processor"
                             android:textColor="@color/specialTextPrimary"
-                            android:textSize="20sp" />
+                            android:textSize="22sp" />
 
                         <RadioButton
                             android:layout_marginTop="5dp"
@@ -828,18 +887,92 @@
                             android:buttonTint="@color/specialTextPrimary"
                             android:text="None"
                             android:textColor="@color/specialTextPrimary"
-                            android:textSize="20sp" />
+                            android:textSize="22sp" />
+
+
 
                     </RadioGroup>
+                    </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#FCD9DF"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/top_rounded_rect"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/amp_scoring_title"
+                    style="?android:listSeparatorTextViewStyle"
+                    android:layout_width="120dp"
+                    android:layout_height="34dp"
+                    android:backgroundTint="#faccc8"
+                    android:text="Coral"
+                    android:background="@drawable/top_left_corner_rounded"
+                    android:textColor="@color/specialTextPrimary"
+                    android:textSize="24sp" />
+
+                <CheckBox
+                        android:id="@+id/floor_coral"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:textSize="22sp"
+                        android:buttonTint="#8957A1"
+                        android:text="Floor" />
+
+
+                    <CheckBox
+                        android:id="@+id/station_coral"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="22sp"
+                        android:buttonTint="#8957A1"
+                        android:text="Station" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FCD9DF"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/amp_scoreing_title"
+                        style="?android:listSeparatorTextViewStyle"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Algae"
+                        android:textColor="@color/specialTextPrimary"
+                        android:background="#faccc8"
+                        android:textSize="24sp" />
+
+                        <CheckBox
+                            android:id="@+id/floor_algae"
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:textSize="22sp"
+                            android:buttonTint="#8957A1"
+                            android:text="Floor" />
+
+
+                        <CheckBox
+                            android:id="@+id/reef_algae"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="22sp"
+                            android:buttonTint="#8957A1"
+                            android:background="@drawable/bottom_left_rounded_rect"
+                            android:text="Reef" />
+
+        </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
 
-        </LinearLayout>
-
-    </ScrollView>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

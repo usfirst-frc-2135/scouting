@@ -51,6 +51,11 @@ public class AutonFragment extends Fragment
     private Button m_autonCoralIncrL4;
     private Button m_autonCoralDecrL4;
 
+    private RadioGroup m_startingPosition;
+    private RadioButton m_rightStart;
+    private RadioButton m_middleStart;
+    private RadioButton m_leftStart;
+
     private TextView m_autonCoralL1;
     private TextView m_autonCoralL2;
     private TextView m_autonCoralL3;
@@ -78,6 +83,11 @@ public class AutonFragment extends Fragment
     private TextView m_autonAlgaeProcessor;
 
     private CheckBox m_leaveCheckbox;
+    private CheckBox m_floorCoral;
+    private CheckBox m_stationCoral;
+    private CheckBox m_floorAlgae;
+    private CheckBox m_reefAlgae;
+
     private MatchData m_matchData;
 
     // Check if pointsTextView field has a valid number, greater than MAX_POINTS.
@@ -270,6 +280,24 @@ public class AutonFragment extends Fragment
 
             m_autonAlgaeNet = v.findViewById(R.id.auton_algae_net);
             m_autonAlgaeProcessor = v.findViewById(R.id.auton_algae_processor);
+
+            // Setup TextViews that displays points, setting 0 as the default.
+            // defense buttons
+            m_startingPosition = v.findViewById(R.id.starting_position);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
+            m_rightStart = v.findViewById(R.id.right_start);//Sets up radio button that corresponds to 0
+            m_middleStart = v.findViewById(R.id.middle_start);//Sets up radio button that corresponds to 1
+            m_leftStart  = v.findViewById(R.id.left_start);//Sets up radio button that corresponds to 2
+            m_rightStart.setChecked(false);
+            m_middleStart.setChecked(false);
+            m_leftStart .setChecked(false);
+
+            int defValue = m_matchData.getCurrentStartingPosition();
+            if (defValue == 0)
+                m_rightStart.setChecked(true);
+            else if(defValue == 1)
+                m_middleStart.setChecked(true);
+            else if(defValue == 2)
+                m_leftStart.setChecked(true);
 
             m_autonCoralButtonGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
             {
@@ -1115,6 +1143,16 @@ public class AutonFragment extends Fragment
         //Connects the checkbox for leaving starting zone and sets up a listener to detect when the checked status is changed
         m_leaveCheckbox = v.findViewById(R.id.leave_checkbox);
         m_leaveCheckbox.setChecked(m_matchData.getAutonLeave());
+        m_floorCoral = v.findViewById(R.id.floor_coral);
+        m_floorCoral.setChecked(m_matchData.getFloorCoral());
+        m_stationCoral = v.findViewById(R.id.station_coral);
+        m_stationCoral.setChecked(m_matchData.getStationCoral());
+        m_floorAlgae = v.findViewById(R.id.floor_algae);
+        m_floorAlgae.setChecked(m_matchData.getFloorAlgae());
+        m_reefAlgae = v.findViewById(R.id.reef_algae);
+        m_reefAlgae.setChecked(m_matchData.getReefAlgae());
+
+
         m_autonCoralTextL1.setText(String.valueOf(m_matchData.getAutonCoralL1()));
         m_autonCoralTextL2.setText(String.valueOf(m_matchData.getAutonCoralL2()));
         m_autonCoralTextL3.setText(String.valueOf(m_matchData.getAutonCoralL3()));
@@ -1173,6 +1211,25 @@ public class AutonFragment extends Fragment
         return rtn;
     }
 
+    public int getCurrentStartingPosition()
+    {
+        // Returns the integer climb level that is current checked in the radio buttons
+        int rtn = 0;
+        if (m_startingPosition.getCheckedRadioButtonId() == m_rightStart.getId())
+        {
+            rtn = 0;
+        }
+        if (m_startingPosition.getCheckedRadioButtonId() == m_middleStart.getId())
+        {
+            rtn = 1;
+        }
+        if (m_startingPosition.getCheckedRadioButtonId() == m_leftStart.getId())
+        {
+            rtn = 2;
+        }
+        return rtn;
+    }
+
     public void updateAutonData()
     {
 
@@ -1188,7 +1245,19 @@ public class AutonFragment extends Fragment
 
         m_matchData.setAutonAlgaeProcessor(Integer.parseInt(m_autonAlgaeTextProcessor.getText().toString()));
 
+        m_matchData.setCurrentStartingPosition(getCurrentStartingPosition());
+
         m_matchData.setAutonLeave(m_leaveCheckbox.isChecked());
+
+        m_matchData.setFloorCoral(m_floorCoral.isChecked());
+
+        m_matchData.setStationCoral(m_stationCoral.isChecked());
+
+        m_matchData.setFloorAlgae(m_floorAlgae.isChecked());
+
+        m_matchData.setReefAlgae(m_reefAlgae.isChecked());
+
+
 
 
     }

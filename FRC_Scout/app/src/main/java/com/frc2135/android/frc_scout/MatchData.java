@@ -41,6 +41,12 @@ public class MatchData
     private static final String JSON_KEY_PICK_UP_CORAL = "pickUpCoral";
     private static final String JSON_KEY_CORAL_ACQUIRE= "coralAcquire";
     private static final String JSON_KEY_ALGAE_ACQUIRE = "algaeAcquire";
+    private static final String JSON_KEY_STARTING_POSITION = "startingPosition";
+    private static final String JSON_KEY_FLOOR_CORAL= "floorCoral";
+    private static final String JSON_KEY_STATION_CORAL = "stationCoral";
+    private static final String JSON_KEY_FLOOR_ALGAE= "floorAlgae";
+    private static final String JSON_KEY_REEF_ALGAE = "reefAlgae";
+
     private static final String JSON_KEY_TELEOP_PASSES = "teleopPasses";
     private static final String JSON_KEY_PICK_UP_ALGAE = "pickUpAlgae";
     private static final String JSON_KEY_KNOCK_OFF_ALGAE = "knockOffAlgae";
@@ -80,9 +86,14 @@ public class MatchData
     private int m_teleopCoralL4;
     private int m_teleopAlgaeNet;
     private int m_teleopAlgaeProcessor;
+    private int m_positionStarting;
 
     private boolean m_pickUpCoral;
     private boolean m_pickUpAlgae;
+    private boolean m_coralFloor;
+    private boolean m_coralStation;
+    private boolean m_algaeFloor;
+    private boolean m_algaeReef;
     private int m_playedDefense;
 
     private int m_pinFoul;
@@ -143,6 +154,8 @@ public class MatchData
         setAutonCoralL4(0);
         setAutonAlgaeNet(0);
         setAutonAlgaeProcessor(0);
+        setFloorCoral(false);
+        setStationCoral(false);
 
         setTeleopCoralL1(0);
         setTeleopCoralL2(0);
@@ -199,6 +212,8 @@ public class MatchData
         setAutonCoralL4(json.getInt(JSON_KEY_TELEOP_CORAL_L4));
         setAutonAlgaeNet(json.getInt(JSON_KEY_TELEOP_ALGAE_NET));
         setAutonAlgaeProcessor(json.getInt(JSON_KEY_TELEOP_ALGAE_PROCESSOR));
+        setFloorCoral(json.getBoolean(JSON_KEY_FLOOR_CORAL));
+        setStationCoral(json.getBoolean(JSON_KEY_STATION_CORAL));
 
         setPickUpCoral(json.getBoolean(JSON_KEY_PICK_UP_CORAL));
         setPickUpAlgae(json.getBoolean(JSON_KEY_PICK_UP_CORAL));
@@ -342,6 +357,50 @@ public class MatchData
         return m_autonLeaveStartingZone;
     }
 
+    public void setFloorCoral(boolean floorCoral)
+    {
+
+        m_coralFloor = floorCoral;
+    }
+
+    public boolean getFloorCoral()
+    {
+        return m_coralFloor;
+    }
+
+    public void setFloorAlgae(boolean floorAlgae)
+    {
+
+        m_algaeFloor = floorAlgae;
+    }
+
+    public boolean getFloorAlgae()
+    {
+        return m_algaeFloor;
+    }
+
+    public void setReefAlgae(boolean reefAlgae)
+    {
+
+        m_algaeReef = reefAlgae;
+    }
+
+    public boolean getReefAlgae()
+    {
+        return m_algaeReef;
+    }
+
+    public void setStationCoral(boolean stationCoral)
+    {
+
+        m_coralStation = stationCoral;
+    }
+
+    public boolean getStationCoral()
+    {
+        return m_coralStation;
+    }
+
     public void setTeleopCoralL1(int numCoral)
     {
         m_teleopCoralL1 = numCoral;
@@ -422,6 +481,17 @@ public class MatchData
     public boolean getPickUpAlgae()
     {
         return m_pickUpAlgae;
+    }
+
+    public void setCurrentStartingPosition(int startingPosition)
+    {
+
+        m_positionStarting = startingPosition;
+    }
+
+    public int getCurrentStartingPosition()
+    {
+        return m_positionStarting;
     }
 
     public void setKnockOffAlgae(boolean KnockOffAlgae)
@@ -647,6 +717,25 @@ public class MatchData
         tsvStr += m_autonCoralL4 + "\t";
         tsvStr += m_autonAlgaeNet + "\t";
         tsvStr += m_autonAlgaeProcessor + "\t";
+        if (m_coralFloor)  // bool value: use 1/0 instead of true/false
+            tsvStr += "1" + "\t";
+        else
+            tsvStr += "0" + "\t";
+        if (m_coralStation)  // bool value: use 1/0 instead of true/false
+            tsvStr += "1" + "\t";
+        else
+            tsvStr += "0" + "\t";
+
+        if (m_algaeFloor)  // bool value: use 1/0 instead of true/false
+            tsvStr += "1" + "\t";
+        else
+            tsvStr += "0" + "\t";
+        if (m_algaeReef)  // bool value: use 1/0 instead of true/false
+            tsvStr += "1" + "\t";
+        else
+            tsvStr += "0" + "\t";
+
+
 
         if (m_pickUpCoral)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
@@ -673,6 +762,7 @@ public class MatchData
         else
             tsvStr += "0" + "\t";
 
+        tsvStr += m_positionStarting + "\t";
         tsvStr += m_playedDefense + "\t";
         tsvStr += m_pinFoul + "\t";
         tsvStr += m_anchorFoul + "\t";
@@ -755,6 +845,14 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_PICK_UP_CORAL, m_pickUpCoral);
         json.put("divider", ",");
+        json.put(JSON_KEY_FLOOR_CORAL, m_coralFloor);
+        json.put("divider", ",");
+        json.put(JSON_KEY_STATION_CORAL, m_coralStation);
+        json.put("divider", ",");
+        json.put(JSON_KEY_FLOOR_ALGAE, m_algaeFloor);
+        json.put("divider", ",");
+        json.put(JSON_KEY_REEF_ALGAE, m_algaeReef);
+        json.put("divider", ",");
         json.put(JSON_KEY_PICK_UP_ALGAE, m_pickUpAlgae);
         json.put("divider", ",");
         json.put(JSON_KEY_KNOCK_OFF_ALGAE, m_knockAlgaeOff);
@@ -762,6 +860,8 @@ public class MatchData
         json.put(JSON_KEY_ALGAE_FROM_REEF, m_algaeFromReef);
         json.put("divider", ",");
         json.put(JSON_KEY_HOLD_BOTH_ELEMENTS, m_holdBothElements);
+        json.put("divider", ",");
+        json.put(JSON_KEY_STARTING_POSITION, m_positionStarting);
         json.put("divider", ",");
         json.put(JSON_KEY_PLAYED_DEFENSE, m_playedDefense);
         json.put("divider", ",");
