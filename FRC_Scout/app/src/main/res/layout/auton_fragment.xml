@@ -72,35 +72,35 @@
             android:layout_height="wrap_content"
             android:background="@color/backgroundColor"
             android:orientation="vertical"
-            android:paddingLeft="15dp"
-            android:paddingTop="22dp"
-            android:paddingRight="15dp">
+            android:paddingTop="10dp"
+            android:paddingRight="10dp">
 
             <LinearLayout
-                android:layout_width="500dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="2dp"
+                android:background="@drawable/rounded_rect"
+                android:backgroundTint="#EFE2FF"
+                android:paddingTop="15dp"
                 android:paddingBottom="15dp">
 
                 <TextView
                     android:id="@+id/leave_title"
                     style="?android:listSeparatorTextViewStyle"
-                    android:layout_width="190dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Leave"
-                    android:textColor="@color/textPrimary"
+                    android:textColor="#000"
                     android:textSize="22sp" />
 
                 <CheckBox
                     android:id="@+id/leave_checkbox"
-                    android:layout_width="262dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
-                    android:layout_marginRight="16dp"
-                    android:buttonTint="@color/textPrimary"
+                    android:buttonTint="#8957A1"
+                    android:textColor="#000"
                     android:text="Leave Starting Zone"
-                    android:textColor="@color/textPrimary"
                     android:textSize="22sp" />
 
             </LinearLayout>
@@ -109,6 +109,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/top_rounded_rect"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
