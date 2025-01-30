@@ -665,7 +665,7 @@ public class TeleopFragment extends Fragment
                         m_teleopCoralButtonL2.setTextColor(Color.parseColor("#363636"));
                         m_teleopCoralButtonL3.setTextColor(Color.parseColor("#363636"));
                         m_teleopCoralButtonL4.setTextColor(Color.parseColor("#363636"));
-                        m_teleopCoralButtonNone.setTextColor(Color.parseColor("#49B6A9"));
+                        m_teleopCoralButtonNone.setTextColor(Color.parseColor("#363636"));
                         m_teleopCoralL1.setTextColor(Color.parseColor("#363636"));
                         m_teleopCoralL2.setTextColor(Color.parseColor("#363636"));
                         m_teleopCoralL3.setTextColor(Color.parseColor("#363636"));
@@ -686,11 +686,11 @@ public class TeleopFragment extends Fragment
                         m_teleopCoralIncrL3.setVisibility(View.INVISIBLE);
                         m_teleopCoralDecrL4.setVisibility(View.INVISIBLE);
                         m_teleopCoralIncrL4.setVisibility(View.INVISIBLE);
-                        m_teleopCoralL1.setTextColor(Color.parseColor("#A9FFCB"));
+                        m_teleopCoralL1.setTextColor(Color.parseColor("#48a14d"));
                         m_teleopCoralL2.setTextColor(Color.parseColor("#363636"));
                         m_teleopCoralL3.setTextColor(Color.parseColor("#363636"));
                         m_teleopCoralL4.setTextColor(Color.parseColor("#363636"));
-                        m_teleopCoralButtonL1.setTextColor(Color.parseColor("#A9FFCB"));
+                        m_teleopCoralButtonL1.setTextColor(Color.parseColor("#48a14d"));
                         m_teleopCoralButtonL2.setTextColor(Color.parseColor("#363636"));
                         m_teleopCoralButtonL3.setTextColor(Color.parseColor("#363636"));
                         m_teleopCoralButtonL4.setTextColor(Color.parseColor("#363636"));
@@ -712,11 +712,11 @@ public class TeleopFragment extends Fragment
                         m_teleopCoralDecrL4.setVisibility(View.INVISIBLE);
                         m_teleopCoralIncrL4.setVisibility(View.INVISIBLE);
                         m_teleopCoralL1.setTextColor(Color.parseColor("#363636"));
-                        m_teleopCoralL2.setTextColor(Color.parseColor("#49B6A9"));
+                        m_teleopCoralL2.setTextColor(Color.parseColor("#3DB9FC"));
                         m_teleopCoralL3.setTextColor(Color.parseColor("#363636"));
                         m_teleopCoralL4.setTextColor(Color.parseColor("#363636"));
                         m_teleopCoralButtonL1.setTextColor(Color.parseColor("#363636"));
-                        m_teleopCoralButtonL2.setTextColor(Color.parseColor("#49B6A9"));
+                        m_teleopCoralButtonL2.setTextColor(Color.parseColor("#3DB9FC"));
                         m_teleopCoralButtonL3.setTextColor(Color.parseColor("#363636"));
                         m_teleopCoralButtonL4.setTextColor(Color.parseColor("#363636"));
                         m_teleopCoralButtonNone.setTextColor(Color.parseColor("#363636"));
@@ -738,11 +738,11 @@ public class TeleopFragment extends Fragment
                         m_teleopCoralIncrL4.setVisibility(View.INVISIBLE);
                         m_teleopCoralL1.setTextColor(Color.parseColor("#363636"));
                         m_teleopCoralL2.setTextColor(Color.parseColor("#363636"));
-                        m_teleopCoralL3.setTextColor(Color.parseColor("#5B37C8"));
+                        m_teleopCoralL3.setTextColor(Color.parseColor("#433DFC"));
                         m_teleopCoralL4.setTextColor(Color.parseColor("#363636"));
                         m_teleopCoralButtonL1.setTextColor(Color.parseColor("#363636"));
                         m_teleopCoralButtonL2.setTextColor(Color.parseColor("#363636"));
-                        m_teleopCoralButtonL3.setTextColor(Color.parseColor("#5B37C8"));
+                        m_teleopCoralButtonL3.setTextColor(Color.parseColor("#433DFC"));
                         m_teleopCoralButtonL4.setTextColor(Color.parseColor("#363636"));
                         m_teleopCoralButtonNone.setTextColor(Color.parseColor("#363636"));
                     }
@@ -764,11 +764,11 @@ public class TeleopFragment extends Fragment
                         m_teleopCoralL1.setTextColor(Color.parseColor("#363636"));
                         m_teleopCoralL2.setTextColor(Color.parseColor("#363636"));
                         m_teleopCoralL3.setTextColor(Color.parseColor("#363636"));
-                        m_teleopCoralL4.setTextColor(Color.parseColor("#9C1DE2"));
+                        m_teleopCoralL4.setTextColor(Color.parseColor("#B331EB"));
                         m_teleopCoralButtonL1.setTextColor(Color.parseColor("#363636"));
                         m_teleopCoralButtonL2.setTextColor(Color.parseColor("#363636"));
                         m_teleopCoralButtonL3.setTextColor(Color.parseColor("#363636"));
-                        m_teleopCoralButtonL4.setTextColor(Color.parseColor("#9C1DE2"));
+                        m_teleopCoralButtonL4.setTextColor(Color.parseColor("#B331EB"));
                         m_teleopCoralButtonNone.setTextColor(Color.parseColor("#363636"));
                     }
                     if (Integer.parseInt(m_teleopCoralText.getText().toString()) <= MAX_POINTS_CORAL)
@@ -1086,7 +1086,7 @@ public class TeleopFragment extends Fragment
                         m_teleopAlgaeDecrDisabled.setVisibility(View.VISIBLE);
                         m_teleopAlgaeIncrDisabled.setVisibility(View.VISIBLE);
                     }
-                    else if (getCurrentAlgaeLevel() == 1) //parked
+                    else if (getCurrentAlgaeLevel() == 1)
                     {
                         m_teleopAlgaeButtonNet.setChecked(true);
                         m_teleopAlgaeButtonNet.setTextColor(Color.parseColor("#A9FFCB")); //ensures text remains gray
@@ -1107,7 +1107,7 @@ public class TeleopFragment extends Fragment
                         m_teleopAlgaeDecrProcessor.setVisibility(View.INVISIBLE);
                         m_teleopAlgaeIncrProcessor.setVisibility(View.INVISIBLE);
                     }
-                    else if (getCurrentCoralLevel() == 2) //onstage
+                    else if (getCurrentAlgaeLevel() == 2) //onstage
                     {
                         m_teleopAlgaeButtonNet.setChecked(false);
                         m_teleopAlgaeButtonNet.setTextColor(Color.parseColor("#363636")); //changes text color when stage level is 2
@@ -1166,7 +1166,7 @@ public class TeleopFragment extends Fragment
                         m_teleopAlgaeIncrProcessor.setVisibility(View.INVISIBLE);
                         m_teleopAlgaeButtonNet.setTextColor(Color.parseColor("#363636"));
                         m_teleopAlgaeButtonProcessor.setTextColor(Color.parseColor("#363636"));
-                        m_teleopAlgaeButtonNone.setTextColor(Color.parseColor("#49B6A9"));
+                        m_teleopAlgaeButtonNone.setTextColor(Color.parseColor("#363636"));
                         m_teleopAlgaeNet.setTextColor(Color.parseColor("#363636"));
                         m_teleopAlgaeProcessor.setTextColor(Color.parseColor("#363636"));
                     }
@@ -1181,9 +1181,9 @@ public class TeleopFragment extends Fragment
                         m_teleopAlgaeDecrNet.setVisibility(View.VISIBLE);
                         m_teleopAlgaeDecrProcessor.setVisibility(View.INVISIBLE);
                         m_teleopAlgaeIncrProcessor.setVisibility(View.INVISIBLE);
-                        m_teleopAlgaeNet.setTextColor(Color.parseColor("#A9FFCB"));
+                        m_teleopAlgaeNet.setTextColor(Color.parseColor("#2F63FF"));
                         m_teleopAlgaeProcessor.setTextColor(Color.parseColor("#363636"));
-                        m_teleopAlgaeButtonNet.setTextColor(Color.parseColor("#A9FFCB"));
+                        m_teleopAlgaeButtonNet.setTextColor(Color.parseColor("#2F63FF"));
                         m_teleopAlgaeButtonProcessor.setTextColor(Color.parseColor("#363636"));
                         m_teleopAlgaeButtonNone.setTextColor(Color.parseColor("#363636"));
                     }
@@ -1199,9 +1199,9 @@ public class TeleopFragment extends Fragment
                         m_teleopAlgaeDecrProcessor.setVisibility(View.VISIBLE);
                         m_teleopAlgaeIncrProcessor.setVisibility(View.VISIBLE);
                         m_teleopAlgaeNet.setTextColor(Color.parseColor("#363636"));
-                        m_teleopAlgaeProcessor.setTextColor(Color.parseColor("#49B6A9"));
+                        m_teleopAlgaeProcessor.setTextColor(Color.parseColor("#39169A"));
                         m_teleopAlgaeButtonNet.setTextColor(Color.parseColor("#363636"));
-                        m_teleopAlgaeButtonProcessor.setTextColor(Color.parseColor("#49B6A9"));
+                        m_teleopAlgaeButtonProcessor.setTextColor(Color.parseColor("#39169A"));
                         m_teleopAlgaeButtonNone.setTextColor(Color.parseColor("#363636"));
                     }
                     if (Integer.parseInt(m_teleopAlgaeText.getText().toString()) <= MAX_POINTS_ALGAE)

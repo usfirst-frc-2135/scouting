@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="Acquire Game Piece"
-                android:backgroundTint="#CEEAF5"
+                android:backgroundTint="#CACFF9"
                 android:textColor="@color/specialTextPrimary"
                 android:background="@drawable/top_rounded_rect"
                 android:textSize="24sp" />
@@ -33,7 +33,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="#b3E5f2">
+                android:background="@drawable/bottom_rounded_rect"
+                android:backgroundTint="#CACFF9">
 
                 <TextView
                     android:id="@+id/coral_text"
@@ -41,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:textSize="20sp"
-                    android:background="#b3E5f2"
+                    android:background="#CACFF9"
                     android:layout_marginTop="5dp"
                     android:textColor="#000000"
                     android:text="Coral" />
@@ -51,12 +52,12 @@
                     android:layout_width="80dp"
                     android:layout_height="40dp"
                     android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#faccc8"
+                    android:backgroundTint="#f08080"
                     android:text="@string/decrease"
-                    android:textColor="#9F3FB5"
+                    android:textColor="#FFFFFF"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
-                    android:textSize="20dp" />
+                    android:textSize="30dp" />
 
                 <TextView
                     android:id="@+id/coral_acquire_text"
@@ -73,17 +74,17 @@
                     android:layout_marginEnd="30dp"
                     android:background="@drawable/rounded_rect"
                     android:text="@string/increase"
-                    android:backgroundTint="#faccc8"
-                    android:textColor="#9F3FB5"
+                    android:backgroundTint="#f08080"
+                    android:textColor="#FFFFFF"
                     android:layout_marginTop="5dp"
-                    android:textSize="20dp" />
+                    android:textSize="30dp" />
 
                 <TextView
                     android:id="@+id/algae_text"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    android:background="#b3E5f2"
+                    android:background="#CACFF9"
                     android:layout_marginTop="5dp"
                     android:textColor="#000000"
                     android:layout_marginBottom="10dp"
@@ -95,11 +96,11 @@
                     android:layout_width="80dp"
                     android:layout_height="40dp"
                     android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#faccc8"
+                    android:backgroundTint="#23DEBF"
                     android:text="@string/decrease"
-                    android:textColor="#9F3FB5"
+                    android:textColor="#FFFFFF"
                     android:layout_marginTop="5dp"
-                    android:textSize="20dp" />
+                    android:textSize="30dp" />
 
                 <TextView
                     android:id="@+id/algae_acquire_text"
@@ -117,9 +118,9 @@
                     android:background="@drawable/rounded_rect"
                     android:text="@string/increase"
                     android:layout_marginTop="5dp"
-                    android:backgroundTint="#faccc8"
-                    android:textColor="#9F3FB5"
-                    android:textSize="20dp" />
+                    android:backgroundTint="#23DEBF"
+                    android:textColor="#FFFFFF"
+                    android:textSize="30dp" />
 
 
             </LinearLayout>
@@ -130,7 +131,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FCD9DF"
+            android:backgroundTint="#CADAF8"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rounded_rect"
             android:orientation="horizontal">
 
             <TextView
@@ -139,7 +143,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="34dp"
                 android:text="Floor Pickup "
-                android:background="#faccc8"
+                android:background="@drawable/rounded_rect"
+                android:backgroundTint="#CADAF8"
                 android:textColor="@color/specialTextPrimary"
                 android:textSize="24sp" />
 
@@ -167,7 +172,8 @@
             android:id="@+id/textView2"
             style="?android:listSeparatorTextViewStyle"
             android:textColor="#000000"
-            android:background="#CEEAF5"
+            android:backgroundTint="#E7CCE4"
+            android:background="@drawable/top_rounded_rect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Handling game pieces"
@@ -176,19 +182,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:backgroundTint="#b3E5f2"
+            android:backgroundTint="#E7CCE4"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#b3E5f2"
+                android:background="@drawable/bottom_rounded_rect"
+                android:backgroundTint="#E7CCE4"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#b3E5f2"
+                    android:backgroundTint="#E7CCE4"
                     android:background="@drawable/bottom_rounded_rect"
                     android:orientation="horizontal">
 
@@ -226,7 +233,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FCD9DF"
+                android:background="@drawable/rounded_rect"
+                android:backgroundTint="#FCD9DF"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -485,8 +494,8 @@
                                         android:layout_marginStart="16dp"
                                         android:background="@drawable/rounded_rect"
                                         android:text="@string/decrease"
-                                        android:textColor="#FFA9DD"
-                                        android:backgroundTint="#A9FFCB"
+                                        android:textColor="#FFFFFF"
+                                        android:backgroundTint="#48a14d"
                                         android:layout_alignRight="@+id/teleop_coral_scoring_decr"
                                         android:textSize="30sp" />
 
@@ -503,9 +512,9 @@
                                         android:layout_height="40dp"
                                         android:layout_marginEnd="30dp"
                                         android:background="@drawable/rounded_rect"
-                                        android:backgroundTint="#A9FFCB"
+                                        android:backgroundTint="#48a14d"
                                         android:text="@string/increase"
-                                        android:textColor="#FFA9DD"
+                                        android:textColor="#FFFFFF"
                                         android:layout_alignLeft="@+id/teleop_coral_scoring_incr"
                                         android:textSize="30sp" />
 
@@ -516,8 +525,8 @@
                                         android:layout_marginStart="16dp"
                                         android:background="@drawable/rounded_rect"
                                         android:text="@string/decrease"
-                                        android:textColor="#EA6E5E"
-                                        android:backgroundTint="#5EDAEA"
+                                        android:textColor="#FFFFFF"
+                                        android:backgroundTint="#3DB9FC"
                                         android:layout_alignRight="@+id/teleop_coral_scoring_decr"
                                         android:textSize="30sp" />
 
@@ -534,9 +543,9 @@
                                         android:layout_height="40dp"
                                         android:layout_marginEnd="30dp"
                                         android:background="@drawable/rounded_rect"
-                                        android:backgroundTint="#5EDAEA"
+                                        android:backgroundTint="#3DB9FC"
                                         android:text="@string/increase"
-                                        android:textColor="#EA6E5E"
+                                        android:textColor="#FFFFFF"
                                         android:layout_alignLeft="@+id/teleop_coral_scoring_incr"
                                         android:textSize="30sp" />
 
@@ -547,8 +556,8 @@
                                         android:layout_marginStart="16dp"
                                         android:background="@drawable/rounded_rect"
                                         android:text="@string/decrease"
-                                        android:textColor="#A4C837"
-                                        android:backgroundTint="#5B37C8"
+                                        android:textColor="#FFFFFF"
+                                        android:backgroundTint="#433DFC"
                                         android:layout_alignRight="@+id/teleop_coral_scoring_decr"
                                         android:textSize="30sp" />
 
@@ -565,9 +574,9 @@
                                         android:layout_height="40dp"
                                         android:layout_marginEnd="30dp"
                                         android:background="@drawable/rounded_rect"
-                                        android:backgroundTint="#5B37C8"
+                                        android:backgroundTint="#433DFC"
                                         android:text="@string/increase"
-                                        android:textColor="#A4C837"
+                                        android:textColor="#FFFFFF"
                                         android:layout_alignLeft="@+id/teleop_coral_scoring_incr"
                                         android:textSize="30sp" />
 
@@ -578,8 +587,8 @@
                                         android:layout_marginStart="16dp"
                                         android:background="@drawable/rounded_rect"
                                         android:text="@string/decrease"
-                                        android:textColor="#63E21D"
-                                        android:backgroundTint="#9C1DE2"
+                                        android:textColor="#FFFFFF"
+                                        android:backgroundTint="#B331EB"
                                         android:layout_marginBottom="5dp"
                                         android:layout_alignRight="@+id/teleop_coral_scoring_decr"
                                         android:textSize="30sp" />
@@ -597,9 +606,9 @@
                                         android:layout_height="40dp"
                                         android:layout_marginEnd="30dp"
                                         android:background="@drawable/rounded_rect"
-                                        android:backgroundTint="#9C1DE2"
+                                        android:backgroundTint="#B331EB"
                                         android:text="@string/increase"
-                                        android:textColor="#63E21D"
+                                        android:textColor="#FFFFFF"
                                         android:layout_alignLeft="@+id/teleop_coral_scoring_incr"
                                         android:textSize="30sp" />
 
@@ -609,7 +618,8 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="#FBCDD5"
+                                android:background="@drawable/bottom_rounded_rect"
+                                android:backgroundTint="#FBCDD5"
                                 android:orientation="vertical">
 
                                 <RadioGroup
@@ -637,7 +647,7 @@
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:buttonTint="@color/specialTextPrimary"
+                                        android:buttonTint="#48a14d"
                                         android:text="1"
                                         android:textColor="@color/specialTextPrimary"
                                         android:textSize="20sp" />
@@ -649,7 +659,7 @@
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:buttonTint="@color/specialTextPrimary"
+                                        android:buttonTint="#3DB9FC"
                                         android:text="2"
                                         android:textColor="@color/specialTextPrimary"
                                         android:textSize="20sp" />
@@ -661,7 +671,7 @@
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:buttonTint="@color/specialTextPrimary"
+                                        android:buttonTint="#433DFC"
                                         android:text="3"
                                         android:textColor="@color/specialTextPrimary"
                                         android:textSize="20sp" />
@@ -673,7 +683,7 @@
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:buttonTint="@color/specialTextPrimary"
+                                        android:buttonTint="#B331EB"
                                         android:text="4"
                                         android:textColor="@color/specialTextPrimary"
                                         android:textSize="20sp" />
@@ -703,22 +713,24 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:background="@drawable/bottom_rounded_rect"
-                android:backgroundTint="#EFE2FF">
+                android:backgroundTint="@color/specialTextPrimary">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:background="#EFE2FF">
+                    android:background="@drawable/rounded_rect"
+                    android:layout_marginTop="5dp"
+                    android:backgroundTint="#C8F7D4">
 
                     <TextView
                         android:id="@+id/teleop_algae_scoring_title"
                         style="?android:listSeparatorTextViewStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="#EFE2FF"
+                        android:background="#C8F7D4"
                         android:layout_marginTop="70dp"
-                        android:text="Algae"
+                        android:text="ALGAE"
                         android:rotation="-90"
                         android:textColor="@color/specialTextPrimary"
                         android:textSize="22sp" />
@@ -726,13 +738,15 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#EFE2FF"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#EFE2FF"
                         android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="#EFE2FF"
+                            android:background="@drawable/top_rounded_rect"
+                            android:backgroundTint="#ECFCF0"
                             android:orientation="horizontal"
                             android:paddingBottom="1dp">
 
@@ -741,13 +755,13 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
                                 android:background="@drawable/top_rounded_rect"
-                                android:backgroundTint="#F5EDFF"
+                                android:backgroundTint="#ECFCF0"
                                 android:paddingBottom="1dp">
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="#F5EDFF"
+                                    android:background="#ECFCF0"
                                     android:orientation="horizontal"
                                     android:layout_marginTop="4dp"
                                     android:layout_marginStart="16dp"
@@ -778,7 +792,7 @@
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="#F5EDFF"
+                                    android:background="#ECFCF0"
                                     android:orientation="horizontal"
                                     android:layout_marginTop="8dp"
                                     android:layout_weight="4"
@@ -810,20 +824,20 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="#EFE2FF"
+                            android:background="#C8F7D4"
                             android:orientation="vertical"
                             android:paddingBottom="1dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="#EBDAFF"
+                                android:background="#DAF9E2"
                                 android:orientation="vertical">
 
                                 <RelativeLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="#EBDAFF"
+                                    android:background="#DAF9E2"
                                     android:orientation="horizontal"
                                     android:layout_marginStart="90dp"
                                     android:layout_marginTop="10dp">
@@ -895,8 +909,8 @@
                                         android:layout_marginStart="16dp"
                                         android:background="@drawable/rounded_rect"
                                         android:text="@string/decrease"
-                                        android:textColor="#FFA9DD"
-                                        android:backgroundTint="#A9FFCB"
+                                        android:textColor="#FFFFFF"
+                                        android:backgroundTint="#2F63FF"
                                         android:layout_alignRight="@+id/teleop_algae_scoring_decr"
                                         android:textSize="30sp" />
 
@@ -913,9 +927,9 @@
                                         android:layout_height="40dp"
                                         android:layout_marginEnd="30dp"
                                         android:background="@drawable/rounded_rect"
-                                        android:backgroundTint="#A9FFCB"
+                                        android:backgroundTint="#2F63FF"
                                         android:text="@string/increase"
-                                        android:textColor="#FFA9DD"
+                                        android:textColor="#FFFFFF"
                                         android:layout_alignLeft="@+id/teleop_algae_scoring_incr"
                                         android:textSize="30sp" />
 
@@ -926,8 +940,8 @@
                                         android:layout_marginStart="16dp"
                                         android:background="@drawable/rounded_rect"
                                         android:text="@string/decrease"
-                                        android:textColor="#EA6E5E"
-                                        android:backgroundTint="#5EDAEA"
+                                        android:textColor="#FFFFFF"
+                                        android:backgroundTint="#39169A"
                                         android:layout_alignRight="@+id/teleop_algae_scoring_decr"
                                         android:layout_marginBottom="10dp"
                                         android:textSize="30sp" />
@@ -945,9 +959,9 @@
                                         android:layout_height="40dp"
                                         android:layout_marginEnd="30dp"
                                         android:background="@drawable/rounded_rect"
-                                        android:backgroundTint="#5EDAEA"
+                                        android:backgroundTint="#39169A"
                                         android:text="@string/increase"
-                                        android:textColor="#EA6E5E"
+                                        android:textColor="#FFFFFF"
                                         android:layout_alignLeft="@+id/teleop_algae_scoring_incr"
                                         android:textSize="30sp" />
 
@@ -958,7 +972,8 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="#EFE2FF"
+                                android:background="@drawable/bottom_rounded_rect"
+                                android:backgroundTint="#C8F7D4"
                                 android:orientation="horizontal"
                                 android:paddingBottom="1dp">
 
@@ -967,7 +982,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:background="@drawable/bottom_rounded_rect"
-                                    android:backgroundTint="#E6D1FF"
+                                    android:backgroundTint="#B6F4C6"
                                     android:orientation="horizontal">
 
                                     <RadioButton
@@ -977,7 +992,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:buttonTint="@color/specialTextPrimary"
+                                        android:buttonTint="#2F63FF"
                                         android:text="Net"
                                         android:textColor="@color/specialTextPrimary"
                                         android:textSize="20sp" />
@@ -989,7 +1004,7 @@
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:buttonTint="@color/specialTextPrimary"
+                                        android:buttonTint="#39169A"
                                         android:text="Processor"
                                         android:textColor="@color/specialTextPrimary"
                                         android:textSize="20sp" />
@@ -1001,6 +1016,8 @@
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
+                                        android:background="@drawable/bottom_rounded_rect"
+                                        android:backgroundTint="#B6F4C6"
                                         android:buttonTint="@color/specialTextPrimary"
                                         android:text="None"
                                         android:textColor="@color/specialTextPrimary"
@@ -1017,22 +1034,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="#FCD9D2">
-            <TextView
-                android:id="@+id/textView3"
-                style="?android:listSeparatorTextViewStyle"
-                android:textColor="#000000"
-                android:background="#faccc8"
-                android:layout_width="wrap_content"
-                android:layout_height="34dp"
-                android:text="defense"
-                android:textSize="24sp" />
+                android:layout_marginTop="5dp"
+                android:background="@drawable/rounded_rect"
+                android:backgroundTint="#b3E5f2">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    style="?android:listSeparatorTextViewStyle"
+                    android:layout_width="120dp"
+                    android:layout_height="34dp"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#b3E5f2"
+                    android:text="defense"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
 
                 <RadioGroup
                     android:id="@+id/defense_buttons"
                     android:layout_width="wrap_content"
                     android:layout_height="27dp"
-                    android:background="#FCD9DF"
+                    android:background="#b3E5f2"
                     android:orientation="horizontal">
 
                     <RadioButton
@@ -1079,15 +1100,16 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bottom_rounded_rect"
-                android:backgroundTint="#b3E5f2"
+                android:background="@drawable/rounded_rect"
+                android:backgroundTint="#D0CAED"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView5"
                     style="?android:listSeparatorTextViewStyle"
                     android:textColor="#000000"
-                    android:background="#CEEAF5"
+                    android:background="#D0CAED"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Fouls"
@@ -1102,7 +1124,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:orientation="horizontal">
 
 
@@ -1112,8 +1134,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:textSize="20sp"
-                    android:paddingBottom="15dp"
-                    android:background="#b3E5f2"
+                    android:background="#D0CAED"
                     android:textColor="#000000"
                     android:text="Pin"/>
 
@@ -1158,8 +1179,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="37dp"
-                android:background="#A7DCEC"
+                android:layout_height="35dp"
+                android:background="#bfb7e7"
                 android:orientation="horizontal">
 
                 <TextView
@@ -1168,8 +1189,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:textSize="20sp"
-                    android:paddingBottom="15dp"
-                    android:background="#A7DCEC"
+                    android:background="#bfb7e7"
                     android:textColor="#000000"
                     android:text="Anchor" />
 
@@ -1213,8 +1233,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="41dp"
-                android:background="#b3E5f2"
+                android:layout_height="35dp"
+                android:background="#D0CAED"
                 android:orientation="horizontal">
 
                 <TextView
@@ -1223,8 +1243,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:textSize="20sp"
-                    android:paddingBottom="15dp"
-                    android:background="#b3E5f2"
+                    android:background="#D0CAED"
                     android:textColor="#000000"
                     android:text="Cage"/>
 
@@ -1267,8 +1286,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="41dp"
-                android:background="#A7DCEC"
+                android:layout_height="35dp"
+                android:background="#bfb7e7"
                 android:orientation="horizontal">
 
                 <TextView
@@ -1277,8 +1296,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:textSize="20sp"
-                    android:paddingBottom="15dp"
-                    android:background="#A7DCEC"
+                    android:background="#bfb7e7"
                     android:textColor="#000000"
                     android:text="Barge Zone"/>
 
@@ -1321,8 +1339,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="37dp"
-                android:backgroundTint="#b3E5f2"
+                android:layout_height="35dp"
+                android:backgroundTint="#D0CAED"
                 android:background="@drawable/bottom_rounded_rect"
                 android:orientation="horizontal">
 
@@ -1332,8 +1350,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:textSize="20sp"
-                    android:paddingBottom="15dp"
-                    android:backgroundTint="#b3E5f2"
+                    android:backgroundTint="#D0CAED"
                     android:textColor="#000000"
                     android:text="Reef Zone"/>
 
