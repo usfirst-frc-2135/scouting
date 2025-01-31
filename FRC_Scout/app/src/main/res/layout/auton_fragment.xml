@@ -25,6 +25,8 @@
             android:paddingTop="2dp"
             android:paddingBottom="1dp"
             android:text="Starting Pos"
+            android:backgroundTint="#CEEAF5"
+            android:background="@drawable/bottom_rounded_rect"
             android:textColor="@color/specialTextPrimary"
             android:textSize="22sp" />
 
@@ -90,6 +92,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Leave"
+                    android:backgroundTint="#EFE2FF"
+                    android:background="@drawable/bottom_rounded_rect"
                     android:textColor="#000"
                     android:textSize="22sp" />
 
@@ -120,6 +124,7 @@
                 android:layout_marginTop="60dp"
                 android:rotation="-90"
                 android:text="CORAL"
+                android:background="@drawable/bottom_rounded_rect"
                 android:textColor="@color/specialTextPrimary"
                 android:textSize="22sp" />
 

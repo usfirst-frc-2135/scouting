@@ -14,31 +14,27 @@
         tools:layout_editor_absoluteX="-44dp">
 
         <TextView
-            android:id="@+id/barge_scoring_text"
-            style="?android:listSeparatorTextViewStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="BARGE SCORING"
-            android:backgroundTint="#CEEAF5"
+            android:layout_marginTop="2dp"
             android:textColor="@color/specialTextPrimary"
-            android:background="@drawable/top_rounded_rect"
-            android:textSize="24sp" />
-
-        <TextView
-            android:background="#CEEAF5"
             style="?android:listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#b3E5f2"
-            android:text="CLIMB:"
-            android:textSize="20dp"/>
+            android:backgroundTint="#A7DCEC"
+            android:background="@drawable/top_rounded_rect"
+            android:text="CLIMB"
+            android:textSize="24sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            >
 
         <RadioGroup
             android:id="@+id/climb_group"
-            android:background="#b3E5f2"
+            android:background="@drawable/bottom_rounded_rect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#b3E5f2"
             android:orientation="horizontal">
 
             <RadioButton
@@ -49,27 +45,27 @@
                 android:text="N/A"
                 android:layout_weight="1"
                 android:textColor="@color/specialTextPrimary"
-                android:textSize="18sp" />
+                android:textSize="20dp" />
 
             <RadioButton
                 android:id="@+id/climb_parked"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:buttonTint="@color/specialTextPrimary"
                 android:text="Parked"
                 android:layout_weight="1"
                 android:textColor="@color/specialTextPrimary"
-                android:textSize="18sp" />
+                android:textSize="20dp" />
 
             <RadioButton
                 android:id="@+id/climb_fell"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:buttonTint="@color/specialTextPrimary"
                 android:text="Fell"
+                android:layout_weight="1"
                 android:textColor="@color/specialTextPrimary"
-                android:textSize="18sp" />
+                android:textSize="20dp" />
             <RadioButton
                 android:id="@+id/climb_shallow"
                 android:layout_width="wrap_content"
@@ -78,7 +74,7 @@
                 android:text="Shallow"
                 android:layout_weight="1"
                 android:textColor="@color/specialTextPrimary"
-                android:textSize="18sp" />
+                android:textSize="20dp" />
 
             <RadioButton
                 android:id="@+id/climb_deep"
@@ -86,25 +82,37 @@
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/specialTextPrimary"
                 android:text="Deep"
+                android:layout_weight="1"
                 android:textColor="@color/specialTextPrimary"
-                android:textSize="18sp" />
+                android:textSize="20dp" />
 
         </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/top_rounded_rect"
             style="?android:listSeparatorTextViewStyle"
-            android:background="#A7DCEC"
-            android:textSize="20dp"
+            android:textColor="@color/specialTextPrimary"
+            android:backgroundTint="#bfb7e7"
+            android:textSize="24sp"
             android:text="START CLIMBING"
             />
 
         <RadioGroup
             android:id="@+id/start_text"
-            android:background="#A7DCEC"
+            android:backgroundTint="#D0CAED"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/bottom_rounded_rect"
             android:orientation="horizontal">
 
             <RadioButton
@@ -115,17 +123,17 @@
                 android:text="N/A"
                 android:layout_weight="1"
                 android:textColor="@color/specialTextPrimary"
-                android:textSize="18sp" />
+                android:textSize="20dp" />
 
             <RadioButton
                 android:id="@+id/start_bell"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:buttonTint="@color/specialTextPrimary"
                 android:text="At bell"
+                android:layout_weight="1"
                 android:textColor="@color/specialTextPrimary"
-                android:textSize="18sp" />
+                android:textSize="20dp" />
 
             <RadioButton
                 android:id="@+id/start_ten"
@@ -135,7 +143,7 @@
                 android:text="10 sec"
                 android:layout_weight="1"
                 android:textColor="@color/specialTextPrimary"
-                android:textSize="18sp" />
+                android:textSize="20dp" />
 
             <RadioButton
                 android:id="@+id/start_five"
@@ -145,75 +153,75 @@
                 android:text="5 sec"
                 android:layout_weight="1"
                 android:textColor="@color/specialTextPrimary"
-                android:textSize="18sp" />
+                android:textSize="20dp" />
 
         </RadioGroup>
 
         <TextView
             android:id="@+id/foul_text"
             style="?android:listSeparatorTextViewStyle"
+            android:background="@drawable/top_rounded_rect"
             android:textColor="#000000"
-            android:background="#faccc8"
+            android:backgroundTint="#faccc8"
             android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
             android:layout_height="34dp"
             android:text="Foul"
             android:textSize="24sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:orientation="horizontal"
             android:backgroundTint="#FCD9DF"
             android:background="@drawable/bottom_rounded_rect"
             >
 
             <TextView
+                android:textColor="@color/specialTextPrimary"
                 style="?android:listSeparatorTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#FCD9DF"
+                android:background="@drawable/top_rounded_rect"
                 android:text="contacting robot"
-                android:textSize="20dp" />
-
+                android:textSize="20sp"/>
             <RadioGroup
                 android:id="@+id/foul_robot"
                 android:layout_width="wrap_content"
-                android:layout_height="27dp"
-                android:background="#FCD9DF"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#FCD9DF"
                 android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/zero_contact"
-                    android:layout_width="match_parent"
+                    android:layout_width="98dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:textSize="20sp"
-                    android:layout_weight="1"
                     android:buttonTint="#8957A1"
                     android:text="0" />
 
                 <RadioButton
                     android:id="@+id/one_contact"
-                    android:layout_width="wrap_content"
+                    android:layout_width="98dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_weight="1"
                     android:textSize="20sp"
                     android:buttonTint="#8957A1"
                     android:text="1"/>
 
                 <RadioButton
                     android:id="@+id/two_contact"
-                    android:layout_width="wrap_content"
+                    android:layout_width="98dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:textSize="20sp"
-                    android:layout_weight="1"
                     android:buttonTint="#8957A1"
                     android:text="2+"/>
 
 
             </RadioGroup>
+        </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -320,5 +328,6 @@
         </LinearLayout>
 
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
