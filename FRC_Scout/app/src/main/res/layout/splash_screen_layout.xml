@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="FRC Scout 2024"
+            android:text="FRC Scout 2025"
             android:textSize="48sp"
             android:textColor="#FF0F396B"
             android:textStyle="bold" />
