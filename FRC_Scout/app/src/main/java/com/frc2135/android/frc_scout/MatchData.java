@@ -31,6 +31,11 @@ public class MatchData
     private static final String JSON_KEY_AUTON_CORAL_L4 = "autonCoralL4";
     private static final String JSON_KEY_AUTON_ALGAE_NET = "autonAlgaeNet";
     private static final String JSON_KEY_AUTON_ALGAE_PROCESSOR = "autonAlgaeProcessor";
+    private static final String JSON_KEY_FLOOR_CORAL= "floorCoral";
+    private static final String JSON_KEY_STATION_CORAL = "stationCoral";
+    private static final String JSON_KEY_FLOOR_ALGAE= "floorAlgae";
+    private static final String JSON_KEY_REEF_ALGAE = "reefAlgae";
+
 
     private static final String JSON_KEY_TELEOP_CORAL_L1 = "teleopCoralL1";
     private static final String JSON_KEY_TELEOP_CORAL_L2 = "teleopCoralL2";
@@ -42,12 +47,7 @@ public class MatchData
     private static final String JSON_KEY_CORAL_ACQUIRE= "coralAcquire";
     private static final String JSON_KEY_ALGAE_ACQUIRE = "algaeAcquire";
     private static final String JSON_KEY_STARTING_POSITION = "startingPosition";
-    private static final String JSON_KEY_FLOOR_CORAL= "floorCoral";
-    private static final String JSON_KEY_STATION_CORAL = "stationCoral";
-    private static final String JSON_KEY_FLOOR_ALGAE= "floorAlgae";
-    private static final String JSON_KEY_REEF_ALGAE = "reefAlgae";
 
-    private static final String JSON_KEY_TELEOP_PASSES = "teleopPasses";
     private static final String JSON_KEY_PICK_UP_ALGAE = "pickUpAlgae";
     private static final String JSON_KEY_KNOCK_OFF_ALGAE = "knockOffAlgae";
     private static final String JSON_KEY_ALGAE_FROM_REEF = "algaeFromReef";
@@ -205,28 +205,38 @@ public class MatchData
         setAutonCoralL4(json.getInt(JSON_KEY_AUTON_CORAL_L4));
         setAutonAlgaeNet(json.getInt(JSON_KEY_AUTON_ALGAE_NET));
         setAutonAlgaeProcessor(json.getInt(JSON_KEY_AUTON_ALGAE_PROCESSOR));
-
-        setAutonCoralL1(json.getInt(JSON_KEY_TELEOP_CORAL_L1));
-        setAutonCoralL2(json.getInt(JSON_KEY_TELEOP_CORAL_L2));
-        setAutonCoralL3(json.getInt(JSON_KEY_TELEOP_CORAL_L3));
-        setAutonCoralL4(json.getInt(JSON_KEY_TELEOP_CORAL_L4));
-        setAutonAlgaeNet(json.getInt(JSON_KEY_TELEOP_ALGAE_NET));
-        setAutonAlgaeProcessor(json.getInt(JSON_KEY_TELEOP_ALGAE_PROCESSOR));
         setFloorCoral(json.getBoolean(JSON_KEY_FLOOR_CORAL));
         setStationCoral(json.getBoolean(JSON_KEY_STATION_CORAL));
+        setFloorAlgae(json.getBoolean(JSON_KEY_FLOOR_ALGAE));
+        setReefAlgae(json.getBoolean(JSON_KEY_REEF_ALGAE));
+
+        setCoralAcquire(json.getInt(JSON_KEY_CORAL_ACQUIRE));
+        setAlgaeAcquire(json.getInt(JSON_KEY_ALGAE_ACQUIRE));
 
         setPickUpCoral(json.getBoolean(JSON_KEY_PICK_UP_CORAL));
         setPickUpAlgae(json.getBoolean(JSON_KEY_PICK_UP_CORAL));
-        setCoralAcquire(json.getInt(JSON_KEY_CORAL_ACQUIRE));
-        setAlgaeAcquire(json.getInt(JSON_KEY_ALGAE_ACQUIRE));
+
+        setKnockOffAlgae(json.getBoolean(JSON_KEY_KNOCK_OFF_ALGAE));
+        setAlgaeFromReef(json.getBoolean(JSON_KEY_ALGAE_FROM_REEF));
+        setHoldBothElements(json.getBoolean(JSON_KEY_HOLD_BOTH_ELEMENTS));
+
+        setTeleopCoralL1(json.getInt(JSON_KEY_TELEOP_CORAL_L1));
+        setTeleopCoralL2(json.getInt(JSON_KEY_TELEOP_CORAL_L2));
+        setTeleopCoralL3(json.getInt(JSON_KEY_TELEOP_CORAL_L3));
+        setTeleopCoralL4(json.getInt(JSON_KEY_TELEOP_CORAL_L4));
+        setTeleopAlgaeNet(json.getInt(JSON_KEY_TELEOP_ALGAE_NET));
+        setTeleopAlgaeProcessor(json.getInt(JSON_KEY_TELEOP_ALGAE_PROCESSOR));
+
         setFoulPin(json.getInt(JSON_KEY_NUMBER_PINS));
         setFoulAnchor(json.getInt(JSON_KEY_NUMBER_ANCHOR));
         setFoulCage(json.getInt(JSON_KEY_NUMBER_CAGE));
         setFoulBarge(json.getInt(JSON_KEY_NUMBER_BARGE));
         setFoulReef(json.getInt(JSON_KEY_NUMBER_REEF));
-        setFoulNumber(json.getInt(JSON_KEY_ROBOT_FOUL));
+
         setEndgameBarge(json.getInt(JSON_KEY_END_GAME_BARGE));
         setEndgameStartClimbing(json.getInt(JSON_KEY_END_GAME_START_CLIMB));
+        setFoulNumber(json.getInt(JSON_KEY_ROBOT_FOUL));
+
         setComment(json.getString(JSON_KEY_COMMENTS));
 
         String dateStr = json.getString(JSON_KEY_TIMESTAMP);
@@ -698,14 +708,14 @@ public class MatchData
         // NOTE! THE ORDER IS IMPORTANT!
         // This is the data that goes into the QR code.
 
-        String headers = "TeamNumber AutonLeaveStartingZone AutonCoralL1 AutonCoralL2 AutonCoralL3 AutonCoralL4 AutonAlgaeNet AutonAlgaeProcessor TeleopCoralL1 TeleopCoralL2 TeleopCoralL3 TeleopCoralL4 TeleopAlgaeNet TeleopAlgaeProcessor Pick Up Coral TeleopAmpNotes TeleopAmpMisses TeleopSpeakerNotes TeleopSpeakerMisses  TeleopPasses EndgameStage EndgameHarmony EndgameSpotlit EndgameTrap Died MatchNum Competition Scout Comment";
+        String headers = "TeamNumber AutonStartingPosition AutonLeaveStartingZone AutonCoralL1 AutonCoralL2 AutonCoralL3 AutonCoralL4 AutonAlgaeNet AutonAlgaeProcessor AutonCoralFloor AutonCoralStation AutonAlgaeFloor AutonAlgaeReef TeleopAcquireCoral TeleopAcquireAlgae TeleopAlgaeFloorPickup TeleopCoralFloorPickup TeleopKnockOffAlgae TeleopAcquireAlgaeFromReef TeleopHoldBothGamePieces TeleopCoralL1 TeleopCoralL2 TeleopCoralL3 TeleopCoralL4 TeleopAlgaeNet TeleopAlgaeProcessor TeleopPlayedDefense TeleopPinFoul TeleopAnchorFoul TeleopCageFoul TeleopBargeFoul TeleopReefZoneFoul EndgameClimb EndgameStartClimbing EndgameFoul Died MatchNum Competition Scout Comment";
 
         String tsvStr = "";
 
         // For teamNumber, strip off 'frc' prefix.
         tsvStr += stripTeamNamePrefix(m_teamNumber) + "\t";
 
-
+        tsvStr += m_positionStarting + "\t";
         if (m_autonLeaveStartingZone)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
         else
@@ -736,6 +746,8 @@ public class MatchData
             tsvStr += "0" + "\t";
 
 
+        tsvStr += m_coralAcquire + "\t";
+        tsvStr += m_algaeAcquire + "\t";
 
         if (m_pickUpCoral)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
@@ -751,34 +763,33 @@ public class MatchData
             tsvStr += "1" + "\t";
         else
             tsvStr += "0" + "\t";
-
         if (m_algaeFromReef)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
         else
             tsvStr += "0" + "\t";
-
         if (m_holdBothElements)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
         else
             tsvStr += "0" + "\t";
 
-        tsvStr += m_positionStarting + "\t";
+        tsvStr += m_teleopCoralL1 + "\t";
+        tsvStr += m_teleopCoralL2 + "\t";
+        tsvStr += m_teleopCoralL3 + "\t";
+        tsvStr += m_teleopCoralL4 + "\t";
+        tsvStr += m_teleopAlgaeNet + "\t";
+        tsvStr += m_teleopAlgaeProcessor + "\t";
+
         tsvStr += m_playedDefense + "\t";
+
         tsvStr += m_pinFoul + "\t";
         tsvStr += m_anchorFoul + "\t";
+        tsvStr += m_cageFoul + "\t";
         tsvStr += m_bargeFoul + "\t";
         tsvStr += m_teleopReefFoul + "\t";
-        tsvStr += m_cageFoul + "\t";
-        tsvStr += m_coralAcquire + "\t";
-        tsvStr += m_teleopAmpMisses + "\t";
-        tsvStr += m_algaeAcquire + "\t";
-        tsvStr += m_teleopSpeakerMisses + "\t";
-        tsvStr += m_teleopPasses + "\t";
 
         tsvStr += m_bargeClimb + "\t";
         tsvStr += m_startClimb + "\t";
         tsvStr += m_robotFoul + "\t";
-
 
         if (m_died)
             tsvStr += "1" + "\t";
@@ -809,13 +820,15 @@ public class MatchData
         json.put("divider", ",");
         json.put("divider", ", \n");
 
-        json.put("headings", "Competition, Team Number, Match Number, Leave Starting Zone, Auton Coral L1, Auton Coral L2, Auton Coral L3, Auton Coral L4, Auton Speaker Notes, Pick Up Coral, Teleop Amp Notes, Teleop Amp Misses, Teleop Speaker Notes, Teleop Speaker Misses, Teleop Passes, Endgame Stage, Endgame Harmony, Endgame Spotlit, Endgame Trap, Died, Comments, Timestamp, MatchID \n");
+        json.put("headings", "Competition, Team Number, Match Number, Leave Starting Zone, Starting Position, Leave Starting Position, Auton Coral L1, Auton Coral L2, Auton Coral L3, Auton Coral L4, Auton Algae Net, Auton Algae Processor, Auton Pick Up Coral Floor, Auton Pick Up Coral Station, Teleop Amp Notes, Teleop Amp Misses, Teleop Speaker Notes, Teleop Speaker Misses, Teleop Passes, Endgame Stage, Endgame Harmony, Endgame Spotlit, Endgame Trap, Died, Comments, Timestamp, MatchID \n");
         json.put(JSON_KEY_EVENT_CODE, m_eventCode);
         json.put("divider", ",");
         json.put(JSON_KEY_TEAM_NUMBER, m_teamNumber);
         json.put("divider", ",");
         json.put(JSON_KEY_MATCH_NUMBER, m_matchNumber);
         json.put("divider", ",");
+        json.put("divider", ",");
+        json.put(JSON_KEY_STARTING_POSITION, m_positionStarting);
         json.put("divider", ",");
         json.put(JSON_KEY_LEAVE, m_autonLeaveStartingZone);
         json.put("divider", ",");
@@ -831,6 +844,28 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_AUTON_ALGAE_PROCESSOR, m_autonAlgaeProcessor);
         json.put("divider", ",");
+        json.put(JSON_KEY_FLOOR_CORAL, m_coralFloor);
+        json.put("divider", ",");
+        json.put(JSON_KEY_STATION_CORAL, m_coralStation);
+        json.put("divider", ",");
+        json.put(JSON_KEY_FLOOR_ALGAE, m_algaeFloor);
+        json.put("divider", ",");
+        json.put(JSON_KEY_REEF_ALGAE, m_algaeReef);
+        json.put("divider", ",");
+        json.put(JSON_KEY_CORAL_ACQUIRE, m_coralAcquire);
+        json.put("divider", ",");
+        json.put(JSON_KEY_ALGAE_ACQUIRE, m_algaeAcquire);
+        json.put("divider", ",");
+        json.put(JSON_KEY_PICK_UP_CORAL, m_pickUpCoral);
+        json.put("divider", ",");
+        json.put(JSON_KEY_PICK_UP_ALGAE, m_pickUpAlgae);
+        json.put("divider", ",");
+        json.put(JSON_KEY_KNOCK_OFF_ALGAE, m_knockAlgaeOff);
+        json.put("divider", ",");
+        json.put(JSON_KEY_ALGAE_FROM_REEF, m_algaeFromReef);
+        json.put("divider", ",");
+        json.put(JSON_KEY_HOLD_BOTH_ELEMENTS, m_holdBothElements);
+        json.put("divider", ",");
         json.put(JSON_KEY_TELEOP_CORAL_L1, m_teleopCoralL1);
         json.put("divider", ",");
         json.put(JSON_KEY_TELEOP_CORAL_L2, m_teleopCoralL2);
@@ -843,51 +878,23 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_TELEOP_ALGAE_PROCESSOR, m_teleopAlgaeProcessor);
         json.put("divider", ",");
-        json.put(JSON_KEY_PICK_UP_CORAL, m_pickUpCoral);
-        json.put("divider", ",");
-        json.put(JSON_KEY_FLOOR_CORAL, m_coralFloor);
-        json.put("divider", ",");
-        json.put(JSON_KEY_STATION_CORAL, m_coralStation);
-        json.put("divider", ",");
-        json.put(JSON_KEY_FLOOR_ALGAE, m_algaeFloor);
-        json.put("divider", ",");
-        json.put(JSON_KEY_REEF_ALGAE, m_algaeReef);
-        json.put("divider", ",");
-        json.put(JSON_KEY_PICK_UP_ALGAE, m_pickUpAlgae);
-        json.put("divider", ",");
-        json.put(JSON_KEY_KNOCK_OFF_ALGAE, m_knockAlgaeOff);
-        json.put("divider", ",");
-        json.put(JSON_KEY_ALGAE_FROM_REEF, m_algaeFromReef);
-        json.put("divider", ",");
-        json.put(JSON_KEY_HOLD_BOTH_ELEMENTS, m_holdBothElements);
-        json.put("divider", ",");
-        json.put(JSON_KEY_STARTING_POSITION, m_positionStarting);
-        json.put("divider", ",");
         json.put(JSON_KEY_PLAYED_DEFENSE, m_playedDefense);
         json.put("divider", ",");
         json.put(JSON_KEY_NUMBER_PINS, m_pinFoul);
         json.put("divider", ",");
         json.put(JSON_KEY_NUMBER_ANCHOR, m_anchorFoul);
         json.put("divider", ",");
+        json.put(JSON_KEY_NUMBER_CAGE, m_cageFoul);
+        json.put("divider", ",");
         json.put(JSON_KEY_NUMBER_BARGE, m_bargeFoul);
         json.put("divider", ",");
         json.put(JSON_KEY_NUMBER_REEF, m_teleopReefFoul);
         json.put("divider", ",");
-        json.put(JSON_KEY_NUMBER_CAGE, m_cageFoul);
-        json.put("divider", ",");
-        json.put(JSON_KEY_CORAL_ACQUIRE, m_coralAcquire);
-        json.put("divider", ",");
-        json.put(JSON_KEY_ALGAE_ACQUIRE, m_algaeAcquire);
-        json.put("divider", ",");
-        json.put(JSON_KEY_TELEOP_CORAL_L2, m_teleopSpeakerMisses);
-        json.put("divider", ",");
-        json.put(JSON_KEY_TELEOP_PASSES, m_teleopPasses);
-        json.put("divider", ",");
         json.put(JSON_KEY_END_GAME_BARGE, m_bargeClimb);
         json.put("divider", ",");
-        json.put(JSON_KEY_ROBOT_FOUL, m_robotFoul);
-        json.put("divider", ",");
         json.put(JSON_KEY_END_GAME_START_CLIMB, m_startClimb);
+        json.put("divider", ",");
+        json.put(JSON_KEY_ROBOT_FOUL, m_robotFoul);
         json.put("divider", ",");
         json.put(JSON_KEY_DIED, m_died);
         json.put("divider", ",");
