@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -23,64 +24,46 @@ import androidx.fragment.app.Fragment;
 public class AutonFragment extends Fragment
 {
     private static final String TAG = "AutonFragment";
-    private static final int MAX_POINTS = 5;     // make sure to update max points - max for valid high or low points total
+    private static final int MAX_POINTS = 4;    
 
-    private TextView m_autonCoralText;
-    private TextView m_autonCoralTextL1;
-    private TextView m_autonCoralTextL2;
-    private TextView m_autonCoralTextL3;
-    private TextView m_autonCoralTextL4;
+    private CheckBox m_reefZoneCkbx1;
+    private CheckBox m_reefZoneCkbx2;
+    private CheckBox m_reefZoneCkbx3;
+    private CheckBox m_reefZoneCkbx4;
+    private CheckBox m_reefZoneCkbx5;
+    private CheckBox m_reefZoneCkbx6;
 
-    private RadioGroup m_autonCoralButtonGroup;
-    private RadioButton m_autonCoralButtonL1;
-    private RadioButton m_autonCoralButtonL2;
-    private RadioButton m_autonCoralButtonL3;
-    private RadioButton m_autonCoralButtonL4;
-    private RadioButton m_autonCoralButtonNone;
+    // Reefzone image orientation: 
+    //   0 = Red scoringTable side
+    //   1 = Red non-scoringTable side
+    //   2 = Blue scoringTable side
+    //   3 = Blue non-scoringTable side
+    private int m_reefzoneOrient;   
 
-    private Button m_autonCoralIncr;
-    private Button m_autonCoralDecr;
-    private Button m_autonCoralDecrDisabled;
-    private Button m_autonCoralIncrDisabled;
-    private Button m_autonCoralIncrL1;
-    private Button m_autonCoralDecrL1;
-    private Button m_autonCoralIncrL2;
-    private Button m_autonCoralDecrL2;
-    private Button m_autonCoralIncrL3;
-    private Button m_autonCoralDecrL3;
-    private Button m_autonCoralIncrL4;
-    private Button m_autonCoralDecrL4;
+    private TextView m_autonL1Total;
+    private TextView m_autonL2Total;
+    private TextView m_autonL3Total;
+    private TextView m_autonL4Total;
+    private Button m_autonL1IncrButton;
+    private Button m_autonL1DecrButton;
+    private Button m_autonL2IncrButton;
+    private Button m_autonL2DecrButton;
+    private Button m_autonL3IncrButton;
+    private Button m_autonL3DecrButton;
+    private Button m_autonL4IncrButton;
+    private Button m_autonL4DecrButton;
+
+    private TextView m_autonAlgaeNetTotal;
+    private TextView m_autonAlgaeProcTotal;
+    private Button m_autonAlgaeNetIncrButton;
+    private Button m_autonAlgaeNetDecrButton;
+    private Button m_autonAlgaeProcIncrButton;
+    private Button m_autonAlgaeProcDecrButton;
 
     private RadioGroup m_startingPosition;
     private RadioButton m_rightStart;
     private RadioButton m_middleStart;
     private RadioButton m_leftStart;
-
-    private TextView m_autonCoralL1;
-    private TextView m_autonCoralL2;
-    private TextView m_autonCoralL3;
-    private TextView m_autonCoralL4;
-
-    private TextView m_autonAlgaeText;
-    private TextView m_autonAlgaeTextNet;
-    private TextView m_autonAlgaeTextProcessor;
-
-    private RadioGroup m_autonAlgaeButtonGroup;
-    private RadioButton m_autonAlgaeButtonNet;
-    private RadioButton m_autonAlgaeButtonProcessor;
-    private RadioButton m_autonAlgaeButtonNone;
-
-    private Button m_autonAlgaeIncr;
-    private Button m_autonAlgaeDecr;
-    private Button m_autonAlgaeIncrDisabled;
-    private Button m_autonAlgaeDecrDisabled;
-    private Button m_autonAlgaeIncrNet;
-    private Button m_autonAlgaeDecrNet;
-    private Button m_autonAlgaeIncrProcessor;
-    private Button m_autonAlgaeDecrProcessor;
-
-    private TextView m_autonAlgaeNet;
-    private TextView m_autonAlgaeProcessor;
 
     private CheckBox m_leaveCheckbox;
     private CheckBox m_floorCoral;
@@ -98,6 +81,55 @@ public class AutonFragment extends Fragment
         if (num > MAX_POINTS)
             rtn = true;
         return rtn;
+    }
+
+    private void getMatchDataReefscapeZones()
+    {
+        // Red scoring table side or blue non-scoring table side.
+        if(m_reefzoneOrient == 0 || m_reefzoneOrient == 3)   
+        {
+            m_reefZoneCkbx1.setChecked(m_matchData.getReefzone_GH());
+            m_reefZoneCkbx2.setChecked(m_matchData.getReefzone_EF());
+            m_reefZoneCkbx3.setChecked(m_matchData.getReefzone_CD());
+            m_reefZoneCkbx4.setChecked(m_matchData.getReefzone_AB());
+            m_reefZoneCkbx5.setChecked(m_matchData.getReefzone_KL());
+            m_reefZoneCkbx6.setChecked(m_matchData.getReefzone_IJ());
+
+        }
+        // Red non-scoring table side or Blue scoring table side
+        else if(m_reefzoneOrient == 1 || m_reefzoneOrient == 2)   
+        {
+            m_reefZoneCkbx1.setChecked(m_matchData.getReefzone_AB());
+            m_reefZoneCkbx2.setChecked(m_matchData.getReefzone_KL());
+            m_reefZoneCkbx3.setChecked(m_matchData.getReefzone_IJ());
+            m_reefZoneCkbx4.setChecked(m_matchData.getReefzone_GH());
+            m_reefZoneCkbx5.setChecked(m_matchData.getReefzone_EF());
+            m_reefZoneCkbx6.setChecked(m_matchData.getReefzone_CD());
+        }
+    }
+
+    private void setMatchDataReefscapeZones()
+    {
+        // Red scoring table side or blue non-scoring table side.
+        if(m_reefzoneOrient == 0 || m_reefzoneOrient == 3)   
+        {
+            m_matchData.setReefzone_AB(m_reefZoneCkbx4.isChecked());
+            m_matchData.setReefzone_CD(m_reefZoneCkbx3.isChecked());
+            m_matchData.setReefzone_EF(m_reefZoneCkbx2.isChecked());
+            m_matchData.setReefzone_GH(m_reefZoneCkbx1.isChecked());
+            m_matchData.setReefzone_IJ(m_reefZoneCkbx6.isChecked());
+            m_matchData.setReefzone_KL(m_reefZoneCkbx5.isChecked());
+        }
+        // Red non-scoring table side or Blue scoring table side
+        else if(m_reefzoneOrient == 1 || m_reefzoneOrient == 2)   
+        {
+            m_matchData.setReefzone_AB(m_reefZoneCkbx1.isChecked());
+            m_matchData.setReefzone_CD(m_reefZoneCkbx6.isChecked());
+            m_matchData.setReefzone_EF(m_reefZoneCkbx5.isChecked());
+            m_matchData.setReefzone_GH(m_reefZoneCkbx4.isChecked());
+            m_matchData.setReefzone_IJ(m_reefZoneCkbx3.isChecked());
+            m_matchData.setReefzone_KL(m_reefZoneCkbx2.isChecked());
+        }
     }
 
     @Override
@@ -164,129 +196,57 @@ public class AutonFragment extends Fragment
         Context context = getContext();
         if (context != null)
         {
-            int specialTextPrimaryColor = ContextCompat.getColor(context, R.color.specialTextPrimary);
-/*
-            // Sets up TextView that displays amp note points, setting 0 as the default
-            */
-            m_autonCoralText = v.findViewById(R.id.auton_coral_scoring_text);
-            m_autonCoralText.setText("0");
-            m_autonCoralText.setTextColor(specialTextPrimaryColor);
+            // Set the Reefzone background image. 
+            m_reefzoneOrient = 0;   // default (matches the default image in layout file)
+            Scouter myScouter = Scouter.get(getContext());
+            if (myScouter != null){
+                String color = myScouter.getTeamIndexColor();
+                boolean scoringTableSide = myScouter.getScoringTableSide();
+                LinearLayout rzone_ll = (LinearLayout)v.findViewById(R.id.reef_zones_layout);
+                if (color.equals("red")) {
+                    if (scoringTableSide) {
+                        rzone_ll.setBackgroundResource(R.drawable.reefzone_r1_sctbl);
+                        m_reefzoneOrient = 0;
+                    }
+                    else {
+                        rzone_ll.setBackgroundResource(R.drawable.reefzone_r2);
+                        m_reefzoneOrient = 1;
+                    }
+                } else {
+                    if (scoringTableSide) {
+                        rzone_ll.setBackgroundResource(R.drawable.reefzone_b1_sctbl);
+                        m_reefzoneOrient = 2;
+                    }
+                    else {
+                        rzone_ll.setBackgroundResource(R.drawable.reefzone_b2);
+                        m_reefzoneOrient = 3;
+                    }       
+                }       
+            }       
 
-            // Sets up TextView that displays speaker note points, setting 0 as the default
-            m_autonAlgaeText = v.findViewById(R.id.auton_algae_scoring_text);
-            m_autonAlgaeText.setText("0");
-            m_autonAlgaeText.setTextColor(specialTextPrimaryColor);
-
-            m_autonCoralTextL1 = v.findViewById(R.id.auton_coral_scoring_text_L1);
-            m_autonCoralTextL1.setText("0");
-            m_autonCoralTextL1.setTextColor(specialTextPrimaryColor);
-
-            m_autonCoralTextL2 = v.findViewById(R.id.auton_coral_scoring_text_L2);
-            m_autonCoralTextL2.setText("0");
-            m_autonCoralTextL2.setTextColor(specialTextPrimaryColor);
-
-            m_autonCoralTextL3 = v.findViewById(R.id.auton_coral_scoring_text_L3);
-            m_autonCoralTextL3.setText("0");
-            m_autonCoralTextL3.setTextColor(specialTextPrimaryColor);
-
-            m_autonCoralTextL4 = v.findViewById(R.id.auton_coral_scoring_text_L4);
-            m_autonCoralTextL4.setText("0");
-            m_autonCoralTextL4.setTextColor(specialTextPrimaryColor);
-
-            m_autonAlgaeTextNet = v.findViewById(R.id.auton_algae_net_scoring);
-            m_autonAlgaeTextNet.setText("0");
-            m_autonAlgaeTextNet.setTextColor(specialTextPrimaryColor);
-
-            m_autonAlgaeTextProcessor = v.findViewById(R.id.auton_algae_processor_scoring);
-            m_autonAlgaeTextProcessor.setText("0");
-            m_autonAlgaeTextProcessor.setTextColor(specialTextPrimaryColor);
-
-            m_autonCoralIncr = v.findViewById(R.id.auton_coral_scoring_incr);
-            m_autonCoralDecr = v.findViewById(R.id.auton_coral_scoring_decr);
-            m_autonCoralIncr.setEnabled(false);
-            m_autonCoralDecr.setEnabled(false);
-            m_autonCoralDecr.setVisibility(View.INVISIBLE);
-            m_autonCoralIncr.setVisibility(View.INVISIBLE);
-
-            m_autonCoralDecrDisabled = v.findViewById(R.id.auton_coral_scoring_decr_disabled);
-            m_autonCoralDecrDisabled.setVisibility(View.VISIBLE);
-            m_autonCoralIncrDisabled = v.findViewById(R.id.auton_coral_scoring_incr_disabled);
-            m_autonCoralIncrDisabled.setVisibility(View.VISIBLE);
-
-            m_autonAlgaeIncr = v.findViewById(R.id.auton_algae_scoring_incr);
-            m_autonAlgaeDecr = v.findViewById(R.id.auton_algae_scoring_decr);
-            m_autonAlgaeIncr.setEnabled(false);
-            m_autonAlgaeDecr.setEnabled(false);
-            m_autonAlgaeIncr.setVisibility(View.INVISIBLE);
-            m_autonAlgaeDecr.setVisibility(View.INVISIBLE);
-
-            m_autonAlgaeIncrDisabled = v.findViewById(R.id.auton_algae_scoring_incr_disabled);
-            m_autonAlgaeIncrDisabled.setVisibility(View.VISIBLE);
-            m_autonAlgaeDecrDisabled = v.findViewById(R.id.auton_algae_scoring_decr_disabled);
-            m_autonAlgaeDecrDisabled.setVisibility(View.VISIBLE);
-
-            m_autonCoralIncrL1 = v.findViewById(R.id.auton_coral_scoring_incr_L1);
-            m_autonCoralIncrL1.setVisibility(View.INVISIBLE);
-            m_autonCoralIncrL2 = v.findViewById(R.id.auton_coral_scoring_incr_L2);
-            m_autonCoralIncrL2.setVisibility(View.INVISIBLE);
-            m_autonCoralIncrL3 = v.findViewById(R.id.auton_coral_scoring_incr_L3);
-            m_autonCoralIncrL3.setVisibility(View.INVISIBLE);
-            m_autonCoralIncrL4 = v.findViewById(R.id.auton_coral_scoring_incr_L4);
-            m_autonCoralIncrL4.setVisibility(View.INVISIBLE);
-
-            m_autonAlgaeIncrNet = v.findViewById(R.id.auton_algae_scoring_incr_net);
-            m_autonAlgaeIncrNet.setVisibility(View.INVISIBLE);
-            m_autonAlgaeIncrProcessor = v.findViewById(R.id.auton_algae_scoring_incr_processor);
-            m_autonAlgaeIncrProcessor.setVisibility(View.INVISIBLE);
-
-            m_autonCoralDecrL1 = v.findViewById(R.id.auton_coral_scoring_decr_L1);
-            m_autonCoralDecrL1.setVisibility(View.INVISIBLE);
-            m_autonCoralDecrL2 = v.findViewById(R.id.auton_coral_scoring_decr_L2);
-            m_autonCoralDecrL2.setVisibility(View.INVISIBLE);
-            m_autonCoralDecrL3 = v.findViewById(R.id.auton_coral_scoring_decr_L3);
-            m_autonCoralDecrL3.setVisibility(View.INVISIBLE);
-            m_autonCoralDecrL4 = v.findViewById(R.id.auton_coral_scoring_decr_L4);
-            m_autonCoralDecrL4.setVisibility(View.INVISIBLE);
-
-            m_autonAlgaeDecrNet = v.findViewById(R.id.auton_algae_scoring_decr_net);
-            m_autonAlgaeDecrNet.setVisibility(View.INVISIBLE);
-            m_autonAlgaeDecrProcessor = v.findViewById(R.id.auton_algae_scoring_decr_processor);
-            m_autonAlgaeDecrProcessor.setVisibility(View.INVISIBLE);
-
-            m_autonCoralButtonGroup = v.findViewById(R.id.auton_coral_radio_group);
-            m_autonCoralButtonNone = v.findViewById(R.id.auton_coral_none);
-            m_autonCoralButtonNone.setChecked(true);
-            m_autonCoralButtonL1 = v.findViewById(R.id.auton_coral_L1);
-            m_autonCoralButtonL1.setChecked(false);
-            m_autonCoralButtonL2 = v.findViewById(R.id.auton_coral_L2);
-            m_autonCoralButtonL2.setChecked(false);
-            m_autonCoralButtonL3 = v.findViewById(R.id.auton_coral_L3);
-            m_autonCoralButtonL3.setChecked(false);
-            m_autonCoralButtonL4 = v.findViewById(R.id.auton_coral_L4);
-            m_autonCoralButtonL4.setChecked(false);
-
-            m_autonAlgaeButtonGroup = v.findViewById(R.id.auton_algae_radio_group);
-            m_autonAlgaeButtonNone = v.findViewById(R.id.auton_algae_none_button);
-            m_autonAlgaeButtonNone.setChecked(true);
-            m_autonAlgaeButtonNet = v.findViewById(R.id.auton_algae_net_button);
-            m_autonAlgaeButtonNet.setChecked(false);
-            m_autonAlgaeButtonProcessor = v.findViewById(R.id.auton_algae_processor_button);
-            m_autonAlgaeButtonProcessor.setChecked(false);
-
-            m_autonCoralL1 = v.findViewById(R.id.auton_coral_scoring_L1);
-            m_autonCoralL2 = v.findViewById(R.id.auton_coral_scoring_L2);
-            m_autonCoralL3 = v.findViewById(R.id.auton_coral_scoring_L3);
-            m_autonCoralL4 = v.findViewById(R.id.auton_coral_scoring_L4);
-
-            m_autonAlgaeNet = v.findViewById(R.id.auton_algae_net);
-            m_autonAlgaeProcessor = v.findViewById(R.id.auton_algae_processor);
+            m_autonL1Total = v.findViewById(R.id.auton_L1_score_total);
+            m_autonL1Total.setText(String.valueOf(m_matchData.getAutonCoralL1()));
+            m_autonL1DecrButton = v.findViewById(R.id.auton_L1_decr_button);
+            m_autonL1IncrButton = v.findViewById(R.id.auton_L1_incr_button);
+            m_autonL2Total = v.findViewById(R.id.auton_L2_score_total);
+            m_autonL2Total.setText(String.valueOf(m_matchData.getAutonCoralL2()));
+            m_autonL2DecrButton = v.findViewById(R.id.auton_L2_decr_button);
+            m_autonL2IncrButton = v.findViewById(R.id.auton_L2_incr_button);
+            m_autonL3Total = v.findViewById(R.id.auton_L3_score_total);
+            m_autonL3Total.setText(String.valueOf(m_matchData.getAutonCoralL3()));
+            m_autonL3DecrButton = v.findViewById(R.id.auton_L3_decr_button);
+            m_autonL3IncrButton = v.findViewById(R.id.auton_L3_incr_button);
+            m_autonL4Total = v.findViewById(R.id.auton_L4_score_total);
+            m_autonL4Total.setText(String.valueOf(m_matchData.getAutonCoralL4()));
+            m_autonL4DecrButton = v.findViewById(R.id.auton_L4_decr_button);
+            m_autonL4IncrButton = v.findViewById(R.id.auton_L4_incr_button);
 
             // Setup TextViews that displays points, setting 0 as the default.
             // defense buttons
-            m_startingPosition = v.findViewById(R.id.starting_position);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
-            m_rightStart = v.findViewById(R.id.right_start);//Sets up radio button that corresponds to 0
-            m_middleStart = v.findViewById(R.id.middle_start);//Sets up radio button that corresponds to 1
-            m_leftStart  = v.findViewById(R.id.left_start);//Sets up radio button that corresponds to 2
+            m_startingPosition = v.findViewById(R.id.starting_position);
+            m_rightStart = v.findViewById(R.id.right_start);
+            m_middleStart = v.findViewById(R.id.middle_start);
+            m_leftStart  = v.findViewById(R.id.left_start);
             m_rightStart.setChecked(false);
             m_middleStart.setChecked(false);
             m_leftStart .setChecked(false);
@@ -299,848 +259,91 @@ public class AutonFragment extends Fragment
             else if(defValue == 2)
                 m_leftStart.setChecked(true);
 
-            m_autonCoralButtonGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-            {
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId)
-                {
-
-                    if (getCurrentCoralLevel() == 0) //none
-                    {
-                        m_autonCoralButtonL1.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
-                        m_autonCoralButtonL1.setChecked(false);
-                        m_autonCoralButtonL2.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
-                        m_autonCoralButtonL2.setChecked(false);
-                        m_autonCoralButtonL3.setTextColor(Color.parseColor("#999999"));
-                        m_autonCoralButtonL3.setChecked(false);
-                        m_autonCoralButtonL4.setTextColor(Color.parseColor("#999999"));
-                        m_autonCoralButtonL4.setChecked(false);
-                        m_autonCoralButtonNone.setTextColor(Color.parseColor("#49B6A9"));
-                        m_autonCoralButtonNone.setChecked(true);
-                        m_autonCoralIncr.setEnabled(false);
-                        m_autonCoralDecr.setEnabled(false);
-                        m_autonCoralDecrDisabled.setVisibility(View.VISIBLE);
-                        m_autonCoralIncrDisabled.setVisibility(View.VISIBLE);
-                    }
-                    else if (getCurrentCoralLevel() == 1) //parked
-                    {
-                        m_autonCoralButtonL1.setChecked(true);
-                        m_autonCoralButtonL1.setTextColor(Color.parseColor("#A9FFCB")); //ensures text remains gray
-                        m_autonCoralButtonL2.setChecked(false);
-                        m_autonCoralButtonL2.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
-                        m_autonCoralButtonL3.setChecked(false);
-                        m_autonCoralButtonL3.setTextColor(Color.parseColor("#999999"));
-                        m_autonCoralButtonL4.setChecked(false);
-                        m_autonCoralButtonL4.setTextColor(Color.parseColor("#999999"));
-                        m_autonCoralButtonNone.setChecked(false);
-                        m_autonCoralButtonNone.setTextColor(Color.parseColor("#999999"));
-                        m_autonCoralTextL1.setText(String.valueOf(m_matchData.getAutonCoralL1()));
-                        m_autonCoralIncr.setEnabled(true);
-                        m_autonCoralDecr.setEnabled(true);
-                        m_autonCoralText.setText(m_autonCoralTextL1.getText().toString());
-                        m_autonCoralDecrDisabled.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrDisabled.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecr.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncr.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL1.setVisibility(View.VISIBLE);
-                        m_autonCoralIncrL1.setVisibility(View.VISIBLE);
-                        m_autonCoralDecrL2.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL2.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL3.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL3.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL4.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL4.setVisibility(View.INVISIBLE);
-                    }
-                    else if (getCurrentCoralLevel() == 2)
-                    {
-                        m_autonCoralButtonL1.setChecked(false);
-                        m_autonCoralButtonL1.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonL2.setChecked(true);
-                        m_autonCoralButtonL2.setTextColor(Color.parseColor("#49B6A9"));
-                        m_autonCoralButtonL3.setChecked(false);
-                        m_autonCoralButtonL3.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonL4.setChecked(false);
-                        m_autonCoralButtonL4.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonNone.setChecked(false);
-                        m_autonCoralButtonNone.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralTextL2.setText(String.valueOf(m_matchData.getAutonCoralL2()));
-                        m_autonCoralIncr.setEnabled(true);
-                        m_autonCoralDecr.setEnabled(true);
-                        m_autonCoralText.setText(m_autonCoralTextL2.getText().toString());
-                        m_autonCoralDecrDisabled.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrDisabled.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecr.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncr.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL1.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL1.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL2.setVisibility(View.VISIBLE);
-                        m_autonCoralIncrL2.setVisibility(View.VISIBLE);
-                        m_autonCoralDecrL3.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL3.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL4.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL4.setVisibility(View.INVISIBLE);
-                    }
-                    else if (getCurrentCoralLevel() == 3) //onstage
-                    {
-                        m_autonCoralButtonL1.setChecked(false);
-                        m_autonCoralButtonL1.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonL2.setChecked(false);
-                        m_autonCoralButtonL2.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonL3.setChecked(true);
-                        m_autonCoralButtonL3.setTextColor(Color.parseColor("#5B37C8"));
-                        m_autonCoralButtonL4.setEnabled(false);
-                        m_autonCoralButtonL4.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonNone.setEnabled(false);
-                        m_autonCoralButtonNone.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralTextL3.setText(String.valueOf(m_matchData.getAutonCoralL3()));
-                        m_autonCoralIncr.setEnabled(true);
-                        m_autonCoralDecr.setEnabled(true);
-                        m_autonCoralText.setText(m_autonCoralTextL3.getText().toString());
-                        m_autonCoralDecrDisabled.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrDisabled.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecr.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncr.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL1.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL1.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL2.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL2.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL3.setVisibility(View.VISIBLE);
-                        m_autonCoralIncrL3.setVisibility(View.VISIBLE);
-                        m_autonCoralDecrL4.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL4.setVisibility(View.INVISIBLE);
-                    }
-                    else if (getCurrentCoralLevel() == 4)
-                    {
-                        m_autonCoralButtonL1.setChecked(false);
-                        m_autonCoralButtonL1.setTextColor(Color.parseColor("#363636")); //changes text color when stage level is 2
-                        m_autonCoralButtonL2.setChecked(false);
-                        m_autonCoralButtonL2.setTextColor(Color.parseColor("#363636")); //changes text color when stage level is 2
-                        m_autonCoralButtonL3.setChecked(false);
-                        m_autonCoralButtonL3.setTextColor(Color.parseColor("#363636")); //changes text color when stage level is 2
-                        m_autonCoralButtonL4.setChecked(true);
-                        m_autonCoralButtonL4.setTextColor(Color.parseColor("#9C1DE2"));
-                        m_autonCoralButtonNone.setChecked(false);
-                        m_autonCoralButtonNone.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralTextL4.setText(String.valueOf(m_matchData.getAutonCoralL4()));
-                        m_autonCoralIncr.setEnabled(true);
-                        m_autonCoralDecr.setEnabled(true);
-                        m_autonCoralText.setText(m_autonCoralTextL4.getText().toString());
-                        m_autonCoralDecrDisabled.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrDisabled.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecr.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncr.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL1.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL1.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL2.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL2.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL3.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL3.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL4.setVisibility(View.VISIBLE);
-                        m_autonCoralIncrL4.setVisibility(View.VISIBLE);
-                    }
-                }
-            });
-
-            m_autonCoralButtonGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-            {
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId)
-                {
-
-                    if (m_autonCoralButtonNone.isChecked() == false)
-                    {
-                        m_autonCoralIncr.setEnabled(true);
-                        m_autonCoralDecr.setEnabled(true);
-                        m_autonCoralDecrDisabled.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrDisabled.setVisibility(View.INVISIBLE);
-                    }
-                    else
-                    {
-                        m_autonCoralIncr.setEnabled(false);
-                        m_autonCoralDecr.setEnabled(false);
-                        m_autonCoralDecrDisabled.setVisibility(View.VISIBLE);
-                        m_autonCoralIncrDisabled.setVisibility(View.VISIBLE);
-                        m_autonCoralDecr.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncr.setVisibility(View.INVISIBLE);
-                    }
-                    if (m_autonCoralButtonNone.isChecked())
-                    {
-                        m_autonCoralText.setText("0");
-                        m_autonCoralDecrDisabled.setVisibility(View.VISIBLE);
-                        m_autonCoralIncrDisabled.setVisibility(View.VISIBLE);
-                        m_autonCoralDecr.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncr.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL1.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL1.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL2.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL2.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL3.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL3.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL4.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL4.setVisibility(View.INVISIBLE);
-                        m_autonCoralButtonL1.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonL2.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonL3.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonL4.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonNone.setTextColor(Color.parseColor("#49B6A9"));
-                        m_autonCoralL1.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralL2.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralL3.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralL4.setTextColor(Color.parseColor("#363636"));
-                    }
-                    if (m_autonCoralButtonL1.isChecked())
-                    {
-                        m_autonCoralText.setText(m_autonCoralTextL1.getText().toString());
-                        m_autonCoralDecrDisabled.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrDisabled.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecr.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncr.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL1.setVisibility(View.VISIBLE);
-                        m_autonCoralIncrL1.setVisibility(View.VISIBLE);
-                        m_autonCoralDecrL2.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL2.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL3.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL3.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL4.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL4.setVisibility(View.INVISIBLE);
-                        m_autonCoralL1.setTextColor(Color.parseColor("#A9FFCB"));
-                        m_autonCoralL2.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralL3.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralL4.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonL1.setTextColor(Color.parseColor("#A9FFCB"));
-                        m_autonCoralButtonL2.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonL3.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonL4.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonNone.setTextColor(Color.parseColor("#363636"));
-                    }
-                    if (m_autonCoralButtonL2.isChecked())
-                    {
-                        m_autonCoralText.setText(m_autonCoralTextL2.getText().toString());
-                        m_autonCoralDecrDisabled.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrDisabled.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecr.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncr.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL1.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL1.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL2.setVisibility(View.VISIBLE);
-                        m_autonCoralIncrL2.setVisibility(View.VISIBLE);
-                        m_autonCoralDecrL3.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL3.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL4.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL4.setVisibility(View.INVISIBLE);
-                        m_autonCoralL1.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralL2.setTextColor(Color.parseColor("#49B6A9"));
-                        m_autonCoralL3.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralL4.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonL1.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonL2.setTextColor(Color.parseColor("#49B6A9"));
-                        m_autonCoralButtonL3.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonL4.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonNone.setTextColor(Color.parseColor("#363636"));
-                    }
-                    if (m_autonCoralButtonL3.isChecked())
-                    {
-                        m_autonCoralText.setText(m_autonCoralTextL3.getText().toString());
-                        m_autonCoralDecrDisabled.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrDisabled.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecr.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncr.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL1.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL1.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL2.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL2.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL3.setVisibility(View.VISIBLE);
-                        m_autonCoralIncrL3.setVisibility(View.VISIBLE);
-                        m_autonCoralDecrL4.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL4.setVisibility(View.INVISIBLE);
-                        m_autonCoralL1.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralL2.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralL3.setTextColor(Color.parseColor("#5B37C8"));
-                        m_autonCoralL4.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonL1.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonL2.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonL3.setTextColor(Color.parseColor("#5B37C8"));
-                        m_autonCoralButtonL4.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonNone.setTextColor(Color.parseColor("#363636"));
-                    }
-                    if (m_autonCoralButtonL4.isChecked())
-                    {
-                        m_autonCoralText.setText(m_autonCoralTextL4.getText().toString());
-                        m_autonCoralDecrDisabled.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrDisabled.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecr.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncr.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL1.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL1.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL2.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL2.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL3.setVisibility(View.INVISIBLE);
-                        m_autonCoralIncrL3.setVisibility(View.INVISIBLE);
-                        m_autonCoralDecrL4.setVisibility(View.VISIBLE);
-                        m_autonCoralIncrL4.setVisibility(View.VISIBLE);
-                        m_autonCoralL1.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralL2.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralL3.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralL4.setTextColor(Color.parseColor("#9C1DE2"));
-                        m_autonCoralButtonL1.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonL2.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonL3.setTextColor(Color.parseColor("#363636"));
-                        m_autonCoralButtonL4.setTextColor(Color.parseColor("#9C1DE2"));
-                        m_autonCoralButtonNone.setTextColor(Color.parseColor("#363636"));
-                    }
-                    if (Integer.parseInt(m_autonCoralText.getText().toString()) <= MAX_POINTS)
-                    {
-                        m_autonCoralText.setTextColor(Color.parseColor("#363636"));
-                    }
-                    if (Integer.parseInt(m_autonCoralText.getText().toString()) > MAX_POINTS)
-                    {
-                        m_autonCoralText.setTextColor(Color.RED);
-                    }
-
-                    //Changes m_matchData's climb variable according to which radio button is selected
-                    //m_matchData.setEndgameHarmony(getCurrentCoralLevel());
-                }
-            });
+            m_autonAlgaeNetTotal = v.findViewById(R.id.auton_algae_net_total);
+            m_autonAlgaeNetTotal.setText(String.valueOf(m_matchData.getAutonAlgaeNet()));
+            m_autonAlgaeNetDecrButton = v.findViewById(R.id.auton_algae_net_decr_button);
+            m_autonAlgaeNetIncrButton = v.findViewById(R.id.auton_algae_net_incr_button);
+            m_autonAlgaeProcTotal = v.findViewById(R.id.auton_algae_proc_total);
+            m_autonAlgaeProcTotal.setText(String.valueOf(m_matchData.getAutonAlgaeProcessor()));
+            m_autonAlgaeProcDecrButton = v.findViewById(R.id.auton_algae_proc_decr_button);
+            m_autonAlgaeProcIncrButton = v.findViewById(R.id.auton_algae_proc_incr_button);
         }
 
+        m_autonL1IncrButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                updatePointsInt(m_autonL1Total, true);
+            }
+        });
 
-        //Connects the increment button for cubes top row points and sets up a listener that detects when the button is clicked
-        Button autonCoralIncrButton = v.findViewById(R.id.auton_coral_scoring_incr);
-        autonCoralIncrButton.setOnClickListener(new View.OnClickListener()
-
+        m_autonL2IncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 //Increases displayed point value by 1
-                if (getCurrentCoralLevel() == 1)
-                {
-                    updatePointsInt(m_autonCoralTextL1, true);
-                }
-                if (getCurrentCoralLevel() == 2)
-                {
-                    updatePointsInt(m_autonCoralTextL2, true);
-                }
-                if (getCurrentCoralLevel() == 3)
-                {
-                    updatePointsInt(m_autonCoralTextL3, true);
-                }
-                if (getCurrentCoralLevel() == 4)
-                {
-                    updatePointsInt(m_autonCoralTextL4, true);
-                }
-                updatePointsInt(m_autonCoralText, true);
+                updatePointsInt(m_autonL2Total, true);
             }
         });
 
-        Button autonCoralIncrButtonL1 = v.findViewById(R.id.auton_coral_scoring_incr_L1);
-        autonCoralIncrButtonL1.setOnClickListener(new View.OnClickListener()
-
+        m_autonL3IncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 //Increases displayed point value by 1
-                if (getCurrentCoralLevel() == 1)
-                {
-                    updatePointsInt(m_autonCoralTextL1, true);
-                }
-                if (getCurrentCoralLevel() == 2)
-                {
-                    updatePointsInt(m_autonCoralTextL2, true);
-                }
-                if (getCurrentCoralLevel() == 3)
-                {
-                    updatePointsInt(m_autonCoralTextL3, true);
-                }
-                if (getCurrentCoralLevel() == 4)
-                {
-                    updatePointsInt(m_autonCoralTextL4, true);
-                }
-                updatePointsInt(m_autonCoralText, true);
+                updatePointsInt(m_autonL3Total, true);
             }
         });
 
-        Button autonCoralIncrButtonL2 = v.findViewById(R.id.auton_coral_scoring_incr_L2);
-        autonCoralIncrButtonL2.setOnClickListener(new View.OnClickListener()
-
+        m_autonL4IncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                //Increases displayed point value by 1
-                if (getCurrentCoralLevel() == 1)
-                {
-                    updatePointsInt(m_autonCoralTextL1, true);
-                }
-                if (getCurrentCoralLevel() == 2)
-                {
-                    updatePointsInt(m_autonCoralTextL2, true);
-                }
-                if (getCurrentCoralLevel() == 3)
-                {
-                    updatePointsInt(m_autonCoralTextL3, true);
-                }
-                if (getCurrentCoralLevel() == 4)
-                {
-                    updatePointsInt(m_autonCoralTextL4, true);
-                }
-                updatePointsInt(m_autonCoralText, true);
+                updatePointsInt(m_autonL4Total, true);
             }
         });
 
-        Button autonCoralIncrButtonL3 = v.findViewById(R.id.auton_coral_scoring_incr_L3);
-        autonCoralIncrButtonL3.setOnClickListener(new View.OnClickListener()
-
+        m_autonL1DecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                //Increases displayed point value by 1
-                if (getCurrentCoralLevel() == 1)
-                {
-                    updatePointsInt(m_autonCoralTextL1, true);
-                }
-                if (getCurrentCoralLevel() == 2)
-                {
-                    updatePointsInt(m_autonCoralTextL2, true);
-                }
-                if (getCurrentCoralLevel() == 3)
-                {
-                    updatePointsInt(m_autonCoralTextL3, true);
-                }
-                if (getCurrentCoralLevel() == 4)
-                {
-                    updatePointsInt(m_autonCoralTextL4, true);
-                }
-                updatePointsInt(m_autonCoralText, true);
+                updatePointsInt(m_autonL1Total, false);
             }
         });
 
-        Button autonCoralIncrButtonL4 = v.findViewById(R.id.auton_coral_scoring_incr_L4);
-        autonCoralIncrButtonL4.setOnClickListener(new View.OnClickListener()
-
+        m_autonL2DecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                //Increases displayed point value by 1
-                if (getCurrentCoralLevel() == 1)
-                {
-                    updatePointsInt(m_autonCoralTextL1, true);
-                }
-                if (getCurrentCoralLevel() == 2)
-                {
-                    updatePointsInt(m_autonCoralTextL2, true);
-                }
-                if (getCurrentCoralLevel() == 3)
-                {
-                    updatePointsInt(m_autonCoralTextL3, true);
-                }
-                if (getCurrentCoralLevel() == 4)
-                {
-                    updatePointsInt(m_autonCoralTextL4, true);
-                }
-                updatePointsInt(m_autonCoralText, true);
+                updatePointsInt(m_autonL2Total, false);
             }
         });
 
-        //Connects the decrement button for cones top row points and sets up a listener that detects when the button is clicked
-        Button autonCoralDecrButton = v.findViewById(R.id.auton_coral_scoring_decr);
-        autonCoralDecrButton.setOnClickListener(new View.OnClickListener()
-
+        m_autonL3DecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                //Decreases displayed point value by 1; sets to 0 if result would be negative
-                if (getCurrentCoralLevel() == 1)
-                {
-                    updatePointsInt(m_autonCoralTextL1, false);
-                }
-                if (getCurrentCoralLevel() == 2)
-                {
-                    updatePointsInt(m_autonCoralTextL2, false);
-                }
-                if (getCurrentCoralLevel() == 3)
-                {
-                    updatePointsInt(m_autonCoralTextL3, false);
-                }
-                if (getCurrentCoralLevel() == 4)
-                {
-                    updatePointsInt(m_autonCoralTextL4, false);
-                }
-                updatePointsInt(m_autonCoralText, false);
+                updatePointsInt(m_autonL3Total, false);
             }
         });
 
-        Button autonCoralDecrButtonL1 = v.findViewById(R.id.auton_coral_scoring_decr_L1);
-        autonCoralDecrButtonL1.setOnClickListener(new View.OnClickListener()
-
+        m_autonL4DecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                //Decreases displayed point value by 1; sets to 0 if result would be negative
-                if (getCurrentCoralLevel() == 1)
-                {
-                    updatePointsInt(m_autonCoralTextL1, false);
-                }
-                if (getCurrentCoralLevel() == 2)
-                {
-                    updatePointsInt(m_autonCoralTextL2, false);
-                }
-                if (getCurrentCoralLevel() == 3)
-                {
-                    updatePointsInt(m_autonCoralTextL3, false);
-                }
-                if (getCurrentCoralLevel() == 4)
-                {
-                    updatePointsInt(m_autonCoralTextL4, false);
-                }
-                updatePointsInt(m_autonCoralText, false);
+                updatePointsInt(m_autonL4Total, false);
             }
         });
 
-        Button autonCoralDecrButtonL2 = v.findViewById(R.id.auton_coral_scoring_decr_L2);
-        autonCoralDecrButtonL2.setOnClickListener(new View.OnClickListener()
-
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Decreases displayed point value by 1; sets to 0 if result would be negative
-                if (getCurrentCoralLevel() == 1)
-                {
-                    updatePointsInt(m_autonCoralTextL1, false);
-                }
-                if (getCurrentCoralLevel() == 2)
-                {
-                    updatePointsInt(m_autonCoralTextL2, false);
-                }
-                if (getCurrentCoralLevel() == 3)
-                {
-                    updatePointsInt(m_autonCoralTextL3, false);
-                }
-                if (getCurrentCoralLevel() == 4)
-                {
-                    updatePointsInt(m_autonCoralTextL4, false);
-                }
-                updatePointsInt(m_autonCoralText, false);
-            }
-        });
-
-        Button autonCoralDecrButtonL3 = v.findViewById(R.id.auton_coral_scoring_decr_L3);
-        autonCoralDecrButtonL3.setOnClickListener(new View.OnClickListener()
-
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Decreases displayed point value by 1; sets to 0 if result would be negative
-                if (getCurrentCoralLevel() == 1)
-                {
-                    updatePointsInt(m_autonCoralTextL1, false);
-                }
-                if (getCurrentCoralLevel() == 2)
-                {
-                    updatePointsInt(m_autonCoralTextL2, false);
-                }
-                if (getCurrentCoralLevel() == 3)
-                {
-                    updatePointsInt(m_autonCoralTextL3, false);
-                }
-                if (getCurrentCoralLevel() == 4)
-                {
-                    updatePointsInt(m_autonCoralTextL4, false);
-                }
-                updatePointsInt(m_autonCoralText, false);
-            }
-        });
-
-        Button autonCoralDecrButtonL4 = v.findViewById(R.id.auton_coral_scoring_decr_L4);
-        autonCoralDecrButtonL4.setOnClickListener(new View.OnClickListener()
-
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Decreases displayed point value by 1; sets to 0 if result would be negative
-                if (getCurrentCoralLevel() == 1)
-                {
-                    updatePointsInt(m_autonCoralTextL1, false);
-                }
-                if (getCurrentCoralLevel() == 2)
-                {
-                    updatePointsInt(m_autonCoralTextL2, false);
-                }
-                if (getCurrentCoralLevel() == 3)
-                {
-                    updatePointsInt(m_autonCoralTextL3, false);
-                }
-                if (getCurrentCoralLevel() == 4)
-                {
-                    updatePointsInt(m_autonCoralTextL4, false);
-                }
-                updatePointsInt(m_autonCoralText, false);
-            }
-        });
-
-        m_autonAlgaeButtonGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId)
-            {
-
-                //Changes m_matchData's climb variable according to which radio button is selected
-                if (getCurrentAlgaeLevel() == 0) //none
-                {
-                    m_autonAlgaeButtonNet.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
-                    m_autonAlgaeButtonNet.setChecked(false);
-                    m_autonAlgaeButtonProcessor.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
-                    m_autonAlgaeButtonProcessor.setChecked(false);
-                    m_autonAlgaeButtonNone.setTextColor(Color.parseColor("#49B6A9"));
-                    m_autonAlgaeButtonNone.setChecked(true);
-                    m_autonAlgaeIncr.setEnabled(false);
-                    m_autonAlgaeDecr.setEnabled(false);
-                    m_autonAlgaeDecrDisabled.setVisibility(View.VISIBLE);
-                    m_autonAlgaeIncrDisabled.setVisibility(View.VISIBLE);
-                }
-                else if (getCurrentAlgaeLevel() == 1) //parked
-                {
-                    m_autonAlgaeButtonNet.setChecked(true);
-                    m_autonAlgaeButtonNet.setTextColor(Color.parseColor("#A9FFCB")); //ensures text remains gray
-                    m_autonAlgaeButtonProcessor.setChecked(false);
-                    m_autonAlgaeButtonProcessor.setTextColor(Color.parseColor("#999999")); //ensures text remains gray
-                    m_autonAlgaeButtonNone.setChecked(false);
-                    m_autonAlgaeButtonNone.setTextColor(Color.parseColor("#999999"));
-                    m_autonAlgaeTextNet.setText(String.valueOf(m_matchData.getAutonAlgaeNet()));
-                    m_autonAlgaeIncr.setEnabled(true);
-                    m_autonAlgaeDecr.setEnabled(true);
-                    m_autonAlgaeText.setText(m_autonAlgaeTextNet.getText().toString());
-                    m_autonAlgaeDecrDisabled.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeIncrDisabled.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeDecr.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeIncr.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeDecrNet.setVisibility(View.VISIBLE);
-                    m_autonAlgaeIncrNet.setVisibility(View.VISIBLE);
-                    m_autonAlgaeDecrProcessor.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeIncrProcessor.setVisibility(View.INVISIBLE);
-                }
-                else if (getCurrentCoralLevel() == 2) //onstage
-                {
-                    m_autonAlgaeButtonNet.setChecked(false);
-                    m_autonAlgaeButtonNet.setTextColor(Color.parseColor("#363636")); //changes text color when stage level is 2
-                    m_autonAlgaeButtonProcessor.setChecked(true);
-                    m_autonAlgaeButtonProcessor.setTextColor(Color.parseColor("#49B6A9")); //changes text color when stage level is 2
-                    m_autonAlgaeButtonNone.setChecked(false);
-                    m_autonAlgaeButtonNone.setTextColor(Color.parseColor("#363636"));
-                    m_autonAlgaeTextProcessor.setText(String.valueOf(m_matchData.getAutonAlgaeProcessor()));
-                    m_autonAlgaeIncr.setEnabled(true);
-                    m_autonAlgaeDecr.setEnabled(true);
-                    m_autonAlgaeText.setText(m_autonAlgaeTextProcessor.getText().toString());
-                    m_autonAlgaeDecrDisabled.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeIncrDisabled.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeDecr.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeIncr.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeDecrNet.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeIncrNet.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeIncrProcessor.setVisibility(View.VISIBLE);
-                    m_autonAlgaeDecrProcessor.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
-        m_autonAlgaeButtonGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId)
-            {
-
-                if (m_autonAlgaeButtonNone.isChecked() == false)
-                {
-                    m_autonAlgaeIncr.setEnabled(true);
-                    m_autonAlgaeDecr.setEnabled(true);
-                    m_autonAlgaeDecrDisabled.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeIncrDisabled.setVisibility(View.INVISIBLE);
-                }
-                else
-                {
-                    m_autonAlgaeIncr.setEnabled(false);
-                    m_autonAlgaeDecr.setEnabled(false);
-                    m_autonAlgaeDecrDisabled.setVisibility(View.VISIBLE);
-                    m_autonAlgaeIncrDisabled.setVisibility(View.VISIBLE);
-                    m_autonAlgaeDecr.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeIncr.setVisibility(View.INVISIBLE);
-                }
-                if (m_autonAlgaeButtonNone.isChecked())
-                {
-                    m_autonAlgaeText.setText("0");
-                    m_autonAlgaeDecrDisabled.setVisibility(View.VISIBLE);
-                    m_autonAlgaeIncrDisabled.setVisibility(View.VISIBLE);
-                    m_autonAlgaeDecr.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeIncr.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeDecrNet.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeIncrNet.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeDecrProcessor.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeIncrProcessor.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeButtonNet.setTextColor(Color.parseColor("#363636"));
-                    m_autonAlgaeButtonProcessor.setTextColor(Color.parseColor("#363636"));
-                    m_autonAlgaeButtonNone.setTextColor(Color.parseColor("#49B6A9"));
-                    m_autonAlgaeNet.setTextColor(Color.parseColor("#363636"));
-                    m_autonAlgaeProcessor.setTextColor(Color.parseColor("#363636"));
-                }
-                if (m_autonAlgaeButtonNet.isChecked())
-                {
-                    m_autonAlgaeText.setText(m_autonAlgaeTextNet.getText().toString());
-                    m_autonAlgaeDecrDisabled.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeIncrDisabled.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeDecr.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeIncr.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeIncrNet.setVisibility(View.VISIBLE);
-                    m_autonAlgaeDecrNet.setVisibility(View.VISIBLE);
-                    m_autonAlgaeDecrProcessor.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeIncrProcessor.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeNet.setTextColor(Color.parseColor("#A9FFCB"));
-                    m_autonAlgaeProcessor.setTextColor(Color.parseColor("#363636"));
-                    m_autonAlgaeButtonNet.setTextColor(Color.parseColor("#A9FFCB"));
-                    m_autonAlgaeButtonProcessor.setTextColor(Color.parseColor("#363636"));
-                    m_autonAlgaeButtonNone.setTextColor(Color.parseColor("#363636"));
-                }
-                if (m_autonAlgaeButtonProcessor.isChecked())
-                {
-                    m_autonAlgaeText.setText(m_autonAlgaeTextProcessor.getText().toString());
-                    m_autonAlgaeDecrDisabled.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeIncrDisabled.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeDecr.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeIncr.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeIncrNet.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeDecrNet.setVisibility(View.INVISIBLE);
-                    m_autonAlgaeDecrProcessor.setVisibility(View.VISIBLE);
-                    m_autonAlgaeIncrProcessor.setVisibility(View.VISIBLE);
-                    m_autonAlgaeNet.setTextColor(Color.parseColor("#363636"));
-                    m_autonAlgaeProcessor.setTextColor(Color.parseColor("#49B6A9"));
-                    m_autonAlgaeButtonNet.setTextColor(Color.parseColor("#363636"));
-                    m_autonAlgaeButtonProcessor.setTextColor(Color.parseColor("#49B6A9"));
-                    m_autonAlgaeButtonNone.setTextColor(Color.parseColor("#363636"));
-                }
-                if (Integer.parseInt(m_autonAlgaeText.getText().toString()) <= MAX_POINTS)
-                {
-                    m_autonAlgaeText.setTextColor(Color.parseColor("#363636"));
-                }
-                if (Integer.parseInt(m_autonAlgaeText.getText().toString()) > MAX_POINTS)
-                {
-                    m_autonAlgaeText.setTextColor(Color.RED);
-                }
-            }
-        });
-
-        Button autonAlgaeIncrButton = v.findViewById(R.id.auton_algae_scoring_incr);
-        autonAlgaeIncrButton.setOnClickListener(new View.OnClickListener()
-
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Increases displayed point value by 1
-                if (getCurrentAlgaeLevel() == 1)
-                {
-                    updatePointsInt(m_autonAlgaeTextNet, true);
-                }
-                if (getCurrentAlgaeLevel() == 2)
-                {
-                    updatePointsInt(m_autonAlgaeTextProcessor, true);
-                }
-                updatePointsInt(m_autonAlgaeText, true);
-            }
-        });
-
-        Button autonAlgaeIncrButtonNet = v.findViewById(R.id.auton_algae_scoring_incr_net);
-        autonAlgaeIncrButtonNet.setOnClickListener(new View.OnClickListener()
-
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Increases displayed point value by 1
-                if (getCurrentAlgaeLevel() == 1)
-                {
-                    updatePointsInt(m_autonAlgaeTextNet, true);
-                }
-                if (getCurrentAlgaeLevel() == 2)
-                {
-                    updatePointsInt(m_autonAlgaeTextProcessor, true);
-                }
-                updatePointsInt(m_autonAlgaeText, true);
-            }
-        });
-
-        Button autonAlgaeIncrButtonProcessor = v.findViewById(R.id.auton_algae_scoring_incr_processor);
-        autonAlgaeIncrButtonProcessor.setOnClickListener(new View.OnClickListener()
-
-        {
-            @Override
-            public void onClick(View v)
-            {
-                updatePointsInt(m_autonAlgaeTextProcessor, true);
-                updatePointsInt(m_autonAlgaeText, true);
-            }
-        });
-
-        //Connects the decrement button for cones top row points and sets up a listener that detects when the button is clicked
-        Button autonAlgaeDecrButton = v.findViewById(R.id.auton_algae_scoring_decr);
-        autonAlgaeDecrButton.setOnClickListener(new View.OnClickListener()
-
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Decreases displayed point value by 1; sets to 0 if result would be negative
-                if (getCurrentAlgaeLevel() == 1)
-                {
-                    updatePointsInt(m_autonAlgaeTextNet, false);
-                }
-                if (getCurrentAlgaeLevel() == 2)
-                {
-                    updatePointsInt(m_autonAlgaeTextProcessor, false);
-                }
-                updatePointsInt(m_autonAlgaeText, false);
-            }
-        });
-
-        Button autonAlgaeDecrButtonNet = v.findViewById(R.id.auton_algae_scoring_decr_net);
-        autonAlgaeDecrButtonNet.setOnClickListener(new View.OnClickListener()
-
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Decreases displayed point value by 1; sets to 0 if result would be negative
-                if (getCurrentAlgaeLevel() == 1)
-                {
-                    updatePointsInt(m_autonAlgaeTextNet, false);
-                }
-                if (getCurrentAlgaeLevel() == 2)
-                {
-                    updatePointsInt(m_autonAlgaeTextProcessor, false);
-                }
-                updatePointsInt(m_autonAlgaeText, false);
-            }
-        });
-
-        Button autonAlgaeDecrButtonProcessor = v.findViewById(R.id.auton_algae_scoring_decr_processor);
-        autonAlgaeDecrButtonProcessor.setOnClickListener(new View.OnClickListener()
-
-        {
-            @Override
-            public void onClick(View v)
-            {
-                updatePointsInt(m_autonAlgaeTextProcessor, false);
-                updatePointsInt(m_autonAlgaeText, false);
-            }
-        });
-
-        //Connects the checkbox for leaving starting zone and sets up a listener to detect when the checked status is changed
+        //Connects the checkboxes and sets up a listener to detect when checked status is changed
         m_leaveCheckbox = v.findViewById(R.id.leave_checkbox);
         m_leaveCheckbox.setChecked(m_matchData.getAutonLeave());
         m_floorCoral = v.findViewById(R.id.floor_coral);
@@ -1153,62 +356,53 @@ public class AutonFragment extends Fragment
         m_reefAlgae.setChecked(m_matchData.getReefAlgae());
 
 
-        m_autonCoralTextL1.setText(String.valueOf(m_matchData.getAutonCoralL1()));
-        m_autonCoralTextL2.setText(String.valueOf(m_matchData.getAutonCoralL2()));
-        m_autonCoralTextL3.setText(String.valueOf(m_matchData.getAutonCoralL3()));
-        m_autonCoralTextL4.setText(String.valueOf(m_matchData.getAutonCoralL4()));
-        m_autonAlgaeTextNet.setText(String.valueOf(m_matchData.getAutonAlgaeNet()));
-        m_autonAlgaeTextProcessor.setText(String.valueOf(m_matchData.getAutonAlgaeProcessor()));
-        //m_autonSpeakerNotes.setText(String.valueOf(m_matchData.getAutonSpeakerNotes()));
+        // Set up listener for each incr/decr button
+        m_autonAlgaeNetIncrButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                updatePointsInt(m_autonAlgaeNetTotal, true);
+            }
+        });
 
-        if (isNotValidPoints(m_autonCoralText))
+        m_autonAlgaeNetDecrButton.setOnClickListener(new View.OnClickListener()
         {
-            m_autonCoralText.setTextColor(Color.RED);
-        }
-        if (isNotValidPoints(m_autonAlgaeText))
+            @Override
+            public void onClick(View v)
+            {
+                updatePointsInt(m_autonAlgaeNetTotal, false);
+            }
+        });
+
+        m_autonAlgaeProcIncrButton.setOnClickListener(new View.OnClickListener()
         {
-            m_autonAlgaeText.setTextColor(Color.RED);
-        }
+            @Override
+            public void onClick(View v)
+            {
+                updatePointsInt(m_autonAlgaeProcTotal, true);
+            }
+        });
+
+        m_autonAlgaeProcDecrButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                updatePointsInt(m_autonAlgaeProcTotal, false);
+            }
+        });
+
+        // Set up reefzone checkboxes from MatchData.
+        m_reefZoneCkbx1 = v.findViewById(R.id.reefzone_b1);
+        m_reefZoneCkbx2 = v.findViewById(R.id.reefzone_b2);
+        m_reefZoneCkbx3 = v.findViewById(R.id.reefzone_b3);
+        m_reefZoneCkbx4 = v.findViewById(R.id.reefzone_b4);
+        m_reefZoneCkbx5 = v.findViewById(R.id.reefzone_b5);
+        m_reefZoneCkbx6 = v.findViewById(R.id.reefzone_b6);
+        getMatchDataReefscapeZones();
+
         return v;
-
-    }
-
-    public int getCurrentCoralLevel()
-    {
-        // Returns the integer level that is current checked in the radio buttons
-        int rtn = 0;
-        if (m_autonCoralButtonGroup.getCheckedRadioButtonId() == m_autonCoralButtonL1.getId())
-        {
-            rtn = 1;
-        }
-        else if (m_autonCoralButtonGroup.getCheckedRadioButtonId() == m_autonCoralButtonL2.getId())
-        {
-            rtn = 2;
-        }
-        else if (m_autonCoralButtonGroup.getCheckedRadioButtonId() == m_autonCoralButtonL3.getId())
-        {
-            rtn = 3;
-        }
-        else if (m_autonCoralButtonGroup.getCheckedRadioButtonId() == m_autonCoralButtonL4.getId())
-        {
-            rtn = 4;
-        }
-        return rtn;
-    }
-
-    public int getCurrentAlgaeLevel()
-    {
-        // Returns the integer level that is current checked in the radio buttons
-        int rtn = 0;
-        if (m_autonAlgaeButtonGroup.getCheckedRadioButtonId() == m_autonAlgaeButtonNet.getId())
-        {
-            rtn = 1;
-        }
-        else if (m_autonCoralButtonGroup.getCheckedRadioButtonId() == m_autonAlgaeButtonProcessor.getId())
-        {
-            rtn = 2;
-        }
-        return rtn;
     }
 
     public int getCurrentStartingPosition()
@@ -1232,33 +426,22 @@ public class AutonFragment extends Fragment
 
     public void updateAutonData()
     {
+        m_matchData.setAutonCoralL1(Integer.parseInt(m_autonL1Total.getText().toString()));
+        m_matchData.setAutonCoralL2(Integer.parseInt(m_autonL2Total.getText().toString()));
+        m_matchData.setAutonCoralL3(Integer.parseInt(m_autonL3Total.getText().toString()));
+        m_matchData.setAutonCoralL4(Integer.parseInt(m_autonL4Total.getText().toString()));
 
-        m_matchData.setAutonCoralL1(Integer.parseInt(m_autonCoralTextL1.getText().toString()));
-
-        m_matchData.setAutonCoralL2(Integer.parseInt(m_autonCoralTextL2.getText().toString()));
-
-        m_matchData.setAutonCoralL3(Integer.parseInt(m_autonCoralTextL3.getText().toString()));
-
-        m_matchData.setAutonCoralL4(Integer.parseInt(m_autonCoralTextL4.getText().toString()));
-
-        m_matchData.setAutonAlgaeNet(Integer.parseInt(m_autonAlgaeTextNet.getText().toString()));
-
-        m_matchData.setAutonAlgaeProcessor(Integer.parseInt(m_autonAlgaeTextProcessor.getText().toString()));
+        m_matchData.setAutonAlgaeNet(Integer.parseInt(m_autonAlgaeNetTotal.getText().toString()));
+        m_matchData.setAutonAlgaeProcessor(Integer.parseInt(m_autonAlgaeProcTotal.getText().toString()));
 
         m_matchData.setCurrentStartingPosition(getCurrentStartingPosition());
-
         m_matchData.setAutonLeave(m_leaveCheckbox.isChecked());
-
         m_matchData.setFloorCoral(m_floorCoral.isChecked());
-
         m_matchData.setStationCoral(m_stationCoral.isChecked());
-
         m_matchData.setFloorAlgae(m_floorAlgae.isChecked());
-
         m_matchData.setReefAlgae(m_reefAlgae.isChecked());
 
-
-
-
+        // Determine the reefscape face for each checkbox.
+        setMatchDataReefscapeZones();
     }
 }

@@ -15,6 +15,7 @@ public class Scouter
     private final ArrayList<String> m_pastScouters;
     private static Scouter sScouter;
     private String m_teamIndexStr;
+    private boolean m_scoringTableSide;
     private String m_mostRecentScoutName;
     private String m_mostRecentMatchNumber;
     private static final String FILENAME = "Scouter.json";
@@ -27,6 +28,7 @@ public class Scouter
         m_mostRecentScoutName = "";
         m_mostRecentMatchNumber = "";
         m_teamIndexStr = "None";
+        m_scoringTableSide = false;
 
         MatchDataSerializer serializer = new MatchDataSerializer(mAppContext, FILENAME);
 
@@ -41,6 +43,7 @@ public class Scouter
                 {
                     Collections.addAll(m_pastScouters, tmpScouter.getPastScouts());
                     m_teamIndexStr = tmpScouter.getTeamIndexStr();
+                    m_scoringTableSide = tmpScouter.getScoringTableSide();
                 }
             } catch (Exception e)
             {
@@ -63,9 +66,13 @@ public class Scouter
                 i++;
             }
             setTeamIndexStr(json.getString("teamIndex"));
+            int scoringTableSideVal = json.getInt("scoringTableSide");
+            if(scoringTableSideVal == 1)
+               setScoringTableSide(true);
+            else setScoringTableSide(false);
         } catch (Exception e)
         {
-            Log.d(TAG, "Error loading past scout data");
+            Log.d(TAG, "Error loading Scouter JSON file");
             Log.e(TAG, e.toString());
         }
     }
@@ -127,6 +134,7 @@ public class Scouter
     {
         return m_teamIndexStr;
     }
+
     //returns "red", "blue", or "" based on current team index
     public String getTeamIndexColor()
     {
@@ -154,6 +162,16 @@ public class Scouter
     public boolean isValidTeamIndexStr(String indexStr)
     {
         return indexStr.equals("1") || indexStr.equals("2") || indexStr.equals("3") || indexStr.equals("4") || indexStr.equals("5") || indexStr.equals("6") || indexStr.equals("None");
+    }
+
+    public boolean getScoringTableSide()
+    {
+        return m_scoringTableSide;
+    }
+
+    public void setScoringTableSide(boolean val)
+    {
+        m_scoringTableSide = val;
     }
 
     public String getMostRecentScoutName()
@@ -195,7 +213,16 @@ public class Scouter
         json.put("teamIndex", m_teamIndexStr);
         logMsg.append("teamIndex" + "=").append(m_teamIndexStr);
 
-        Log.d(TAG, "Writing to Scouter.json: " + logMsg);
+        if(m_scoringTableSide) {
+            json.put("scoringTableSide", 1);
+            logMsg.append("scoringTableSide=1");
+        }
+        else {
+            json.put("scoringTableSide", 0);
+            logMsg.append("scoringTableSide=0");
+        }
+
+        Log.d(TAG, "--->>> Writing to Scouter.json: " + logMsg);
         return json;
     }
 

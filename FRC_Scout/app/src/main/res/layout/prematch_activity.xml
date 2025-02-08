@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor">
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:paddingLeft="30dp"
-        android:paddingRight="30dp"
         android:paddingTop="15dp"
-        app:layout_constraintTop_toTopOf="parent">
+        android:paddingRight="30dp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="-264dp">
 
         <TextView
             android:id="@+id/pre_match_title_comp"
@@ -36,25 +37,25 @@
                 style="?android:listSeparatorTextViewStyle"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/textSecondary"
                 android:text="COMPETITION"
-                android:textSize="18sp"
                 android:textColor="@color/textSecondary"
-                android:textStyle="bold"
-                android:backgroundTint="@color/textSecondary" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/comp_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:paddingTop="25dp"
                 android:layout_marginStart="16dp"
+                android:autofillHints="competition"
+                android:backgroundTint="@color/textSecondary"
+                android:ems="10"
                 android:hint="competition"
                 android:inputType="text"
-                android:autofillHints="competition"
-                android:textColorHint="@color/hintColor"
+                android:paddingTop="25dp"
                 android:textColor="@color/textPrimary"
-                android:backgroundTint="@color/textSecondary" />
+                android:textColorHint="@color/hintColor" />
 
         </LinearLayout>
 
@@ -68,37 +69,53 @@
                 style="?android:listSeparatorTextViewStyle"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="NAME"
-                android:textSize="18sp"
+                android:backgroundTint="@color/textSecondary"
+                android:text="SCOUT NAME"
                 android:textColor="@color/textSecondary"
-                android:textStyle="bold"
-                android:backgroundTint="@color/textSecondary" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <AutoCompleteTextView
                 android:id="@+id/scouter_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:layout_marginStart="16dp"
+                android:backgroundTint="@color/textSecondary"
+                android:ems="10"
                 android:paddingTop="25dp"
-                android:textColorHint="@color/hintColor"
                 android:textColor="@color/textPrimary"
-                android:backgroundTint="@color/textSecondary">
+                android:textColorHint="@color/hintColor">
 
             </AutoCompleteTextView>
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/scoring_table_side_ckbx"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textSize="20sp"
+                android:textColor="@color/textSecondary"
+                android:buttonTint="@color/textSecondary"
+                android:text="Scoring Table Side" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/pre_match_title_match"
             style="?android:listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/textPrimary"
             android:paddingTop="50dp"
             android:text="Match Info"
             android:textColor="@color/textPrimary"
-            android:textSize="24sp"
-            android:backgroundTint="@color/textPrimary" />
+            android:textSize="24sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -110,21 +127,21 @@
                 style="?android:listSeparatorTextViewStyle"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/textSecondary"
                 android:text="MATCH NUMBER"
-                android:textSize="18sp"
                 android:textColor="@color/textSecondary"
-                android:textStyle="bold"
-                android:backgroundTint="@color/textSecondary" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <AutoCompleteTextView
                 android:id="@+id/match_number_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:backgroundTint="@color/textSecondary"
                 android:ems="10"
                 android:paddingTop="25dp"
-                android:layout_marginStart="20dp"
-                android:textColor="@color/textPrimary"
-                android:backgroundTint="@color/textSecondary" />
+                android:textColor="@color/textPrimary" />
 
         </LinearLayout>
 
@@ -138,21 +155,21 @@
                 style="?android:listSeparatorTextViewStyle"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/textSecondary"
                 android:text="TEAM NUMBER"
-                android:textSize="18sp"
                 android:textColor="@color/textSecondary"
-                android:textStyle="bold"
-                android:backgroundTint="@color/textSecondary" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <AutoCompleteTextView
                 android:id="@+id/team_number_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:backgroundTint="@color/textSecondary"
                 android:ems="10"
                 android:paddingTop="25dp"
-                android:layout_marginStart="20dp"
-                android:textColor="@color/textPrimary"
-                android:backgroundTint="@color/textSecondary">
+                android:textColor="@color/textPrimary">
 
             </AutoCompleteTextView>
         </LinearLayout>
@@ -161,8 +178,8 @@
             android:id="@+id/error_message_pm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Please fill in the missing fields!"
-            android:paddingTop="20dp" />
+            android:paddingTop="20dp"
+            android:text="Please fill in the missing fields!" />
 
         <Button
             android:id="@+id/start_scouting_button"
@@ -189,8 +206,6 @@
 
         </Button>
 
-
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

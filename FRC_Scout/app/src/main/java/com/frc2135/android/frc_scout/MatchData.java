@@ -36,6 +36,12 @@ public class MatchData
     private static final String JSON_KEY_FLOOR_ALGAE= "floorAlgae";
     private static final String JSON_KEY_REEF_ALGAE = "reefAlgae";
 
+    private static final String JSON_KEY_REEFZONE_AB = "reefZoneAB";
+    private static final String JSON_KEY_REEFZONE_CD = "reefZoneCD";
+    private static final String JSON_KEY_REEFZONE_EF = "reefZoneEF";
+    private static final String JSON_KEY_REEFZONE_GH = "reefZoneGH";
+    private static final String JSON_KEY_REEFZONE_IJ = "reefZoneIJ";
+    private static final String JSON_KEY_REEFZONE_KL = "reefZoneKL";
 
     private static final String JSON_KEY_TELEOP_CORAL_L1 = "teleopCoralL1";
     private static final String JSON_KEY_TELEOP_CORAL_L2 = "teleopCoralL2";
@@ -59,11 +65,9 @@ public class MatchData
     private static final String JSON_KEY_NUMBER_BARGE = "numberBarge";
     private static final String JSON_KEY_NUMBER_REEF = "numberReef";
 
-
     private static final String JSON_KEY_END_GAME_BARGE = "endGameBarge";
     private static final String JSON_KEY_END_GAME_START_CLIMB = "endGameStartClimb";
     private static final String JSON_KEY_ROBOT_FOUL = "robotFoul";
-
 
     private static final String JSON_KEY_COMMENTS = "comments";
     private static final String JSON_KEY_TIMESTAMP = "timestamp";
@@ -95,6 +99,13 @@ public class MatchData
     private boolean m_algaeFloor;
     private boolean m_algaeReef;
     private int m_playedDefense;
+
+    private boolean m_reefzoneAB;
+    private boolean m_reefzoneCD;
+    private boolean m_reefzoneEF;
+    private boolean m_reefzoneGH;
+    private boolean m_reefzoneIJ;
+    private boolean m_reefzoneKL;
 
     private int m_pinFoul;
     private int m_anchorFoul;
@@ -173,6 +184,12 @@ public class MatchData
         setAlgaeAcquire(0);
         setTeleopPasses(0);
 
+        setReefzone_AB(false);
+        setReefzone_CD(false);
+        setReefzone_EF(false);
+        setReefzone_GH(false);
+        setReefzone_IJ(false);
+        setReefzone_KL(false);
 
         setEndgameBarge(0);
         setEndgameStartClimbing(0);
@@ -189,7 +206,6 @@ public class MatchData
     //////////////////////// constructor from JSON file  //////////////////////////////
     public MatchData(JSONObject json) throws JSONException
     {
-
         Log.d(TAG, "MatchData being created using json data");
 
         setName(json.getString(JSON_KEY_SCOUT_NAME));
@@ -219,6 +235,13 @@ public class MatchData
         setKnockOffAlgae(json.getBoolean(JSON_KEY_KNOCK_OFF_ALGAE));
         setAlgaeFromReef(json.getBoolean(JSON_KEY_ALGAE_FROM_REEF));
         setHoldBothElements(json.getBoolean(JSON_KEY_HOLD_BOTH_ELEMENTS));
+
+        setReefzone_AB(json.getBoolean(JSON_KEY_REEFZONE_AB));
+        setReefzone_CD(json.getBoolean(JSON_KEY_REEFZONE_CD));
+        setReefzone_EF(json.getBoolean(JSON_KEY_REEFZONE_EF));
+        setReefzone_GH(json.getBoolean(JSON_KEY_REEFZONE_GH));
+        setReefzone_IJ(json.getBoolean(JSON_KEY_REEFZONE_IJ));
+        setReefzone_KL(json.getBoolean(JSON_KEY_REEFZONE_KL));
 
         setTeleopCoralL1(json.getInt(JSON_KEY_TELEOP_CORAL_L1));
         setTeleopCoralL2(json.getInt(JSON_KEY_TELEOP_CORAL_L2));
@@ -391,7 +414,6 @@ public class MatchData
 
     public void setReefAlgae(boolean reefAlgae)
     {
-
         m_algaeReef = reefAlgae;
     }
 
@@ -402,7 +424,6 @@ public class MatchData
 
     public void setStationCoral(boolean stationCoral)
     {
-
         m_coralStation = stationCoral;
     }
 
@@ -471,9 +492,69 @@ public class MatchData
         return m_teleopAlgaeProcessor;
     }
 
+    // Reefzones checkboxes
+    public void setReefzone_AB(boolean val)
+    {
+        m_reefzoneAB = val;
+    }
+
+    public boolean getReefzone_AB()
+    {
+        return m_reefzoneAB;
+    }
+
+    public void setReefzone_CD(boolean val)
+    {
+        m_reefzoneCD = val;
+    }
+
+    public boolean getReefzone_CD()
+    {
+        return m_reefzoneCD;
+    }
+
+    public void setReefzone_EF(boolean val)
+    {
+        m_reefzoneEF = val;
+    }
+
+    public boolean getReefzone_EF()
+    {
+        return m_reefzoneEF;
+    }
+
+    public void setReefzone_GH(boolean val)
+    {
+        m_reefzoneGH = val;
+    }
+
+    public boolean getReefzone_GH()
+    {
+        return m_reefzoneGH;
+    }
+
+    public void setReefzone_IJ(boolean val)
+    {
+        m_reefzoneIJ = val;
+    }
+
+    public boolean getReefzone_IJ()
+    {
+        return m_reefzoneIJ;
+    }
+
+    public void setReefzone_KL(boolean val)
+    {
+        m_reefzoneKL = val;
+    }
+
+    public boolean getReefzone_KL()
+    {
+        return m_reefzoneKL;
+    }
+
     public void setPickUpCoral(boolean pickUpCoral)
     {
-
         m_pickUpCoral = pickUpCoral;
     }
 
@@ -484,7 +565,6 @@ public class MatchData
 
     public void setPickUpAlgae(boolean pickUpAlgae)
     {
-
         m_pickUpAlgae = pickUpAlgae;
     }
 
@@ -495,7 +575,6 @@ public class MatchData
 
     public void setCurrentStartingPosition(int startingPosition)
     {
-
         m_positionStarting = startingPosition;
     }
 
@@ -506,7 +585,6 @@ public class MatchData
 
     public void setKnockOffAlgae(boolean KnockOffAlgae)
     {
-
         m_knockAlgaeOff = KnockOffAlgae;
     }
 
@@ -601,8 +679,6 @@ public class MatchData
         return m_teleopReefFoul;
     }
 
-
-
     public void setCoralAcquire(int coralAcquire)
     {
         m_coralAcquire = coralAcquire;
@@ -612,7 +688,6 @@ public class MatchData
     {
         return m_coralAcquire;
     }
-
 
     public void setAlgaeAcquire(int algaeAcquire)
     {
@@ -721,6 +796,13 @@ public class MatchData
         else
             tsvStr += "0" + "\t";
 
+        tsvStr += m_reefzoneAB + "\t";
+        tsvStr += m_reefzoneCD + "\t";
+        tsvStr += m_reefzoneEF + "\t";
+        tsvStr += m_reefzoneGH + "\t";
+        tsvStr += m_reefzoneIJ + "\t";
+        tsvStr += m_reefzoneKL + "\t";
+
         tsvStr += m_autonCoralL1 + "\t";
         tsvStr += m_autonCoralL2 + "\t";
         tsvStr += m_autonCoralL3 + "\t";
@@ -820,17 +902,28 @@ public class MatchData
         json.put("divider", ",");
         json.put("divider", ", \n");
 
-        json.put("headings", "Competition, Team Number, Match Number, Leave Starting Zone, Starting Position, Leave Starting Position, Auton Coral L1, Auton Coral L2, Auton Coral L3, Auton Coral L4, Auton Algae Net, Auton Algae Processor, Auton Pick Up Coral Floor, Auton Pick Up Coral Station, Teleop Amp Notes, Teleop Amp Misses, Teleop Speaker Notes, Teleop Speaker Misses, Teleop Passes, Endgame Stage, Endgame Harmony, Endgame Spotlit, Endgame Trap, Died, Comments, Timestamp, MatchID \n");
+        json.put("headings", "Competition, Team Number, Match Number, Leave Starting Zone, Starting Position, Leave Starting Position, ReefzoneAB, ReefzoneCD, ReefzoneEF, ReefzoneGH, ReefzoneIJ, ReefzoneKL, Auton Coral L1, Auton Coral L2, Auton Coral L3, Auton Coral L4, Auton Algae Net, Auton Algae Processor, Auton Pick Up Coral Floor, Auton Pick Up Coral Station, Teleop Amp Notes, Teleop Amp Misses, Teleop Speaker Notes, Teleop Speaker Misses, Teleop Passes, Endgame Stage, Endgame Harmony, Endgame Spotlit, Endgame Trap, Died, Comments, Timestamp, MatchID \n");
         json.put(JSON_KEY_EVENT_CODE, m_eventCode);
         json.put("divider", ",");
         json.put(JSON_KEY_TEAM_NUMBER, m_teamNumber);
         json.put("divider", ",");
         json.put(JSON_KEY_MATCH_NUMBER, m_matchNumber);
         json.put("divider", ",");
-        json.put("divider", ",");
         json.put(JSON_KEY_STARTING_POSITION, m_positionStarting);
         json.put("divider", ",");
         json.put(JSON_KEY_LEAVE, m_autonLeaveStartingZone);
+        json.put("divider", ",");
+        json.put(JSON_KEY_REEFZONE_AB, m_reefzoneAB);
+        json.put("divider", ",");
+        json.put(JSON_KEY_REEFZONE_CD, m_reefzoneCD);
+        json.put("divider", ",");
+        json.put(JSON_KEY_REEFZONE_EF, m_reefzoneEF);
+        json.put("divider", ",");
+        json.put(JSON_KEY_REEFZONE_GH, m_reefzoneGH);
+        json.put("divider", ",");
+        json.put(JSON_KEY_REEFZONE_IJ, m_reefzoneIJ);
+        json.put("divider", ",");
+        json.put(JSON_KEY_REEFZONE_KL, m_reefzoneKL);
         json.put("divider", ",");
         json.put(JSON_KEY_AUTON_CORAL_L1, m_autonCoralL1);
         json.put("divider", ",");
