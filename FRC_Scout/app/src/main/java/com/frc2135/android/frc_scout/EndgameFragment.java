@@ -134,9 +134,9 @@ public class EndgameFragment extends Fragment
 
 
         m_foulRobot = v.findViewById(R.id.foul_robot);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
-        m_zeroContact = v.findViewById(R.id.zero_contact);//Sets up radio button that corresponds to 0
-        m_oneContact = v.findViewById(R.id.one_contact);//Sets up radio button that corresponds to 1
-        m_twoContact = v.findViewById(R.id.two_contact);//Sets up radio button that corresponds to 2
+        m_zeroContact = v.findViewById(R.id.foul_contact_zero);//Sets up radio button that corresponds to 0
+        m_oneContact = v.findViewById(R.id.foul_contact_one);//Sets up radio button that corresponds to 1
+        m_twoContact = v.findViewById(R.id.foul_contact_two);//Sets up radio button that corresponds to 2
         m_zeroContact.setChecked(false);
         m_oneContact.setChecked(false);
         m_twoContact.setChecked(false);

@@ -222,7 +222,7 @@ public class Scouter
             logMsg.append("scoringTableSide=0");
         }
 
-        Log.d(TAG, "--->>> Writing to Scouter.json: " + logMsg);
+        Log.d(TAG, "Writing to Scouter.json: " + logMsg);
         return json;
     }
 

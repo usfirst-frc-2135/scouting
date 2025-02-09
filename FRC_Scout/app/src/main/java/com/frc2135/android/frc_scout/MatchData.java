@@ -50,8 +50,8 @@ public class MatchData
     private static final String JSON_KEY_TELEOP_ALGAE_NET = "teleopAlgaeNet";
     private static final String JSON_KEY_TELEOP_ALGAE_PROCESSOR = "teleopAlgaeProcessor";
     private static final String JSON_KEY_PICK_UP_CORAL = "pickUpCoral";
-    private static final String JSON_KEY_CORAL_ACQUIRE= "coralAcquire";
-    private static final String JSON_KEY_ALGAE_ACQUIRE = "algaeAcquire";
+    private static final String JSON_KEY_CORAL_ACQUIRED= "coralAcquired";
+    private static final String JSON_KEY_ALGAE_ACQUIRED = "algaeAcquired";
     private static final String JSON_KEY_STARTING_POSITION = "startingPosition";
 
     private static final String JSON_KEY_PICK_UP_ALGAE = "pickUpAlgae";
@@ -116,8 +116,8 @@ public class MatchData
     private boolean m_knockAlgaeOff;
     private boolean m_algaeFromReef;
     private boolean m_holdBothElements;
-    private int m_coralAcquire;
-    private int m_algaeAcquire;
+    private int m_coralAcquired;
+    private int m_algaeAcquired;
 
     private int m_teleopAmpMisses;
     private int m_teleopSpeakerMisses;
@@ -180,8 +180,8 @@ public class MatchData
         setPlayedDefense(0);
         setFoulPin(0);
         setFoulAnchor(0);
-        setCoralAcquire(0);
-        setAlgaeAcquire(0);
+        setCoralAcquired(0);
+        setAlgaeAcquired(0);
         setTeleopPasses(0);
 
         setReefzone_AB(false);
@@ -226,8 +226,8 @@ public class MatchData
         setFloorAlgae(json.getBoolean(JSON_KEY_FLOOR_ALGAE));
         setReefAlgae(json.getBoolean(JSON_KEY_REEF_ALGAE));
 
-        setCoralAcquire(json.getInt(JSON_KEY_CORAL_ACQUIRE));
-        setAlgaeAcquire(json.getInt(JSON_KEY_ALGAE_ACQUIRE));
+        setCoralAcquired(json.getInt(JSON_KEY_CORAL_ACQUIRED));
+        setAlgaeAcquired(json.getInt(JSON_KEY_ALGAE_ACQUIRED));
 
         setPickUpCoral(json.getBoolean(JSON_KEY_PICK_UP_CORAL));
         setPickUpAlgae(json.getBoolean(JSON_KEY_PICK_UP_CORAL));
@@ -573,12 +573,12 @@ public class MatchData
         return m_pickUpAlgae;
     }
 
-    public void setCurrentStartingPosition(int startingPosition)
+    public void setStartingPosition(int startingPosition)
     {
         m_positionStarting = startingPosition;
     }
 
-    public int getCurrentStartingPosition()
+    public int getStartingPosition()
     {
         return m_positionStarting;
     }
@@ -679,24 +679,24 @@ public class MatchData
         return m_teleopReefFoul;
     }
 
-    public void setCoralAcquire(int coralAcquire)
+    public void setCoralAcquired(int coralAcquired)
     {
-        m_coralAcquire = coralAcquire;
+        m_coralAcquired = coralAcquired;
     }
 
-    public int getCoralAcquire()
+    public int getCoralAcquired()
     {
-        return m_coralAcquire;
+        return m_coralAcquired;
     }
 
-    public void setAlgaeAcquire(int algaeAcquire)
+    public void setAlgaeAcquired(int algaeAcquired)
     {
-        m_algaeAcquire = algaeAcquire;
+        m_algaeAcquired = algaeAcquired;
     }
 
-    public int getAlgaeAcquire()
+    public int getAlgaeAcquired()
     {
-        return m_algaeAcquire;
+        return m_algaeAcquired;
     }
 
     public void setTeleopPasses(int numPasses)
@@ -828,8 +828,8 @@ public class MatchData
             tsvStr += "0" + "\t";
 
 
-        tsvStr += m_coralAcquire + "\t";
-        tsvStr += m_algaeAcquire + "\t";
+        tsvStr += m_coralAcquired + "\t";
+        tsvStr += m_algaeAcquired + "\t";
 
         if (m_pickUpCoral)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
@@ -945,9 +945,9 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_REEF_ALGAE, m_algaeReef);
         json.put("divider", ",");
-        json.put(JSON_KEY_CORAL_ACQUIRE, m_coralAcquire);
+        json.put(JSON_KEY_CORAL_ACQUIRED, m_coralAcquired);
         json.put("divider", ",");
-        json.put(JSON_KEY_ALGAE_ACQUIRE, m_algaeAcquire);
+        json.put(JSON_KEY_ALGAE_ACQUIRED, m_algaeAcquired);
         json.put("divider", ",");
         json.put(JSON_KEY_PICK_UP_CORAL, m_pickUpCoral);
         json.put("divider", ",");

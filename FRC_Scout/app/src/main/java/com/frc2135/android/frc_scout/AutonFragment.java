@@ -24,7 +24,8 @@ import androidx.fragment.app.Fragment;
 public class AutonFragment extends Fragment
 {
     private static final String TAG = "AutonFragment";
-    private static final int MAX_POINTS = 4;    
+    private static final int MAX_NUM_CORAL = 3;
+    private static final int MAX_NUM_ALGAE = 2;    
 
     private CheckBox m_reefZoneCkbx1;
     private CheckBox m_reefZoneCkbx2;
@@ -73,14 +74,46 @@ public class AutonFragment extends Fragment
 
     private MatchData m_matchData;
 
-    // Check if pointsTextView field has a valid number, greater than MAX_POINTS.
-    private boolean isNotValidPoints(TextView field)
+    // Check if given field is greater than expected max number.
+    private boolean isGreaterThanMax(TextView field,boolean bIsCoral)
     {
         boolean rtn = false;
         int num = Integer.parseInt(field.getText().toString());
-        if (num > MAX_POINTS)
-            rtn = true;
+        if (bIsCoral == true) {
+            if (num > MAX_NUM_CORAL)  // for coral number
+                rtn = true;
+        } else  // for algae number
+        {       
+            if (num > MAX_NUM_ALGAE)
+                rtn = true;
+        }
         return rtn;
+    }
+
+    // Sets the new result integer value for the given TextView, either decrementing or 
+    // incrementing the shown value. If the decrement case falls below zero, returns 0. 
+    // Sets textView color to RED if out of expected range.
+    public void updateTotalsInt(TextView tView, boolean bIncr, boolean bIsCoral)
+    {
+        int result = Integer.parseInt(tView.getText().toString()); // get current value as int
+        if (bIncr)
+            result += 1;
+        else result -= 1;
+        if (result < 0) 
+            result = 0;
+        tView.setText(String.valueOf(result));
+        if (isGreaterThanMax(tView,bIsCoral))
+        {
+            tView.setTextColor(Color.RED);
+        }
+        else
+        {
+            Context context = getContext();
+            if (context != null)
+            {
+                tView.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
+            }
+        }
     }
 
     private void getMatchDataReefscapeZones()
@@ -163,187 +196,141 @@ public class AutonFragment extends Fragment
         }
     }
 
-    // Sets the new result integer value for the given Button, either decrementing or incrementing it.
-    // If the decrement case falls below zero, returns 0. Sets textView to RED if out of valid range.
-    public void updatePointsInt(TextView pointsTextView, boolean bIncr)
-    {
-        int result = Integer.parseInt(pointsTextView.getText().toString()); // get current value as int
-        if (bIncr)
-            result += 1;
-        else
-            result -= 1;
-        if (result < 0) result = 0;
-        pointsTextView.setText(String.valueOf(result));
-        if (isNotValidPoints(pointsTextView))
-        {
-            pointsTextView.setTextColor(Color.RED);
-        }
-        else
-        {
-            Context context = getContext();
-            if (context != null)
-            {
-                pointsTextView.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
-            }
-        }
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
         // Creates a view using the specific fragment layout
         View v = inflater.inflate(R.layout.auton_fragment, parent, false);
-        Context context = getContext();
-        if (context != null)
-        {
-            // Set the Reefzone background image. 
-            m_reefzoneOrient = 0;   // default (matches the default image in layout file)
-            Scouter myScouter = Scouter.get(getContext());
-            if (myScouter != null){
-                String color = myScouter.getTeamIndexColor();
-                boolean scoringTableSide = myScouter.getScoringTableSide();
-                LinearLayout rzone_ll = (LinearLayout)v.findViewById(R.id.reef_zones_layout);
-                if (color.equals("red")) {
-                    if (scoringTableSide) {
-                        rzone_ll.setBackgroundResource(R.drawable.reefzone_r1_sctbl);
-                        m_reefzoneOrient = 0;
-                    }
-                    else {
-                        rzone_ll.setBackgroundResource(R.drawable.reefzone_r2);
-                        m_reefzoneOrient = 1;
-                    }
-                } else {
-                    if (scoringTableSide) {
-                        rzone_ll.setBackgroundResource(R.drawable.reefzone_b1_sctbl);
-                        m_reefzoneOrient = 2;
-                    }
-                    else {
-                        rzone_ll.setBackgroundResource(R.drawable.reefzone_b2);
-                        m_reefzoneOrient = 3;
-                    }       
+
+        // Set the Reefzone background image. 
+        m_reefzoneOrient = 0;   // default (matches the default image in layout file)
+        Scouter myScouter = Scouter.get(getContext());
+        if (myScouter != null){
+            String color = myScouter.getTeamIndexColor();
+            boolean scoringTableSide = myScouter.getScoringTableSide();
+            LinearLayout rzone_ll = (LinearLayout)v.findViewById(R.id.reef_zones_layout);
+            if (color.equals("red")) {
+                if (scoringTableSide) {
+                    rzone_ll.setBackgroundResource(R.drawable.reefzone_r1_sctbl);
+                    m_reefzoneOrient = 0;
+                }
+                else {
+                    rzone_ll.setBackgroundResource(R.drawable.reefzone_r2);
+                    m_reefzoneOrient = 1;
+                }
+            } else {
+                if (scoringTableSide) {
+                    rzone_ll.setBackgroundResource(R.drawable.reefzone_b1_sctbl);
+                    m_reefzoneOrient = 2;
+                }
+                else {
+                    rzone_ll.setBackgroundResource(R.drawable.reefzone_b2);
+                    m_reefzoneOrient = 3;
                 }       
             }       
+        }       
 
-            m_autonL1Total = v.findViewById(R.id.auton_L1_score_total);
-            m_autonL1Total.setText(String.valueOf(m_matchData.getAutonCoralL1()));
-            m_autonL1DecrButton = v.findViewById(R.id.auton_L1_decr_button);
-            m_autonL1IncrButton = v.findViewById(R.id.auton_L1_incr_button);
-            m_autonL2Total = v.findViewById(R.id.auton_L2_score_total);
-            m_autonL2Total.setText(String.valueOf(m_matchData.getAutonCoralL2()));
-            m_autonL2DecrButton = v.findViewById(R.id.auton_L2_decr_button);
-            m_autonL2IncrButton = v.findViewById(R.id.auton_L2_incr_button);
-            m_autonL3Total = v.findViewById(R.id.auton_L3_score_total);
-            m_autonL3Total.setText(String.valueOf(m_matchData.getAutonCoralL3()));
-            m_autonL3DecrButton = v.findViewById(R.id.auton_L3_decr_button);
-            m_autonL3IncrButton = v.findViewById(R.id.auton_L3_incr_button);
-            m_autonL4Total = v.findViewById(R.id.auton_L4_score_total);
-            m_autonL4Total.setText(String.valueOf(m_matchData.getAutonCoralL4()));
-            m_autonL4DecrButton = v.findViewById(R.id.auton_L4_decr_button);
-            m_autonL4IncrButton = v.findViewById(R.id.auton_L4_incr_button);
+        m_autonL1Total = v.findViewById(R.id.auton_L1_score_total);
+        m_autonL1Total.setText(String.valueOf(m_matchData.getAutonCoralL1()));
+        m_autonL1DecrButton = v.findViewById(R.id.auton_L1_decr_button);
+        m_autonL1IncrButton = v.findViewById(R.id.auton_L1_incr_button);
+        m_autonL2Total = v.findViewById(R.id.auton_L2_score_total);
+        m_autonL2Total.setText(String.valueOf(m_matchData.getAutonCoralL2()));
+        m_autonL2DecrButton = v.findViewById(R.id.auton_L2_decr_button);
+        m_autonL2IncrButton = v.findViewById(R.id.auton_L2_incr_button);
+        m_autonL3Total = v.findViewById(R.id.auton_L3_score_total);
+        m_autonL3Total.setText(String.valueOf(m_matchData.getAutonCoralL3()));
+        m_autonL3DecrButton = v.findViewById(R.id.auton_L3_decr_button);
+        m_autonL3IncrButton = v.findViewById(R.id.auton_L3_incr_button);
+        m_autonL4Total = v.findViewById(R.id.auton_L4_score_total);
+        m_autonL4Total.setText(String.valueOf(m_matchData.getAutonCoralL4()));
+        m_autonL4DecrButton = v.findViewById(R.id.auton_L4_decr_button);
+        m_autonL4IncrButton = v.findViewById(R.id.auton_L4_incr_button);
 
-            // Setup TextViews that displays points, setting 0 as the default.
-            // defense buttons
-            m_startingPosition = v.findViewById(R.id.starting_position);
-            m_rightStart = v.findViewById(R.id.right_start);
-            m_middleStart = v.findViewById(R.id.middle_start);
-            m_leftStart  = v.findViewById(R.id.left_start);
-            m_rightStart.setChecked(false);
-            m_middleStart.setChecked(false);
-            m_leftStart .setChecked(false);
-
-            int defValue = m_matchData.getCurrentStartingPosition();
-            if (defValue == 0)
-                m_rightStart.setChecked(true);
-            else if(defValue == 1)
-                m_middleStart.setChecked(true);
-            else if(defValue == 2)
-                m_leftStart.setChecked(true);
-
-            m_autonAlgaeNetTotal = v.findViewById(R.id.auton_algae_net_total);
-            m_autonAlgaeNetTotal.setText(String.valueOf(m_matchData.getAutonAlgaeNet()));
-            m_autonAlgaeNetDecrButton = v.findViewById(R.id.auton_algae_net_decr_button);
-            m_autonAlgaeNetIncrButton = v.findViewById(R.id.auton_algae_net_incr_button);
-            m_autonAlgaeProcTotal = v.findViewById(R.id.auton_algae_proc_total);
-            m_autonAlgaeProcTotal.setText(String.valueOf(m_matchData.getAutonAlgaeProcessor()));
-            m_autonAlgaeProcDecrButton = v.findViewById(R.id.auton_algae_proc_decr_button);
-            m_autonAlgaeProcIncrButton = v.findViewById(R.id.auton_algae_proc_incr_button);
-        }
-
+        // Set up Coral L1-L4 incr/decr buttons.
         m_autonL1IncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                updatePointsInt(m_autonL1Total, true);
+                updateTotalsInt(m_autonL1Total, true, true);
             }
         });
-
         m_autonL2IncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 //Increases displayed point value by 1
-                updatePointsInt(m_autonL2Total, true);
+                updateTotalsInt(m_autonL2Total, true, true);
             }
         });
-
         m_autonL3IncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 //Increases displayed point value by 1
-                updatePointsInt(m_autonL3Total, true);
+                updateTotalsInt(m_autonL3Total, true, true);
             }
         });
-
         m_autonL4IncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                updatePointsInt(m_autonL4Total, true);
+                updateTotalsInt(m_autonL4Total, true, true);
             }
         });
-
         m_autonL1DecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                updatePointsInt(m_autonL1Total, false);
+                updateTotalsInt(m_autonL1Total, false, true);
             }
         });
-
         m_autonL2DecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                updatePointsInt(m_autonL2Total, false);
+                updateTotalsInt(m_autonL2Total, false, true);
             }
         });
-
         m_autonL3DecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                updatePointsInt(m_autonL3Total, false);
+                updateTotalsInt(m_autonL3Total, false, true);
             }
         });
-
         m_autonL4DecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                updatePointsInt(m_autonL4Total, false);
+                updateTotalsInt(m_autonL4Total, false, true);
             }
         });
 
-        //Connects the checkboxes and sets up a listener to detect when checked status is changed
+        m_startingPosition = v.findViewById(R.id.starting_position);
+        m_rightStart = v.findViewById(R.id.right_start);
+        m_middleStart = v.findViewById(R.id.middle_start);
+        m_leftStart  = v.findViewById(R.id.left_start);
+        m_rightStart.setChecked(false);
+        m_middleStart.setChecked(false);
+        m_leftStart .setChecked(false);
+
+        int defValue = m_matchData.getStartingPosition();
+        if (defValue == 0)
+            m_rightStart.setChecked(true);
+        else if(defValue == 1)
+            m_middleStart.setChecked(true);
+        else if(defValue == 2)
+            m_leftStart.setChecked(true);
+
         m_leaveCheckbox = v.findViewById(R.id.leave_checkbox);
         m_leaveCheckbox.setChecked(m_matchData.getAutonLeave());
         m_floorCoral = v.findViewById(R.id.floor_coral);
@@ -355,43 +342,64 @@ public class AutonFragment extends Fragment
         m_reefAlgae = v.findViewById(R.id.reef_algae);
         m_reefAlgae.setChecked(m_matchData.getReefAlgae());
 
+        // Set up Algae Net/Proc incr/decr buttons and listeners.
+        m_autonAlgaeNetTotal = v.findViewById(R.id.auton_algae_net_total);
+        m_autonAlgaeNetTotal.setText(String.valueOf(m_matchData.getAutonAlgaeNet()));
+        m_autonAlgaeNetDecrButton = v.findViewById(R.id.auton_algae_net_decr_button);
+        m_autonAlgaeNetIncrButton = v.findViewById(R.id.auton_algae_net_incr_button);
+        m_autonAlgaeProcTotal = v.findViewById(R.id.auton_algae_proc_total);
+        m_autonAlgaeProcTotal.setText(String.valueOf(m_matchData.getAutonAlgaeProcessor()));
+        m_autonAlgaeProcDecrButton = v.findViewById(R.id.auton_algae_proc_decr_button);
+        m_autonAlgaeProcIncrButton = v.findViewById(R.id.auton_algae_proc_incr_button);
 
-        // Set up listener for each incr/decr button
         m_autonAlgaeNetIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                updatePointsInt(m_autonAlgaeNetTotal, true);
+                updateTotalsInt(m_autonAlgaeNetTotal, true, false);
             }
         });
-
         m_autonAlgaeNetDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                updatePointsInt(m_autonAlgaeNetTotal, false);
+                updateTotalsInt(m_autonAlgaeNetTotal, false, false);
             }
         });
-
         m_autonAlgaeProcIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                updatePointsInt(m_autonAlgaeProcTotal, true);
+                updateTotalsInt(m_autonAlgaeProcTotal, true, false);
             }
         });
-
         m_autonAlgaeProcDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                updatePointsInt(m_autonAlgaeProcTotal, false);
+                updateTotalsInt(m_autonAlgaeProcTotal, false, false);
             }
         });
+
+        // Check coral levels for MAX
+        if (isGreaterThanMax(m_autonL1Total,true))
+            m_autonL1Total.setTextColor(Color.RED);
+        if (isGreaterThanMax(m_autonL2Total,true))
+            m_autonL2Total.setTextColor(Color.RED);
+        if (isGreaterThanMax(m_autonL3Total,true))
+            m_autonL3Total.setTextColor(Color.RED);
+        if (isGreaterThanMax(m_autonL4Total,true))
+            m_autonL4Total.setTextColor(Color.RED);
+
+        // Check algae for MAX
+        if (isGreaterThanMax(m_autonAlgaeNetTotal,false))
+            m_autonAlgaeNetTotal.setTextColor(Color.RED);
+        if (isGreaterThanMax(m_autonAlgaeProcTotal,false))
+            m_autonAlgaeProcTotal.setTextColor(Color.RED);
 
         // Set up reefzone checkboxes from MatchData.
         m_reefZoneCkbx1 = v.findViewById(R.id.reefzone_b1);
@@ -401,7 +409,6 @@ public class AutonFragment extends Fragment
         m_reefZoneCkbx5 = v.findViewById(R.id.reefzone_b5);
         m_reefZoneCkbx6 = v.findViewById(R.id.reefzone_b6);
         getMatchDataReefscapeZones();
-
         return v;
     }
 
@@ -434,7 +441,7 @@ public class AutonFragment extends Fragment
         m_matchData.setAutonAlgaeNet(Integer.parseInt(m_autonAlgaeNetTotal.getText().toString()));
         m_matchData.setAutonAlgaeProcessor(Integer.parseInt(m_autonAlgaeProcTotal.getText().toString()));
 
-        m_matchData.setCurrentStartingPosition(getCurrentStartingPosition());
+        m_matchData.setStartingPosition(getCurrentStartingPosition());
         m_matchData.setAutonLeave(m_leaveCheckbox.isChecked());
         m_matchData.setFloorCoral(m_floorCoral.isChecked());
         m_matchData.setStationCoral(m_stationCoral.isChecked());

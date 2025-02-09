@@ -1,54 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+<!-- ACQUIRE GAME PIECE starts -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/rounded_rect"
+            android:backgroundTint="#CACFF9"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/acquire_game_piece"
-                style="?android:listSeparatorTextViewStyle"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="Acquire Game Piece"
-                android:backgroundTint="#CACFF9"
+                android:text="ACQUIRE GAME PIECE"
                 android:textColor="@color/specialTextPrimary"
-                android:background="@drawable/top_rounded_rect"
-                android:textSize="24sp" />
+                android:textSize="22sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/bottom_rounded_rect"
-                android:backgroundTint="#CACFF9">
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/coral_text"
-                    android:layout_width="60dp"
+                    android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="10dp"
                     android:textSize="20sp"
                     android:background="#CACFF9"
-                    android:layout_marginTop="5dp"
-                    android:textColor="#000000"
-                    android:text="Coral" />
+                    android:textColor="@color/specialTextPrimary"
+                    android:text="CORAL" />
 
                 <Button
-                    android:id="@+id/coral_acquire_decr"
+                    android:id="@+id/coral_acquired_decr_button"
                     android:layout_width="80dp"
                     android:layout_height="40dp"
                     android:background="@drawable/rounded_rect"
@@ -60,15 +56,15 @@
                     android:textSize="30dp" />
 
                 <TextView
-                    android:id="@+id/coral_acquire_text"
+                    android:id="@+id/coral_acquired_total"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:textAlignment="center"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="8dp"
                     android:textSize="25sp" />
 
                 <Button
-                    android:id="@+id/coral_acquire_incr"
+                    android:id="@+id/coral_acquired_incr_button"
                     android:layout_width="80dp"
                     android:layout_height="40dp"
                     android:layout_marginEnd="30dp"
@@ -81,18 +77,16 @@
 
                 <TextView
                     android:id="@+id/algae_text"
-                    android:layout_width="60dp"
+                    android:layout_width="67dp"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:background="#CACFF9"
-                    android:layout_marginTop="5dp"
-                    android:textColor="#000000"
+                    android:textColor="@color/specialTextPrimary"
                     android:layout_marginBottom="10dp"
-                    android:text="Algae" />
-
+                    android:text="ALGAE" />
 
                 <Button
-                    android:id="@+id/algae_acquire_decr"
+                    android:id="@+id/algae_acquired_decr_button"
                     android:layout_width="80dp"
                     android:layout_height="40dp"
                     android:background="@drawable/rounded_rect"
@@ -103,15 +97,15 @@
                     android:textSize="30dp" />
 
                 <TextView
-                    android:id="@+id/algae_acquire_text"
+                    android:id="@+id/algae_acquired_total"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:textAlignment="center"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="8dp"
                     android:textSize="25sp" />
 
                 <Button
-                    android:id="@+id/algae_acquire_incr"
+                    android:id="@+id/algae_acquired_incr_button"
                     android:layout_width="80dp"
                     android:layout_height="40dp"
                     android:layout_marginEnd="30dp"
@@ -121,32 +115,31 @@
                     android:backgroundTint="#23DEBF"
                     android:textColor="#FFFFFF"
                     android:textSize="30dp" />
-
-
             </LinearLayout>
-
-
         </LinearLayout>
+<!-- end ACQUIRE GAME PIECE -->
 
+<!-- FLOOR PICKUP section -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#CADAF8"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="5dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:background="@drawable/rounded_rect"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/amp_scoring_title"
-                style="?android:listSeparatorTextViewStyle"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="34dp"
-                android:text="Floor Pickup "
-                android:background="@drawable/rounded_rect"
-                android:backgroundTint="#CADAF8"
+                android:text="FLOOR PICKUP "
                 android:textColor="@color/specialTextPrimary"
-                android:textSize="24sp" />
+                android:textSize="22sp" />
 
             <CheckBox
                 android:id="@+id/pickup_coral"
@@ -167,28 +160,29 @@
                 android:text="Coral" />
 
         </LinearLayout>
+<!-- end FLOOR PICKUP section -->
 
-        <TextView
-            android:id="@+id/textView2"
-            style="?android:listSeparatorTextViewStyle"
-            android:textColor="#000000"
-            android:backgroundTint="#E7CCE4"
-            android:background="@drawable/top_rounded_rect"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Handling game pieces"
-            android:textSize="24sp" />
-
+<!-- start HANDLING GAME PIECES section -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_rect"
             android:backgroundTint="#E7CCE4"
             android:orientation="vertical">
+
+        <TextView
+            android:textStyle="bold"
+            android:textColor="@color/specialTextPrimary"
+            android:layout_marginLeft="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="HANDLING GAME PIECES"
+            android:textSize="22sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bottom_rounded_rect"
                 android:backgroundTint="#E7CCE4"
                 android:orientation="vertical">
 
@@ -216,7 +210,6 @@
                         android:textSize="20sp"
                         android:buttonTint="#8957A1"
                         android:text="Acquire Algae from reef" />
-
                 </LinearLayout>
 
                 <CheckBox
@@ -227,1176 +220,420 @@
                     android:textSize="20sp"
                     android:buttonTint="#8957A1"
                     android:text="Can hold both game pieces at once" />
-
             </LinearLayout>
+        </LinearLayout>
+<!-- end HANDLING GAME PIECES section -->
 
+<!-- start ALGAE/CORAL SCORING side-by-side section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/backgroundColor"
+            android:orientation="horizontal"
+            android:paddingTop="20dp">
+                
+<!--start ALGAE SCORING -->
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_rect"
-                android:backgroundTint="#FCD9DF"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
+                android:layout_width="290dp"
+                android:layout_height="350dp"
+                android:background="@drawable/algae_bkgnd"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/coral_scoring_title"
-                    style="?android:listSeparatorTextViewStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="60dp"
-                    android:rotation="-90"
-                    android:text="CORAL"
-                    android:background="@drawable/bottom_rounded_rect"
-                    android:textColor="@color/specialTextPrimary"
-                    android:textSize="22sp" />
+           <TextView
+                android:id="@+id/algae_scored_label"
+                android:layout_width="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textStyle="bold"
+                android:text="ALGAE SCORED"
+                android:textColor="@color/specialTextPrimary"
+                android:textSize="22sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/top_rounded_rect"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/top_rounded_rect"
-                        android:orientation="horizontal"
-                        android:backgroundTint="#FDE5E5"
-                        android:paddingBottom="1dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/top_rounded_rect"
-                            android:orientation="horizontal"
-                            android:backgroundTint="#FEEFF2"
-                            android:paddingBottom="1dp">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@color/teleopUpperCardColor"
-                                android:orientation="horizontal"
-                                android:layout_marginTop="4dp"
-                                android:layout_marginStart="16dp"
-                                android:backgroundTint="#FEEFF2"
-                                android:layout_weight="4"
-                                android:paddingBottom="1dp">
-
-                                <TextView
-                                    android:id="@+id/teleop_coral_scoring_L1"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="L1:"
-                                    android:layout_marginTop="8dp"
-                                    android:textSize="22dp"
-                                    android:textColor="@color/specialTextPrimary"
-                                    />
-
-                                <TextView
-                                    android:id="@+id/teleop_coral_scoring_text_L1"
-                                    android:layout_width="100dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginStart="16dp"
-                                    android:layout_marginTop="6dp"
-                                    android:textSize="25sp" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@color/teleopUpperCardColor"
-                                android:orientation="horizontal"
-                                android:layout_marginTop="8dp"
-                                android:layout_weight="4"
-                                android:backgroundTint="#FEEFF2"
-                                android:paddingBottom="1dp">
-
-                                <TextView
-                                    android:id="@+id/teleop_coral_scoring_L2"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginTop="4dp"
-                                    android:text="L2:"
-                                    android:layout_marginStart="16dp"
-                                    android:textSize="22dp"
-                                    android:textColor="@color/specialTextPrimary"
-                                    />
-
-                                <TextView
-                                    android:layout_marginTop="2dp"
-                                    android:id="@+id/teleop_coral_scoring_text_L2"
-                                    android:layout_width="100dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginStart="16dp"
-                                    android:textSize="25sp" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@color/teleopUpperCardColor"
-                                android:orientation="horizontal"
-                                android:layout_marginTop="8dp"
-                                android:layout_weight="4"
-                                android:backgroundTint="#FEEFF2"
-                                android:paddingBottom="1dp">
-
-                                <TextView
-                                    android:id="@+id/teleop_coral_scoring_L3"
-                                    android:layout_marginTop="4dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="L3:"
-                                    android:layout_marginStart="16dp"
-                                    android:textSize="22dp"
-                                    android:textColor="@color/specialTextPrimary"
-                                    />
-
-                                <TextView
-                                    android:layout_marginTop="1dp"
-                                    android:id="@+id/teleop_coral_scoring_text_L3"
-                                    android:layout_width="100dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginStart="16dp"
-                                    android:textSize="25sp" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_marginTop="8dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@color/teleopUpperCardColor"
-                                android:orientation="horizontal"
-                                android:layout_marginStart="16dp"
-                                android:layout_weight="4"
-                                android:backgroundTint="#FEEFF2"
-                                android:paddingBottom="1dp">
-
-                                <TextView
-                                    android:id="@+id/teleop_coral_scoring_L4"
-                                    android:layout_marginTop="4dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="L4:"
-                                    android:layout_marginStart="16dp"
-                                    android:textSize="22dp"
-                                    android:textColor="@color/specialTextPrimary"
-                                    />
-
-                                <TextView
-                                    android:id="@+id/teleop_coral_scoring_text_L4"
-                                    android:layout_width="100dp"
-                                    android:layout_marginTop="2dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginStart="16dp"
-                                    android:background="@drawable/top_rounded_rect"
-                                    android:backgroundTint="#FEEFF2"
-                                    android:textSize="25sp" />
-
-                            </LinearLayout>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/top_rounded_rect">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/top_rounded_rect"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:background="#FDE2E7">
-
-                                <RelativeLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@color/teleopUpperCardColor"
-                                    android:orientation="horizontal"
-                                    android:layout_marginStart="90dp"
-                                    android:layout_marginTop="10dp"
-                                    android:backgroundTint="#FDE2E7"
-                                    android:paddingBottom="1dp">
-
-                                    <Button
-                                        android:id="@+id/teleop_coral_scoring_decr"
-                                        android:layout_width="80dp"
-                                        android:layout_height="40dp"
-                                        android:layout_marginStart="16dp"
-                                        android:background="@drawable/rounded_rect"
-                                        android:text="@string/decrease"
-                                        android:textColor="#9F3FB5"
-                                        android:textSize="30sp" />
-
-                                    <TextView
-                                        android:id="@+id/teleop_coral_scoring_text"
-                                        android:layout_width="100dp"
-                                        android:layout_height="wrap_content"
-                                        android:textAlignment="center"
-                                        android:layout_toRightOf="@+id/teleop_coral_scoring_decr"
-                                        android:textSize="25sp" />
-
-                                    <Button
-                                        android:id="@+id/teleop_coral_scoring_incr"
-                                        android:layout_width="80dp"
-                                        android:layout_height="40dp"
-                                        android:layout_marginEnd="30dp"
-                                        android:background="@drawable/rounded_rect"
-                                        android:text="@string/increase"
-                                        android:layout_toRightOf="@+id/teleop_coral_scoring_text"
-                                        android:textColor="#9F3FB5"
-                                        android:textSize="30sp" />
-
-                                    <Button
-                                        android:id="@+id/teleop_coral_scoring_decr_disabled"
-                                        android:layout_width="80dp"
-                                        android:layout_height="40dp"
-                                        android:layout_marginStart="16dp"
-                                        android:background="@drawable/rounded_rect"
-                                        android:text="@string/decrease"
-                                        android:textColor="#696969"
-                                        android:backgroundTint="#BEBEBE"
-                                        android:layout_alignRight="@+id/teleop_coral_scoring_decr"
-                                        android:textSize="30sp" />
-
-                                    <TextView
-                                        android:id="@+id/teleop_coral_scoring_text_disabled"
-                                        android:layout_width="100dp"
-                                        android:layout_height="wrap_content"
-                                        android:textAlignment="center"
-                                        android:textSize="25sp" />
-
-                                    <Button
-                                        android:id="@+id/teleop_coral_scoring_incr_disabled"
-                                        android:layout_width="80dp"
-                                        android:layout_height="40dp"
-                                        android:layout_marginEnd="30dp"
-                                        android:background="@drawable/rounded_rect"
-                                        android:backgroundTint="#BEBEBE"
-                                        android:text="@string/increase"
-                                        android:textColor="#696969"
-                                        android:layout_alignLeft="@+id/teleop_coral_scoring_incr"
-                                        android:textSize="30sp" />
-
-                                    <Button
-                                        android:id="@+id/teleop_coral_scoring_decr_L1"
-                                        android:layout_width="80dp"
-                                        android:layout_height="40dp"
-                                        android:layout_marginStart="16dp"
-                                        android:background="@drawable/rounded_rect"
-                                        android:text="@string/decrease"
-                                        android:textColor="#FFFFFF"
-                                        android:backgroundTint="#48a14d"
-                                        android:layout_alignRight="@+id/teleop_coral_scoring_decr"
-                                        android:textSize="30sp" />
-
-                                    <TextView
-                                        android:id="@+id/teleop_coral_scoring_button_text_L1"
-                                        android:layout_width="100dp"
-                                        android:layout_height="wrap_content"
-                                        android:textAlignment="center"
-                                        android:textSize="25sp" />
-
-                                    <Button
-                                        android:id="@+id/teleop_coral_scoring_incr_L1"
-                                        android:layout_width="80dp"
-                                        android:layout_height="40dp"
-                                        android:layout_marginEnd="30dp"
-                                        android:background="@drawable/rounded_rect"
-                                        android:backgroundTint="#48a14d"
-                                        android:text="@string/increase"
-                                        android:textColor="#FFFFFF"
-                                        android:layout_alignLeft="@+id/teleop_coral_scoring_incr"
-                                        android:textSize="30sp" />
-
-                                    <Button
-                                        android:id="@+id/teleop_coral_scoring_decr_L2"
-                                        android:layout_width="80dp"
-                                        android:layout_height="40dp"
-                                        android:layout_marginStart="16dp"
-                                        android:background="@drawable/rounded_rect"
-                                        android:text="@string/decrease"
-                                        android:textColor="#FFFFFF"
-                                        android:backgroundTint="#3DB9FC"
-                                        android:layout_alignRight="@+id/teleop_coral_scoring_decr"
-                                        android:textSize="30sp" />
-
-                                    <TextView
-                                        android:id="@+id/teleop_coral_scoring_button_text_L2"
-                                        android:layout_width="100dp"
-                                        android:layout_height="wrap_content"
-                                        android:textAlignment="center"
-                                        android:textSize="25sp" />
-
-                                    <Button
-                                        android:id="@+id/teleop_coral_scoring_incr_L2"
-                                        android:layout_width="80dp"
-                                        android:layout_height="40dp"
-                                        android:layout_marginEnd="30dp"
-                                        android:background="@drawable/rounded_rect"
-                                        android:backgroundTint="#3DB9FC"
-                                        android:text="@string/increase"
-                                        android:textColor="#FFFFFF"
-                                        android:layout_alignLeft="@+id/teleop_coral_scoring_incr"
-                                        android:textSize="30sp" />
-
-                                    <Button
-                                        android:id="@+id/teleop_coral_scoring_decr_L3"
-                                        android:layout_width="80dp"
-                                        android:layout_height="40dp"
-                                        android:layout_marginStart="16dp"
-                                        android:background="@drawable/rounded_rect"
-                                        android:text="@string/decrease"
-                                        android:textColor="#FFFFFF"
-                                        android:backgroundTint="#433DFC"
-                                        android:layout_alignRight="@+id/teleop_coral_scoring_decr"
-                                        android:textSize="30sp" />
-
-                                    <TextView
-                                        android:id="@+id/teleop_coral_scoring_button_text_L3"
-                                        android:layout_width="100dp"
-                                        android:layout_height="wrap_content"
-                                        android:textAlignment="center"
-                                        android:textSize="25sp" />
-
-                                    <Button
-                                        android:id="@+id/teleop_coral_scoring_incr_L3"
-                                        android:layout_width="80dp"
-                                        android:layout_height="40dp"
-                                        android:layout_marginEnd="30dp"
-                                        android:background="@drawable/rounded_rect"
-                                        android:backgroundTint="#433DFC"
-                                        android:text="@string/increase"
-                                        android:textColor="#FFFFFF"
-                                        android:layout_alignLeft="@+id/teleop_coral_scoring_incr"
-                                        android:textSize="30sp" />
-
-                                    <Button
-                                        android:id="@+id/teleop_coral_scoring_decr_L4"
-                                        android:layout_width="80dp"
-                                        android:layout_height="40dp"
-                                        android:layout_marginStart="16dp"
-                                        android:background="@drawable/rounded_rect"
-                                        android:text="@string/decrease"
-                                        android:textColor="#FFFFFF"
-                                        android:backgroundTint="#B331EB"
-                                        android:layout_marginBottom="5dp"
-                                        android:layout_alignRight="@+id/teleop_coral_scoring_decr"
-                                        android:textSize="30sp" />
-
-                                    <TextView
-                                        android:id="@+id/teleop_coral_scoring_button_text_L4"
-                                        android:layout_width="100dp"
-                                        android:layout_height="wrap_content"
-                                        android:textAlignment="center"
-                                        android:textSize="25sp" />
-
-                                    <Button
-                                        android:id="@+id/teleop_coral_scoring_incr_L4"
-                                        android:layout_width="80dp"
-                                        android:layout_height="40dp"
-                                        android:layout_marginEnd="30dp"
-                                        android:background="@drawable/rounded_rect"
-                                        android:backgroundTint="#B331EB"
-                                        android:text="@string/increase"
-                                        android:textColor="#FFFFFF"
-                                        android:layout_alignLeft="@+id/teleop_coral_scoring_incr"
-                                        android:textSize="30sp" />
-
-                                </RelativeLayout>
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/bottom_rounded_rect"
-                                android:backgroundTint="#FBCDD5"
-                                android:orientation="vertical">
-
-                                <RadioGroup
-                                    android:id="@+id/teleop_coral_radio_group"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="horizontal">
-
-                                    <TextView
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/amp_notes_title"
-                                        style="?android:listSeparatorTextViewStyle"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:background="@drawable/rounded_side"
-                                        android:backgroundTint="#FBCDD5"
-                                        android:text="LEVEL:"
-                                        android:textColor="@color/specialTextSecondary"
-                                        android:textSize="16sp" />
-
-                                    <RadioButton
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/teleop_coral_L1"
-                                        android:layout_marginStart="8dp"
-                                        android:layout_width="70dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:buttonTint="#48a14d"
-                                        android:text="1"
-                                        android:textColor="@color/specialTextPrimary"
-                                        android:textSize="20sp" />
-
-                                    <RadioButton
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/teleop_coral_L2"
-                                        android:layout_marginStart="8dp"
-                                        android:layout_width="70dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:buttonTint="#3DB9FC"
-                                        android:text="2"
-                                        android:textColor="@color/specialTextPrimary"
-                                        android:textSize="20sp" />
-
-                                    <RadioButton
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/teleop_coral_L3"
-                                        android:layout_marginStart="8dp"
-                                        android:layout_width="70dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:buttonTint="#433DFC"
-                                        android:text="3"
-                                        android:textColor="@color/specialTextPrimary"
-                                        android:textSize="20sp" />
-
-                                    <RadioButton
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/teleop_coral_L4"
-                                        android:layout_marginStart="8dp"
-                                        android:layout_width="70dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:buttonTint="#B331EB"
-                                        android:text="4"
-                                        android:textColor="@color/specialTextPrimary"
-                                        android:textSize="20sp" />
-
-                                    <RadioButton
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/teleop_coral_none"
-                                        android:layout_marginStart="8dp"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:buttonTint="@color/specialTextPrimary"
-                                        android:text="None"
-                                        android:textColor="@color/specialTextPrimary"
-                                        android:textSize="20sp" />
-
-                                </RadioGroup>
-                            </LinearLayout>
-
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/bottom_rounded_rect"
-                android:backgroundTint="@color/specialTextPrimary">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="@drawable/rounded_rect"
-                    android:layout_marginTop="5dp"
-                    android:backgroundTint="#C8F7D4">
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/teleop_algae_scoring_title"
-                        style="?android:listSeparatorTextViewStyle"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/algae_scoring_net_label"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content"
-                        android:background="#C8F7D4"
-                        android:layout_marginTop="70dp"
-                        android:text="ALGAE"
-                        android:rotation="-90"
+                        android:layout_marginStart="8dp"
+                        android:textSize="20sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/specialTextPrimary"
+                        android:text="NET" />
+    
+                    <Button
+                        android:id="@+id/teleop_algae_net_decr_button"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#433DFC"
+                        android:text="@string/decrease"
+                        android:textColor="#FFFFFF"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:textSize="30dp" />
+    
+                    <TextView
+                        android:id="@+id/teleop_algae_net_total"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:textAlignment="center"
+                        android:layout_marginTop="8dp"
+                        android:textSize="25sp" />
+
+                    <Button
+                        android:id="@+id/teleop_algae_net_incr_button"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/rounded_rect"
+                        android:text="@string/increase"
+                        android:backgroundTint="#433DFC"
+                        android:textColor="#FFFFFF"
+                        android:layout_marginTop="5dp"
+                        android:textSize="30dp" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/teleop_algae_proc_label"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/specialTextPrimary"
+                        android:layout_marginBottom="10dp"
+                        android:text="PROC" />
+
+                    <Button
+                        android:id="@+id/teleop_algae_proc_decr_button"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#007c80"
+                        android:text="@string/decrease"
+                        android:textColor="#FFFFFF"
+                        android:layout_marginTop="5dp"
+                        android:textSize="30dp" />
+
+                    <TextView
+                        android:id="@+id/teleop_algae_proc_total"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:textAlignment="center"
+                        android:layout_marginTop="8dp"
+                        android:textSize="25sp" />
+
+                    <Button
+                        android:id="@+id/teleop_algae_proc_incr_button"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/rounded_rect"
+                        android:text="@string/increase"
+                        android:layout_marginTop="5dp"
+                        android:backgroundTint="#007c80"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+<!--end ALGAE SCORING-->
+
+<!--start CORAL SCORING-->
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="350dp"
+                android:background="@drawable/coral_levels"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/L4_label"
+                        android:textStyle="bold"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="5dp"
+                        android:text="L4"
                         android:textColor="@color/specialTextPrimary"
                         android:textSize="22sp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                    <Button
+                        android:id="@+id/teleop_L4_decr_button"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         android:background="@drawable/rounded_rect"
-                        android:backgroundTint="#EFE2FF"
-                        android:orientation="vertical">
+                        android:backgroundTint="#f08080"
+                        android:text="@string/decrease"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/top_rounded_rect"
-                            android:backgroundTint="#ECFCF0"
-                            android:orientation="horizontal"
-                            android:paddingBottom="1dp">
+                    <TextView
+                        android:id="@+id/teleop_L4_score_total"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:textAlignment="center"
+                        android:textSize="25sp" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:background="@drawable/top_rounded_rect"
-                                android:backgroundTint="#ECFCF0"
-                                android:paddingBottom="1dp">
+                    <Button
+                        android:id="@+id/teleop_L4_incr_button"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#f08080"
+                        android:text="@string/increase"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp" />
+                </LinearLayout>
+<!-- L3 Coral-->
+                <android.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp" />
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="#ECFCF0"
-                                    android:orientation="horizontal"
-                                    android:layout_marginTop="4dp"
-                                    android:layout_marginStart="16dp"
-                                    android:layout_weight="4"
-                                    android:paddingBottom="1dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                                    <TextView
-                                        android:id="@+id/teleop_algae_net"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:text="Net:"
-                                        android:layout_marginTop="8dp"
-                                        android:layout_marginStart="16dp"
-                                        android:textSize="22dp"
-                                        android:textColor="@color/specialTextPrimary"
-                                        />
+                    <TextView
+                        android:id="@+id/L3_label"
+                        android:textStyle="bold"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="5dp"
+                        android:text="L3"
+                        android:textColor="@color/specialTextPrimary"
+                        android:textSize="22sp" />
 
-                                    <TextView
-                                        android:id="@+id/teleop_algae_net_scoring"
-                                        android:layout_width="100dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginStart="16dp"
-                                        android:layout_marginTop="6dp"
-                                        android:textSize="25sp" />
+                    <Button
+                        android:id="@+id/teleop_L3_decr_button"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#f08080"
+                        android:text="@string/decrease"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp" />
 
-                                </LinearLayout>
+                    <TextView
+                        android:id="@+id/teleop_L3_score_total"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:textAlignment="center"
+                        android:textSize="25sp" />
+                    <Button
+                        android:id="@+id/teleop_L3_incr_button"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#f08080"
+                        android:text="@string/increase"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp" />
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="#ECFCF0"
-                                    android:orientation="horizontal"
-                                    android:layout_marginTop="8dp"
-                                    android:layout_weight="4"
-                                    android:paddingBottom="1dp">
+                </LinearLayout>
+<!-- L2 Coral-->
+                <android.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp" />
 
-                                    <TextView
-                                        android:id="@+id/teleop_algae_processor"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginTop="4dp"
-                                        android:text="Processor:"
-                                        android:layout_marginStart="16dp"
-                                        android:textSize="22dp"
-                                        android:textColor="@color/specialTextPrimary"
-                                        />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                                    <TextView
-                                        android:layout_marginTop="2dp"
-                                        android:id="@+id/teleop_algae_processor_scoring"
-                                        android:layout_width="100dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginStart="16dp"
-                                        android:textSize="25sp" />
+                    <TextView
+                        android:id="@+id/L2_label"
+                        android:textStyle="bold"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="5dp"
+                        android:text="L2"
+                        android:textColor="@color/specialTextPrimary"
+                        android:textSize="22sp" />
 
-                                </LinearLayout>
-                            </LinearLayout>
-                        </LinearLayout>
+                    <Button
+                        android:id="@+id/teleop_L2_decr_button"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#f08080"
+                        android:text="@string/decrease"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="#C8F7D4"
-                            android:orientation="vertical"
-                            android:paddingBottom="1dp">
+                    <TextView
+                        android:id="@+id/teleop_L2_score_total"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:textAlignment="center"
+                        android:textSize="25sp" />
+                    <Button
+                        android:id="@+id/teleop_L2_incr_button"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#f08080"
+                        android:text="@string/increase"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="#DAF9E2"
-                                android:orientation="vertical">
+                </LinearLayout>
+<!-- L1 Coral-->
+                <android.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp" />
 
-                                <RelativeLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="#DAF9E2"
-                                    android:orientation="horizontal"
-                                    android:layout_marginStart="90dp"
-                                    android:layout_marginTop="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                                    <Button
-                                        android:id="@+id/teleop_algae_scoring_decr"
-                                        android:layout_width="80dp"
-                                        android:layout_height="40dp"
-                                        android:layout_marginStart="16dp"
-                                        android:background="@drawable/rounded_rect"
-                                        android:text="@string/decrease"
-                                        android:textColor="#9F3FB5"
-                                        android:textSize="30sp" />
+                    <TextView
+                        android:id="@+id/L1_label"
+                        android:textStyle="bold"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="5dp"
+                        android:text="L1"
+                        android:textColor="@color/specialTextPrimary"
+                        android:textSize="22sp" />
 
-                                    <TextView
-                                        android:id="@+id/teleop_algae_scoring_text"
-                                        android:layout_width="100dp"
-                                        android:layout_height="40dp"
-                                        android:textAlignment="center"
-                                        android:layout_toRightOf="@+id/teleop_algae_scoring_decr"
-                                        android:textSize="25sp" />
+                    <Button
+                        android:id="@+id/teleop_L1_decr_button"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#f08080"
+                        android:text="@string/decrease"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp" />
 
-                                    <Button
-                                        android:id="@+id/teleop_algae_scoring_incr"
-                                        android:layout_width="80dp"
-                                        android:layout_height="40dp"
-                                        android:layout_marginEnd="30dp"
-                                        android:background="@drawable/rounded_rect"
-                                        android:text="@string/increase"
-                                        android:layout_toRightOf="@+id/teleop_algae_scoring_text"
-                                        android:textColor="#9F3FB5"
-                                        android:textSize="30sp" />
+                    <TextView
+                        android:id="@+id/teleop_L1_score_total"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:textAlignment="center"
+                        android:textSize="25sp" />
+                    <Button
+                        android:id="@+id/teleop_L1_incr_button"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#f08080"
+                        android:text="@string/increase"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp" />
 
-                                    <Button
-                                        android:id="@+id/teleop_algae_scoring_decr_disabled"
-                                        android:layout_width="80dp"
-                                        android:layout_height="40dp"
-                                        android:layout_marginStart="16dp"
-                                        android:background="@drawable/rounded_rect"
-                                        android:text="@string/decrease"
-                                        android:textColor="#696969"
-                                        android:backgroundTint="#BEBEBE"
-                                        android:layout_alignRight="@+id/teleop_algae_scoring_decr"
-                                        android:textSize="30sp" />
-
-                                    <TextView
-                                        android:id="@+id/teleop_algae_scoring_text_disabled"
-                                        android:layout_width="80dp"
-                                        android:layout_height="wrap_content"
-                                        android:textAlignment="center"
-                                        android:textSize="25sp" />
-
-                                    <Button
-                                        android:id="@+id/teleop_algae_scoring_incr_disabled"
-                                        android:layout_width="80dp"
-                                        android:layout_height="40dp"
-                                        android:layout_marginEnd="30dp"
-                                        android:background="@drawable/rounded_rect"
-                                        android:backgroundTint="#BEBEBE"
-                                        android:text="@string/increase"
-                                        android:textColor="#696969"
-                                        android:layout_alignLeft="@+id/teleop_algae_scoring_incr"
-                                        android:textSize="30sp" />
-
-                                    <Button
-                                        android:id="@+id/teleop_algae_scoring_decr_net"
-                                        android:layout_width="80dp"
-                                        android:layout_height="40dp"
-                                        android:layout_marginStart="16dp"
-                                        android:background="@drawable/rounded_rect"
-                                        android:text="@string/decrease"
-                                        android:textColor="#FFFFFF"
-                                        android:backgroundTint="#2F63FF"
-                                        android:layout_alignRight="@+id/teleop_algae_scoring_decr"
-                                        android:textSize="30sp" />
-
-                                    <TextView
-                                        android:id="@+id/teleop_algae_scoring_button_text_net"
-                                        android:layout_width="80dp"
-                                        android:layout_height="40dp"
-                                        android:textAlignment="center"
-                                        android:textSize="25sp" />
-
-                                    <Button
-                                        android:id="@+id/teleop_algae_scoring_incr_net"
-                                        android:layout_width="80dp"
-                                        android:layout_height="40dp"
-                                        android:layout_marginEnd="30dp"
-                                        android:background="@drawable/rounded_rect"
-                                        android:backgroundTint="#2F63FF"
-                                        android:text="@string/increase"
-                                        android:textColor="#FFFFFF"
-                                        android:layout_alignLeft="@+id/teleop_algae_scoring_incr"
-                                        android:textSize="30sp" />
-
-                                    <Button
-                                        android:id="@+id/teleop_algae_scoring_decr_processor"
-                                        android:layout_width="80dp"
-                                        android:layout_height="40dp"
-                                        android:layout_marginStart="16dp"
-                                        android:background="@drawable/rounded_rect"
-                                        android:text="@string/decrease"
-                                        android:textColor="#FFFFFF"
-                                        android:backgroundTint="#39169A"
-                                        android:layout_alignRight="@+id/teleop_algae_scoring_decr"
-                                        android:layout_marginBottom="10dp"
-                                        android:textSize="30sp" />
-
-                                    <TextView
-                                        android:id="@+id/teleop_algae_scoring_button_text_processor"
-                                        android:layout_width="80dp"
-                                        android:layout_height="wrap_content"
-                                        android:textAlignment="center"
-                                        android:textSize="25sp" />
-
-                                    <Button
-                                        android:id="@+id/teleop_algae_scoring_incr_processor"
-                                        android:layout_width="80dp"
-                                        android:layout_height="40dp"
-                                        android:layout_marginEnd="30dp"
-                                        android:background="@drawable/rounded_rect"
-                                        android:backgroundTint="#39169A"
-                                        android:text="@string/increase"
-                                        android:textColor="#FFFFFF"
-                                        android:layout_alignLeft="@+id/teleop_algae_scoring_incr"
-                                        android:textSize="30sp" />
-
-                                </RelativeLayout>
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/bottom_rounded_rect"
-                                android:backgroundTint="#C8F7D4"
-                                android:orientation="horizontal"
-                                android:paddingBottom="1dp">
-
-                                <RadioGroup
-                                    android:id="@+id/teleop_algae_radio_group"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@drawable/bottom_rounded_rect"
-                                    android:backgroundTint="#B6F4C6"
-                                    android:orientation="horizontal">
-
-                                    <RadioButton
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/teleop_algae_net_button"
-                                        android:layout_marginStart="40dp"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:buttonTint="#2F63FF"
-                                        android:text="Net"
-                                        android:textColor="@color/specialTextPrimary"
-                                        android:textSize="20sp" />
-
-                                    <RadioButton
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/teleop_algae_processor_button"
-                                        android:layout_marginStart="16dp"
-                                        android:layout_width="70dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:buttonTint="#39169A"
-                                        android:text="Processor"
-                                        android:textColor="@color/specialTextPrimary"
-                                        android:textSize="20sp" />
-
-                                    <RadioButton
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/teleop_algae_none_button"
-                                        android:layout_marginStart="16dp"
-                                        android:layout_width="70dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:background="@drawable/bottom_rounded_rect"
-                                        android:backgroundTint="#B6F4C6"
-                                        android:buttonTint="@color/specialTextPrimary"
-                                        android:text="None"
-                                        android:textColor="@color/specialTextPrimary"
-                                        android:textSize="20sp" />
-
-                                </RadioGroup>
-                            </LinearLayout>
-                        </LinearLayout>
-                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/rounded_rect"
-                android:backgroundTint="#b3E5f2">
-
-                <TextView
-                    android:id="@+id/textView3"
-                    style="?android:listSeparatorTextViewStyle"
-                    android:layout_width="120dp"
-                    android:layout_height="34dp"
-                    android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#b3E5f2"
-                    android:text="defense"
-                    android:textColor="#000000"
-                    android:textSize="24sp" />
-
-                <RadioGroup
-                    android:id="@+id/defense_buttons"
-                    android:layout_width="wrap_content"
-                    android:layout_height="27dp"
-                    android:background="#b3E5f2"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/defense_none"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:textSize="20sp"
-                        android:buttonTint="#8957A1"
-                        android:text="N/A" />
-
-                    <RadioButton
-                        android:id="@+id/defense_low"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:textSize="20sp"
-                        android:buttonTint="#8957A1"
-                        android:text="Low"/>
-
-                    <RadioButton
-                        android:id="@+id/defense_medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:textSize="20sp"
-                        android:buttonTint="#8957A1"
-                        android:text="Medium"/>
-
-                    <RadioButton
-                        android:id="@+id/defense_high"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:textSize="20sp"
-                        android:buttonTint="#8957A1"
-                        android:text="High"/>
-
-
-                </RadioGroup>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_rect"
-                android:backgroundTint="#D0CAED"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView5"
-                    style="?android:listSeparatorTextViewStyle"
-                    android:textColor="#000000"
-                    android:background="#D0CAED"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Fouls"
-                    android:rotation="-90"
-                    android:layout_marginTop="80dp"
-                    android:textSize="24sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:orientation="horizontal">
-
-
-                <TextView
-                    android:id="@+id/pin_text"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:textSize="20sp"
-                    android:background="#D0CAED"
-                    android:textColor="#000000"
-                    android:text="Pin"/>
-
-                <RadioGroup
-                    android:id="@+id/foul_pin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/zero_pin"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:textSize="20sp"
-                        android:buttonTint="#8957A1"
-                        android:text="0" />
-
-                    <RadioButton
-                        android:id="@+id/one_pin"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:textSize="20sp"
-                        android:buttonTint="#8957A1"
-                        android:text="1"/>
-
-                    <RadioButton
-                        android:id="@+id/two_pin"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:textSize="20sp"
-                        android:buttonTint="#8957A1"
-                        android:text="2+"/>
-
-
-                </RadioGroup>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:background="#bfb7e7"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/anchor_text"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:textSize="20sp"
-                    android:background="#bfb7e7"
-                    android:textColor="#000000"
-                    android:text="Anchor" />
-
-
-                <RadioGroup
-                    android:id="@+id/foul_anchor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/zero_anchor"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:textSize="20sp"
-                        android:buttonTint="#8957A1"
-                        android:text="0" />
-
-                    <RadioButton
-                        android:id="@+id/one_anchor"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:textSize="20sp"
-                        android:buttonTint="#8957A1"
-                        android:text="1"/>
-
-                    <RadioButton
-                        android:id="@+id/two_anchor"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:textSize="20sp"
-                        android:buttonTint="#8957A1"
-                        android:text="2+"/>
-
-
-                </RadioGroup>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:background="#D0CAED"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/cage_text"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:textSize="20sp"
-                    android:background="#D0CAED"
-                    android:textColor="#000000"
-                    android:text="Cage"/>
-
-                <RadioGroup
-                    android:id="@+id/foul_cage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/zero_cage"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:textSize="20sp"
-                        android:buttonTint="#8957A1"
-                        android:text="0" />
-
-                    <RadioButton
-                        android:id="@+id/one_cage"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:textSize="20sp"
-                        android:buttonTint="#8957A1"
-                        android:text="1"/>
-
-                    <RadioButton
-                        android:id="@+id/two_cage"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:textSize="20sp"
-                        android:buttonTint="#8957A1"
-                        android:text="2+"/>
-
-
-                </RadioGroup>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:background="#bfb7e7"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/bargezone_text"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:textSize="20sp"
-                    android:background="#bfb7e7"
-                    android:textColor="#000000"
-                    android:text="Barge Zone"/>
-
-                <RadioGroup
-                    android:id="@+id/teleop_foul_barge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/teleop_zero_barge"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:textSize="20sp"
-                        android:buttonTint="#8957A1"
-                        android:text="0" />
-
-                    <RadioButton
-                        android:id="@+id/teleop_one_barge"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:textSize="20sp"
-                        android:buttonTint="#8957A1"
-                        android:text="1"/>
-
-                    <RadioButton
-                        android:id="@+id/teleop_two_barge"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:textSize="20sp"
-                        android:buttonTint="#8957A1"
-                        android:text="2+"/>
-
-
-                </RadioGroup>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:backgroundTint="#D0CAED"
-                android:background="@drawable/bottom_rounded_rect"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/reefzone_text"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:textSize="20sp"
-                    android:backgroundTint="#D0CAED"
-                    android:textColor="#000000"
-                    android:text="Reef Zone"/>
-
-                <RadioGroup
-                    android:id="@+id/teleop_foul_reef"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/teleop_zero_reef"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:textSize="20sp"
-                        android:buttonTint="#8957A1"
-                        android:text="0" />
-
-                    <RadioButton
-                        android:id="@+id/teleop_one_reef"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:textSize="20sp"
-                        android:buttonTint="#8957A1"
-                        android:text="1"/>
-
-                    <RadioButton
-                        android:id="@+id/teleop_two_reef"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:textSize="20sp"
-                        android:buttonTint="#8957A1"
-                        android:text="2+"/>
-
-
-                </RadioGroup>
-            </LinearLayout>
-            </LinearLayout>
-            </LinearLayout>
-
+<!-- end CORAL levels-->
 
         </LinearLayout>
+<!-- end ALGAE/CORAL section -->
 
+<!-- start DEFENSE section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:background="@drawable/rounded_rect"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:backgroundTint="#b3E5f2">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="120dp"
+                android:layout_marginLeft="5dp"
+                android:textStyle="bold"
+                android:layout_height="34dp"
+                android:text="DEFENSE"
+                android:textColor="@color/specialTextPrimary"
+                android:textSize="22sp" />
+
+            <RadioGroup
+                android:id="@+id/defense_buttons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/defense_none"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="22sp"
+                    android:buttonTint="#8957A1"
+                    android:text="N/A" />
+
+                <RadioButton
+                    android:id="@+id/defense_low"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="22sp"
+                    android:buttonTint="#8957A1"
+                    android:text="Low"/>
+
+                <RadioButton
+                    android:id="@+id/defense_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="22sp"
+                    android:buttonTint="#8957A1"
+                    android:text="Medium"/>
+
+                <RadioButton
+                    android:id="@+id/defense_high"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="22sp"
+                    android:buttonTint="#8957A1"
+                    android:text="High"/>
+            </RadioGroup>
+        </LinearLayout>
+<!-- end DEFENSE section -->
 
     </LinearLayout>
 

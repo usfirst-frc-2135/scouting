@@ -9,36 +9,31 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:backgroundTint="@color/backgroundColor"
-        android:background="@drawable/rounded_rect"
-        tools:ignore="MissingConstraints">
+        android:orientation="vertical">
 
+<!-- start START POSITION section -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#CEEAF5"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/rounded_rect"
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/acquire_game_piece"
                 android:textStyle="bold"
+                android:layout_marginLeft="5dp"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
                 android:text="START POSITION"
-                android:backgroundTint="#CEEAF5"
-                android:background="@drawable/top_rounded_rect"
-                android:textColor="#000"
+                android:textColor="@color/specialTextPrimary"
                 android:textSize="22sp" />
             <RadioGroup
                 android:id="@+id/starting_position"
                 android:layout_width="match_parent"
-                android:backgroundTint="#CEEAF5"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bottom_rounded_rect"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
                 android:orientation="horizontal">
@@ -71,447 +66,443 @@
                     android:text="Left"/>
             </RadioGroup>
         </LinearLayout>
+<!-- end START POSITION section -->
 
-<!--START REEF ZONES/CORAL SCORING vertical layout -->
+<!--start LEAVE vertical layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:background="@drawable/rounded_rect"
+            android:backgroundTint="#EFE2FF"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
+
+            <TextView
+                android:id="@+id/leave_title"
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LEAVE"
+                android:textStyle="bold"
+                android:textColor="@color/specialTextPrimary"
+                android:textSize="22sp" />
+
+            <CheckBox
+                android:id="@+id/leave_checkbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:buttonTint="#8957A1"
+                android:textColor="@color/specialTextPrimary"
+                android:text="Leave Starting Zone"
+                android:textSize="22sp" />
+        </LinearLayout>
+<!--end LEAVE vertical layout -->
+
+<!--start REEF ZONES/CORAL SCORING side-by-side-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/backgroundColor"
-            android:orientation="vertical"
-            android:paddingTop="10dp">
+            android:orientation="horizontal"
+            android:paddingTop="20dp">
 
+<!--start REEF ZONES-->
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/rounded_rect"
-                android:backgroundTint="#EFE2FF"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp">
+                android:id="@+id/reef_zones_layout"
+                android:layout_width="290dp"
+                android:layout_height="350dp"
+                android:background="@drawable/reefzone_r1_sctbl"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/leave_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="LEAVE"
-                    android:textStyle="bold"
-                    android:backgroundTint="#EFE2FF"
-                    android:background="@drawable/bottom_rounded_rect"
-                    android:textColor="#000"
-                    android:textSize="22sp" />
-
-                <CheckBox
-                    android:id="@+id/leave_checkbox"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:buttonTint="#8957A1"
-                    android:textColor="#000"
-                    android:text="Leave Starting Zone"
-                    android:textSize="22sp" />
+                    android:orientation="horizontal">
 
-            </LinearLayout>
-
-<!--START REEF ZONES/CORAL SCORING side-by-side-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/backgroundColor"
-                android:orientation="horizontal"
-                android:paddingTop="10dp">
-
-<!--START REEF ZONES-->
-                <LinearLayout
-                    android:id="@+id/reef_zones_layout"
-                    android:layout_width="290dp"
-                    android:layout_height="350dp"
-                    android:background="@drawable/reefzone_r1_sctbl"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/reef_zones_label"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/reef_zones_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginTop="5dp"
-                            android:text="REEF ZONES SCORED IN"
-                            android:textColor="#000000"
-                            android:textStyle="bold"
-                            android:textSize="22sp" />
-                    </LinearLayout>
-
-<!--START REEF ZONE CHECKBOXES-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <CheckBox
-                            android:layout_marginTop="140dp"
-                            android:id="@+id/reefzone_b1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="#000000"
-                            android:layout_marginStart="50dp" />
-                        <CheckBox
-                            android:layout_marginTop="76dp"
-                            android:id="@+id/reefzone_b2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="#000000"
-                            android:layout_marginStart="10dp" />
-
-                        <CheckBox
-                            android:layout_marginTop="76dp"
-                            android:id="@+id/reefzone_b3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="#000000"
-                            android:layout_marginStart="45dp" />
-
-                        <CheckBox
-                            android:layout_marginTop="140dp"
-                            android:id="@+id/reefzone_b4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="#000000"
-                            android:layout_marginStart="4dp" />
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <CheckBox
-                            android:layout_marginTop="28dp"
-                            android:id="@+id/reefzone_b6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="95dp"
-                            android:buttonTint="#000000" />
-
-                        <CheckBox
-                            android:layout_marginTop="28dp"
-                            android:id="@+id/reefzone_b5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="#000000"
-                            android:layout_marginStart="45dp" />
-
-
-                    </LinearLayout>
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:text="REEF ZONES SCORED IN"
+                        android:textColor="@color/specialTextPrimary"
+                        android:textStyle="bold"
+                        android:textSize="22sp" />
                 </LinearLayout>
 
-<!--START CORAL SCORING-->
+<!--start REEF ZONE checkboxes -->
                 <LinearLayout
-                    android:layout_width="300dp"
-                    android:layout_height="350dp"
-                    android:background="@drawable/coral_levels"
-                    android:layout_marginStart="10dp"
-                    android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <CheckBox
+                        android:layout_marginTop="140dp"
+                        android:id="@+id/reefzone_b1"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:buttonTint="#000000"
+                        android:layout_marginStart="50dp" />
+                    <CheckBox
+                        android:layout_marginTop="73dp"
+                        android:id="@+id/reefzone_b2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="#000000"
+                        android:layout_marginStart="10dp" />
 
-                        <TextView
-                            android:id="@+id/L4_label"
-                            android:textStyle="bold"
-                            android:layout_width="40dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="40dp"
-                            android:layout_marginTop="5dp"
-                            android:text="L4"
-                            android:textColor="#000000"
-                            android:textSize="22sp" />
+                    <CheckBox
+                        android:layout_marginTop="73dp"
+                        android:id="@+id/reefzone_b3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="#000000"
+                        android:layout_marginStart="45dp" />
 
-                        <Button
-                            android:id="@+id/auton_L4_decr_button"
-                            android:layout_width="80dp"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
-                            android:background="@drawable/rounded_rect"
-                            android:backgroundTint="#f08080"
-                            android:text="@string/decrease"
-                            android:textColor="#FFFFFF"
-                            android:textSize="30dp" />
+                    <CheckBox
+                        android:layout_marginTop="140dp"
+                        android:id="@+id/reefzone_b4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="#000000"
+                        android:layout_marginStart="4dp" />
 
-                        <TextView
-                            android:id="@+id/auton_L4_score_total"
-                            android:layout_width="50dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="5dp"
-                            android:textAlignment="center"
-                            android:textSize="25sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                        <Button
-                            android:id="@+id/auton_L4_incr_button"
-                            android:layout_width="80dp"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="30dp"
-                            android:background="@drawable/rounded_rect"
-                            android:backgroundTint="#f08080"
-                            android:text="@string/increase"
-                            android:textColor="#FFFFFF"
-                            android:textSize="30dp" />
-                    </LinearLayout>
+                    <CheckBox
+                        android:layout_marginTop="28dp"
+                        android:id="@+id/reefzone_b6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="95dp"
+                        android:buttonTint="#000000" />
+
+                    <CheckBox
+                        android:layout_marginTop="28dp"
+                        android:id="@+id/reefzone_b5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="#000000"
+                        android:layout_marginStart="45dp" />
+                </LinearLayout>
+<!--end REEF ZONE checkboxes -->
+
+            </LinearLayout>
+<!--end REEF ZONES-->
+
+<!--start CORAL SCORING-->
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="350dp"
+                android:background="@drawable/coral_levels"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/L4_label"
+                        android:textStyle="bold"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="5dp"
+                        android:text="L4"
+                        android:textColor="@color/specialTextPrimary"
+                        android:textSize="22sp" />
+
+                    <Button
+                        android:id="@+id/auton_L4_decr_button"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#f08080"
+                        android:text="@string/decrease"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp" />
+
+                    <TextView
+                        android:id="@+id/auton_L4_score_total"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:textAlignment="center"
+                        android:textSize="25sp" />
+
+                    <Button
+                        android:id="@+id/auton_L4_incr_button"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#f08080"
+                        android:text="@string/increase"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp" />
+                </LinearLayout>
 <!-- L3 Coral-->
-                    <android.widget.Space
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp" />
+                <android.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/L3_label"
+                        android:textStyle="bold"
+                        android:layout_width="40dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="5dp"
+                        android:text="L3"
+                        android:textColor="@color/specialTextPrimary"
+                        android:textSize="22sp" />
 
-                        <TextView
-                            android:id="@+id/L3_label"
-                            android:textStyle="bold"
-                            android:layout_width="40dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="40dp"
-                            android:layout_marginTop="5dp"
-                            android:text="L3"
-                            android:textColor="#000000"
-                            android:textSize="22sp" />
+                    <Button
+                        android:id="@+id/auton_L3_decr_button"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#f08080"
+                        android:text="@string/decrease"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp" />
 
-                        <Button
-                            android:id="@+id/auton_L3_decr_button"
-                            android:layout_width="80dp"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
-                            android:background="@drawable/rounded_rect"
-                            android:backgroundTint="#f08080"
-                            android:text="@string/decrease"
-                            android:textColor="#FFFFFF"
-                            android:textSize="30dp" />
+                    <TextView
+                        android:id="@+id/auton_L3_score_total"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:textAlignment="center"
+                        android:textSize="25sp" />
 
-                        <TextView
-                            android:id="@+id/auton_L3_score_total"
-                            android:layout_width="50dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="5dp"
-                            android:textAlignment="center"
-                            android:textSize="25sp" />
+                    <Button
+                        android:id="@+id/auton_L3_incr_button"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#f08080"
+                        android:text="@string/increase"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp" />
 
-                        <Button
-                            android:id="@+id/auton_L3_incr_button"
-                            android:layout_width="80dp"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="30dp"
-                            android:background="@drawable/rounded_rect"
-                            android:backgroundTint="#f08080"
-                            android:text="@string/increase"
-                            android:textColor="#FFFFFF"
-                            android:textSize="30dp" />
-
-                    </LinearLayout>
-<!-- L2 Coral-->
-                    <android.widget.Space
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/L2_label"
-                            android:textStyle="bold"
-                            android:layout_width="40dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="40dp"
-                            android:layout_marginTop="5dp"
-                            android:text="L2"
-                            android:textColor="#000000"
-                            android:textSize="22sp" />
-
-                        <Button
-                            android:id="@+id/auton_L2_decr_button"
-                            android:layout_width="80dp"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
-                            android:background="@drawable/rounded_rect"
-                            android:backgroundTint="#f08080"
-                            android:text="@string/decrease"
-                            android:textColor="#FFFFFF"
-                            android:textSize="30dp" />
-
-                        <TextView
-                            android:id="@+id/auton_L2_score_total"
-                            android:layout_width="50dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="5dp"
-                            android:textAlignment="center"
-                            android:textSize="25sp" />
-
-                        <Button
-                            android:id="@+id/auton_L2_incr_button"
-                            android:layout_width="80dp"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="30dp"
-                            android:background="@drawable/rounded_rect"
-                            android:backgroundTint="#f08080"
-                            android:text="@string/increase"
-                            android:textColor="#FFFFFF"
-                            android:textSize="30dp" />
-
-                    </LinearLayout>
-<!-- L1 Coral-->
-                    <android.widget.Space
-                        android:layout_width="match_parent"
-                        android:layout_height="35dp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/L1_label"
-                            android:textStyle="bold"
-                            android:layout_width="40dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="40dp"
-                            android:layout_marginTop="5dp"
-                            android:text="L1"
-                            android:textColor="#000000"
-                            android:textSize="22sp" />
-
-                        <Button
-                            android:id="@+id/auton_L1_decr_button"
-                            android:layout_width="80dp"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
-                            android:background="@drawable/rounded_rect"
-                            android:backgroundTint="#f08080"
-                            android:text="@string/decrease"
-                            android:textColor="#FFFFFF"
-                            android:textSize="30dp" />
-
-                        <TextView
-                            android:id="@+id/auton_L1_score_total"
-                            android:layout_width="50dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="5dp"
-                            android:textAlignment="center"
-                            android:textSize="25sp" />
-
-                        <Button
-                            android:id="@+id/auton_L1_incr_button"
-                            android:layout_width="80dp"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="30dp"
-                            android:background="@drawable/rounded_rect"
-                            android:backgroundTint="#f08080"
-                            android:text="@string/increase"
-                            android:textColor="#FFFFFF"
-                            android:textSize="30dp" />
-
-                    </LinearLayout>
                 </LinearLayout>
-<!-- END CORAL-->
-            </LinearLayout>
+<!-- L2 Coral-->
+                <android.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp" />
 
-<!-- PICKUP FROM FLOOR -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/L2_label"
+                        android:textStyle="bold"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="5dp"
+                        android:text="L2"
+                        android:textColor="@color/specialTextPrimary"
+                        android:textSize="22sp" />
+
+                    <Button
+                        android:id="@+id/auton_L2_decr_button"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#f08080"
+                        android:text="@string/decrease"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp" />
+
+                    <TextView
+                        android:id="@+id/auton_L2_score_total"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:textAlignment="center"
+                        android:textSize="25sp" />
+
+                    <Button
+                        android:id="@+id/auton_L2_incr_button"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#f08080"
+                        android:text="@string/increase"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp" />
+
+                </LinearLayout>
+<!-- L1 Coral-->
+                <android.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/L1_label"
+                        android:textStyle="bold"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="5dp"
+                        android:text="L1"
+                        android:textColor="@color/specialTextPrimary"
+                        android:textSize="22sp" />
+
+                    <Button
+                        android:id="@+id/auton_L1_decr_button"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#f08080"
+                        android:text="@string/decrease"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp" />
+
+                    <TextView
+                        android:id="@+id/auton_L1_score_total"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:textAlignment="center"
+                        android:textSize="25sp" />
+
+                    <Button
+                        android:id="@+id/auton_L1_incr_button"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#f08080"
+                        android:text="@string/increase"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp" />
+
+                </LinearLayout>
+            </LinearLayout>
+<!-- end CORAL-->
+
+        </LinearLayout>
+<!-- end REEF/CORAL section-->
+
+<!-- start GET FROM section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#faccc8"
+            android:background="@drawable/top_rounded_rect"
+            android:orientation="horizontal">
+
+            <TextView
+                android:textStyle="bold"
                 android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_width="270dp"
+                android:layout_height="34dp"
                 android:backgroundTint="#faccc8"
-                android:background="@drawable/top_rounded_rect"
-                android:orientation="horizontal">
+                android:text="GET CORAL FROM"
+                android:textColor="@color/specialTextPrimary"
+                android:textSize="22sp" />
 
-                <TextView
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_width="270dp"
-                    android:layout_height="34dp"
-                    android:backgroundTint="#faccc8"
-                    android:text="GET CORAL FROM"
-                    android:textColor="@color/specialTextPrimary"
-                    android:textSize="22sp" />
+            <CheckBox
+                android:id="@+id/floor_coral"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:buttonTint="#8957A1"
+                android:text="Floor"
+                android:textSize="22sp" />
 
-                <CheckBox
-                    android:id="@+id/floor_coral"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:buttonTint="#8957A1"
-                    android:text="Floor"
-                    android:textSize="22sp" />
-
-                <CheckBox
-                    android:id="@+id/station_coral"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:buttonTint="#8957A1"
-                    android:text="Station"
-                    android:textSize="22sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:backgroundTint="#ECFCF0"
-                android:background="@drawable/bottom_rounded_rect"
-                android:orientation="horizontal">
-
-               <TextView
-                   android:layout_width="270dp"
-                   android:layout_marginTop="10dp"
-                   android:textStyle="bold"
-                   android:layout_height="wrap_content"
-                   android:layout_marginStart="5dp"
-                   android:text="GET ALGAE FROM"
-                   android:textColor="@color/specialTextPrimary"
-                   android:textSize="22sp" />
-
-               <CheckBox
-                   android:id="@+id/floor_algae"
-                   android:layout_marginTop="10dp"
-                   android:layout_width="150dp"
-                   android:layout_height="wrap_content"
-                   android:buttonTint="#8957A1"
-                   android:textSize="22sp"
-                   android:text="Floor" />
-
-               <CheckBox
-                   android:id="@+id/reef_algae"
-                   android:layout_marginTop="10dp"
-                   android:layout_width="wrap_content"
-                   android:buttonTint="#8957A1"
-                   android:layout_height="wrap_content"
-                   android:textSize="22sp"
-                   android:text="Reef" />
-
-            </LinearLayout>
+            <CheckBox
+                android:id="@+id/station_coral"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:buttonTint="#8957A1"
+                android:text="Station"
+                android:textSize="22sp" />
         </LinearLayout>
 
-<!-- ALGAE SCORED START-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:backgroundTint="#ECFCF0"
+            android:background="@drawable/bottom_rounded_rect"
+            android:orientation="horizontal">
+
+           <TextView
+               android:layout_width="270dp"
+               android:layout_marginTop="10dp"
+               android:textStyle="bold"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="5dp"
+               android:text="GET ALGAE FROM"
+               android:textColor="@color/specialTextPrimary"
+               android:textSize="22sp" />
+
+           <CheckBox
+               android:id="@+id/floor_algae"
+               android:layout_marginTop="10dp"
+               android:layout_width="150dp"
+               android:layout_height="wrap_content"
+               android:buttonTint="#8957A1"
+               android:textSize="22sp"
+               android:text="Floor" />
+
+           <CheckBox
+               android:id="@+id/reef_algae"
+               android:layout_marginTop="10dp"
+               android:layout_width="wrap_content"
+               android:buttonTint="#8957A1"
+               android:layout_height="wrap_content"
+               android:textSize="22sp"
+               android:text="Reef" />
+
+        </LinearLayout>
+
+<!-- ALGAE SCORED start-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/rounded_rect"
             android:backgroundTint="#CACFF9"
             android:orientation="vertical">
@@ -533,14 +524,12 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/algae_scoring_net_label"
-                    android:layout_width="60dp"
+                    android:layout_width="55dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:textSize="20sp"
                     android:background="#CACFF9"
-                    android:layout_marginTop="5dp"
-                    android:textColor="#000000"
+                    android:textColor="@color/specialTextPrimary"
                     android:text="NET" />
 
                 <Button
@@ -581,8 +570,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:background="#CACFF9"
-                    android:layout_marginTop="5dp"
-                    android:textColor="#000000"
+                    android:textColor="@color/specialTextPrimary"
                     android:layout_marginBottom="10dp"
                     android:text="PROC" />
 
@@ -591,7 +579,7 @@
                     android:layout_width="80dp"
                     android:layout_height="40dp"
                     android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#23DEBF"
+                    android:backgroundTint="#007c80"
                     android:text="@string/decrease"
                     android:textColor="#FFFFFF"
                     android:layout_marginTop="5dp"
@@ -604,7 +592,7 @@
                     android:textAlignment="center"
                     android:layout_marginTop="8dp"
                     android:textSize="25sp" />
-
+    
                 <Button
                     android:id="@+id/auton_algae_proc_incr_button"
                     android:layout_width="80dp"
@@ -613,12 +601,12 @@
                     android:background="@drawable/rounded_rect"
                     android:text="@string/increase"
                     android:layout_marginTop="5dp"
-                    android:backgroundTint="#23DEBF"
+                    android:backgroundTint="#007c80"
                     android:textColor="#FFFFFF"
                     android:textSize="30dp" />
             </LinearLayout>
         </LinearLayout>
-<!-- ALGAE SCORING END-->
+<!-- end ALGAE SCORED section-->
 
     </LinearLayout>
 
