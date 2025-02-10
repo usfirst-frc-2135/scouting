@@ -162,68 +162,6 @@
         </LinearLayout>
 <!-- end START CLIMBING section -->
 
-<!-- start FOUL CONTACTING ROBOT -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="5dp"
-            android:backgroundTint="#FCD9DF"
-            android:background="@drawable/rounded_rect"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/foul_text"
-                android:textStyle="bold"
-                android:textColor="@color/specialTextPrimary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="5dp"
-                android:text="FOUL - Contacting Robot in Barge Zone"
-                android:textSize="22sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal" >
-
-                <RadioGroup
-                    android:id="@+id/foul_robot"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/foul_contact_zero"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/specialTextPrimary"
-                        android:layout_weight="1"
-                        android:textSize="22sp"
-                        android:text="None" />
-
-                    <RadioButton
-                        android:id="@+id/foul_contact_one"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="22sp"
-                        android:buttonTint="@color/specialTextPrimary"
-                        android:text="Once"/>
-
-                    <RadioButton
-                        android:id="@+id/foul_contact_two"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="22sp"
-                        android:buttonTint="@color/specialTextPrimary"
-                        android:text="Two or more"/>
-                </RadioGroup>
-            </LinearLayout>
-        </LinearLayout>
-<!-- end FOUL section -->
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

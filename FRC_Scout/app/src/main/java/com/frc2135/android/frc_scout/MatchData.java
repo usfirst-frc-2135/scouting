@@ -59,15 +59,9 @@ public class MatchData
     private static final String JSON_KEY_ALGAE_FROM_REEF = "algaeFromReef";
     private static final String JSON_KEY_HOLD_BOTH_ELEMENTS = "holdBothElements";
     private static final String JSON_KEY_PLAYED_DEFENSE = "playedDefense";
-    private static final String JSON_KEY_NUMBER_PINS = "numberPins";
-    private static final String JSON_KEY_NUMBER_ANCHOR = "numberAnchor";
-    private static final String JSON_KEY_NUMBER_CAGE = "numberCage";
-    private static final String JSON_KEY_NUMBER_BARGE = "numberBarge";
-    private static final String JSON_KEY_NUMBER_REEF = "numberReef";
 
     private static final String JSON_KEY_END_GAME_BARGE = "endGameBarge";
     private static final String JSON_KEY_END_GAME_START_CLIMB = "endGameStartClimb";
-    private static final String JSON_KEY_ROBOT_FOUL = "robotFoul";
 
     private static final String JSON_KEY_COMMENTS = "comments";
     private static final String JSON_KEY_TIMESTAMP = "timestamp";
@@ -107,12 +101,6 @@ public class MatchData
     private boolean m_reefzoneIJ;
     private boolean m_reefzoneKL;
 
-    private int m_pinFoul;
-    private int m_anchorFoul;
-    private int m_cageFoul;
-    private int m_bargeFoul;
-    private int m_teleopReefFoul;
-
     private boolean m_knockAlgaeOff;
     private boolean m_algaeFromReef;
     private boolean m_holdBothElements;
@@ -125,7 +113,6 @@ public class MatchData
 
     private int m_bargeClimb;
     private int m_startClimb;
-    private int m_robotFoul;
 
     private String m_comment;
     private boolean m_died;
@@ -178,8 +165,6 @@ public class MatchData
         setPickUpCoral(false);
         setPickUpAlgae(false);
         setPlayedDefense(0);
-        setFoulPin(0);
-        setFoulAnchor(0);
         setCoralAcquired(0);
         setAlgaeAcquired(0);
         setTeleopPasses(0);
@@ -250,15 +235,8 @@ public class MatchData
         setTeleopAlgaeNet(json.getInt(JSON_KEY_TELEOP_ALGAE_NET));
         setTeleopAlgaeProcessor(json.getInt(JSON_KEY_TELEOP_ALGAE_PROCESSOR));
 
-        setFoulPin(json.getInt(JSON_KEY_NUMBER_PINS));
-        setFoulAnchor(json.getInt(JSON_KEY_NUMBER_ANCHOR));
-        setFoulCage(json.getInt(JSON_KEY_NUMBER_CAGE));
-        setFoulBarge(json.getInt(JSON_KEY_NUMBER_BARGE));
-        setFoulReef(json.getInt(JSON_KEY_NUMBER_REEF));
-
         setEndgameBarge(json.getInt(JSON_KEY_END_GAME_BARGE));
         setEndgameStartClimbing(json.getInt(JSON_KEY_END_GAME_START_CLIMB));
-        setFoulNumber(json.getInt(JSON_KEY_ROBOT_FOUL));
 
         setComment(json.getString(JSON_KEY_COMMENTS));
 
@@ -624,61 +602,6 @@ public class MatchData
         return m_playedDefense;
     }
 
-    public void setFoulPin(int numberPins)
-    {
-
-        m_pinFoul = numberPins;
-    }
-
-    public int getFoulPin()
-    {
-        return m_pinFoul;
-    }
-
-    public void setFoulAnchor(int numberAnchor)
-    {
-
-        m_anchorFoul = numberAnchor;
-    }
-
-    public int getFoulAnchor()
-    {
-        return m_anchorFoul;
-    }
-
-    public void setFoulCage(int numberCage)
-    {
-
-        m_cageFoul = numberCage;
-    }
-
-    public int getFoulCage()
-    {
-        return m_cageFoul;
-    }
-
-    public void setFoulBarge(int numberBarge)
-    {
-
-        m_bargeFoul= numberBarge;
-    }
-
-    public int getFoulBarge()
-    {
-        return m_bargeFoul;
-    }
-
-    public void setFoulReef(int numberReef)
-    {
-
-        m_teleopReefFoul= numberReef;
-    }
-
-    public int getFoulReef()
-    {
-        return m_teleopReefFoul;
-    }
-
     public void setCoralAcquired(int coralAcquired)
     {
         m_coralAcquired = coralAcquired;
@@ -720,7 +643,6 @@ public class MatchData
         return m_bargeClimb;
     }
 
-    ////////////  m_endgameHarmony   /////////////////////
     public void setEndgameStartClimbing(int y)
     {
         m_startClimb = y;
@@ -730,19 +652,6 @@ public class MatchData
     {
         return m_startClimb;
     }
-
-    ////////////  m_endgame   /////////////////////
-
-    public void setFoulNumber(int foulNumber)
-    {
-        m_robotFoul = foulNumber;
-    }
-
-    public int getCurrentFoulNumber()
-    {
-        return m_robotFoul;
-    }
-    ////////////  m_endgameTrap   /////////////////////
 
     ////////////  m_comment   /////////////////////
     public void setComment(String comment)
@@ -783,7 +692,7 @@ public class MatchData
         // NOTE! THE ORDER IS IMPORTANT!
         // This is the data that goes into the QR code.
 
-        String headers = "TeamNumber AutonStartingPosition AutonLeaveStartingZone AutonCoralL1 AutonCoralL2 AutonCoralL3 AutonCoralL4 AutonAlgaeNet AutonAlgaeProcessor AutonCoralFloor AutonCoralStation AutonAlgaeFloor AutonAlgaeReef TeleopAcquireCoral TeleopAcquireAlgae TeleopAlgaeFloorPickup TeleopCoralFloorPickup TeleopKnockOffAlgae TeleopAcquireAlgaeFromReef TeleopHoldBothGamePieces TeleopCoralL1 TeleopCoralL2 TeleopCoralL3 TeleopCoralL4 TeleopAlgaeNet TeleopAlgaeProcessor TeleopPlayedDefense TeleopPinFoul TeleopAnchorFoul TeleopCageFoul TeleopBargeFoul TeleopReefZoneFoul EndgameClimb EndgameStartClimbing EndgameFoul Died MatchNum Competition Scout Comment";
+        String headers = "TeamNumber AutonStartingPos AutonLeave ReefzoneAB ReefzoneCD ReefzoneEF ReefzoneGH ReefzoneIJ ReefzoneKL AutonCoralL1 AutonCoralL2 AutonCoralL3 AutonCoralL4 AutonAlgaeNet AutonAlgaeProc AutonCoralFloor AutonCoralStation AutonAlgaeFloor AutonAlgaeReef AcquiredCoral AcquiredAlgae AlgaeFloorPickup CoralFloorPickup KnockOffAlgae AlgaeFromReef HoldBoth TeleopCoralL1 TeleopCoralL2 TeleopCoralL3 TeleopCoralL4 TeleopAlgaeNet TeleopAlgaeProc Defense EndgameClimb EndgameStartClimb Died MatchNum Competition Scout Comment";
 
         String tsvStr = "";
 
@@ -793,8 +702,7 @@ public class MatchData
         tsvStr += m_positionStarting + "\t";
         if (m_autonLeaveStartingZone)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
-        else
-            tsvStr += "0" + "\t";
+        else tsvStr += "0" + "\t";
 
         tsvStr += m_reefzoneAB + "\t";
         tsvStr += m_reefzoneCD + "\t";
@@ -811,48 +719,42 @@ public class MatchData
         tsvStr += m_autonAlgaeProcessor + "\t";
         if (m_coralFloor)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
-        else
-            tsvStr += "0" + "\t";
+        else tsvStr += "0" + "\t";
+
         if (m_coralStation)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
-        else
-            tsvStr += "0" + "\t";
+        else tsvStr += "0" + "\t";
 
         if (m_algaeFloor)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
-        else
-            tsvStr += "0" + "\t";
+        else tsvStr += "0" + "\t";
+
         if (m_algaeReef)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
-        else
-            tsvStr += "0" + "\t";
-
+        else tsvStr += "0" + "\t";
 
         tsvStr += m_coralAcquired + "\t";
         tsvStr += m_algaeAcquired + "\t";
 
-        if (m_pickUpCoral)  // bool value: use 1/0 instead of true/false
-            tsvStr += "1" + "\t";
-        else
-            tsvStr += "0" + "\t";
-
         if (m_pickUpAlgae)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
-        else
-            tsvStr += "0" + "\t";
+        else tsvStr += "0" + "\t";
+
+        if (m_pickUpCoral)  // bool value: use 1/0 instead of true/false
+            tsvStr += "1" + "\t";
+        else tsvStr += "0" + "\t";
 
         if (m_knockAlgaeOff)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
-        else
-            tsvStr += "0" + "\t";
+        else tsvStr += "0" + "\t";
+
         if (m_algaeFromReef)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
-        else
-            tsvStr += "0" + "\t";
+        else tsvStr += "0" + "\t";
+
         if (m_holdBothElements)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
-        else
-            tsvStr += "0" + "\t";
+        else tsvStr += "0" + "\t";
 
         tsvStr += m_teleopCoralL1 + "\t";
         tsvStr += m_teleopCoralL2 + "\t";
@@ -863,20 +765,12 @@ public class MatchData
 
         tsvStr += m_playedDefense + "\t";
 
-        tsvStr += m_pinFoul + "\t";
-        tsvStr += m_anchorFoul + "\t";
-        tsvStr += m_cageFoul + "\t";
-        tsvStr += m_bargeFoul + "\t";
-        tsvStr += m_teleopReefFoul + "\t";
-
         tsvStr += m_bargeClimb + "\t";
         tsvStr += m_startClimb + "\t";
-        tsvStr += m_robotFoul + "\t";
 
         if (m_died)
             tsvStr += "1" + "\t";
-        else
-            tsvStr += "0" + "\t";
+        else tsvStr += "0" + "\t";
 
         tsvStr += m_matchNumber + "\t";
         tsvStr += m_eventCode + "\t";
@@ -884,8 +778,7 @@ public class MatchData
         tsvStr += m_name + "\t";   // Scout name
         if (!m_comment.equals(""))
             tsvStr += m_comment + "\t";
-        else
-            tsvStr += "-" + "\t";
+        else tsvStr += "-" + "\t";
 
         Log.d(TAG, "MatchData encodeToTSV() columns: " + headers);
         Log.d(TAG, "MatchData encodeToTSV(): " + tsvStr);
@@ -973,21 +866,9 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_PLAYED_DEFENSE, m_playedDefense);
         json.put("divider", ",");
-        json.put(JSON_KEY_NUMBER_PINS, m_pinFoul);
-        json.put("divider", ",");
-        json.put(JSON_KEY_NUMBER_ANCHOR, m_anchorFoul);
-        json.put("divider", ",");
-        json.put(JSON_KEY_NUMBER_CAGE, m_cageFoul);
-        json.put("divider", ",");
-        json.put(JSON_KEY_NUMBER_BARGE, m_bargeFoul);
-        json.put("divider", ",");
-        json.put(JSON_KEY_NUMBER_REEF, m_teleopReefFoul);
-        json.put("divider", ",");
         json.put(JSON_KEY_END_GAME_BARGE, m_bargeClimb);
         json.put("divider", ",");
         json.put(JSON_KEY_END_GAME_START_CLIMB, m_startClimb);
-        json.put("divider", ",");
-        json.put(JSON_KEY_ROBOT_FOUL, m_robotFoul);
         json.put("divider", ",");
         json.put(JSON_KEY_DIED, m_died);
         json.put("divider", ",");

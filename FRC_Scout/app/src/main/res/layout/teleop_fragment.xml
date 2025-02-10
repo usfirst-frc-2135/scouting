@@ -41,48 +41,6 @@
                     android:textSize="20sp"
                     android:background="#CACFF9"
                     android:textColor="@color/specialTextPrimary"
-                    android:text="CORAL" />
-
-                <Button
-                    android:id="@+id/coral_acquired_decr_button"
-                    android:layout_width="80dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#f08080"
-                    android:text="@string/decrease"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
-                    android:textSize="30dp" />
-
-                <TextView
-                    android:id="@+id/coral_acquired_total"
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:textAlignment="center"
-                    android:layout_marginTop="8dp"
-                    android:textSize="25sp" />
-
-                <Button
-                    android:id="@+id/coral_acquired_incr_button"
-                    android:layout_width="80dp"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="30dp"
-                    android:background="@drawable/rounded_rect"
-                    android:text="@string/increase"
-                    android:backgroundTint="#f08080"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginTop="5dp"
-                    android:textSize="30dp" />
-
-                <TextView
-                    android:id="@+id/algae_text"
-                    android:layout_width="67dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:background="#CACFF9"
-                    android:textColor="@color/specialTextPrimary"
-                    android:layout_marginBottom="10dp"
                     android:text="ALGAE" />
 
                 <Button
@@ -93,6 +51,7 @@
                     android:backgroundTint="#23DEBF"
                     android:text="@string/decrease"
                     android:textColor="#FFFFFF"
+                    android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
                     android:textSize="30dp" />
 
@@ -111,8 +70,48 @@
                     android:layout_marginEnd="30dp"
                     android:background="@drawable/rounded_rect"
                     android:text="@string/increase"
-                    android:layout_marginTop="5dp"
                     android:backgroundTint="#23DEBF"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginTop="5dp"
+                    android:textSize="30dp" />
+
+                <TextView
+                    android:layout_width="67dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:background="#CACFF9"
+                    android:textColor="@color/specialTextPrimary"
+                    android:layout_marginBottom="10dp"
+                    android:text="CORAL" />
+
+                <Button
+                    android:id="@+id/coral_acquired_decr_button"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#f08080"
+                    android:text="@string/decrease"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginTop="5dp"
+                    android:textSize="30dp" />
+
+                <TextView
+                    android:id="@+id/coral_acquired_total"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:textAlignment="center"
+                    android:layout_marginTop="8dp"
+                    android:textSize="25sp" />
+
+                <Button
+                    android:id="@+id/coral_acquired_incr_button"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/rounded_rect"
+                    android:text="@string/increase"
+                    android:layout_marginTop="5dp"
+                    android:backgroundTint="#f08080"
                     android:textColor="#FFFFFF"
                     android:textSize="30dp" />
             </LinearLayout>
