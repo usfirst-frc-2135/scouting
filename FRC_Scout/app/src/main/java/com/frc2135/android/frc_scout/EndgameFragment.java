@@ -95,7 +95,7 @@ public class EndgameFragment extends Fragment
         m_climbShallow.setChecked(false);
         m_climbDeep.setChecked(false);
 
-        int defValueClimb = m_matchData.getEndgameBarge();
+        int defValueClimb = m_matchData.getCageClimb();
         if (defValueClimb == 0)
             radio_climbNone.setChecked(true);
         else if (defValueClimb == 1)
@@ -118,7 +118,7 @@ public class EndgameFragment extends Fragment
         m_startFive.setChecked(false);
 
 
-        int defValueStartClimb = m_matchData.getEndgameStartClimbing();
+        int defValueStartClimb = m_matchData.getStartClimb();
         if (defValueStartClimb == 0)
             m_startNone.setChecked(true);
         else if(defValueStartClimb == 1)
@@ -187,7 +187,7 @@ public class EndgameFragment extends Fragment
         return v;
     }
 
-    public int getCurrentEndgameBargeLevel()
+    public int getCurrentCageClimb()
     {
         // Returns the integer climb level that is current checked in the radio buttons
         int rtn = 0;
@@ -235,8 +235,8 @@ public class EndgameFragment extends Fragment
 
     public void updateEndgameData()
     {
-        m_matchData.setEndgameStartClimbing(getCurrentStartClimbing());
-        m_matchData.setEndgameBarge(getCurrentEndgameBargeLevel());
+        m_matchData.setStartClimb(getCurrentStartClimbing());
+        m_matchData.setCageClimb(getCurrentCageClimb());
         m_matchData.setDied(m_diedCheckbox.isChecked());
         m_matchData.setComment(m_commentText.getText().toString());
 

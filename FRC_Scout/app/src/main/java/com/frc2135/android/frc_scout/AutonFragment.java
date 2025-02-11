@@ -27,6 +27,13 @@ public class AutonFragment extends Fragment
     private static final int MAX_NUM_CORAL = 3;
     private static final int MAX_NUM_ALGAE = 2;    
 
+    private RadioGroup m_startingPosition;
+    private RadioButton m_rightStart;
+    private RadioButton m_middleStart;
+    private RadioButton m_leftStart;
+
+    private CheckBox m_leaveCheckbox;
+
     private CheckBox m_reefZoneCkbx1;
     private CheckBox m_reefZoneCkbx2;
     private CheckBox m_reefZoneCkbx3;
@@ -61,12 +68,6 @@ public class AutonFragment extends Fragment
     private Button m_autonAlgaeProcIncrButton;
     private Button m_autonAlgaeProcDecrButton;
 
-    private RadioGroup m_startingPosition;
-    private RadioButton m_rightStart;
-    private RadioButton m_middleStart;
-    private RadioButton m_leftStart;
-
-    private CheckBox m_leaveCheckbox;
     private CheckBox m_floorCoral;
     private CheckBox m_stationCoral;
     private CheckBox m_floorAlgae;
