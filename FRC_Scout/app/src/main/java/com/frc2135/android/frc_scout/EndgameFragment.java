@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,6 +45,85 @@ public class EndgameFragment extends Fragment
 
     public static final String QRTAG = "qr";
     private static final String TAG = "EndgameFragment";
+
+    private void setupWarnings(View view)
+    {
+        Log.d(TAG, "-->  starting setupWarnings()");
+        // Determine if the warning msgs should be shown or hidden, and thus if the QR and Done 
+        // buttons should be disabled or not.
+        String warnmsg = "";
+        String warnmsg2 = "";
+        boolean bWarnCoral = false;
+        boolean bWarnAlgae = false;
+        boolean bDisableButtons = false;
+        TextView tmsg1 = view.findViewById(R.id.warn_msg1);
+        TextView tmsg2 = view.findViewById(R.id.warn_msg2);
+
+        // Check if the acquired number is less than the scored number for coral and algae.
+        int numCoralAcqd = m_matchData.getCoralAcquired();
+        int numAlgaeAcqd = m_matchData.getAlgaeAcquired();
+        int numCoralScored = m_matchData.getTeleopCoralL1() + m_matchData.getTeleopCoralL2() + m_matchData.getTeleopCoralL3() + m_matchData.getTeleopCoralL4();
+        int numAlgaeScored = m_matchData.getTeleopAlgaeNet() + m_matchData.getTeleopAlgaeProcessor();
+        if(numCoralAcqd < numCoralScored) {
+            bWarnCoral = true;
+            Log.d(TAG, "-->  Number of coral acquired ("+numCoralAcqd+") is less than numCoralScored("+numCoralScored+")!");
+        }
+        if(numAlgaeAcqd < numAlgaeScored) {
+            bWarnAlgae = true;
+            Log.d(TAG, "-->  Number of algae acquired ("+numAlgaeAcqd+") is less than numAlgaeScored("+numAlgaeScored+")!");
+        }
+        if(bWarnAlgae && bWarnCoral) 
+            warnmsg = "The number of acquired algae and acquired coral are less than the number scored!";
+        else if(bWarnAlgae)
+            warnmsg = "The number of acquired algae is less than the number scored!";
+        else if(bWarnCoral)
+            warnmsg = "The number of acquired coral is less than the number scored!";
+
+        // Check if auton coral was scored but no reefzone was checked.
+        boolean bReefzoneChecked = m_matchData.getReefzone_AB() || m_matchData.getReefzone_CD() || m_matchData.getReefzone_EF() || m_matchData.getReefzone_GH() || m_matchData.getReefzone_IJ() || m_matchData.getReefzone_KL();
+        int numAutonCoral = m_matchData.getAutonCoralL1() + m_matchData.getAutonCoralL2() + m_matchData.getAutonCoralL3() + m_matchData.getAutonCoralL4(); 
+        if(numAutonCoral != 0 && !bReefzoneChecked)
+        {
+            Log.d(TAG, "-->  numAutonCoral = "+numAutonCoral+", but NO reefzone checked!");
+            if(bWarnAlgae || bWarnCoral)
+                warnmsg2 = "Please select the reefzone(s) that were used in Auton.";
+            else warnmsg = "Please select the reefzone(s) that were used in Auton.";
+        }
+        // Make the appropriate warnings visible and red. 
+        if(warnmsg != "") 
+        {
+            tmsg1.setText(warnmsg);
+            tmsg1.setVisibility(View.VISIBLE);
+            tmsg1.setTextColor(Color.RED);
+            bDisableButtons = true;
+        }
+        else  tmsg1.setVisibility(View.INVISIBLE);
+        if(warnmsg2 != "")
+        {
+            tmsg2.setText(warnmsg2);
+            tmsg2.setVisibility(View.VISIBLE);
+            tmsg2.setTextColor(Color.RED);
+            bDisableButtons = true;
+        }
+        else  tmsg2.setVisibility(View.INVISIBLE);
+
+        // Enable or disable the QR and DONE buttons.
+        ImageButton qrButton = view.findViewById(R.id.gen_QR);
+        Button doneButton = view.findViewById(R.id.nav_to_menu_button);
+        if(bDisableButtons)
+        {
+            Log.d(TAG, "--> ! Disabling DONE and QR buttons");
+            qrButton.setEnabled(false);
+            doneButton.setEnabled(false);
+// TODO - set done and qr buttons to looked disabled 
+
+        } else {
+            Log.d(TAG, "--> ! Enabling DONE and QR buttons");
+            qrButton.setEnabled(true);
+            doneButton.setEnabled(true);
+// TODO - set done and qr buttons to looked enabled 
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -184,6 +264,7 @@ public class EndgameFragment extends Fragment
             }
         });
 
+        setupWarnings(v);
         return v;
     }
 

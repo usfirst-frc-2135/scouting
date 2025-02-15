@@ -225,6 +225,34 @@
 
         </LinearLayout>
 
+<!-- start Warning messages section -->
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:id="@+id/warn_msg1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_marginStart="5dp"
+                android:text="WARN1"/>
+
+            <TextView
+                android:id="@+id/warn_msg2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_marginStart="5dp"
+                android:text="WARN2"/>
+
+        </LinearLayout>
+<!-- end Warning messages section -->
 
         <android.widget.Space
             android:layout_width="match_parent"
