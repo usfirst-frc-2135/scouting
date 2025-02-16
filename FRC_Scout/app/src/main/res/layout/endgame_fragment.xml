@@ -259,7 +259,7 @@
             android:layout_height="10dp" />
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -278,11 +278,23 @@
                 android:contentDescription="QR code image"
                 android:textColor="#3F51B5" />
 
+            <ImageButton
+                android:id="@+id/gen_QR_disabled"
+                android:layout_width="190dp"
+                android:layout_height="190dp"
+                android:background="@drawable/rounded_rect"
+                android:backgroundTint="#6e848d"
+                android:focusable="true"
+                android:src="@drawable/qr_code_icon"
+                android:contentDescription="QR code image"
+                android:textColor="#3F51B5" />
+
             <android.widget.Space
                 android:layout_width="90dp"
                 android:layout_height="match_parent" />
 
             <Button
+                android:layout_marginStart="80dp"
                 android:id="@+id/nav_to_menu_button"
                 android:layout_width="190dp"
                 android:layout_height="190dp"
@@ -291,8 +303,23 @@
                 android:focusable="true"
                 android:text="Done"
                 android:textColor="@color/textPrimary"
+                android:layout_toEndOf="@id/gen_QR"
                 android:textSize="36sp" />
-        </LinearLayout>
+
+            <Button
+                android:layout_marginStart="80dp"
+                android:id="@+id/nav_to_menu_button_disabled"
+                android:layout_width="190dp"
+                android:layout_height="190dp"
+                android:background="@drawable/rounded_rect"
+                android:backgroundTint="#b19769"
+                android:focusable="true"
+                android:text="Done"
+                android:textColor="@color/textPrimary"
+                android:layout_toEndOf="@id/gen_QR"
+                android:textSize="36sp" />
+
+        </RelativeLayout>
     </LinearLayout>
 
 

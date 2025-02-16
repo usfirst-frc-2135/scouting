@@ -109,18 +109,26 @@ public class EndgameFragment extends Fragment
 
         // Enable or disable the QR and DONE buttons.
         ImageButton qrButton = view.findViewById(R.id.gen_QR);
+        ImageButton qrButtonDisabled = view.findViewById(R.id.gen_QR_disabled);
+        qrButtonDisabled.setVisibility(view.INVISIBLE);
         Button doneButton = view.findViewById(R.id.nav_to_menu_button);
+        Button doneButtonDisabled = view.findViewById(R.id.nav_to_menu_button_disabled);
+        doneButtonDisabled.setVisibility(view.INVISIBLE);
         if(bDisableButtons)
         {
             Log.d(TAG, "--> ! Disabling DONE and QR buttons");
             qrButton.setEnabled(false);
             doneButton.setEnabled(false);
+            qrButtonDisabled.setVisibility(view.VISIBLE);
+            doneButtonDisabled.setVisibility(view.VISIBLE);
 // TODO - set done and qr buttons to looked disabled 
 
         } else {
             Log.d(TAG, "--> ! Enabling DONE and QR buttons");
             qrButton.setEnabled(true);
             doneButton.setEnabled(true);
+            qrButtonDisabled.setVisibility(view.INVISIBLE);
+            doneButtonDisabled.setVisibility(view.INVISIBLE);
 // TODO - set done and qr buttons to looked enabled 
         }
     }
