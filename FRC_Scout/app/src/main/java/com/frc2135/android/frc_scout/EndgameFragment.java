@@ -48,7 +48,6 @@ public class EndgameFragment extends Fragment
 
     private void setupWarnings(View view)
     {
-        Log.d(TAG, "-->  starting setupWarnings()");
         // Determine if the warning msgs should be shown or hidden, and thus if the QR and Done 
         // buttons should be disabled or not.
         String warnmsg = "";
@@ -73,11 +72,11 @@ public class EndgameFragment extends Fragment
             Log.d(TAG, "-->  Number of algae acquired ("+numAlgaeAcqd+") is less than numAlgaeScored("+numAlgaeScored+")!");
         }
         if(bWarnAlgae && bWarnCoral) 
-            warnmsg = "The number of acquired algae and acquired coral are less than the number scored!";
+            warnmsg = "In Teleop, adjust the acquired coral and algae numbers (they are less than the numbers scored).";
         else if(bWarnAlgae)
-            warnmsg = "The number of acquired algae is less than the number scored!";
+            warnmsg = "In Teleop, adjust the acquired algae number (it is less than the number scored).";
         else if(bWarnCoral)
-            warnmsg = "The number of acquired coral is less than the number scored!";
+            warnmsg = "In Teleop, adjust the acquired coral number (it is less than the number scored).";
 
         // Check if auton coral was scored but no reefzone was checked.
         boolean bReefzoneChecked = m_matchData.getReefzone_AB() || m_matchData.getReefzone_CD() || m_matchData.getReefzone_EF() || m_matchData.getReefzone_GH() || m_matchData.getReefzone_IJ() || m_matchData.getReefzone_KL();
@@ -86,8 +85,8 @@ public class EndgameFragment extends Fragment
         {
             Log.d(TAG, "-->  numAutonCoral = "+numAutonCoral+", but NO reefzone checked!");
             if(bWarnAlgae || bWarnCoral)
-                warnmsg2 = "Please select the reefzone(s) that were used in Auton.";
-            else warnmsg = "Please select the reefzone(s) that were used in Auton.";
+                warnmsg2 = "In Auton, select the reefzone side(s) that were used.";
+            else warnmsg = "In Auton, select the reefzone side(s) that were used.";
         }
         // Make the appropriate warnings visible and red. 
         if(warnmsg != "") 

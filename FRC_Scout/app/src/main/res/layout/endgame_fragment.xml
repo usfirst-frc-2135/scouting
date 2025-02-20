@@ -144,7 +144,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/specialTextPrimary"
-                        android:text="10 sec"
+                        android:text="10 sec left"
                         android:layout_weight="1"
                         android:textColor="@color/specialTextPrimary"
                         android:textSize="22dp" />
@@ -153,7 +153,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/specialTextPrimary"
-                        android:text="5 sec"
+                        android:text="5 sec left"
                         android:layout_weight="1"
                         android:textColor="@color/specialTextPrimary"
                         android:textSize="22dp" />
