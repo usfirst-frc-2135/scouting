@@ -96,7 +96,7 @@
                 android:layout_marginLeft="30dp"
                 android:buttonTint="#8957A1"
                 android:textColor="@color/specialTextPrimary"
-                android:text="Leave Starting Zone"
+                android:text="Leave Starting Line"
                 android:textSize="22sp" />
         </LinearLayout>
 <!--end LEAVE vertical layout -->
@@ -126,12 +126,12 @@
                         android:id="@+id/reef_zones_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
+                        android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
-                        android:text="REEF ZONES SCORED IN"
+                        android:text="REEFZONE SIDES SCORED IN"
                         android:textColor="@color/specialTextPrimary"
                         android:textStyle="bold"
-                        android:textSize="22sp" />
+                        android:textSize="20sp" />
                 </LinearLayout>
 
 <!--start REEF ZONE checkboxes -->

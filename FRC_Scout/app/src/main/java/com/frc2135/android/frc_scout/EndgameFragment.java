@@ -121,7 +121,6 @@ public class EndgameFragment extends Fragment
             doneButton.setEnabled(false);
             qrButtonDisabled.setVisibility(view.VISIBLE);
             doneButtonDisabled.setVisibility(view.VISIBLE);
-// TODO - set done and qr buttons to looked disabled 
 
         } else {
             Log.d(TAG, "--> ! Enabling DONE and QR buttons");
@@ -129,7 +128,6 @@ public class EndgameFragment extends Fragment
             doneButton.setEnabled(true);
             qrButtonDisabled.setVisibility(view.INVISIBLE);
             doneButtonDisabled.setVisibility(view.INVISIBLE);
-// TODO - set done and qr buttons to looked enabled 
         }
     }
 
