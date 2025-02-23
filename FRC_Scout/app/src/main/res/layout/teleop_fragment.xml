@@ -123,8 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#CADAF8"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="11dp"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
             android:background="@drawable/rounded_rect"
@@ -149,7 +148,6 @@
                 android:buttonTint="#8957A1"
                 android:text="Algae" />
 
-
             <CheckBox
                 android:id="@+id/pickup_algae"
                 android:layout_width="wrap_content"
@@ -165,7 +163,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="11dp"
             android:background="@drawable/rounded_rect"
             android:backgroundTint="#E7CCE4"
             android:orientation="vertical">
@@ -190,7 +188,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="#E7CCE4"
                     android:background="@drawable/bottom_rounded_rect"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <CheckBox
                         android:id="@+id/knock_algae_off"
@@ -229,11 +227,12 @@
             android:layout_height="wrap_content"
             android:background="@color/backgroundColor"
             android:orientation="horizontal"
-            android:paddingTop="20dp">
+            android:paddingTop="2dp">
                 
 <!--start ALGAE SCORING -->
             <LinearLayout
                 android:layout_width="290dp"
+                android:layout_marginTop="11dp"
                 android:layout_height="350dp"
                 android:background="@drawable/algae_bkgnd"
                 android:orientation="vertical">
@@ -351,6 +350,7 @@
             <LinearLayout
                 android:layout_width="300dp"
                 android:layout_height="350dp"
+                android:layout_marginTop="11dp"
                 android:background="@drawable/coral_levels"
                 android:layout_marginStart="10dp"
                 android:orientation="vertical">
@@ -572,7 +572,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="11dp"
             android:orientation="horizontal"
             android:background="@drawable/rounded_rect"
             android:paddingTop="15dp"

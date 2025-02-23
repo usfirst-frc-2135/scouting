@@ -18,15 +18,14 @@
             android:backgroundTint="#CEEAF5"
             android:layout_marginTop="5dp"
             android:background="@drawable/rounded_rect"
-            android:orientation="horizontal">
+            android:orientation="vertical">
             <TextView
                 android:id="@+id/acquire_game_piece"
                 android:textStyle="bold"
                 android:layout_marginLeft="5dp"
-                android:layout_width="200dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp"
-                android:paddingBottom="15dp"
                 android:text="START POSITION"
                 android:textColor="@color/specialTextPrimary"
                 android:textSize="22sp" />
@@ -34,7 +33,6 @@
                 android:id="@+id/starting_position"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
                 android:paddingBottom="15dp"
                 android:orientation="horizontal">
 
@@ -48,6 +46,15 @@
                     android:text="Right"/>
 
                 <RadioButton
+                    android:id="@+id/mid_right_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:buttonTint="#8957A1"
+                    android:textSize="22sp"
+                    android:text="Mid right"/>
+
+                <RadioButton
                     android:id="@+id/middle_start"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -55,6 +62,15 @@
                     android:buttonTint="#8957A1"
                     android:textSize="22sp"
                     android:text="Middle"/>
+
+                <RadioButton
+                    android:id="@+id/mid_left_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:buttonTint="#8957A1"
+                    android:textSize="22sp"
+                    android:text="Mid Left"/>
 
                 <RadioButton
                     android:id="@+id/left_start"
@@ -72,7 +88,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="11dp"
             android:orientation="horizontal"
             android:background="@drawable/rounded_rect"
             android:backgroundTint="#EFE2FF"
@@ -107,7 +123,7 @@
             android:layout_height="wrap_content"
             android:background="@color/backgroundColor"
             android:orientation="horizontal"
-            android:paddingTop="20dp">
+            android:paddingTop="11dp">
 
 <!--start REEF ZONES-->
             <LinearLayout
@@ -426,7 +442,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="11dp"
             android:backgroundTint="#faccc8"
             android:background="@drawable/top_rounded_rect"
             android:orientation="horizontal">
@@ -502,7 +518,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="11dp"
             android:background="@drawable/rounded_rect"
             android:backgroundTint="#CACFF9"
             android:orientation="vertical">
