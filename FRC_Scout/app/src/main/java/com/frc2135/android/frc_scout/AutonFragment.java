@@ -29,7 +29,9 @@ public class AutonFragment extends Fragment
 
     private RadioGroup m_startingPosition;
     private RadioButton m_rightStart;
+    private RadioButton m_midRightStart;
     private RadioButton m_middleStart;
+    private RadioButton m_midLeftStart;
     private RadioButton m_leftStart;
 
     private CheckBox m_leaveCheckbox;
@@ -318,18 +320,26 @@ public class AutonFragment extends Fragment
 
         m_startingPosition = v.findViewById(R.id.starting_position);
         m_rightStart = v.findViewById(R.id.right_start);
+        m_midRightStart = v.findViewById(R.id.mid_right_start);
         m_middleStart = v.findViewById(R.id.middle_start);
+        m_midLeftStart = v.findViewById(R.id.mid_left_start);
         m_leftStart  = v.findViewById(R.id.left_start);
         m_rightStart.setChecked(false);
+        m_midRightStart.setChecked(false);
         m_middleStart.setChecked(false);
+        m_midLeftStart.setChecked(false);
         m_leftStart .setChecked(false);
 
         int defValue = m_matchData.getStartingPosition();
         if (defValue == 0)
             m_rightStart.setChecked(true);
-        else if(defValue == 1)
+        if (defValue == 1)
+            m_midRightStart.setChecked(true);
+        if (defValue == 2)
             m_middleStart.setChecked(true);
-        else if(defValue == 2)
+        if (defValue == 3)
+            m_midLeftStart.setChecked(true);
+        else if(defValue == 4)
             m_leftStart.setChecked(true);
 
         m_leaveCheckbox = v.findViewById(R.id.leave_checkbox);
@@ -421,13 +431,21 @@ public class AutonFragment extends Fragment
         {
             rtn = 0;
         }
-        if (m_startingPosition.getCheckedRadioButtonId() == m_middleStart.getId())
+        if (m_startingPosition.getCheckedRadioButtonId() == m_midRightStart.getId())
         {
             rtn = 1;
         }
-        if (m_startingPosition.getCheckedRadioButtonId() == m_leftStart.getId())
+        if (m_startingPosition.getCheckedRadioButtonId() == m_middleStart.getId())
         {
             rtn = 2;
+        }
+        if (m_startingPosition.getCheckedRadioButtonId() == m_midLeftStart.getId())
+        {
+            rtn = 3;
+        }
+        if (m_startingPosition.getCheckedRadioButtonId() == m_leftStart.getId())
+        {
+            rtn = 4;
         }
         return rtn;
     }
