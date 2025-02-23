@@ -52,7 +52,7 @@
                     android:layout_weight="1"
                     android:buttonTint="#8957A1"
                     android:textSize="22sp"
-                    android:text="Mid right"/>
+                    android:text="Mid Right"/>
 
                 <RadioButton
                     android:id="@+id/middle_start"
