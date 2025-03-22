@@ -73,15 +73,6 @@ public class EndgameFragment extends Fragment
             warnmsg = "In Teleop, adjust the acquired coral number (it is less than the number scored).";
 
         // Check if auton coral was scored but no reefzone was checked.
-        boolean bReefzoneChecked = m_matchData.getReefzone_AB() || m_matchData.getReefzone_CD() || m_matchData.getReefzone_EF() || m_matchData.getReefzone_GH() || m_matchData.getReefzone_IJ() || m_matchData.getReefzone_KL();
-        int numAutonCoral = m_matchData.getAutonCoralL1() + m_matchData.getAutonCoralL2() + m_matchData.getAutonCoralL3() + m_matchData.getAutonCoralL4(); 
-        if(numAutonCoral != 0 && !bReefzoneChecked)
-        {
-            Log.d(TAG, "-->  numAutonCoral = "+numAutonCoral+", but NO reefzone checked!");
-            if(bWarnAlgae || bWarnCoral)
-                warnmsg2 = "In Auton, select the reefzone side(s) that were used.";
-            else warnmsg = "In Auton, select the reefzone side(s) that were used.";
-        }
         // Make the appropriate warnings visible and red. 
         if(warnmsg != "") 
         {
