@@ -44,7 +44,7 @@
         </LinearLayout>
 <!--end LEAVE vertical layout -->
 
-<!--start REEF ZONES/CORAL SCORING side-by-side-->
+    <!--start CORAL SCORING side-by-side-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,101 +52,22 @@
             android:orientation="horizontal"
             android:paddingTop="11dp">
 
-<!--start REEF ZONES-->
             <LinearLayout
-                android:id="@+id/reef_zones_layout"
-                android:layout_width="290dp"
+                android:layout_width="288dp"
                 android:layout_height="350dp"
-                android:background="@drawable/reefzone_r1_sctbl"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/reefzone_logo"
                 android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/reef_zones_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="5dp"
-                        android:text="REEFZONE SIDES SCORED IN"
-                        android:textColor="@color/specialTextPrimary"
-                        android:textStyle="bold"
-                        android:textSize="20sp" />
-                </LinearLayout>
-
-<!--start REEF ZONE checkboxes -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <CheckBox
-                        android:layout_marginTop="140dp"
-                        android:id="@+id/reefzone_b1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="#000000"
-                        android:layout_marginStart="50dp" />
-                    <CheckBox
-                        android:layout_marginTop="73dp"
-                        android:id="@+id/reefzone_b2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="#000000"
-                        android:layout_marginStart="10dp" />
-
-                    <CheckBox
-                        android:layout_marginTop="73dp"
-                        android:id="@+id/reefzone_b3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="#000000"
-                        android:layout_marginStart="45dp" />
-
-                    <CheckBox
-                        android:layout_marginTop="140dp"
-                        android:id="@+id/reefzone_b4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="#000000"
-                        android:layout_marginStart="4dp" />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <CheckBox
-                        android:layout_marginTop="28dp"
-                        android:id="@+id/reefzone_b6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="95dp"
-                        android:buttonTint="#000000" />
-
-                    <CheckBox
-                        android:layout_marginTop="28dp"
-                        android:id="@+id/reefzone_b5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="#000000"
-                        android:layout_marginStart="45dp" />
-                </LinearLayout>
-<!--end REEF ZONE checkboxes -->
-
             </LinearLayout>
-<!--end REEF ZONES-->
 
-<!--start CORAL SCORING-->
+
+            <!--start CORAL SCORING-->
             <LinearLayout
-                android:layout_width="300dp"
+                android:layout_width="288dp"
                 android:layout_height="350dp"
                 android:background="@drawable/coral_levels"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="5dp"
                 android:orientation="vertical">
 
                 <LinearLayout

@@ -26,20 +26,6 @@ public class AutonFragment extends Fragment
     private static final int MAX_NUM_ALGAE = 2;
     private CheckBox m_leaveCheckbox;
 
-    private CheckBox m_reefZoneCkbx1;
-    private CheckBox m_reefZoneCkbx2;
-    private CheckBox m_reefZoneCkbx3;
-    private CheckBox m_reefZoneCkbx4;
-    private CheckBox m_reefZoneCkbx5;
-    private CheckBox m_reefZoneCkbx6;
-
-    // Reefzone image orientation: 
-    //   0 = Red scoringTable side
-    //   1 = Red non-scoringTable side
-    //   2 = Blue scoringTable side
-    //   3 = Blue non-scoringTable side
-    private int m_reefzoneOrient;   
-
     private TextView m_autonL1Total;
     private TextView m_autonL2Total;
     private TextView m_autonL3Total;
@@ -59,7 +45,7 @@ public class AutonFragment extends Fragment
     private Button m_autonAlgaeNetDecrButton;
     private Button m_autonAlgaeProcIncrButton;
     private Button m_autonAlgaeProcDecrButton;
-    
+
     private MatchData m_matchData;
 
     // Check if given field is greater than expected max number.
@@ -104,54 +90,6 @@ public class AutonFragment extends Fragment
         }
     }
 
-    private void getMatchDataReefscapeZones()
-    {
-        // Red scoring table side or blue non-scoring table side.
-        if(m_reefzoneOrient == 0 || m_reefzoneOrient == 3)   
-        {
-            m_reefZoneCkbx1.setChecked(m_matchData.getReefzone_GH());
-            m_reefZoneCkbx2.setChecked(m_matchData.getReefzone_EF());
-            m_reefZoneCkbx3.setChecked(m_matchData.getReefzone_CD());
-            m_reefZoneCkbx4.setChecked(m_matchData.getReefzone_AB());
-            m_reefZoneCkbx5.setChecked(m_matchData.getReefzone_KL());
-            m_reefZoneCkbx6.setChecked(m_matchData.getReefzone_IJ());
-
-        }
-        // Red non-scoring table side or Blue scoring table side
-        else if(m_reefzoneOrient == 1 || m_reefzoneOrient == 2)   
-        {
-            m_reefZoneCkbx1.setChecked(m_matchData.getReefzone_AB());
-            m_reefZoneCkbx2.setChecked(m_matchData.getReefzone_KL());
-            m_reefZoneCkbx3.setChecked(m_matchData.getReefzone_IJ());
-            m_reefZoneCkbx4.setChecked(m_matchData.getReefzone_GH());
-            m_reefZoneCkbx5.setChecked(m_matchData.getReefzone_EF());
-            m_reefZoneCkbx6.setChecked(m_matchData.getReefzone_CD());
-        }
-    }
-
-    private void setMatchDataReefscapeZones()
-    {
-        // Red scoring table side or blue non-scoring table side.
-        if(m_reefzoneOrient == 0 || m_reefzoneOrient == 3)   
-        {
-            m_matchData.setReefzone_AB(m_reefZoneCkbx4.isChecked());
-            m_matchData.setReefzone_CD(m_reefZoneCkbx3.isChecked());
-            m_matchData.setReefzone_EF(m_reefZoneCkbx2.isChecked());
-            m_matchData.setReefzone_GH(m_reefZoneCkbx1.isChecked());
-            m_matchData.setReefzone_IJ(m_reefZoneCkbx6.isChecked());
-            m_matchData.setReefzone_KL(m_reefZoneCkbx5.isChecked());
-        }
-        // Red non-scoring table side or Blue scoring table side
-        else if(m_reefzoneOrient == 1 || m_reefzoneOrient == 2)   
-        {
-            m_matchData.setReefzone_AB(m_reefZoneCkbx1.isChecked());
-            m_matchData.setReefzone_CD(m_reefZoneCkbx6.isChecked());
-            m_matchData.setReefzone_EF(m_reefZoneCkbx5.isChecked());
-            m_matchData.setReefzone_GH(m_reefZoneCkbx4.isChecked());
-            m_matchData.setReefzone_IJ(m_reefZoneCkbx3.isChecked());
-            m_matchData.setReefzone_KL(m_reefZoneCkbx2.isChecked());
-        }
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -189,34 +127,6 @@ public class AutonFragment extends Fragment
     {
         // Creates a view using the specific fragment layout
         View v = inflater.inflate(R.layout.auton_fragment, parent, false);
-
-        // Set the Reefzone background image. 
-        m_reefzoneOrient = 0;   // default (matches the default image in layout file)
-        Scouter myScouter = Scouter.get(getContext());
-        if (myScouter != null){
-            String color = myScouter.getTeamIndexColor();
-            boolean scoringTableSide = myScouter.getScoringTableSide();
-            LinearLayout rzone_ll = (LinearLayout)v.findViewById(R.id.reef_zones_layout);
-            if (color.equals("red")) {
-                if (scoringTableSide) {
-                    rzone_ll.setBackgroundResource(R.drawable.reefzone_r1_sctbl);
-                    m_reefzoneOrient = 0;
-                }
-                else {
-                    rzone_ll.setBackgroundResource(R.drawable.reefzone_r2);
-                    m_reefzoneOrient = 1;
-                }
-            } else {
-                if (scoringTableSide) {
-                    rzone_ll.setBackgroundResource(R.drawable.reefzone_b1_sctbl);
-                    m_reefzoneOrient = 2;
-                }
-                else {
-                    rzone_ll.setBackgroundResource(R.drawable.reefzone_b2);
-                    m_reefzoneOrient = 3;
-                }       
-            }       
-        }       
 
         m_autonL1Total = v.findViewById(R.id.auton_L1_score_total);
         m_autonL1Total.setText(String.valueOf(m_matchData.getAutonCoralL1()));
@@ -365,14 +275,6 @@ public class AutonFragment extends Fragment
         if (isGreaterThanMax(m_autonAlgaeProcTotal,false))
             m_autonAlgaeProcTotal.setTextColor(Color.RED);
 
-        // Set up reefzone checkboxes from MatchData.
-        m_reefZoneCkbx1 = v.findViewById(R.id.reefzone_b1);
-        m_reefZoneCkbx2 = v.findViewById(R.id.reefzone_b2);
-        m_reefZoneCkbx3 = v.findViewById(R.id.reefzone_b3);
-        m_reefZoneCkbx4 = v.findViewById(R.id.reefzone_b4);
-        m_reefZoneCkbx5 = v.findViewById(R.id.reefzone_b5);
-        m_reefZoneCkbx6 = v.findViewById(R.id.reefzone_b6);
-        getMatchDataReefscapeZones();
         return v;
     }
 
@@ -390,6 +292,5 @@ public class AutonFragment extends Fragment
         m_matchData.setAutonLeave(m_leaveCheckbox.isChecked());
 
         // Determine the reefscape face for each checkbox.
-        setMatchDataReefscapeZones();
     }
 }
