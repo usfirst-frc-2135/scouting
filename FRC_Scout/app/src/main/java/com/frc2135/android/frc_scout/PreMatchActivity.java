@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.CheckBox;
+//import android.widget.CheckBox; //REMOVE LATER
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -36,7 +36,7 @@ public class PreMatchActivity extends AppCompatActivity
     private CompetitionInfo      m_compInfo;
     private static Scouter       m_Scouter;
     private String               m_inEdit; 
-    private CheckBox m_scoringTableSideChbx;
+    //private CheckBox m_scoringTableSideChbx;// REMOVE LATER
 
     private void setTeamNumFromMatchNum()
     {
@@ -148,12 +148,12 @@ public class PreMatchActivity extends AppCompatActivity
                 }
             }
         });
-
+/*
         m_scoringTableSideChbx = findViewById(R.id.scoring_table_side_ckbx);
         if(m_Scouter != null)
             m_scoringTableSideChbx.setChecked(m_Scouter.getScoringTableSide());
         else m_scoringTableSideChbx.setChecked(false);
-
+*///REMOVE LATER
         m_matchNumberField = findViewById(R.id.match_number_field);
         if (!m_matchData.getMatchNumber().isEmpty())
             m_matchNumberField.setText(m_matchData.getMatchNumber());
@@ -284,7 +284,7 @@ public class PreMatchActivity extends AppCompatActivity
         m_Scouter.addPastScouter(m_scoutNameField.getText().toString());
         m_Scouter.setMostRecentScoutName(m_scoutNameField.getText().toString());
         m_Scouter.setMostRecentMatchNumber(m_matchNumberField.getText().toString().toLowerCase());
-        m_Scouter.setScoringTableSide(m_scoringTableSideChbx.isChecked());
+        //m_Scouter.setScoringTableSide(m_scoringTableSideChbx.isChecked());//REMOVE LATER
         m_matchData.setName(m_scoutNameField.getText().toString());
         m_matchData.setEventCode(m_competitionField.getText().toString());
         m_matchData.setMatchNumber(m_matchNumberField.getText().toString().trim().toLowerCase());

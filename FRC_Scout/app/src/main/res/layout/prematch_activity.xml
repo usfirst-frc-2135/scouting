@@ -94,16 +94,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <CheckBox
-                android:id="@+id/scoring_table_side_ckbx"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:textSize="20sp"
-                android:textColor="@color/textSecondary"
-                android:buttonTint="@color/textSecondary"
-                android:text="Scoring Table Side" />
-
         </LinearLayout>
 
         <TextView

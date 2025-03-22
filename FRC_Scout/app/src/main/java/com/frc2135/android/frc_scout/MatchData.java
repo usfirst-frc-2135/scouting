@@ -121,10 +121,6 @@ public class MatchData
     private int m_coralAcquired;
     private int m_algaeAcquired;
 
-    private int m_teleopAmpMisses;
-    private int m_teleopSpeakerMisses;
-    private int m_teleopPasses;
-
     private int m_cageClimb;
     private int m_startClimb;
 
