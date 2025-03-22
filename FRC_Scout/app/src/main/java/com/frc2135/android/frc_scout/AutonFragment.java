@@ -59,12 +59,7 @@ public class AutonFragment extends Fragment
     private Button m_autonAlgaeNetDecrButton;
     private Button m_autonAlgaeProcIncrButton;
     private Button m_autonAlgaeProcDecrButton;
-
-    private CheckBox m_floorCoral;
-    private CheckBox m_stationCoral;
-    private CheckBox m_floorAlgae;
-    private CheckBox m_reefAlgae;
-
+    
     private MatchData m_matchData;
 
     // Check if given field is greater than expected max number.
@@ -310,14 +305,6 @@ public class AutonFragment extends Fragment
 
         m_leaveCheckbox = v.findViewById(R.id.leave_checkbox);
         m_leaveCheckbox.setChecked(m_matchData.getAutonLeave());
-        m_floorCoral = v.findViewById(R.id.floor_coral);
-        m_floorCoral.setChecked(m_matchData.getFloorCoral());
-        m_stationCoral = v.findViewById(R.id.station_coral);
-        m_stationCoral.setChecked(m_matchData.getStationCoral());
-        m_floorAlgae = v.findViewById(R.id.floor_algae);
-        m_floorAlgae.setChecked(m_matchData.getFloorAlgae());
-        m_reefAlgae = v.findViewById(R.id.reef_algae);
-        m_reefAlgae.setChecked(m_matchData.getReefAlgae());
 
         // Set up Algae Net/Proc incr/decr buttons and listeners.
         m_autonAlgaeNetTotal = v.findViewById(R.id.auton_algae_net_total);
@@ -401,10 +388,6 @@ public class AutonFragment extends Fragment
         m_matchData.setAutonAlgaeProcessor(Integer.parseInt(m_autonAlgaeProcTotal.getText().toString()));
 
         m_matchData.setAutonLeave(m_leaveCheckbox.isChecked());
-        m_matchData.setFloorCoral(m_floorCoral.isChecked());
-        m_matchData.setStationCoral(m_stationCoral.isChecked());
-        m_matchData.setFloorAlgae(m_floorAlgae.isChecked());
-        m_matchData.setReefAlgae(m_reefAlgae.isChecked());
 
         // Determine the reefscape face for each checkbox.
         setMatchDataReefscapeZones();
