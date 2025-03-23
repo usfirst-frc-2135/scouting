@@ -12,25 +12,28 @@
         android:orientation="vertical">
 
 <!--start LEAVE vertical layout -->
+        <!--end LEAVE vertical layout -->
+
+    <!--start CORAL SCORING side-by-side-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="11dp"
-            android:orientation="horizontal"
+            android:layout_marginTop="17dp"
             android:background="@drawable/rounded_rect"
             android:backgroundTint="#EFE2FF"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp">
+            android:orientation="horizontal"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp">
 
             <TextView
                 android:id="@+id/leave_title"
-                android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:text="LEAVE"
-                android:textStyle="bold"
                 android:textColor="@color/specialTextPrimary"
-                android:textSize="22sp" />
+                android:textSize="22sp"
+                android:textStyle="bold" />
 
             <CheckBox
                 android:id="@+id/leave_checkbox"
@@ -38,19 +41,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:buttonTint="#8957A1"
-                android:textColor="@color/specialTextPrimary"
                 android:text="Leave Starting Line"
+                android:textColor="@color/specialTextPrimary"
                 android:textSize="22sp" />
         </LinearLayout>
-<!--end LEAVE vertical layout -->
 
-    <!--start CORAL SCORING side-by-side-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/backgroundColor"
             android:orientation="horizontal"
-            android:paddingTop="11dp">
+            android:paddingTop="17dp">
 
             <LinearLayout
                 android:layout_width="288dp"
@@ -290,7 +291,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="11dp"
+            android:layout_marginTop="17dp"
             android:background="@drawable/rounded_rect"
             android:backgroundTint="#CACFF9"
             android:orientation="vertical">
@@ -300,7 +301,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginStart="5dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="7dp"
                 android:textStyle="bold"
                 android:text="ALGAE SCORED"
                 android:textColor="@color/specialTextPrimary"

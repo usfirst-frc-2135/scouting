@@ -17,13 +17,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="22dp"
             android:backgroundTint="#b3E5f2"
             android:background="@drawable/rounded_rect"
             android:orientation="vertical">
 
             <TextView
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="5dp"
                 android:textColor="@color/specialTextPrimary"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
