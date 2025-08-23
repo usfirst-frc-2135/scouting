@@ -385,6 +385,13 @@ public class MatchListFragment extends ListFragment
                     SetTeamIndexDialog tiDlg = SetTeamIndexDialog.newInstance();
                     tiDlg.show(fm2, "set_team_index_dialog");
                 }
+                else if (itemID == R.id.load_aliases)
+                {
+                    FragmentManager fm3 = requireActivity().getSupportFragmentManager();
+                    Log.d(TAG, "Going to load an aliases");
+                    LoadAliasesDialog dialog = LoadAliasesDialog.newInstance();
+                    dialog.show(fm3, "load_aliases");
+                }
                 return true;
             }
         });

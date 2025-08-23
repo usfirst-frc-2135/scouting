@@ -19,22 +19,22 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.file.Files;
 
-public class CompetitionDataSerializer
+public class AliasesSerializer
 {
-    private static final String TAG = "CompetitionDataSerializer";
+    private static final String TAG = "AliasesSerializer";
 
     // Data members
     private final Context m_context;
     private final String m_dataPath;
 
-    public CompetitionDataSerializer(Context context)
+    public AliasesSerializer(Context context)
     {
         m_context = context;
         m_dataPath = m_context.getFilesDir().getPath();
-        Log.d(TAG, "Data files dir = " + m_dataPath);
+        Log.i(TAG, "Data files dir = " + m_dataPath);
     }
 
-    // Takes the JSONArray data from thebluealliance.com event matches and writes it out to <eventCode>_matches.json file.
+    // Takes the JSONArray data from Aliases file on scouting website and writes it out to <eventCode>_aliases.json file on kindle.
     public void saveAliasesData(JSONArray compData) throws JSONException, IOException
     {
 
@@ -43,12 +43,12 @@ public class CompetitionDataSerializer
         Writer compWriter = null;
         try
         {
-            File file1 = new File(m_dataPath + "/" + CurrentCompetition.get(m_context).getEventCode() + "matches.json");
+            File file1 = new File(m_dataPath + "/" + CurrentCompetition.get(m_context).getEventCode() + "_aliases.json");
 
             OutputStream out = Files.newOutputStream(file1.toPath());
             compWriter = new OutputStreamWriter(out);
             compWriter.write(compData.toString());
-            Log.d(TAG, "Device Data File created: " + file1);
+            Log.d(TAG, "Aliases Device Data File created: " + file1);
         } finally
         {
             if (compWriter != null)
@@ -58,7 +58,7 @@ public class CompetitionDataSerializer
         }
     }
 
-    public void saveCurrentCompetition(JSONObject compJSON) throws IOException
+    /*public void saveCurrentCompetition(JSONObject compJSON) throws IOException
     {
         // Write out current_competition.json file.
         Log.d(TAG, "saveCurrentCompetition() starting");
@@ -81,6 +81,7 @@ public class CompetitionDataSerializer
             }
         }
     }
+
 
     public CurrentCompetition loadCurrentComp() throws IOException, JSONException
     {
@@ -130,4 +131,6 @@ public class CompetitionDataSerializer
         }
         return currComp;
     }
+
+     */
 }

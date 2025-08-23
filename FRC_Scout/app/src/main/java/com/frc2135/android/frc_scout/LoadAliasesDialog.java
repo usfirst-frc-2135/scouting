@@ -33,11 +33,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /** @noinspection ALL*/
-public class LoadEventDialog extends DialogFragment
+public class LoadAliasesDialog extends DialogFragment
 {
-    private static final String TAG = "LoadEventDialog";
+    private static final String TAG = "LoadAliasesDialog";
 
-    private CompetitionDataSerializer m_compSerializer;
+    private AliasesSerializer m_aliaseSerializer;
     private EditText m_eventCodeField;
     private String m_eventCode = "myEventCode";
     private Context m_appContext;
@@ -67,7 +67,7 @@ public class LoadEventDialog extends DialogFragment
             }
         }).create();
 
-        dialog.setTitle("Load Competition Data");
+        dialog.setTitle("Load Alias Data");
 
         dialog.show();
         Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
@@ -76,12 +76,12 @@ public class LoadEventDialog extends DialogFragment
         return dialog;
     }
 
-    public static LoadEventDialog newInstance()
+    public static LoadAliasesDialog newInstance()
     {
         Log.i(TAG, "newInstance() called");
         Bundle args = new Bundle();
 
-        LoadEventDialog dialog = new LoadEventDialog();
+        LoadAliasesDialog dialog = new LoadAliasesDialog();
         dialog.setArguments(args);
 
         return dialog;
@@ -95,14 +95,15 @@ public class LoadEventDialog extends DialogFragment
         // Get the eventCode's list of matches (which has the list of 6 team numbers for each match)
         // from thebluealliance.com site and save it as a JSON file named <eventCode>_matches.json.
         // The file is saved to the device.
-        Log.d(TAG, "Load data clicked");
+        Log.i(TAG, "Load data clicked");
         String eventCode = m_eventCodeField.getText().toString();
-        Log.d(TAG, "LoadEventDialog: eventCode = '" + eventCode + "'");
+        Log.i(TAG, "LoadAliasesDialog: eventCode = '" + eventCode + "'");
         if (!eventCode.isEmpty() && eventCode.length() > 4)
         {
 
             // Save the eventCode and competition name in CurrentCompetition object.
             CurrentCompetition.get(getContext()).setCompName(eventCode.substring(4));
+            Log.i(TAG, "Verified event code length");
             CurrentCompetition.get(getContext()).setEventCode(eventCode.trim());
 
             m_appContext = getContext();
@@ -110,14 +111,14 @@ public class LoadEventDialog extends DialogFragment
 
             if (getActivity() != null)
             {
-                m_compSerializer = new CompetitionDataSerializer(getActivity());
+                m_aliaseSerializer = new AliasesSerializer(getActivity());
 
                 // Instantiate the RequestQueue.
                 RequestQueue queue = Volley.newRequestQueue(getActivity());
 
                 // Looking for the event matches data at this URL:
-                String urlStr = "https://www.thebluealliance.com/api/v3/event/" + m_eventCodeField.getText().toString().trim() + "/matches";
-                Log.d(TAG, "LoadEventData URL = " + urlStr);
+                String urlStr = "https://www.frc2135.org/scouting/" + m_eventCodeField.getText().toString().trim() + "_aliases";
+                Log.i(TAG, "LoadAliasesDialog URL = " + urlStr);
 
                 // Load the data found at the URL into a JsonArrayRequest object.
                 JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlStr, null, new Response.Listener<JSONArray>()
@@ -126,36 +127,37 @@ public class LoadEventDialog extends DialogFragment
                     @Override
                     public void onResponse(JSONArray response)
                     {
-                        // Going to save the event matches JSONArray data to the device.
+                        // Going to save the aliases JSONArray data to the device.
+                        Log.i(TAG, "going to save the aliases JSONArray data to the device");
                         try
                         {
                             // Look thru existing files on device.
                             // File will be saved to this path on the device.
                             String dataFileDir = m_appContext.getFilesDir().getPath();
-                            Log.d(TAG, "Data files path = " + dataFileDir);
+                            Log.i(TAG, "Data files path = " + dataFileDir);
                             File file = new File(dataFileDir);
                             File[] fileList = file.listFiles();
                             if (fileList != null)
                             {
-                                String eventFileName = m_eventCodeField.getText().toString().trim() + "matches.json";
+                                String eventFileName = m_eventCodeField.getText().toString().trim() + "_aliases.json";
                                 // Remove event matches data file if it exists already.
                                 for (File f1 : fileList)
                                 {
                                     if (f1.getName().equals(eventFileName))
                                     {
-                                        Log.d(TAG, "DELETING existing competition file on device: " + f1.getName());
+                                        Log.i(TAG, "DELETING existing competition file on device: " + f1.getName());
                                         boolean deleted = f1.delete();
                                         if (!deleted)
-                                            Log.d(TAG, "DELETING existing competition file: failed");
+                                            Log.i(TAG, "DELETING existing competition file: failed");
                                         break;
                                     }
                                 }
 
                                 // Save comp data to matches JSON file 
-                                m_compSerializer.saveAliasesData(response);
-                                Log.d(TAG, "SUCCESSFULLY saved matches.json file: " + dataFileDir + "/" + eventFileName);
+                                m_aliaseSerializer.saveAliasesData(response);
+                                Log.i(TAG, "SUCCESSFULLY saved aliases json file: " + dataFileDir + "/" + eventFileName);
                                 // Set up the CompetitionInfo with this event data.
-                                CompetitionInfo.get(m_appContext, m_eventCode, true);
+                                //CompetitionInfo.get(m_appContext, m_eventCode, true);
                             }
                         } catch (JSONException | IOException e)
                         {
@@ -168,7 +170,7 @@ public class LoadEventDialog extends DialogFragment
                     public void onErrorResponse(VolleyError error)
                     {
                         // Failed to load the data from the URL.
-                        Log.d(TAG, "LoadEventData::sendResult() failed!");
+                        Log.i(TAG, "LoadAliasesDialog::sendResult() failed!");
                         String toastMsg = " Failed to download competition match data for event: '" + m_eventCode + "'. \n Check wifi connections or eventCode string.";
                         Toast toast2 = Toast.makeText(m_appContext, toastMsg, Toast.LENGTH_LONG);
                         View view2 = toast2.getView();
@@ -178,7 +180,7 @@ public class LoadEventDialog extends DialogFragment
                     }
                 })
                 {
-                    @Override
+                    /*@Override
                     public Map<String, String> getHeaders()
                     {
                         // These params are used to access the URL data (I think).
@@ -186,19 +188,19 @@ public class LoadEventDialog extends DialogFragment
                         //noinspection SpellCheckingInspection
                         params.put("X-TBA-Auth-Key", "E7akoVihRO2ZbNHtW2nRrjuNTcZaOxWtfeYWwh4XILMsKsqLnH2ZQrKAnbevlWGn");
                         return params;
-                    }
+                    } */
                 };
 
                 queue.add(jsonArrayRequest);
 
                 // Write out the current_competition.json file.
-                m_compSerializer.saveCurrentCompetition(CurrentCompetition.get(getContext()).toJSON());
+               // m_aliasesSerializer.saveCurrentCompetition(CurrentCompetition.get(getContext()).toJSON());
 
                 startActivity(i);
             }
         }
         else
-            Log.d(TAG, "LoadEventDialog: no event code entered!");
+            Log.i(TAG, "LoadAliasesDialog: no event code entered!");
     }
 }
 
