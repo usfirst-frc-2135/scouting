@@ -22,7 +22,7 @@ import java.util.Objects;
 
 public class AliasesInfo
 {
-    private static final String TAG = "CompetitionInfo";
+    private static final String TAG = "AliasesInfo";
 
     // Data members
     private String m_eventCode;
@@ -46,7 +46,7 @@ public class AliasesInfo
             if (bForceReload || !oldEventCode.equals(eventCode))
             {
                 sAliasesInfo.setEventCode(eventCode);
-                Log.d(TAG, "Resetting existing " + oldEventCode + " CompetitionInfo for new eventCode " + eventCode);
+                Log.d(TAG, "Resetting existing " + oldEventCode + " sAliasesInfo for new eventCode " + eventCode);
                 sAliasesInfo.readAliasesJSON(context, true);
             }
         }

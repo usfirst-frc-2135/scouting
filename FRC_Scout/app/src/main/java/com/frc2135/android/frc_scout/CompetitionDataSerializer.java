@@ -35,11 +35,11 @@ public class CompetitionDataSerializer
     }
 
     // Takes the JSONArray data from thebluealliance.com event matches and writes it out to <eventCode>_matches.json file.
-    public void saveAliasesData(JSONArray compData) throws JSONException, IOException
+    public void saveEventData(JSONArray compData) throws JSONException, IOException
     {
 
         // Writes out the given compData JSONArray to '<eventCode>matches.json' file.
-        Log.d(TAG, "saveAliasesData() starting");
+        Log.d(TAG, "saveEventData() starting");
         Writer compWriter = null;
         try
         {

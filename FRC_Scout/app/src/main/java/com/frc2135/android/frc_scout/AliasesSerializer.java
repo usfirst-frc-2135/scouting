@@ -34,31 +34,31 @@ public class AliasesSerializer
         Log.i(TAG, "Data files dir = " + m_dataPath);
     }
 
-    // Takes the JSONArray data from Aliases file on scouting website and writes it out to <eventCode>_aliases.json file on kindle.
-    public void saveAliasesData(JSONArray compData) throws JSONException, IOException
+    // Takes the JSONArray data from Aliases file on scouting website and writes it out 
+    // to <eventCode>_aliases.json file on kindle device.
+    public void saveAliasesData(String aliasFileBaseName,JSONArray aliasData) throws JSONException, IOException
     {
-
-        // Writes out the given compData JSONArray to '<eventCode>matches.json' file.
         Log.d(TAG, "saveAliasesData() starting");
-        Writer compWriter = null;
+        Writer aliasWriter = null;
         try
         {
-            File file1 = new File(m_dataPath + "/" + CurrentCompetition.get(m_context).getEventCode() + "_aliases.json");
+            File file1 = new File(m_dataPath + "/" + aliasFileBaseName);
+            Log.i(TAG, "Alias file path on device: = " + m_dataPath+"/" + aliasFileBaseName);
 
             OutputStream out = Files.newOutputStream(file1.toPath());
-            compWriter = new OutputStreamWriter(out);
-            compWriter.write(compData.toString());
+            aliasWriter = new OutputStreamWriter(out);
+            aliasWriter.write(aliasData.toString());
             Log.d(TAG, "Aliases Device Data File created: " + file1);
         } finally
         {
-            if (compWriter != null)
+            if (aliasWriter != null)
             {
-                compWriter.close();
+                aliasWriter.close();
             }
         }
     }
-
-    /*public void saveCurrentCompetition(JSONObject compJSON) throws IOException
+/*REMOVE->
+    public void saveCurrentCompetition(JSONObject compJSON) throws IOException
     {
         // Write out current_competition.json file.
         Log.d(TAG, "saveCurrentCompetition() starting");
@@ -86,7 +86,7 @@ public class AliasesSerializer
     public CurrentCompetition loadCurrentComp() throws IOException, JSONException
     {
         // Reads in existing current_competition.json file on the device.
-        Log.d(TAG, "loadCurrentComp() starting");
+        Log.d(TAG, "AliasesSerializer::loadCurrentComp() starting");
         BufferedReader reader = null;
         CurrentCompetition currComp = null;
         File dirPath = new File(m_dataPath);
@@ -131,6 +131,5 @@ public class AliasesSerializer
         }
         return currComp;
     }
-
-     */
+<-REMOVE */
 }
