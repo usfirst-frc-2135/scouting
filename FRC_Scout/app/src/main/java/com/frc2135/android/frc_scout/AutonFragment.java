@@ -103,7 +103,7 @@ public class AutonFragment extends Fragment
             {
                 Log.d(TAG, "New match ID = " + m_matchData.getMatchID());
                 ActionBar m_actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-                String teamNumber = m_matchData.stripTeamNamePrefix(m_matchData.getTeamNumber());
+                String teamNumber = MatchData.stripTeamNamePrefix(m_matchData.getTeamNumber());
                 if (m_actionBar != null)
                 {
                     m_actionBar.setTitle("Autonomous          Scouting Team " + teamNumber + "         Match " + m_matchData.getMatchNumber());

@@ -125,7 +125,7 @@ public class EndgameFragment extends Fragment
             m_matchData = activity.getCurrentMatch();
             if (m_matchData != null)
             {
-                String teamNumber = m_matchData.stripTeamNamePrefix(m_matchData.getTeamNumber());
+                String teamNumber = MatchData.stripTeamNamePrefix(m_matchData.getTeamNumber());
                 ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
                 if (actionBar != null)
                 {

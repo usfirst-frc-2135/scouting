@@ -76,6 +76,61 @@ public class AliasesInfo
         return m_eventCode;
     }
 
+    public String getAliasForTeamNum(String teamNumStr) throws JSONException
+    {
+        String rtnVal = "";
+        if (m_jsonData != null)
+        {
+            teamNumStr = MatchData.stripTeamNamePrefix(teamNumStr);
+            for (int ctr = 0; ctr < m_jsonData.length(); ctr++) {
+                JSONObject data1 =(JSONObject) m_jsonData.get(ctr);
+
+                JSONArray aliasList = (JSONArray) data1.get("aliases");
+                for (int i = 0; i < aliasList.length(); i++)
+                {
+                    JSONObject tempA = (JSONObject) aliasList.get(i);
+                    String num = tempA.getString("teamnum");
+                    Log.d(TAG, "For Alias[" + i + "], teamnum = " + num);
+                    if (num.equals(teamNumStr))
+                    {
+                        rtnVal = tempA.getString("alias");
+                        Log.d(TAG, "Found alias for teamnum " + num + ": " + rtnVal);
+                        break;
+                    }
+                }
+            }
+        }
+        return rtnVal;
+    }
+
+    public String getTeamNumForAlias(String myAlias) throws JSONException
+    {
+        String rtnVal = "";
+        if (m_jsonData != null)
+        {
+            for (int ctr = 0; ctr < m_jsonData.length(); ctr++)
+            {
+                JSONObject data1 = (JSONObject) m_jsonData.get(ctr);
+
+                JSONArray aliasList = (JSONArray) data1.get("aliases");
+                for (int i = 0; i < aliasList.length(); i++)
+                {
+                    JSONObject tempA = (JSONObject) aliasList.get(i);
+                    String tval = tempA.getString("alias");
+                    Log.d(TAG, "For Alias[" + i + "], alias = " + tval);
+                    if (tval.equals(myAlias))
+                    {
+                        rtnVal = tempA.getString("teamnum");
+                        Log.d(TAG, "Found teamnum for alias " + tval + ": " + rtnVal);
+                        break;
+                    }
+                }
+            }
+        }
+        return rtnVal;
+    }
+
+
     public void setEventCode(String eventCode)
     {
         m_eventCode = eventCode;
@@ -126,8 +181,8 @@ public class AliasesInfo
                     String errMsg = "ERROR reading aliases file: \n" + err;
                     Log.e(TAG, errMsg);
                     Toast toastM = Toast.makeText(context, errMsg, Toast.LENGTH_LONG);
-                    View view2 = toastM.getView();
-                    Objects.requireNonNull(view2).setBackgroundColor(Color.RED);
+                    //View view2 = toastM.getView();
+                    //Objects.requireNonNull(view2).setBackgroundColor(Color.RED);
                     toastM.setGravity(Gravity.CENTER, 0, 0);
                     toastM.show();
                 }
@@ -140,7 +195,7 @@ public class AliasesInfo
                 Log.e(TAG, "ERROR (ioException) reading aliases file\n");
                 ioException.printStackTrace();
             }
-        }
+        } else Log.d(TAG, "File doesn't exist: " + filename);
     }
 
     public boolean isAliasesDataLoaded()

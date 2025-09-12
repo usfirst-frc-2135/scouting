@@ -168,8 +168,8 @@ public class LoadAliasesDialog extends DialogFragment
                         Log.i(TAG,"---> error = "+error);
                         String toastMsg = " Failed to download competition match data for event: '" + m_eventCode + "'. \n Check wifi connections or eventCode string.";
                         Toast toast2 = Toast.makeText(m_appContext, toastMsg, Toast.LENGTH_LONG);
-                        View view2 = toast2.getView();
-                        view2.setBackgroundColor(Color.RED);
+                        //View view2 = toast2.getView();
+                        //view2.setBackgroundColor(Color.RED);
                         toast2.setGravity(Gravity.CENTER, 0, 0);
                         toast2.show();
                     }
@@ -186,6 +186,7 @@ public class LoadAliasesDialog extends DialogFragment
                     } */
                 };
 
+                //jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 queue.add(jsonArrayRequest);
 
                 startActivity(i);

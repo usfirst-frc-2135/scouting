@@ -34,6 +34,7 @@ public class PreMatchActivity extends AppCompatActivity
     private TextView             m_missingFieldErrMsg;
     private MatchData            m_matchData;
     private CompetitionInfo      m_compInfo;
+    private AliasesInfo          m_aliasesInfo;
     private static Scouter       m_Scouter;
     private String               m_inEdit; 
     //private CheckBox m_scoringTableSideChbx;// REMOVE LATER
@@ -50,14 +51,27 @@ public class PreMatchActivity extends AppCompatActivity
                 int teamIndex = Integer.parseInt(m_teamIndexStr);
                 String teamNumStr = teams[teamIndex];
                 Log.d(TAG, "Preloading team number using index " + m_teamIndexStr + ": " + teamNumStr);
-                m_teamNumberField.setText(teamNumStr);
-            } catch (JSONException jsonException)
+                // If aliases are used, get the alias for this teamNum.
+                if (m_aliasesInfo.isAliasesDataLoaded())
+                {
+                    String alias = m_aliasesInfo.getAliasForTeamNum(teamNumStr);
+                    if (!alias.equals(""))
+                    {
+                        teamNumStr = alias;
+                    }
+
+                    m_teamNumberField.setText(teamNumStr);
+                }
+            }
+            catch(JSONException jsonException)
             {
                 Log.e(TAG, "For preload: couldn't get teams from m_compInfo");
                 jsonException.printStackTrace();
             }
         }
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -70,6 +84,7 @@ public class PreMatchActivity extends AppCompatActivity
         m_inEdit = getIntent().getStringExtra("in_edit");  
         m_matchData = MatchHistory.get(getApplicationContext()).getMatch(matchId);
         m_compInfo = CompetitionInfo.get(getApplicationContext(), m_matchData.getEventCode().trim(), false);
+        m_aliasesInfo = AliasesInfo.get(getApplicationContext(), m_matchData.getEventCode().trim(), false);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)
@@ -217,7 +232,8 @@ public class PreMatchActivity extends AppCompatActivity
                 {
                     Log.d(TAG, "m_teamNumberField clicked");
                     String matchNumStr = m_matchNumberField.getText().toString().trim().toLowerCase();
-                    if (!matchNumStr.isEmpty() && m_compInfo != null && m_compInfo.isEventDataLoaded())
+                    String matchAliasStr = m_matchNumberField.getText().toString().trim().toLowerCase();
+                    if ((!matchNumStr.isEmpty() && m_compInfo != null && m_compInfo.isEventDataLoaded()) && (!matchAliasStr.isEmpty() && m_aliasesInfo != null && m_aliasesInfo.isAliasesDataLoaded()));
                     {
                         boolean bTeamsLoadedSuccessfully = false;
                         try
@@ -226,6 +242,7 @@ public class PreMatchActivity extends AppCompatActivity
                             if (!teams[0].equals(""))
                                 bTeamsLoadedSuccessfully = true;
                             ArrayAdapter<String> adapter3 = new ArrayAdapter<>(PreMatchActivity.this, android.R.layout.select_dialog_item, teams);
+
                             m_teamNumberField.setAdapter(adapter3);
                         } catch (JSONException jsonException)
                         {

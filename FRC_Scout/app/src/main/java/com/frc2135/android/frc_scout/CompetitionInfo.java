@@ -126,8 +126,8 @@ public class CompetitionInfo
                     String errMsg = "ERROR reading event matches file: \n" + err;
                     Log.e(TAG, errMsg);
                     Toast toastM = Toast.makeText(context, errMsg, Toast.LENGTH_LONG);
-                    View view2 = toastM.getView();
-                    Objects.requireNonNull(view2).setBackgroundColor(Color.RED);
+                    //View view2 = toastM.getView();
+                    //Objects.requireNonNull(view2).setBackgroundColor(Color.RED);
                     toastM.setGravity(Gravity.CENTER, 0, 0);
                     toastM.show();
                 }

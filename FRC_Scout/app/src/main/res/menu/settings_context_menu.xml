@@ -14,10 +14,10 @@
         android:id="@+id/delete_tba_matches_file"
         android:title="Delete TBA Event Files" />
     <item
-        android:id="@+id/about_item"
-        android:title="About" />
-    <item
         android:id="@+id/load_aliases"
         android:title="Load Aliases" />
+    <item
+        android:id="@+id/about_item"
+        android:title="About" />
 
 </menu>
