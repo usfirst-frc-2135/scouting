@@ -43,6 +43,7 @@ public class PreMatchActivity extends AppCompatActivity
     {
         // If there is a match number and a team index, load that team number from event teams list.
         String matchNumStr = m_matchNumberField.getText().toString().trim();
+        Log.d(TAG, "---> Looking for team number for match " + matchNumStr);
         if (!matchNumStr.isEmpty() && !m_teamIndexStr.isEmpty() && m_Scouter.isValidTeamIndexNum(m_teamIndexStr) && m_compInfo != null && m_compInfo.isEventDataLoaded())
         {
             try
@@ -50,27 +51,29 @@ public class PreMatchActivity extends AppCompatActivity
                 String[] teams = m_compInfo.getTeams(matchNumStr);
                 int teamIndex = Integer.parseInt(m_teamIndexStr);
                 String teamNumStr = teams[teamIndex];
-                Log.d(TAG, "Preloading team number using index " + m_teamIndexStr + ": " + teamNumStr);
+
+                // Strip off "frc" prefix from teamNumStr if needed.
+                teamNumStr = MatchData.stripTeamNumPrefix(teamNumStr);
+                Log.d(TAG, "Auto-loading team number using index " + m_teamIndexStr + ": " + teamNumStr);
                 // If aliases are used, get the alias for this teamNum.
                 if (m_aliasesInfo.isAliasesDataLoaded())
                 {
                     String alias = m_aliasesInfo.getAliasForTeamNum(teamNumStr);
                     if (!alias.equals(""))
                     {
+                        Log.d(TAG, "For team "+teamNumStr + ", found an alias: " + alias);
                         teamNumStr = alias;
                     }
-
-                    m_teamNumberField.setText(teamNumStr);
                 }
+                m_teamNumberField.setText(teamNumStr);
             }
             catch(JSONException jsonException)
             {
-                Log.e(TAG, "For preload: couldn't get teams from m_compInfo");
+                Log.e(TAG, "For auto-load: couldn't get teams from m_compInfo");
                 jsonException.printStackTrace();
             }
         }
     }
-
 
 
     @Override
@@ -328,12 +331,12 @@ public class PreMatchActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void onBackPressed()
-    {
-        Log.d(TAG, "onBack Pressed");
-        super.onBackPressed();
-    }
+  //REMOVE  @Override
+  //REMOVE  public void onBackPressed()
+  //REMOVE  {
+    //REMOVELog.d(TAG, "onBack Pressed");
+ //REMOVE       super.onBackPressed();
+ //REMOVE   }
 }
 
 

@@ -22,7 +22,7 @@ import androidx.fragment.app.Fragment;
 public class AutonFragment extends Fragment
 {
     private static final String TAG = "AutonFragment";
-    private static final int MAX_NUM_CORAL = 2;
+    private static final int MAX_NUM_CORAL = 3;
     private static final int MAX_NUM_ALGAE = 2;
     private CheckBox m_leaveCheckbox;
 
@@ -103,7 +103,7 @@ public class AutonFragment extends Fragment
             {
                 Log.d(TAG, "New match ID = " + m_matchData.getMatchID());
                 ActionBar m_actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-                String teamNumber = MatchData.stripTeamNamePrefix(m_matchData.getTeamNumber());
+                String teamNumber = MatchData.stripTeamNumPrefix(m_matchData.getTeamNumber());
                 if (m_actionBar != null)
                 {
                     m_actionBar.setTitle("Autonomous          Scouting Team " + teamNumber + "         Match " + m_matchData.getMatchNumber());

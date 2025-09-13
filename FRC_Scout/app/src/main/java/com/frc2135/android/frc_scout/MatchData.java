@@ -135,7 +135,7 @@ public class MatchData
 
 
     // Utility to strip off "frc" prefix to team number.
-    static public String stripTeamNamePrefix(String teamName)
+    static public String stripTeamNumPrefix(String teamName)
     {
         StringBuilder newTeamName = new StringBuilder();
         for (int i = 0; i < teamName.length(); i++)
@@ -719,7 +719,7 @@ public class MatchData
         String tsvStr = "";
 
         // For teamNumber, strip off 'frc' prefix.
-        tsvStr += stripTeamNamePrefix(m_teamNumber) + "\t";
+        tsvStr += stripTeamNumPrefix(m_teamNumber) + "\t";
 
         tsvStr += m_startingPos + "\t";
         if (m_autonLeave)  // bool value: use 1/0 instead of true/false

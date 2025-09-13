@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.ContextMenu;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -368,7 +367,7 @@ public class MatchListFragment extends ListFragment
                     // Issue toast msg
                     Log.d(TAG, toastMsg.toString());
                     Toast toast1 = Toast.makeText(context, toastMsg.toString(), Toast.LENGTH_LONG);
-                    toast1.setGravity(Gravity.CENTER, 0, 0);
+//REMOVE                    toast1.setGravity(Gravity.CENTER, 0, 0);
                     toast1.show();
                 }
                 else if (itemID == R.id.load_data_over_network)

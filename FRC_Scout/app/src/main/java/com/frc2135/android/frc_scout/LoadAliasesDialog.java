@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -67,7 +66,7 @@ public class LoadAliasesDialog extends DialogFragment
             }
         }).create();
 
-        dialog.setTitle("Load Alias Data");
+        dialog.setTitle("Enter event code for aliases data");
 
         dialog.show();
         Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
@@ -111,8 +110,8 @@ public class LoadAliasesDialog extends DialogFragment
                 // Instantiate the RequestQueue.
                 RequestQueue queue = Volley.newRequestQueue(getActivity());
 
-                // Looking for the event matches data at this URL:
-                String urlStr = "https://www.frc2135.org/" + m_eventCodeField.getText().toString().trim() + "_aliases.json";
+                // Looking for the event aliases data at this URL:
+                String urlStr = "https://www.frc2135.org/json/" + m_eventCodeField.getText().toString().trim() + "_teamAliases.json";
                 Log.i(TAG, "LoadAliasesDialog URL = " + urlStr);
 
                 // Load the data found at the URL into a JsonArrayRequest object.
@@ -149,7 +148,11 @@ public class LoadAliasesDialog extends DialogFragment
 
                                 // Save comp data to matches JSON file 
                                 m_aliasesSerializer.saveAliasesData(aliasFileBaseName,response);
-                                Log.i(TAG, "SUCCESSFULLY saved aliases json file: " + dataFileDir + "/" + aliasFileBaseName);
+                                Log.i(TAG, "SUCCESSFULLY downloaded aliases json file: " + dataFileDir + "/" + aliasFileBaseName);
+                                String tMsg = "Successfully downloaded aliases file for event: " + m_eventCode;
+                                Toast toast1 = Toast.makeText(m_appContext, tMsg, Toast.LENGTH_LONG);
+//REMOVE                                toast1.setGravity(Gravity.CENTER, 0, 0);
+                                toast1.show();
                             }
                         } 
                         catch (JSONException | IOException e)
@@ -166,11 +169,11 @@ public class LoadAliasesDialog extends DialogFragment
                         // Failed to load the data from the URL.
                         Log.i(TAG, "LoadAliasesDialog::sendResult() failed!");
                         Log.i(TAG,"---> error = "+error);
-                        String toastMsg = " Failed to download competition match data for event: '" + m_eventCode + "'. \n Check wifi connections or eventCode string.";
+                        String toastMsg = "FAILED to download aliases file for event: '" + m_eventCode + "'. \n Check wifi connections or eventCode string.";
                         Toast toast2 = Toast.makeText(m_appContext, toastMsg, Toast.LENGTH_LONG);
-                        //View view2 = toast2.getView();
-                        //view2.setBackgroundColor(Color.RED);
-                        toast2.setGravity(Gravity.CENTER, 0, 0);
+//REMOVE                        View view2 = toast2.getView();
+//REMOVE                        view2.setBackgroundColor(Color.RED);
+//REMOVE                        toast2.setGravity(Gravity.CENTER, 0, 0);
                         toast2.show();
                     }
                 })

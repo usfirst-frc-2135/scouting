@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,7 +50,7 @@ public class LoadEventDialog extends DialogFragment
 
         View v = requireActivity().getLayoutInflater().inflate(R.layout.load_event_data_dialog, null);
         m_eventCodeField = v.findViewById(R.id.event_code_field);
-        m_eventCodeField.setHint("Enter event code");
+        m_eventCodeField.setHint("Enter event code for matches list");
 
         AlertDialog dialog = new AlertDialog.Builder(getActivity()).setView(v).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
         {
@@ -67,7 +66,7 @@ public class LoadEventDialog extends DialogFragment
             }
         }).create();
 
-        dialog.setTitle("Load Competition Data");
+        dialog.setTitle("Enter event code for matches list");
 
         dialog.show();
         Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
@@ -153,7 +152,11 @@ public class LoadEventDialog extends DialogFragment
 
                                 // Save comp data to matches JSON file 
                                 m_compSerializer.saveEventData(response);
-                                Log.d(TAG, "SUCCESSFULLY saved matches.json file: " + dataFileDir + "/" + eventFileName);
+                                String tMsg = " Successfully downloaded matches list for event: " + m_eventCode + " to device";
+                                Toast toast1 = Toast.makeText(m_appContext, tMsg, Toast.LENGTH_LONG);
+//REMOVE                                toast1.setGravity(Gravity.CENTER, 0, 0);
+                                toast1.show();
+                                Log.d(TAG, "SUCCESSFULLY downloaded matches.json file: " + dataFileDir + "/" + eventFileName);
                                 // Set up the CompetitionInfo with this event data.
                                 CompetitionInfo.get(m_appContext, m_eventCode, true);
                             }
@@ -169,11 +172,11 @@ public class LoadEventDialog extends DialogFragment
                     {
                         // Failed to load the data from the URL.
                         Log.d(TAG, "LoadEventData::sendResult() failed!");
-                        String toastMsg = " Failed to download competition match data for event: '" + m_eventCode + "'. \n Check wifi connections or eventCode string.";
+                        String toastMsg = " FAILED to download competition match data for event: '" + m_eventCode + "'. \n Check wifi connections or eventCode string.";
                         Toast toast2 = Toast.makeText(m_appContext, toastMsg, Toast.LENGTH_LONG);
-                        //View view2 = toast2.getView();
-                        //view2.setBackgroundColor(Color.RED);
-                        toast2.setGravity(Gravity.CENTER, 0, 0);
+//REMOVE                        View view2 = toast2.getView();
+//REMOVE                        view2.setBackgroundColor(Color.RED);
+//REMOVE                        toast2.setGravity(Gravity.CENTER, 0, 0);
                         toast2.show();
                     }
                 })

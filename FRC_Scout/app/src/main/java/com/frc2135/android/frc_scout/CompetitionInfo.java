@@ -3,7 +3,6 @@ package com.frc2135.android.frc_scout;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -112,10 +111,10 @@ public class CompetitionInfo
                 m_bEventDataLoaded = true;
 
                 // Show success Toast msg 
-                String msg = "Successfully read event " + m_eventCode + " matches.json file ";
+                String msg = "Successfully read " + m_eventCode + " matches file from device";
                 Log.d(TAG, msg);
                 Toast toastS = Toast.makeText(context, msg, Toast.LENGTH_LONG);
-                toastS.setGravity(Gravity.CENTER, 0, 0);
+//REMOVE             toastS.setGravity(Gravity.CENTER, 0, 0);
                 toastS.show();
                 reader.close();
             } catch (FileNotFoundException err)
@@ -123,12 +122,12 @@ public class CompetitionInfo
                 if (!bSilent)
                 {
                     // Show error Toast msg 
-                    String errMsg = "ERROR reading event matches file: \n" + err;
+                    String errMsg = "ERROR reading event "+m_eventCode + " matches file: \n" + err;
                     Log.e(TAG, errMsg);
                     Toast toastM = Toast.makeText(context, errMsg, Toast.LENGTH_LONG);
-                    //View view2 = toastM.getView();
-                    //Objects.requireNonNull(view2).setBackgroundColor(Color.RED);
-                    toastM.setGravity(Gravity.CENTER, 0, 0);
+//REMOVE                    View view2 = toastM.getView();
+//REMOVE                    Objects.requireNonNull(view2).setBackgroundColor(Color.RED);
+//REMOVE                    toastM.setGravity(Gravity.CENTER, 0, 0);
                     toastM.show();
                 }
             } catch (JSONException jsonException)

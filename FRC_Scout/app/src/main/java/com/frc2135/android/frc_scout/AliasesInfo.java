@@ -3,7 +3,6 @@ package com.frc2135.android.frc_scout;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -76,54 +75,49 @@ public class AliasesInfo
         return m_eventCode;
     }
 
+    // Get the alias ("99" number) for the given teamnum (B/C/D num)
     public String getAliasForTeamNum(String teamNumStr) throws JSONException
     {
         String rtnVal = "";
         if (m_jsonData != null)
         {
-            teamNumStr = MatchData.stripTeamNamePrefix(teamNumStr);
-            for (int ctr = 0; ctr < m_jsonData.length(); ctr++) {
-                JSONObject data1 =(JSONObject) m_jsonData.get(ctr);
+            // Strip "frc" prefix from given teamNumStr if needed.
+            teamNumStr = MatchData.stripTeamNumPrefix(teamNumStr);
 
-                JSONArray aliasList = (JSONArray) data1.get("aliases");
-                for (int i = 0; i < aliasList.length(); i++)
+            // Go thru the array of aliases data and find the one for the given teamNumStr.
+            for (int ctr = 0; ctr < m_jsonData.length(); ctr++) 
+            {
+                JSONObject data1 =(JSONObject) m_jsonData.get(ctr);
+                String num = data1.getString("teamnum");
+//                Log.d(TAG, "For jsonData[" + ctr + "], teamnum = " + num);
+                if (num.equals(teamNumStr))
                 {
-                    JSONObject tempA = (JSONObject) aliasList.get(i);
-                    String num = tempA.getString("teamnum");
-                    Log.d(TAG, "For Alias[" + i + "], teamnum = " + num);
-                    if (num.equals(teamNumStr))
-                    {
-                        rtnVal = tempA.getString("alias");
-                        Log.d(TAG, "Found alias for teamnum " + num + ": " + rtnVal);
-                        break;
-                    }
+                    rtnVal = data1.getString("aliasnum");
+                    Log.d(TAG, "Found alias for teamnum " + num + ": " + rtnVal);
+                    break;
                 }
             }
         }
         return rtnVal;
     }
 
+    // Get the teamnum (B/C/D num) for the given alias ("99" number) 
     public String getTeamNumForAlias(String myAlias) throws JSONException
     {
         String rtnVal = "";
         if (m_jsonData != null)
         {
+            // Go thru the array of aliases data and find the one for the given aliasNum.
             for (int ctr = 0; ctr < m_jsonData.length(); ctr++)
             {
-                JSONObject data1 = (JSONObject) m_jsonData.get(ctr);
-
-                JSONArray aliasList = (JSONArray) data1.get("aliases");
-                for (int i = 0; i < aliasList.length(); i++)
+                JSONObject data1 =(JSONObject) m_jsonData.get(ctr);
+                String aliasnum = data1.getString("aliasnum");
+                Log.d(TAG, "For jsonData[" + ctr + "], aliasnum = " + aliasnum);
+                if (aliasnum.equals(myAlias))
                 {
-                    JSONObject tempA = (JSONObject) aliasList.get(i);
-                    String tval = tempA.getString("alias");
-                    Log.d(TAG, "For Alias[" + i + "], alias = " + tval);
-                    if (tval.equals(myAlias))
-                    {
-                        rtnVal = tempA.getString("teamnum");
-                        Log.d(TAG, "Found teamnum for alias " + tval + ": " + rtnVal);
-                        break;
-                    }
+                    rtnVal = data1.getString("teamnum");
+                    Log.d(TAG, "Found teamnum for alias " + aliasnum + ": " + rtnVal);
+                    break;
                 }
             }
         }
@@ -167,10 +161,10 @@ public class AliasesInfo
                 m_bAliasesDataLoaded = true;
 
                 // Show success Toast msg 
-                String msg = "Successfully read event " + m_eventCode + " _aliases.json file ";
+                String msg = "Successfully read aliases file from device: " + m_eventCode + " _aliases.json file ";
                 Log.d(TAG, msg);
                 Toast toastS = Toast.makeText(context, msg, Toast.LENGTH_LONG);
-                toastS.setGravity(Gravity.CENTER, 0, 0);
+//REMOVE                toastS.setGravity(Gravity.CENTER, 0, 0);
                 toastS.show();
                 reader.close();
             } catch (FileNotFoundException err)
@@ -178,12 +172,12 @@ public class AliasesInfo
                 if (!bSilent)
                 {
                     // Show error Toast msg 
-                    String errMsg = "ERROR reading aliases file: \n" + err;
+                    String errMsg = "ERROR reading aliases file from device: \n" + err;
                     Log.e(TAG, errMsg);
                     Toast toastM = Toast.makeText(context, errMsg, Toast.LENGTH_LONG);
-                    //View view2 = toastM.getView();
-                    //Objects.requireNonNull(view2).setBackgroundColor(Color.RED);
-                    toastM.setGravity(Gravity.CENTER, 0, 0);
+ //REMOVE                   View view2 = toastM.getView();
+ //REMOVE                   Objects.requireNonNull(view2).setBackgroundColor(Color.RED);
+ //REMOVE                   toastM.setGravity(Gravity.CENTER, 0, 0);
                     toastM.show();
                 }
             } catch (JSONException jsonException)

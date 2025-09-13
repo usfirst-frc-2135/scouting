@@ -123,12 +123,12 @@ public class ScoutingActivity extends AppCompatActivity
         return new com.frc2135.android.frc_scout.AutonFragment();
     }
 
-    @Override
-    public void onBackPressed()
-    {
-        Log.d(TAG, "onBack Pressed");
-        super.onBackPressed();
-    }
+//REMOVE    @Override
+//REMOVE    public void onBackPressed()
+//REMOVE    {
+//REMOVE        Log.d(TAG, "onBack Pressed");
+//REMOVE        super.onBackPressed();
+//REMOVE    }
 
     protected MatchData getCurrentMatch()
     {
