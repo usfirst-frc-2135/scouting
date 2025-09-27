@@ -242,8 +242,26 @@ public class PreMatchActivity extends AppCompatActivity
                         try
                         {
                             String[] teams = m_compInfo.getTeams(m_matchNumberField.getText().toString().trim());
-                            if (!teams[0].equals(""))
-                                bTeamsLoadedSuccessfully = true;
+                            if (!teams[0].equals("")) {
+                               bTeamsLoadedSuccessfully = true;
+                               // Strip off "frc" prefix from teamNumStr if needed.
+                               for(int i = 0; i < teams.length; i++) {
+                                  String tnum = teams[i];
+                                  tnum = MatchData.stripTeamNumPrefix(tnum);  // strip off prefix
+                                  teams[i] = tnum;
+
+                                  // If aliases are used, get the alias (99#) for BCD num.
+                                  if (m_aliasesInfo.isAliasesDataLoaded())
+                                  {
+                                     String alias = m_aliasesInfo.getAliasForTeamNum(tnum);
+                                     if (!alias.equals(""))
+                                     {
+                                        Log.d(TAG, "For team "+tnum + ", found an alias: " + alias);
+                                        teams[i] = alias;
+                                     }
+                                  }
+                               }
+                            }
                             ArrayAdapter<String> adapter3 = new ArrayAdapter<>(PreMatchActivity.this, android.R.layout.select_dialog_item, teams);
 
                             m_teamNumberField.setAdapter(adapter3);
