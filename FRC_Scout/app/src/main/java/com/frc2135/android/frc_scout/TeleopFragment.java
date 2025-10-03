@@ -9,13 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 
 /** @noinspection SpellCheckingInspection*/
@@ -25,13 +27,25 @@ public class TeleopFragment extends Fragment
     private static final int MAX_NUM_ALGAE = 7;     // algae max expected high total
     private static final int MAX_NUM_CORAL= 11;     // coral max expected high total 
 
+    private CheckBox m_pickUpCoralCkbx;
+    private CheckBox m_pickUpAlgaeCkbx;
+    private CheckBox m_knockAlgaeCkbx;
+    private CheckBox m_algaeFromReefCkbx;
+    private CheckBox m_holdBothCkbx;
+
     private TextView m_coralAcquiredTotal;
     private Button   m_coralAcquiredDecrButton;
     private Button   m_coralAcquiredIncrButton;
     private TextView m_algaeAcquiredTotal;
     private Button   m_algaeAcquiredDecrButton;
     private Button   m_algaeAcquiredIncrButton;
-    
+
+    private RadioGroup m_defenseButtonGroup;
+    private RadioButton m_defenseNone;
+    private RadioButton m_defenseLow;
+    private RadioButton m_defenseMedium;
+    private RadioButton m_defenseHigh;
+
     private TextView m_teleopL1Total;
     private TextView m_teleopL2Total;
     private TextView m_teleopL3Total;
@@ -296,6 +310,27 @@ public class TeleopFragment extends Fragment
             }
         });
 
+
+        m_defenseButtonGroup = v.findViewById(R.id.defense_buttons);
+        m_defenseNone = v.findViewById(R.id.defense_none);
+        m_defenseLow = v.findViewById(R.id.defense_low);
+        m_defenseMedium = v.findViewById(R.id.defense_medium);
+        m_defenseHigh = v.findViewById(R.id.defense_high);
+        m_defenseNone.setChecked(false);
+        m_defenseLow.setChecked(false);
+        m_defenseMedium.setChecked(false);
+        m_defenseHigh.setChecked(false);
+
+        int defValue = m_matchData.getPlayedDefense();
+        if (defValue == 0)
+            m_defenseNone.setChecked(true);
+        else if(defValue == 1)
+          m_defenseLow.setChecked(true);
+        else if(defValue == 2)
+            m_defenseMedium.setChecked(true);
+        else if(defValue == 3)
+            m_defenseHigh.setChecked(true);
+
         // Check acquired totals for MAX
         if (isGreaterThanMax(m_coralAcquiredTotal,true))
             m_coralAcquiredTotal.setTextColor(Color.RED);
@@ -314,6 +349,29 @@ public class TeleopFragment extends Fragment
 
         return v;
     }
+    
+    public int getCurrentDefenseLevel()
+    {
+        // Returns the integer climb level that is current checked in the radio buttons
+        int rtn = 0;
+        if (m_defenseButtonGroup.getCheckedRadioButtonId() == m_defenseNone.getId())
+        {
+            rtn = 0;
+        }
+        if (m_defenseButtonGroup.getCheckedRadioButtonId() == m_defenseLow.getId())
+        {
+            rtn = 1;
+        }
+        if (m_defenseButtonGroup.getCheckedRadioButtonId() == m_defenseMedium.getId())
+        {
+            rtn = 2;
+        }
+        if (m_defenseButtonGroup.getCheckedRadioButtonId() == m_defenseHigh .getId())
+        {
+            rtn = 3;
+        }
+        return rtn;
+    }
 
     public void updateTeleopData()
     {
@@ -327,6 +385,7 @@ public class TeleopFragment extends Fragment
         m_matchData.setTeleopCoralL2(Integer.parseInt(m_teleopL2Total.getText().toString()));
         m_matchData.setTeleopCoralL3(Integer.parseInt(m_teleopL3Total.getText().toString()));
         m_matchData.setTeleopCoralL4(Integer.parseInt(m_teleopL4Total.getText().toString()));
+        m_matchData.setPlayedDefense(getCurrentDefenseLevel());
 
     }
 }

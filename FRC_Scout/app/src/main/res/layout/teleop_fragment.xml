@@ -465,6 +465,72 @@
         </LinearLayout>
 <!-- end ALGAE/CORAL section -->
 
+<!-- start DEFENSE section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            android:orientation="horizontal"
+            android:background="@drawable/rounded_rect"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:backgroundTint="#b3E5f2">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="120dp"
+                android:layout_marginLeft="5dp"
+                android:textStyle="bold"
+                android:layout_height="34dp"
+                android:text="DEFENSE"
+                android:textColor="@color/specialTextPrimary"
+                android:textSize="22sp" />
+
+            <RadioGroup
+                android:id="@+id/defense_buttons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/defense_none"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="22sp"
+                    android:buttonTint="#8957A1"
+                    android:text="N/A" />
+
+                <RadioButton
+                    android:id="@+id/defense_low"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="22sp"
+                    android:buttonTint="#8957A1"
+                    android:text="Low"/>
+
+                <RadioButton
+                    android:id="@+id/defense_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="22sp"
+                    android:buttonTint="#8957A1"
+                    android:text="Medium"/>
+
+                <RadioButton
+                    android:id="@+id/defense_high"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="22sp"
+                    android:buttonTint="#8957A1"
+                    android:text="High"/>
+            </RadioGroup>
+        </LinearLayout>
+<!-- end DEFENSE section -->
+
     </LinearLayout>
 
 

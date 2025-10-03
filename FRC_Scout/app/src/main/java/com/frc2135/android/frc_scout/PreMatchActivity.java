@@ -89,9 +89,15 @@ public class PreMatchActivity extends AppCompatActivity
         m_compInfo = CompetitionInfo.get(getApplicationContext(), m_matchData.getEventCode().trim(), false);
         m_aliasesInfo = AliasesInfo.get(getApplicationContext(), m_matchData.getEventCode().trim(), false);
 
+        if (m_Scouter != null)
+            m_teamIndexStr = m_Scouter.getTeamIndexStr();
+        else
+            m_teamIndexStr = "None";
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)
-            actionBar.setTitle("Pre-Match");
+
+            actionBar.setTitle("Pre-Match                                                Team Index = "+m_teamIndexStr);
 
         setContentView(R.layout.prematch_activity);
 
@@ -99,10 +105,7 @@ public class PreMatchActivity extends AppCompatActivity
         m_missingFieldErrMsg.setVisibility(View.INVISIBLE);
         m_missingFieldErrMsg.setTextColor(Color.RED);
 
-        if (m_Scouter != null)
-            m_teamIndexStr = m_Scouter.getTeamIndexStr();
-        else
-            m_teamIndexStr = "None";
+
 
         m_competitionField = findViewById(R.id.comp_name);
         m_competitionField.setHint("Competition");
