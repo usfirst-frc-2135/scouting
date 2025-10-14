@@ -122,8 +122,11 @@ public class TeleopFragment extends Fragment
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         if (actionBar != null)
         {
-            String teamNumber = MatchData.stripTeamNumPrefix(m_matchData.getTeamNumber());
-            actionBar.setTitle("Teleoperated          Scouting Team " + teamNumber + "         Match " + m_matchData.getMatchNumber());
+            String teamNumber = m_matchData.getTeamNumber();
+            String teamAlias = m_matchData.getTeamAlias();
+            if(!teamAlias.equals(""))
+                actionBar.setTitle("Teleoperated          Scouting Team " + teamAlias + "         Match " + m_matchData.getMatchNumber());
+            else actionBar.setTitle("Teleoperated          Scouting Team " + teamNumber + "         Match " + m_matchData.getMatchNumber());
         }
     }
 

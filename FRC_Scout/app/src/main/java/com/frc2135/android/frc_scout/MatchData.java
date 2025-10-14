@@ -22,6 +22,7 @@ public class MatchData
     private static final String JSON_KEY_SCOUT_NAME = "scoutName";
     private static final String JSON_KEY_EVENT_CODE = "eventCode";
     private static final String JSON_KEY_TEAM_NUMBER = "teamNumber";
+    private static final String JSON_KEY_TEAM_ALIAS = "teamAlias";
     private static final String JSON_KEY_MATCH_NUMBER = "matchNumber";
 
     // Auton data
@@ -128,6 +129,7 @@ public class MatchData
     private boolean m_died;
     private String m_name;
     private String m_teamNumber;
+    private String m_teamAlias;
     private String m_matchNumber;
     private final String m_matchID;
     private String m_eventCode;
@@ -153,6 +155,7 @@ public class MatchData
 
         m_name = "";
         m_teamNumber = "";
+        m_teamAlias = "";
         m_matchNumber = "";
         // Auton data
         setAutonLeave(false);
@@ -326,6 +329,17 @@ public class MatchData
     public String getTeamNumber()
     {
         return m_teamNumber;
+    }
+
+    ////////////  m_teamAlias   /////////////////////
+    public void setTeamAlias(String alias)
+    {
+        m_teamAlias = alias;
+    }
+
+    public String getTeamAlias()
+    {
+        return m_teamAlias;
     }
 
     ////////////  m_matchNumber   /////////////////////
@@ -814,6 +828,10 @@ public class MatchData
             tsvStr += m_comment + "\t";
         else tsvStr += "-" + "\t";
 
+        if (!m_teamAlias.equals(""))
+            tsvStr += m_teamAlias + "\t";
+        else tsvStr += "-" + "\t";
+
 //HOLD        Log.d(TAG, "MatchData encodeToTSV() columns: " + headers);
         Log.d(TAG, "MatchData encodeToTSV(): " + tsvStr);
         return tsvStr;
@@ -835,6 +853,8 @@ public class MatchData
         json.put(JSON_KEY_TEAM_NUMBER, m_teamNumber);
         json.put("divider", ",");
         json.put(JSON_KEY_MATCH_NUMBER, m_matchNumber);
+        json.put("divider", ",");
+        json.put(JSON_KEY_TEAM_ALIAS, m_teamAlias);
         json.put("divider", ",");
         json.put(JSON_KEY_STARTING_POSITION, m_startingPos);
         json.put("divider", ",");

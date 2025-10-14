@@ -43,25 +43,28 @@ public class PreMatchActivity extends AppCompatActivity
     {
         // If there is a match number and a team index, load that team number from event teams list.
         String matchNumStr = m_matchNumberField.getText().toString().trim();
-        Log.d(TAG, "---> Looking for team number for match " + matchNumStr);
         if (!matchNumStr.isEmpty() && !m_teamIndexStr.isEmpty() && m_Scouter.isValidTeamIndexNum(m_teamIndexStr) && m_compInfo != null && m_compInfo.isEventDataLoaded())
         {
+            Log.d(TAG,"Looking for team number (index = "+m_teamIndexStr+") for match " + matchNumStr);
             try
             {
                 String[] teams = m_compInfo.getTeams(matchNumStr);
                 int teamIndex = Integer.parseInt(m_teamIndexStr);
-                String teamNumStr = teams[teamIndex];
+                String tbaTeamNum = teams[teamIndex];
 
                 // Strip off "frc" prefix from teamNumStr if needed.
-                teamNumStr = MatchData.stripTeamNumPrefix(teamNumStr);
+                String teamNumStr = MatchData.stripTeamNumPrefix(tbaTeamNum);
                 Log.d(TAG, "Auto-loading team number using index " + m_teamIndexStr + ": " + teamNumStr);
-                // If aliases are used, get the alias for this teamNum.
-                if (m_aliasesInfo.isAliasesDataLoaded())
+                // If aliases are used, get the alias for this team#.
+                if (m_aliasesInfo != null && m_aliasesInfo.isAliasesDataLoaded())
                 {
                     String alias = m_aliasesInfo.getAliasForTeamNum(teamNumStr);
                     if (!alias.equals(""))
                     {
+                        // Found an alias; that means teamNumStr is the BCD num.
+                        // But we want to display the alias in this case. 
                         Log.d(TAG, "For team "+teamNumStr + ", found an alias: " + alias);
+
                         teamNumStr = alias;
                     }
                 }
@@ -79,10 +82,10 @@ public class PreMatchActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-
         super.onCreate(savedInstanceState);
         m_Scouter = Scouter.get(getApplicationContext());
-
+        Log.i(TAG,"INFO! starting PreMatchActivity onCreate()");
+        Log.d(TAG,"!!!! starting PreMatchActivity onCreate()");
         String matchId = getIntent().getStringExtra("match_ID");
         m_inEdit = getIntent().getStringExtra("in_edit");  
         m_matchData = MatchHistory.get(getApplicationContext()).getMatch(matchId);
@@ -169,12 +172,12 @@ public class PreMatchActivity extends AppCompatActivity
                 }
             }
         });
-/*
+/* REMOVE->
         m_scoringTableSideChbx = findViewById(R.id.scoring_table_side_ckbx);
         if(m_Scouter != null)
             m_scoringTableSideChbx.setChecked(m_Scouter.getScoringTableSide());
         else m_scoringTableSideChbx.setChecked(false);
-*///REMOVE LATER
+<-REMOVE*/
         m_matchNumberField = findViewById(R.id.match_number_field);
         if (!m_matchData.getMatchNumber().isEmpty())
             m_matchNumberField.setText(m_matchData.getMatchNumber());
@@ -216,6 +219,7 @@ public class PreMatchActivity extends AppCompatActivity
                 m_missingFieldErrMsg.setVisibility(View.INVISIBLE);
                 if (parent != null && parent.getItemAtPosition(position) != null)
                 {
+                    Log.i(TAG,"!!!!! setting matchData teamNum = "+parent.getItemAtPosition(position).toString());
                     m_matchData.setTeamNumber(parent.getItemAtPosition(position).toString());
 
                 }
@@ -234,12 +238,16 @@ public class PreMatchActivity extends AppCompatActivity
             @Override
             public void onFocusChange(View v, boolean hasFocus)
             {
+                // Show drop down list of possible team numbers from TBA matchlist (if loaded).
                 if (hasFocus)
                 {
                     Log.d(TAG, "m_teamNumberField clicked");
                     String matchNumStr = m_matchNumberField.getText().toString().trim().toLowerCase();
-                    String matchAliasStr = m_matchNumberField.getText().toString().trim().toLowerCase();
-                    if ((!matchNumStr.isEmpty() && m_compInfo != null && m_compInfo.isEventDataLoaded()) && (!matchAliasStr.isEmpty() && m_aliasesInfo != null && m_aliasesInfo.isAliasesDataLoaded()));
+                    boolean bAliasUsed = false;
+                    if (m_aliasesInfo != null && m_aliasesInfo.isAliasesDataLoaded())
+                        bAliasUsed = true;
+
+                    if ((!matchNumStr.isEmpty() && m_compInfo != null && m_compInfo.isEventDataLoaded()))
                     {
                         boolean bTeamsLoadedSuccessfully = false;
                         try
@@ -247,6 +255,7 @@ public class PreMatchActivity extends AppCompatActivity
                             String[] teams = m_compInfo.getTeams(m_matchNumberField.getText().toString().trim());
                             if (!teams[0].equals("")) {
                                bTeamsLoadedSuccessfully = true;
+
                                // Strip off "frc" prefix from teamNumStr if needed.
                                for(int i = 0; i < teams.length; i++) {
                                   String tnum = teams[i];
@@ -254,7 +263,7 @@ public class PreMatchActivity extends AppCompatActivity
                                   teams[i] = tnum;
 
                                   // If aliases are used, get the alias (99#) for BCD num.
-                                  if (m_aliasesInfo.isAliasesDataLoaded())
+                                  if (bAliasUsed)
                                   {
                                      String alias = m_aliasesInfo.getAliasForTeamNum(tnum);
                                      if (!alias.equals(""))
@@ -329,7 +338,31 @@ public class PreMatchActivity extends AppCompatActivity
         m_matchData.setName(m_scoutNameField.getText().toString());
         m_matchData.setEventCode(m_competitionField.getText().toString());
         m_matchData.setMatchNumber(m_matchNumberField.getText().toString().trim().toLowerCase());
-        m_matchData.setTeamNumber(m_teamNumberField.getText().toString());
+        String teamNumEntry = m_teamNumberField.getText().toString().trim();
+        String teamNum = teamNumEntry;
+        String teamAlias = "";
+
+        // If aliases are used and if teamNumEntry starts with "99", then get its BCDnum.
+        if (m_aliasesInfo != null && m_aliasesInfo.isAliasesDataLoaded() && teamNumEntry.charAt(0) == '9' && teamNumEntry.charAt(1) == '9')
+        {
+            try
+            {
+                String bcdNum = m_aliasesInfo.getTeamNumForAlias(teamNumEntry);
+                if (!bcdNum.equals(""))
+                {
+                    teamNum = bcdNum;
+                    teamAlias = teamNumEntry;  // this is the 99#
+                }
+            }
+            catch(JSONException jsonException)
+            {
+                Log.e(TAG, "For updatePreMatchData(): jsonException when getting teamNum from alias");
+                jsonException.printStackTrace();
+            }
+        } 
+        m_matchData.setTeamNumber(teamNum);
+        m_matchData.setTeamAlias(teamAlias);
+        Log.i(TAG,"--> setting MatchData teamNum = "+teamNum+", alias = "+teamAlias);
     }
 
     @Override

@@ -125,11 +125,14 @@ public class EndgameFragment extends Fragment
             m_matchData = activity.getCurrentMatch();
             if (m_matchData != null)
             {
-                String teamNumber = MatchData.stripTeamNumPrefix(m_matchData.getTeamNumber());
+                String teamNumber = m_matchData.getTeamNumber();
+                String teamAlias = m_matchData.getTeamAlias();
                 ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
                 if (actionBar != null)
                 {
-                    actionBar.setTitle("Endgame               Scouting Team " + teamNumber + "          Match " + m_matchData.getMatchNumber());
+                    if(!teamAlias.equals(""))
+                        actionBar.setTitle("Endgame               Scouting Team " + teamAlias + "          Match " + m_matchData.getMatchNumber());
+                    else actionBar.setTitle("Endgame               Scouting Team " + teamNumber + "          Match " + m_matchData.getMatchNumber());
                 }
             }
         }

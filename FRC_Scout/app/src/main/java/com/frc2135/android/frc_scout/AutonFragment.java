@@ -103,10 +103,14 @@ public class AutonFragment extends Fragment
             {
                 Log.d(TAG, "New match ID = " + m_matchData.getMatchID());
                 ActionBar m_actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-                String teamNumber = MatchData.stripTeamNumPrefix(m_matchData.getTeamNumber());
+                String teamNumber = m_matchData.getTeamNumber();
+                String teamAlias = m_matchData.getTeamAlias();
                 if (m_actionBar != null)
                 {
-                    m_actionBar.setTitle("Autonomous          Scouting Team " + teamNumber + "         Match " + m_matchData.getMatchNumber());
+                    // Use teamAlias if there is one instead of teamNumber.
+                    if(!teamAlias.equals(""))
+                        m_actionBar.setTitle("Autonomous          Scouting Team " + teamAlias + "         Match " + m_matchData.getMatchNumber());
+                    else m_actionBar.setTitle("Autonomous          Scouting Team " + teamNumber + "         Match " + m_matchData.getMatchNumber());
                     Scouter myScouter = Scouter.get(getContext());
                     if (myScouter != null){
                         String color = myScouter.getTeamIndexColor();
