@@ -26,22 +26,22 @@
             android:paddingBottom="20dp">
 
             <TextView
-                android:id="@+id/leave_title"
+                android:id="@+id/preload_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="LEAVE"
+                android:text="Preload"
                 android:textColor="@color/specialTextPrimary"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
             <CheckBox
-                android:id="@+id/leave_checkbox"
+                android:id="@+id/preload_checkbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:buttonTint="#8957A1"
-                android:text="Leave Starting Line"
+                android:text="Preload 8 fuel"
                 android:textColor="@color/specialTextPrimary"
                 android:textSize="22sp" />
         </LinearLayout>

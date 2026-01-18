@@ -24,7 +24,7 @@ public class AutonFragment extends Fragment
     private static final String TAG = "AutonFragment";
     private static final int MAX_NUM_CORAL = 3;
     private static final int MAX_NUM_ALGAE = 2;
-    private CheckBox m_leaveCheckbox;
+    private CheckBox m_preloadCheckbox;
 
     private TextView m_autonL1Total;
     private TextView m_autonL2Total;
@@ -217,8 +217,8 @@ public class AutonFragment extends Fragment
             }
         });
 
-        m_leaveCheckbox = v.findViewById(R.id.leave_checkbox);
-        m_leaveCheckbox.setChecked(m_matchData.getAutonLeave());
+        m_preloadCheckbox = v.findViewById(R.id.preload_checkbox);
+        m_preloadCheckbox.setChecked(m_matchData.getAutonPreload());
 
         // Set up Algae Net/Proc incr/decr buttons and listeners.
         m_autonAlgaeNetTotal = v.findViewById(R.id.auton_algae_net_total);
@@ -293,7 +293,7 @@ public class AutonFragment extends Fragment
         m_matchData.setAutonAlgaeNet(Integer.parseInt(m_autonAlgaeNetTotal.getText().toString()));
         m_matchData.setAutonAlgaeProcessor(Integer.parseInt(m_autonAlgaeProcTotal.getText().toString()));
 
-        m_matchData.setAutonLeave(m_leaveCheckbox.isChecked());
+        m_matchData.setAutonPreload(m_preloadCheckbox.isChecked());
 
         // Determine the reefscape face for each checkbox.
     }

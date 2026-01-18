@@ -27,7 +27,7 @@ public class MatchData
 
     // Auton data
     private static final String JSON_KEY_STARTING_POSITION = "startingPosition";
-    private static final String JSON_KEY_LEAVE = "leave";
+    private static final String JSON_KEY_PRELOAD = "preload";
 
     private static final String JSON_KEY_REEFZONE_AB = "reefZoneAB";
     private static final String JSON_KEY_REEFZONE_CD = "reefZoneCD";
@@ -82,7 +82,7 @@ public class MatchData
     // Data members 
     // Auton data
     private int m_startingPos;
-    private boolean m_autonLeave;
+    private boolean m_autonPreload;
 
     private boolean m_reefzoneAB;
     private boolean m_reefzoneCD;
@@ -158,7 +158,7 @@ public class MatchData
         m_teamAlias = "";
         m_matchNumber = "";
         // Auton data
-        setAutonLeave(false);
+        setAutonPreload(false);
         setStartingPosition(0);
 
         setReefzone_AB(false);
@@ -228,7 +228,7 @@ public class MatchData
 
         // Auton data
         setStartingPosition(json.getInt(JSON_KEY_STARTING_POSITION));
-        setAutonLeave(json.getBoolean(JSON_KEY_LEAVE));
+        setAutonPreload(json.getBoolean(JSON_KEY_PRELOAD));
 
         setReefzone_AB(json.getBoolean(JSON_KEY_REEFZONE_AB));
         setReefzone_CD(json.getBoolean(JSON_KEY_REEFZONE_CD));
@@ -402,17 +402,17 @@ public class MatchData
         return m_autonAlgaeProcessor;
     }
 
-    ////////////  m_autonLeave   /////////////////////
+    ////////////  m_autonPreload   /////////////////////
 
-    public void setAutonLeave(boolean x)
+    public void setAutonPreload(boolean x)
     {
 
-        m_autonLeave = x;
+        m_autonPreload = x;
     }
 
-    public boolean getAutonLeave()
+    public boolean getAutonPreload()
     {
-        return m_autonLeave;
+        return m_autonPreload;
     }
 
     public void setFloorCoral(boolean floorCoral)
@@ -728,7 +728,7 @@ public class MatchData
         // NOTE! THE ORDER IS IMPORTANT!
         // This is the data that goes into the QR code.
 
-//HOLD        String headers = "TeamNumber AutonStartingPos AutonLeave ReefzoneAB ReefzoneCD ReefzoneEF ReefzoneGH ReefzoneIJ ReefzoneKL AutonCoralL1 AutonCoralL2 AutonCoralL3 AutonCoralL4 AutonAlgaeNet AutonAlgaeProc AutonCoralFloor AutonCoralStation AutonAlgaeFloor AutonAlgaeReef AcquiredCoral AcquiredAlgae AlgaeFloorPickup CoralFloorPickup KnockOffAlgae AlgaeFromReef HoldBoth TeleopCoralL1 TeleopCoralL2 TeleopCoralL3 TeleopCoralL4 TeleopAlgaeNet TeleopAlgaeProc Defense EndgameClimb EndgameStartClimb Died MatchNum Competition Scout Comment";
+//HOLD        String headers = "TeamNumber AutonStartingPos AutonPreload ReefzoneAB ReefzoneCD ReefzoneEF ReefzoneGH ReefzoneIJ ReefzoneKL AutonCoralL1 AutonCoralL2 AutonCoralL3 AutonCoralL4 AutonAlgaeNet AutonAlgaeProc AutonCoralFloor AutonCoralStation AutonAlgaeFloor AutonAlgaeReef AcquiredCoral AcquiredAlgae AlgaeFloorPickup CoralFloorPickup KnockOffAlgae AlgaeFromReef HoldBoth TeleopCoralL1 TeleopCoralL2 TeleopCoralL3 TeleopCoralL4 TeleopAlgaeNet TeleopAlgaeProc Defense EndgameClimb EndgameStartClimb Died MatchNum Competition Scout Comment";
 
         String tsvStr = "";
 
@@ -736,7 +736,7 @@ public class MatchData
         tsvStr += stripTeamNumPrefix(m_teamNumber) + "\t";
 
         tsvStr += m_startingPos + "\t";
-        if (m_autonLeave)  // bool value: use 1/0 instead of true/false
+        if (m_autonPreload)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
         else tsvStr += "0" + "\t";
 
@@ -847,7 +847,7 @@ public class MatchData
         json.put("divider", ",");
         json.put("divider", ", \n");
 
-        json.put("headings", "Competition, Team Number, Match Number, Starting Pos, Leave, ReefzoneAB, ReefzoneCD, ReefzoneEF, ReefzoneGH, ReefzoneIJ, ReefzoneKL, Auton Coral L1, Auton Coral L2, Auton Coral L3, Auton Coral L4, Auton Algae Net, Auton Algae Processor, Auton Coral Floor, Auton Coral Station, Auton Algae Floor, Auton Algae Reef, Coral Acquired, Algae Acquired, Teleop Coral Floor, Teleop Algae Floor, Algae From Reef, Hold Both, Teleop Coral L1, Teleop Coral L2, Teleop Coral L3, Teleop Coral L4, Teleop Algae Net, Teleop Algae Processor, Defense, Cage Climb, Start Climb, Died, Comments, Timestamp, MatchID \n");
+        json.put("headings", "Competition, Team Number, Match Number, Starting Pos, Preload, ReefzoneAB, ReefzoneCD, ReefzoneEF, ReefzoneGH, ReefzoneIJ, ReefzoneKL, Auton Coral L1, Auton Coral L2, Auton Coral L3, Auton Coral L4, Auton Algae Net, Auton Algae Processor, Auton Coral Floor, Auton Coral Station, Auton Algae Floor, Auton Algae Reef, Coral Acquired, Algae Acquired, Teleop Coral Floor, Teleop Algae Floor, Algae From Reef, Hold Both, Teleop Coral L1, Teleop Coral L2, Teleop Coral L3, Teleop Coral L4, Teleop Algae Net, Teleop Algae Processor, Defense, Cage Climb, Start Climb, Died, Comments, Timestamp, MatchID \n");
         json.put(JSON_KEY_EVENT_CODE, m_eventCode);
         json.put("divider", ",");
         json.put(JSON_KEY_TEAM_NUMBER, m_teamNumber);
@@ -858,7 +858,7 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_STARTING_POSITION, m_startingPos);
         json.put("divider", ",");
-        json.put(JSON_KEY_LEAVE, m_autonLeave);
+        json.put(JSON_KEY_PRELOAD, m_autonPreload);
         json.put("divider", ",");
         json.put(JSON_KEY_REEFZONE_AB, m_reefzoneAB);
         json.put("divider", ",");
