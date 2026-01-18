@@ -26,9 +26,7 @@ public class AutonFragment extends Fragment
     private static final int MAX_NUM_ALGAE = 2;
     private CheckBox m_preloadCheckbox;
 
-    private TextView m_autonL1Total;
-    private TextView m_autonL2Total;
-    private TextView m_autonL3Total;
+
     private TextView m_autonL4Total;
     private Button m_autonL1IncrButton;
     private Button m_autonL1DecrButton;
@@ -132,50 +130,13 @@ public class AutonFragment extends Fragment
         // Creates a view using the specific fragment layout
         View v = inflater.inflate(R.layout.auton_fragment, parent, false);
 
-        m_autonL1Total = v.findViewById(R.id.auton_L1_score_total);
-        m_autonL1Total.setText(String.valueOf(m_matchData.getAutonCoralL1()));
-        m_autonL1DecrButton = v.findViewById(R.id.auton_L1_decr_button);
-        m_autonL1IncrButton = v.findViewById(R.id.auton_L1_incr_button);
-        m_autonL2Total = v.findViewById(R.id.auton_L2_score_total);
-        m_autonL2Total.setText(String.valueOf(m_matchData.getAutonCoralL2()));
-        m_autonL2DecrButton = v.findViewById(R.id.auton_L2_decr_button);
-        m_autonL2IncrButton = v.findViewById(R.id.auton_L2_incr_button);
-        m_autonL3Total = v.findViewById(R.id.auton_L3_score_total);
-        m_autonL3Total.setText(String.valueOf(m_matchData.getAutonCoralL3()));
-        m_autonL3DecrButton = v.findViewById(R.id.auton_L3_decr_button);
-        m_autonL3IncrButton = v.findViewById(R.id.auton_L3_incr_button);
         m_autonL4Total = v.findViewById(R.id.auton_L4_score_total);
         m_autonL4Total.setText(String.valueOf(m_matchData.getAutonCoralL4()));
         m_autonL4DecrButton = v.findViewById(R.id.auton_L4_decr_button);
         m_autonL4IncrButton = v.findViewById(R.id.auton_L4_incr_button);
 
         // Set up Coral L1-L4 incr/decr buttons.
-        m_autonL1IncrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                updateTotalsInt(m_autonL1Total, true, true);
-            }
-        });
-        m_autonL2IncrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Increases displayed point value by 1
-                updateTotalsInt(m_autonL2Total, true, true);
-            }
-        });
-        m_autonL3IncrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Increases displayed point value by 1
-                updateTotalsInt(m_autonL3Total, true, true);
-            }
-        });
+
         m_autonL4IncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -184,30 +145,7 @@ public class AutonFragment extends Fragment
                 updateTotalsInt(m_autonL4Total, true, true);
             }
         });
-        m_autonL1DecrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                updateTotalsInt(m_autonL1Total, false, true);
-            }
-        });
-        m_autonL2DecrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                updateTotalsInt(m_autonL2Total, false, true);
-            }
-        });
-        m_autonL3DecrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                updateTotalsInt(m_autonL3Total, false, true);
-            }
-        });
+
         m_autonL4DecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -264,12 +202,6 @@ public class AutonFragment extends Fragment
         });
 
         // Check coral levels for MAX
-        if (isGreaterThanMax(m_autonL1Total,true))
-            m_autonL1Total.setTextColor(Color.RED);
-        if (isGreaterThanMax(m_autonL2Total,true))
-            m_autonL2Total.setTextColor(Color.RED);
-        if (isGreaterThanMax(m_autonL3Total,true))
-            m_autonL3Total.setTextColor(Color.RED);
         if (isGreaterThanMax(m_autonL4Total,true))
             m_autonL4Total.setTextColor(Color.RED);
 
@@ -285,9 +217,7 @@ public class AutonFragment extends Fragment
 
     public void updateAutonData()
     {
-        m_matchData.setAutonCoralL1(Integer.parseInt(m_autonL1Total.getText().toString()));
-        m_matchData.setAutonCoralL2(Integer.parseInt(m_autonL2Total.getText().toString()));
-        m_matchData.setAutonCoralL3(Integer.parseInt(m_autonL3Total.getText().toString()));
+
         m_matchData.setAutonCoralL4(Integer.parseInt(m_autonL4Total.getText().toString()));
 
         m_matchData.setAutonAlgaeNet(Integer.parseInt(m_autonAlgaeNetTotal.getText().toString()));
