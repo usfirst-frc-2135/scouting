@@ -59,9 +59,9 @@ public class EndgameFragment extends Fragment
         TextView tmsg2 = view.findViewById(R.id.warn_msg2);
 
         // Check if the acquired number is less than the scored number for coral and algae.
-        int numCoralAcqd = m_matchData.getCoralAcquired();
-        int numAlgaeAcqd = m_matchData.getAlgaeAcquired();
-        int numCoralScored = m_matchData.getTeleopCoralL1() + m_matchData.getTeleopCoralL2() + m_matchData.getTeleopCoralL3() + m_matchData.getTeleopCoralL4();
+       //FIX int numCoralAcqd = m_matchData.getCoralAcquired();
+      //FIX  int numAlgaeAcqd = m_matchData.getAlgaeAcquired();
+       /* int numCoralScored = m_matchData.getTeleopCoralL1() + m_matchData.getTeleopCoralL2() + m_matchData.getTeleopCoralL3() + m_matchData.getTeleopCoralL4();
         int numAlgaeScored = m_matchData.getTeleopAlgaeNet() + m_matchData.getTeleopAlgaeProcessor();
         if(numCoralAcqd < numCoralScored) {
             bWarnCoral = true;
@@ -70,7 +70,7 @@ public class EndgameFragment extends Fragment
         if(numAlgaeAcqd < numAlgaeScored) {
             bWarnAlgae = true;
             Log.d(TAG, "-->  Number of algae acquired ("+numAlgaeAcqd+") is less than numAlgaeScored("+numAlgaeScored+")!");
-        }
+        }*/
         if(bWarnAlgae && bWarnCoral) 
             warnmsg = "In Teleop, adjust the acquired coral and algae numbers (they are less than the numbers scored).";
         else if(bWarnAlgae)

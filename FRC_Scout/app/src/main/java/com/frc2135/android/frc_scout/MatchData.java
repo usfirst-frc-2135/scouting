@@ -29,13 +29,6 @@ public class MatchData
     private static final String JSON_KEY_STARTING_POSITION = "startingPosition";
     private static final String JSON_KEY_PRELOAD = "preload";
 
-    private static final String JSON_KEY_REEFZONE_AB = "reefZoneAB";
-    private static final String JSON_KEY_REEFZONE_CD = "reefZoneCD";
-    private static final String JSON_KEY_REEFZONE_EF = "reefZoneEF";
-    private static final String JSON_KEY_REEFZONE_GH = "reefZoneGH";
-    private static final String JSON_KEY_REEFZONE_IJ = "reefZoneIJ";
-    private static final String JSON_KEY_REEFZONE_KL = "reefZoneKL";
-
     private static final String JSON_KEY_AUTON_CORAL_L4 = "autonCoralL4";
 
     private static final String JSON_KEY_FLOOR_CORAL= "floorCoral";
@@ -47,23 +40,19 @@ public class MatchData
     private static final String JSON_KEY_AUTON_ALGAE_PROCESSOR = "autonAlgaeProcessor";
 
     // Teleop data
-    private static final String JSON_KEY_CORAL_ACQUIRED= "coralAcquired";
-    private static final String JSON_KEY_ALGAE_ACQUIRED = "algaeAcquired";
-
-    private static final String JSON_KEY_PICK_UP_CORAL = "pickUpCoral";
-    private static final String JSON_KEY_PICK_UP_ALGAE = "pickUpAlgae";
-
-    private static final String JSON_KEY_KNOCK_OFF_ALGAE = "knockOffAlgae";
-    private static final String JSON_KEY_ALGAE_FROM_REEF = "algaeFromReef";
-    private static final String JSON_KEY_HOLD_BOTH_ELEMENTS = "holdBothElements";
-
-    private static final String JSON_KEY_TELEOP_ALGAE_NET = "teleopAlgaeNet";
+    private static final String JSON_KEY_HOPPERS_USED= "hoppersUsed";
+    private static final String JSON_KEY_ACCURACY_RATE= "accuracyRate";
+    private static final String JSON_KEY_INTAKE_AND_SHOOT= "intakeAndShoot";
+    private static final String JSON_KEY_NEUTRAL_TO_ALLIANCE_PASSING = "neutralToAlliancePassing";
+    private static final String JSON_KEY_ALLIANCE_TO_ALLIANCE_PASSING = "allianceToAlliancePassing";
+    private static final String JSON_KEY_PASSING_EFFECTIVENESS_RATE= "passingEffectivenessRate";
+  /*  private static final String JSON_KEY_TELEOP_ALGAE_NET = "teleopAlgaeNet";
     private static final String JSON_KEY_TELEOP_ALGAE_PROCESSOR = "teleopAlgaeProcessor";
 
     private static final String JSON_KEY_TELEOP_CORAL_L1 = "teleopCoralL1";
     private static final String JSON_KEY_TELEOP_CORAL_L2 = "teleopCoralL2";
     private static final String JSON_KEY_TELEOP_CORAL_L3 = "teleopCoralL3";
-    private static final String JSON_KEY_TELEOP_CORAL_L4 = "teleopCoralL4";
+    private static final String JSON_KEY_TELEOP_CORAL_L4 = "teleopCoralL4";*/
 
     private static final String JSON_KEY_PLAYED_DEFENSE = "playedDefense";
 
@@ -81,13 +70,6 @@ public class MatchData
     private int m_startingPos;
     private boolean m_autonPreload;
 
-    private boolean m_reefzoneAB;
-    private boolean m_reefzoneCD;
-    private boolean m_reefzoneEF;
-    private boolean m_reefzoneGH;
-    private boolean m_reefzoneIJ;
-    private boolean m_reefzoneKL;
-
     private int m_autonCoralL4;
 
     private boolean m_coralFloor;
@@ -99,23 +81,21 @@ public class MatchData
     private int m_autonAlgaeProcessor;
 
     // Teleop data
-    private int m_teleopCoralL1;
-    private int m_teleopCoralL2;
-    private int m_teleopCoralL3;
-    private int m_teleopCoralL4;
-    private int m_teleopAlgaeNet;
-    private int m_teleopAlgaeProcessor;
-
-    private boolean m_pickUpCoral;
-    private boolean m_pickUpAlgae;
+    //private int m_teleopCoralL1;
+    //private int m_teleopCoralL2;
+    //private int m_teleopCoralL3;
+    //private int m_teleopCoralL4;
+    //private int m_teleopAlgaeNet;
+    // private int m_teleopAlgaeProcessor;
+    private int m_hoppersUsed;
+    private int m_accuracyRate;
+    private boolean m_intakeAndShoot;
+    private boolean m_neutralToAlliancePassing;
+    private boolean m_allianceToAlliancePassing;
+    private int m_passingEffectivenessRate;
     private int m_playedDefense;
 
-    private boolean m_knockAlgaeOff;
-    private boolean m_algaeFromReef;
-    private boolean m_holdBothElements;
-    private int m_coralAcquired;
-    private int m_algaeAcquired;
-
+    //endgame
     private int m_cageClimb;
     private int m_startClimb;
 
@@ -153,14 +133,7 @@ public class MatchData
         m_matchNumber = "";
         // Auton data
         setAutonPreload(false);
-        setStartingPosition(0);
-
-        setReefzone_AB(false);
-        setReefzone_CD(false);
-        setReefzone_EF(false);
-        setReefzone_GH(false);
-        setReefzone_IJ(false);
-        setReefzone_KL(false);
+        //setStartingPosition(0);
 
         setAutonCoralL4(0);
 
@@ -173,23 +146,21 @@ public class MatchData
         setAutonAlgaeProcessor(0);
 
         // Teleop data
-        setCoralAcquired(0);
-        setAlgaeAcquired(0);
+        setHoppersUsed(0);
+        setAccuracyRate(0);
 
-        setPickUpCoral(false);
-        setPickUpAlgae(false);
+        setIntakeAndShoot(false);
+        setNeutralToAlliancePassing(false);
+        setAllianceToAlliancePassing(false);
+        setPassingEffectivenessRate(0);
 
-        setKnockOffAlgae(false);
-        setAlgaeFromReef(false);
-        setHoldBothElements(false);
+        //setTeleopAlgaeNet(0);
+        //setTeleopAlgaeProcessor(0);
 
-        setTeleopAlgaeNet(0);
-        setTeleopAlgaeProcessor(0);
-
-        setTeleopCoralL1(0);
-        setTeleopCoralL2(0);
-        setTeleopCoralL3(0);
-        setTeleopCoralL4(0);
+        //setTeleopCoralL1(0);
+        //setTeleopCoralL2(0);
+        //setTeleopCoralL3(0);
+        //setTeleopCoralL4(0);
 
         setPlayedDefense(0);
 
@@ -218,15 +189,8 @@ public class MatchData
         setMatchNumber(json.getString(JSON_KEY_MATCH_NUMBER));
 
         // Auton data
-        setStartingPosition(json.getInt(JSON_KEY_STARTING_POSITION));
+        //setStartingPosition(json.getInt(JSON_KEY_STARTING_POSITION));
         setAutonPreload(json.getBoolean(JSON_KEY_PRELOAD));
-
-        setReefzone_AB(json.getBoolean(JSON_KEY_REEFZONE_AB));
-        setReefzone_CD(json.getBoolean(JSON_KEY_REEFZONE_CD));
-        setReefzone_EF(json.getBoolean(JSON_KEY_REEFZONE_EF));
-        setReefzone_GH(json.getBoolean(JSON_KEY_REEFZONE_GH));
-        setReefzone_IJ(json.getBoolean(JSON_KEY_REEFZONE_IJ));
-        setReefzone_KL(json.getBoolean(JSON_KEY_REEFZONE_KL));
 
         setAutonCoralL4(json.getInt(JSON_KEY_AUTON_CORAL_L4));
 
@@ -239,26 +203,25 @@ public class MatchData
         setAutonAlgaeProcessor(json.getInt(JSON_KEY_AUTON_ALGAE_PROCESSOR));
 
         // Teleop data
-        setCoralAcquired(json.getInt(JSON_KEY_CORAL_ACQUIRED));
-        setAlgaeAcquired(json.getInt(JSON_KEY_ALGAE_ACQUIRED));
+        setHoppersUsed(json.getInt(JSON_KEY_HOPPERS_USED));
+        setAccuracyRate(json.getInt(JSON_KEY_ACCURACY_RATE));
 
-        setPickUpCoral(json.getBoolean(JSON_KEY_PICK_UP_ALGAE));
-        setPickUpAlgae(json.getBoolean(JSON_KEY_PICK_UP_CORAL));
+        setIntakeAndShoot(json.getBoolean(JSON_KEY_INTAKE_AND_SHOOT));
+        setNeutralToAlliancePassing(json.getBoolean(JSON_KEY_NEUTRAL_TO_ALLIANCE_PASSING));
+        setAllianceToAlliancePassing(json.getBoolean(JSON_KEY_ALLIANCE_TO_ALLIANCE_PASSING));
+        setPassingEffectivenessRate(json.getInt(JSON_KEY_PASSING_EFFECTIVENESS_RATE));
 
-        setKnockOffAlgae(json.getBoolean(JSON_KEY_KNOCK_OFF_ALGAE));
-        setAlgaeFromReef(json.getBoolean(JSON_KEY_ALGAE_FROM_REEF));
-        setHoldBothElements(json.getBoolean(JSON_KEY_HOLD_BOTH_ELEMENTS));
-
-        setTeleopAlgaeNet(json.getInt(JSON_KEY_TELEOP_ALGAE_NET));
+       /* setTeleopAlgaeNet(json.getInt(JSON_KEY_TELEOP_ALGAE_NET));
         setTeleopAlgaeProcessor(json.getInt(JSON_KEY_TELEOP_ALGAE_PROCESSOR));
 
         setTeleopCoralL1(json.getInt(JSON_KEY_TELEOP_CORAL_L1));
         setTeleopCoralL2(json.getInt(JSON_KEY_TELEOP_CORAL_L2));
         setTeleopCoralL3(json.getInt(JSON_KEY_TELEOP_CORAL_L3));
-        setTeleopCoralL4(json.getInt(JSON_KEY_TELEOP_CORAL_L4));
+        setTeleopCoralL4(json.getInt(JSON_KEY_TELEOP_CORAL_L4));*/
 
         setPlayedDefense(json.getInt(JSON_KEY_PLAYED_DEFENSE));
 
+        //endgame
         setCageClimb(json.getInt(JSON_KEY_CAGE_CLIMB));
         setStartClimb(json.getInt(JSON_KEY_START_CLIMB));
 
@@ -424,8 +387,8 @@ public class MatchData
     {
         return m_coralStation;
     }
-
-    public void setTeleopCoralL1(int numCoral)
+    ///////////Teleop/////////
+   /* public void setTeleopCoralL1(int numCoral)
     {
         m_teleopCoralL1 = numCoral;
     }
@@ -485,87 +448,6 @@ public class MatchData
         return m_teleopAlgaeProcessor;
     }
 
-    // Reefzones checkboxes
-    public void setReefzone_AB(boolean val)
-    {
-        m_reefzoneAB = val;
-    }
-
-    public boolean getReefzone_AB()
-    {
-        return m_reefzoneAB;
-    }
-
-    public void setReefzone_CD(boolean val)
-    {
-        m_reefzoneCD = val;
-    }
-
-    public boolean getReefzone_CD()
-    {
-        return m_reefzoneCD;
-    }
-
-    public void setReefzone_EF(boolean val)
-    {
-        m_reefzoneEF = val;
-    }
-
-    public boolean getReefzone_EF()
-    {
-        return m_reefzoneEF;
-    }
-
-    public void setReefzone_GH(boolean val)
-    {
-        m_reefzoneGH = val;
-    }
-
-    public boolean getReefzone_GH()
-    {
-        return m_reefzoneGH;
-    }
-
-    public void setReefzone_IJ(boolean val)
-    {
-        m_reefzoneIJ = val;
-    }
-
-    public boolean getReefzone_IJ()
-    {
-        return m_reefzoneIJ;
-    }
-
-    public void setReefzone_KL(boolean val)
-    {
-        m_reefzoneKL = val;
-    }
-
-    public boolean getReefzone_KL()
-    {
-        return m_reefzoneKL;
-    }
-
-    public void setPickUpCoral(boolean pickUpCoral)
-    {
-        m_pickUpCoral = pickUpCoral;
-    }
-
-    public boolean getPickUpCoral()
-    {
-        return m_pickUpCoral;
-    }
-
-    public void setPickUpAlgae(boolean pickUpAlgae)
-    {
-        m_pickUpAlgae = pickUpAlgae;
-    }
-
-    public boolean getPickUpAlgae()
-    {
-        return m_pickUpAlgae;
-    }
-
     public void setStartingPosition(int startingPosition)
     {
         m_startingPos = startingPosition;
@@ -574,38 +456,67 @@ public class MatchData
     public int getStartingPosition()
     {
         return m_startingPos;
-    }
-
-    public void setKnockOffAlgae(boolean KnockOffAlgae)
+    }*/
+    public void setHoppersUsed(int hoppersUsed)
     {
-        m_knockAlgaeOff = KnockOffAlgae;
+        m_hoppersUsed = hoppersUsed;
     }
 
-    public boolean getKnockOffAlgae()
+    public int getHoppersUsed()
     {
-        return m_knockAlgaeOff;
+        return m_hoppersUsed;
     }
-    public void setAlgaeFromReef(boolean AlgaeFromReef)
+
+    public void setAccuracyRate(int accuracyRate)
     {
-
-        m_algaeFromReef = AlgaeFromReef;
+        m_accuracyRate = accuracyRate;
     }
 
-    public boolean getAlgaeFromReef()
+    public int getAccuracyRate()
     {
-        return m_algaeFromReef;
+        return m_accuracyRate;
     }
 
-    public void setHoldBothElements(boolean holdBothElements)
+    public void setIntakeAndShoot(boolean intakeAndShoot)
     {
-
-        m_holdBothElements = holdBothElements;
+        m_intakeAndShoot = intakeAndShoot;
     }
 
-    public boolean getHoldBothElements()
+    public boolean getIntakeAndShoot()
     {
-        return m_holdBothElements;
+        return m_intakeAndShoot;
     }
+
+    public void setNeutralToAlliancePassing(boolean neutralToAlliancePassing)
+    {
+        m_neutralToAlliancePassing = neutralToAlliancePassing;
+    }
+
+    public boolean getNeutralToAlliancePassing()
+    {
+        return m_neutralToAlliancePassing;
+    }
+
+    public void setAllianceToAlliancePassing(boolean allianceToAlliancePassing)
+    {
+        m_allianceToAlliancePassing = allianceToAlliancePassing;
+    }
+
+    public boolean getAllianceToAlliancePassing()
+    {
+        return m_allianceToAlliancePassing;
+    }
+
+    public void setPassingEffectivenessRate(int passingEffectivenessRate)
+    {
+        m_passingEffectivenessRate = passingEffectivenessRate;
+    }
+
+    public int getPassingEffectivenessrate()
+    {
+        return m_passingEffectivenessRate;
+    }
+
     public void setPlayedDefense(int playedDefense)
     {
 
@@ -615,26 +526,6 @@ public class MatchData
     public int getPlayedDefense()
     {
         return m_playedDefense;
-    }
-
-    public void setCoralAcquired(int coralAcquired)
-    {
-        m_coralAcquired = coralAcquired;
-    }
-
-    public int getCoralAcquired()
-    {
-        return m_coralAcquired;
-    }
-
-    public void setAlgaeAcquired(int algaeAcquired)
-    {
-        m_algaeAcquired = algaeAcquired;
-    }
-
-    public int getAlgaeAcquired()
-    {
-        return m_algaeAcquired;
     }
 
     public void setCageClimb(int x)
@@ -696,8 +587,6 @@ public class MatchData
         // NOTE! THE ORDER IS IMPORTANT!
         // This is the data that goes into the QR code.
 
-//HOLD        String headers = "TeamNumber AutonStartingPos AutonPreload ReefzoneAB ReefzoneCD ReefzoneEF ReefzoneGH ReefzoneIJ ReefzoneKL AutonCoralL4 AutonAlgaeNet AutonAlgaeProc AutonCoralFloor AutonCoralStation AutonAlgaeFloor AutonAlgaeReef AcquiredCoral AcquiredAlgae AlgaeFloorPickup CoralFloorPickup KnockOffAlgae AlgaeFromReef HoldBoth TeleopCoralL1 TeleopCoralL2 TeleopCoralL3 TeleopCoralL4 TeleopAlgaeNet TeleopAlgaeProc Defense EndgameClimb EndgameStartClimb Died MatchNum Competition Scout Comment";
-
         String tsvStr = "";
 
         // For teamNumber, strip off 'frc' prefix.
@@ -705,25 +594,6 @@ public class MatchData
 
         tsvStr += m_startingPos + "\t";
         if (m_autonPreload)  // bool value: use 1/0 instead of true/false
-            tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
-
-        if (m_reefzoneAB) // bool value: use 1/0 instead of true/false
-            tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
-        if (m_reefzoneCD)
-            tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
-        if (m_reefzoneEF)
-            tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
-        if(m_reefzoneGH)
-            tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
-        if (m_reefzoneIJ)
-            tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
-        if (m_reefzoneKL)
             tsvStr += "1" + "\t";
         else tsvStr += "0" + "\t";
 
@@ -746,35 +616,20 @@ public class MatchData
             tsvStr += "1" + "\t";
         else tsvStr += "0" + "\t";
 
-        tsvStr += m_coralAcquired + "\t";
-        tsvStr += m_algaeAcquired + "\t";
+        tsvStr += m_hoppersUsed + "\t";
+        tsvStr += m_accuracyRate + "\t";
 
-        if (m_pickUpAlgae)  // bool value: use 1/0 instead of true/false
-            tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
+        tsvStr += m_intakeAndShoot + "\t";
+        tsvStr += m_neutralToAlliancePassing + "\t";
+        tsvStr += m_allianceToAlliancePassing + "\t";
+        tsvStr += m_passingEffectivenessRate + "\t";
 
-        if (m_pickUpCoral)  // bool value: use 1/0 instead of true/false
-            tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
-
-        if (m_knockAlgaeOff)  // bool value: use 1/0 instead of true/false
-            tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
-
-        if (m_algaeFromReef)  // bool value: use 1/0 instead of true/false
-            tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
-
-        if (m_holdBothElements)  // bool value: use 1/0 instead of true/false
-            tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
-
-        tsvStr += m_teleopCoralL1 + "\t";
+        /*tsvStr += m_teleopCoralL1 + "\t";
         tsvStr += m_teleopCoralL2 + "\t";
         tsvStr += m_teleopCoralL3 + "\t";
         tsvStr += m_teleopCoralL4 + "\t";
         tsvStr += m_teleopAlgaeNet + "\t";
-        tsvStr += m_teleopAlgaeProcessor + "\t";
+        tsvStr += m_teleopAlgaeProcessor + "\t";*/
 
         tsvStr += m_playedDefense + "\t";
 
@@ -812,7 +667,7 @@ public class MatchData
         json.put("divider", ",");
         json.put("divider", ", \n");
 
-        json.put("headings", "Competition, Team Number, Match Number, Starting Pos, Preload, ReefzoneAB, ReefzoneCD, ReefzoneEF, ReefzoneGH, ReefzoneIJ, ReefzoneKL, Auton Coral L4, Auton Algae Net, Auton Algae Processor, Auton Coral Floor, Auton Coral Station, Auton Algae Floor, Auton Algae Reef, Coral Acquired, Algae Acquired, Teleop Coral Floor, Teleop Algae Floor, Algae From Reef, Hold Both, Teleop Coral L1, Teleop Coral L2, Teleop Coral L3, Teleop Coral L4, Teleop Algae Net, Teleop Algae Processor, Defense, Cage Climb, Start Climb, Died, Comments, Timestamp, MatchID \n");
+        json.put("headings", "Competition, Team Number, Match Number, Starting Pos, Preload, Auton Coral L4, Auton Algae Net, Auton Algae Processor, Auton Coral Floor, Auton Coral Station, Auton Algae Floor, Teleop Hoppers Used, Accuracy Rate, Intake and Shoot, Neutral to Alliance Passing, Alliance to Alliance Passing, Passing Effectiveness Rate, Defense, Cage Climb, Start Climb, Died, Comments, Timestamp, MatchID \n");
         json.put(JSON_KEY_EVENT_CODE, m_eventCode);
         json.put("divider", ",");
         json.put(JSON_KEY_TEAM_NUMBER, m_teamNumber);
@@ -824,18 +679,6 @@ public class MatchData
         json.put(JSON_KEY_STARTING_POSITION, m_startingPos);
         json.put("divider", ",");
         json.put(JSON_KEY_PRELOAD, m_autonPreload);
-        json.put("divider", ",");
-        json.put(JSON_KEY_REEFZONE_AB, m_reefzoneAB);
-        json.put("divider", ",");
-        json.put(JSON_KEY_REEFZONE_CD, m_reefzoneCD);
-        json.put("divider", ",");
-        json.put(JSON_KEY_REEFZONE_EF, m_reefzoneEF);
-        json.put("divider", ",");
-        json.put(JSON_KEY_REEFZONE_GH, m_reefzoneGH);
-        json.put("divider", ",");
-        json.put(JSON_KEY_REEFZONE_IJ, m_reefzoneIJ);
-        json.put("divider", ",");
-        json.put(JSON_KEY_REEFZONE_KL, m_reefzoneKL);
         json.put("divider", ",");
         json.put(JSON_KEY_AUTON_CORAL_L4, m_autonCoralL4);
         json.put("divider", ",");
@@ -851,21 +694,19 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_REEF_ALGAE, m_algaeReef);
         json.put("divider", ",");
-        json.put(JSON_KEY_CORAL_ACQUIRED, m_coralAcquired);
+        json.put(JSON_KEY_HOPPERS_USED, m_hoppersUsed);
         json.put("divider", ",");
-        json.put(JSON_KEY_ALGAE_ACQUIRED, m_algaeAcquired);
+        json.put(JSON_KEY_ACCURACY_RATE, m_accuracyRate);
         json.put("divider", ",");
-        json.put(JSON_KEY_PICK_UP_CORAL, m_pickUpCoral);
+        json.put(JSON_KEY_INTAKE_AND_SHOOT, m_intakeAndShoot);
         json.put("divider", ",");
-        json.put(JSON_KEY_PICK_UP_ALGAE, m_pickUpAlgae);
+        json.put(JSON_KEY_NEUTRAL_TO_ALLIANCE_PASSING, m_neutralToAlliancePassing);
         json.put("divider", ",");
-        json.put(JSON_KEY_KNOCK_OFF_ALGAE, m_knockAlgaeOff);
+        json.put(JSON_KEY_ALLIANCE_TO_ALLIANCE_PASSING, m_allianceToAlliancePassing);
         json.put("divider", ",");
-        json.put(JSON_KEY_ALGAE_FROM_REEF, m_algaeFromReef);
+        json.put(JSON_KEY_PASSING_EFFECTIVENESS_RATE, m_passingEffectivenessRate);
         json.put("divider", ",");
-        json.put(JSON_KEY_HOLD_BOTH_ELEMENTS, m_holdBothElements);
-        json.put("divider", ",");
-        json.put(JSON_KEY_TELEOP_CORAL_L1, m_teleopCoralL1);
+       /* json.put(JSON_KEY_TELEOP_CORAL_L1, m_teleopCoralL1);
         json.put("divider", ",");
         json.put(JSON_KEY_TELEOP_CORAL_L2, m_teleopCoralL2);
         json.put("divider", ",");
@@ -876,7 +717,7 @@ public class MatchData
         json.put(JSON_KEY_TELEOP_ALGAE_NET, m_teleopAlgaeNet);
         json.put("divider", ",");
         json.put(JSON_KEY_TELEOP_ALGAE_PROCESSOR, m_teleopAlgaeProcessor);
-        json.put("divider", ",");
+        json.put("divider", ",");*/
         json.put(JSON_KEY_PLAYED_DEFENSE, m_playedDefense);
         json.put("divider", ",");
         json.put(JSON_KEY_CAGE_CLIMB, m_cageClimb);
