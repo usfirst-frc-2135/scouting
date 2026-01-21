@@ -102,6 +102,15 @@
                     android:orientation="horizontal"
                     android:background="#DFE2FB">
 
+                    <RadioButton
+                        android:id="@+id/accuracy_NA"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="20sp"
+                        android:buttonTint="#8957A1"
+                        android:text="N/A" />
+
                 <RadioButton
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="5dp"
@@ -111,7 +120,7 @@
                     android:layout_weight="1"
                     android:textSize="20sp"
                     android:buttonTint="#8957A1"
-                    android:text="MOST" />
+                    android:text="Most" />
 
                 <RadioButton
                     android:id="@+id/accuracy_three_fourths"
@@ -147,7 +156,7 @@
                     android:layout_weight="1"
                     android:textSize="20sp"
                     android:buttonTint="#8957A1"
-                    android:text="FEW" />
+                    android:text="Few" />
 
                 <RadioButton
                     android:id="@+id/accuracy_none"
@@ -179,7 +188,7 @@
                     android:id="@+id/intake_and_shoot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/textPrimary"
+                    android:buttonTint="#8957A1"
                     android:text="INTAKE AND SHOOT AT THE SAME TIME"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
@@ -221,6 +230,7 @@
                     android:id="@+id/from_neutral_zone_to_alliance_zone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:buttonTint="#8957A1"
                     android:text="FROM NEUTRAL ZONE TO ALLIANCE ZONE"
                     android:layout_marginLeft="10dp"
                     android:textSize="20sp" />
@@ -229,6 +239,7 @@
                     android:id="@+id/from_alliance_zone_to_other_alliance_zone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:buttonTint="#8957A1"
                     android:text="FROM ALLIANCE ZONE TO OTHER ALLIANCE ZONE"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
@@ -273,7 +284,7 @@
                         android:layout_weight="1"
                         android:textSize="20sp"
                         android:buttonTint="#8957A1"
-                        android:text="TONS" />
+                        android:text="Tons" />
 
                     <RadioButton
                         android:id="@+id/passing_large"
@@ -282,7 +293,7 @@
                         android:layout_weight="1"
                         android:textSize="20sp"
                         android:buttonTint="#8957A1"
-                        android:text="LARGE" />
+                        android:text="Large" />
 
                     <RadioButton
                         android:id="@+id/passing_medium"
@@ -291,7 +302,7 @@
                         android:layout_weight="1"
                         android:textSize="20sp"
                         android:buttonTint="#8957A1"
-                        android:text="MEDIUM" />
+                        android:text="Medium" />
 
                     <RadioButton
                         android:id="@+id/passing_low"
@@ -300,7 +311,7 @@
                         android:layout_weight="1"
                         android:textSize="20sp"
                         android:buttonTint="#8957A1"
-                        android:text="LOW" />
+                        android:text="Low" />
 
                 </RadioGroup>
 
