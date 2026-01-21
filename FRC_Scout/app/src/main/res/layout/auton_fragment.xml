@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="Preload"
+                android:text="PRELOAD"
                 android:textColor="@color/specialTextPrimary"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:buttonTint="#8957A1"
-                android:text="Preload 8 fuel"
+                android:text="Preloaded 8 fuel for auton"
                 android:textColor="@color/specialTextPrimary"
                 android:textSize="22sp" />
 
@@ -50,16 +50,17 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="#EFE2FF"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/Hopper_label"
                         android:textStyle="bold"
-                        android:layout_width="40dp"
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="40dp"
+                        android:layout_marginStart="20dp"
                         android:layout_marginTop="5dp"
-                        android:text="Hopper"
+                        android:text="HOPPER"
                         android:textColor="@color/specialTextPrimary"
                         android:textSize="22sp" />
 
@@ -95,6 +96,97 @@
                         android:textColor="#FFFFFF"
                         android:textSize="30dp" />
                 </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+           android:background="#DFE2FB">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textSize="20sp"
+                android:textColor="@color/specialTextPrimary"
+                android:text="ACCURACY RATE:" />
+
+            <RadioGroup
+                android:id="@+id/auton_accuracy_buttons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#DFE2FB">
+
+                <RadioButton
+                    android:id="@+id/auton_accuracy_most"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:buttonTint="#8957A1"
+                    android:text="MOST" />
+
+                <RadioButton
+                    android:id="@+id/auton_accuracy_three_fourths"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:buttonTint="#8957A1"
+                    android:text="3/4" />
+
+                <RadioButton
+                    android:id="@+id/auton_accuracy_half"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:buttonTint="#8957A1"
+                    android:text="1/2" />
+
+                <RadioButton
+                    android:id="@+id/auton_accuracy_quarter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:buttonTint="#8957A1"
+                    android:text="1/4" />
+
+                <RadioButton
+                    android:id="@+id/auton_accuracy_few"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:buttonTint="#8957A1"
+                    android:text="FEW" />
+
+                <RadioButton
+                    android:id="@+id/auton_accuracy_none"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:buttonTint="#8957A1"
+                    android:text="0" />
+
+                <RadioButton
+                    android:id="@+id/auton_accuracy_cannot_tell"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:buttonTint="#8957A1"
+                    android:text="IDK" />
+
+            </RadioGroup>
+
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

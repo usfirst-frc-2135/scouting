@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -30,6 +32,16 @@ public class AutonFragment extends Fragment
     private TextView m_autonHopperTotal;
     private Button m_autonHopperIncrButton;
     private Button m_autonHopperDecrButton;
+
+    private RadioGroup m_autonAccuracyButtonGroup;
+    private RadioButton m_autonAccuracyMost;
+    private RadioButton m_autonAccuracyThreeFourths;
+    private RadioButton m_autonAccuracyHalf;
+    private RadioButton m_autonAccuracyQuarters;
+    private RadioButton m_autonAccuracyFew;
+    private RadioButton m_autonAccuracyNone;
+    private RadioButton m_autonAccuracyCannotTell;
+
 
     private MatchData m_matchData;
 
@@ -144,6 +156,38 @@ public class AutonFragment extends Fragment
 
         m_preloadCheckbox = v.findViewById(R.id.preload_checkbox);
         m_preloadCheckbox.setChecked(m_matchData.getAutonPreload());
+        m_autonAccuracyButtonGroup = v.findViewById(R.id.auton_accuracy_buttons);
+        m_autonAccuracyMost = v.findViewById(R.id.auton_accuracy_most);
+        m_autonAccuracyThreeFourths = v.findViewById(R.id.auton_accuracy_three_fourths);
+        m_autonAccuracyHalf = v.findViewById(R.id.auton_accuracy_half);
+        m_autonAccuracyQuarters = v.findViewById(R.id.auton_accuracy_quarter);
+        m_autonAccuracyFew = v.findViewById(R.id.auton_accuracy_few);
+        m_autonAccuracyNone = v.findViewById(R.id.auton_accuracy_none);
+        m_autonAccuracyCannotTell = v.findViewById(R.id.auton_accuracy_cannot_tell);
+        m_autonAccuracyMost.setChecked(false);
+        m_autonAccuracyThreeFourths.setChecked(false);
+        m_autonAccuracyHalf.setChecked(false);
+        m_autonAccuracyQuarters.setChecked(false);
+        m_autonAccuracyFew.setChecked(false);
+        m_autonAccuracyNone.setChecked(false);
+        m_autonAccuracyCannotTell.setChecked(false);
+
+        int accValue = m_matchData.getAutonAccuracyRate();
+        if (accValue == 0)
+            m_autonAccuracyMost.setChecked(true);
+        else if(accValue == 1)
+            m_autonAccuracyThreeFourths.setChecked(true);
+        else if(accValue == 2)
+            m_autonAccuracyHalf.setChecked(true);
+        else if(accValue == 3)
+            m_autonAccuracyQuarters.setChecked(true);
+        else if(accValue == 4)
+            m_autonAccuracyFew.setChecked(true);
+        else if(accValue == 5)
+            m_autonAccuracyNone.setChecked(true);
+        else if(accValue == 6)
+            m_autonAccuracyCannotTell.setChecked(true);
+
 
         // Set up Algae Net/Proc incr/decr buttons and listeners.
         // Check coral levels for MAX
@@ -162,12 +206,46 @@ public class AutonFragment extends Fragment
         return v;
     }
 
-
+    public int getCurrentAutonAccuracyLevel()
+    {
+        // Returns the integer climb level that is current checked in the radio buttons
+        int rtn = 0;
+        if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyMost.getId())
+        {
+            rtn = 0;
+        }
+        if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyThreeFourths.getId())
+        {
+            rtn = 1;
+        }
+        if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyHalf.getId())
+        {
+            rtn = 2;
+        }
+        if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyQuarters.getId())
+        {
+            rtn = 3;
+        }
+        if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyFew.getId())
+        {
+            rtn = 4;
+        }
+        if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyNone.getId())
+        {
+            rtn = 5;
+        }
+        if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyCannotTell.getId())
+        {
+            rtn = 6;
+        }
+        return rtn;
+    }
     public void updateAutonData()
     {
 
         m_matchData.setAutonHopper(Integer.parseInt(m_autonHopperTotal.getText().toString()));
         m_matchData.setAutonPreload(m_preloadCheckbox.isChecked());
+        m_matchData.setAutonAccuracyRate(getCurrentAutonAccuracyLevel());
 
         // Determine the reefscape face for each checkbox.
     }

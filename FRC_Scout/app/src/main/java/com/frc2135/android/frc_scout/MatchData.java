@@ -39,6 +39,7 @@ public class MatchData
     // Teleop data
     private static final String JSON_KEY_HOPPERS_USED= "hoppersUsed";
     private static final String JSON_KEY_ACCURACY_RATE= "accuracyRate";
+    private static final String JSON_KEY_AUTON_ACCURACY_RATE= "autonAccuracyRate";
     private static final String JSON_KEY_INTAKE_AND_SHOOT= "intakeAndShoot";
     private static final String JSON_KEY_NEUTRAL_TO_ALLIANCE_PASSING = "neutralToAlliancePassing";
     private static final String JSON_KEY_ALLIANCE_TO_ALLIANCE_PASSING = "allianceToAlliancePassing";
@@ -84,6 +85,7 @@ public class MatchData
     // private int m_teleopAlgaeProcessor;
     private int m_hoppersUsed;
     private int m_accuracyRate;
+    private int m_autonAccuracyRate;
     private boolean m_intakeAndShoot;
     private boolean m_neutralToAlliancePassing;
     private boolean m_allianceToAlliancePassing;
@@ -194,6 +196,7 @@ public class MatchData
         // Teleop data
         setHoppersUsed(json.getInt(JSON_KEY_HOPPERS_USED));
         setAccuracyRate(json.getInt(JSON_KEY_ACCURACY_RATE));
+        setAutonAccuracyRate(json.getInt(JSON_KEY_AUTON_ACCURACY_RATE));
 
         setIntakeAndShoot(json.getBoolean(JSON_KEY_INTAKE_AND_SHOOT));
         setNeutralToAlliancePassing(json.getBoolean(JSON_KEY_NEUTRAL_TO_ALLIANCE_PASSING));
@@ -447,6 +450,17 @@ public class MatchData
         return m_accuracyRate;
     }
 
+    public void setAutonAccuracyRate(int autonAccuracyRate)
+    {
+        m_autonAccuracyRate = autonAccuracyRate;
+    }
+
+    public int getAutonAccuracyRate()
+    {
+        return m_autonAccuracyRate;
+    }
+
+
     public void setIntakeAndShoot(boolean intakeAndShoot)
     {
         m_intakeAndShoot = intakeAndShoot;
@@ -586,6 +600,7 @@ public class MatchData
 
         tsvStr += m_hoppersUsed + "\t";
         tsvStr += m_accuracyRate + "\t";
+        tsvStr += m_autonAccuracyRate + "\t";
 
         tsvStr += m_intakeAndShoot + "\t";
         tsvStr += m_neutralToAlliancePassing + "\t";
@@ -661,6 +676,8 @@ public class MatchData
         json.put(JSON_KEY_HOPPERS_USED, m_hoppersUsed);
         json.put("divider", ",");
         json.put(JSON_KEY_ACCURACY_RATE, m_accuracyRate);
+        json.put("divider", ",");
+        json.put(JSON_KEY_AUTON_ACCURACY_RATE, m_autonAccuracyRate);
         json.put("divider", ",");
         json.put(JSON_KEY_INTAKE_AND_SHOOT, m_intakeAndShoot);
         json.put("divider", ",");
