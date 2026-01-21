@@ -1,7 +1,5 @@
 package com.frc2135.android.frc_scout;
 import android.annotation.SuppressLint;
-import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -24,21 +22,41 @@ import android.widget.RadioGroup;
 public class TeleopFragment extends Fragment
 {
     private static final String TAG = "TeleopFragment";
-    private static final int MAX_NUM_ALGAE = 7;     // algae max expected high total
-    private static final int MAX_NUM_CORAL= 11;     // coral max expected high total 
+    private static final int MAX_NUM_HOPPERS = 7;     // algae max expected high total
+   // private static final int MAX_NUM_CORAL= 11;     // coral max expected high total
 
-    private CheckBox m_pickUpCoralCkbx;
+  /*private CheckBox m_pickUpCoralCkbx;
     private CheckBox m_pickUpAlgaeCkbx;
     private CheckBox m_knockAlgaeCkbx;
     private CheckBox m_algaeFromReefCkbx;
-    private CheckBox m_holdBothCkbx;
+    private CheckBox m_holdBothCkbx;*/
 
-    private TextView m_coralAcquiredTotal;
-    private Button   m_coralAcquiredDecrButton;
-    private Button   m_coralAcquiredIncrButton;
-    private TextView m_algaeAcquiredTotal;
+    private TextView m_hoppersUsedTotal;
+    private Button m_hoppersUsedDecrButton;
+    private Button m_hoppersUsedIncrButton;
+    /*private TextView m_algaeAcquiredTotal;
     private Button   m_algaeAcquiredDecrButton;
-    private Button   m_algaeAcquiredIncrButton;
+    private Button   m_algaeAcquiredIncrButton;*/
+
+    private RadioGroup m_accuracyButtonGroup;
+    private RadioButton m_accuracyMost;
+    private RadioButton m_accuracyThreeFourths;
+    private RadioButton m_accuracyHalf;
+    private RadioButton m_accuracyQuarters;
+    private RadioButton m_accuracyFew;
+    private RadioButton m_accuracyNone;
+    private RadioButton m_accuracyCannotTell;
+
+    private CheckBox m_intakeAndShootCkbx;
+    private CheckBox m_NeutralToAlliancePassingCkbx;
+    private CheckBox m_AllianceToAlliancePassingCkbx;
+
+    private RadioGroup m_passingEffectivenessButtonsGroup;
+    private RadioButton m_passingNA;
+    private RadioButton m_passingTons;
+    private RadioButton m_passingLarge;
+    private RadioButton m_passingMedium;
+    private RadioButton m_passingLow;
 
     private RadioGroup m_defenseButtonGroup;
     private RadioButton m_defenseNone;
@@ -46,7 +64,7 @@ public class TeleopFragment extends Fragment
     private RadioButton m_defenseMedium;
     private RadioButton m_defenseHigh;
 
-    private TextView m_teleopL1Total;
+  /*  private TextView m_teleopL1Total;
     private TextView m_teleopL2Total;
     private TextView m_teleopL3Total;
     private TextView m_teleopL4Total;
@@ -57,38 +75,38 @@ public class TeleopFragment extends Fragment
     private Button m_teleopL3IncrButton;
     private Button m_teleopL3DecrButton;
     private Button m_teleopL4IncrButton;
-    private Button m_teleopL4DecrButton; 
+    private Button m_teleopL4DecrButton;
 
     private TextView m_teleopAlgaeNetTotal;
     private Button m_teleopAlgaeNetIncrButton;
     private Button m_teleopAlgaeNetDecrButton;
     private TextView m_teleopAlgaeProcTotal;
     private Button m_teleopAlgaeProcIncrButton;
-    private Button m_teleopAlgaeProcDecrButton;
+    private Button m_teleopAlgaeProcDecrButton;*/
 
     private MatchData m_matchData;
 
     // Check if pointsTextView field is greater than the MAX_NUM*.
-    private boolean isGreaterThanMax(TextView field,boolean bIsCoral)
+    private boolean isGreaterThanMax(TextView field,boolean bIsHoppers)
     {
         boolean rtn = false;
         int num = Integer.parseInt(field.getText().toString());
-        if (bIsCoral == true) {
-            if (num > MAX_NUM_CORAL)  // for coral number
+        if (bIsHoppers == true) {
+            if (num > MAX_NUM_HOPPERS)  // for coral number
                 rtn = true;
         }
-        else  // for algae number
+      /*  else  // for algae number
         {
             if (num > MAX_NUM_ALGAE)
                 rtn = true;
-        }
+        }*/
         return rtn;
     }
 
     // Sets the new result integer value for the given TextView, either decrementing or 
     // incrementing the shown value. If the decrement case falls below zero, returns 0. 
     // Sets textView color to RED if out of expected range.
-    public void updateTotalsInt(TextView tview, boolean bIncr, boolean bIsCoral)
+    public void updateTotalsInt(TextView tview, boolean bIncr, boolean bIsHoppers)
     {
         int result = Integer.parseInt(tview.getText().toString()); // get current value as int
         if (bIncr)
@@ -99,7 +117,7 @@ public class TeleopFragment extends Fragment
             result = 0;
         tview.setText(String.valueOf(result));
 
-        if (isGreaterThanMax(tview,bIsCoral))
+        if (isGreaterThanMax(tview,bIsHoppers))
         {
             tview.setTextColor(Color.RED);
         }
@@ -140,52 +158,61 @@ public class TeleopFragment extends Fragment
         //Creates a view using the specific fragment layout.
         View v = inflater.inflate(R.layout.teleop_fragment, parent, false);
 
-        // Set up listener for coralAcquired +/-buttons.
-        m_coralAcquiredTotal= v.findViewById(R.id.coral_acquired_total);
-        m_coralAcquiredTotal.setText(String.valueOf(m_matchData.getCoralAcquired()));
-        m_coralAcquiredDecrButton = v.findViewById(R.id.coral_acquired_decr_button);
-        m_coralAcquiredIncrButton = v.findViewById(R.id.coral_acquired_incr_button);
-        m_coralAcquiredDecrButton.setOnClickListener(new View.OnClickListener()
+        // Set up listener for hoppersUsed +/-buttons.
+        m_hoppersUsedTotal= v.findViewById(R.id.hopper_used_total);
+        m_hoppersUsedTotal.setText(String.valueOf(m_matchData.getHoppersUsed()));
+        m_hoppersUsedDecrButton = v.findViewById(R.id.hopper_used_decr_button);
+        m_hoppersUsedIncrButton = v.findViewById(R.id.hopper_used_incr_button);
+        m_hoppersUsedDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                updateTotalsInt(m_coralAcquiredTotal, false, true);
+                updateTotalsInt(m_hoppersUsedTotal, false, true);
             }
         });
-        m_coralAcquiredIncrButton.setOnClickListener(new View.OnClickListener()
+        m_hoppersUsedIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                updateTotalsInt(m_coralAcquiredTotal, true, true);
+                updateTotalsInt(m_hoppersUsedTotal, true, true);
             }
         });
+
+        m_intakeAndShootCkbx = v.findViewById(R.id.intake_and_shoot);
+        m_intakeAndShootCkbx.setChecked(m_matchData.getIntakeAndShoot());
+
+        m_NeutralToAlliancePassingCkbx = v.findViewById(R.id.from_neutral_zone_to_alliance_zone);
+        m_NeutralToAlliancePassingCkbx.setChecked(m_matchData.getNeutralToAlliancePassing());
+
+        m_AllianceToAlliancePassingCkbx = v.findViewById(R.id.from_alliance_zone_to_other_alliance_zone);
+        m_AllianceToAlliancePassingCkbx.setChecked(m_matchData.getAllianceToAlliancePassing());
 
         // Set up listener for algaeAcquired +/-buttons.
-        m_algaeAcquiredTotal= v.findViewById(R.id.algae_acquired_total);
+       /* m_algaeAcquiredTotal= v.findViewById(R.id.algae_acquired_total);
         m_algaeAcquiredTotal.setText(String.valueOf(m_matchData.getAlgaeAcquired()));
         m_algaeAcquiredDecrButton = v.findViewById(R.id.algae_acquired_decr_button);
-        m_algaeAcquiredIncrButton = v.findViewById(R.id.algae_acquired_incr_button);
-        m_algaeAcquiredDecrButton.setOnClickListener(new View.OnClickListener()
+        m_algaeAcquiredIncrButton = v.findViewById(R.id.algae_acquired_incr_button);*/
+       /* m_hoppersUsedDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                updateTotalsInt(m_algaeAcquiredTotal, false, false) ;
+                updateTotalsInt(m_hoppersUsedTotal, false, false) ;
             }
         });
-        m_algaeAcquiredIncrButton.setOnClickListener(new View.OnClickListener()
+        m_hoppersUsedIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                updateTotalsInt(m_algaeAcquiredTotal, true, false);
+                updateTotalsInt(m_hoppersUsedTotal, true, false);
             }
-        });
+        });*/
 
         // Set up Coral L1-L4 incr/decr buttons and totals
-        m_teleopL1Total = v.findViewById(R.id.teleop_L1_score_total);
+      /*  m_teleopL1Total = v.findViewById(R.id.teleop_L1_score_total);
         m_teleopL1Total.setText(String.valueOf(m_matchData.getTeleopCoralL1()));
         m_teleopL1DecrButton = v.findViewById(R.id.teleop_L1_decr_button);
         m_teleopL1IncrButton = v.findViewById(R.id.teleop_L1_incr_button);
@@ -200,9 +227,9 @@ public class TeleopFragment extends Fragment
         m_teleopL4Total = v.findViewById(R.id.teleop_L4_score_total);
         m_teleopL4Total.setText(String.valueOf(m_matchData.getTeleopCoralL4()));
         m_teleopL4DecrButton = v.findViewById(R.id.teleop_L4_decr_button);
-        m_teleopL4IncrButton = v.findViewById(R.id.teleop_L4_incr_button);
+        m_teleopL4IncrButton = v.findViewById(R.id.teleop_L4_incr_button);*/
 
-        m_teleopL1IncrButton.setOnClickListener(new View.OnClickListener()
+        /*m_teleopL1IncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -267,10 +294,10 @@ public class TeleopFragment extends Fragment
             {
                 updateTotalsInt(m_teleopL4Total, false,true);
             }
-        });
+        });*/
 
         // Set up listener for Scoring Algae Net +/-buttons.
-        m_teleopAlgaeNetTotal= v.findViewById(R.id.teleop_algae_net_total);
+     /*   m_teleopAlgaeNetTotal= v.findViewById(R.id.teleop_algae_net_total);
         m_teleopAlgaeNetTotal.setText(String.valueOf(m_matchData.getTeleopAlgaeNet()));
         m_teleopAlgaeNetDecrButton = v.findViewById(R.id.teleop_algae_net_decr_button);
         m_teleopAlgaeNetIncrButton = v.findViewById(R.id.teleop_algae_net_incr_button);
@@ -289,10 +316,10 @@ public class TeleopFragment extends Fragment
             {
                 updateTotalsInt(m_teleopAlgaeNetTotal, true, false);
             }
-        });
+        });*/
 
         // Set up listener for Scoring Algae Proc +/-buttons.
-        m_teleopAlgaeProcTotal= v.findViewById(R.id.teleop_algae_proc_total);
+       /* m_teleopAlgaeProcTotal= v.findViewById(R.id.teleop_algae_proc_total);
         m_teleopAlgaeProcTotal.setText(String.valueOf(m_matchData.getTeleopAlgaeProcessor()));
         m_teleopAlgaeProcDecrButton = v.findViewById(R.id.teleop_algae_proc_decr_button);
         m_teleopAlgaeProcIncrButton = v.findViewById(R.id.teleop_algae_proc_incr_button);
@@ -311,8 +338,65 @@ public class TeleopFragment extends Fragment
             {
                 updateTotalsInt(m_teleopAlgaeProcTotal, true, false);
             }
-        });
+        });*/
 
+
+        m_accuracyButtonGroup = v.findViewById(R.id.accuracy_buttons);
+        m_accuracyMost = v.findViewById(R.id.accuracy_most);
+        m_accuracyThreeFourths = v.findViewById(R.id.accuracy_three_fourths);
+        m_accuracyHalf = v.findViewById(R.id.accuracy_half);
+        m_accuracyQuarters = v.findViewById(R.id.accuracy_quarter);
+        m_accuracyFew = v.findViewById(R.id.accuracy_few);
+        m_accuracyNone = v.findViewById(R.id.accuracy_none);
+        m_accuracyCannotTell = v.findViewById(R.id.accuracy_cannot_tell);
+        m_accuracyMost.setChecked(false);
+        m_accuracyThreeFourths.setChecked(false);
+        m_accuracyHalf.setChecked(false);
+        m_accuracyQuarters.setChecked(false);
+        m_accuracyFew.setChecked(false);
+        m_accuracyNone.setChecked(false);
+        m_accuracyCannotTell.setChecked(false);
+
+        int accValue = m_matchData.getAccuracyRate();
+        if (accValue == 0)
+            m_accuracyMost.setChecked(true);
+        else if(accValue == 1)
+            m_accuracyThreeFourths.setChecked(true);
+        else if(accValue == 2)
+            m_accuracyHalf.setChecked(true);
+        else if(accValue == 3)
+            m_accuracyQuarters.setChecked(true);
+        else if(accValue == 4)
+            m_accuracyFew.setChecked(true);
+        else if(accValue == 5)
+            m_accuracyNone.setChecked(true);
+        else if(accValue == 6)
+            m_accuracyCannotTell.setChecked(true);
+
+        m_passingEffectivenessButtonsGroup = v.findViewById(R.id.passing_effectiveness_buttons);
+        m_passingNA = v.findViewById(R.id.passing_rate_na);
+        m_passingTons = v.findViewById(R.id.passing_tons);
+        m_passingLarge = v.findViewById(R.id.passing_large);
+        m_passingMedium = v.findViewById(R.id.passing_medium);
+        m_passingLow = v.findViewById(R.id.passing_low);
+
+        m_passingNA.setChecked(false);
+        m_passingTons.setChecked(false);
+        m_passingLarge.setChecked(false);
+        m_passingMedium.setChecked(false);
+        m_passingLow.setChecked(false);
+
+        int passValue = m_matchData.getPassingEffectivenessrate();
+        if (passValue == 0)
+            m_passingNA.setChecked(true);
+        else if(passValue == 1)
+          m_passingTons.setChecked(true);
+        else if(passValue == 2)
+            m_passingLarge.setChecked(true);
+        else if(passValue == 3)
+            m_passingMedium.setChecked(true);
+        else if(passValue == 4)
+            m_passingLow.setChecked(true);
 
         m_defenseButtonGroup = v.findViewById(R.id.defense_buttons);
         m_defenseNone = v.findViewById(R.id.defense_none);
@@ -335,24 +419,86 @@ public class TeleopFragment extends Fragment
             m_defenseHigh.setChecked(true);
 
         // Check acquired totals for MAX
-        if (isGreaterThanMax(m_coralAcquiredTotal,true))
-            m_coralAcquiredTotal.setTextColor(Color.RED);
-        if (isGreaterThanMax(m_algaeAcquiredTotal,false))
-            m_algaeAcquiredTotal.setTextColor(Color.RED);
+        if (isGreaterThanMax(m_hoppersUsedTotal,true))
+            m_hoppersUsedTotal.setTextColor(Color.RED);
+        if (isGreaterThanMax(m_hoppersUsedTotal,false))
+            m_hoppersUsedTotal.setTextColor(Color.RED);
 
         // Check coral levels for MAX
-        if (isGreaterThanMax(m_teleopL1Total,true))
+       /* if (isGreaterThanMax(m_teleopL1Total,true))
             m_teleopL1Total.setTextColor(Color.RED);
         if (isGreaterThanMax(m_teleopL2Total,true))
             m_teleopL2Total.setTextColor(Color.RED);
         if (isGreaterThanMax(m_teleopL3Total,true))
             m_teleopL3Total.setTextColor(Color.RED);
         if (isGreaterThanMax(m_teleopL4Total,true))
-            m_teleopL4Total.setTextColor(Color.RED);
+            m_teleopL4Total.setTextColor(Color.RED);*/
 
         return v;
     }
     
+    public int getCurrentAccuracyLevel()
+    {
+        // Returns the integer climb level that is current checked in the radio buttons
+        int rtn = 0;
+        if (m_accuracyButtonGroup.getCheckedRadioButtonId() == m_accuracyMost.getId())
+        {
+            rtn = 0;
+        }
+        if (m_accuracyButtonGroup.getCheckedRadioButtonId() == m_accuracyThreeFourths.getId())
+        {
+            rtn = 1;
+        }
+        if (m_accuracyButtonGroup.getCheckedRadioButtonId() == m_accuracyHalf.getId())
+        {
+            rtn = 2;
+        }
+        if (m_accuracyButtonGroup.getCheckedRadioButtonId() == m_accuracyQuarters.getId())
+        {
+            rtn = 3;
+        }
+        if (m_accuracyButtonGroup.getCheckedRadioButtonId() == m_accuracyFew.getId())
+        {
+            rtn = 4;
+        }
+        if (m_accuracyButtonGroup.getCheckedRadioButtonId() == m_accuracyNone.getId())
+        {
+            rtn = 5;
+        }
+        if (m_accuracyButtonGroup.getCheckedRadioButtonId() == m_accuracyCannotTell.getId())
+        {
+            rtn = 6;
+        }
+        return rtn;
+    }
+
+    public int getCurrentPassingLevel()
+    {
+        // Returns the integer climb level that is current checked in the radio buttons
+        int rtn = 0;
+        if (m_passingEffectivenessButtonsGroup.getCheckedRadioButtonId() == m_passingNA.getId())
+        {
+            rtn = 0;
+        }
+        if (m_passingEffectivenessButtonsGroup.getCheckedRadioButtonId() == m_passingTons.getId())
+        {
+            rtn = 1;
+        }
+        if (m_passingEffectivenessButtonsGroup.getCheckedRadioButtonId() == m_passingLarge.getId())
+        {
+            rtn = 2;
+        }
+        if (m_passingEffectivenessButtonsGroup.getCheckedRadioButtonId() == m_passingMedium.getId())
+        {
+            rtn = 3;
+        }
+        if (m_passingEffectivenessButtonsGroup.getCheckedRadioButtonId() == m_passingLow.getId())
+        {
+            rtn = 4;
+        }
+        return rtn;
+    }
+
     public int getCurrentDefenseLevel()
     {
         // Returns the integer climb level that is current checked in the radio buttons
@@ -378,17 +524,23 @@ public class TeleopFragment extends Fragment
 
     public void updateTeleopData()
     {
-        m_matchData.setCoralAcquired(Integer.parseInt(m_coralAcquiredTotal.getText().toString()));
-        m_matchData.setAlgaeAcquired(Integer.parseInt(m_algaeAcquiredTotal.getText().toString()));
+        m_matchData.setHoppersUsed(Integer.parseInt(m_hoppersUsedTotal.getText().toString()));
+        m_matchData.setAccuracyRate(getCurrentAccuracyLevel());
+        m_matchData.setPassingEffectivenessRate(getCurrentPassingLevel());
+        //m_matchData.setHoppersUsed(Integer.parseInt(m_algaeAcquiredTotal.getText().toString()));
 
-        m_matchData.setTeleopAlgaeNet(Integer.parseInt(m_teleopAlgaeNetTotal.getText().toString()));
+       /* m_matchData.setTeleopAlgaeNet(Integer.parseInt(m_teleopAlgaeNetTotal.getText().toString()));
         m_matchData.setTeleopAlgaeProcessor(Integer.parseInt(m_teleopAlgaeProcTotal.getText().toString()));
 
         m_matchData.setTeleopCoralL1(Integer.parseInt(m_teleopL1Total.getText().toString()));
         m_matchData.setTeleopCoralL2(Integer.parseInt(m_teleopL2Total.getText().toString()));
         m_matchData.setTeleopCoralL3(Integer.parseInt(m_teleopL3Total.getText().toString()));
-        m_matchData.setTeleopCoralL4(Integer.parseInt(m_teleopL4Total.getText().toString()));
+        m_matchData.setTeleopCoralL4(Integer.parseInt(m_teleopL4Total.getText().toString()));*/
         m_matchData.setPlayedDefense(getCurrentDefenseLevel());
+
+        m_matchData.setIntakeAndShoot(m_intakeAndShootCkbx.isChecked());
+        m_matchData.setNeutralToAlliancePassing(m_NeutralToAlliancePassingCkbx.isChecked());
+        m_matchData.setAllianceToAlliancePassing(m_AllianceToAlliancePassingCkbx.isChecked());
 
     }
 }
