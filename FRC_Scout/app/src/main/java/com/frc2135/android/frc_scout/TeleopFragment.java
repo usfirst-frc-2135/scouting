@@ -46,6 +46,7 @@ public class TeleopFragment extends Fragment
     private RadioButton m_accuracyFew;
     private RadioButton m_accuracyNone;
     private RadioButton m_accuracyCannotTell;
+    private RadioButton m_accuracyNA;
 
     private CheckBox m_intakeAndShootCkbx;
     private CheckBox m_NeutralToAlliancePassingCkbx;
@@ -349,6 +350,7 @@ public class TeleopFragment extends Fragment
         m_accuracyFew = v.findViewById(R.id.accuracy_few);
         m_accuracyNone = v.findViewById(R.id.accuracy_none);
         m_accuracyCannotTell = v.findViewById(R.id.accuracy_cannot_tell);
+        m_accuracyNA = v.findViewById(R.id.accuracy_NA);
         m_accuracyMost.setChecked(false);
         m_accuracyThreeFourths.setChecked(false);
         m_accuracyHalf.setChecked(false);
@@ -356,21 +358,24 @@ public class TeleopFragment extends Fragment
         m_accuracyFew.setChecked(false);
         m_accuracyNone.setChecked(false);
         m_accuracyCannotTell.setChecked(false);
+        m_accuracyNA.setChecked(false);
 
         int accValue = m_matchData.getAccuracyRate();
         if (accValue == 0)
-            m_accuracyMost.setChecked(true);
+            m_accuracyNA.setChecked(true);
         else if(accValue == 1)
-            m_accuracyThreeFourths.setChecked(true);
+            m_accuracyMost.setChecked(true);
         else if(accValue == 2)
-            m_accuracyHalf.setChecked(true);
+            m_accuracyThreeFourths.setChecked(true);
         else if(accValue == 3)
-            m_accuracyQuarters.setChecked(true);
+            m_accuracyHalf.setChecked(true);
         else if(accValue == 4)
-            m_accuracyFew.setChecked(true);
+            m_accuracyQuarters.setChecked(true);
         else if(accValue == 5)
-            m_accuracyNone.setChecked(true);
+            m_accuracyFew.setChecked(true);
         else if(accValue == 6)
+            m_accuracyNone.setChecked(true);
+        else if(accValue == 7)
             m_accuracyCannotTell.setChecked(true);
 
         m_passingEffectivenessButtonsGroup = v.findViewById(R.id.passing_effectiveness_buttons);
@@ -421,8 +426,8 @@ public class TeleopFragment extends Fragment
         // Check acquired totals for MAX
         if (isGreaterThanMax(m_hoppersUsedTotal,true))
             m_hoppersUsedTotal.setTextColor(Color.RED);
-        if (isGreaterThanMax(m_hoppersUsedTotal,false))
-            m_hoppersUsedTotal.setTextColor(Color.RED);
+       /* if (isGreaterThanMax(m_hoppersUsedTotal,false))
+            m_hoppersUsedTotal.setTextColor(Color.RED); */
 
         // Check coral levels for MAX
        /* if (isGreaterThanMax(m_teleopL1Total,true))
@@ -439,35 +444,39 @@ public class TeleopFragment extends Fragment
     
     public int getCurrentAccuracyLevel()
     {
-        // Returns the integer climb level that is current checked in the radio buttons
+        // Returns the integer accuracy level that is current checked in the radio buttons
         int rtn = 0;
-        if (m_accuracyButtonGroup.getCheckedRadioButtonId() == m_accuracyMost.getId())
+        if (m_accuracyButtonGroup.getCheckedRadioButtonId() == m_accuracyNA.getId())
         {
             rtn = 0;
         }
-        if (m_accuracyButtonGroup.getCheckedRadioButtonId() == m_accuracyThreeFourths.getId())
+        if (m_accuracyButtonGroup.getCheckedRadioButtonId() == m_accuracyMost.getId())
         {
             rtn = 1;
         }
-        if (m_accuracyButtonGroup.getCheckedRadioButtonId() == m_accuracyHalf.getId())
+        if (m_accuracyButtonGroup.getCheckedRadioButtonId() == m_accuracyThreeFourths.getId())
         {
             rtn = 2;
         }
-        if (m_accuracyButtonGroup.getCheckedRadioButtonId() == m_accuracyQuarters.getId())
+        if (m_accuracyButtonGroup.getCheckedRadioButtonId() == m_accuracyHalf.getId())
         {
             rtn = 3;
         }
-        if (m_accuracyButtonGroup.getCheckedRadioButtonId() == m_accuracyFew.getId())
+        if (m_accuracyButtonGroup.getCheckedRadioButtonId() == m_accuracyQuarters.getId())
         {
             rtn = 4;
         }
-        if (m_accuracyButtonGroup.getCheckedRadioButtonId() == m_accuracyNone.getId())
+        if (m_accuracyButtonGroup.getCheckedRadioButtonId() == m_accuracyFew.getId())
         {
             rtn = 5;
         }
-        if (m_accuracyButtonGroup.getCheckedRadioButtonId() == m_accuracyCannotTell.getId())
+        if (m_accuracyButtonGroup.getCheckedRadioButtonId() == m_accuracyNone.getId())
         {
             rtn = 6;
+        }
+        if (m_accuracyButtonGroup.getCheckedRadioButtonId() == m_accuracyCannotTell.getId())
+        {
+            rtn = 7;
         }
         return rtn;
     }
