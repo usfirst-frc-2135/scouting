@@ -29,15 +29,12 @@ public class MatchData
     private static final String JSON_KEY_STARTING_POSITION = "startingPosition";
     private static final String JSON_KEY_PRELOAD = "preload";
 
-    private static final String JSON_KEY_AUTON_CORAL_L4 = "autonCoralL4";
+    private static final String JSON_KEY_AUTON_HOPPER = "autonHopper";
 
     private static final String JSON_KEY_FLOOR_CORAL= "floorCoral";
     private static final String JSON_KEY_STATION_CORAL = "stationCoral";
     private static final String JSON_KEY_FLOOR_ALGAE= "floorAlgae";
     private static final String JSON_KEY_REEF_ALGAE = "reefAlgae";
-
-    private static final String JSON_KEY_AUTON_ALGAE_NET = "autonAlgaeNet";
-    private static final String JSON_KEY_AUTON_ALGAE_PROCESSOR = "autonAlgaeProcessor";
 
     // Teleop data
     private static final String JSON_KEY_HOPPERS_USED= "hoppersUsed";
@@ -70,15 +67,13 @@ public class MatchData
     private int m_startingPos;
     private boolean m_autonPreload;
 
-    private int m_autonCoralL4;
+    private int m_autonHopper;
 
     private boolean m_coralFloor;
     private boolean m_coralStation;
     private boolean m_algaeFloor;
     private boolean m_algaeReef;
 
-    private int m_autonAlgaeNet;
-    private int m_autonAlgaeProcessor;
 
     // Teleop data
     //private int m_teleopCoralL1;
@@ -135,15 +130,12 @@ public class MatchData
         setAutonPreload(false);
         //setStartingPosition(0);
 
-        setAutonCoralL4(0);
+        setAutonHopper(0);
 
         setFloorCoral(false);
         setStationCoral(false);
         setFloorAlgae(false);
         setReefAlgae(false);
-
-        setAutonAlgaeNet(0);
-        setAutonAlgaeProcessor(0);
 
         // Teleop data
         setHoppersUsed(0);
@@ -192,15 +184,12 @@ public class MatchData
         //setStartingPosition(json.getInt(JSON_KEY_STARTING_POSITION));
         setAutonPreload(json.getBoolean(JSON_KEY_PRELOAD));
 
-        setAutonCoralL4(json.getInt(JSON_KEY_AUTON_CORAL_L4));
+        setAutonHopper(json.getInt(JSON_KEY_AUTON_HOPPER));
 
         setFloorCoral(json.getBoolean(JSON_KEY_FLOOR_CORAL));
         setStationCoral(json.getBoolean(JSON_KEY_STATION_CORAL));
         setFloorAlgae(json.getBoolean(JSON_KEY_FLOOR_ALGAE));
         setReefAlgae(json.getBoolean(JSON_KEY_REEF_ALGAE));
-
-        setAutonAlgaeNet(json.getInt(JSON_KEY_AUTON_ALGAE_NET));
-        setAutonAlgaeProcessor(json.getInt(JSON_KEY_AUTON_ALGAE_PROCESSOR));
 
         // Teleop data
         setHoppersUsed(json.getInt(JSON_KEY_HOPPERS_USED));
@@ -306,32 +295,13 @@ public class MatchData
 
 
 
-    public void setAutonCoralL4(int numCoral) { m_autonCoralL4 = numCoral; }
+    public void setAutonHopper(int numCoral) { m_autonHopper = numCoral; }
 
-    public int getAutonCoralL4()
+    public boolean getAutonPreload()
     {
-        return m_autonCoralL4;
+        return m_autonPreload;
     }
 
-    public void setAutonAlgaeNet(int numNet)
-    {
-        m_autonAlgaeNet = numNet;
-    }
-
-    public int getAutonAlgaeNet()
-    {
-        return m_autonAlgaeNet;
-    }
-
-    public void setAutonAlgaeProcessor(int numProcessor)
-    {
-        m_autonAlgaeProcessor = numProcessor;
-    }
-
-    public int getAutonAlgaeProcessor()
-    {
-        return m_autonAlgaeProcessor;
-    }
 
     ////////////  m_autonPreload   /////////////////////
 
@@ -341,9 +311,9 @@ public class MatchData
         m_autonPreload = x;
     }
 
-    public boolean getAutonPreload()
+    public int getAutonHopper()
     {
-        return m_autonPreload;
+        return m_autonHopper;
     }
 
     public void setFloorCoral(boolean floorCoral)
@@ -597,9 +567,7 @@ public class MatchData
             tsvStr += "1" + "\t";
         else tsvStr += "0" + "\t";
 
-        tsvStr += m_autonCoralL4 + "\t";
-        tsvStr += m_autonAlgaeNet + "\t";
-        tsvStr += m_autonAlgaeProcessor + "\t";
+        tsvStr += m_autonHopper + "\t";
         if (m_coralFloor)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
         else tsvStr += "0" + "\t";
@@ -667,7 +635,7 @@ public class MatchData
         json.put("divider", ",");
         json.put("divider", ", \n");
 
-        json.put("headings", "Competition, Team Number, Match Number, Starting Pos, Preload, Auton Coral L4, Auton Algae Net, Auton Algae Processor, Auton Coral Floor, Auton Coral Station, Auton Algae Floor, Teleop Hoppers Used, Accuracy Rate, Intake and Shoot, Neutral to Alliance Passing, Alliance to Alliance Passing, Passing Effectiveness Rate, Defense, Cage Climb, Start Climb, Died, Comments, Timestamp, MatchID \n");
+        json.put("headings", "Competition, Team Number, Match Number, Starting Pos, Preload, Auton Hopper, Auton Algae Net, Auton Algae Processor, Auton Coral Floor, Auton Coral Station, Auton Algae Floor, Teleop Hoppers Used, Accuracy Rate, Intake and Shoot, Neutral to Alliance Passing, Alliance to Alliance Passing, Passing Effectiveness Rate, Defense, Cage Climb, Start Climb, Died, Comments, Timestamp, MatchID \n");
         json.put(JSON_KEY_EVENT_CODE, m_eventCode);
         json.put("divider", ",");
         json.put(JSON_KEY_TEAM_NUMBER, m_teamNumber);
@@ -680,11 +648,7 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_PRELOAD, m_autonPreload);
         json.put("divider", ",");
-        json.put(JSON_KEY_AUTON_CORAL_L4, m_autonCoralL4);
-        json.put("divider", ",");
-        json.put(JSON_KEY_AUTON_ALGAE_NET, m_autonAlgaeNet);
-        json.put("divider", ",");
-        json.put(JSON_KEY_AUTON_ALGAE_PROCESSOR, m_autonAlgaeProcessor);
+        json.put(JSON_KEY_AUTON_HOPPER, m_autonHopper);
         json.put("divider", ",");
         json.put(JSON_KEY_FLOOR_CORAL, m_coralFloor);
         json.put("divider", ",");

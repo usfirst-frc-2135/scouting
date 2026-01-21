@@ -23,26 +23,13 @@ public class AutonFragment extends Fragment
 {
     private static final String TAG = "AutonFragment";
     private static final int MAX_NUM_CORAL = 3;
-    private static final int MAX_NUM_ALGAE = 2;
+    //private static final int MAX_NUM_ALGAE = 2;
     private CheckBox m_preloadCheckbox;
 
 
-    private TextView m_autonL4Total;
-    private Button m_autonL1IncrButton;
-    private Button m_autonL1DecrButton;
-    private Button m_autonL2IncrButton;
-    private Button m_autonL2DecrButton;
-    private Button m_autonL3IncrButton;
-    private Button m_autonL3DecrButton;
-    private Button m_autonL4IncrButton;
-    private Button m_autonL4DecrButton;
-
-    private TextView m_autonAlgaeNetTotal;
-    private TextView m_autonAlgaeProcTotal;
-    private Button m_autonAlgaeNetIncrButton;
-    private Button m_autonAlgaeNetDecrButton;
-    private Button m_autonAlgaeProcIncrButton;
-    private Button m_autonAlgaeProcDecrButton;
+    private TextView m_autonHopperTotal;
+    private Button m_autonHopperIncrButton;
+    private Button m_autonHopperDecrButton;
 
     private MatchData m_matchData;
 
@@ -54,11 +41,11 @@ public class AutonFragment extends Fragment
         if (bIsCoral == true) {
             if (num > MAX_NUM_CORAL)  // for coral number
                 rtn = true;
-        } else  // for algae number
+        } /* else  // for algae number
         {       
             if (num > MAX_NUM_ALGAE)
                 rtn = true;
-        }
+        }*/
         return rtn;
     }
 
@@ -130,28 +117,28 @@ public class AutonFragment extends Fragment
         // Creates a view using the specific fragment layout
         View v = inflater.inflate(R.layout.auton_fragment, parent, false);
 
-        m_autonL4Total = v.findViewById(R.id.auton_L4_score_total);
-        m_autonL4Total.setText(String.valueOf(m_matchData.getAutonCoralL4()));
-        m_autonL4DecrButton = v.findViewById(R.id.auton_L4_decr_button);
-        m_autonL4IncrButton = v.findViewById(R.id.auton_L4_incr_button);
+        m_autonHopperTotal = v.findViewById(R.id.auton_Hopper_score_total);
+        m_autonHopperTotal.setText(String.valueOf(m_matchData.getAutonHopper()));
+        m_autonHopperDecrButton = v.findViewById(R.id.auton_Hopper_decr_button);
+        m_autonHopperIncrButton = v.findViewById(R.id.auton_Hopper_incr_button);
 
         // Set up Coral L1-L4 incr/decr buttons.
 
-        m_autonL4IncrButton.setOnClickListener(new View.OnClickListener()
+        m_autonHopperIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                updateTotalsInt(m_autonL4Total, true, true);
+                updateTotalsInt(m_autonHopperTotal, true, true);
             }
         });
 
-        m_autonL4DecrButton.setOnClickListener(new View.OnClickListener()
+        m_autonHopperDecrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                updateTotalsInt(m_autonL4Total, false, true);
+                updateTotalsInt(m_autonHopperTotal, false, true);
             }
         });
 
@@ -159,57 +146,18 @@ public class AutonFragment extends Fragment
         m_preloadCheckbox.setChecked(m_matchData.getAutonPreload());
 
         // Set up Algae Net/Proc incr/decr buttons and listeners.
-        m_autonAlgaeNetTotal = v.findViewById(R.id.auton_algae_net_total);
-        m_autonAlgaeNetTotal.setText(String.valueOf(m_matchData.getAutonAlgaeNet()));
-        m_autonAlgaeNetDecrButton = v.findViewById(R.id.auton_algae_net_decr_button);
-        m_autonAlgaeNetIncrButton = v.findViewById(R.id.auton_algae_net_incr_button);
-        m_autonAlgaeProcTotal = v.findViewById(R.id.auton_algae_proc_total);
-        m_autonAlgaeProcTotal.setText(String.valueOf(m_matchData.getAutonAlgaeProcessor()));
-        m_autonAlgaeProcDecrButton = v.findViewById(R.id.auton_algae_proc_decr_button);
-        m_autonAlgaeProcIncrButton = v.findViewById(R.id.auton_algae_proc_incr_button);
-
-        m_autonAlgaeNetIncrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                updateTotalsInt(m_autonAlgaeNetTotal, true, false);
-            }
-        });
-        m_autonAlgaeNetDecrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                updateTotalsInt(m_autonAlgaeNetTotal, false, false);
-            }
-        });
-        m_autonAlgaeProcIncrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                updateTotalsInt(m_autonAlgaeProcTotal, true, false);
-            }
-        });
-        m_autonAlgaeProcDecrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                updateTotalsInt(m_autonAlgaeProcTotal, false, false);
-            }
-        });
-
         // Check coral levels for MAX
-        if (isGreaterThanMax(m_autonL4Total,true))
-            m_autonL4Total.setTextColor(Color.RED);
+        if (isGreaterThanMax(m_autonHopperTotal,true))
+            m_autonHopperTotal.setTextColor(Color.RED);
 
         // Check algae for MAX
+        /*
         if (isGreaterThanMax(m_autonAlgaeNetTotal,false))
             m_autonAlgaeNetTotal.setTextColor(Color.RED);
         if (isGreaterThanMax(m_autonAlgaeProcTotal,false))
             m_autonAlgaeProcTotal.setTextColor(Color.RED);
+
+         */
 
         return v;
     }
@@ -218,11 +166,7 @@ public class AutonFragment extends Fragment
     public void updateAutonData()
     {
 
-        m_matchData.setAutonCoralL4(Integer.parseInt(m_autonL4Total.getText().toString()));
-
-        m_matchData.setAutonAlgaeNet(Integer.parseInt(m_autonAlgaeNetTotal.getText().toString()));
-        m_matchData.setAutonAlgaeProcessor(Integer.parseInt(m_autonAlgaeProcTotal.getText().toString()));
-
+        m_matchData.setAutonHopper(Integer.parseInt(m_autonHopperTotal.getText().toString()));
         m_matchData.setAutonPreload(m_preloadCheckbox.isChecked());
 
         // Determine the reefscape face for each checkbox.
