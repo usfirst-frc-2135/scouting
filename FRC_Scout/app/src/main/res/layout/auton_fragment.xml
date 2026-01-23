@@ -133,27 +133,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
+                    android:textSize="30sp"
                     android:buttonTint="#8957A1"
-                    android:text="3/4" />
+                    android:text="¾" />
 
                 <RadioButton
                     android:id="@+id/auton_accuracy_half"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
+                    android:textSize="30sp"
                     android:buttonTint="#8957A1"
-                    android:text="1/2" />
+                    android:text="½" />
 
                 <RadioButton
                     android:id="@+id/auton_accuracy_quarter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
+                    android:textSize="30sp"
                     android:buttonTint="#8957A1"
-                    android:text="1/4" />
+                    android:text="¼" />
 
                 <RadioButton
                     android:id="@+id/auton_accuracy_few"
@@ -184,8 +184,69 @@
 
             </RadioGroup>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/preload_tsitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="GOT FUEL FROM"
+                    android:textColor="@color/specialTextPrimary"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="17dp"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#EFE2FF"
+                    android:orientation="horizontal"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp">
+
+                    <CheckBox
+                        android:id="@+id/az_checkbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:buttonTint="#8957A1"
+                        android:text="ALLIANCE ZONE"
+                        android:textColor="@color/specialTextPrimary"
+                        android:textSize="22sp" />
+
+                    <CheckBox
+                        android:id="@+id/depot_checkbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:buttonTint="#8957A1"
+                        android:text="DEPOT"
+                        android:textColor="@color/specialTextPrimary"
+                        android:textSize="22sp" />
+
+                    <CheckBox
+                        android:id="@+id/outpost_checkbox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:buttonTint="#8957A1"
+                        android:text="OUTPOST"
+                        android:textColor="@color/specialTextPrimary"
+                        android:textSize="22sp" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
         </LinearLayout>
+
+
 
     </LinearLayout>
 

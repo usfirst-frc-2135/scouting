@@ -28,6 +28,10 @@ public class MatchData
     // Auton data
     private static final String JSON_KEY_STARTING_POSITION = "startingPosition";
     private static final String JSON_KEY_PRELOAD = "preload";
+    private static final String JSON_KEY_AUTON_AZ = "autonAz";
+    private static final String JSON_KEY_AUTON_DEPOT = "autonDepot";
+    private static final String JSON_KEY_AUTON_OUTPOST = "autonOutpost";
+
 
     private static final String JSON_KEY_AUTON_HOPPER = "autonHopper";
 
@@ -67,8 +71,12 @@ public class MatchData
     // Auton data
     private int m_startingPos;
     private boolean m_autonPreload;
+    private boolean m_autonAz;
+    private boolean m_autonDepot;
+    private boolean m_autonOutpost;
 
     private int m_autonHopper;
+
 
     private boolean m_coralFloor;
     private boolean m_coralStation;
@@ -130,7 +138,10 @@ public class MatchData
         m_matchNumber = "";
         // Auton data
         setAutonPreload(false);
-        //setStartingPosition(0);
+
+        setAutonAzCheckbox(false);
+        setAutonDepotCheckbox(false);
+        setAutonOutpostCheckbox(false);
 
         setAutonHopper(0);
 
@@ -185,6 +196,10 @@ public class MatchData
         // Auton data
         //setStartingPosition(json.getInt(JSON_KEY_STARTING_POSITION));
         setAutonPreload(json.getBoolean(JSON_KEY_PRELOAD));
+
+        setAutonAzCheckbox(json.getBoolean(JSON_KEY_AUTON_AZ));
+        setAutonDepotCheckbox(json.getBoolean(JSON_KEY_AUTON_DEPOT));
+        setAutonOutpostCheckbox(json.getBoolean(JSON_KEY_AUTON_OUTPOST));
 
         setAutonHopper(json.getInt(JSON_KEY_AUTON_HOPPER));
 
@@ -300,24 +315,57 @@ public class MatchData
 
     public void setAutonHopper(int numCoral) { m_autonHopper = numCoral; }
 
+    public int getAutonHopper()
+    {
+        return m_autonHopper;
+    }
+
     public boolean getAutonPreload()
     {
         return m_autonPreload;
     }
 
-
-    ////////////  m_autonPreload   /////////////////////
-
-    public void setAutonPreload(boolean x)
+    public void setAutonPreload(boolean preload)
     {
 
-        m_autonPreload = x;
+        m_autonPreload = preload;
     }
 
-    public int getAutonHopper()
+    public boolean getAutonAzCheckbox()
     {
-        return m_autonHopper;
+        return m_autonAz;
     }
+
+    public void setAutonAzCheckbox(boolean autonAz)
+    {
+
+        m_autonAz = autonAz;
+    }
+
+    public boolean getAutonDepotCheckbox()
+    {
+        return m_autonDepot;
+    }
+
+    public void setAutonDepotCheckbox(boolean autonDepot)
+    {
+
+        m_autonDepot = autonDepot;
+    }
+
+    public boolean getAutonOutpostCheckbox()
+    {
+        return m_autonOutpost;
+    }
+
+    public void setAutonOutpostCheckbox(boolean autonOutpost)
+    {
+
+        m_autonOutpost = autonOutpost;
+    }
+
+
+
 
     public void setFloorCoral(boolean floorCoral)
     {
@@ -576,10 +624,13 @@ public class MatchData
         // For teamNumber, strip off 'frc' prefix.
         tsvStr += stripTeamNumPrefix(m_teamNumber) + "\t";
 
-        tsvStr += m_startingPos + "\t";
-        if (m_autonPreload)  // bool value: use 1/0 instead of true/false
-            tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
+        tsvStr += m_autonPreload + "\t";
+
+        tsvStr += m_autonAz + "\t";
+        
+        tsvStr += m_autonDepot + "\t";
+
+        tsvStr += m_autonOutpost + "\t";
 
         tsvStr += m_autonHopper + "\t";
         if (m_coralFloor)  // bool value: use 1/0 instead of true/false
@@ -662,6 +713,12 @@ public class MatchData
         json.put(JSON_KEY_STARTING_POSITION, m_startingPos);
         json.put("divider", ",");
         json.put(JSON_KEY_PRELOAD, m_autonPreload);
+        json.put("divider", ",");
+        json.put(JSON_KEY_AUTON_AZ, m_autonAz);
+        json.put("divider", ",");
+        json.put(JSON_KEY_AUTON_DEPOT, m_autonDepot);
+        json.put("divider", ",");
+        json.put(JSON_KEY_AUTON_OUTPOST, m_autonOutpost);
         json.put("divider", ",");
         json.put(JSON_KEY_AUTON_HOPPER, m_autonHopper);
         json.put("divider", ",");

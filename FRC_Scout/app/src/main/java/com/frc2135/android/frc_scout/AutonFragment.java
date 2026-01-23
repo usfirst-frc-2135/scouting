@@ -27,6 +27,9 @@ public class AutonFragment extends Fragment
     private static final int MAX_NUM_CORAL = 3;
     //private static final int MAX_NUM_ALGAE = 2;
     private CheckBox m_preloadCheckbox;
+    private CheckBox m_azCheckbox;
+    private CheckBox m_depotCheckbox;
+    private CheckBox m_outpostCheckbox;
 
 
     private TextView m_autonHopperTotal;
@@ -156,6 +159,14 @@ public class AutonFragment extends Fragment
 
         m_preloadCheckbox = v.findViewById(R.id.preload_checkbox);
         m_preloadCheckbox.setChecked(m_matchData.getAutonPreload());
+
+        m_azCheckbox = v.findViewById(R.id.az_checkbox);
+        m_azCheckbox.setChecked(m_matchData.getAutonAzCheckbox());
+        m_depotCheckbox = v.findViewById(R.id.depot_checkbox);
+        m_depotCheckbox.setChecked(m_matchData.getAutonDepotCheckbox());
+        m_outpostCheckbox = v.findViewById(R.id.outpost_checkbox);
+        m_outpostCheckbox.setChecked(m_matchData.getAutonOutpostCheckbox());
+
         m_autonAccuracyButtonGroup = v.findViewById(R.id.auton_accuracy_buttons);
         m_autonAccuracyMost = v.findViewById(R.id.auton_accuracy_most);
         m_autonAccuracyThreeFourths = v.findViewById(R.id.auton_accuracy_three_fourths);
@@ -245,6 +256,9 @@ public class AutonFragment extends Fragment
 
         m_matchData.setAutonHopper(Integer.parseInt(m_autonHopperTotal.getText().toString()));
         m_matchData.setAutonPreload(m_preloadCheckbox.isChecked());
+        m_matchData.setAutonAzCheckbox(m_azCheckbox.isChecked());
+        m_matchData.setAutonDepotCheckbox(m_depotCheckbox.isChecked());
+        m_matchData.setAutonOutpostCheckbox(m_outpostCheckbox.isChecked());
         m_matchData.setAutonAccuracyRate(getCurrentAutonAccuracyLevel());
 
         // Determine the reefscape face for each checkbox.
