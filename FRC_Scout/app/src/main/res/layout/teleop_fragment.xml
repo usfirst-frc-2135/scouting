@@ -50,7 +50,7 @@
                     android:layout_width="80dp"
                     android:layout_height="40dp"
                     android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#f08080"
+                    android:backgroundTint="#017371"
                     android:text="@string/decrease"
                     android:textColor="#FFFFFF"
                     android:layout_marginTop="5dp"
@@ -73,25 +73,29 @@
                     android:background="@drawable/rounded_rect"
                     android:text="@string/increase"
                     android:layout_marginTop="5dp"
-                    android:backgroundTint="#f08080"
+                    android:backgroundTint="#017371"
                     android:textColor="#FFFFFF"
                     android:textSize="30dp" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginTop="5dp"
                 android:background="#DFE2FB">
 
                 <TextView
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:textSize="20sp"
+                    android:layout_marginStart="7dp"
+                    android:textSize="22sp"
                     android:background="#DFE2FB"
+                    android:layout_marginTop="5dp"
                     android:textColor="@color/specialTextPrimary"
-                    android:text="ACCURACY RATE:" />
+                    android:text="ACCURACY RATE" />
 
             </LinearLayout>
 
@@ -103,6 +107,7 @@
                     android:background="#DFE2FB">
 
                     <RadioButton
+                        android:layout_marginStart="10dp"
                         android:id="@+id/accuracy_NA"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -112,7 +117,6 @@
                         android:text="N/A" />
 
                 <RadioButton
-                    android:layout_marginLeft="10dp"
                     android:layout_marginBottom="5dp"
                     android:id="@+id/accuracy_most"
                     android:layout_width="wrap_content"
@@ -129,7 +133,7 @@
                     android:layout_weight="1"
                     android:textSize="20sp"
                     android:buttonTint="#8957A1"
-                    android:text="3/4" />
+                    android:text="¾" />
 
                 <RadioButton
                     android:id="@+id/accuracy_half"
@@ -138,18 +142,22 @@
                     android:layout_weight="1"
                     android:textSize="20sp"
                     android:buttonTint="#8957A1"
-                    android:text="1/2" />
+                    android:text="½" />
 
                 <RadioButton
+                    android:layout_marginTop="30dp"
+                    android:layout_marginStart="-574dp"
                     android:id="@+id/accuracy_quarter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textSize="20sp"
                     android:buttonTint="#8957A1"
-                    android:text="1/4" />
+                    android:text="¼" />
 
                 <RadioButton
+                    android:layout_marginStart="21dp"
+                    android:layout_marginTop="30dp"
                     android:id="@+id/accuracy_few"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -159,6 +167,8 @@
                     android:text="Few" />
 
                 <RadioButton
+                    android:layout_marginStart="10.5dp"
+                    android:layout_marginTop="30dp"
                     android:id="@+id/accuracy_none"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -168,12 +178,15 @@
                     android:text="0" />
 
                     <RadioButton
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="30dp"
                     android:id="@+id/accuracy_cannot_tell"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textSize="20sp"
                     android:buttonTint="#8957A1"
+                    android:layout_marginBottom="5dp"
                     android:text="IDK" />
 
             </RadioGroup>
@@ -189,7 +202,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="#8957A1"
-                    android:text="INTAKE AND SHOOT AT THE SAME TIME"
+                    android:text="Intake and shoot at the same time"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:textSize="20sp" />
@@ -206,7 +219,6 @@
             android:orientation="horizontal"
             android:paddingTop="2dp">
                 
-<!--start ALGAE SCORING -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -230,8 +242,8 @@
                     android:id="@+id/from_neutral_zone_to_alliance_zone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:buttonTint="#8957A1"
-                    android:text="FROM NEUTRAL ZONE TO ALLIANCE ZONE"
+                    android:buttonTint="#051650"
+                    android:text="From neutral zone to alliance zone"
                     android:layout_marginLeft="10dp"
                     android:textSize="20sp" />
 
@@ -239,8 +251,8 @@
                     android:id="@+id/from_alliance_zone_to_other_alliance_zone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:buttonTint="#8957A1"
-                    android:text="FROM ALLIANCE ZONE TO OTHER ALLIANCE ZONE"
+                    android:buttonTint="#051650"
+                    android:text="From alliance zone to other alliance zone"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:textSize="20sp" />
@@ -248,15 +260,23 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:background="#ADD8EF">
+
+                    <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <TextView
+                        android:textStyle="bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:textSize="20sp"
+                        android:textSize="22sp"
+                        android:layout_marginTop="5dp"
                         android:textColor="@color/specialTextPrimary"
-                        android:text="PASSING EFFECTIVENESS RATE:" />
+                        android:text="PASSING EFFECTIVENESS RATE" />
 
                 </LinearLayout>
 
@@ -274,7 +294,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="20sp"
-                        android:buttonTint="#8957A1"
+                        android:buttonTint="#051650"
                         android:text="N/A" />
 
                     <RadioButton
@@ -283,7 +303,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="20sp"
-                        android:buttonTint="#8957A1"
+                        android:buttonTint="#051650"
                         android:text="Tons" />
 
                     <RadioButton
@@ -292,7 +312,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="20sp"
-                        android:buttonTint="#8957A1"
+                        android:buttonTint="#051650"
                         android:text="Large" />
 
                     <RadioButton
@@ -301,7 +321,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="20sp"
-                        android:buttonTint="#8957A1"
+                        android:buttonTint="#051650"
                         android:text="Medium" />
 
                     <RadioButton
@@ -310,10 +330,11 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="20sp"
-                        android:buttonTint="#8957A1"
+                        android:buttonTint="#051650"
                         android:text="Low" />
 
                 </RadioGroup>
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>
@@ -328,7 +349,7 @@
             android:background="@drawable/rounded_rect"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
-            android:backgroundTint="#b3E5f2">
+            android:backgroundTint="#DEEFF5">
 
             <TextView
                 android:id="@+id/textView3"
@@ -352,7 +373,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textSize="22sp"
-                    android:buttonTint="#8957A1"
+                    android:buttonTint="#051650"
                     android:text="N/A" />
 
                 <RadioButton
@@ -361,7 +382,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textSize="22sp"
-                    android:buttonTint="#8957A1"
+                    android:buttonTint="#051650"
                     android:text="Low"/>
 
                 <RadioButton
@@ -370,7 +391,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textSize="22sp"
-                    android:buttonTint="#8957A1"
+                    android:buttonTint="#051650"
                     android:text="Medium"/>
 
                 <RadioButton
@@ -379,7 +400,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textSize="22sp"
-                    android:buttonTint="#8957A1"
+                    android:buttonTint="#051650"
                     android:text="High"/>
             </RadioGroup>
         </LinearLayout>
