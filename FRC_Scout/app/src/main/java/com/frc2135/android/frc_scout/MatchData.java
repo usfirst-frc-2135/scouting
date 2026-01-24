@@ -44,6 +44,8 @@ public class MatchData
     private static final String JSON_KEY_HOPPERS_USED= "hoppersUsed";
     private static final String JSON_KEY_ACCURACY_RATE= "accuracyRate";
     private static final String JSON_KEY_AUTON_ACCURACY_RATE= "autonAccuracyRate";
+
+    private static final String JSON_KEY_AUTON_CLIMB= "autonClimb";
     private static final String JSON_KEY_INTAKE_AND_SHOOT= "intakeAndShoot";
     private static final String JSON_KEY_NEUTRAL_TO_ALLIANCE_PASSING = "neutralToAlliancePassing";
     private static final String JSON_KEY_ALLIANCE_TO_ALLIANCE_PASSING = "allianceToAlliancePassing";
@@ -94,6 +96,8 @@ public class MatchData
     private int m_hoppersUsed;
     private int m_accuracyRate;
     private int m_autonAccuracyRate;
+
+    private int m_autonClimb;
     private boolean m_intakeAndShoot;
     private boolean m_neutralToAlliancePassing;
     private boolean m_allianceToAlliancePassing;
@@ -200,6 +204,9 @@ public class MatchData
         setAutonAzCheckbox(json.getBoolean(JSON_KEY_AUTON_AZ));
         setAutonDepotCheckbox(json.getBoolean(JSON_KEY_AUTON_DEPOT));
         setAutonOutpostCheckbox(json.getBoolean(JSON_KEY_AUTON_OUTPOST));
+
+        setAutonAccuracyRate(json.getInt(JSON_KEY_AUTON_CLIMB));
+
 
         setAutonHopper(json.getInt(JSON_KEY_AUTON_HOPPER));
 
@@ -509,6 +516,18 @@ public class MatchData
     }
 
 
+    public void setAutonClimb(int autonClimb)
+    {
+        m_autonClimb = autonClimb;
+    }
+
+    public int getAutonClimb()
+    {
+        return m_autonClimb;
+    }
+
+
+
     public void setIntakeAndShoot(boolean intakeAndShoot)
     {
         m_intakeAndShoot = intakeAndShoot;
@@ -627,12 +646,15 @@ public class MatchData
         tsvStr += m_autonPreload + "\t";
 
         tsvStr += m_autonAz + "\t";
-        
+
         tsvStr += m_autonDepot + "\t";
 
         tsvStr += m_autonOutpost + "\t";
 
         tsvStr += m_autonHopper + "\t";
+
+        tsvStr += m_autonClimb + "\t";
+
         if (m_coralFloor)  // bool value: use 1/0 instead of true/false
             tsvStr += "1" + "\t";
         else tsvStr += "0" + "\t";
@@ -735,6 +757,8 @@ public class MatchData
         json.put(JSON_KEY_ACCURACY_RATE, m_accuracyRate);
         json.put("divider", ",");
         json.put(JSON_KEY_AUTON_ACCURACY_RATE, m_autonAccuracyRate);
+        json.put("divider", ",");
+        json.put(JSON_KEY_AUTON_CLIMB, m_autonClimb);
         json.put("divider", ",");
         json.put(JSON_KEY_INTAKE_AND_SHOOT, m_intakeAndShoot);
         json.put("divider", ",");

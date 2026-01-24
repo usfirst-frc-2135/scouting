@@ -124,9 +124,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
+                    android:textSize="25sp"
                     android:buttonTint="#8957A1"
-                    android:text="MOST" />
+                    android:text="M" />
 
                 <RadioButton
                     android:id="@+id/auton_accuracy_three_fourths"
@@ -162,7 +162,7 @@
                     android:layout_weight="1"
                     android:textSize="20sp"
                     android:buttonTint="#8957A1"
-                    android:text="FEW" />
+                    android:text="F" />
 
                 <RadioButton
                     android:id="@+id/auton_accuracy_none"
@@ -242,6 +242,77 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:textSize="20sp"
+                            android:textColor="@color/specialTextPrimary"
+                            android:text="CLIMB" />
+
+                        <RadioGroup
+                            android:id="@+id/auton_climb_buttons"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:background="#DFE2FB">
+
+                            <RadioButton
+                                android:id="@+id/auton_climb_left"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginBottom="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textSize="20sp"
+                                android:buttonTint="#8957A1"
+                                android:text="LEFT" />
+
+                            <RadioButton
+                                android:id="@+id/auton_climb_front"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textSize="20sp"
+                                android:buttonTint="#8957A1"
+                                android:text="FRONT" />
+
+                            <RadioButton
+                                android:id="@+id/auton_climb_right"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:buttonTint="#8957A1"
+                                android:text="RIGHT"
+                                android:textSize="20sp" />
+
+                            <RadioButton
+                                android:id="@+id/auton_climb_back"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:buttonTint="#8957A1"
+                                android:text="BACK"
+                                android:textSize="20sp" />
+
+                            <RadioButton
+                                android:id="@+id/auton_climb_na"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textSize="20sp"
+                                android:buttonTint="#8957A1"
+                                android:text="N/A" />
+
+
+                        </RadioGroup>
+
+
+                    </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>

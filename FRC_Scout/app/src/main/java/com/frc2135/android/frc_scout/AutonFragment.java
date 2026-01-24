@@ -45,6 +45,13 @@ public class AutonFragment extends Fragment
     private RadioButton m_autonAccuracyNone;
     private RadioButton m_autonAccuracyCannotTell;
 
+    private RadioGroup m_autonClimbButtonGroup;
+    private RadioButton m_autonLeft;
+    private RadioButton m_autonFront;
+    private RadioButton m_autonRight;
+    private RadioButton m_autonBack;
+    private RadioButton m_autonNA;
+
 
     private MatchData m_matchData;
 
@@ -183,6 +190,20 @@ public class AutonFragment extends Fragment
         m_autonAccuracyNone.setChecked(false);
         m_autonAccuracyCannotTell.setChecked(false);
 
+        m_autonClimbButtonGroup = v.findViewById(R.id.auton_climb_buttons);
+        m_autonLeft = v.findViewById(R.id.auton_climb_left);
+        m_autonFront = v.findViewById(R.id.auton_climb_front);
+        m_autonRight = v.findViewById(R.id.auton_climb_right);
+        m_autonBack = v.findViewById(R.id.auton_climb_back);
+        m_autonNA = v.findViewById(R.id.auton_climb_na);
+        m_autonLeft.setChecked(false);
+        m_autonFront.setChecked(false);
+        m_autonRight.setChecked(false);
+        m_autonBack.setChecked(false);
+        m_autonNA.setChecked(false);
+
+
+
         int accValue = m_matchData.getAutonAccuracyRate();
         if (accValue == 0)
             m_autonAccuracyMost.setChecked(true);
@@ -198,6 +219,18 @@ public class AutonFragment extends Fragment
             m_autonAccuracyNone.setChecked(true);
         else if(accValue == 6)
             m_autonAccuracyCannotTell.setChecked(true);
+
+        int CaccValue = m_matchData.getAutonClimb();
+        if (CaccValue == 0)
+            m_autonLeft.setChecked(true);
+        else if(CaccValue == 1)
+            m_autonFront.setChecked(true);
+        else if(CaccValue == 2)
+            m_autonRight.setChecked(true);
+        else if(CaccValue == 3)
+            m_autonBack.setChecked(true);
+        else if(CaccValue == 4)
+            m_autonNA.setChecked(true);
 
 
         // Set up Algae Net/Proc incr/decr buttons and listeners.
@@ -251,6 +284,36 @@ public class AutonFragment extends Fragment
         }
         return rtn;
     }
+
+
+    public int getAutonClimb()
+    {
+        // Returns the integer climb level that is current checked in the radio buttons
+        int rtn = 0;
+        if (m_autonClimbButtonGroup.getCheckedRadioButtonId() == m_autonLeft.getId())
+        {
+            rtn = 0;
+        }
+        if (m_autonClimbButtonGroup.getCheckedRadioButtonId() == m_autonFront.getId())
+        {
+            rtn = 1;
+        }
+        if (m_autonClimbButtonGroup.getCheckedRadioButtonId() == m_autonRight.getId())
+        {
+            rtn = 2;
+        }
+        if (m_autonClimbButtonGroup.getCheckedRadioButtonId() == m_autonBack.getId())
+        {
+            rtn = 3;
+        }
+        if (m_autonClimbButtonGroup.getCheckedRadioButtonId() == m_autonNA.getId())
+        {
+            rtn = 4;
+        }
+        return rtn;
+    }
+
+
     public void updateAutonData()
     {
 
@@ -260,6 +323,8 @@ public class AutonFragment extends Fragment
         m_matchData.setAutonDepotCheckbox(m_depotCheckbox.isChecked());
         m_matchData.setAutonOutpostCheckbox(m_outpostCheckbox.isChecked());
         m_matchData.setAutonAccuracyRate(getCurrentAutonAccuracyLevel());
+        m_matchData.setAutonClimb(getAutonClimb());
+
 
         // Determine the reefscape face for each checkbox.
     }
