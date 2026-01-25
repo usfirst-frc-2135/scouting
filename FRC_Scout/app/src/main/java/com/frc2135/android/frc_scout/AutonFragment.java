@@ -44,6 +44,7 @@ public class AutonFragment extends Fragment
     private RadioButton m_autonAccuracyFew;
     private RadioButton m_autonAccuracyNone;
     private RadioButton m_autonAccuracyCannotTell;
+    private RadioButton m_autonAccuracyNA;
 
     private RadioGroup m_autonClimbButtonGroup;
     private RadioButton m_autonLeft;
@@ -181,6 +182,7 @@ public class AutonFragment extends Fragment
         m_autonAccuracyQuarters = v.findViewById(R.id.auton_accuracy_quarter);
         m_autonAccuracyFew = v.findViewById(R.id.auton_accuracy_few);
         m_autonAccuracyNone = v.findViewById(R.id.auton_accuracy_none);
+        m_autonAccuracyNA= v.findViewById(R.id.auton_accuracy_na);
         m_autonAccuracyCannotTell = v.findViewById(R.id.auton_accuracy_cannot_tell);
         m_autonAccuracyMost.setChecked(false);
         m_autonAccuracyThreeFourths.setChecked(false);
@@ -188,6 +190,7 @@ public class AutonFragment extends Fragment
         m_autonAccuracyQuarters.setChecked(false);
         m_autonAccuracyFew.setChecked(false);
         m_autonAccuracyNone.setChecked(false);
+        m_autonAccuracyNA.setChecked(false);
         m_autonAccuracyCannotTell.setChecked(false);
 
         m_autonClimbButtonGroup = v.findViewById(R.id.auton_climb_buttons);
@@ -206,31 +209,33 @@ public class AutonFragment extends Fragment
 
         int accValue = m_matchData.getAutonAccuracyRate();
         if (accValue == 0)
-            m_autonAccuracyMost.setChecked(true);
+            m_autonAccuracyNA.setChecked(true);
         else if(accValue == 1)
-            m_autonAccuracyThreeFourths.setChecked(true);
+            m_autonAccuracyMost.setChecked(true);
         else if(accValue == 2)
-            m_autonAccuracyHalf.setChecked(true);
+            m_autonAccuracyThreeFourths.setChecked(true);
         else if(accValue == 3)
-            m_autonAccuracyQuarters.setChecked(true);
+            m_autonAccuracyHalf.setChecked(true);
         else if(accValue == 4)
-            m_autonAccuracyFew.setChecked(true);
+            m_autonAccuracyQuarters.setChecked(true);
         else if(accValue == 5)
-            m_autonAccuracyNone.setChecked(true);
+            m_autonAccuracyFew.setChecked(true);
         else if(accValue == 6)
+            m_autonAccuracyNone.setChecked(true);
+        else if(accValue == 7)
             m_autonAccuracyCannotTell.setChecked(true);
 
         int CaccValue = m_matchData.getAutonClimb();
         if (CaccValue == 0)
-            m_autonLeft.setChecked(true);
-        else if(CaccValue == 1)
-            m_autonFront.setChecked(true);
-        else if(CaccValue == 2)
-            m_autonRight.setChecked(true);
-        else if(CaccValue == 3)
-            m_autonBack.setChecked(true);
-        else if(CaccValue == 4)
             m_autonNA.setChecked(true);
+        else if(CaccValue == 1)
+            m_autonBack.setChecked(true);
+        else if(CaccValue == 2)
+            m_autonLeft.setChecked(true);
+        else if(CaccValue == 3)
+            m_autonFront.setChecked(true);
+        else if(CaccValue == 4)
+            m_autonRight.setChecked(true);
 
 
         // Set up Algae Net/Proc incr/decr buttons and listeners.
@@ -254,33 +259,37 @@ public class AutonFragment extends Fragment
     {
         // Returns the integer climb level that is current checked in the radio buttons
         int rtn = 0;
-        if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyMost.getId())
+        if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyNA.getId())
         {
             rtn = 0;
         }
-        if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyThreeFourths.getId())
+        if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyMost.getId())
         {
             rtn = 1;
         }
-        if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyHalf.getId())
+        if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyThreeFourths.getId())
         {
             rtn = 2;
         }
-        if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyQuarters.getId())
+        if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyHalf.getId())
         {
             rtn = 3;
         }
-        if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyFew.getId())
+        if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyQuarters.getId())
         {
             rtn = 4;
         }
-        if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyNone.getId())
+        if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyFew.getId())
         {
             rtn = 5;
         }
-        if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyCannotTell.getId())
+        if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyNone.getId())
         {
             rtn = 6;
+        }
+        if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyCannotTell.getId())
+        {
+            rtn = 7;
         }
         return rtn;
     }
@@ -290,23 +299,23 @@ public class AutonFragment extends Fragment
     {
         // Returns the integer climb level that is current checked in the radio buttons
         int rtn = 0;
-        if (m_autonClimbButtonGroup.getCheckedRadioButtonId() == m_autonLeft.getId())
+        if (m_autonClimbButtonGroup.getCheckedRadioButtonId() == m_autonNA.getId())
         {
             rtn = 0;
         }
-        if (m_autonClimbButtonGroup.getCheckedRadioButtonId() == m_autonFront.getId())
+        if (m_autonClimbButtonGroup.getCheckedRadioButtonId() == m_autonBack.getId())
         {
             rtn = 1;
         }
-        if (m_autonClimbButtonGroup.getCheckedRadioButtonId() == m_autonRight.getId())
+        if (m_autonClimbButtonGroup.getCheckedRadioButtonId() == m_autonLeft.getId())
         {
             rtn = 2;
         }
-        if (m_autonClimbButtonGroup.getCheckedRadioButtonId() == m_autonBack.getId())
+        if (m_autonClimbButtonGroup.getCheckedRadioButtonId() == m_autonFront.getId())
         {
             rtn = 3;
         }
-        if (m_autonClimbButtonGroup.getCheckedRadioButtonId() == m_autonNA.getId())
+        if (m_autonClimbButtonGroup.getCheckedRadioButtonId() == m_autonRight.getId())
         {
             rtn = 4;
         }

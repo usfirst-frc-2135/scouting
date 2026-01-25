@@ -12,23 +12,32 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
             android:background="@drawable/rounded_rect"
-            android:backgroundTint="#EFE2FF"
+            android:backgroundTint="#5fc5dc"
             android:orientation="horizontal"
-            android:paddingTop="20dp"
             android:paddingBottom="20dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/preload_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
+                android:layout_marginTop="7dp"
                 android:text="PRELOAD"
                 android:textColor="@color/specialTextPrimary"
                 android:textSize="22sp"
@@ -38,287 +47,348 @@
                 android:id="@+id/preload_checkbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:buttonTint="#8957A1"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="7dp"
+                android:buttonTint="#107eb1"
                 android:text="Preloaded 8 fuel for auton"
                 android:textColor="@color/specialTextPrimary"
                 android:textSize="22sp" />
 
         </LinearLayout>
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#EFE2FF"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/Hopper_label"
-                        android:textStyle="bold"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="5dp"
-                        android:text="HOPPER"
-                        android:textColor="@color/specialTextPrimary"
-                        android:textSize="22sp" />
-
-                    <Button
-                        android:id="@+id/auton_Hopper_decr_button"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@drawable/rounded_rect"
-                        android:backgroundTint="#f08080"
-                        android:text="@string/decrease"
-                        android:textColor="#FFFFFF"
-                        android:textSize="30dp" />
-
-                    <TextView
-                        android:id="@+id/auton_Hopper_score_total"
-                        android:layout_width="50dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:textAlignment="center"
-                        android:textSize="25sp" />
-
-                    <Button
-                        android:id="@+id/auton_Hopper_incr_button"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="30dp"
-                        android:background="@drawable/rounded_rect"
-                        android:backgroundTint="#f08080"
-                        android:text="@string/increase"
-                        android:textColor="#FFFFFF"
-                        android:textSize="30dp" />
-                </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-           android:background="#DFE2FB">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:textSize="20sp"
-                android:textColor="@color/specialTextPrimary"
-                android:text="ACCURACY RATE:" />
-
-            <RadioGroup
-                android:id="@+id/auton_accuracy_buttons"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="#DFE2FB">
-
-                <RadioButton
-                    android:id="@+id/auton_accuracy_most"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="25sp"
-                    android:buttonTint="#8957A1"
-                    android:text="M" />
-
-                <RadioButton
-                    android:id="@+id/auton_accuracy_three_fourths"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="30sp"
-                    android:buttonTint="#8957A1"
-                    android:text="¾" />
-
-                <RadioButton
-                    android:id="@+id/auton_accuracy_half"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="30sp"
-                    android:buttonTint="#8957A1"
-                    android:text="½" />
-
-                <RadioButton
-                    android:id="@+id/auton_accuracy_quarter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="30sp"
-                    android:buttonTint="#8957A1"
-                    android:text="¼" />
-
-                <RadioButton
-                    android:id="@+id/auton_accuracy_few"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="20sp"
-                    android:buttonTint="#8957A1"
-                    android:text="F" />
-
-                <RadioButton
-                    android:id="@+id/auton_accuracy_none"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="20sp"
-                    android:buttonTint="#8957A1"
-                    android:text="0" />
-
-                <RadioButton
-                    android:id="@+id/auton_accuracy_cannot_tell"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="20sp"
-                    android:buttonTint="#8957A1"
-                    android:text="IDK" />
-
-            </RadioGroup>
+            android:layout_marginTop="7dp"
+            android:background="@drawable/rounded_rect"
+            android:backgroundTint="#EE965F"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/preload_tsitle"
-                    android:layout_width="wrap_content"
+                android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/Hopper_label"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="1dp"
+                android:text="HOPPER"
+                android:textColor="@color/specialTextPrimary"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/auton_Hopper_decr_button"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="70dp"
+                android:background="@drawable/rounded_rect"
+                android:backgroundTint="#c64e34"
+                android:text="@string/decrease"
+                android:textColor="#FFFFFF"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/auton_Hopper_score_total"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textAlignment="center"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/auton_Hopper_incr_button"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/rounded_rect"
+                android:backgroundTint="#c64e34"
+                android:text="@string/increase"
+                android:textColor="#FFFFFF"
+                android:textSize="30dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bottom_rounded_rect"
+                android:backgroundTint="#F0A271">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="ACCURACY RATE:"
+                        android:textColor="@color/specialTextPrimary"
+                        android:textStyle="bold"
+                        android:textSize="20sp" />
+
+
+                <RadioGroup
+                    android:id="@+id/auton_accuracy_buttons"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="GOT FUEL FROM"
-                    android:textColor="@color/specialTextPrimary"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal"
+                    android:background="@drawable/bottom_rounded_rect"
+                    android:backgroundTint="#F0A271">
+
+                    <RadioButton
+                        android:layout_marginStart="10dp"
+                        android:id="@+id/auton_accuracy_na"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="20sp"
+                        android:buttonTint="#c64e34"
+                        android:text="N/A" />
+
+                    <RadioButton
+                        android:layout_marginBottom="5dp"
+                        android:id="@+id/auton_accuracy_most"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="20sp"
+                        android:buttonTint="#c64e34"
+                        android:text="Most" />
+
+                    <RadioButton
+                        android:id="@+id/auton_accuracy_three_fourths"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="20sp"
+                        android:buttonTint="#c64e34"
+                        android:text="¾" />
+
+                    <RadioButton
+                        android:id="@+id/auton_accuracy_half"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="20sp"
+                        android:buttonTint="#c45120"
+                        android:text="½" />
+
+                    <RadioButton
+                        android:layout_marginTop="30dp"
+                        android:layout_marginStart="-574dp"
+                        android:id="@+id/auton_accuracy_quarter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="20sp"
+                        android:buttonTint="#c45120"
+                        android:text="¼" />
+
+                    <RadioButton
+                        android:layout_marginStart="21dp"
+                        android:layout_marginTop="30dp"
+                        android:id="@+id/auton_accuracy_few"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="20sp"
+                        android:buttonTint="#c45120"
+                        android:text="Few" />
+
+                    <RadioButton
+                        android:layout_marginStart="10.5dp"
+                        android:layout_marginTop="30dp"
+                        android:id="@+id/auton_accuracy_none"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="20sp"
+                        android:buttonTint="#c45120"
+                        android:text="0" />
+
+                    <RadioButton
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="30dp"
+                        android:id="@+id/auton_accuracy_cannot_tell"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="20sp"
+                        android:buttonTint="#c45120"
+                        android:layout_marginBottom="5dp"
+                        android:text="IDK" />
+
+                </RadioGroup>
+
+
+            </LinearLayout>
+
+            </LinearLayout>
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="17dp"
                     android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#EFE2FF"
-                    android:orientation="horizontal"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="20dp">
+                    android:backgroundTint="#D48C74"
+                    android:orientation="vertical"
+                    android:layout_marginTop="7dp">
 
-                    <CheckBox
-                        android:id="@+id/az_checkbox"
+                    <TextView
+                        android:id="@+id/preload_tsitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:buttonTint="#8957A1"
-                        android:text="ALLIANCE ZONE"
+                        android:text="GOT FUEL FROM"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginStart="5dp"
                         android:textColor="@color/specialTextPrimary"
-                        android:textSize="22sp" />
+                        android:background="#D48C74"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
 
-                    <CheckBox
-                        android:id="@+id/depot_checkbox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:buttonTint="#8957A1"
-                        android:text="DEPOT"
-                        android:textColor="@color/specialTextPrimary"
-                        android:textSize="22sp" />
-
-                    <CheckBox
-                        android:id="@+id/outpost_checkbox"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:buttonTint="#8957A1"
-                        android:text="OUTPOST"
-                        android:textColor="@color/specialTextPrimary"
-                        android:textSize="22sp" />
+                        android:backgroundTint="#e6a28b"
+                        android:orientation="horizontal"
+                        android:paddingTop="7dp"
+                        android:background="@drawable/bottom_rounded_rect"
+                        android:paddingBottom="5dp">
 
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                        <TextView
+                        <CheckBox
+                            android:id="@+id/az_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:textSize="20sp"
+                            android:layout_marginLeft="7dp"
+                            android:buttonTint="#7d4d3d"
+                            android:text="Alliance zone"
                             android:textColor="@color/specialTextPrimary"
-                            android:text="CLIMB" />
+                            android:textSize="22sp" />
 
-                        <RadioGroup
-                            android:id="@+id/auton_climb_buttons"
+                        <CheckBox
+                            android:id="@+id/depot_checkbox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:buttonTint="#7d4d3d"
+                            android:text="Depot"
+                            android:textColor="@color/specialTextPrimary"
+                            android:textSize="22sp" />
+
+                        <CheckBox
+                            android:id="@+id/outpost_checkbox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:background="#DFE2FB">
-
-                            <RadioButton
-                                android:id="@+id/auton_climb_left"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginBottom="5dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textSize="20sp"
-                                android:buttonTint="#8957A1"
-                                android:text="LEFT" />
-
-                            <RadioButton
-                                android:id="@+id/auton_climb_front"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textSize="20sp"
-                                android:buttonTint="#8957A1"
-                                android:text="FRONT" />
-
-                            <RadioButton
-                                android:id="@+id/auton_climb_right"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:buttonTint="#8957A1"
-                                android:text="RIGHT"
-                                android:textSize="20sp" />
-
-                            <RadioButton
-                                android:id="@+id/auton_climb_back"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:buttonTint="#8957A1"
-                                android:text="BACK"
-                                android:textSize="20sp" />
-
-                            <RadioButton
-                                android:id="@+id/auton_climb_na"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textSize="20sp"
-                                android:buttonTint="#8957A1"
-                                android:text="N/A" />
-
-
-                        </RadioGroup>
-
+                            android:layout_marginLeft="30dp"
+                            android:buttonTint="#7d4d3d"
+                            android:text="Outpost"
+                            android:textColor="@color/specialTextPrimary"
+                            android:textSize="22sp" />
 
                     </LinearLayout>
+                </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="420dp"
+            android:layout_marginTop="7dp"
+            android:background="@drawable/rounded_rect"
+            android:backgroundTint="#93A685"
+            android:paddingTop="20dp">
+
+            <TextView
+                android:id="@+id/Climb_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="7dp"
+                android:text="CLIMB"
+                android:textColor="@color/specialTextPrimary"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="370dp"
+                android:layout_height="380dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="1dp"
+                android:background="@drawable/tower_angle_four">
+
+                <RadioGroup
+                    android:id="@+id/auton_climb_buttons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#8957A1"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/auton_climb_na"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="260dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#BECCB8"
+                        android:buttonTint="#748767"
+                        android:text="N/A"
+                        android:textSize="20sp" />
+
+                    <RadioButton
+                        android:id="@+id/auton_climb_back"
+                        android:layout_width="55dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="55dp"
+                        android:layout_marginTop="280dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#BECCB8"
+                        android:buttonTint="#748767"
+                        android:text="B"
+                        android:textSize="20sp" />
+
+                    <RadioButton
+                        android:id="@+id/auton_climb_left"
+                        android:layout_width="55dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="225dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#BECCB8"
+                        android:buttonTint="#748767"
+                        android:text="L"
+                        android:textSize="20dp" />
+
+                    <RadioButton
+                        android:id="@+id/auton_climb_front"
+                        android:layout_width="55dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="300dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#BECCB8"
+                        android:buttonTint="#748767"
+                        android:text="F"
+                        android:textSize="20sp" />
+
+                    <RadioButton
+                        android:id="@+id/auton_climb_right"
+                        android:layout_width="55dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="-10dp"
+                        android:layout_marginTop="155dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#BECCB8"
+                        android:buttonTint="#748767"
+                        android:text="R"
+                        android:textSize="20sp" />
+
+                </RadioGroup>
 
             </LinearLayout>
         </LinearLayout>
-
-
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
