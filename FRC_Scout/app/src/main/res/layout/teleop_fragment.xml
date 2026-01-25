@@ -404,7 +404,18 @@
                     android:text="High"/>
             </RadioGroup>
         </LinearLayout>
-<!-- end DEFENSE section -->
+
+        <LinearLayout
+            android:id="@+id/photo"
+            android:layout_width="589dp"
+            android:layout_height="186dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rebuilt_logo"
+            android:orientation="horizontal"
+            android:paddingTop="2dp">
+
+        </LinearLayout>
 
     </LinearLayout>
 

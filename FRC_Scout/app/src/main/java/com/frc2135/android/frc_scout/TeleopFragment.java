@@ -3,11 +3,14 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -17,19 +20,14 @@ import androidx.fragment.app.Fragment;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import java.util.Random;
+
 
 /** @noinspection SpellCheckingInspection*/
 public class TeleopFragment extends Fragment
 {
     private static final String TAG = "TeleopFragment";
-    private static final int MAX_NUM_HOPPERS = 7;     // algae max expected high total
-   // private static final int MAX_NUM_CORAL= 11;     // coral max expected high total
-
-  /*private CheckBox m_pickUpCoralCkbx;
-    private CheckBox m_pickUpAlgaeCkbx;
-    private CheckBox m_knockAlgaeCkbx;
-    private CheckBox m_algaeFromReefCkbx;
-    private CheckBox m_holdBothCkbx;*/
+    private static final int MAX_NUM_HOPPERS = 7;     // hoppers max expected high total
 
     private TextView m_hoppersUsedTotal;
     private Button m_hoppersUsedDecrButton;
@@ -65,27 +63,12 @@ public class TeleopFragment extends Fragment
     private RadioButton m_defenseMedium;
     private RadioButton m_defenseHigh;
 
-  /*  private TextView m_teleopL1Total;
-    private TextView m_teleopL2Total;
-    private TextView m_teleopL3Total;
-    private TextView m_teleopL4Total;
-    private Button m_teleopL1IncrButton;
-    private Button m_teleopL1DecrButton;
-    private Button m_teleopL2IncrButton;
-    private Button m_teleopL2DecrButton;
-    private Button m_teleopL3IncrButton;
-    private Button m_teleopL3DecrButton;
-    private Button m_teleopL4IncrButton;
-    private Button m_teleopL4DecrButton;
 
-    private TextView m_teleopAlgaeNetTotal;
-    private Button m_teleopAlgaeNetIncrButton;
-    private Button m_teleopAlgaeNetDecrButton;
-    private TextView m_teleopAlgaeProcTotal;
-    private Button m_teleopAlgaeProcIncrButton;
-    private Button m_teleopAlgaeProcDecrButton;*/
+    private LinearLayout photo;
 
     private MatchData m_matchData;
+
+    private int m_photoNum;
 
     // Check if pointsTextView field is greater than the MAX_NUM*.
     private boolean isGreaterThanMax(TextView field,boolean bIsHoppers)
@@ -190,158 +173,6 @@ public class TeleopFragment extends Fragment
         m_AllianceToAlliancePassingCkbx = v.findViewById(R.id.from_alliance_zone_to_other_alliance_zone);
         m_AllianceToAlliancePassingCkbx.setChecked(m_matchData.getAllianceToAlliancePassing());
 
-        // Set up listener for algaeAcquired +/-buttons.
-       /* m_algaeAcquiredTotal= v.findViewById(R.id.algae_acquired_total);
-        m_algaeAcquiredTotal.setText(String.valueOf(m_matchData.getAlgaeAcquired()));
-        m_algaeAcquiredDecrButton = v.findViewById(R.id.algae_acquired_decr_button);
-        m_algaeAcquiredIncrButton = v.findViewById(R.id.algae_acquired_incr_button);*/
-       /* m_hoppersUsedDecrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                updateTotalsInt(m_hoppersUsedTotal, false, false) ;
-            }
-        });
-        m_hoppersUsedIncrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                updateTotalsInt(m_hoppersUsedTotal, true, false);
-            }
-        });*/
-
-        // Set up Coral L1-L4 incr/decr buttons and totals
-      /*  m_teleopL1Total = v.findViewById(R.id.teleop_L1_score_total);
-        m_teleopL1Total.setText(String.valueOf(m_matchData.getTeleopCoralL1()));
-        m_teleopL1DecrButton = v.findViewById(R.id.teleop_L1_decr_button);
-        m_teleopL1IncrButton = v.findViewById(R.id.teleop_L1_incr_button);
-        m_teleopL2Total = v.findViewById(R.id.teleop_L2_score_total);
-        m_teleopL2Total.setText(String.valueOf(m_matchData.getTeleopCoralL2()));
-        m_teleopL2DecrButton = v.findViewById(R.id.teleop_L2_decr_button);
-        m_teleopL2IncrButton = v.findViewById(R.id.teleop_L2_incr_button);
-        m_teleopL3Total = v.findViewById(R.id.teleop_L3_score_total);
-        m_teleopL3Total.setText(String.valueOf(m_matchData.getTeleopCoralL3()));
-        m_teleopL3DecrButton = v.findViewById(R.id.teleop_L3_decr_button);
-        m_teleopL3IncrButton = v.findViewById(R.id.teleop_L3_incr_button);
-        m_teleopL4Total = v.findViewById(R.id.teleop_L4_score_total);
-        m_teleopL4Total.setText(String.valueOf(m_matchData.getTeleopCoralL4()));
-        m_teleopL4DecrButton = v.findViewById(R.id.teleop_L4_decr_button);
-        m_teleopL4IncrButton = v.findViewById(R.id.teleop_L4_incr_button);*/
-
-        /*m_teleopL1IncrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                updateTotalsInt(m_teleopL1Total, true,true);
-            }
-        });
-        m_teleopL2IncrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Increases displayed point value by 1
-                updateTotalsInt(m_teleopL2Total, true,true);
-            }
-        });
-        m_teleopL3IncrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //Increases displayed point value by 1
-                updateTotalsInt(m_teleopL3Total, true,true);
-            }
-        });
-        m_teleopL4IncrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                updateTotalsInt(m_teleopL4Total, true,true);
-            }
-        });
-        m_teleopL1DecrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                updateTotalsInt(m_teleopL1Total, false,true);
-            }
-        });
-        m_teleopL2DecrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                updateTotalsInt(m_teleopL2Total, false,true);
-            }
-        });
-        m_teleopL3DecrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                updateTotalsInt(m_teleopL3Total, false,true);
-            }
-        });
-        m_teleopL4DecrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                updateTotalsInt(m_teleopL4Total, false,true);
-            }
-        });*/
-
-        // Set up listener for Scoring Algae Net +/-buttons.
-     /*   m_teleopAlgaeNetTotal= v.findViewById(R.id.teleop_algae_net_total);
-        m_teleopAlgaeNetTotal.setText(String.valueOf(m_matchData.getTeleopAlgaeNet()));
-        m_teleopAlgaeNetDecrButton = v.findViewById(R.id.teleop_algae_net_decr_button);
-        m_teleopAlgaeNetIncrButton = v.findViewById(R.id.teleop_algae_net_incr_button);
-        m_teleopAlgaeNetDecrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                updateTotalsInt(m_teleopAlgaeNetTotal, false, false);
-            }
-        });
-        m_teleopAlgaeNetIncrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                updateTotalsInt(m_teleopAlgaeNetTotal, true, false);
-            }
-        });*/
-
-        // Set up listener for Scoring Algae Proc +/-buttons.
-       /* m_teleopAlgaeProcTotal= v.findViewById(R.id.teleop_algae_proc_total);
-        m_teleopAlgaeProcTotal.setText(String.valueOf(m_matchData.getTeleopAlgaeProcessor()));
-        m_teleopAlgaeProcDecrButton = v.findViewById(R.id.teleop_algae_proc_decr_button);
-        m_teleopAlgaeProcIncrButton = v.findViewById(R.id.teleop_algae_proc_incr_button);
-        m_teleopAlgaeProcDecrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                updateTotalsInt(m_teleopAlgaeProcTotal, false, false);
-            }
-        });
-        m_teleopAlgaeProcIncrButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                updateTotalsInt(m_teleopAlgaeProcTotal, true, false);
-            }
-        });*/
-
-
         m_accuracyButtonGroup = v.findViewById(R.id.accuracy_buttons);
         m_accuracyMost = v.findViewById(R.id.accuracy_most);
         m_accuracyThreeFourths = v.findViewById(R.id.accuracy_three_fourths);
@@ -426,22 +257,117 @@ public class TeleopFragment extends Fragment
         // Check acquired totals for MAX
         if (isGreaterThanMax(m_hoppersUsedTotal,true))
             m_hoppersUsedTotal.setTextColor(Color.RED);
-       /* if (isGreaterThanMax(m_hoppersUsedTotal,false))
-            m_hoppersUsedTotal.setTextColor(Color.RED); */
 
-        // Check coral levels for MAX
-       /* if (isGreaterThanMax(m_teleopL1Total,true))
-            m_teleopL1Total.setTextColor(Color.RED);
-        if (isGreaterThanMax(m_teleopL2Total,true))
-            m_teleopL2Total.setTextColor(Color.RED);
-        if (isGreaterThanMax(m_teleopL3Total,true))
-            m_teleopL3Total.setTextColor(Color.RED);
-        if (isGreaterThanMax(m_teleopL4Total,true))
-            m_teleopL4Total.setTextColor(Color.RED);*/
+        m_photoNum = m_matchData.getTeleopPhoto();
+        Log.i(TAG, "onCreateView: from matchdata, image= " + m_photoNum);
 
+        LinearLayout photo = (LinearLayout)v.findViewById(R.id.photo);
+
+        ViewGroup.LayoutParams params = photo.getLayoutParams();
+
+        if (m_photoNum == 0)
+        {
+            Random random = new Random();
+            double rand = random.nextDouble();
+
+            Log.i(TAG, "onCreateView: from matchdata, random = " + rand);
+
+            if (rand < 0.03)
+            {
+                m_photoNum = 3;
+                m_matchData.setTeleopPhoto(3);
+                photo.setBackgroundResource(R.drawable.me_and_charlotte);
+            }
+            else if (rand < 0.05)
+            {
+                m_photoNum = 5;
+                m_matchData.setTeleopPhoto(5);
+                photo.setBackgroundResource(R.drawable.me_and_charlotte_2);
+            }
+            else if (rand < 0.3)
+            {
+                m_photoNum = 4;
+                m_matchData.setTeleopPhoto(4);
+                photo.setBackgroundResource(R.drawable.frc_logo);
+                params.width = 450;
+                photo.setLayoutParams(params);
+
+            }
+            else if (rand < 0.4)
+            {
+                m_photoNum = 2;
+                m_matchData.setTeleopPhoto(2);
+                photo.setBackgroundResource(R.drawable.rebuilt_logo);
+                params.width = 250;
+                photo.setLayoutParams(params);
+            }
+            else if (rand < 0.5)
+            {
+                m_photoNum = 6;
+                m_matchData.setTeleopPhoto(6);
+                photo.setBackgroundResource(R.drawable.t2135_logo2);
+                params.width = 260;
+                photo.setLayoutParams(params);
+            }
+            else
+            {
+                m_photoNum = 1;
+                m_matchData.setTeleopPhoto(1);
+                photo.setBackgroundResource(R.drawable.rebuilt_fuel);
+                params.width = 250;
+                photo.setLayoutParams(params);
+
+                Random shiny = new Random();
+                double shine = shiny.nextDouble();
+
+                Log.i(TAG, "onCreateView: from matchdata, random = " + shine);
+
+                if (shine < 0.1)
+                {
+                    m_photoNum = 7;
+                    m_matchData.setTeleopPhoto(7);
+                    photo.setBackgroundResource(R.drawable.rebuilt_fuel_shiny);
+                    params.width = 250;
+                    photo.setLayoutParams(params);
+                }
+            }
+        }
+        else if (m_photoNum == 1)
+        {
+            photo.setBackgroundResource(R.drawable.rebuilt_fuel);
+            params.width = 250;
+            photo.setLayoutParams(params);
+        }
+        else if (m_photoNum == 2)
+        {
+            photo.setBackgroundResource(R.drawable.rebuilt_logo);
+            params.width = 250;
+            photo.setLayoutParams(params);
+        }
+        else if (m_photoNum == 3) {
+            photo.setBackgroundResource(R.drawable.me_and_charlotte);
+        }
+        else if (m_photoNum == 4) {
+            photo.setBackgroundResource(R.drawable.frc_logo);
+            params.width = 450;
+            photo.setLayoutParams(params);
+        }
+        else if (m_photoNum == 5) {
+            photo.setBackgroundResource(R.drawable.me_and_charlotte_2);
+        }
+        else if (m_photoNum == 6) {
+            photo.setBackgroundResource(R.drawable.t2135_logo2);
+            params.width = 260;
+            photo.setLayoutParams(params);
+        }
+        else if (m_photoNum == 7) {
+            photo.setBackgroundResource(R.drawable.rebuilt_fuel_shiny);
+            params.width = 250;
+            photo.setLayoutParams(params);
+        }
         return v;
     }
-    
+
     public int getCurrentAccuracyLevel()
     {
         // Returns the integer accuracy level that is current checked in the radio buttons
@@ -536,6 +462,7 @@ public class TeleopFragment extends Fragment
         m_matchData.setHoppersUsed(Integer.parseInt(m_hoppersUsedTotal.getText().toString()));
         m_matchData.setAccuracyRate(getCurrentAccuracyLevel());
         m_matchData.setPassingEffectivenessRate(getCurrentPassingLevel());
+        m_matchData.setTeleopPhoto(m_photoNum);
         //m_matchData.setHoppersUsed(Integer.parseInt(m_algaeAcquiredTotal.getText().toString()));
 
        /* m_matchData.setTeleopAlgaeNet(Integer.parseInt(m_teleopAlgaeNetTotal.getText().toString()));

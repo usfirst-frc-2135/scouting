@@ -103,6 +103,7 @@ public class MatchData
     private boolean m_allianceToAlliancePassing;
     private int m_passingEffectivenessRate;
     private int m_playedDefense;
+    private int m_teleopPhoto;
 
     //endgame
     private int m_cageClimb;
@@ -157,6 +158,7 @@ public class MatchData
         // Teleop data
         setHoppersUsed(0);
         setAccuracyRate(0);
+        setTeleopPhoto(0);
 
         setIntakeAndShoot(false);
         setNeutralToAlliancePassing(false);
@@ -577,6 +579,16 @@ public class MatchData
     public int getPlayedDefense()
     {
         return m_playedDefense;
+    }
+
+    public void setTeleopPhoto(int teleopPhoto)
+    {
+        m_teleopPhoto = teleopPhoto;
+    }
+
+    public int getTeleopPhoto()
+    {
+        return m_teleopPhoto;
     }
 
     public void setCageClimb(int x)
