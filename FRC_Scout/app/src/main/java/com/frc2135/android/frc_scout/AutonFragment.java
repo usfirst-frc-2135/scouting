@@ -24,7 +24,7 @@ import androidx.fragment.app.Fragment;
 public class AutonFragment extends Fragment
 {
     private static final String TAG = "AutonFragment";
-    private static final int MAX_NUM_CORAL = 3;
+    private static final int MAX_NUM_HOPPERS = 1;
     //private static final int MAX_NUM_ALGAE = 2;
     private CheckBox m_preloadCheckbox;
     private CheckBox m_azCheckbox;
@@ -62,7 +62,7 @@ public class AutonFragment extends Fragment
         boolean rtn = false;
         int num = Integer.parseInt(field.getText().toString());
         if (bIsCoral == true) {
-            if (num > MAX_NUM_CORAL)  // for coral number
+            if (num > MAX_NUM_HOPPERS)  // for coral number
                 rtn = true;
         } /* else  // for algae number
         {       
