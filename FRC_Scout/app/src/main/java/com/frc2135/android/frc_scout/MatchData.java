@@ -653,9 +653,28 @@ public class MatchData
         String tsvStr = "";
 
         // For teamNumber, strip off 'frc' prefix.
+        tsvStr += m_eventCode + "\t";
+        tsvStr += m_matchNumber + "\t";
+
         tsvStr += stripTeamNumPrefix(m_teamNumber) + "\t";
 
+        if (!m_teamAlias.equals(""))
+            tsvStr += m_teamAlias + "\t";
+        else tsvStr += "-" + "\t";
+
+        tsvStr += m_name + "\t";   // Scout name
+
+        if (m_died)
+            tsvStr += "1" + "\t";
+        else tsvStr += "0" + "\t";
+
         tsvStr += m_autonPreload + "\t";
+
+        tsvStr += m_autonAccuracyRate + "\t";
+
+        tsvStr += m_autonHopper + "\t";
+
+        tsvStr += m_autonAccuracyRate + "\t";
 
         tsvStr += m_autonAz + "\t";
 
@@ -663,62 +682,27 @@ public class MatchData
 
         tsvStr += m_autonOutpost + "\t";
 
-        tsvStr += m_autonHopper + "\t";
+        tsvStr += m_autonOutpost + "\t";
 
         tsvStr += m_autonClimb + "\t";
 
-        if (m_coralFloor)  // bool value: use 1/0 instead of true/false
-            tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
-
-        if (m_coralStation)  // bool value: use 1/0 instead of true/false
-            tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
-
-        if (m_algaeFloor)  // bool value: use 1/0 instead of true/false
-            tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
-
-        if (m_algaeReef)  // bool value: use 1/0 instead of true/false
-            tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
-
         tsvStr += m_hoppersUsed + "\t";
         tsvStr += m_accuracyRate + "\t";
-        tsvStr += m_autonAccuracyRate + "\t";
 
         tsvStr += m_intakeAndShoot + "\t";
         tsvStr += m_neutralToAlliancePassing + "\t";
         tsvStr += m_allianceToAlliancePassing + "\t";
         tsvStr += m_passingEffectivenessRate + "\t";
 
-        /*tsvStr += m_teleopCoralL1 + "\t";
-        tsvStr += m_teleopCoralL2 + "\t";
-        tsvStr += m_teleopCoralL3 + "\t";
-        tsvStr += m_teleopCoralL4 + "\t";
-        tsvStr += m_teleopAlgaeNet + "\t";
-        tsvStr += m_teleopAlgaeProcessor + "\t";*/
-
         tsvStr += m_playedDefense + "\t";
 
         tsvStr += m_cageClimb + "\t";
         tsvStr += m_startClimb + "\t";
 
-        if (m_died)
-            tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
-
-        tsvStr += m_matchNumber + "\t";
-        tsvStr += m_eventCode + "\t";
-
-        tsvStr += m_name + "\t";   // Scout name
         if (!m_comment.equals(""))
             tsvStr += m_comment + "\t";
         else tsvStr += "-" + "\t";
 
-        if (!m_teamAlias.equals(""))
-            tsvStr += m_teamAlias + "\t";
-        else tsvStr += "-" + "\t";
 
 //HOLD        Log.d(TAG, "MatchData encodeToTSV() columns: " + headers);
         Log.d(TAG, "MatchData encodeToTSV(): " + tsvStr);
@@ -731,46 +715,42 @@ public class MatchData
         JSONObject json = new JSONObject();
 
         json.put("divider", ",");
-        json.put(JSON_KEY_SCOUT_NAME, m_name);  // Scout name
-        json.put("divider", ",");
         json.put("divider", ", \n");
 
         json.put("headings", "Competition, Team Number, Match Number, Starting Pos, Preload, Auton Hopper, Auton Algae Net, Auton Algae Processor, Auton Coral Floor, Auton Coral Station, Auton Algae Floor, Teleop Hoppers Used, Accuracy Rate, Intake and Shoot, Neutral to Alliance Passing, Alliance to Alliance Passing, Passing Effectiveness Rate, Defense, Cage Climb, Start Climb, Died, Comments, Timestamp, MatchID \n");
         json.put(JSON_KEY_EVENT_CODE, m_eventCode);
         json.put("divider", ",");
-        json.put(JSON_KEY_TEAM_NUMBER, m_teamNumber);
-        json.put("divider", ",");
         json.put(JSON_KEY_MATCH_NUMBER, m_matchNumber);
+        json.put("divider", ",");
+        json.put(JSON_KEY_TEAM_NUMBER, m_teamNumber);
         json.put("divider", ",");
         json.put(JSON_KEY_TEAM_ALIAS, m_teamAlias);
         json.put("divider", ",");
-        json.put(JSON_KEY_STARTING_POSITION, m_startingPos);
+        json.put(JSON_KEY_SCOUT_NAME, m_name);
+        json.put("divider", ",");
+        json.put(JSON_KEY_DIED, m_died);
         json.put("divider", ",");
         json.put(JSON_KEY_PRELOAD, m_autonPreload);
         json.put("divider", ",");
-        json.put(JSON_KEY_AUTON_AZ, m_autonAz);
+        json.put(JSON_KEY_AUTON_AZ, m_autonAccuracyRate);
+        json.put("divider", ",");
+        json.put(JSON_KEY_AUTON_HOPPER, m_autonHopper);
+        json.put("divider", ",");
+        json.put(JSON_KEY_AUTON_ACCURACY_RATE, m_autonAccuracyRate);
+        json.put("divider", ",");
+        json.put(JSON_KEY_AUTON_DEPOT, m_autonAz);
         json.put("divider", ",");
         json.put(JSON_KEY_AUTON_DEPOT, m_autonDepot);
         json.put("divider", ",");
         json.put(JSON_KEY_AUTON_OUTPOST, m_autonOutpost);
         json.put("divider", ",");
-        json.put(JSON_KEY_AUTON_HOPPER, m_autonHopper);
+        json.put(JSON_KEY_AUTON_OUTPOST, m_autonOutpost);
         json.put("divider", ",");
-        json.put(JSON_KEY_FLOOR_CORAL, m_coralFloor);
-        json.put("divider", ",");
-        json.put(JSON_KEY_STATION_CORAL, m_coralStation);
-        json.put("divider", ",");
-        json.put(JSON_KEY_FLOOR_ALGAE, m_algaeFloor);
-        json.put("divider", ",");
-        json.put(JSON_KEY_REEF_ALGAE, m_algaeReef);
+        json.put(JSON_KEY_AUTON_CLIMB, m_autonClimb);
         json.put("divider", ",");
         json.put(JSON_KEY_HOPPERS_USED, m_hoppersUsed);
         json.put("divider", ",");
         json.put(JSON_KEY_ACCURACY_RATE, m_accuracyRate);
-        json.put("divider", ",");
-        json.put(JSON_KEY_AUTON_ACCURACY_RATE, m_autonAccuracyRate);
-        json.put("divider", ",");
-        json.put(JSON_KEY_AUTON_CLIMB, m_autonClimb);
         json.put("divider", ",");
         json.put(JSON_KEY_INTAKE_AND_SHOOT, m_intakeAndShoot);
         json.put("divider", ",");
@@ -780,25 +760,11 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_PASSING_EFFECTIVENESS_RATE, m_passingEffectivenessRate);
         json.put("divider", ",");
-       /* json.put(JSON_KEY_TELEOP_CORAL_L1, m_teleopCoralL1);
-        json.put("divider", ",");
-        json.put(JSON_KEY_TELEOP_CORAL_L2, m_teleopCoralL2);
-        json.put("divider", ",");
-        json.put(JSON_KEY_TELEOP_CORAL_L3, m_teleopCoralL3);
-        json.put("divider", ",");
-        json.put(JSON_KEY_TELEOP_CORAL_L4, m_teleopCoralL4);
-        json.put("divider", ",");
-        json.put(JSON_KEY_TELEOP_ALGAE_NET, m_teleopAlgaeNet);
-        json.put("divider", ",");
-        json.put(JSON_KEY_TELEOP_ALGAE_PROCESSOR, m_teleopAlgaeProcessor);
-        json.put("divider", ",");*/
         json.put(JSON_KEY_PLAYED_DEFENSE, m_playedDefense);
         json.put("divider", ",");
         json.put(JSON_KEY_CAGE_CLIMB, m_cageClimb);
         json.put("divider", ",");
         json.put(JSON_KEY_START_CLIMB, m_startClimb);
-        json.put("divider", ",");
-        json.put(JSON_KEY_DIED, m_died);
         json.put("divider", ",");
         json.put(JSON_KEY_COMMENTS, m_comment);
         json.put("divider", ",");
