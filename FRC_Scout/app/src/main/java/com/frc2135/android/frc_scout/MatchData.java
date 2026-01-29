@@ -45,6 +45,7 @@ public class MatchData
     private static final String JSON_KEY_HOPPERS_USED= "hoppersUsed";
     private static final String JSON_KEY_ACCURACY_RATE= "accuracyRate";
     private static final String JSON_KEY_AUTON_ACCURACY_RATE= "autonAccuracyRate";
+    private static final String JSON_KEY_AUTON_PRELOAD_ACCURACY_RATE= "autonPreloadAccuracyRate";
 
     private static final String JSON_KEY_AUTON_CLIMB= "autonClimb";
     private static final String JSON_KEY_INTAKE_AND_SHOOT= "intakeAndShoot";
@@ -98,6 +99,7 @@ public class MatchData
     private int m_hoppersUsed;
     private int m_accuracyRate;
     private int m_autonAccuracyRate;
+    private int m_autonPreloadAccuracyRate;
 
     private int m_autonClimb;
     private boolean m_intakeAndShoot;
@@ -225,6 +227,7 @@ public class MatchData
         setHoppersUsed(json.getInt(JSON_KEY_HOPPERS_USED));
         setAccuracyRate(json.getInt(JSON_KEY_ACCURACY_RATE));
         setAutonAccuracyRate(json.getInt(JSON_KEY_AUTON_ACCURACY_RATE));
+        setPreloadAccuracyLevel(json.getInt(JSON_KEY_AUTON_PRELOAD_ACCURACY_RATE));
 
         setIntakeAndShoot(json.getBoolean(JSON_KEY_INTAKE_AND_SHOOT));
         setNeutralToAlliancePassing(json.getBoolean(JSON_KEY_NEUTRAL_TO_ALLIANCE_PASSING));
@@ -532,6 +535,16 @@ public class MatchData
         return m_autonAccuracyRate;
     }
 
+    public void setPreloadAccuracyLevel(int autonPreloadAccuracyRate)
+    {
+        m_autonPreloadAccuracyRate = autonPreloadAccuracyRate;
+    }
+
+    public int getPreloadAccuracyLevel()
+    {
+        return m_autonPreloadAccuracyRate;
+    }
+
 
     public void setAutonClimb(int autonClimb)
     {
@@ -708,6 +721,8 @@ public class MatchData
 
         tsvStr += m_autonAccuracyRate + "\t";
 
+        tsvStr += m_autonPreloadAccuracyRate + "\t";
+
         tsvStr += m_autonClimb + "\t";
 
         tsvStr += m_hoppersUsed + "\t";
@@ -755,6 +770,8 @@ public class MatchData
         json.put(JSON_KEY_DIED, m_died);
         json.put("divider", ",");
         json.put(JSON_KEY_PRELOAD, m_autonPreload);
+        json.put("divider", ",");
+        json.put(JSON_KEY_AUTON_PRELOAD_ACCURACY_RATE, m_autonPreloadAccuracyRate);
         json.put("divider", ",");
         json.put(JSON_KEY_AUTON_HOPPER, m_autonHopper);
         json.put("divider", ",");

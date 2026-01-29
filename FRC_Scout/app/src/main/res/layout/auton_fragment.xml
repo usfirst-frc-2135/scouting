@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
-            android:background="@drawable/rounded_rect"
+            android:background="@drawable/top_rounded_rect"
             android:backgroundTint="#719da9"
             android:orientation="horizontal"
             android:paddingBottom="20dp">
@@ -53,6 +53,85 @@
                 android:text="Shoot preloaded 8 fuel"
                 android:textColor="@color/specialTextPrimary"
                 android:textSize="22sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bottom_rounded_rect"
+            android:backgroundTint="#8DB0BA">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="PRELOAD ACCURACY RATE:"
+                android:textColor="@color/specialTextPrimary"
+                android:textStyle="bold"
+                android:textSize="20sp" />
+
+
+            <RadioGroup
+                android:id="@+id/auton_accuracy_boxes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/bottom_rounded_rect"
+                android:backgroundTint="#8DB0BA">
+
+                <RadioButton
+                    android:layout_marginStart="10dp"
+                    android:id="@+id/auton_accuracy_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:buttonTint="#457885"
+                    android:text="N/A" />
+
+                <RadioButton
+                    android:id="@+id/auton_accuracy_m"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:buttonTint="#457885"
+                    android:text="Most" />
+
+
+
+                <RadioButton
+                    android:id="@+id/auton_accuracy_s"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:buttonTint="#457885"
+                    android:text="Some" />
+
+                <RadioButton
+                    android:id="@+id/auton_accuracy_f"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:buttonTint="#457885"
+                    android:text="Few" />
+
+                <RadioButton
+                    android:id="@+id/auton_accuracy_idk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:buttonTint="#457885"
+                    android:layout_marginBottom="5dp"
+                    android:text="IDK" />
+
+            </RadioGroup>
+
 
         </LinearLayout>
 
@@ -308,7 +387,7 @@
             android:layout_marginTop="7dp"
             android:background="@drawable/rounded_rect"
             android:backgroundTint="#93A685"
-            android:paddingTop="20dp">
+            android:paddingTop="10dp">
 
             <TextView
                 android:id="@+id/Climb_title"
@@ -322,10 +401,9 @@
                 android:textStyle="bold" />
 
             <LinearLayout
-                android:layout_width="370dp"
-                android:layout_height="380dp"
+                android:layout_width="349dp"
+                android:layout_height="345dp"
                 android:layout_marginLeft="70dp"
-                android:layout_marginTop="1dp"
                 android:background="@drawable/tower_angle_four">
 
                 <RadioGroup
@@ -351,7 +429,7 @@
                         android:id="@+id/auton_climb_back"
                         android:layout_width="55dp"
                         android:layout_height="30dp"
-                        android:layout_marginStart="55dp"
+                        android:layout_marginStart="35dp"
                         android:layout_marginTop="280dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#BECCB8"
@@ -363,8 +441,8 @@
                         android:id="@+id/auton_climb_left"
                         android:layout_width="55dp"
                         android:layout_height="30dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="225dp"
+                        android:layout_marginLeft="17dp"
+                        android:layout_marginTop="205dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#BECCB8"
                         android:buttonTint="#748767"
@@ -376,7 +454,7 @@
                         android:layout_width="55dp"
                         android:layout_height="30dp"
                         android:layout_marginStart="10dp"
-                        android:layout_marginTop="300dp"
+                        android:layout_marginTop="285dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#BECCB8"
                         android:buttonTint="#748767"
@@ -387,8 +465,8 @@
                         android:id="@+id/auton_climb_right"
                         android:layout_width="55dp"
                         android:layout_height="30dp"
-                        android:layout_marginStart="-10dp"
-                        android:layout_marginTop="155dp"
+                        android:layout_marginStart="-20dp"
+                        android:layout_marginTop="140dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#BECCB8"
                         android:buttonTint="#748767"

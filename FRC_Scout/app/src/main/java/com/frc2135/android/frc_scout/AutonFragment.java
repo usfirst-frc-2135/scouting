@@ -47,6 +47,13 @@ public class AutonFragment extends Fragment
     private RadioButton m_autonAccuracyCannotTell;
     private RadioButton m_autonAccuracyNA;
 
+    private RadioGroup m_autonAccuracyBoxes;
+    private RadioButton m_autonAccuracyNo;
+    private RadioButton m_autonAccuracyM;
+    private RadioButton m_autonAccuracyS;
+    private RadioButton m_autonAccuracyF;
+    private RadioButton m_autonAccuracyIDK;
+
     private RadioGroup m_autonClimbButtonGroup;
     private RadioButton m_autonLeft;
     private RadioButton m_autonFront;
@@ -178,6 +185,19 @@ public class AutonFragment extends Fragment
         m_nzCheckbox = v.findViewById(R.id.nz_checkbox);
         m_nzCheckbox.setChecked(m_matchData.getAutonNzCheckbox());
 
+        m_autonAccuracyBoxes = v.findViewById(R.id.auton_accuracy_boxes);
+        m_autonAccuracyNo = v.findViewById(R.id.auton_accuracy_no);
+        m_autonAccuracyM = v.findViewById(R.id.auton_accuracy_m);
+        m_autonAccuracyS = v.findViewById(R.id.auton_accuracy_s);
+        m_autonAccuracyF = v.findViewById(R.id.auton_accuracy_f);
+        m_autonAccuracyIDK = v.findViewById(R.id.auton_accuracy_idk);
+        m_autonAccuracyNo.setChecked(false);
+        m_autonAccuracyM.setChecked(false);
+        m_autonAccuracyS.setChecked(false);
+        m_autonAccuracyF.setChecked(false);
+        m_autonAccuracyIDK.setChecked(false);
+
+
         m_autonAccuracyButtonGroup = v.findViewById(R.id.auton_accuracy_buttons);
         m_autonAccuracyMost = v.findViewById(R.id.auton_accuracy_most);
         m_autonAccuracyThreeFourths = v.findViewById(R.id.auton_accuracy_three_fourths);
@@ -228,6 +248,19 @@ public class AutonFragment extends Fragment
         else if(accValue == 7)
             m_autonAccuracyCannotTell.setChecked(true);
 
+
+        int BaccValue = m_matchData.getPreloadAccuracyLevel();
+        if (BaccValue == 0)
+            m_autonAccuracyNo.setChecked(true);
+        else if(BaccValue == 1)
+            m_autonAccuracyM.setChecked(true);
+        else if(BaccValue == 2)
+            m_autonAccuracyS.setChecked(true);
+        else if(BaccValue == 3)
+            m_autonAccuracyF.setChecked(true);
+        else if(BaccValue == 4)
+            m_autonAccuracyIDK.setChecked(true);
+
         int CaccValue = m_matchData.getAutonClimb();
         if (CaccValue == 0)
             m_autonNA.setChecked(true);
@@ -258,7 +291,7 @@ public class AutonFragment extends Fragment
         return v;
     }
 
-    public int getCurrentAutonAccuracyLevel()
+    public int getAutonAccuracyRate()
     {
         // Returns the integer climb level that is current checked in the radio buttons
         int rtn = 0;
@@ -293,6 +326,34 @@ public class AutonFragment extends Fragment
         if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyCannotTell.getId())
         {
             rtn = 7;
+        }
+        return rtn;
+    }
+
+
+    public int getPreloadAccuracyLevel()
+    {
+        // Returns the integer climb level that is current checked in the radio buttons
+        int rtn = 0;
+        if (m_autonAccuracyBoxes.getCheckedRadioButtonId() == m_autonAccuracyNo.getId())
+        {
+            rtn = 0;
+        }
+        if (m_autonAccuracyBoxes.getCheckedRadioButtonId() == m_autonAccuracyM.getId())
+        {
+            rtn = 1;
+        }
+        if (m_autonAccuracyBoxes.getCheckedRadioButtonId() == m_autonAccuracyS.getId())
+        {
+            rtn = 2;
+        }
+        if (m_autonAccuracyBoxes.getCheckedRadioButtonId() == m_autonAccuracyF.getId())
+        {
+            rtn = 3;
+        }
+        if (m_autonAccuracyBoxes.getCheckedRadioButtonId() == m_autonAccuracyIDK.getId())
+        {
+            rtn = 4;
         }
         return rtn;
     }
@@ -335,7 +396,8 @@ public class AutonFragment extends Fragment
         m_matchData.setAutonAzCheckbox(m_azCheckbox.isChecked());
         m_matchData.setAutonDepotCheckbox(m_depotCheckbox.isChecked());
         m_matchData.setAutonOutpostCheckbox(m_outpostCheckbox.isChecked());
-        m_matchData.setAutonAccuracyRate(getCurrentAutonAccuracyLevel());
+        m_matchData.setAutonAccuracyRate(getAutonAccuracyRate());
+        m_matchData.setPreloadAccuracyLevel(getPreloadAccuracyLevel());
         m_matchData.setAutonClimb(getAutonClimb());
 
 
