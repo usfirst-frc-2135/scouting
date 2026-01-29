@@ -31,6 +31,7 @@ public class MatchData
     private static final String JSON_KEY_AUTON_AZ = "autonAz";
     private static final String JSON_KEY_AUTON_DEPOT = "autonDepot";
     private static final String JSON_KEY_AUTON_OUTPOST = "autonOutpost";
+    private static final String JSON_KEY_AUTON_NZ = "autonNz";
 
 
     private static final String JSON_KEY_AUTON_HOPPER = "autonHopper";
@@ -76,6 +77,7 @@ public class MatchData
     private boolean m_autonAz;
     private boolean m_autonDepot;
     private boolean m_autonOutpost;
+    private boolean m_autonNz;
 
     private int m_autonHopper;
 
@@ -147,6 +149,7 @@ public class MatchData
         setAutonAzCheckbox(false);
         setAutonDepotCheckbox(false);
         setAutonOutpostCheckbox(false);
+        setAutonNzCheckbox(false);
 
         setAutonHopper(0);
 
@@ -206,6 +209,7 @@ public class MatchData
         setAutonAzCheckbox(json.getBoolean(JSON_KEY_AUTON_AZ));
         setAutonDepotCheckbox(json.getBoolean(JSON_KEY_AUTON_DEPOT));
         setAutonOutpostCheckbox(json.getBoolean(JSON_KEY_AUTON_OUTPOST));
+        setAutonNzCheckbox(json.getBoolean(JSON_KEY_AUTON_NZ));
 
         setAutonAccuracyRate(json.getInt(JSON_KEY_AUTON_CLIMB));
 
@@ -371,6 +375,17 @@ public class MatchData
     {
 
         m_autonOutpost = autonOutpost;
+    }
+
+    public boolean getAutonNzCheckbox()
+    {
+        return m_autonNz;
+    }
+
+    public void setAutonNzCheckbox(boolean autonNz)
+    {
+
+        m_autonNz = autonNz;
     }
 
 
@@ -668,21 +683,30 @@ public class MatchData
             tsvStr += "1" + "\t";
         else tsvStr += "0" + "\t";
 
-        tsvStr += m_autonPreload + "\t";
+        if (m_autonPreload)
+            tsvStr += "1" + "\t";
+        else tsvStr += "0" + "\t";
 
-        tsvStr += m_autonAccuracyRate + "\t";
+        if (m_autonAz)
+            tsvStr += "1" + "\t";
+        else tsvStr += "0" + "\t";
+
+        if (m_autonDepot)
+            tsvStr += "1" + "\t";
+        else tsvStr += "0" + "\t";
+
+        if (m_autonOutpost)
+            tsvStr += "1" + "\t";
+        else tsvStr += "0" + "\t";
+
+        if (m_autonNz)
+            tsvStr += "1" + "\t";
+        else tsvStr += "0" + "\t";
+
 
         tsvStr += m_autonHopper + "\t";
 
         tsvStr += m_autonAccuracyRate + "\t";
-
-        tsvStr += m_autonAz + "\t";
-
-        tsvStr += m_autonDepot + "\t";
-
-        tsvStr += m_autonOutpost + "\t";
-
-        tsvStr += m_autonOutpost + "\t";
 
         tsvStr += m_autonClimb + "\t";
 
@@ -732,19 +756,17 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_PRELOAD, m_autonPreload);
         json.put("divider", ",");
-        json.put(JSON_KEY_AUTON_AZ, m_autonAccuracyRate);
-        json.put("divider", ",");
         json.put(JSON_KEY_AUTON_HOPPER, m_autonHopper);
         json.put("divider", ",");
         json.put(JSON_KEY_AUTON_ACCURACY_RATE, m_autonAccuracyRate);
         json.put("divider", ",");
-        json.put(JSON_KEY_AUTON_DEPOT, m_autonAz);
+        json.put(JSON_KEY_AUTON_AZ, m_autonAz);
         json.put("divider", ",");
         json.put(JSON_KEY_AUTON_DEPOT, m_autonDepot);
         json.put("divider", ",");
         json.put(JSON_KEY_AUTON_OUTPOST, m_autonOutpost);
         json.put("divider", ",");
-        json.put(JSON_KEY_AUTON_OUTPOST, m_autonOutpost);
+        json.put(JSON_KEY_AUTON_NZ, m_autonNz);
         json.put("divider", ",");
         json.put(JSON_KEY_AUTON_CLIMB, m_autonClimb);
         json.put("divider", ",");

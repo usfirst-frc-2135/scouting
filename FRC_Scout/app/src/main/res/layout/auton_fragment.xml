@@ -50,7 +50,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="7dp"
                 android:buttonTint="#457885"
-                android:text="Preloaded 8 fuel for auton"
+                android:text="Shoot preloaded 8 fuel"
                 android:textColor="@color/specialTextPrimary"
                 android:textSize="22sp" />
 
@@ -265,7 +265,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="7dp"
                             android:buttonTint="#8e5845"
-                            android:text="Alliance zone"
+                            android:text="Alliance Zone"
                             android:textColor="@color/specialTextPrimary"
                             android:textSize="22sp" />
 
@@ -273,7 +273,7 @@
                             android:id="@+id/depot_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="30dp"
+                            android:layout_marginLeft="20dp"
                             android:buttonTint="#8e5845"
                             android:text="Depot"
                             android:textColor="@color/specialTextPrimary"
@@ -281,11 +281,21 @@
 
                         <CheckBox
                             android:id="@+id/outpost_checkbox"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="30dp"
+                            android:layout_marginLeft="20dp"
                             android:buttonTint="#8e5845"
                             android:text="Outpost"
+                            android:textColor="@color/specialTextPrimary"
+                            android:textSize="22sp" />
+
+                        <CheckBox
+                            android:id="@+id/nz_checkbox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:buttonTint="#8e5845"
+                            android:text="Neutral Zone"
                             android:textColor="@color/specialTextPrimary"
                             android:textSize="22sp" />
 

@@ -30,6 +30,7 @@ public class AutonFragment extends Fragment
     private CheckBox m_azCheckbox;
     private CheckBox m_depotCheckbox;
     private CheckBox m_outpostCheckbox;
+    private CheckBox m_nzCheckbox;
 
 
     private TextView m_autonHopperTotal;
@@ -174,6 +175,8 @@ public class AutonFragment extends Fragment
         m_depotCheckbox.setChecked(m_matchData.getAutonDepotCheckbox());
         m_outpostCheckbox = v.findViewById(R.id.outpost_checkbox);
         m_outpostCheckbox.setChecked(m_matchData.getAutonOutpostCheckbox());
+        m_nzCheckbox = v.findViewById(R.id.nz_checkbox);
+        m_nzCheckbox.setChecked(m_matchData.getAutonNzCheckbox());
 
         m_autonAccuracyButtonGroup = v.findViewById(R.id.auton_accuracy_buttons);
         m_autonAccuracyMost = v.findViewById(R.id.auton_accuracy_most);
@@ -328,6 +331,7 @@ public class AutonFragment extends Fragment
 
         m_matchData.setAutonHopper(Integer.parseInt(m_autonHopperTotal.getText().toString()));
         m_matchData.setAutonPreload(m_preloadCheckbox.isChecked());
+        m_matchData.setAutonNzCheckbox(m_nzCheckbox.isChecked());
         m_matchData.setAutonAzCheckbox(m_azCheckbox.isChecked());
         m_matchData.setAutonDepotCheckbox(m_depotCheckbox.isChecked());
         m_matchData.setAutonOutpostCheckbox(m_outpostCheckbox.isChecked());
