@@ -681,6 +681,8 @@ public class MatchData
         String tsvStr = "";
 
         // For teamNumber, strip off 'frc' prefix.
+        // Boolean values should be "0" or "1," not "true" or "false"
+
         tsvStr += m_eventCode + "\t";
         tsvStr += m_matchNumber + "\t";
 
@@ -700,6 +702,12 @@ public class MatchData
             tsvStr += "1" + "\t";
         else tsvStr += "0" + "\t";
 
+        tsvStr += m_autonPreloadAccuracyRate + "\t";
+
+        tsvStr += m_autonHopper + "\t";
+
+        tsvStr += m_autonAccuracyRate + "\t";
+
         if (m_autonAz)
             tsvStr += "1" + "\t";
         else tsvStr += "0" + "\t";
@@ -716,21 +724,23 @@ public class MatchData
             tsvStr += "1" + "\t";
         else tsvStr += "0" + "\t";
 
-
-        tsvStr += m_autonHopper + "\t";
-
-        tsvStr += m_autonAccuracyRate + "\t";
-
-        tsvStr += m_autonPreloadAccuracyRate + "\t";
-
         tsvStr += m_autonClimb + "\t";
 
         tsvStr += m_hoppersUsed + "\t";
         tsvStr += m_accuracyRate + "\t";
 
-        tsvStr += m_intakeAndShoot + "\t";
-        tsvStr += m_neutralToAlliancePassing + "\t";
-        tsvStr += m_allianceToAlliancePassing + "\t";
+        if (m_intakeAndShoot)
+            tsvStr += "1" + "\t";
+        else tsvStr += "0" + "\t";
+
+        if (m_neutralToAlliancePassing)
+            tsvStr += "1" + "\t";
+        else tsvStr += "0" + "\t";
+
+        if (m_allianceToAlliancePassing)
+            tsvStr += "1" + "\t";
+        else tsvStr += "0" + "\t";
+
         tsvStr += m_passingEffectivenessRate + "\t";
 
         tsvStr += m_playedDefense + "\t";
