@@ -47,12 +47,15 @@ public class AutonFragment extends Fragment
     private RadioButton m_autonAccuracyCannotTell;
     private RadioButton m_autonAccuracyNA;
 
+
     private RadioGroup m_autonAccuracyBoxes;
     private RadioButton m_autonAccuracyNo;
     private RadioButton m_autonAccuracyM;
     private RadioButton m_autonAccuracyS;
     private RadioButton m_autonAccuracyF;
     private RadioButton m_autonAccuracyIDK;
+    private RadioButton m_autonAccuracyN;
+    private RadioButton m_autonAccuracyA;
 
     private RadioGroup m_autonClimbButtonGroup;
     private RadioButton m_autonLeft;
@@ -191,10 +194,14 @@ public class AutonFragment extends Fragment
         m_autonAccuracyS = v.findViewById(R.id.auton_accuracy_s);
         m_autonAccuracyF = v.findViewById(R.id.auton_accuracy_f);
         m_autonAccuracyIDK = v.findViewById(R.id.auton_accuracy_idk);
+        m_autonAccuracyN = v.findViewById(R.id.auton_accuracy_n);
+        m_autonAccuracyA = v.findViewById(R.id.auton_accuracy_a);
         m_autonAccuracyNo.setChecked(false);
         m_autonAccuracyM.setChecked(false);
         m_autonAccuracyS.setChecked(false);
         m_autonAccuracyF.setChecked(false);
+        m_autonAccuracyN.setChecked(false);
+        m_autonAccuracyA.setChecked(false);
         m_autonAccuracyIDK.setChecked(false);
 
 
@@ -253,12 +260,16 @@ public class AutonFragment extends Fragment
         if (BaccValue == 0)
             m_autonAccuracyNo.setChecked(true);
         else if(BaccValue == 1)
-            m_autonAccuracyM.setChecked(true);
+            m_autonAccuracyA.setChecked(true);
         else if(BaccValue == 2)
-            m_autonAccuracyS.setChecked(true);
+            m_autonAccuracyM.setChecked(true);
         else if(BaccValue == 3)
-            m_autonAccuracyF.setChecked(true);
+            m_autonAccuracyS.setChecked(true);
         else if(BaccValue == 4)
+            m_autonAccuracyF.setChecked(true);
+        else if(BaccValue == 5)
+            m_autonAccuracyN.setChecked(true);
+        else if(BaccValue == 6)
             m_autonAccuracyIDK.setChecked(true);
 
         int CaccValue = m_matchData.getAutonClimb();
@@ -339,21 +350,29 @@ public class AutonFragment extends Fragment
         {
             rtn = 0;
         }
-        if (m_autonAccuracyBoxes.getCheckedRadioButtonId() == m_autonAccuracyM.getId())
+        if (m_autonAccuracyBoxes.getCheckedRadioButtonId() == m_autonAccuracyA.getId())
         {
             rtn = 1;
         }
-        if (m_autonAccuracyBoxes.getCheckedRadioButtonId() == m_autonAccuracyS.getId())
+        if (m_autonAccuracyBoxes.getCheckedRadioButtonId() == m_autonAccuracyM.getId())
         {
             rtn = 2;
         }
-        if (m_autonAccuracyBoxes.getCheckedRadioButtonId() == m_autonAccuracyF.getId())
+        if (m_autonAccuracyBoxes.getCheckedRadioButtonId() == m_autonAccuracyS.getId())
         {
             rtn = 3;
         }
-        if (m_autonAccuracyBoxes.getCheckedRadioButtonId() == m_autonAccuracyIDK.getId())
+        if (m_autonAccuracyBoxes.getCheckedRadioButtonId() == m_autonAccuracyF.getId())
         {
             rtn = 4;
+        }
+        if (m_autonAccuracyBoxes.getCheckedRadioButtonId() == m_autonAccuracyN.getId())
+        {
+            rtn = 5;
+        }
+        if (m_autonAccuracyBoxes.getCheckedRadioButtonId() == m_autonAccuracyIDK.getId())
+        {
+            rtn = 6;
         }
         return rtn;
     }

@@ -92,6 +92,16 @@
                     android:text="N/A" />
 
                 <RadioButton
+                    android:id="@+id/auton_accuracy_a"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:buttonTint="#457885"
+                    android:layout_marginBottom="5dp"
+                    android:text="All" />
+
+                <RadioButton
                     android:id="@+id/auton_accuracy_m"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -100,8 +110,6 @@
                     android:buttonTint="#457885"
                     android:text="Most" />
 
-
-
                 <RadioButton
                     android:id="@+id/auton_accuracy_s"
                     android:layout_width="wrap_content"
@@ -109,7 +117,7 @@
                     android:layout_weight="1"
                     android:textSize="20sp"
                     android:buttonTint="#457885"
-                    android:text="Some" />
+                    android:text="Half" />
 
                 <RadioButton
                     android:id="@+id/auton_accuracy_f"
@@ -118,7 +126,17 @@
                     android:layout_weight="1"
                     android:textSize="20sp"
                     android:buttonTint="#457885"
-                    android:text="Few" />
+                    android:text="Some" />
+
+                <RadioButton
+                    android:id="@+id/auton_accuracy_n"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:buttonTint="#457885"
+                    android:layout_marginBottom="5dp"
+                    android:text="None" />
 
                 <RadioButton
                     android:id="@+id/auton_accuracy_idk"
