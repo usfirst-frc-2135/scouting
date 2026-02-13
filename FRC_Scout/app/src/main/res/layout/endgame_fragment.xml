@@ -13,38 +13,122 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="-44dp">
 
-<!-- start CAGE CLIMB section -->
+<!-- start START CLIMB section -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:backgroundTint="#b3E5f2"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="#e2a2cc"
+            android:background="@drawable/rounded_rect"
+            android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@color/specialTextPrimary"
+                    android:textSize="22sp"
+                    android:layout_marginStart="5dp"
+                    android:text="START CLIMBING"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioGroup
+                        android:id="@+id/start_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:backgroundTint="#e8b5d6"
+                        android:background="@drawable/bottom_rounded_rect">
+
+                        <RadioButton
+                            android:id="@+id/start_none"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/specialTextPrimary"
+                            android:text="N/A"
+                            android:layout_weight="1"
+                            android:textColor="@color/specialTextPrimary"
+                            android:textSize="22dp" />
+
+                        <RadioButton
+                            android:id="@+id/start_before"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/specialTextPrimary"
+                            android:text="Before"
+                            android:layout_weight="1"
+                            android:textColor="@color/specialTextPrimary"
+                            android:textSize="22dp" />
+
+                        <RadioButton
+                            android:id="@+id/start_bell"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/specialTextPrimary"
+                            android:text="Bell"
+                            android:layout_weight="1"
+                            android:textColor="@color/specialTextPrimary"
+                            android:textSize="22dp" />
+
+                        <RadioButton
+                            android:id="@+id/start_ten"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/specialTextPrimary"
+                            android:text="10s left"
+                            android:layout_weight="1"
+                            android:textColor="@color/specialTextPrimary"
+                            android:textSize="22dp" />
+
+                        <RadioButton
+                            android:id="@+id/start_less"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/specialTextPrimary"
+                            android:text="less than 10s"
+                            android:layout_weight="1"
+                            android:textColor="@color/specialTextPrimary"
+                            android:textSize="22dp" />
+                    </RadioGroup>
+                </LinearLayout>
+        </LinearLayout>
+<!-- end START CLIMB section -->
+
+<!-- start DIED section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="#b96299"
             android:background="@drawable/rounded_rect"
             android:orientation="vertical">
 
             <TextView
-                android:layout_marginTop="7dp"
                 android:layout_marginEnd="5dp"
                 android:textColor="@color/specialTextPrimary"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="CAGE CLIMB"
+                android:text="DIED"
                 android:textSize="22sp"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal">
-
                 <RadioGroup
-                    android:id="@+id/climb_group"
+                    android:id="@+id/died_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#c781ad"
+                    android:background="@drawable/bottom_rounded_rect"
                     android:orientation="horizontal">
+
                     <RadioButton
-                        android:id="@+id/climb_none"
+                        android:id="@+id/died_none"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/specialTextPrimary"
@@ -52,157 +136,246 @@
                         android:layout_weight="1"
                         android:textColor="@color/specialTextPrimary"
                         android:textSize="22dp" />
+
                     <RadioButton
-                        android:id="@+id/climb_parked"
+                        android:id="@+id/died_most"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:buttonTint="@color/specialTextPrimary"
-                        android:text="Parked"
+                        android:text="Most"
                         android:layout_weight="1"
                         android:textColor="@color/specialTextPrimary"
                         android:textSize="22dp" />
+
                     <RadioButton
-                        android:id="@+id/climb_fell"
+                        android:id="@+id/died_min"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/specialTextPrimary"
-                        android:text="Fell"
+                        android:text="1min+"
                         android:layout_weight="1"
                         android:textColor="@color/specialTextPrimary"
                         android:textSize="22dp" />
+
                     <RadioButton
-                        android:id="@+id/climb_shallow"
+                        android:id="@+id/died_thirty"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/specialTextPrimary"
-                        android:text="Shallow"
+                        android:text="30s+"
                         android:layout_weight="1"
                         android:textColor="@color/specialTextPrimary"
                         android:textSize="22dp" />
+
                     <RadioButton
-                        android:id="@+id/climb_deep"
+                        android:id="@+id/died_tt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/specialTextPrimary"
-                        android:text="Deep"
+                        android:text="30-15s"
+                        android:layout_weight="1"
+                        android:textColor="@color/specialTextPrimary"
+                        android:textSize="22dp" />
+
+                    <RadioButton
+                        android:id="@+id/no_show"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/specialTextPrimary"
+                        android:text="No show"
                         android:layout_weight="1"
                         android:textColor="@color/specialTextPrimary"
                         android:textSize="22dp" />
                 </RadioGroup>
-            </LinearLayout>
         </LinearLayout>
-<!-- end CAGE CLIMB section -->
+        <!-- end DIED section -->
 
-<!-- start START CLIMBING section -->
+
+        <!-- start CLIMB section -->
+        <!--start layout for entire section-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="5dp"
-            android:backgroundTint="#D0CAED"
+            android:layout_height="320dp"
+            android:layout_marginTop="1dp"
             android:background="@drawable/rounded_rect"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="@color/specialTextPrimary"
-                android:textSize="22sp"
-                android:layout_marginStart="5dp"
-                android:text="START CLIMBING"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal">
-
-                <RadioGroup
-                    android:id="@+id/start_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <RadioButton
-                        android:id="@+id/start_none"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/specialTextPrimary"
-                        android:text="N/A"
-                        android:layout_weight="1"
-                        android:textColor="@color/specialTextPrimary"
-                        android:textSize="22dp" />
-                    <RadioButton
-                        android:id="@+id/start_bell"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/specialTextPrimary"
-                        android:text="Before bell"
-                        android:layout_weight="1"
-                        android:textColor="@color/specialTextPrimary"
-                        android:textSize="22dp" />
-                    <RadioButton
-                        android:id="@+id/start_ten"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/specialTextPrimary"
-                        android:text="At bell"
-                        android:layout_weight="1"
-                        android:textColor="@color/specialTextPrimary"
-                        android:textSize="22dp" />
-                    <RadioButton
-                        android:id="@+id/start_five"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/specialTextPrimary"
-                        android:text="Less then 10 sec"
-                        android:layout_weight="1"
-                        android:textColor="@color/specialTextPrimary"
-                        android:textSize="22dp" />
-                </RadioGroup>
-           </LinearLayout>
-        </LinearLayout>
-<!-- end START CLIMBING section -->
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:backgroundTint="#93A685"
             android:orientation="horizontal"
-            android:paddingTop="15dp">
+            android:paddingTop="7dp">
 
-            <TextView
-                android:layout_marginTop="20dp"
-                android:id="@+id/died_title"
-                style="?android:listSeparatorTextViewStyle"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="Died"
-                android:textColor="@color/textPrimary"
-                android:textSize="25sp" />
+        <TextView
+            android:id="@+id/Climb_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="7dp"
+            android:text="CLIMB"
+            android:textColor="@color/specialTextPrimary"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
-            <CheckBox
-                android:layout_marginTop="20dp"
-                android:id="@+id/died_checkbox_true"
+            <!--start layout that holds both of the images-->
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:buttonTint="@color/textPrimary"
-                android:text="Robot Died"
-                android:textColor="@color/textPrimary"
-                android:textSize="20sp" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <!--start layoout that holds first image-->
+                <LinearLayout
+                    android:id="@+id/imageone"
+                    android:layout_width="300dp"
+                    android:layout_height="230dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginStart="50dp"
+                    android:background="@drawable/tower_angle_one">
 
 
+                    <RadioGroup
+                        android:id="@+id/endgame_level_climb_group"
+                        android:layout_marginTop="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="230dp"
+                        android:buttonTint="#8957A1"
+                        android:paddingTop="50dp"
+                        android:layout_marginStart="150dp"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:id="@+id/endgame_level_na"
+                            android:layout_width="70dp"
+                            android:layout_height="25dp"
+                            android:background="@drawable/rounded_rect"
+                            android:backgroundTint="#BECCB8"
+                            android:buttonTint="#748767"
+                            android:text="N/A"
+                            android:layout_marginTop="-dp"
+                            android:textSize="18sp" />
+                        <RadioButton
+                            android:id="@+id/endgame_level_three"
+                            android:layout_width="65dp"
+                            android:layout_height="25dp"
+                            android:background="@drawable/rounded_rect"
+                            android:backgroundTint="#BECCB8"
+                            android:buttonTint="#748767"
+                            android:text="L3"
+                            android:textSize="18sp" />
+                        <RadioButton
+                            android:id="@+id/endgame_level_two"
+                            android:layout_width="65dp"
+                            android:layout_height="25dp"
+                            android:background="@drawable/rounded_rect"
+                            android:backgroundTint="#BECCB8"
+                            android:buttonTint="#748767"
+                            android:text="L2"
+                            android:layout_marginTop="40dp"
+                            android:textSize="18sp" />
+
+                        <RadioButton
+                            android:id="@+id/endgame_level_one"
+                            android:layout_width="65dp"
+                            android:layout_height="25dp"
+                            android:background="@drawable/rounded_rect"
+                            android:backgroundTint="#BECCB8"
+                            android:buttonTint="#748767"
+                            android:text="L1"
+                            android:layout_marginTop="30dp"
+                            android:textSize="18sp" />
+
+                    </RadioGroup>
+                </LinearLayout>
+                <!--end layout that holds first image-->
+
+                <!--start layout that holds second image-->
+                <LinearLayout
+                    android:layout_width="300dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginStart="50dp"
+                    android:background="@drawable/tower_angle_two">
+
+                    <RadioGroup
+                        android:id="@+id/endgame_climb_buttons"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:buttonTint="#8957A1"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/endgame_climb_na"
+                            android:layout_width="80dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginTop="30dp"
+                            android:background="@drawable/rounded_rect"
+                            android:backgroundTint="#BECCB8"
+                            android:buttonTint="#748767"
+                            android:text="N/A"
+                            android:textSize="20sp" />
+
+                        <RadioButton
+                            android:id="@+id/endgame_climb_back"
+                            android:layout_width="55dp"
+                            android:layout_height="30dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/rounded_rect"
+                            android:backgroundTint="#BECCB8"
+                            android:buttonTint="#748767"
+                            android:text="B"
+                            android:textSize="20sp" />
+
+                        <RadioButton
+                            android:id="@+id/endgame_climb_left"
+                            android:layout_width="55dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginStart="10dp"
+                            android:background="@drawable/rounded_rect"
+                            android:backgroundTint="#BECCB8"
+                            android:buttonTint="#748767"
+                            android:text="L"
+                            android:textSize="20dp" />
+
+                        <RadioButton
+                            android:id="@+id/endgame_climb_front"
+                            android:layout_width="55dp"
+                            android:layout_height="30dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/rounded_rect"
+                            android:backgroundTint="#BECCB8"
+                            android:buttonTint="#748767"
+                            android:text="F"
+                            android:textSize="20sp" />
+
+                        <RadioButton
+                            android:id="@+id/endgame_climb_right"
+                            android:layout_width="55dp"
+                            android:layout_height="30dp"
+                            android:layout_marginStart="-15dp"
+                            android:layout_marginTop="25dp"
+                            android:background="@drawable/rounded_rect"
+                            android:backgroundTint="#BECCB8"
+                            android:buttonTint="#748767"
+                            android:text="R"
+                            android:textSize="20sp" />
+
+                    </RadioGroup>
+                    <!--end layout that holds second image-->
+                </LinearLayout>
+                <!--end layout that holds both images-->
+            </LinearLayout>
+            <!--end layout for the climb section-->
         </LinearLayout>
-
+        <!--end CLIMB section-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="24dp">
+            android:paddingTop="7dp">
 
             <TextView
                 android:id="@+id/comments_title"
-                style="?android:listSeparatorTextViewStyle"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="@string/comments"
@@ -217,7 +390,7 @@
                 android:maxLength="400"
                 android:textColor="@color/textPrimary"
                 android:textColorHint="@color/hintColor"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 android:inputType="text"
                 android:autofillHints="Enter comment here"
                 android:hint="Comment">
@@ -232,14 +405,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="10dp">
+            android:paddingTop="7dp">
 
             <TextView
                 android:id="@+id/warn_msg1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textSize="20sp"
+                android:textSize="19sp"
                 android:layout_marginStart="5dp"
                 android:text="WARN1"/>
 
@@ -248,7 +421,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textSize="20sp"
+                android:textSize="19sp"
                 android:layout_marginStart="5dp"
                 android:text="WARN2"/>
 
@@ -261,17 +434,16 @@
 
 
         <RelativeLayout
-            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:paddingTop="10dp">
+            >
 
             <ImageButton
                 android:id="@+id/gen_QR"
-                android:layout_width="190dp"
-                android:layout_height="190dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:background="@drawable/rounded_rect"
                 android:backgroundTint="#3F98B5"
                 android:focusable="true"
@@ -281,8 +453,8 @@
 
             <ImageButton
                 android:id="@+id/gen_QR_disabled"
-                android:layout_width="190dp"
-                android:layout_height="190dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:background="@drawable/rounded_rect"
                 android:backgroundTint="#6e848d"
                 android:focusable="true"
@@ -297,8 +469,8 @@
             <Button
                 android:layout_marginStart="80dp"
                 android:id="@+id/nav_to_menu_button"
-                android:layout_width="190dp"
-                android:layout_height="190dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:background="@drawable/rounded_rect"
                 android:backgroundTint="#FFC107"
                 android:focusable="true"
@@ -310,8 +482,8 @@
             <Button
                 android:layout_marginStart="80dp"
                 android:id="@+id/nav_to_menu_button_disabled"
-                android:layout_width="190dp"
-                android:layout_height="190dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:background="@drawable/rounded_rect"
                 android:backgroundTint="#b19769"
                 android:focusable="true"

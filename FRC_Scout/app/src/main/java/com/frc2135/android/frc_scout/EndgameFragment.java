@@ -27,19 +27,36 @@ import androidx.fragment.app.FragmentManager;
 public class EndgameFragment extends Fragment
 {
 
-    private RadioGroup m_climbGroup;
-    private RadioButton m_climbParked;
-    private RadioButton m_climbFell;
-    private RadioButton m_climbShallow;
-    private RadioButton m_climbDeep;
+    private RadioGroup m_diedGroup;
+    private RadioButton m_diedNone;
+    private RadioButton m_diedMost;
+    private RadioButton m_diedMin;
+    private RadioButton m_diedThirty;
+    private RadioButton m_diedTt;
+    private RadioButton m_noShow;
 
     private RadioGroup m_startGroup;
     private RadioButton m_startNone;
+    private RadioButton m_startBefore;
     private RadioButton m_startBell;
     private RadioButton m_startTen;
-    private RadioButton m_startFive;
+    private RadioButton m_startLess;
 
-    private CheckBox m_diedCheckbox;
+    private RadioGroup m_endgameClimbButtonGroup;
+    private RadioButton m_endgameLeft;
+    private RadioButton m_endgameFront;
+    private RadioButton m_endgameRight;
+    private RadioButton m_endgameBack;
+    private RadioButton m_endgameNA;
+
+    private RadioGroup m_endgameClimbLevelGroup;
+    private RadioButton m_levelNa;
+    private RadioButton m_levelThree;
+    private RadioButton m_levelTwo;
+    private RadioButton m_levelOne;
+
+
+
     private EditText m_commentText;
     private MatchData m_matchData;
 
@@ -150,6 +167,9 @@ public class EndgameFragment extends Fragment
         //Creates a view using the specific fragment layout.
         View v = inflater.inflate(R.layout.endgame_fragment, parent, false);
 
+
+
+        /*
         //Connects the checkbox for if the robot dies and sets up a listener to detect when the checked status is changed
         m_diedCheckbox = v.findViewById(R.id.died_checkbox_true);
         m_diedCheckbox.setChecked(m_matchData.getDied());// Default is unchecked
@@ -161,51 +181,108 @@ public class EndgameFragment extends Fragment
                 updateEndgameData();
             }
         });
+        */
 
-        m_climbGroup = v.findViewById(R.id.climb_group);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
-        RadioButton radio_climbNone = v.findViewById(R.id.climb_none);//Sets up radio button that corresponds to 0
-        m_climbParked = v.findViewById(R.id.climb_parked);//Sets up radio button that corresponds to 1
-        m_climbFell = v.findViewById(R.id.climb_fell);//Sets up radio button that corresponds to 2
-        m_climbShallow = v.findViewById(R.id.climb_shallow);//Sets up radio button that corresponds to 3
-        m_climbDeep = v.findViewById(R.id.climb_deep);//Sets up radio button that corresponds to 4
-        radio_climbNone.setChecked(false);
-        m_climbParked.setChecked(false);
-        m_climbFell.setChecked(false);
-        m_climbShallow.setChecked(false);
-        m_climbDeep.setChecked(false);
+        m_diedGroup = v.findViewById(R.id.died_group);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
+        m_diedNone = v.findViewById(R.id.died_none);//Sets up radio button that corresponds to 1
+        m_diedMost = v.findViewById(R.id.died_most);//Sets up radio button that corresponds to 2
+        m_diedMin = v.findViewById(R.id.died_min);//Sets up radio button that corresponds to 3
+        m_diedThirty = v.findViewById(R.id.died_thirty);//Sets up radio button that corresponds to 4
+        m_diedTt = v.findViewById(R.id.died_tt);//Sets up radio button that corresponds to 4
+        m_noShow = v.findViewById(R.id.no_show);//Sets up radio button that corresponds to 4
+        m_diedNone.setChecked(false);
+        m_diedMost.setChecked(false);
+        m_diedMin.setChecked(false);
+        m_diedThirty.setChecked(false);
+        m_diedTt.setChecked(false);
+        m_noShow.setChecked(false);
 
-        int defValueClimb = m_matchData.getCageClimb();
+        int defValueClimb = m_matchData.getTimeDied();
         if (defValueClimb == 0)
-            radio_climbNone.setChecked(true);
+            m_diedNone.setChecked(true);
         else if (defValueClimb == 1)
-            m_climbParked.setChecked(true);
+            m_diedMost.setChecked(true);
         else if(defValueClimb == 2)
-            m_climbFell.setChecked(true);
+            m_diedMin.setChecked(true);
         else if(defValueClimb == 3)
-            m_climbShallow.setChecked(true);
+            m_diedThirty.setChecked(true);
         else if(defValueClimb == 4)
-        m_climbDeep.setChecked(true);
+            m_diedTt.setChecked(true);
+        else if(defValueClimb == 5)
+            m_noShow.setChecked(true);
 
         m_startGroup = v.findViewById(R.id.start_text);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
         m_startNone = v.findViewById(R.id.start_none);//Sets up radio button that corresponds to 0
-        m_startBell = v.findViewById(R.id.start_bell);//Sets up radio button that corresponds to 1
-        m_startTen = v.findViewById(R.id.start_ten);//Sets up radio button that corresponds to 2
-        m_startFive = v.findViewById(R.id.start_five);//Sets up radio button that corresponds to 3
-        m_startTen.setChecked(false);
-        m_startBell.setChecked(false);
+        m_startBefore = v.findViewById(R.id.start_before);//Sets up radio button that corresponds to 1
+        m_startBell = v.findViewById(R.id.start_bell);//Sets up radio button that corresponds to 2
+        m_startTen = v.findViewById(R.id.start_ten);//Sets up radio button that corresponds to 3
+        m_startLess = v.findViewById(R.id.start_less);//Sets up radio button that corresponds to 4
         m_startNone.setChecked(false);
-        m_startFive.setChecked(false);
+        m_startBefore.setChecked(false);
+        m_startBell.setChecked(false);
+        m_startTen.setChecked(false);
+        m_startLess.setChecked(false);
 
 
         int defValueStartClimb = m_matchData.getStartClimb();
         if (defValueStartClimb == 0)
             m_startNone.setChecked(true);
         else if(defValueStartClimb == 1)
-            m_startBell.setChecked(true);
+            m_startBefore.setChecked(true);
         else if(defValueStartClimb == 2)
-            m_startTen.setChecked(true);
+            m_startBell.setChecked(true);
         else if(defValueStartClimb == 3)
-            m_startFive.setChecked(true);
+            m_startTen.setChecked(true);
+        else if(defValueStartClimb == 4)
+            m_startLess.setChecked(true);
+
+        m_endgameClimbButtonGroup = v.findViewById(R.id.endgame_climb_buttons);
+        m_endgameLeft = v.findViewById(R.id.endgame_climb_left);
+        m_endgameFront = v.findViewById(R.id.endgame_climb_front);
+        m_endgameRight = v.findViewById(R.id.endgame_climb_right);
+        m_endgameBack = v.findViewById(R.id.endgame_climb_back);
+        m_endgameNA = v.findViewById(R.id.endgame_climb_na);
+        m_endgameLeft.setChecked(false);
+        m_endgameFront.setChecked(false);
+        m_endgameRight.setChecked(false);
+        m_endgameBack.setChecked(false);
+        m_endgameNA.setChecked(false);
+
+
+        int CaccValue = m_matchData.getEndgameClimb();
+        if (CaccValue == 0)
+            m_endgameNA.setChecked(true);
+        else if(CaccValue == 1)
+            m_endgameBack.setChecked(true);
+        else if(CaccValue == 2)
+            m_endgameLeft.setChecked(true);
+        else if(CaccValue == 3)
+            m_endgameFront.setChecked(true);
+        else if(CaccValue == 4)
+            m_endgameRight.setChecked(true);
+
+
+        m_endgameClimbLevelGroup = v.findViewById(R.id.endgame_level_climb_group);
+        m_levelNa= v.findViewById(R.id.endgame_level_na);
+        m_levelThree = v.findViewById(R.id.endgame_level_three);
+        m_levelTwo = v.findViewById(R.id.endgame_level_two);
+        m_levelOne = v.findViewById(R.id.endgame_level_one);
+        m_levelThree.setChecked(false);
+        m_levelTwo.setChecked(false);
+        m_levelOne.setChecked(false);
+        m_levelNa.setChecked(false);
+
+
+        int BaccValue = m_matchData.getEndgameClimbLevel();
+        if (BaccValue == 0)
+            m_levelNa.setChecked(true);
+        else if(BaccValue == 1)
+            m_levelOne.setChecked(true);
+        else if(BaccValue == 2)
+            m_levelTwo.setChecked(true);
+        else if(BaccValue == 3)
+            m_levelThree.setChecked(true);
+
 
         //Sets up an EditText that allows users to input any additional comments
         m_commentText = v.findViewById(R.id.comments);
@@ -267,25 +344,33 @@ public class EndgameFragment extends Fragment
         return v;
     }
 
-    public int getCurrentCageClimb()
+    public int getTimeDied()
     {
         // Returns the integer climb level that is current checked in the radio buttons
         int rtn = 0;
-        if (m_climbGroup.getCheckedRadioButtonId() == m_climbParked.getId())
+        if (m_diedGroup.getCheckedRadioButtonId() == m_diedNone.getId())
+        {
+            rtn = 0;
+        }
+        else if (m_diedGroup.getCheckedRadioButtonId() == m_diedMost.getId())
         {
             rtn = 1;
         }
-        else if (m_climbGroup.getCheckedRadioButtonId() == m_climbFell.getId())
+        else if (m_diedGroup.getCheckedRadioButtonId() == m_diedMin.getId())
         {
             rtn = 2;
         }
-        else if (m_climbGroup.getCheckedRadioButtonId() == m_climbShallow.getId())
+        else if (m_diedGroup.getCheckedRadioButtonId() == m_diedThirty.getId())
         {
             rtn = 3;
         }
-        else if (m_climbGroup.getCheckedRadioButtonId() == m_climbDeep.getId())
+        else if (m_diedGroup.getCheckedRadioButtonId() == m_diedTt.getId())
         {
             rtn = 4;
+        }
+        else if (m_diedGroup.getCheckedRadioButtonId() == m_noShow.getId())
+        {
+            rtn = 5;
         }
         return rtn;
     }
@@ -298,27 +383,81 @@ public class EndgameFragment extends Fragment
         {
             rtn = 0;
         }
-        if (m_startGroup.getCheckedRadioButtonId() == m_startBell.getId())
+        if (m_startGroup.getCheckedRadioButtonId() == m_startBefore.getId())
         {
             rtn = 1;
         }
-        else if (m_startGroup.getCheckedRadioButtonId() == m_startTen.getId())
+        if (m_startGroup.getCheckedRadioButtonId() == m_startBell.getId())
         {
             rtn = 2;
         }
-        else if (m_startGroup.getCheckedRadioButtonId() == m_startFive.getId())
+        if (m_startGroup.getCheckedRadioButtonId() == m_startTen.getId())
+        {
+            rtn = 3;
+        }
+        else if (m_startGroup.getCheckedRadioButtonId() == m_startLess.getId())
+        {
+            rtn = 4;
+        }
+        return rtn;
+    }
+
+    public int getEndgameClimb()
+    {
+        // Returns the integer climb level that is current checked in the radio buttons
+        int rtn = 0;
+        if (m_endgameClimbButtonGroup.getCheckedRadioButtonId() == m_endgameNA.getId())
+        {
+            rtn = 0;
+        }
+        if (m_endgameClimbButtonGroup.getCheckedRadioButtonId() == m_endgameBack.getId())
+        {
+            rtn = 1;
+        }
+        if (m_endgameClimbButtonGroup.getCheckedRadioButtonId() == m_endgameLeft.getId())
+        {
+            rtn = 2;
+        }
+        if (m_endgameClimbButtonGroup.getCheckedRadioButtonId() == m_endgameFront.getId())
+        {
+            rtn = 3;
+        }
+        if (m_endgameClimbButtonGroup.getCheckedRadioButtonId() == m_endgameRight.getId())
+        {
+            rtn = 4;
+        }
+        return rtn;
+    }
+
+    public int getEndgameClimbLevel()
+    {
+        // Returns the integer climb level that is current checked in the radio buttons
+        int rtn = 0;
+        if (m_endgameClimbLevelGroup.getCheckedRadioButtonId() == m_levelNa.getId())
+        {
+            rtn = 0;
+        }
+        if (m_endgameClimbLevelGroup.getCheckedRadioButtonId() == m_levelOne.getId())
+        {
+            rtn = 1;
+        }
+        if (m_endgameClimbLevelGroup.getCheckedRadioButtonId() == m_levelTwo.getId())
+        {
+            rtn = 2;
+        }
+        if (m_endgameClimbLevelGroup.getCheckedRadioButtonId() == m_levelThree.getId())
         {
             rtn = 3;
         }
         return rtn;
     }
-
     public void updateEndgameData()
     {
         m_matchData.setStartClimb(getCurrentStartClimbing());
-        m_matchData.setCageClimb(getCurrentCageClimb());
-        m_matchData.setDied(m_diedCheckbox.isChecked());
+        m_matchData.setTimeDied(getTimeDied());
         m_matchData.setComment(m_commentText.getText().toString());
+        m_matchData.setEndgameClimb(getEndgameClimb());
+        m_matchData.setEndgameClimbLevel(getEndgameClimbLevel());
 
     }
 }

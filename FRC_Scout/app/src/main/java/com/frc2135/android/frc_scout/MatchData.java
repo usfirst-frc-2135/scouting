@@ -34,6 +34,7 @@ public class MatchData
     private static final String JSON_KEY_AUTON_NZ = "autonNz";
 
 
+
     private static final String JSON_KEY_AUTON_HOPPER = "autonHopper";
 
     private static final String JSON_KEY_FLOOR_CORAL= "floorCoral";
@@ -48,6 +49,7 @@ public class MatchData
     private static final String JSON_KEY_AUTON_PRELOAD_ACCURACY_RATE= "autonPreloadAccuracyRate";
 
     private static final String JSON_KEY_AUTON_CLIMB= "autonClimb";
+    private static final String JSON_KEY_ENDGAME_CLIMB= "endgameClimb";
     private static final String JSON_KEY_INTAKE_AND_SHOOT= "intakeAndShoot";
     private static final String JSON_KEY_NEUTRAL_TO_ALLIANCE_PASSING = "neutralToAlliancePassing";
     private static final String JSON_KEY_ALLIANCE_TO_ALLIANCE_PASSING = "allianceToAlliancePassing";
@@ -62,11 +64,13 @@ public class MatchData
 
     private static final String JSON_KEY_PLAYED_DEFENSE = "playedDefense";
 
+    private static final String JSON_KEY_CLIMB_LEVEL = "climbLevel";
+
+
     // Endgame data
-    private static final String JSON_KEY_CAGE_CLIMB = "cageClimb";
+    private static final String JSON_KEY_DIED = "died";
     private static final String JSON_KEY_START_CLIMB = "startClimb";
 
-    private static final String JSON_KEY_DIED = "died";
     private static final String JSON_KEY_COMMENTS = "comments";
     private static final String JSON_KEY_TIMESTAMP = "timestamp";
     private static final String JSON_KEY_MATCH_ID = "matchId";
@@ -102,15 +106,18 @@ public class MatchData
     private int m_autonPreloadAccuracyRate;
 
     private int m_autonClimb;
+    private int m_endgameClimb;
+
     private boolean m_intakeAndShoot;
     private boolean m_neutralToAlliancePassing;
     private boolean m_allianceToAlliancePassing;
     private int m_passingEffectivenessRate;
     private int m_playedDefense;
+    private int m_climbLevel;
     private int m_teleopPhoto;
 
     //endgame
-    private int m_cageClimb;
+    private int m_diedGroup;
     private int m_startClimb;
 
     private String m_comment;
@@ -181,7 +188,7 @@ public class MatchData
         setPlayedDefense(0);
 
         // Endgame data
-        setCageClimb(0);
+        setTimeDied(0);
         setStartClimb(0);
 
         setDied(false);
@@ -234,6 +241,9 @@ public class MatchData
         setAllianceToAlliancePassing(json.getBoolean(JSON_KEY_ALLIANCE_TO_ALLIANCE_PASSING));
         setPassingEffectivenessRate(json.getInt(JSON_KEY_PASSING_EFFECTIVENESS_RATE));
 
+        //Endgame data
+        setAccuracyRate(json.getInt(JSON_KEY_CLIMB_LEVEL));
+
        /* setTeleopAlgaeNet(json.getInt(JSON_KEY_TELEOP_ALGAE_NET));
         setTeleopAlgaeProcessor(json.getInt(JSON_KEY_TELEOP_ALGAE_PROCESSOR));
 
@@ -245,10 +255,9 @@ public class MatchData
         setPlayedDefense(json.getInt(JSON_KEY_PLAYED_DEFENSE));
 
         //endgame
-        setCageClimb(json.getInt(JSON_KEY_CAGE_CLIMB));
+        setTimeDied(json.getInt(JSON_KEY_DIED));
         setStartClimb(json.getInt(JSON_KEY_START_CLIMB));
 
-        setDied(json.getBoolean(JSON_KEY_DIED));
         setComment(json.getString(JSON_KEY_COMMENTS));
 
         String dateStr = json.getString(JSON_KEY_TIMESTAMP);
@@ -557,6 +566,17 @@ public class MatchData
     }
 
 
+    public void setEndgameClimb(int endgameClimb)
+    {
+        m_endgameClimb = endgameClimb;
+    }
+
+    public int getEndgameClimb()
+    {
+        return m_endgameClimb;
+    }
+
+
 
     public void setIntakeAndShoot(boolean intakeAndShoot)
     {
@@ -609,6 +629,22 @@ public class MatchData
         return m_playedDefense;
     }
 
+
+
+
+    public void setEndgameClimbLevel(int climbLevel)
+    {
+
+        m_climbLevel = climbLevel;
+    }
+
+    public int getEndgameClimbLevel()
+    {
+        return m_climbLevel;
+    }
+
+
+
     public void setTeleopPhoto(int teleopPhoto)
     {
         m_teleopPhoto = teleopPhoto;
@@ -619,14 +655,14 @@ public class MatchData
         return m_teleopPhoto;
     }
 
-    public void setCageClimb(int x)
+    public void setTimeDied(int x)
     {
-        m_cageClimb = x;
+        m_diedGroup = x;
     }
 
-    public int getCageClimb()
+    public int getTimeDied()
     {
-        return m_cageClimb;
+        return m_diedGroup;
     }
 
     public void setStartClimb(int y)
@@ -726,6 +762,9 @@ public class MatchData
 
         tsvStr += m_autonClimb + "\t";
 
+        tsvStr += m_endgameClimb + "\t";
+
+
         tsvStr += m_hoppersUsed + "\t";
         tsvStr += m_accuracyRate + "\t";
 
@@ -745,7 +784,9 @@ public class MatchData
 
         tsvStr += m_playedDefense + "\t";
 
-        tsvStr += m_cageClimb + "\t";
+        tsvStr += m_climbLevel + "\t";
+
+        tsvStr += m_diedGroup + "\t";
         tsvStr += m_startClimb + "\t";
 
         if (!m_comment.equals(""))
@@ -777,8 +818,6 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_SCOUT_NAME, m_name);
         json.put("divider", ",");
-        json.put(JSON_KEY_DIED, m_died);
-        json.put("divider", ",");
         json.put(JSON_KEY_PRELOAD, m_autonPreload);
         json.put("divider", ",");
         json.put(JSON_KEY_AUTON_PRELOAD_ACCURACY_RATE, m_autonPreloadAccuracyRate);
@@ -801,6 +840,8 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_ACCURACY_RATE, m_accuracyRate);
         json.put("divider", ",");
+        json.put(JSON_KEY_CLIMB_LEVEL, m_climbLevel);
+        json.put("divider", ",");
         json.put(JSON_KEY_INTAKE_AND_SHOOT, m_intakeAndShoot);
         json.put("divider", ",");
         json.put(JSON_KEY_NEUTRAL_TO_ALLIANCE_PASSING, m_neutralToAlliancePassing);
@@ -811,9 +852,11 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_PLAYED_DEFENSE, m_playedDefense);
         json.put("divider", ",");
-        json.put(JSON_KEY_CAGE_CLIMB, m_cageClimb);
+        json.put(JSON_KEY_DIED, m_diedGroup);
         json.put("divider", ",");
         json.put(JSON_KEY_START_CLIMB, m_startClimb);
+        json.put("divider", ",");
+        json.put(JSON_KEY_ENDGAME_CLIMB, m_endgameClimb);
         json.put("divider", ",");
         json.put(JSON_KEY_COMMENTS, m_comment);
         json.put("divider", ",");

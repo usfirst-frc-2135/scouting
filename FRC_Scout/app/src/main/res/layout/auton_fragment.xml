@@ -275,15 +275,15 @@
                         android:text="½" />
 
                     <RadioButton
-                        android:layout_marginTop="30dp"
-                        android:layout_marginStart="-574dp"
                         android:id="@+id/auton_accuracy_quarter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="-574dp"
+                        android:layout_marginTop="30dp"
                         android:layout_weight="1"
-                        android:textSize="20sp"
                         android:buttonTint="#c45120"
-                        android:text="¼" />
+                        android:text="¼"
+                        android:textSize="20sp" />
 
                     <RadioButton
                         android:layout_marginStart="21dp"
@@ -407,22 +407,22 @@
             android:backgroundTint="#93A685"
             android:paddingTop="10dp">
 
-            <TextView
-                android:id="@+id/Climb_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="7dp"
-                android:text="CLIMB"
-                android:textColor="@color/specialTextPrimary"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
             <LinearLayout
-                android:layout_width="349dp"
-                android:layout_height="345dp"
-                android:layout_marginLeft="70dp"
-                android:background="@drawable/tower_angle_four">
+                android:layout_width="500dp"
+                android:layout_height="330dp"
+                android:layout_marginLeft="7dp"
+                android:background="@drawable/tower_angle_five">
+
+                <TextView
+                    android:id="@+id/Climb_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="7dp"
+                    android:text="CLIMB"
+                    android:textColor="@color/specialTextPrimary"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
                 <RadioGroup
                     android:id="@+id/auton_climb_buttons"
@@ -435,8 +435,8 @@
                         android:id="@+id/auton_climb_na"
                         android:layout_width="80dp"
                         android:layout_height="30dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="260dp"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="40dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#BECCB8"
                         android:buttonTint="#748767"
@@ -447,8 +447,8 @@
                         android:id="@+id/auton_climb_back"
                         android:layout_width="55dp"
                         android:layout_height="30dp"
-                        android:layout_marginStart="35dp"
-                        android:layout_marginTop="280dp"
+                        android:layout_marginStart="115dp"
+                        android:layout_marginTop="265dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#BECCB8"
                         android:buttonTint="#748767"
@@ -459,8 +459,8 @@
                         android:id="@+id/auton_climb_left"
                         android:layout_width="55dp"
                         android:layout_height="30dp"
-                        android:layout_marginLeft="17dp"
-                        android:layout_marginTop="205dp"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="185dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#BECCB8"
                         android:buttonTint="#748767"
@@ -472,7 +472,7 @@
                         android:layout_width="55dp"
                         android:layout_height="30dp"
                         android:layout_marginStart="10dp"
-                        android:layout_marginTop="285dp"
+                        android:layout_marginTop="265dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#BECCB8"
                         android:buttonTint="#748767"
@@ -483,8 +483,8 @@
                         android:id="@+id/auton_climb_right"
                         android:layout_width="55dp"
                         android:layout_height="30dp"
-                        android:layout_marginStart="-20dp"
-                        android:layout_marginTop="140dp"
+                        android:layout_marginStart="-15dp"
+                        android:layout_marginTop="130dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#BECCB8"
                         android:buttonTint="#748767"
