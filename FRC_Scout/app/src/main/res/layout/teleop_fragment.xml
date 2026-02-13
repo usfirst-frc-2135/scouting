@@ -261,7 +261,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="#ADD8EF">
+                    android:background="@drawable/bottom_rounded_rect"
+                    android:backgroundTint="#ADD8EF">
 
                     <LinearLayout
                     android:layout_width="match_parent"
