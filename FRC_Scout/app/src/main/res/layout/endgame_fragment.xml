@@ -225,7 +225,7 @@
                     android:layout_width="300dp"
                     android:layout_height="230dp"
                     android:layout_marginLeft="7dp"
-                    android:layout_marginStart="50dp"
+                    android:layout_marginStart="80dp"
                     android:background="@drawable/tower_angle_one">
 
 
@@ -234,9 +234,8 @@
                         android:layout_marginTop="0dp"
                         android:layout_width="match_parent"
                         android:layout_height="230dp"
-                        android:buttonTint="#8957A1"
-                        android:paddingTop="50dp"
-                        android:layout_marginStart="150dp"
+                        android:paddingTop="20dp"
+                        android:layout_marginStart="140dp"
                         android:orientation="vertical">
 
                         <RadioButton
@@ -244,8 +243,8 @@
                             android:layout_width="70dp"
                             android:layout_height="25dp"
                             android:background="@drawable/rounded_rect"
-                            android:backgroundTint="#BECCB8"
-                            android:buttonTint="#748767"
+                            android:backgroundTint="#f3d8ea"
+                            android:buttonTint="#db8ac1"
                             android:text="N/A"
                             android:layout_marginTop="1dp"
                             android:textSize="18sp" />
@@ -254,8 +253,9 @@
                             android:layout_width="65dp"
                             android:layout_height="25dp"
                             android:background="@drawable/rounded_rect"
-                            android:backgroundTint="#BECCB8"
-                            android:buttonTint="#748767"
+                            android:backgroundTint="#f3d8ea"
+                            android:layout_marginTop="27dp"
+                            android:buttonTint="#db8ac1"
                             android:text="L3"
                             android:textSize="18sp" />
                         <RadioButton
@@ -263,8 +263,8 @@
                             android:layout_width="65dp"
                             android:layout_height="25dp"
                             android:background="@drawable/rounded_rect"
-                            android:backgroundTint="#BECCB8"
-                            android:buttonTint="#748767"
+                            android:backgroundTint="#f3d8ea"
+                            android:buttonTint="#db8ac1"
                             android:text="L2"
                             android:layout_marginTop="40dp"
                             android:textSize="18sp" />
@@ -274,8 +274,8 @@
                             android:layout_width="65dp"
                             android:layout_height="25dp"
                             android:background="@drawable/rounded_rect"
-                            android:backgroundTint="#BECCB8"
-                            android:buttonTint="#748767"
+                            android:backgroundTint="#f3d8ea"
+                            android:buttonTint="#db8ac1"
                             android:text="L1"
                             android:layout_marginTop="30dp"
                             android:textSize="18sp" />
@@ -289,7 +289,7 @@
                     android:layout_width="300dp"
                     android:layout_height="100dp"
                     android:layout_marginLeft="7dp"
-                    android:layout_marginStart="50dp"
+                    android:layout_marginStart="80dp"
                     android:background="@drawable/tower_angle_two">
 
                     <RadioGroup
@@ -301,63 +301,63 @@
 
                         <RadioButton
                             android:id="@+id/endgame_climb_na"
-                            android:layout_width="80dp"
-                            android:layout_height="30dp"
+                            android:layout_width="70dp"
+                            android:layout_height="25dp"
                             android:layout_marginLeft="0dp"
-                            android:layout_marginTop="30dp"
+                            android:layout_marginTop="0dp"
                             android:background="@drawable/rounded_rect"
                             android:backgroundTint="#BECCB8"
                             android:buttonTint="#748767"
                             android:text="N/A"
-                            android:textSize="20sp" />
+                            android:textSize="18sp" />
 
                         <RadioButton
                             android:id="@+id/endgame_climb_back"
-                            android:layout_width="55dp"
-                            android:layout_height="30dp"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_width="50dp"
+                            android:layout_height="25dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="30dp"
                             android:background="@drawable/rounded_rect"
                             android:backgroundTint="#BECCB8"
                             android:buttonTint="#748767"
                             android:text="B"
-                            android:textSize="20sp" />
+                            android:textSize="18sp" />
 
                         <RadioButton
                             android:id="@+id/endgame_climb_left"
-                            android:layout_width="55dp"
-                            android:layout_height="30dp"
-                            android:layout_marginTop="20dp"
+                            android:layout_width="50dp"
+                            android:layout_height="25dp"
+                            android:layout_marginTop="0dp"
                             android:layout_marginStart="10dp"
                             android:background="@drawable/rounded_rect"
                             android:backgroundTint="#BECCB8"
                             android:buttonTint="#748767"
                             android:text="L"
-                            android:textSize="20dp" />
+                            android:textSize="18dp" />
 
                         <RadioButton
                             android:id="@+id/endgame_climb_front"
-                            android:layout_width="55dp"
-                            android:layout_height="30dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="20dp"
+                            android:layout_width="50dp"
+                            android:layout_height="25dp"
+                            android:layout_marginStart="-5dp"
+                            android:layout_marginTop="30dp"
                             android:background="@drawable/rounded_rect"
                             android:backgroundTint="#BECCB8"
                             android:buttonTint="#748767"
                             android:text="F"
-                            android:textSize="20sp" />
+                            android:textSize="18sp" />
 
                         <RadioButton
                             android:id="@+id/endgame_climb_right"
-                            android:layout_width="55dp"
-                            android:layout_height="30dp"
-                            android:layout_marginStart="-15dp"
-                            android:layout_marginTop="25dp"
+                            android:layout_width="50dp"
+                            android:layout_height="25dp"
+                            android:layout_marginStart="-10dp"
+                            android:layout_marginTop="0dp"
                             android:background="@drawable/rounded_rect"
                             android:backgroundTint="#BECCB8"
                             android:buttonTint="#748767"
                             android:text="R"
-                            android:textSize="20sp" />
+                            android:textSize="18sp" />
 
                     </RadioGroup>
                     <!--end layout that holds second image-->
