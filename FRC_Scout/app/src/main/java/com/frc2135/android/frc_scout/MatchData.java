@@ -47,12 +47,14 @@ public class MatchData
     private static final String JSON_KEY_ACCURACY_RATE= "accuracyRate";
     private static final String JSON_KEY_AUTON_ACCURACY_RATE= "autonAccuracyRate";
     private static final String JSON_KEY_AUTON_PRELOAD_ACCURACY_RATE= "autonPreloadAccuracyRate";
+    private static final String JSON_KEY_PASS_NEUTRAL_ZONE= "neutralZone";
+    private static final String JSON_KEY_PASS_ALLIANCE_ZONE= "allianceZone";
+
+
 
     private static final String JSON_KEY_AUTON_CLIMB= "autonClimb";
     private static final String JSON_KEY_ENDGAME_CLIMB= "endgameClimb";
     private static final String JSON_KEY_INTAKE_AND_SHOOT= "intakeAndShoot";
-    private static final String JSON_KEY_NEUTRAL_TO_ALLIANCE_PASSING = "neutralToAlliancePassing";
-    private static final String JSON_KEY_ALLIANCE_TO_ALLIANCE_PASSING = "allianceToAlliancePassing";
     private static final String JSON_KEY_PASSING_EFFECTIVENESS_RATE= "passingEffectivenessRate";
   /*  private static final String JSON_KEY_TELEOP_ALGAE_NET = "teleopAlgaeNet";
     private static final String JSON_KEY_TELEOP_ALGAE_PROCESSOR = "teleopAlgaeProcessor";
@@ -63,6 +65,8 @@ public class MatchData
     private static final String JSON_KEY_TELEOP_CORAL_L4 = "teleopCoralL4";*/
 
     private static final String JSON_KEY_PLAYED_DEFENSE = "playedDefense";
+
+    private static final String JSON_KEY_DRIVE_ABILITY = "driveAbility";
 
     private static final String JSON_KEY_CLIMB_LEVEL = "climbLevel";
 
@@ -109,11 +113,12 @@ public class MatchData
     private int m_endgameClimb;
 
     private boolean m_intakeAndShoot;
-    private boolean m_neutralToAlliancePassing;
-    private boolean m_allianceToAlliancePassing;
     private int m_passingEffectivenessRate;
     private int m_playedDefense;
+    private int m_drivingability;
     private int m_climbLevel;
+    private int m_passedNz;
+    private int m_passedAz;
     private int m_teleopPhoto;
 
     //endgame
@@ -173,8 +178,6 @@ public class MatchData
         setTeleopPhoto(0);
 
         setIntakeAndShoot(false);
-        setNeutralToAlliancePassing(false);
-        setAllianceToAlliancePassing(false);
         setPassingEffectivenessRate(0);
 
         //setTeleopAlgaeNet(0);
@@ -186,6 +189,10 @@ public class MatchData
         //setTeleopCoralL4(0);
 
         setPlayedDefense(0);
+        setDriveAbility(0);
+
+        setPassNeutralZone(0);
+        setPassAllianceZone(0);
 
         // Endgame data
         setTimeDied(0);
@@ -235,15 +242,14 @@ public class MatchData
         setAccuracyRate(json.getInt(JSON_KEY_ACCURACY_RATE));
         setAutonAccuracyRate(json.getInt(JSON_KEY_AUTON_ACCURACY_RATE));
         setPreloadAccuracyLevel(json.getInt(JSON_KEY_AUTON_PRELOAD_ACCURACY_RATE));
+        setPassNeutralZone(json.getInt(JSON_KEY_PASS_NEUTRAL_ZONE));
+        setPassAllianceZone(json.getInt(JSON_KEY_PASS_ALLIANCE_ZONE));
+
 
         setIntakeAndShoot(json.getBoolean(JSON_KEY_INTAKE_AND_SHOOT));
-        setNeutralToAlliancePassing(json.getBoolean(JSON_KEY_NEUTRAL_TO_ALLIANCE_PASSING));
-        setAllianceToAlliancePassing(json.getBoolean(JSON_KEY_ALLIANCE_TO_ALLIANCE_PASSING));
         setPassingEffectivenessRate(json.getInt(JSON_KEY_PASSING_EFFECTIVENESS_RATE));
 
         //Endgame data
-        setAccuracyRate(json.getInt(JSON_KEY_CLIMB_LEVEL));
-
        /* setTeleopAlgaeNet(json.getInt(JSON_KEY_TELEOP_ALGAE_NET));
         setTeleopAlgaeProcessor(json.getInt(JSON_KEY_TELEOP_ALGAE_PROCESSOR));
 
@@ -253,6 +259,8 @@ public class MatchData
         setTeleopCoralL4(json.getInt(JSON_KEY_TELEOP_CORAL_L4));*/
 
         setPlayedDefense(json.getInt(JSON_KEY_PLAYED_DEFENSE));
+        setDriveAbility(json.getInt(JSON_KEY_DRIVE_ABILITY));
+
 
         //endgame
         setTimeDied(json.getInt(JSON_KEY_DIED));
@@ -588,25 +596,6 @@ public class MatchData
         return m_intakeAndShoot;
     }
 
-    public void setNeutralToAlliancePassing(boolean neutralToAlliancePassing)
-    {
-        m_neutralToAlliancePassing = neutralToAlliancePassing;
-    }
-
-    public boolean getNeutralToAlliancePassing()
-    {
-        return m_neutralToAlliancePassing;
-    }
-
-    public void setAllianceToAlliancePassing(boolean allianceToAlliancePassing)
-    {
-        m_allianceToAlliancePassing = allianceToAlliancePassing;
-    }
-
-    public boolean getAllianceToAlliancePassing()
-    {
-        return m_allianceToAlliancePassing;
-    }
 
     public void setPassingEffectivenessRate(int passingEffectivenessRate)
     {
@@ -630,6 +619,18 @@ public class MatchData
     }
 
 
+    public void setDriveAbility(int driveAbility)
+    {
+
+        m_drivingability = driveAbility;
+    }
+
+    public int getDriveAbility()
+    {
+        return m_drivingability;
+    }
+
+
 
 
     public void setEndgameClimbLevel(int climbLevel)
@@ -643,6 +644,30 @@ public class MatchData
         return m_climbLevel;
     }
 
+
+
+    public void setPassNeutralZone(int neutralZone)
+    {
+
+        m_passedNz = neutralZone;
+    }
+
+    public int getPassNeutralZone()
+    {
+        return m_passedNz;
+    }
+
+
+    public void setPassAllianceZone(int allianceZone)
+    {
+
+        m_passedAz = allianceZone;
+    }
+
+    public int getPassAllianceZone()
+    {
+        return m_passedAz;
+    }
 
 
     public void setTeleopPhoto(int teleopPhoto)
@@ -772,19 +797,16 @@ public class MatchData
             tsvStr += "1" + "\t";
         else tsvStr += "0" + "\t";
 
-        if (m_neutralToAlliancePassing)
-            tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
-
-        if (m_allianceToAlliancePassing)
-            tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
-
         tsvStr += m_passingEffectivenessRate + "\t";
 
         tsvStr += m_playedDefense + "\t";
 
+        tsvStr += m_drivingability + "\t";
+
         tsvStr += m_climbLevel + "\t";
+
+        tsvStr += m_passedAz + "\t";
+        tsvStr += m_passedNz + "\t";
 
         tsvStr += m_diedGroup + "\t";
         tsvStr += m_startClimb + "\t";
@@ -842,15 +864,17 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_CLIMB_LEVEL, m_climbLevel);
         json.put("divider", ",");
+        json.put(JSON_KEY_PASS_NEUTRAL_ZONE, m_passedNz);
+        json.put("divider", ",");
+        json.put(JSON_KEY_PASS_ALLIANCE_ZONE, m_passedAz);
+        json.put("divider", ",");
         json.put(JSON_KEY_INTAKE_AND_SHOOT, m_intakeAndShoot);
-        json.put("divider", ",");
-        json.put(JSON_KEY_NEUTRAL_TO_ALLIANCE_PASSING, m_neutralToAlliancePassing);
-        json.put("divider", ",");
-        json.put(JSON_KEY_ALLIANCE_TO_ALLIANCE_PASSING, m_allianceToAlliancePassing);
         json.put("divider", ",");
         json.put(JSON_KEY_PASSING_EFFECTIVENESS_RATE, m_passingEffectivenessRate);
         json.put("divider", ",");
         json.put(JSON_KEY_PLAYED_DEFENSE, m_playedDefense);
+        json.put("divider", ",");
+        json.put(JSON_KEY_DRIVE_ABILITY, m_drivingability);
         json.put("divider", ",");
         json.put(JSON_KEY_DIED, m_diedGroup);
         json.put("divider", ",");

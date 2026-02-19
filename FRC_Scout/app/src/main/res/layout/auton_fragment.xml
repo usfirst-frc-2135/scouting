@@ -5,25 +5,19 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundColor">
 
-<!--start LEAVE vertical layout -->
-        <!--end LEAVE vertical layout -->
-
-    <!--start CORAL SCORING side-by-side-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="17dp"
-            android:background="@drawable/top_rounded_rect"
-            android:backgroundTint="#719da9"
             android:orientation="horizontal"
-            android:paddingBottom="20dp">
+            android:layout_marginTop="12dp"
+            android:paddingBottom="20dp"
+            android:backgroundTint="#719da9"
+            android:background="@drawable/top_rounded_rect">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -50,7 +44,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="7dp"
                 android:buttonTint="#457885"
-                android:text="Shoot preloaded 8 fuel"
+                android:text="Shot preloaded 8 fuel"
                 android:textColor="@color/specialTextPrimary"
                 android:textSize="22sp" />
 
@@ -137,16 +131,6 @@
                     android:buttonTint="#457885"
                     android:layout_marginBottom="5dp"
                     android:text="None" />
-
-                <RadioButton
-                    android:id="@+id/auton_accuracy_idk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="20sp"
-                    android:buttonTint="#457885"
-                    android:layout_marginBottom="5dp"
-                    android:text="IDK" />
 
             </RadioGroup>
 
@@ -242,7 +226,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="20sp"
+                        android:textSize="22sp"
                         android:buttonTint="#c64e34"
                         android:text="N/A" />
 
@@ -252,7 +236,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="20sp"
+                        android:textSize="22sp"
                         android:buttonTint="#c64e34"
                         android:text="Most" />
 
@@ -261,7 +245,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="20sp"
+                        android:textSize="22sp"
                         android:buttonTint="#c64e34"
                         android:text="¾" />
 
@@ -270,7 +254,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="20sp"
+                        android:textSize="22sp"
                         android:buttonTint="#c45120"
                         android:text="½" />
 
@@ -278,34 +262,35 @@
                         android:id="@+id/auton_accuracy_quarter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="-574dp"
+                        android:layout_marginStart="-537dp"
                         android:layout_marginTop="30dp"
                         android:layout_weight="1"
                         android:buttonTint="#c45120"
                         android:text="¼"
-                        android:textSize="20sp" />
+                        android:textSize="22sp" />
 
                     <RadioButton
-                        android:layout_marginStart="21dp"
+                        android:layout_marginStart="21.5dp"
                         android:layout_marginTop="30dp"
                         android:id="@+id/auton_accuracy_few"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="20sp"
+                        android:paddingEnd="5dp"
+                        android:textSize="22sp"
                         android:buttonTint="#c45120"
                         android:text="Few" />
 
                     <RadioButton
-                        android:layout_marginStart="10.5dp"
+                        android:layout_marginStart="5dp"
                         android:layout_marginTop="30dp"
                         android:id="@+id/auton_accuracy_none"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="20sp"
+                        android:textSize="22sp"
                         android:buttonTint="#c45120"
-                        android:text="0" />
+                        android:text="None" />
 
                     <RadioButton
                         android:layout_marginStart="4dp"
@@ -314,9 +299,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="20sp"
+                        android:textSize="22sp"
                         android:buttonTint="#c45120"
                         android:layout_marginBottom="5dp"
+                        android:visibility="invisible"
                         android:text="IDK" />
 
                 </RadioGroup>

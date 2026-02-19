@@ -44,7 +44,6 @@ public class AutonFragment extends Fragment
     private RadioButton m_autonAccuracyQuarters;
     private RadioButton m_autonAccuracyFew;
     private RadioButton m_autonAccuracyNone;
-    private RadioButton m_autonAccuracyCannotTell;
     private RadioButton m_autonAccuracyNA;
 
 
@@ -53,7 +52,6 @@ public class AutonFragment extends Fragment
     private RadioButton m_autonAccuracyM;
     private RadioButton m_autonAccuracyS;
     private RadioButton m_autonAccuracyF;
-    private RadioButton m_autonAccuracyIDK;
     private RadioButton m_autonAccuracyN;
     private RadioButton m_autonAccuracyA;
 
@@ -193,7 +191,6 @@ public class AutonFragment extends Fragment
         m_autonAccuracyM = v.findViewById(R.id.auton_accuracy_m);
         m_autonAccuracyS = v.findViewById(R.id.auton_accuracy_s);
         m_autonAccuracyF = v.findViewById(R.id.auton_accuracy_f);
-        m_autonAccuracyIDK = v.findViewById(R.id.auton_accuracy_idk);
         m_autonAccuracyN = v.findViewById(R.id.auton_accuracy_n);
         m_autonAccuracyA = v.findViewById(R.id.auton_accuracy_a);
         m_autonAccuracyNo.setChecked(false);
@@ -202,7 +199,6 @@ public class AutonFragment extends Fragment
         m_autonAccuracyF.setChecked(false);
         m_autonAccuracyN.setChecked(false);
         m_autonAccuracyA.setChecked(false);
-        m_autonAccuracyIDK.setChecked(false);
 
 
         m_autonAccuracyButtonGroup = v.findViewById(R.id.auton_accuracy_buttons);
@@ -213,7 +209,6 @@ public class AutonFragment extends Fragment
         m_autonAccuracyFew = v.findViewById(R.id.auton_accuracy_few);
         m_autonAccuracyNone = v.findViewById(R.id.auton_accuracy_none);
         m_autonAccuracyNA= v.findViewById(R.id.auton_accuracy_na);
-        m_autonAccuracyCannotTell = v.findViewById(R.id.auton_accuracy_cannot_tell);
         m_autonAccuracyMost.setChecked(false);
         m_autonAccuracyThreeFourths.setChecked(false);
         m_autonAccuracyHalf.setChecked(false);
@@ -221,7 +216,6 @@ public class AutonFragment extends Fragment
         m_autonAccuracyFew.setChecked(false);
         m_autonAccuracyNone.setChecked(false);
         m_autonAccuracyNA.setChecked(false);
-        m_autonAccuracyCannotTell.setChecked(false);
 
         m_autonClimbButtonGroup = v.findViewById(R.id.auton_climb_buttons);
         m_autonLeft = v.findViewById(R.id.auton_climb_left);
@@ -234,7 +228,6 @@ public class AutonFragment extends Fragment
         m_autonRight.setChecked(false);
         m_autonBack.setChecked(false);
         m_autonNA.setChecked(false);
-
 
 
         int accValue = m_matchData.getAutonAccuracyRate();
@@ -252,8 +245,6 @@ public class AutonFragment extends Fragment
             m_autonAccuracyFew.setChecked(true);
         else if(accValue == 6)
             m_autonAccuracyNone.setChecked(true);
-        else if(accValue == 7)
-            m_autonAccuracyCannotTell.setChecked(true);
 
 
         int BaccValue = m_matchData.getPreloadAccuracyLevel();
@@ -269,8 +260,7 @@ public class AutonFragment extends Fragment
             m_autonAccuracyF.setChecked(true);
         else if(BaccValue == 5)
             m_autonAccuracyN.setChecked(true);
-        else if(BaccValue == 6)
-            m_autonAccuracyIDK.setChecked(true);
+
 
         int CaccValue = m_matchData.getAutonClimb();
         if (CaccValue == 0)
@@ -334,10 +324,6 @@ public class AutonFragment extends Fragment
         {
             rtn = 6;
         }
-        if (m_autonAccuracyButtonGroup.getCheckedRadioButtonId() == m_autonAccuracyCannotTell.getId())
-        {
-            rtn = 7;
-        }
         return rtn;
     }
 
@@ -369,10 +355,6 @@ public class AutonFragment extends Fragment
         if (m_autonAccuracyBoxes.getCheckedRadioButtonId() == m_autonAccuracyN.getId())
         {
             rtn = 5;
-        }
-        if (m_autonAccuracyBoxes.getCheckedRadioButtonId() == m_autonAccuracyIDK.getId())
-        {
-            rtn = 6;
         }
         return rtn;
     }

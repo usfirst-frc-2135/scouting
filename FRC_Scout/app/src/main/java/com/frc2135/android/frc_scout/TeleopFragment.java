@@ -43,12 +43,17 @@ public class TeleopFragment extends Fragment
     private RadioButton m_accuracyQuarters;
     private RadioButton m_accuracyFew;
     private RadioButton m_accuracyNone;
-    private RadioButton m_accuracyCannotTell;
     private RadioButton m_accuracyNA;
 
     private CheckBox m_intakeAndShootCkbx;
-    private CheckBox m_NeutralToAlliancePassingCkbx;
-    private CheckBox m_AllianceToAlliancePassingCkbx;
+
+    private RadioGroup m_passNz;
+    private RadioButton m_passNzyes;
+    private RadioButton m_passNzno;
+
+    private RadioGroup m_passAz;
+    private RadioButton m_passAzyes;
+    private RadioButton m_passAzno;
 
     private RadioGroup m_passingEffectivenessButtonsGroup;
     private RadioButton m_passingNA;
@@ -60,9 +65,18 @@ public class TeleopFragment extends Fragment
     private RadioGroup m_defenseButtonGroup;
     private RadioButton m_defenseNone;
     private RadioButton m_defenseLow;
+    private RadioButton m_defenseMediuml;
     private RadioButton m_defenseMedium;
+    private RadioButton m_defenseMediumh;
     private RadioButton m_defenseHigh;
 
+    private RadioGroup m_drivingButtonGroup;
+    private RadioButton m_drivingNa;
+    private RadioButton m_drivingSlow;
+    private RadioButton m_drivingJerky;
+    private RadioButton m_drivingAvg;
+    private RadioButton m_drivingFast;
+    private RadioButton m_drivingElite;
 
     private LinearLayout photo;
 
@@ -167,12 +181,6 @@ public class TeleopFragment extends Fragment
         m_intakeAndShootCkbx = v.findViewById(R.id.intake_and_shoot);
         m_intakeAndShootCkbx.setChecked(m_matchData.getIntakeAndShoot());
 
-        m_NeutralToAlliancePassingCkbx = v.findViewById(R.id.from_neutral_zone_to_alliance_zone);
-        m_NeutralToAlliancePassingCkbx.setChecked(m_matchData.getNeutralToAlliancePassing());
-
-        m_AllianceToAlliancePassingCkbx = v.findViewById(R.id.from_alliance_zone_to_other_alliance_zone);
-        m_AllianceToAlliancePassingCkbx.setChecked(m_matchData.getAllianceToAlliancePassing());
-
         m_accuracyButtonGroup = v.findViewById(R.id.accuracy_buttons);
         m_accuracyMost = v.findViewById(R.id.accuracy_most);
         m_accuracyThreeFourths = v.findViewById(R.id.accuracy_three_fourths);
@@ -180,7 +188,6 @@ public class TeleopFragment extends Fragment
         m_accuracyQuarters = v.findViewById(R.id.accuracy_quarter);
         m_accuracyFew = v.findViewById(R.id.accuracy_few);
         m_accuracyNone = v.findViewById(R.id.accuracy_none);
-        m_accuracyCannotTell = v.findViewById(R.id.accuracy_cannot_tell);
         m_accuracyNA = v.findViewById(R.id.accuracy_NA);
         m_accuracyMost.setChecked(false);
         m_accuracyThreeFourths.setChecked(false);
@@ -188,7 +195,6 @@ public class TeleopFragment extends Fragment
         m_accuracyQuarters.setChecked(false);
         m_accuracyFew.setChecked(false);
         m_accuracyNone.setChecked(false);
-        m_accuracyCannotTell.setChecked(false);
         m_accuracyNA.setChecked(false);
 
         int accValue = m_matchData.getAccuracyRate();
@@ -206,8 +212,6 @@ public class TeleopFragment extends Fragment
             m_accuracyFew.setChecked(true);
         else if(accValue == 6)
             m_accuracyNone.setChecked(true);
-        else if(accValue == 7)
-            m_accuracyCannotTell.setChecked(true);
 
         m_passingEffectivenessButtonsGroup = v.findViewById(R.id.passing_effectiveness_buttons);
         m_passingNA = v.findViewById(R.id.passing_rate_na);
@@ -237,12 +241,17 @@ public class TeleopFragment extends Fragment
         m_defenseButtonGroup = v.findViewById(R.id.defense_buttons);
         m_defenseNone = v.findViewById(R.id.defense_none);
         m_defenseLow = v.findViewById(R.id.defense_low);
+        m_defenseMediuml = v.findViewById(R.id.defense_medium_low);
         m_defenseMedium = v.findViewById(R.id.defense_medium);
+        m_defenseMediumh = v.findViewById(R.id.defense_medium_high);
         m_defenseHigh = v.findViewById(R.id.defense_high);
         m_defenseNone.setChecked(false);
         m_defenseLow.setChecked(false);
+        m_defenseMediuml.setChecked(false);
         m_defenseMedium.setChecked(false);
+        m_defenseMediumh.setChecked(false);
         m_defenseHigh.setChecked(false);
+
 
         int defValue = m_matchData.getPlayedDefense();
         if (defValue == 0)
@@ -250,9 +259,69 @@ public class TeleopFragment extends Fragment
         else if(defValue == 1)
           m_defenseLow.setChecked(true);
         else if(defValue == 2)
-            m_defenseMedium.setChecked(true);
+            m_defenseMediuml.setChecked(true);
         else if(defValue == 3)
+            m_defenseMedium.setChecked(true);
+        else if(defValue == 4)
+            m_defenseMediumh.setChecked(true);
+        else if(defValue == 5)
             m_defenseHigh.setChecked(true);
+
+        m_passNz = v.findViewById(R.id.pass_nz);
+        m_passNzno = v.findViewById(R.id.no_nz);
+        m_passNzyes = v.findViewById(R.id.yes_nz);
+        m_passNzno.setChecked(false);
+        m_passNzyes.setChecked(false);
+
+        int TaccValue = m_matchData.getPassNeutralZone();
+        if (TaccValue == 0)
+            m_passNzno.setChecked(true);
+        else if(TaccValue == 1)
+            m_passNzyes.setChecked(true);
+
+
+        m_passAz = v.findViewById(R.id.pass_az);
+        m_passAzno = v.findViewById(R.id.no_az);
+        m_passAzyes = v.findViewById(R.id.yes_az);
+        m_passAzno.setChecked(false);
+        m_passAzyes.setChecked(false);
+
+        int WaccValue = m_matchData.getPassAllianceZone();
+        if (WaccValue == 0)
+            m_passAzno.setChecked(true);
+        else if(WaccValue == 1)
+            m_passAzyes.setChecked(true);
+
+
+        m_drivingButtonGroup = v.findViewById(R.id.driving_buttons);
+        m_drivingNa = v.findViewById(R.id.driving_na);
+        m_drivingSlow = v.findViewById(R.id.driving_slow);
+        m_drivingJerky = v.findViewById(R.id.driving_jerky);
+        m_drivingAvg = v.findViewById(R.id.driving_avg);
+        m_drivingFast = v.findViewById(R.id.driving_fast);
+        m_drivingElite = v.findViewById(R.id.driving_elite);
+        m_drivingNa.setChecked(false);
+        m_drivingSlow.setChecked(false);
+        m_drivingJerky.setChecked(false);
+        m_drivingAvg.setChecked(false);
+        m_drivingFast.setChecked(false);
+        m_drivingElite.setChecked(false);
+
+
+        int defValued = m_matchData.getDriveAbility();
+        if (defValued == 0)
+            m_drivingNa.setChecked(true);
+        else if(defValued == 1)
+            m_drivingSlow.setChecked(true);
+        else if(defValued == 2)
+            m_drivingJerky.setChecked(true);
+        else if(defValued == 3)
+            m_drivingAvg.setChecked(true);
+        else if(defValued == 4)
+            m_drivingFast.setChecked(true);
+        else if(defValued == 5)
+            m_drivingElite.setChecked(true);
+
 
         // Check acquired totals for MAX
         if (isGreaterThanMax(m_hoppersUsedTotal,true))
@@ -400,10 +469,6 @@ public class TeleopFragment extends Fragment
         {
             rtn = 6;
         }
-        if (m_accuracyButtonGroup.getCheckedRadioButtonId() == m_accuracyCannotTell.getId())
-        {
-            rtn = 7;
-        }
         return rtn;
     }
 
@@ -446,16 +511,87 @@ public class TeleopFragment extends Fragment
         {
             rtn = 1;
         }
-        if (m_defenseButtonGroup.getCheckedRadioButtonId() == m_defenseMedium.getId())
+        if (m_defenseButtonGroup.getCheckedRadioButtonId() == m_defenseMediuml.getId())
         {
             rtn = 2;
         }
-        if (m_defenseButtonGroup.getCheckedRadioButtonId() == m_defenseHigh .getId())
+        if (m_defenseButtonGroup.getCheckedRadioButtonId() == m_defenseMedium.getId())
         {
             rtn = 3;
         }
+        if (m_defenseButtonGroup.getCheckedRadioButtonId() == m_defenseMediumh.getId())
+        {
+            rtn = 4;
+        }
+        if (m_defenseButtonGroup.getCheckedRadioButtonId() == m_defenseHigh .getId())
+        {
+            rtn = 5;
+        }
         return rtn;
     }
+
+    public int getPassNeutralZone()
+    {
+        // Returns the integer climb level that is current checked in the radio buttons
+        int rtn = 0;
+        if (m_passNz.getCheckedRadioButtonId() == m_passNzno.getId())
+        {
+            rtn = 0;
+        }
+        if (m_passNz.getCheckedRadioButtonId() == m_passNzyes.getId())
+        {
+            rtn = 1;
+        }
+        return rtn;
+    }
+
+    public int getPassAllianceZone()
+    {
+        // Returns the integer climb level that is current checked in the radio buttons
+        int rtn = 0;
+        if (m_passAz.getCheckedRadioButtonId() == m_passAzno.getId())
+        {
+            rtn = 0;
+        }
+        if (m_passAz.getCheckedRadioButtonId() == m_passAzyes.getId())
+        {
+            rtn = 1;
+        }
+        return rtn;
+    }
+
+    public int getDriveAbility()
+    {
+        // Returns the integer climb level that is current checked in the radio buttons
+        int rtn = 0;
+        if (m_drivingButtonGroup.getCheckedRadioButtonId() == m_drivingNa.getId())
+        {
+            rtn = 0;
+        }
+        if (m_drivingButtonGroup.getCheckedRadioButtonId() == m_drivingSlow.getId())
+        {
+            rtn = 1;
+        }
+        if (m_drivingButtonGroup.getCheckedRadioButtonId() == m_drivingJerky.getId())
+        {
+            rtn = 2;
+        }
+        if (m_drivingButtonGroup.getCheckedRadioButtonId() == m_drivingAvg.getId())
+        {
+            rtn = 3;
+        }
+        if (m_drivingButtonGroup.getCheckedRadioButtonId() == m_drivingFast.getId())
+        {
+            rtn = 4;
+        }
+        if (m_drivingButtonGroup.getCheckedRadioButtonId() == m_drivingElite.getId())
+        {
+            rtn = 5;
+        }
+        return rtn;
+    }
+
+
 
     public void updateTeleopData()
     {
@@ -473,10 +609,10 @@ public class TeleopFragment extends Fragment
         m_matchData.setTeleopCoralL3(Integer.parseInt(m_teleopL3Total.getText().toString()));
         m_matchData.setTeleopCoralL4(Integer.parseInt(m_teleopL4Total.getText().toString()));*/
         m_matchData.setPlayedDefense(getCurrentDefenseLevel());
-
         m_matchData.setIntakeAndShoot(m_intakeAndShootCkbx.isChecked());
-        m_matchData.setNeutralToAlliancePassing(m_NeutralToAlliancePassingCkbx.isChecked());
-        m_matchData.setAllianceToAlliancePassing(m_AllianceToAlliancePassingCkbx.isChecked());
+        m_matchData.setPassNeutralZone(getPassNeutralZone());
+        m_matchData.setPassAllianceZone(getPassAllianceZone());
+        m_matchData.setDriveAbility(getDriveAbility());
 
     }
 }
