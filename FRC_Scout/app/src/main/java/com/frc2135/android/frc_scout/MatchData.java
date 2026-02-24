@@ -26,6 +26,7 @@ public class MatchData
     private static final String JSON_KEY_MATCH_NUMBER = "matchNumber";
 
     // Auton data
+    private static final String JSON_KEY_VERSION = "version";
     private static final String JSON_KEY_STARTING_POSITION = "startingPosition";
     private static final String JSON_KEY_PRELOAD = "preload";
     private static final String JSON_KEY_AUTON_AZ = "autonAz";
@@ -81,6 +82,7 @@ public class MatchData
 
     // Data members 
     // Auton data
+    private double m_version;
     private int m_startingPos;
     private boolean m_autonPreload;
     private boolean m_autonAz;
@@ -744,6 +746,10 @@ public class MatchData
         // For teamNumber, strip off 'frc' prefix.
         // Boolean values should be "0" or "1," not "true" or "false"
 
+        //sets the version number
+        m_version = 26.1;
+        tsvStr += m_version + "\t";
+
         tsvStr += m_eventCode + "\t";
         tsvStr += m_matchNumber + "\t";
 
@@ -829,7 +835,9 @@ public class MatchData
         json.put("divider", ",");
         json.put("divider", ", \n");
 
-        json.put("headings", "Competition, Team Number, Match Number, Starting Pos, Preload, Auton Hopper, Auton Algae Net, Auton Algae Processor, Auton Coral Floor, Auton Coral Station, Auton Algae Floor, Teleop Hoppers Used, Accuracy Rate, Intake and Shoot, Neutral to Alliance Passing, Alliance to Alliance Passing, Passing Effectiveness Rate, Defense, Cage Climb, Start Climb, Died, Comments, Timestamp, MatchID \n");
+        json.put("headings", "Competition, Team Number, Match Number, Version, Starting Pos, Preload, Auton Hopper, Auton Algae Net, Auton Algae Processor, Auton Coral Floor, Auton Coral Station, Auton Algae Floor, Teleop Hoppers Used, Accuracy Rate, Intake and Shoot, Neutral to Alliance Passing, Alliance to Alliance Passing, Passing Effectiveness Rate, Defense, Cage Climb, Start Climb, Died, Comments, Timestamp, MatchID \n");
+        json.put(JSON_KEY_VERSION, m_version);
+        json.put("divider", ",");
         json.put(JSON_KEY_EVENT_CODE, m_eventCode);
         json.put("divider", ",");
         json.put(JSON_KEY_MATCH_NUMBER, m_matchNumber);
