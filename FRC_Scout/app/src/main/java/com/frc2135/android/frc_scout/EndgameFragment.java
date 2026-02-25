@@ -169,27 +169,25 @@ public class EndgameFragment extends Fragment
 
 
 
-        /*
         //Connects the checkbox for if the robot dies and sets up a listener to detect when the checked status is changed
-        m_diedCheckbox = v.findViewById(R.id.died_checkbox_true);
-        m_diedCheckbox.setChecked(m_matchData.getDied());// Default is unchecked
-        m_diedCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
-                updateEndgameData();
-            }
-        });
-        */
+//HOLD        m_diedCheckbox = v.findViewById(R.id.died_checkbox_true);
+//HOLD        m_diedCheckbox.setChecked(m_matchData.getDied());// Default is unchecked
+//HOLD        m_diedCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+//HOLD        {
+//HOLD            @Override
+//HOLD            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+//HOLD            {
+//HOLD                updateEndgameData();
+//HOLD            }
+//HOLD        });
 
         m_diedGroup = v.findViewById(R.id.died_group);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
         m_diedNone = v.findViewById(R.id.died_none);//Sets up radio button that corresponds to 1
         m_diedMost = v.findViewById(R.id.died_most);//Sets up radio button that corresponds to 2
         m_diedMin = v.findViewById(R.id.died_min);//Sets up radio button that corresponds to 3
         m_diedThirty = v.findViewById(R.id.died_thirty);//Sets up radio button that corresponds to 4
-        m_diedTt = v.findViewById(R.id.died_tt);//Sets up radio button that corresponds to 4
-        m_noShow = v.findViewById(R.id.no_show);//Sets up radio button that corresponds to 4
+        m_diedTt = v.findViewById(R.id.died_tt);//Sets up radio button that corresponds to 5
+        m_noShow = v.findViewById(R.id.no_show);//Sets up radio button that corresponds to 6
         m_diedNone.setChecked(false);
         m_diedMost.setChecked(false);
         m_diedMin.setChecked(false);
@@ -197,18 +195,18 @@ public class EndgameFragment extends Fragment
         m_diedTt.setChecked(false);
         m_noShow.setChecked(false);
 
-        int defValueClimb = m_matchData.getTimeDied();
-        if (defValueClimb == 0)
+        int diedValue = m_matchData.getDiedValue();
+        if (diedValue == 0)
             m_diedNone.setChecked(true);
-        else if (defValueClimb == 1)
+        else if (diedValue == 1)
             m_diedMost.setChecked(true);
-        else if(defValueClimb == 2)
+        else if(diedValue == 2)
             m_diedMin.setChecked(true);
-        else if(defValueClimb == 3)
+        else if(diedValue == 3)
             m_diedThirty.setChecked(true);
-        else if(defValueClimb == 4)
+        else if(diedValue == 4)
             m_diedTt.setChecked(true);
-        else if(defValueClimb == 5)
+        else if(diedValue == 5)
             m_noShow.setChecked(true);
 
         m_startGroup = v.findViewById(R.id.start_text);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
@@ -249,7 +247,7 @@ public class EndgameFragment extends Fragment
         m_endgameNA.setChecked(false);
 
 
-        int CaccValue = m_matchData.getEndgameClimb();
+        int CaccValue = m_matchData.getEndgameClimbPos();
         if (CaccValue == 0)
             m_endgameNA.setChecked(true);
         else if(CaccValue == 1)
@@ -344,9 +342,9 @@ public class EndgameFragment extends Fragment
         return v;
     }
 
-    public int getTimeDied()
+    public int getDiedValue()
     {
-        // Returns the integer climb level that is current checked in the radio buttons
+        // Returns the current value for the Died radio buttons
         int rtn = 0;
         if (m_diedGroup.getCheckedRadioButtonId() == m_diedNone.getId())
         {
@@ -402,7 +400,7 @@ public class EndgameFragment extends Fragment
         return rtn;
     }
 
-    public int getEndgameClimb()
+    public int getEndgameClimbPos()
     {
         // Returns the integer climb level that is current checked in the radio buttons
         int rtn = 0;
@@ -454,9 +452,9 @@ public class EndgameFragment extends Fragment
     public void updateEndgameData()
     {
         m_matchData.setStartClimb(getCurrentStartClimbing());
-        m_matchData.setTimeDied(getTimeDied());
+        m_matchData.setDiedValue(getDiedValue());
         m_matchData.setComment(m_commentText.getText().toString());
-        m_matchData.setEndgameClimb(getEndgameClimb());
+        m_matchData.setEndgameClimbPos(getEndgameClimbPos());
         m_matchData.setEndgameClimbLevel(getEndgameClimbLevel());
 
     }

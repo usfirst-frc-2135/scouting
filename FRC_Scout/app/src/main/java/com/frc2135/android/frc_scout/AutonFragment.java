@@ -27,11 +27,11 @@ public class AutonFragment extends Fragment
     private static final int MAX_NUM_HOPPERS = 1;
     //private static final int MAX_NUM_ALGAE = 2;
     private CheckBox m_preloadCheckbox;
+
     private CheckBox m_azCheckbox;
     private CheckBox m_depotCheckbox;
     private CheckBox m_outpostCheckbox;
     private CheckBox m_nzCheckbox;
-
 
     private TextView m_autonHopperTotal;
     private Button m_autonHopperIncrButton;
@@ -45,7 +45,6 @@ public class AutonFragment extends Fragment
     private RadioButton m_autonAccuracyFew;
     private RadioButton m_autonAccuracyNone;
     private RadioButton m_autonAccuracyNA;
-
 
     private RadioGroup m_autonAccuracyBoxes;
     private RadioButton m_autonAccuracyNo;
@@ -62,29 +61,22 @@ public class AutonFragment extends Fragment
     private RadioButton m_autonBack;
     private RadioButton m_autonNA;
 
-
     private MatchData m_matchData;
 
     // Check if given field is greater than expected max number.
-    private boolean isGreaterThanMax(TextView field,boolean bIsCoral)
+    private boolean isGreaterThanMax(TextView field)
     {
         boolean rtn = false;
         int num = Integer.parseInt(field.getText().toString());
-        if (bIsCoral == true) {
-            if (num > MAX_NUM_HOPPERS)  // for coral number
-                rtn = true;
-        } /* else  // for algae number
-        {       
-            if (num > MAX_NUM_ALGAE)
-                rtn = true;
-        }*/
+        if (num > MAX_NUM_HOPPERS)  
+          rtn = true;
         return rtn;
     }
 
     // Sets the new result integer value for the given TextView, either decrementing or 
     // incrementing the shown value. If the decrement case falls below zero, returns 0. 
     // Sets textView color to RED if out of expected range.
-    public void updateTotalsInt(TextView tView, boolean bIncr, boolean bIsCoral)
+    public void updateTotalsInt(TextView tView, boolean bIncr)
     {
         int result = Integer.parseInt(tView.getText().toString()); // get current value as int
         if (bIncr)
@@ -93,7 +85,7 @@ public class AutonFragment extends Fragment
         if (result < 0) 
             result = 0;
         tView.setText(String.valueOf(result));
-        if (isGreaterThanMax(tView,bIsCoral))
+        if (isGreaterThanMax(tView))
         {
             tView.setTextColor(Color.RED);
         }
@@ -154,14 +146,12 @@ public class AutonFragment extends Fragment
         m_autonHopperDecrButton = v.findViewById(R.id.auton_Hopper_decr_button);
         m_autonHopperIncrButton = v.findViewById(R.id.auton_Hopper_incr_button);
 
-        // Set up Coral L1-L4 incr/decr buttons.
-
         m_autonHopperIncrButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                updateTotalsInt(m_autonHopperTotal, true, true);
+                updateTotalsInt(m_autonHopperTotal, true);
             }
         });
 
@@ -170,7 +160,7 @@ public class AutonFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                updateTotalsInt(m_autonHopperTotal, false, true);
+                updateTotalsInt(m_autonHopperTotal, false);
             }
         });
 
@@ -275,19 +265,9 @@ public class AutonFragment extends Fragment
             m_autonRight.setChecked(true);
 
 
-        // Set up Algae Net/Proc incr/decr buttons and listeners.
-        // Check coral levels for MAX
-        if (isGreaterThanMax(m_autonHopperTotal,true))
+        // Check Hopper levels for MAX
+        if (isGreaterThanMax(m_autonHopperTotal))
             m_autonHopperTotal.setTextColor(Color.RED);
-
-        // Check algae for MAX
-        /*
-        if (isGreaterThanMax(m_autonAlgaeNetTotal,false))
-            m_autonAlgaeNetTotal.setTextColor(Color.RED);
-        if (isGreaterThanMax(m_autonAlgaeProcTotal,false))
-            m_autonAlgaeProcTotal.setTextColor(Color.RED);
-
-         */
 
         return v;
     }

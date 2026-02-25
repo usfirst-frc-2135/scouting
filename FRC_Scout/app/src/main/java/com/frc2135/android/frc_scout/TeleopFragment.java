@@ -32,9 +32,6 @@ public class TeleopFragment extends Fragment
     private TextView m_hoppersUsedTotal;
     private Button m_hoppersUsedDecrButton;
     private Button m_hoppersUsedIncrButton;
-    /*private TextView m_algaeAcquiredTotal;
-    private Button   m_algaeAcquiredDecrButton;
-    private Button   m_algaeAcquiredIncrButton;*/
 
     private RadioGroup m_accuracyButtonGroup;
     private RadioButton m_accuracyMost;
@@ -85,26 +82,19 @@ public class TeleopFragment extends Fragment
     private int m_photoNum;
 
     // Check if pointsTextView field is greater than the MAX_NUM*.
-    private boolean isGreaterThanMax(TextView field,boolean bIsHoppers)
+    private boolean isGreaterThanMax(TextView field)
     {
         boolean rtn = false;
         int num = Integer.parseInt(field.getText().toString());
-        if (bIsHoppers == true) {
-            if (num > MAX_NUM_HOPPERS)  // for coral number
-                rtn = true;
-        }
-      /*  else  // for algae number
-        {
-            if (num > MAX_NUM_ALGAE)
-                rtn = true;
-        }*/
+        if (num > MAX_NUM_HOPPERS)  
+            rtn = true;
         return rtn;
     }
 
     // Sets the new result integer value for the given TextView, either decrementing or 
     // incrementing the shown value. If the decrement case falls below zero, returns 0. 
     // Sets textView color to RED if out of expected range.
-    public void updateTotalsInt(TextView tview, boolean bIncr, boolean bIsHoppers)
+    public void updateTotalsInt(TextView tview, boolean bIncr)
     {
         int result = Integer.parseInt(tview.getText().toString()); // get current value as int
         if (bIncr)
@@ -115,7 +105,7 @@ public class TeleopFragment extends Fragment
             result = 0;
         tview.setText(String.valueOf(result));
 
-        if (isGreaterThanMax(tview,bIsHoppers))
+        if (isGreaterThanMax(tview))
         {
             tview.setTextColor(Color.RED);
         }
@@ -166,7 +156,7 @@ public class TeleopFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                updateTotalsInt(m_hoppersUsedTotal, false, true);
+                updateTotalsInt(m_hoppersUsedTotal, false);
             }
         });
         m_hoppersUsedIncrButton.setOnClickListener(new View.OnClickListener()
@@ -174,7 +164,7 @@ public class TeleopFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                updateTotalsInt(m_hoppersUsedTotal, true, true);
+                updateTotalsInt(m_hoppersUsedTotal, true);
             }
         });
 
@@ -229,13 +219,13 @@ public class TeleopFragment extends Fragment
         int passValue = m_matchData.getPassingEffectivenessrate();
         if (passValue == 0)
             m_passingNA.setChecked(true);
-        else if(passValue == 1)
-          m_passingTons.setChecked(true);
-        else if(passValue == 2)
-            m_passingLarge.setChecked(true);
-        else if(passValue == 3)
-            m_passingMedium.setChecked(true);
         else if(passValue == 4)
+          m_passingTons.setChecked(true);
+        else if(passValue == 3)
+            m_passingLarge.setChecked(true);
+        else if(passValue == 2)
+            m_passingMedium.setChecked(true);
+        else if(passValue == 1)
             m_passingLow.setChecked(true);
 
         m_defenseButtonGroup = v.findViewById(R.id.defense_buttons);
@@ -253,7 +243,7 @@ public class TeleopFragment extends Fragment
         m_defenseHigh.setChecked(false);
 
 
-        int defValue = m_matchData.getPlayedDefense();
+        int defValue = m_matchData.getDefenseRate();
         if (defValue == 0)
             m_defenseNone.setChecked(true);
         else if(defValue == 1)
@@ -324,7 +314,7 @@ public class TeleopFragment extends Fragment
 
 
         // Check acquired totals for MAX
-        if (isGreaterThanMax(m_hoppersUsedTotal,true))
+        if (isGreaterThanMax(m_hoppersUsedTotal))
             m_hoppersUsedTotal.setTextColor(Color.RED);
 
         m_photoNum = m_matchData.getTeleopPhoto();
@@ -597,18 +587,10 @@ public class TeleopFragment extends Fragment
     {
         m_matchData.setHoppersUsed(Integer.parseInt(m_hoppersUsedTotal.getText().toString()));
         m_matchData.setAccuracyRate(getCurrentAccuracyLevel());
-        m_matchData.setPassingEffectivenessRate(getCurrentPassingLevel());
+        m_matchData.setPassingRate(getCurrentPassingLevel());
         m_matchData.setTeleopPhoto(m_photoNum);
-        //m_matchData.setHoppersUsed(Integer.parseInt(m_algaeAcquiredTotal.getText().toString()));
 
-       /* m_matchData.setTeleopAlgaeNet(Integer.parseInt(m_teleopAlgaeNetTotal.getText().toString()));
-        m_matchData.setTeleopAlgaeProcessor(Integer.parseInt(m_teleopAlgaeProcTotal.getText().toString()));
-
-        m_matchData.setTeleopCoralL1(Integer.parseInt(m_teleopL1Total.getText().toString()));
-        m_matchData.setTeleopCoralL2(Integer.parseInt(m_teleopL2Total.getText().toString()));
-        m_matchData.setTeleopCoralL3(Integer.parseInt(m_teleopL3Total.getText().toString()));
-        m_matchData.setTeleopCoralL4(Integer.parseInt(m_teleopL4Total.getText().toString()));*/
-        m_matchData.setPlayedDefense(getCurrentDefenseLevel());
+        m_matchData.setDefenseRate(getCurrentDefenseLevel());
         m_matchData.setIntakeAndShoot(m_intakeAndShootCkbx.isChecked());
         m_matchData.setPassNeutralZone(getPassNeutralZone());
         m_matchData.setPassAllianceZone(getPassAllianceZone());

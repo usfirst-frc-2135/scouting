@@ -33,102 +33,71 @@ public class MatchData
     private static final String JSON_KEY_AUTON_DEPOT = "autonDepot";
     private static final String JSON_KEY_AUTON_OUTPOST = "autonOutpost";
     private static final String JSON_KEY_AUTON_NZ = "autonNz";
-
-
-
+    private static final String JSON_KEY_AUTON_ACCURACY_RATE= "autonAccuracyRate";
     private static final String JSON_KEY_AUTON_HOPPER = "autonHopper";
-
-    private static final String JSON_KEY_FLOOR_CORAL= "floorCoral";
-    private static final String JSON_KEY_STATION_CORAL = "stationCoral";
-    private static final String JSON_KEY_FLOOR_ALGAE= "floorAlgae";
-    private static final String JSON_KEY_REEF_ALGAE = "reefAlgae";
+    private static final String JSON_KEY_AUTON_PRELOAD_ACCURACY_RATE= "autonPreloadAccRate";
+    private static final String JSON_KEY_AUTON_CLIMB= "autonClimb";
 
     // Teleop data
     private static final String JSON_KEY_HOPPERS_USED= "hoppersUsed";
     private static final String JSON_KEY_ACCURACY_RATE= "accuracyRate";
-    private static final String JSON_KEY_AUTON_ACCURACY_RATE= "autonAccuracyRate";
-    private static final String JSON_KEY_AUTON_PRELOAD_ACCURACY_RATE= "autonPreloadAccuracyRate";
-    private static final String JSON_KEY_PASS_NEUTRAL_ZONE= "neutralZone";
-    private static final String JSON_KEY_PASS_ALLIANCE_ZONE= "allianceZone";
-
-
-
-    private static final String JSON_KEY_AUTON_CLIMB= "autonClimb";
-    private static final String JSON_KEY_ENDGAME_CLIMB= "endgameClimb";
     private static final String JSON_KEY_INTAKE_AND_SHOOT= "intakeAndShoot";
-    private static final String JSON_KEY_PASSING_EFFECTIVENESS_RATE= "passingEffectivenessRate";
-  /*  private static final String JSON_KEY_TELEOP_ALGAE_NET = "teleopAlgaeNet";
-    private static final String JSON_KEY_TELEOP_ALGAE_PROCESSOR = "teleopAlgaeProcessor";
-
-    private static final String JSON_KEY_TELEOP_CORAL_L1 = "teleopCoralL1";
-    private static final String JSON_KEY_TELEOP_CORAL_L2 = "teleopCoralL2";
-    private static final String JSON_KEY_TELEOP_CORAL_L3 = "teleopCoralL3";
-    private static final String JSON_KEY_TELEOP_CORAL_L4 = "teleopCoralL4";*/
-
-    private static final String JSON_KEY_PLAYED_DEFENSE = "playedDefense";
-
+    private static final String JSON_KEY_PASSING_RATE= "passingRate";
+    private static final String JSON_KEY_DEFENSE_RATE = "defenseRate";
     private static final String JSON_KEY_DRIVE_ABILITY = "driveAbility";
-
-    private static final String JSON_KEY_CLIMB_LEVEL = "climbLevel";
-
+    private static final String JSON_KEY_PASS_ALLIANCE_ZONE= "allianceZone";
+    private static final String JSON_KEY_PASS_NEUTRAL_ZONE= "neutralZone";
 
     // Endgame data
-    private static final String JSON_KEY_DIED = "died";
     private static final String JSON_KEY_START_CLIMB = "startClimb";
+    private static final String JSON_KEY_CLIMB_LEVEL = "climbLevel";
+    private static final String JSON_KEY_ENDGAME_CLIMB_POS= "endgameClimbPos";
 
+    private static final String JSON_KEY_DIED = "died";
     private static final String JSON_KEY_COMMENTS = "comments";
+    private static final String JSON_KEY_OTHER1 = "other1";
+    private static final String JSON_KEY_OTHER2 = "other2";
+    private static final String JSON_KEY_OTHER3 = "other3";
+    private static final String JSON_KEY_OTHER4 = "other4";
     private static final String JSON_KEY_TIMESTAMP = "timestamp";
     private static final String JSON_KEY_MATCH_ID = "matchId";
 
     // Data members 
     // Auton data
     private double m_version;
-    private int m_startingPos;
     private boolean m_autonPreload;
+    private int m_autonPreloadAccRate;
+    private int m_autonHopper;
+    private int m_autonAccuracyRate;
     private boolean m_autonAz;
     private boolean m_autonDepot;
     private boolean m_autonOutpost;
     private boolean m_autonNz;
-
-    private int m_autonHopper;
-
-
-    private boolean m_coralFloor;
-    private boolean m_coralStation;
-    private boolean m_algaeFloor;
-    private boolean m_algaeReef;
-
+    private int m_autonClimb;
 
     // Teleop data
-    //private int m_teleopCoralL1;
-    //private int m_teleopCoralL2;
-    //private int m_teleopCoralL3;
-    //private int m_teleopCoralL4;
-    //private int m_teleopAlgaeNet;
-    // private int m_teleopAlgaeProcessor;
     private int m_hoppersUsed;
     private int m_accuracyRate;
-    private int m_autonAccuracyRate;
-    private int m_autonPreloadAccuracyRate;
-
-    private int m_autonClimb;
-    private int m_endgameClimb;
 
     private boolean m_intakeAndShoot;
-    private int m_passingEffectivenessRate;
-    private int m_playedDefense;
+    private int m_passingRate;
+    private int m_defenseRate;
     private int m_drivingability;
-    private int m_climbLevel;
-    private int m_passedNz;
     private int m_passedAz;
+    private int m_passedNz;
     private int m_teleopPhoto;
 
-    //endgame
-    private int m_diedGroup;
+    //Endgame
+    private int m_diedValue;
+    private int m_endgameClimbPos;  // climb position
     private int m_startClimb;
+    private int m_endgameClimbLevel;
 
     private String m_comment;
-    private boolean m_died;
+    private String m_other1;
+    private String m_other2;
+    private String m_other3;
+    private String m_other4;
     private String m_name;
     private String m_teamNumber;
     private String m_teamAlias;
@@ -154,53 +123,43 @@ public class MatchData
     ////////////////////////  Default constructor   //////////////////////////////
     public MatchData(Context context) throws IOException, JSONException
     {
-
         m_name = "";
         m_teamNumber = "";
         m_teamAlias = "";
         m_matchNumber = "";
+
         // Auton data
         setAutonPreload(false);
+        setPreloadAccuracyLevel(0);
+        setAutonHopper(0);
+        setAutonAccuracyRate(0);
 
         setAutonAzCheckbox(false);
         setAutonDepotCheckbox(false);
         setAutonOutpostCheckbox(false);
         setAutonNzCheckbox(false);
 
-        setAutonHopper(0);
-
-        setFloorCoral(false);
-        setStationCoral(false);
-        setFloorAlgae(false);
-        setReefAlgae(false);
+        setAutonClimb(0);
 
         // Teleop data
         setHoppersUsed(0);
         setAccuracyRate(0);
-        setTeleopPhoto(0);
-
         setIntakeAndShoot(false);
-        setPassingEffectivenessRate(0);
 
-        //setTeleopAlgaeNet(0);
-        //setTeleopAlgaeProcessor(0);
-
-        //setTeleopCoralL1(0);
-        //setTeleopCoralL2(0);
-        //setTeleopCoralL3(0);
-        //setTeleopCoralL4(0);
-
-        setPlayedDefense(0);
+        setPassingRate(0);
+        setDefenseRate(0);
         setDriveAbility(0);
-
         setPassNeutralZone(0);
         setPassAllianceZone(0);
 
-        // Endgame data
-        setTimeDied(0);
-        setStartClimb(0);
+        setTeleopPhoto(0);
 
-        setDied(false);
+        // Endgame data
+        setStartClimb(0);
+        setEndgameClimbLevel(0);
+        setEndgameClimbPos(0);
+
+        setDiedValue(0);
         setComment("");
         setTimestamp(Calendar.getInstance().getTime());
 
@@ -208,6 +167,10 @@ public class MatchData
 
         m_eventCode = CurrentCompetition.get(context).getEventCode();
         Log.d(TAG, "Default constructor m_eventCode set to " + m_eventCode);
+        m_other1 = "0";
+        m_other2 = "0";
+        m_other3 = "0";
+        m_other4 = "0";
     }
 
     //////////////////////// constructor from JSON file  //////////////////////////////
@@ -221,52 +184,33 @@ public class MatchData
         setMatchNumber(json.getString(JSON_KEY_MATCH_NUMBER));
 
         // Auton data
-        //setStartingPosition(json.getInt(JSON_KEY_STARTING_POSITION));
         setAutonPreload(json.getBoolean(JSON_KEY_PRELOAD));
+        setPreloadAccuracyLevel(json.getInt(JSON_KEY_AUTON_PRELOAD_ACCURACY_RATE));
+        setAutonHopper(json.getInt(JSON_KEY_AUTON_HOPPER));
+        setAutonAccuracyRate(json.getInt(JSON_KEY_AUTON_ACCURACY_RATE));
 
         setAutonAzCheckbox(json.getBoolean(JSON_KEY_AUTON_AZ));
         setAutonDepotCheckbox(json.getBoolean(JSON_KEY_AUTON_DEPOT));
         setAutonOutpostCheckbox(json.getBoolean(JSON_KEY_AUTON_OUTPOST));
         setAutonNzCheckbox(json.getBoolean(JSON_KEY_AUTON_NZ));
-
-        setAutonAccuracyRate(json.getInt(JSON_KEY_AUTON_CLIMB));
-
-
-        setAutonHopper(json.getInt(JSON_KEY_AUTON_HOPPER));
-
-        setFloorCoral(json.getBoolean(JSON_KEY_FLOOR_CORAL));
-        setStationCoral(json.getBoolean(JSON_KEY_STATION_CORAL));
-        setFloorAlgae(json.getBoolean(JSON_KEY_FLOOR_ALGAE));
-        setReefAlgae(json.getBoolean(JSON_KEY_REEF_ALGAE));
+        setAutonClimb(json.getInt(JSON_KEY_AUTON_CLIMB));
 
         // Teleop data
         setHoppersUsed(json.getInt(JSON_KEY_HOPPERS_USED));
         setAccuracyRate(json.getInt(JSON_KEY_ACCURACY_RATE));
-        setAutonAccuracyRate(json.getInt(JSON_KEY_AUTON_ACCURACY_RATE));
-        setPreloadAccuracyLevel(json.getInt(JSON_KEY_AUTON_PRELOAD_ACCURACY_RATE));
-        setPassNeutralZone(json.getInt(JSON_KEY_PASS_NEUTRAL_ZONE));
-        setPassAllianceZone(json.getInt(JSON_KEY_PASS_ALLIANCE_ZONE));
-
 
         setIntakeAndShoot(json.getBoolean(JSON_KEY_INTAKE_AND_SHOOT));
-        setPassingEffectivenessRate(json.getInt(JSON_KEY_PASSING_EFFECTIVENESS_RATE));
+        setPassingRate(json.getInt(JSON_KEY_PASSING_RATE));
+        setDefenseRate(json.getInt(JSON_KEY_DEFENSE_RATE));
+        setDriveAbility(json.getInt(JSON_KEY_DRIVE_ABILITY));
+        setPassAllianceZone(json.getInt(JSON_KEY_PASS_ALLIANCE_ZONE));
+        setPassNeutralZone(json.getInt(JSON_KEY_PASS_NEUTRAL_ZONE));
 
         //Endgame data
-       /* setTeleopAlgaeNet(json.getInt(JSON_KEY_TELEOP_ALGAE_NET));
-        setTeleopAlgaeProcessor(json.getInt(JSON_KEY_TELEOP_ALGAE_PROCESSOR));
-
-        setTeleopCoralL1(json.getInt(JSON_KEY_TELEOP_CORAL_L1));
-        setTeleopCoralL2(json.getInt(JSON_KEY_TELEOP_CORAL_L2));
-        setTeleopCoralL3(json.getInt(JSON_KEY_TELEOP_CORAL_L3));
-        setTeleopCoralL4(json.getInt(JSON_KEY_TELEOP_CORAL_L4));*/
-
-        setPlayedDefense(json.getInt(JSON_KEY_PLAYED_DEFENSE));
-        setDriveAbility(json.getInt(JSON_KEY_DRIVE_ABILITY));
-
-
-        //endgame
-        setTimeDied(json.getInt(JSON_KEY_DIED));
+        setDiedValue(json.getInt(JSON_KEY_DIED));
         setStartClimb(json.getInt(JSON_KEY_START_CLIMB));
+        setEndgameClimbLevel(json.getInt(JSON_KEY_CLIMB_LEVEL));
+        setEndgameClimbPos(json.getInt(JSON_KEY_ENDGAME_CLIMB_POS));
 
         setComment(json.getString(JSON_KEY_COMMENTS));
 
@@ -362,7 +306,6 @@ public class MatchData
 
     public void setAutonPreload(boolean preload)
     {
-
         m_autonPreload = preload;
     }
 
@@ -373,7 +316,6 @@ public class MatchData
 
     public void setAutonAzCheckbox(boolean autonAz)
     {
-
         m_autonAz = autonAz;
     }
 
@@ -384,7 +326,6 @@ public class MatchData
 
     public void setAutonDepotCheckbox(boolean autonDepot)
     {
-
         m_autonDepot = autonDepot;
     }
 
@@ -395,7 +336,6 @@ public class MatchData
 
     public void setAutonOutpostCheckbox(boolean autonOutpost)
     {
-
         m_autonOutpost = autonOutpost;
     }
 
@@ -406,124 +346,11 @@ public class MatchData
 
     public void setAutonNzCheckbox(boolean autonNz)
     {
-
         m_autonNz = autonNz;
     }
 
-
-
-
-    public void setFloorCoral(boolean floorCoral)
-    {
-
-        m_coralFloor = floorCoral;
-    }
-
-    public boolean getFloorCoral()
-    {
-        return m_coralFloor;
-    }
-
-    public void setFloorAlgae(boolean floorAlgae)
-    {
-
-        m_algaeFloor = floorAlgae;
-    }
-
-    public boolean getFloorAlgae()
-    {
-        return m_algaeFloor;
-    }
-
-    public void setReefAlgae(boolean reefAlgae)
-    {
-        m_algaeReef = reefAlgae;
-    }
-
-    public boolean getReefAlgae()
-    {
-        return m_algaeReef;
-    }
-
-    public void setStationCoral(boolean stationCoral)
-    {
-        m_coralStation = stationCoral;
-    }
-
-    public boolean getStationCoral()
-    {
-        return m_coralStation;
-    }
     ///////////Teleop/////////
-   /* public void setTeleopCoralL1(int numCoral)
-    {
-        m_teleopCoralL1 = numCoral;
-    }
 
-    public int getTeleopCoralL1()
-    {
-        return m_teleopCoralL1;
-    }
-
-    public void setTeleopCoralL2(int numCoral)
-    {
-        m_teleopCoralL2 = numCoral;
-    }
-
-    public int getTeleopCoralL2()
-    {
-        return m_teleopCoralL2;
-    }
-
-    public void setTeleopCoralL3(int numCoral)
-    {
-        m_teleopCoralL3 = numCoral;
-    }
-
-    public int getTeleopCoralL3()
-    {
-        return m_teleopCoralL3;
-    }
-
-    public void setTeleopCoralL4(int numCoral)
-    {
-        m_teleopCoralL4 = numCoral;
-    }
-
-    public int getTeleopCoralL4()
-    {
-        return m_teleopCoralL4;
-    }
-
-    public void setTeleopAlgaeNet(int numNet)
-    {
-        m_teleopAlgaeNet = numNet;
-    }
-
-    public int getTeleopAlgaeNet()
-    {
-        return m_teleopAlgaeNet;
-    }
-
-    public void setTeleopAlgaeProcessor(int numProcessor)
-    {
-        m_teleopAlgaeProcessor = numProcessor;
-    }
-
-    public int getTeleopAlgaeProcessor()
-    {
-        return m_teleopAlgaeProcessor;
-    }
-
-    public void setStartingPosition(int startingPosition)
-    {
-        m_startingPos = startingPosition;
-    }
-
-    public int getStartingPosition()
-    {
-        return m_startingPos;
-    }*/
     public void setHoppersUsed(int hoppersUsed)
     {
         m_hoppersUsed = hoppersUsed;
@@ -554,16 +381,15 @@ public class MatchData
         return m_autonAccuracyRate;
     }
 
-    public void setPreloadAccuracyLevel(int autonPreloadAccuracyRate)
+    public void setPreloadAccuracyLevel(int autonPreloadAccRate)
     {
-        m_autonPreloadAccuracyRate = autonPreloadAccuracyRate;
+        m_autonPreloadAccRate = autonPreloadAccRate;
     }
 
     public int getPreloadAccuracyLevel()
     {
-        return m_autonPreloadAccuracyRate;
+        return m_autonPreloadAccRate;
     }
-
 
     public void setAutonClimb(int autonClimb)
     {
@@ -575,18 +401,15 @@ public class MatchData
         return m_autonClimb;
     }
 
-
-    public void setEndgameClimb(int endgameClimb)
+    public void setEndgameClimbPos(int endgameClimbPos)
     {
-        m_endgameClimb = endgameClimb;
+        m_endgameClimbPos = endgameClimbPos;
     }
 
-    public int getEndgameClimb()
+    public int getEndgameClimbPos()
     {
-        return m_endgameClimb;
+        return m_endgameClimbPos;
     }
-
-
 
     public void setIntakeAndShoot(boolean intakeAndShoot)
     {
@@ -598,32 +421,28 @@ public class MatchData
         return m_intakeAndShoot;
     }
 
-
-    public void setPassingEffectivenessRate(int passingEffectivenessRate)
+    public void setPassingRate(int passingRate)
     {
-        m_passingEffectivenessRate = passingEffectivenessRate;
+        m_passingRate = passingRate;
     }
 
     public int getPassingEffectivenessrate()
     {
-        return m_passingEffectivenessRate;
+        return m_passingRate;
     }
 
-    public void setPlayedDefense(int playedDefense)
+    public void setDefenseRate(int def)
     {
-
-        m_playedDefense = playedDefense;
+        m_defenseRate = def;
     }
 
-    public int getPlayedDefense()
+    public int getDefenseRate()
     {
-        return m_playedDefense;
+        return m_defenseRate;
     }
-
 
     public void setDriveAbility(int driveAbility)
     {
-
         m_drivingability = driveAbility;
     }
 
@@ -632,25 +451,18 @@ public class MatchData
         return m_drivingability;
     }
 
-
-
-
     public void setEndgameClimbLevel(int climbLevel)
     {
-
-        m_climbLevel = climbLevel;
+        m_endgameClimbLevel = climbLevel;
     }
 
     public int getEndgameClimbLevel()
     {
-        return m_climbLevel;
+        return m_endgameClimbLevel;
     }
-
-
 
     public void setPassNeutralZone(int neutralZone)
     {
-
         m_passedNz = neutralZone;
     }
 
@@ -659,10 +471,8 @@ public class MatchData
         return m_passedNz;
     }
 
-
     public void setPassAllianceZone(int allianceZone)
     {
-
         m_passedAz = allianceZone;
     }
 
@@ -670,8 +480,7 @@ public class MatchData
     {
         return m_passedAz;
     }
-
-
+    
     public void setTeleopPhoto(int teleopPhoto)
     {
         m_teleopPhoto = teleopPhoto;
@@ -682,14 +491,14 @@ public class MatchData
         return m_teleopPhoto;
     }
 
-    public void setTimeDied(int x)
+    public void setDiedValue(int x)
     {
-        m_diedGroup = x;
+        m_diedValue = x;
     }
 
-    public int getTimeDied()
+    public int getDiedValue()
     {
-        return m_diedGroup;
+        return m_diedValue;
     }
 
     public void setStartClimb(int y)
@@ -724,18 +533,6 @@ public class MatchData
         return m_timestamp;
     }
 
-    ////////////  m_died   /////////////////////
-    public void setDied(boolean x)
-    {
-        m_died = x;
-    }
-
-    public boolean getDied()
-    {
-        return m_died;
-    }
-
-
     public String encodeToTSV()
     {
         // NOTE! THE ORDER IS IMPORTANT!
@@ -761,15 +558,13 @@ public class MatchData
 
         tsvStr += m_name + "\t";   // Scout name
 
-        if (m_died)
-            tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
+        tsvStr += m_diedValue + "\t";
 
         if (m_autonPreload)
             tsvStr += "1" + "\t";
         else tsvStr += "0" + "\t";
 
-        tsvStr += m_autonPreloadAccuracyRate + "\t";
+        tsvStr += m_autonPreloadAccRate + "\t";
 
         tsvStr += m_autonHopper + "\t";
 
@@ -793,9 +588,7 @@ public class MatchData
 
         tsvStr += m_autonClimb + "\t";
 
-        tsvStr += m_endgameClimb + "\t";
-
-
+        // Teleop data
         tsvStr += m_hoppersUsed + "\t";
         tsvStr += m_accuracyRate + "\t";
 
@@ -803,26 +596,28 @@ public class MatchData
             tsvStr += "1" + "\t";
         else tsvStr += "0" + "\t";
 
-        tsvStr += m_passingEffectivenessRate + "\t";
+        tsvStr += m_passingRate + "\t";
 
-        tsvStr += m_playedDefense + "\t";
+        tsvStr += m_defenseRate + "\t";
 
         tsvStr += m_drivingability + "\t";
-
-        tsvStr += m_climbLevel + "\t";
 
         tsvStr += m_passedAz + "\t";
         tsvStr += m_passedNz + "\t";
 
-        tsvStr += m_diedGroup + "\t";
         tsvStr += m_startClimb + "\t";
+        tsvStr += m_endgameClimbLevel + "\t";
+        tsvStr += m_endgameClimbPos + "\t";   // climb position
 
         if (!m_comment.equals(""))
             tsvStr += m_comment + "\t";
         else tsvStr += "-" + "\t";
 
+        tsvStr += m_other1 + "\t";   // extra spot 1
+        tsvStr += m_other2 + "\t";   // extra spot 2 
+        tsvStr += m_other3 + "\t";   // extra spot 3 
+        tsvStr += m_other4 + "\t";   // extra spot 4 
 
-//HOLD        Log.d(TAG, "MatchData encodeToTSV() columns: " + headers);
         Log.d(TAG, "MatchData encodeToTSV(): " + tsvStr);
         return tsvStr;
     }
@@ -850,7 +645,7 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_PRELOAD, m_autonPreload);
         json.put("divider", ",");
-        json.put(JSON_KEY_AUTON_PRELOAD_ACCURACY_RATE, m_autonPreloadAccuracyRate);
+        json.put(JSON_KEY_AUTON_PRELOAD_ACCURACY_RATE, m_autonPreloadAccRate);
         json.put("divider", ",");
         json.put(JSON_KEY_AUTON_HOPPER, m_autonHopper);
         json.put("divider", ",");
@@ -870,27 +665,35 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_ACCURACY_RATE, m_accuracyRate);
         json.put("divider", ",");
-        json.put(JSON_KEY_CLIMB_LEVEL, m_climbLevel);
-        json.put("divider", ",");
-        json.put(JSON_KEY_PASS_NEUTRAL_ZONE, m_passedNz);
-        json.put("divider", ",");
-        json.put(JSON_KEY_PASS_ALLIANCE_ZONE, m_passedAz);
-        json.put("divider", ",");
         json.put(JSON_KEY_INTAKE_AND_SHOOT, m_intakeAndShoot);
         json.put("divider", ",");
-        json.put(JSON_KEY_PASSING_EFFECTIVENESS_RATE, m_passingEffectivenessRate);
+        json.put(JSON_KEY_PASSING_RATE, m_passingRate);
         json.put("divider", ",");
-        json.put(JSON_KEY_PLAYED_DEFENSE, m_playedDefense);
+        json.put(JSON_KEY_DEFENSE_RATE, m_defenseRate);
         json.put("divider", ",");
         json.put(JSON_KEY_DRIVE_ABILITY, m_drivingability);
         json.put("divider", ",");
-        json.put(JSON_KEY_DIED, m_diedGroup);
+        json.put(JSON_KEY_PASS_ALLIANCE_ZONE, m_passedAz);
+        json.put("divider", ",");
+        json.put(JSON_KEY_PASS_NEUTRAL_ZONE, m_passedNz);
         json.put("divider", ",");
         json.put(JSON_KEY_START_CLIMB, m_startClimb);
         json.put("divider", ",");
-        json.put(JSON_KEY_ENDGAME_CLIMB, m_endgameClimb);
+        json.put(JSON_KEY_CLIMB_LEVEL, m_endgameClimbLevel);
+        json.put("divider", ",");
+        json.put(JSON_KEY_ENDGAME_CLIMB_POS, m_endgameClimbPos);
+        json.put("divider", ",");
+        json.put(JSON_KEY_DIED, m_diedValue);
         json.put("divider", ",");
         json.put(JSON_KEY_COMMENTS, m_comment);
+        json.put("divider", ",");
+        json.put(JSON_KEY_OTHER1, m_other1);   // Holders for extra data if ever needed
+        json.put("divider", ",");
+        json.put(JSON_KEY_OTHER2, m_other2);
+        json.put("divider", ",");
+        json.put(JSON_KEY_OTHER3, m_other3);
+        json.put("divider", ",");
+        json.put(JSON_KEY_OTHER4, m_other4);
         json.put("divider", ",");
         json.put(JSON_KEY_TIMESTAMP, m_timestamp);
         json.put("divider", ",");
