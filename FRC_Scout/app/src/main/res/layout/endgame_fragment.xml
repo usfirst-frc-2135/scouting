@@ -384,7 +384,7 @@
                     android:layout_weight="1"
                     android:textColor="@color/specialTextPrimary"
                     android:buttonTint="@color/specialTextPrimary"
-                    android:text="30-15s"/>
+                    android:text="15-30s"/>
 
                 <RadioButton
                     android:id="@+id/no_show"
