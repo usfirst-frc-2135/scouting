@@ -63,9 +63,9 @@ public class EndgameFragment extends Fragment
     public static final String QRTAG = "qr";
     private static final String TAG = "EndgameFragment";
 
-    private void setupWarnings(View view)
+    public void setupWarnings(View view)
     {
-        // Determine if the warning msgs should be shown or hidden, and thus if the QR and Done 
+        // Determine if the warning msgs should be shown or hidden, and thus if the QR and Done
         // buttons should be disabled or not.
         String warnmsg = "";
         String warnmsg2 = "";
@@ -78,7 +78,8 @@ public class EndgameFragment extends Fragment
         // Check if the acquired number is less than the scored number for coral and algae.
        //FIX int numCoralAcqd = m_matchData.getCoralAcquired();
       //FIX  int numAlgaeAcqd = m_matchData.getAlgaeAcquired();
-       /* int numCoralScored = m_matchData.getTeleopCoralL1() + m_matchData.getTeleopCoralL2() + m_matchData.getTeleopCoralL3() + m_matchData.getTeleopCoralL4();
+        /*
+       int numCoralScored = m_matchData.getTeleopCoralL1() + m_matchData.getTeleopCoralL2() + m_matchData.getTeleopCoralL3() + m_matchData.getTeleopCoralL4();
         int numAlgaeScored = m_matchData.getTeleopAlgaeNet() + m_matchData.getTeleopAlgaeProcessor();
         if(numCoralAcqd < numCoralScored) {
             bWarnCoral = true;
@@ -87,17 +88,34 @@ public class EndgameFragment extends Fragment
         if(numAlgaeAcqd < numAlgaeScored) {
             bWarnAlgae = true;
             Log.d(TAG, "-->  Number of algae acquired ("+numAlgaeAcqd+") is less than numAlgaeScored("+numAlgaeScored+")!");
-        }*/
-        if(bWarnAlgae && bWarnCoral) 
+        }
+        */
+
+        /*
+
+        //FOR THE REBUILT GAME
+        //WORK IN PROGRESS WARINING FOR ENDGAMDE CLIMB LEVEL AND POSTION
+
+        int endgameClimbLevel = m_matchData.getEndgameClimbLevel();
+        int endgameClimbPosition = m_matchData.getEndgameClimbPos();
+
+        if(endgameClimbLevel > 0)
+            if (endgameClimbPosition == 0) {
+                bWarnCoral = true;
+                warnmsg = "A level is checked, but there is no position";}
+
+*/
+/*
+        if(bWarnAlgae && bWarnCoral)
             warnmsg = "In Teleop, adjust the acquired coral and algae numbers (they are less than the numbers scored).";
         else if(bWarnAlgae)
             warnmsg = "In Teleop, adjust the acquired algae number (it is less than the number scored).";
         else if(bWarnCoral)
             warnmsg = "In Teleop, adjust the acquired coral number (it is less than the number scored).";
-
+*/
         // Check if auton coral was scored but no reefzone was checked.
-        // Make the appropriate warnings visible and red. 
-        if(warnmsg != "") 
+        // Make the appropriate warnings visible and red.
+        if(warnmsg != "")
         {
             tmsg1.setText(warnmsg);
             tmsg1.setVisibility(View.VISIBLE);
@@ -307,6 +325,7 @@ public class EndgameFragment extends Fragment
                 }
             }
         });
+
 
         Button mNextButton = v.findViewById(R.id.nav_to_menu_button);
         mNextButton.setOnClickListener(new View.OnClickListener()

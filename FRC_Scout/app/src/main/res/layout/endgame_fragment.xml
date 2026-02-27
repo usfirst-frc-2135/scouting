@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="12dp"
-            android:backgroundTint="#e2a2cc"
+            android:backgroundTint="#adbba2"
             android:background="@drawable/rounded_rect">
 
                 <TextView
@@ -41,7 +41,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:backgroundTint="#e8b5d6"
+                        android:backgroundTint="#c1cbb8"
                         android:background="@drawable/bottom_rounded_rect">
 
                         <RadioButton
@@ -105,20 +105,9 @@
             android:layout_height="320dp"
             android:orientation="horizontal"
             android:paddingTop="7dp"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="5dp"
             android:backgroundTint="#93A685"
             android:background="@drawable/rounded_rect">
-
-        <TextView
-            android:id="@+id/Climb_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:layout_marginLeft="5dp"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="@color/specialTextPrimary"
-            android:text="CLIMB"/>
 
             <!--start layout that holds both of the images-->
             <LinearLayout
@@ -129,11 +118,32 @@
                 <!--start layoout that holds first image-->
                 <LinearLayout
                     android:id="@+id/imageone"
-                    android:layout_width="300dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="230dp"
-                    android:layout_marginStart="80dp"
+                    android:layout_marginStart="1dp"
                     android:layout_marginLeft="7dp"
                     android:background="@drawable/tower_angle_one">
+
+                    <LinearLayout
+                        android:layout_width="130dp"
+                        android:layout_height="65dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginLeft="5dp"
+                        android:backgroundTint="#f3d8ea"
+                        android:background="@drawable/rounded_rect">
+
+                        <TextView
+                            android:id="@+id/Climb_title"
+                            android:layout_width="115dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginLeft="5dp"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/specialTextPrimary"
+                            android:text="CLIMB LEVEL:"/>
+                    </LinearLayout>
+
 
 
                     <RadioGroup
@@ -142,7 +152,6 @@
                         android:layout_height="230dp"
                         android:orientation="vertical"
                         android:layout_marginTop="0dp"
-                        android:layout_marginStart="140dp"
                         android:paddingTop="20dp">
 
                         <RadioButton
@@ -150,6 +159,7 @@
                             android:layout_width="70dp"
                             android:layout_height="25dp"
                             android:layout_marginTop="1dp"
+                            android:layout_marginStart="3dp"
                             android:textSize="18sp"
                             android:buttonTint="#db8ac1"
                             android:backgroundTint="#f3d8ea"
@@ -159,6 +169,7 @@
                             android:id="@+id/endgame_level_three"
                             android:layout_width="65dp"
                             android:layout_height="25dp"
+                            android:layout_marginStart="240dp"
                             android:layout_marginTop="27dp"
                             android:textSize="18sp"
                             android:buttonTint="#db8ac1"
@@ -169,6 +180,7 @@
                             android:id="@+id/endgame_level_two"
                             android:layout_width="65dp"
                             android:layout_height="25dp"
+                            android:layout_marginStart="240dp"
                             android:layout_marginTop="40dp"
                             android:textSize="18sp"
                             android:buttonTint="#db8ac1"
@@ -180,6 +192,7 @@
                             android:id="@+id/endgame_level_one"
                             android:layout_width="65dp"
                             android:layout_height="25dp"
+                            android:layout_marginStart="240dp"
                             android:layout_marginTop="30dp"
                             android:textSize="18sp"
                             android:buttonTint="#db8ac1"
@@ -193,25 +206,47 @@
 
                 <!--start layout that holds second image-->
                 <LinearLayout
-                    android:layout_width="300dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="100dp"
-                    android:layout_marginStart="80dp"
+                    android:layout_marginStart="1dp"
                     android:layout_marginLeft="7dp"
                     android:background="@drawable/tower_angle_two">
+
+                    <LinearLayout
+                        android:layout_width="130dp"
+                        android:layout_height="65dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginLeft="5dp"
+                        android:backgroundTint="#BECCB8"
+                        android:background="@drawable/rounded_rect">
+
+                        <TextView
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginLeft="5dp"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/specialTextPrimary"
+                            android:text="CLIMB POSITION:"/>
+
+                    </LinearLayout>
 
                     <RadioGroup
                         android:id="@+id/endgame_climb_buttons"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:orientation="horizontal"
-                        android:buttonTint="#8957A1">
+                        android:buttonTint="#536149">
 
                         <RadioButton
                             android:id="@+id/endgame_climb_na"
                             android:layout_width="70dp"
                             android:layout_height="25dp"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginTop="25dp"
                             android:textSize="18sp"
-                            android:buttonTint="#748767"
+                            android:buttonTint="#536149"
                             android:backgroundTint="#BECCB8"
                             android:background="@drawable/rounded_rect"
                             android:text="N/A"/>
@@ -221,9 +256,9 @@
                             android:layout_width="50dp"
                             android:layout_height="25dp"
                             android:layout_marginTop="30dp"
-                            android:layout_marginStart="20dp"
+                            android:layout_marginStart="90dp"
                             android:textSize="18sp"
-                            android:buttonTint="#748767"
+                            android:buttonTint="#536149"
                             android:backgroundTint="#BECCB8"
                             android:background="@drawable/rounded_rect"
                             android:text="B"/>
@@ -233,10 +268,10 @@
                             android:layout_width="50dp"
                             android:layout_height="25dp"
                             android:layout_marginTop="0dp"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="30dp"
                             android:textSize="18dp"
                             android:backgroundTint="#BECCB8"
-                            android:buttonTint="#748767"
+                            android:buttonTint="#536149"
                             android:background="@drawable/rounded_rect"
                             android:text="L"/>
 
@@ -247,7 +282,7 @@
                             android:layout_marginTop="30dp"
                             android:layout_marginStart="-5dp"
                             android:textSize="18sp"
-                            android:buttonTint="#748767"
+                            android:buttonTint="#536149"
                             android:backgroundTint="#BECCB8"
                             android:background="@drawable/rounded_rect"
                             android:text="F"/>
@@ -259,7 +294,7 @@
                             android:layout_marginTop="0dp"
                             android:layout_marginStart="-10dp"
                             android:textSize="18sp"
-                            android:buttonTint="#748767"
+                            android:buttonTint="#536149"
                             android:backgroundTint="#BECCB8"
                             android:background="@drawable/rounded_rect"
                             android:text="R"/>

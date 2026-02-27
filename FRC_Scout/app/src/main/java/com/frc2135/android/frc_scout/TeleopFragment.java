@@ -470,19 +470,19 @@ public class TeleopFragment extends Fragment
         {
             rtn = 0;
         }
-        if (m_passingEffectivenessButtonsGroup.getCheckedRadioButtonId() == m_passingTons.getId())
+        if (m_passingEffectivenessButtonsGroup.getCheckedRadioButtonId() == m_passingLow.getId())
         {
             rtn = 1;
         }
-        if (m_passingEffectivenessButtonsGroup.getCheckedRadioButtonId() == m_passingLarge.getId())
+        if (m_passingEffectivenessButtonsGroup.getCheckedRadioButtonId() == m_passingMedium.getId())
         {
             rtn = 2;
         }
-        if (m_passingEffectivenessButtonsGroup.getCheckedRadioButtonId() == m_passingMedium.getId())
+        if (m_passingEffectivenessButtonsGroup.getCheckedRadioButtonId() == m_passingLarge.getId())
         {
             rtn = 3;
         }
-        if (m_passingEffectivenessButtonsGroup.getCheckedRadioButtonId() == m_passingLow.getId())
+        if (m_passingEffectivenessButtonsGroup.getCheckedRadioButtonId() == m_passingTons.getId())
         {
             rtn = 4;
         }

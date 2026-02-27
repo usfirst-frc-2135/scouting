@@ -117,7 +117,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="22sp"
+                        android:textSize="27sp"
                         android:buttonTint="#8957A1"
                         android:text="Most" />
 
@@ -126,7 +126,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="22sp"
+                        android:textSize="27sp"
                         android:buttonTint="#8957A1"
                         android:text="¾" />
 
@@ -135,7 +135,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="22sp"
+                        android:textSize="27sp"
                         android:buttonTint="#8957A1"
                         android:text="½" />
 

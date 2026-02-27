@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="12dp"
-            android:paddingBottom="20dp"
+            android:paddingBottom="7dp"
             android:backgroundTint="#719da9"
             android:background="@drawable/top_rounded_rect">
 
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="7dp"
-                android:buttonTint="#457885"
+                android:buttonTint="#354c54"
                 android:text="Shot preloaded 8 fuel"
                 android:textColor="@color/specialTextPrimary"
                 android:textSize="22sp" />
@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textSize="20sp"
-                    android:buttonTint="#457885"
+                    android:buttonTint="#354c54"
                     android:text="N/A" />
 
                 <RadioButton
@@ -91,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textSize="20sp"
-                    android:buttonTint="#457885"
+                    android:buttonTint="#354c54"
                     android:layout_marginBottom="5dp"
                     android:text="All" />
 
@@ -101,7 +101,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textSize="20sp"
-                    android:buttonTint="#457885"
+                    android:buttonTint="#354c54"
                     android:text="Most" />
 
                 <RadioButton
@@ -110,7 +110,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textSize="20sp"
-                    android:buttonTint="#457885"
+                    android:buttonTint="#354c54"
                     android:text="Half" />
 
                 <RadioButton
@@ -119,7 +119,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textSize="20sp"
-                    android:buttonTint="#457885"
+                    android:buttonTint="#354c54"
                     android:text="Some" />
 
                 <RadioButton
@@ -128,7 +128,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textSize="20sp"
-                    android:buttonTint="#457885"
+                    android:buttonTint="#354c54"
                     android:layout_marginBottom="5dp"
                     android:text="None" />
 
@@ -245,7 +245,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="22sp"
+                        android:textSize="27sp"
                         android:buttonTint="#c64e34"
                         android:text="¾" />
 
@@ -254,7 +254,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="22sp"
+                        android:textSize="27sp"
                         android:buttonTint="#c45120"
                         android:text="½" />
 
@@ -267,7 +267,7 @@
                         android:layout_weight="1"
                         android:buttonTint="#c45120"
                         android:text="¼"
-                        android:textSize="22sp" />
+                        android:textSize="27sp" />
 
                     <RadioButton
                         android:layout_marginStart="21.5dp"
@@ -407,6 +407,8 @@
                     android:layout_marginTop="7dp"
                     android:text="CLIMB"
                     android:textColor="@color/specialTextPrimary"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#BECCB8"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
@@ -425,7 +427,7 @@
                         android:layout_marginTop="40dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#BECCB8"
-                        android:buttonTint="#748767"
+                        android:buttonTint="#536149"
                         android:text="N/A"
                         android:textSize="20sp" />
 
@@ -437,7 +439,7 @@
                         android:layout_marginTop="265dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#BECCB8"
-                        android:buttonTint="#748767"
+                        android:buttonTint="#536149"
                         android:text="B"
                         android:textSize="20sp" />
 
@@ -449,7 +451,7 @@
                         android:layout_marginTop="185dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#BECCB8"
-                        android:buttonTint="#748767"
+                        android:buttonTint="#536149"
                         android:text="L"
                         android:textSize="20dp" />
 
@@ -461,7 +463,7 @@
                         android:layout_marginTop="265dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#BECCB8"
-                        android:buttonTint="#748767"
+                        android:buttonTint="#536149"
                         android:text="F"
                         android:textSize="20sp" />
 
@@ -473,7 +475,7 @@
                         android:layout_marginTop="130dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#BECCB8"
-                        android:buttonTint="#748767"
+                        android:buttonTint="#536149"
                         android:text="R"
                         android:textSize="20sp" />
 
