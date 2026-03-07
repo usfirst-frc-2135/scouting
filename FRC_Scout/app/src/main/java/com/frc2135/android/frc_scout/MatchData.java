@@ -149,8 +149,8 @@ public class MatchData
         setPassingRate(0);
         setDefenseRate(0);
         setDriveAbility(0);
-        setPassNeutralZone(0);
-        setPassAllianceZone(0);
+        setPassNeutralZone(3);
+        setPassAllianceZone(3);
 
         setTeleopPhoto(0);
 

@@ -30,6 +30,7 @@ public class TeleopFragment extends Fragment
     private static final int MAX_NUM_HOPPERS = 7;     // hoppers max expected high total
 
     private TextView m_hoppersUsedTotal;
+    public TextView m_unknown;
     private Button m_hoppersUsedDecrButton;
     private Button m_hoppersUsedIncrButton;
 
@@ -268,6 +269,11 @@ public class TeleopFragment extends Fragment
             m_passNzno.setChecked(true);
         else if(TaccValue == 1)
             m_passNzyes.setChecked(true);
+        else{
+            m_passNzno.setChecked(false);
+            m_passNzyes.setChecked(false);
+
+        }
 
 
         m_passAz = v.findViewById(R.id.pass_az);
@@ -276,11 +282,23 @@ public class TeleopFragment extends Fragment
         m_passAzno.setChecked(false);
         m_passAzyes.setChecked(false);
 
+
         int WaccValue = m_matchData.getPassAllianceZone();
         if (WaccValue == 0)
+        {
+            Log.i(TAG, "--> 1SETTING ALLIANCE ZONE RADIO BUTTON NO TO TRUE");
             m_passAzno.setChecked(true);
+        }
         else if(WaccValue == 1)
+        {
             m_passAzyes.setChecked(true);
+            Log.i(TAG, "--> 2SETTING ALLIANCE ZONE RADIO BUTTON YES TO TRUE");
+        }
+        else {
+            m_passAzno.setChecked(false);
+            m_passAzyes.setChecked(false);
+            Log.i(TAG, "--> 3SETTING ALLIANCE ZONE RADIO BUTTONS OFF");
+        }
 
 
         m_drivingButtonGroup = v.findViewById(R.id.driving_buttons);
@@ -523,7 +541,7 @@ public class TeleopFragment extends Fragment
     public int getPassNeutralZone()
     {
         // Returns the integer climb level that is current checked in the radio buttons
-        int rtn = 0;
+        int rtn = 3;
         if (m_passNz.getCheckedRadioButtonId() == m_passNzno.getId())
         {
             rtn = 0;
@@ -538,7 +556,7 @@ public class TeleopFragment extends Fragment
     public int getPassAllianceZone()
     {
         // Returns the integer climb level that is current checked in the radio buttons
-        int rtn = 0;
+        int rtn = 3;
         if (m_passAz.getCheckedRadioButtonId() == m_passAzno.getId())
         {
             rtn = 0;

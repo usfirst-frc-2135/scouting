@@ -3,6 +3,7 @@ package com.frc2135.android.frc_scout;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -59,80 +61,40 @@ public class EndgameFragment extends Fragment
 
     private EditText m_commentText;
     private MatchData m_matchData;
+    private View m_view;
 
     public static final String QRTAG = "qr";
     private static final String TAG = "EndgameFragment";
+
+    private void setupDoneButton(View view, boolean bEnable)
+    {
+        Button doneButton = view.findViewById(R.id.nav_to_menu_button);
+        Button doneButtonDisabled = view.findViewById(R.id.nav_to_menu_button_disabled);
+        if (doneButton != null && doneButtonDisabled != null) {
+        if (!bEnable)
+        {    // Disab;e DONE button
+            Log.d(TAG, "--> ! Disabling DONE ");
+            doneButton.setEnabled(false);
+            doneButtonDisabled.setVisibility(view.VISIBLE);
+        }
+        else
+        {
+            Log.d(TAG, "--> ! Enabling DONE");
+            doneButton.setEnabled(true);
+            doneButtonDisabled.setVisibility(view.INVISIBLE);
+        }
+      }
+    }
+
 
     public void setupWarnings(View view)
     {
         // Determine if the warning msgs should be shown or hidden, and thus if the QR and Done
         // buttons should be disabled or not.
-        String warnmsg = "";
-        String warnmsg2 = "";
-        boolean bWarnCoral = false;
-        boolean bWarnAlgae = false;
         boolean bDisableButtons = false;
-        TextView tmsg1 = view.findViewById(R.id.warn_msg1);
-        TextView tmsg2 = view.findViewById(R.id.warn_msg2);
-
-        // Check if the acquired number is less than the scored number for coral and algae.
-       //FIX int numCoralAcqd = m_matchData.getCoralAcquired();
-      //FIX  int numAlgaeAcqd = m_matchData.getAlgaeAcquired();
-        /*
-       int numCoralScored = m_matchData.getTeleopCoralL1() + m_matchData.getTeleopCoralL2() + m_matchData.getTeleopCoralL3() + m_matchData.getTeleopCoralL4();
-        int numAlgaeScored = m_matchData.getTeleopAlgaeNet() + m_matchData.getTeleopAlgaeProcessor();
-        if(numCoralAcqd < numCoralScored) {
-            bWarnCoral = true;
-            Log.d(TAG, "-->  Number of coral acquired ("+numCoralAcqd+") is less than numCoralScored("+numCoralScored+")!");
-        }
-        if(numAlgaeAcqd < numAlgaeScored) {
-            bWarnAlgae = true;
-            Log.d(TAG, "-->  Number of algae acquired ("+numAlgaeAcqd+") is less than numAlgaeScored("+numAlgaeScored+")!");
-        }
-        */
-
-        /*
-
-        //FOR THE REBUILT GAME
-        //WORK IN PROGRESS WARINING FOR ENDGAMDE CLIMB LEVEL AND POSTION
-
-        int endgameClimbLevel = m_matchData.getEndgameClimbLevel();
-        int endgameClimbPosition = m_matchData.getEndgameClimbPos();
-
-        if(endgameClimbLevel > 0)
-            if (endgameClimbPosition == 0) {
-                bWarnCoral = true;
-                warnmsg = "A level is checked, but there is no position";}
-
-*/
-/*
-        if(bWarnAlgae && bWarnCoral)
-            warnmsg = "In Teleop, adjust the acquired coral and algae numbers (they are less than the numbers scored).";
-        else if(bWarnAlgae)
-            warnmsg = "In Teleop, adjust the acquired algae number (it is less than the number scored).";
-        else if(bWarnCoral)
-            warnmsg = "In Teleop, adjust the acquired coral number (it is less than the number scored).";
-*/
-        // Check if auton coral was scored but no reefzone was checked.
-        // Make the appropriate warnings visible and red.
-        if(warnmsg != "")
-        {
-            tmsg1.setText(warnmsg);
-            tmsg1.setVisibility(View.VISIBLE);
-            tmsg1.setTextColor(Color.RED);
-            bDisableButtons = true;
-        }
-        else  tmsg1.setVisibility(View.INVISIBLE);
-        if(warnmsg2 != "")
-        {
-            tmsg2.setText(warnmsg2);
-            tmsg2.setVisibility(View.VISIBLE);
-            tmsg2.setTextColor(Color.RED);
-            bDisableButtons = true;
-        }
-        else  tmsg2.setVisibility(View.INVISIBLE);
 
         // Enable or disable the QR and DONE buttons.
+        String message = "This is error";
         ImageButton qrButton = view.findViewById(R.id.gen_QR);
         ImageButton qrButtonDisabled = view.findViewById(R.id.gen_QR_disabled);
         qrButtonDisabled.setVisibility(view.INVISIBLE);
@@ -142,6 +104,7 @@ public class EndgameFragment extends Fragment
         if(bDisableButtons)
         {
             Log.d(TAG, "--> ! Disabling DONE and QR buttons");
+
             qrButton.setEnabled(false);
             doneButton.setEnabled(false);
             qrButtonDisabled.setVisibility(view.VISIBLE);
@@ -198,7 +161,7 @@ public class EndgameFragment extends Fragment
 //HOLD                updateEndgameData();
 //HOLD            }
 //HOLD        });
-
+        m_view = v;
         m_diedGroup = v.findViewById(R.id.died_group);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
         m_diedNone = v.findViewById(R.id.died_none);//Sets up radio button that corresponds to 1
         m_diedMost = v.findViewById(R.id.died_most);//Sets up radio button that corresponds to 2
@@ -306,6 +269,9 @@ public class EndgameFragment extends Fragment
         m_commentText.setText(m_matchData.getComment());
 
         ImageButton qrButton = v.findViewById(R.id.gen_QR);
+        ImageButton qrButtonDisabled = v.findViewById(R.id.gen_QR_disabled);
+        qrButton.setEnabled(true);
+        qrButtonDisabled.setVisibility(v.INVISIBLE);
         qrButton.setOnClickListener(new View.OnClickListener()
         {
             //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
@@ -316,12 +282,47 @@ public class EndgameFragment extends Fragment
                 //Uses intents to start the QR code dialog
                 updateEndgameData();
                 Log.d(TAG, "Clicked on QR Code");
-                FragmentActivity fActivity = getActivity();
-                if (fActivity != null)
+                String msg = "";
+                boolean bError = false;
+                int passNZ = m_matchData.getPassNeutralZone();
+                int passAZ = m_matchData.getPassAllianceZone();
+                if (passNZ == 3 || passAZ ==3)
                 {
-                    FragmentManager fm = fActivity.getSupportFragmentManager();
-                    QRFragment dialog = QRFragment.newInstance(m_matchData);
-                    dialog.show(fm, QRTAG);
+                    if (passNZ == 3 && passAZ == 3)
+                        msg = "Teleop: Passing From Neutral Zone and Alliance Zone buttons must be set!\n";
+                    else if (passNZ == 3)
+                        msg = "Teleop: Passing From Neutral Zone button must be set\n";
+                    else
+                        msg = "Teleop: Passing From Alliance Zone  button must be set\n";
+                    bError = true;
+                }
+                // Check climb selections
+                int startClimb = m_matchData.getStartClimb();
+                int climbLevel = m_matchData.getEndgameClimbLevel();
+                int climbPosition = m_matchData.getEndgameClimbPos();
+                if( (startClimb == 0 && (climbLevel != 0 || climbPosition != 0)) ||
+                        (climbLevel == 0 && (startClimb != 0 || climbPosition != 0)) ||
+                        (climbPosition == 0 && (startClimb != 0 || climbLevel != 0)) ) {
+                    msg += "\nEndgame: Start Climb, Climb Level and Climb Position settings don't match!";
+                    bError = true;
+                }
+                if (bError) {
+                    Log.d(TAG, msg);
+                    Toast toastS = Toast.makeText( getContext(), msg, Toast.LENGTH_LONG);
+                    View view1 = toastS.getView();
+                    view1.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+                    toastS.show();
+                }
+                else
+                {
+                    FragmentActivity fActivity = getActivity();
+                    if (fActivity != null)
+                    {
+                        FragmentManager fm = fActivity.getSupportFragmentManager();
+                        QRFragment dialog = QRFragment.newInstance(m_matchData);
+                        dialog.show(fm, QRTAG);
+                    }
+                    setupDoneButton(m_view, true);
                 }
             }
         });
@@ -357,7 +358,7 @@ public class EndgameFragment extends Fragment
             }
         });
 
-        setupWarnings(v);
+        setupDoneButton(v, false);
         return v;
     }
 
