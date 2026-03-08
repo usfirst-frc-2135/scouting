@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-<!-- GAME PIECE MANIPULATION starts-->
+<!-- start GAME PIECE MANIPULATION layout-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
             android:backgroundTint="#CACFF9"
             android:orientation="vertical">
 
-            <!-- HOPPER layout starts-->
+            <!-- start HOPPER layout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
                 android:text="HOPPER"
                 android:textColor="@color/specialTextPrimary"
                 android:textSize="22sp" />
-                <!-- HOPPER +/- BUTTONS start-->
+                <!-- start HOPPER +/- BUTTONS -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -76,12 +76,12 @@
                     android:textSize="30dp" />
 
                 </LinearLayout>
-                <!-- HOPPER +/- BUTTONS end-->
+                <!-- end HOPPER +/- BUTTONS -->
             </LinearLayout>
-            <!-- HOPPER layout ends -->
+            <!-- end HOPPER layout -->
 
 
-            <!-- ACCURACY RATING starts-->
+            <!-- start ACCURACY RATING -->
                 <TextView
                     android:textStyle="bold"
                     android:layout_width="match_parent"
@@ -186,9 +186,9 @@
                         android:visibility="invisible"
                         android:text="IDK" />
                 </RadioGroup>
-                <!-- ACCURACY RATING ends-->
+                <!-- end ACCURACY RATING -->
 
-            <!--INTAKE AND SHOOT CHECKBOX layout starts -->
+            <!-- start INTAKE AND SHOOT CHECKBOX layout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -209,11 +209,11 @@
                     android:textSize="20sp" />
 
             </LinearLayout>
-            <!--INTAKE AND SHOOT CHECKBOX layout ends -->
+            <!--end INTAKE AND SHOOT CHECKBOX layout -->
         </LinearLayout>
-        <!-- GAME PIECE MANIPULATION ends -->
+        <!-- end GAME PIECE MANIPULATION -->
 
-            <!-- PASSING SECTION layout starts -->
+            <!-- start PASSING SECTION layout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -233,7 +233,7 @@
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
-                <!-- PASSING FROM CHECKBOXES layout starts -->
+                <!-- start PASSING FROM CHECKBOXES layout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -248,7 +248,7 @@
                         android:text="Neutral Zone">
                     </TextView>
 
-                    <!-- NEUTRAL ZONE CHECKBOX starts -->
+                    <!-- start NEUTRAL ZONE CHECKBOX -->
                     <RadioGroup
                         android:layout_width="127dp"
                         android:id="@+id/pass_nz"
@@ -275,10 +275,10 @@
                             android:buttonTint="#051650"
                             android:text="Yes" />
                     </RadioGroup>
-                    <!-- NEUTRAL ZONE CHECKBOX ends -->
+                    <!-- end NEUTRAL ZONE CHECKBOX -->
 
 
-                    <!-- OTHER ALLIANCE ZONE CHECKBOX starts -->
+                    <!-- start OTHER ALLIANCE ZONE CHECKBOX -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -315,12 +315,12 @@
                                 android:buttonTint="#051650"
                                 android:text="Yes" />
                         </RadioGroup>
-                        <!-- NEUTRAL ZONE CHECKBOX layout ends -->
+                        <!-- end NEUTRAL ZONE CHECKBOX layout -->
                 </LinearLayout>
-                <!-- PASSING FROM CHECKBOXES layout ends -->
+                <!-- end PASSING FROM CHECKBOXES layout -->
 
 
-                <!-- PASSING EFFECTIVENESS RATING layout starts -->
+                <!-- start PASSING EFFECTIVENESS RATING layout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -393,11 +393,11 @@
                             android:text="Tons" />
                     </RadioGroup>
                 </LinearLayout>
-                <!-- PASSING EFFECTIVENESS RATING layout ends -->
+                <!-- end PASSING EFFECTIVENESS RATING layout -->
             </LinearLayout>
-            <!-- PASSING SECTION layout starts -->
+            <!-- start PASSING SECTION layout -->
 
-        <!-- DEFENSE SECTION layout start-->
+        <!-- start DEFENSE SECTION layout-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -405,7 +405,7 @@
             android:orientation="vertical"
             android:background="@drawable/rounded_rect"
             android:paddingTop="7dp"
-            android:backgroundTint="#DEEFF5">
+            android:backgroundTint="#adc7ee">
 
             <TextView
                 android:id="@+id/textView3"
@@ -422,6 +422,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
+                android:backgroundTint="#c2d5f2"
+                android:background="@drawable/bottom_rounded_rect"
                 android:orientation="horizontal">
 
                 <RadioButton
@@ -479,19 +481,18 @@
                     android:text="High"/>
             </RadioGroup>
         </LinearLayout>
-        <!-- DEFENSE SECTION layout ends -->
+        <!-- end DEFENSE SECTION layout -->
 
 
-        <!-- DRIVER ABILITY layout starts-->
+        <!-- start DRIVER ABILITY layout -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
-            android:background="@drawable/rounded_rect"
-            android:backgroundTint="#DFE2FB"
             android:orientation="vertical"
+            android:background="@drawable/rounded_rect"
             android:paddingTop="7dp"
-            android:paddingBottom="5dp">
+            android:backgroundTint="#9aa3f2">
 
             <TextView
                 android:id="@+id/textView4"
@@ -507,8 +508,10 @@
                 android:id="@+id/driving_buttons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="#DFE2FB">
+                android:paddingBottom="5dp"
+                android:backgroundTint="#b1b8f5"
+                android:background="@drawable/bottom_rounded_rect"
+                android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/driving_na"
@@ -566,9 +569,9 @@
             </RadioGroup>
 
         </LinearLayout>
-        <!-- DRIVER ABILITY layout ends-->
+        <!-- end DRIVER ABILITY layout -->
 
-        <!-- PHOTO layout starts-->
+        <!-- start PHOTO layout -->
         <LinearLayout
             android:id="@+id/photo"
             android:layout_width="589dp"
@@ -580,7 +583,7 @@
             android:paddingTop="2dp">
 
         </LinearLayout>
-        <!-- PHOTO layout ends-->
+        <!-- end PHOTO layout -->
 
 
     </LinearLayout>
