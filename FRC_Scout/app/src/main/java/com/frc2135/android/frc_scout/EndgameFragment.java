@@ -310,7 +310,6 @@ public class EndgameFragment extends Fragment
                     Log.d(TAG, msg);
                     Toast toastS = Toast.makeText( getContext(), msg, Toast.LENGTH_LONG);
                     View view1 = toastS.getView();
-                    view1.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
                     toastS.show();
                 }
                 else
