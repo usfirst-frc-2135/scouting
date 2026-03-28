@@ -25,41 +25,41 @@ public class AutonFragment extends Fragment
 {
     private static final String TAG = "AutonFragment";
     private static final int MAX_NUM_HOPPERS = 1;
-    //private static final int MAX_NUM_ALGAE = 2;
+
     private CheckBox m_preloadCheckbox;
 
-    private CheckBox m_azCheckbox;
-    private CheckBox m_depotCheckbox;
-    private CheckBox m_outpostCheckbox;
-    private CheckBox m_nzCheckbox;
+    private RadioGroup m_autonAccuracyBoxes;
+    private RadioButton m_autonAccuracyNo;
+    private RadioButton m_autonAccuracyA;
+    private RadioButton m_autonAccuracyM;
+    private RadioButton m_autonAccuracyS;
+    private RadioButton m_autonAccuracyF;
+    private RadioButton m_autonAccuracyN;
 
     private TextView m_autonHopperTotal;
     private Button m_autonHopperIncrButton;
     private Button m_autonHopperDecrButton;
 
     private RadioGroup m_autonAccuracyButtonGroup;
+    private RadioButton m_autonAccuracyNA;
     private RadioButton m_autonAccuracyMost;
     private RadioButton m_autonAccuracyThreeFourths;
     private RadioButton m_autonAccuracyHalf;
     private RadioButton m_autonAccuracyQuarters;
     private RadioButton m_autonAccuracyFew;
     private RadioButton m_autonAccuracyNone;
-    private RadioButton m_autonAccuracyNA;
 
-    private RadioGroup m_autonAccuracyBoxes;
-    private RadioButton m_autonAccuracyNo;
-    private RadioButton m_autonAccuracyM;
-    private RadioButton m_autonAccuracyS;
-    private RadioButton m_autonAccuracyF;
-    private RadioButton m_autonAccuracyN;
-    private RadioButton m_autonAccuracyA;
+    private CheckBox m_azCheckbox;
+    private CheckBox m_depotCheckbox;
+    private CheckBox m_outpostCheckbox;
+    private CheckBox m_nzCheckbox;
 
     private RadioGroup m_autonClimbButtonGroup;
+    private RadioButton m_autonNA;
     private RadioButton m_autonLeft;
     private RadioButton m_autonFront;
     private RadioButton m_autonRight;
     private RadioButton m_autonBack;
-    private RadioButton m_autonNA;
 
     private MatchData m_matchData;
 
@@ -183,12 +183,27 @@ public class AutonFragment extends Fragment
         m_autonAccuracyF = v.findViewById(R.id.auton_accuracy_f);
         m_autonAccuracyN = v.findViewById(R.id.auton_accuracy_n);
         m_autonAccuracyA = v.findViewById(R.id.auton_accuracy_a);
+
         m_autonAccuracyNo.setChecked(false);
         m_autonAccuracyM.setChecked(false);
         m_autonAccuracyS.setChecked(false);
         m_autonAccuracyF.setChecked(false);
         m_autonAccuracyN.setChecked(false);
         m_autonAccuracyA.setChecked(false);
+
+        int BaccValue = m_matchData.getPreloadAccuracyLevel();
+        if (BaccValue == 0)
+            m_autonAccuracyNo.setChecked(true);
+        else if(BaccValue == 1)
+            m_autonAccuracyA.setChecked(true);
+        else if(BaccValue == 2)
+            m_autonAccuracyM.setChecked(true);
+        else if(BaccValue == 3)
+            m_autonAccuracyS.setChecked(true);
+        else if(BaccValue == 4)
+            m_autonAccuracyF.setChecked(true);
+        else if(BaccValue == 5)
+            m_autonAccuracyN.setChecked(true);
 
 
         m_autonAccuracyButtonGroup = v.findViewById(R.id.auton_accuracy_buttons);
@@ -199,6 +214,7 @@ public class AutonFragment extends Fragment
         m_autonAccuracyFew = v.findViewById(R.id.auton_accuracy_few);
         m_autonAccuracyNone = v.findViewById(R.id.auton_accuracy_none);
         m_autonAccuracyNA= v.findViewById(R.id.auton_accuracy_na);
+
         m_autonAccuracyMost.setChecked(false);
         m_autonAccuracyThreeFourths.setChecked(false);
         m_autonAccuracyHalf.setChecked(false);
@@ -206,19 +222,6 @@ public class AutonFragment extends Fragment
         m_autonAccuracyFew.setChecked(false);
         m_autonAccuracyNone.setChecked(false);
         m_autonAccuracyNA.setChecked(false);
-
-        m_autonClimbButtonGroup = v.findViewById(R.id.auton_climb_buttons);
-        m_autonLeft = v.findViewById(R.id.auton_climb_left);
-        m_autonFront = v.findViewById(R.id.auton_climb_front);
-        m_autonRight = v.findViewById(R.id.auton_climb_right);
-        m_autonBack = v.findViewById(R.id.auton_climb_back);
-        m_autonNA = v.findViewById(R.id.auton_climb_na);
-        m_autonLeft.setChecked(false);
-        m_autonFront.setChecked(false);
-        m_autonRight.setChecked(false);
-        m_autonBack.setChecked(false);
-        m_autonNA.setChecked(false);
-
 
         int accValue = m_matchData.getAutonAccuracyRate();
         if (accValue == 0)
@@ -237,20 +240,18 @@ public class AutonFragment extends Fragment
             m_autonAccuracyNone.setChecked(true);
 
 
-        int BaccValue = m_matchData.getPreloadAccuracyLevel();
-        if (BaccValue == 0)
-            m_autonAccuracyNo.setChecked(true);
-        else if(BaccValue == 1)
-            m_autonAccuracyA.setChecked(true);
-        else if(BaccValue == 2)
-            m_autonAccuracyM.setChecked(true);
-        else if(BaccValue == 3)
-            m_autonAccuracyS.setChecked(true);
-        else if(BaccValue == 4)
-            m_autonAccuracyF.setChecked(true);
-        else if(BaccValue == 5)
-            m_autonAccuracyN.setChecked(true);
+        m_autonClimbButtonGroup = v.findViewById(R.id.auton_climb_buttons);
+        m_autonLeft = v.findViewById(R.id.auton_climb_left);
+        m_autonFront = v.findViewById(R.id.auton_climb_front);
+        m_autonRight = v.findViewById(R.id.auton_climb_right);
+        m_autonBack = v.findViewById(R.id.auton_climb_back);
+        m_autonNA = v.findViewById(R.id.auton_climb_na);
 
+        m_autonLeft.setChecked(false);
+        m_autonFront.setChecked(false);
+        m_autonRight.setChecked(false);
+        m_autonBack.setChecked(false);
+        m_autonNA.setChecked(false);
 
         int CaccValue = m_matchData.getAutonClimb();
         if (CaccValue == 0)

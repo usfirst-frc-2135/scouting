@@ -19,6 +19,7 @@ public class MatchData
     private static final String TAG = "MatchData";
 
     // Keys used for reading/writing match JSON files.
+    private static final String JSON_KEY_VERSION = "version";
     private static final String JSON_KEY_SCOUT_NAME = "scoutName";
     private static final String JSON_KEY_EVENT_CODE = "eventCode";
     private static final String JSON_KEY_TEAM_NUMBER = "teamNumber";
@@ -26,8 +27,6 @@ public class MatchData
     private static final String JSON_KEY_MATCH_NUMBER = "matchNumber";
 
     // Auton data
-    private static final String JSON_KEY_VERSION = "version";
-    private static final String JSON_KEY_STARTING_POSITION = "startingPosition";
     private static final String JSON_KEY_PRELOAD = "preload";
     private static final String JSON_KEY_AUTON_AZ = "autonAz";
     private static final String JSON_KEY_AUTON_DEPOT = "autonDepot";
@@ -146,9 +145,9 @@ public class MatchData
         setAccuracyRate(0);
         setIntakeAndShoot(false);
 
-        setPassingRate(0);
+        setPassingRate(5);
         setDefenseRate(0);
-        setDriveAbility(0);
+        setDriveAbility(6);
         setPassNeutralZone(3);
         setPassAllianceZone(3);
 

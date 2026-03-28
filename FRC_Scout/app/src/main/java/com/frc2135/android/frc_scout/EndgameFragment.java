@@ -29,20 +29,18 @@ import androidx.fragment.app.FragmentManager;
 public class EndgameFragment extends Fragment
 {
 
-    private RadioGroup m_diedGroup;
-    private RadioButton m_diedNone;
-    private RadioButton m_diedMost;
-    private RadioButton m_diedMin;
-    private RadioButton m_diedThirty;
-    private RadioButton m_diedTt;
-    private RadioButton m_noShow;
-
     private RadioGroup m_startGroup;
     private RadioButton m_startNone;
     private RadioButton m_startBefore;
     private RadioButton m_startBell;
     private RadioButton m_startTen;
     private RadioButton m_startLess;
+
+    private RadioGroup m_endgameClimbLevelGroup;
+    private RadioButton m_levelNa;
+    private RadioButton m_levelThree;
+    private RadioButton m_levelTwo;
+    private RadioButton m_levelOne;
 
     private RadioGroup m_endgameClimbButtonGroup;
     private RadioButton m_endgameLeft;
@@ -51,13 +49,14 @@ public class EndgameFragment extends Fragment
     private RadioButton m_endgameBack;
     private RadioButton m_endgameNA;
 
-    private RadioGroup m_endgameClimbLevelGroup;
-    private RadioButton m_levelNa;
-    private RadioButton m_levelThree;
-    private RadioButton m_levelTwo;
-    private RadioButton m_levelOne;
 
-
+    private RadioGroup m_diedGroup;
+    private RadioButton m_diedNone;
+    private RadioButton m_diedMost;
+    private RadioButton m_diedMin;
+    private RadioButton m_diedThirty;
+    private RadioButton m_diedTt;
+    private RadioButton m_noShow;
 
     private EditText m_commentText;
     private MatchData m_matchData;
@@ -161,6 +160,81 @@ public class EndgameFragment extends Fragment
 //HOLD                updateEndgameData();
 //HOLD            }
 //HOLD        });
+
+        m_startGroup = v.findViewById(R.id.start_text);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
+        m_startNone = v.findViewById(R.id.start_none);//Sets up radio button that corresponds to 0
+        m_startBefore = v.findViewById(R.id.start_before);//Sets up radio button that corresponds to 1
+        m_startBell = v.findViewById(R.id.start_bell);//Sets up radio button that corresponds to 2
+        m_startTen = v.findViewById(R.id.start_ten);//Sets up radio button that corresponds to 3
+        m_startLess = v.findViewById(R.id.start_less);//Sets up radio button that corresponds to 4
+
+        m_startNone.setChecked(false);
+        m_startBefore.setChecked(false);
+        m_startBell.setChecked(false);
+        m_startTen.setChecked(false);
+        m_startLess.setChecked(false);
+
+        int defValueStartClimb = m_matchData.getStartClimb();
+        if (defValueStartClimb == 0)
+            m_startNone.setChecked(true);
+        else if(defValueStartClimb == 1)
+            m_startBefore.setChecked(true);
+        else if(defValueStartClimb == 2)
+            m_startBell.setChecked(true);
+        else if(defValueStartClimb == 3)
+            m_startTen.setChecked(true);
+        else if(defValueStartClimb == 4)
+            m_startLess.setChecked(true);
+
+
+        m_endgameClimbLevelGroup = v.findViewById(R.id.endgame_level_climb_group);
+        m_levelNa= v.findViewById(R.id.endgame_level_na);
+        m_levelThree = v.findViewById(R.id.endgame_level_three);
+        m_levelTwo = v.findViewById(R.id.endgame_level_two);
+        m_levelOne = v.findViewById(R.id.endgame_level_one);
+
+        m_levelThree.setChecked(false);
+        m_levelTwo.setChecked(false);
+        m_levelOne.setChecked(false);
+        m_levelNa.setChecked(false);
+
+        int BaccValue = m_matchData.getEndgameClimbLevel();
+        if (BaccValue == 0)
+            m_levelNa.setChecked(true);
+        else if(BaccValue == 1)
+            m_levelOne.setChecked(true);
+        else if(BaccValue == 2)
+            m_levelTwo.setChecked(true);
+        else if(BaccValue == 3)
+            m_levelThree.setChecked(true);
+
+
+        m_endgameClimbButtonGroup = v.findViewById(R.id.endgame_climb_buttons);
+        m_endgameLeft = v.findViewById(R.id.endgame_climb_left);
+        m_endgameFront = v.findViewById(R.id.endgame_climb_front);
+        m_endgameRight = v.findViewById(R.id.endgame_climb_right);
+        m_endgameBack = v.findViewById(R.id.endgame_climb_back);
+        m_endgameNA = v.findViewById(R.id.endgame_climb_na);
+
+        m_endgameLeft.setChecked(false);
+        m_endgameFront.setChecked(false);
+        m_endgameRight.setChecked(false);
+        m_endgameBack.setChecked(false);
+        m_endgameNA.setChecked(false);
+
+        int CaccValue = m_matchData.getEndgameClimbPos();
+        if (CaccValue == 0)
+            m_endgameNA.setChecked(true);
+        else if(CaccValue == 1)
+            m_endgameBack.setChecked(true);
+        else if(CaccValue == 2)
+            m_endgameLeft.setChecked(true);
+        else if(CaccValue == 3)
+            m_endgameFront.setChecked(true);
+        else if(CaccValue == 4)
+            m_endgameRight.setChecked(true);
+
+
         m_view = v;
         m_diedGroup = v.findViewById(R.id.died_group);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
         m_diedNone = v.findViewById(R.id.died_none);//Sets up radio button that corresponds to 1
@@ -169,6 +243,7 @@ public class EndgameFragment extends Fragment
         m_diedThirty = v.findViewById(R.id.died_thirty);//Sets up radio button that corresponds to 4
         m_diedTt = v.findViewById(R.id.died_tt);//Sets up radio button that corresponds to 5
         m_noShow = v.findViewById(R.id.no_show);//Sets up radio button that corresponds to 6
+
         m_diedNone.setChecked(false);
         m_diedMost.setChecked(false);
         m_diedMin.setChecked(false);
@@ -189,78 +264,6 @@ public class EndgameFragment extends Fragment
             m_diedTt.setChecked(true);
         else if(diedValue == 5)
             m_noShow.setChecked(true);
-
-        m_startGroup = v.findViewById(R.id.start_text);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
-        m_startNone = v.findViewById(R.id.start_none);//Sets up radio button that corresponds to 0
-        m_startBefore = v.findViewById(R.id.start_before);//Sets up radio button that corresponds to 1
-        m_startBell = v.findViewById(R.id.start_bell);//Sets up radio button that corresponds to 2
-        m_startTen = v.findViewById(R.id.start_ten);//Sets up radio button that corresponds to 3
-        m_startLess = v.findViewById(R.id.start_less);//Sets up radio button that corresponds to 4
-        m_startNone.setChecked(false);
-        m_startBefore.setChecked(false);
-        m_startBell.setChecked(false);
-        m_startTen.setChecked(false);
-        m_startLess.setChecked(false);
-
-
-        int defValueStartClimb = m_matchData.getStartClimb();
-        if (defValueStartClimb == 0)
-            m_startNone.setChecked(true);
-        else if(defValueStartClimb == 1)
-            m_startBefore.setChecked(true);
-        else if(defValueStartClimb == 2)
-            m_startBell.setChecked(true);
-        else if(defValueStartClimb == 3)
-            m_startTen.setChecked(true);
-        else if(defValueStartClimb == 4)
-            m_startLess.setChecked(true);
-
-        m_endgameClimbButtonGroup = v.findViewById(R.id.endgame_climb_buttons);
-        m_endgameLeft = v.findViewById(R.id.endgame_climb_left);
-        m_endgameFront = v.findViewById(R.id.endgame_climb_front);
-        m_endgameRight = v.findViewById(R.id.endgame_climb_right);
-        m_endgameBack = v.findViewById(R.id.endgame_climb_back);
-        m_endgameNA = v.findViewById(R.id.endgame_climb_na);
-        m_endgameLeft.setChecked(false);
-        m_endgameFront.setChecked(false);
-        m_endgameRight.setChecked(false);
-        m_endgameBack.setChecked(false);
-        m_endgameNA.setChecked(false);
-
-
-        int CaccValue = m_matchData.getEndgameClimbPos();
-        if (CaccValue == 0)
-            m_endgameNA.setChecked(true);
-        else if(CaccValue == 1)
-            m_endgameBack.setChecked(true);
-        else if(CaccValue == 2)
-            m_endgameLeft.setChecked(true);
-        else if(CaccValue == 3)
-            m_endgameFront.setChecked(true);
-        else if(CaccValue == 4)
-            m_endgameRight.setChecked(true);
-
-
-        m_endgameClimbLevelGroup = v.findViewById(R.id.endgame_level_climb_group);
-        m_levelNa= v.findViewById(R.id.endgame_level_na);
-        m_levelThree = v.findViewById(R.id.endgame_level_three);
-        m_levelTwo = v.findViewById(R.id.endgame_level_two);
-        m_levelOne = v.findViewById(R.id.endgame_level_one);
-        m_levelThree.setChecked(false);
-        m_levelTwo.setChecked(false);
-        m_levelOne.setChecked(false);
-        m_levelNa.setChecked(false);
-
-
-        int BaccValue = m_matchData.getEndgameClimbLevel();
-        if (BaccValue == 0)
-            m_levelNa.setChecked(true);
-        else if(BaccValue == 1)
-            m_levelOne.setChecked(true);
-        else if(BaccValue == 2)
-            m_levelTwo.setChecked(true);
-        else if(BaccValue == 3)
-            m_levelThree.setChecked(true);
 
 
         //Sets up an EditText that allows users to input any additional comments
@@ -303,9 +306,28 @@ public class EndgameFragment extends Fragment
                 if( (startClimb == 0 && (climbLevel != 0 || climbPosition != 0)) ||
                         (climbLevel == 0 && (startClimb != 0 || climbPosition != 0)) ||
                         (climbPosition == 0 && (startClimb != 0 || climbLevel != 0)) ) {
-                    msg += "\nEndgame: Start Climb, Climb Level and Climb Position settings don't match!";
+                    msg += "\nEndgame: Start Climb, Climb Level and Climb Position settings don't match!\n";
                     bError = true;
                 }
+                //check driverability
+                int driverAbility = m_matchData.getDriveAbility();
+                if (driverAbility == 6) {
+                    msg += "\nTeleop: Driver ability not set!\n";
+                    bError = true;
+                }
+                //check passing rate
+                int passRate  = m_matchData.getPassingEffectivenessrate();
+                if (((passNZ == 1|| passAZ == 1) && passRate == 0) || (passRate == 5) || ((passNZ == 0|| passAZ == 0) && passRate > 0)){
+                    if ((passNZ == 1|| passAZ == 1) && passRate == 0)
+                        msg += "\nTeleop: Passed from zone set, Passing rate not set!\n";
+                    else if (passRate == 5)
+                        msg += "\nTeleop: Passing rate not set!\n";
+                    else
+                        msg += "\nTeleop: Passing rate set, Passed from zone not set!\n";
+                    bError = true;
+                }
+
+
                 if (bError) {
                     Log.d(TAG, msg);
                     Toast toastS = Toast.makeText( getContext(), msg, Toast.LENGTH_LONG);
@@ -323,6 +345,7 @@ public class EndgameFragment extends Fragment
                     }
                     setupDoneButton(m_view, true);
                 }
+
             }
         });
 

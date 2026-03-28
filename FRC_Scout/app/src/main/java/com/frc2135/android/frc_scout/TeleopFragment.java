@@ -30,18 +30,17 @@ public class TeleopFragment extends Fragment
     private static final int MAX_NUM_HOPPERS = 7;     // hoppers max expected high total
 
     private TextView m_hoppersUsedTotal;
-    public TextView m_unknown;
     private Button m_hoppersUsedDecrButton;
     private Button m_hoppersUsedIncrButton;
 
     private RadioGroup m_accuracyButtonGroup;
+    private RadioButton m_accuracyNA;
     private RadioButton m_accuracyMost;
     private RadioButton m_accuracyThreeFourths;
     private RadioButton m_accuracyHalf;
     private RadioButton m_accuracyQuarters;
     private RadioButton m_accuracyFew;
     private RadioButton m_accuracyNone;
-    private RadioButton m_accuracyNA;
 
     private CheckBox m_intakeAndShootCkbx;
 
@@ -55,10 +54,10 @@ public class TeleopFragment extends Fragment
 
     private RadioGroup m_passingEffectivenessButtonsGroup;
     private RadioButton m_passingNA;
-    private RadioButton m_passingTons;
-    private RadioButton m_passingLarge;
-    private RadioButton m_passingMedium;
     private RadioButton m_passingLow;
+    private RadioButton m_passingMedium;
+    private RadioButton m_passingLarge;
+    private RadioButton m_passingTons;
 
     private RadioGroup m_defenseButtonGroup;
     private RadioButton m_defenseNone;
@@ -75,8 +74,6 @@ public class TeleopFragment extends Fragment
     private RadioButton m_drivingAvg;
     private RadioButton m_drivingFast;
     private RadioButton m_drivingElite;
-
-    private LinearLayout photo;
 
     private MatchData m_matchData;
 
@@ -172,6 +169,7 @@ public class TeleopFragment extends Fragment
         m_intakeAndShootCkbx = v.findViewById(R.id.intake_and_shoot);
         m_intakeAndShootCkbx.setChecked(m_matchData.getIntakeAndShoot());
 
+
         m_accuracyButtonGroup = v.findViewById(R.id.accuracy_buttons);
         m_accuracyMost = v.findViewById(R.id.accuracy_most);
         m_accuracyThreeFourths = v.findViewById(R.id.accuracy_three_fourths);
@@ -180,6 +178,7 @@ public class TeleopFragment extends Fragment
         m_accuracyFew = v.findViewById(R.id.accuracy_few);
         m_accuracyNone = v.findViewById(R.id.accuracy_none);
         m_accuracyNA = v.findViewById(R.id.accuracy_NA);
+
         m_accuracyMost.setChecked(false);
         m_accuracyThreeFourths.setChecked(false);
         m_accuracyHalf.setChecked(false);
@@ -203,6 +202,7 @@ public class TeleopFragment extends Fragment
             m_accuracyFew.setChecked(true);
         else if(accValue == 6)
             m_accuracyNone.setChecked(true);
+
 
         m_passingEffectivenessButtonsGroup = v.findViewById(R.id.passing_effectiveness_buttons);
         m_passingNA = v.findViewById(R.id.passing_rate_na);
@@ -229,6 +229,7 @@ public class TeleopFragment extends Fragment
         else if(passValue == 1)
             m_passingLow.setChecked(true);
 
+
         m_defenseButtonGroup = v.findViewById(R.id.defense_buttons);
         m_defenseNone = v.findViewById(R.id.defense_none);
         m_defenseLow = v.findViewById(R.id.defense_low);
@@ -236,13 +237,13 @@ public class TeleopFragment extends Fragment
         m_defenseMedium = v.findViewById(R.id.defense_medium);
         m_defenseMediumh = v.findViewById(R.id.defense_medium_high);
         m_defenseHigh = v.findViewById(R.id.defense_high);
+
         m_defenseNone.setChecked(false);
         m_defenseLow.setChecked(false);
         m_defenseMediuml.setChecked(false);
         m_defenseMedium.setChecked(false);
         m_defenseMediumh.setChecked(false);
         m_defenseHigh.setChecked(false);
-
 
         int defValue = m_matchData.getDefenseRate();
         if (defValue == 0)
@@ -258,9 +259,11 @@ public class TeleopFragment extends Fragment
         else if(defValue == 5)
             m_defenseHigh.setChecked(true);
 
+
         m_passNz = v.findViewById(R.id.pass_nz);
         m_passNzno = v.findViewById(R.id.no_nz);
         m_passNzyes = v.findViewById(R.id.yes_nz);
+
         m_passNzno.setChecked(false);
         m_passNzyes.setChecked(false);
 
@@ -272,32 +275,23 @@ public class TeleopFragment extends Fragment
         else{
             m_passNzno.setChecked(false);
             m_passNzyes.setChecked(false);
-
         }
-
 
         m_passAz = v.findViewById(R.id.pass_az);
         m_passAzno = v.findViewById(R.id.no_az);
         m_passAzyes = v.findViewById(R.id.yes_az);
+
         m_passAzno.setChecked(false);
         m_passAzyes.setChecked(false);
 
-
         int WaccValue = m_matchData.getPassAllianceZone();
         if (WaccValue == 0)
-        {
-            Log.i(TAG, "--> 1SETTING ALLIANCE ZONE RADIO BUTTON NO TO TRUE");
             m_passAzno.setChecked(true);
-        }
         else if(WaccValue == 1)
-        {
             m_passAzyes.setChecked(true);
-            Log.i(TAG, "--> 2SETTING ALLIANCE ZONE RADIO BUTTON YES TO TRUE");
-        }
         else {
             m_passAzno.setChecked(false);
             m_passAzyes.setChecked(false);
-            Log.i(TAG, "--> 3SETTING ALLIANCE ZONE RADIO BUTTONS OFF");
         }
 
 
@@ -308,13 +302,13 @@ public class TeleopFragment extends Fragment
         m_drivingAvg = v.findViewById(R.id.driving_avg);
         m_drivingFast = v.findViewById(R.id.driving_fast);
         m_drivingElite = v.findViewById(R.id.driving_elite);
+
         m_drivingNa.setChecked(false);
         m_drivingSlow.setChecked(false);
         m_drivingJerky.setChecked(false);
         m_drivingAvg.setChecked(false);
         m_drivingFast.setChecked(false);
         m_drivingElite.setChecked(false);
-
 
         int defValued = m_matchData.getDriveAbility();
         if (defValued == 0)
@@ -480,10 +474,10 @@ public class TeleopFragment extends Fragment
         return rtn;
     }
 
-    public int getCurrentPassingLevel()
+    public int getPassingEffectivenessrate()
     {
         // Returns the integer climb level that is current checked in the radio buttons
-        int rtn = 0;
+        int rtn = 5;
         if (m_passingEffectivenessButtonsGroup.getCheckedRadioButtonId() == m_passingNA.getId())
         {
             rtn = 0;
@@ -571,7 +565,7 @@ public class TeleopFragment extends Fragment
     public int getDriveAbility()
     {
         // Returns the integer climb level that is current checked in the radio buttons
-        int rtn = 0;
+        int rtn = 6;
         if (m_drivingButtonGroup.getCheckedRadioButtonId() == m_drivingNa.getId())
         {
             rtn = 0;
@@ -605,9 +599,8 @@ public class TeleopFragment extends Fragment
     {
         m_matchData.setHoppersUsed(Integer.parseInt(m_hoppersUsedTotal.getText().toString()));
         m_matchData.setAccuracyRate(getCurrentAccuracyLevel());
-        m_matchData.setPassingRate(getCurrentPassingLevel());
+        m_matchData.setPassingRate(getPassingEffectivenessrate());
         m_matchData.setTeleopPhoto(m_photoNum);
-
         m_matchData.setDefenseRate(getCurrentDefenseLevel());
         m_matchData.setIntakeAndShoot(m_intakeAndShootCkbx.isChecked());
         m_matchData.setPassNeutralZone(getPassNeutralZone());
