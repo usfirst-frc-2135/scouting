@@ -14,7 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/rounded_rect"
             android:backgroundTint="#CACFF9"
             android:orientation="vertical">
@@ -25,15 +25,16 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-            <TextView
-                android:textStyle="bold"
-                android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:text="HOPPERS SHOT"
-                android:textColor="@color/specialTextPrimary"
-                android:textSize="22sp" />
+                <TextView
+                    android:textStyle="bold"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:text="HOPPERS SHOT"
+                    android:textColor="@color/specialTextPrimary"
+                    android:textSize="22sp" />
+
                 <!-- start HOPPER +/- BUTTONS -->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -43,149 +44,146 @@
                     android:paddingTop="5dp"
                     android:layout_marginLeft="10dp">
 
-                <Button
-                    android:id="@+id/hopper_used_decr_button"
-                    android:layout_width="80dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#017371"
-                    android:text="@string/decrease"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginLeft="70dp"
-                    android:textSize="30dp" />
+                    <Button
+                        android:id="@+id/hopper_used_decr_button"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#017371"
+                        android:text="@string/decrease"
+                        android:textColor="#FFFFFF"
+                        android:layout_marginLeft="70dp"
+                        android:textSize="30dp" />
 
-                <TextView
-                    android:id="@+id/hopper_used_total"
-                    android:layout_width="70dp"
-                    android:layout_height="match_parent"
-                    android:textAlignment="center"
-                    android:paddingBottom="5dp"
-                    android:layout_marginTop="8dp"
-                    android:textSize="25sp" />
+                    <TextView
+                        android:id="@+id/hopper_used_total"
+                        android:layout_width="70dp"
+                        android:layout_height="match_parent"
+                        android:textAlignment="center"
+                        android:paddingBottom="5dp"
+                        android:layout_marginTop="8dp"
+                        android:textSize="25sp" />
 
-                <Button
-                    android:id="@+id/hopper_used_incr_button"
-                    android:layout_width="80dp"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="30dp"
-                    android:background="@drawable/rounded_rect"
-                    android:text="@string/increase"
-                    android:backgroundTint="#017371"
-                    android:textColor="#FFFFFF"
-                    android:textSize="30dp" />
-
+                    <Button
+                        android:id="@+id/hopper_used_incr_button"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/rounded_rect"
+                        android:text="@string/increase"
+                        android:backgroundTint="#017371"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp" />
                 </LinearLayout>
                 <!-- end HOPPER +/- BUTTONS -->
             </LinearLayout>
             <!-- end HOPPER layout -->
 
-
             <!-- start ACCURACY RATING -->
-                <TextView
-                    android:textStyle="bold"
-                    android:layout_width="match_parent"
+            <TextView
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="7dp"
+                android:textSize="22sp"
+                android:background="#DFE2FB"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/specialTextPrimary"
+                android:text="ACCURACY RATE" />
+
+            <RadioGroup
+                android:id="@+id/accuracy_buttons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#DFE2FB">
+
+                <RadioButton
+                    android:layout_marginStart="10dp"
+                    android:id="@+id/accuracy_NA"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="7dp"
+                    android:layout_weight="1"
                     android:textSize="22sp"
-                    android:background="#DFE2FB"
-                    android:layout_marginTop="5dp"
-                    android:textColor="@color/specialTextPrimary"
-                    android:text="ACCURACY RATE" />
+                    android:buttonTint="#8957A1"
+                    android:text="N/A" />
 
-
-                <RadioGroup
-                    android:id="@+id/accuracy_buttons"
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:layout_marginBottom="5dp"
+                    android:id="@+id/accuracy_most"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="#DFE2FB">
+                    android:layout_weight="1"
+                    android:textSize="22sp"
+                    android:buttonTint="#8957A1"
+                    android:text="Most" />
 
-                    <RadioButton
-                        android:layout_marginStart="10dp"
-                        android:id="@+id/accuracy_NA"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="22sp"
-                        android:buttonTint="#8957A1"
-                        android:text="N/A" />
+                <RadioButton
+                    android:id="@+id/accuracy_three_fourths"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="27sp"
+                    android:buttonTint="#8957A1"
+                    android:text="¾" />
 
-                    <RadioButton
-                        android:layout_marginBottom="5dp"
-                        android:id="@+id/accuracy_most"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="22sp"
-                        android:buttonTint="#8957A1"
-                        android:text="Most" />
+                <RadioButton
+                    android:id="@+id/accuracy_half"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="27sp"
+                    android:buttonTint="#8957A1"
+                    android:text="½" />
 
-                    <RadioButton
-                        android:id="@+id/accuracy_three_fourths"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="27sp"
-                        android:buttonTint="#8957A1"
-                        android:text="¾" />
+                <RadioButton
+                    android:layout_marginTop="30dp"
+                    android:layout_marginStart="-537dp"
+                    android:id="@+id/accuracy_quarter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="27sp"
+                    android:buttonTint="#8957A1"
+                    android:text="¼" />
 
-                    <RadioButton
-                        android:id="@+id/accuracy_half"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="27sp"
-                        android:buttonTint="#8957A1"
-                        android:text="½" />
+                <RadioButton
+                    android:layout_marginStart="21.5dp"
+                    android:layout_marginTop="30dp"
+                    android:id="@+id/accuracy_few"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="22sp"
+                    android:paddingEnd="5dp"
+                    android:buttonTint="#8957A1"
+                    android:text="Few" />
 
-                    <RadioButton
-                        android:layout_marginTop="30dp"
-                        android:layout_marginStart="-537dp"
-                        android:id="@+id/accuracy_quarter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="27sp"
-                        android:buttonTint="#8957A1"
-                        android:text="¼" />
+                <RadioButton
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="30dp"
+                    android:id="@+id/accuracy_none"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="22sp"
+                    android:buttonTint="#8957A1"
+                    android:text="None"/>
 
-                    <RadioButton
-                        android:layout_marginStart="21.5dp"
-                        android:layout_marginTop="30dp"
-                        android:id="@+id/accuracy_few"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="22sp"
-                        android:paddingEnd="5dp"
-                        android:buttonTint="#8957A1"
-                        android:text="Few" />
-
-                    <RadioButton
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="30dp"
-                        android:id="@+id/accuracy_none"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="22sp"
-                        android:buttonTint="#8957A1"
-                        android:text="None"/>
-
-                    <RadioButton
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="30dp"
-                        android:id="@+id/teleop_accuracy_cannot_tell"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="22sp"
-                        android:buttonTint="#c45120"
-                        android:layout_marginBottom="5dp"
-                        android:visibility="invisible"
-                        android:text="IDK" />
-                </RadioGroup>
-                <!-- end ACCURACY RATING -->
+                <RadioButton
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="30dp"
+                    android:id="@+id/teleop_accuracy_cannot_tell"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="22sp"
+                    android:buttonTint="#c45120"
+                    android:layout_marginBottom="5dp"
+                    android:visibility="invisible"
+                    android:text="IDK" />
+            </RadioGroup>
+            <!-- end ACCURACY RATING -->
 
             <!-- start INTAKE AND SHOOT CHECKBOX layout -->
             <LinearLayout
@@ -196,70 +194,109 @@
                 android:backgroundTint="#EAECFD">
 
                 <CheckBox
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="2dp"
                     android:id="@+id/intake_and_shoot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="#8957A1"
                     android:text="Intake and shoot at the same time"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="2dp"
                     android:layout_marginLeft="10dp"
                     android:backgroundTint="#EAECFD"
                     android:textSize="20sp" />
-
             </LinearLayout>
             <!--end INTAKE AND SHOOT CHECKBOX layout -->
         </LinearLayout>
         <!-- end GAME PIECE MANIPULATION -->
 
-            <!-- start PASSING SECTION layout -->
+        <!-- start PASSING SECTION layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:background="@drawable/rounded_rect"
+            android:backgroundTint="#87CEEB"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/algae_scored_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="7dp"
+                android:text="PASSING FROM ZONE"
+                android:textColor="@color/specialTextPrimary"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <!-- start PASSING FROM RADIO BUTTONS layout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:background="@drawable/rounded_rect"
-                android:backgroundTint="#87CEEB"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/algae_scored_label"
-                    android:layout_width="match_parent"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="7dp"
-                    android:text="PASSING FROM ZONE"
-                    android:textColor="@color/specialTextPrimary"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
+                    android:textSize="22dp"
+                    android:layout_marginStart="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingBottom="10dp"
+                    android:textColor="#000000"
+                    android:text="Neutral">
+                </TextView>
 
-                <!-- start PASSING FROM RADIO BUTTONS layout -->
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <!-- start NEUTRAL ZONE CHECKBOX -->
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:id="@+id/pass_nz"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingStart="7dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:textSize="22dp"
-                        android:layout_marginStart="10dp"
-                        android:paddingStart="10dp"
-                        android:paddingBottom="10dp"
-                        android:textColor="#000000"
-                        android:text="Neutral">
-                    </TextView>
-
-                    <!-- start NEUTRAL ZONE CHECKBOX -->
-                    <RadioGroup
-                        android:layout_width="wrap_content"
-                        android:id="@+id/pass_nz"
+                    <RadioButton
+                        android:id="@+id/no_nz"
+                        android:layout_width="10dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textSize="22sp"
+                        android:buttonTint="#051650"
+                        android:text="No" />
+
+                    <RadioButton
+                        android:id="@+id/yes_nz"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="22sp"
+                        android:buttonTint="#051650"
+                        android:text="Yes" />
+                </RadioGroup>
+                <!-- end NEUTRAL ZONE CHECKBOX -->
+
+
+                <!-- start OTHER ALLIANCE ZONE CHECKBOX -->
+                <TextView
+                    android:layout_width="135dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="22dp"
+                    android:paddingStart="50dp"
+                    android:textColor="#000000"
+                    android:text="Alliance">
+                </TextView>
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:id="@+id/pass_az"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="neutral zone"
                         android:paddingStart="7dp"
                         android:orientation="horizontal">
 
                         <RadioButton
-                            android:id="@+id/no_nz"
+                            android:id="@+id/no_az"
                             android:layout_width="10dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -268,135 +305,114 @@
                             android:text="No" />
 
                         <RadioButton
-                            android:id="@+id/yes_nz"
+                            android:id="@+id/yes_az"
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textSize="22sp"
+                            android:textSize="20sp"
                             android:buttonTint="#051650"
                             android:text="Yes" />
                     </RadioGroup>
-                    <!-- end NEUTRAL ZONE CHECKBOX -->
+                    <!-- end NEUTRAL ZONE CHECKBOX layout -->
+            </LinearLayout>
 
+            <!-- start PASSING EFFECTIVENESS RATING layout -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ADD8EF"
+                android:orientation="vertical">
 
-                    <!-- start OTHER ALLIANCE ZONE CHECKBOX -->
-                    <TextView
-                        android:layout_width="135dp"
-                        android:layout_height="wrap_content"
-                        android:textSize="22dp"
-                        android:paddingStart="50dp"
-                        android:textColor="#000000"
-                        android:text="Alliance">
-                    </TextView>
+                <TextView
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:textSize="22sp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/specialTextPrimary"
+                    android:text="PASSING RATE" />
 
-                        <RadioGroup
-                            android:layout_width="wrap_content"
-                            android:id="@+id/pass_az"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="neutral zone"
-                            android:paddingStart="7dp"
-                            android:orientation="horizontal">
-
-                            <RadioButton
-                                android:id="@+id/no_az"
-                                android:layout_width="10dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textSize="22sp"
-                                android:buttonTint="#051650"
-                                android:text="No" />
-
-                            <RadioButton
-                                android:id="@+id/yes_az"
-                                android:layout_width="60dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textSize="20sp"
-                                android:buttonTint="#051650"
-                                android:text="Yes" />
-                        </RadioGroup>
-                        <!-- end NEUTRAL ZONE CHECKBOX layout -->
-                </LinearLayout>
-                <!-- end PASSING FROM CHECKBOXES layout -->
-
-
-                <!-- start PASSING EFFECTIVENESS RATING layout -->
-                <LinearLayout
+                <RadioGroup
+                    android:id="@+id/passing_effectiveness_buttons"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="5dp"
                     android:backgroundTint="#ADD8EF"
-                    android:background="@drawable/bottom_rounded_rect"
-                    android:orientation="vertical">
+                    android:layout_marginLeft="10dp">
 
-                    <TextView
-                        android:textStyle="bold"
+                    <RadioButton
+                        android:id="@+id/passing_rate_na"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:textSize="22sp"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/specialTextPrimary"
-                        android:text="PASSING RATE" />
+                        android:layout_weight="1"
+                        android:textSize="20sp"
+                        android:buttonTint="#051650"
+                        android:text="N/A" />
 
-                    <RadioGroup
-                        android:id="@+id/passing_effectiveness_buttons"
-                        android:layout_width="match_parent"
+                    <RadioButton
+                        android:id="@+id/passing_low"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="5dp"
-                        android:backgroundTint="#ADD8EF"
-                        android:layout_marginLeft="10dp">
+                        android:layout_weight="1"
+                        android:textSize="20sp"
+                        android:buttonTint="#051650"
+                        android:text="Low" />
 
-                        <RadioButton
-                            android:id="@+id/passing_rate_na"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="20sp"
-                            android:buttonTint="#051650"
-                            android:text="N/A" />
+                    <RadioButton
+                        android:id="@+id/passing_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="20sp"
+                        android:buttonTint="#051650"
+                        android:text="Medium" />
 
-                        <RadioButton
-                            android:id="@+id/passing_low"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="20sp"
-                            android:buttonTint="#051650"
-                            android:text="Low" />
+                    <RadioButton
+                        android:id="@+id/passing_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="20sp"
+                        android:buttonTint="#051650"
+                        android:text="Large" />
 
-                        <RadioButton
-                            android:id="@+id/passing_medium"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="20sp"
-                            android:buttonTint="#051650"
-                            android:text="Medium" />
-
-                        <RadioButton
-                            android:id="@+id/passing_large"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="20sp"
-                            android:buttonTint="#051650"
-                            android:text="Large" />
-
-                        <RadioButton
-                            android:id="@+id/passing_tons"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="20sp"
-                            android:buttonTint="#051650"
-                            android:text="Tons" />
-                    </RadioGroup>
-                </LinearLayout>
-                <!-- end PASSING EFFECTIVENESS RATING layout -->
+                    <RadioButton
+                        android:id="@+id/passing_tons"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="20sp"
+                        android:buttonTint="#051650"
+                        android:text="Tons" />
+                </RadioGroup>
             </LinearLayout>
-            <!-- start PASSING SECTION layout -->
+            <!-- end PASSING EFFECTIVENESS RATING layout -->
+
+            <!-- start HERDING FUEL CHECKBOX layout -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/bottom_rounded_rect"
+                android:backgroundTint="#F0FFFF">
+
+                <CheckBox
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/shovel_fuel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#051650"
+                    android:text="Herded a lot of fuel"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="10dp"
+                    android:backgroundTint="#051650"
+                    android:textSize="20sp" />
+            </LinearLayout>
+            <!--end HERDING FUEL CHECKBOX layout -->
+        </LinearLayout>
+        <!-- end PASSING SECTION layout -->
 
         <!-- start DEFENSE SECTION layout-->
         <LinearLayout
@@ -578,10 +594,9 @@
             android:layout_width="589dp"
             android:layout_height="186dp"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/rebuilt_logo"
-            android:orientation="horizontal"
-            android:paddingTop="2dp">
+            android:orientation="horizontal">
 
         </LinearLayout>
         <!-- end PHOTO layout -->

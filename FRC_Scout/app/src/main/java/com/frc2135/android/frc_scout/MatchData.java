@@ -79,6 +79,7 @@ public class MatchData
     private int m_accuracyRate;
 
     private boolean m_intakeAndShoot;
+    private boolean m_shovelFuel;
     private int m_passingRate;
     private int m_defenseRate;
     private int m_drivingability;
@@ -150,6 +151,7 @@ public class MatchData
         setDriveAbility(6);
         setPassNeutralZone(3);
         setPassAllianceZone(3);
+        setShovelFuel(false);
 
         setTeleopPhoto(0);
 
@@ -204,6 +206,7 @@ public class MatchData
         setDriveAbility(json.getInt(JSON_KEY_DRIVE_ABILITY));
         setPassAllianceZone(json.getInt(JSON_KEY_PASS_ALLIANCE_ZONE));
         setPassNeutralZone(json.getInt(JSON_KEY_PASS_NEUTRAL_ZONE));
+        setShovelFuel(json.getBoolean(JSON_KEY_OTHER1));
 
         //Endgame data
         setDiedValue(json.getInt(JSON_KEY_DIED));
@@ -420,6 +423,16 @@ public class MatchData
         return m_intakeAndShoot;
     }
 
+    public void setShovelFuel(boolean shovelFuel)
+    {
+        m_shovelFuel = shovelFuel;
+    }
+
+    public boolean getShovelFuel()
+    {
+        return m_shovelFuel;
+    }
+
     public void setPassingRate(int passingRate)
     {
         m_passingRate = passingRate;
@@ -612,7 +625,10 @@ public class MatchData
             tsvStr += m_comment + "\t";
         else tsvStr += "-" + "\t";
 
-        tsvStr += m_other1 + "\t";   // extra spot 1
+        if (m_shovelFuel)
+            tsvStr += "1" + "\t";
+        else tsvStr += "0" + "\t";   // use extra spot 1 for shovelFuel
+
         tsvStr += m_other2 + "\t";   // extra spot 2 
         tsvStr += m_other3 + "\t";   // extra spot 3 
         tsvStr += m_other4 + "\t";   // extra spot 4 
@@ -629,7 +645,7 @@ public class MatchData
         json.put("divider", ",");
         json.put("divider", ", \n");
 
-        json.put("headings", "Competition, Team Number, Match Number, Version, Starting Pos, Preload, Auton Hopper, Auton Algae Net, Auton Algae Processor, Auton Coral Floor, Auton Coral Station, Auton Algae Floor, Teleop Hoppers Used, Accuracy Rate, Intake and Shoot, Neutral to Alliance Passing, Alliance to Alliance Passing, Passing Effectiveness Rate, Defense, Cage Climb, Start Climb, Died, Comments, Timestamp, MatchID \n");
+        json.put("headings", "Competition, Team Number, Match Number, Version, Starting Pos, Preload, Auton Hopper, Auton Algae Net, Auton Algae Processor, Auton Coral Floor, Auton Coral Station, Auton Algae Floor, Teleop Hoppers Used, Accuracy Rate, Intake and Shoot, Neutral to Alliance Passing, Alliance to Alliance Passing, Passing Effectiveness Rate, Shovel Fuel, Defense, Cage Climb, Start Climb, Died, Comments, Timestamp, MatchID \n");
         json.put(JSON_KEY_VERSION, m_version);
         json.put("divider", ",");
         json.put(JSON_KEY_EVENT_CODE, m_eventCode);
@@ -686,7 +702,7 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_COMMENTS, m_comment);
         json.put("divider", ",");
-        json.put(JSON_KEY_OTHER1, m_other1);   // Holders for extra data if ever needed
+        json.put(JSON_KEY_OTHER1, m_shovelFuel);   // use other1 for shovelFuel
         json.put("divider", ",");
         json.put(JSON_KEY_OTHER2, m_other2);
         json.put("divider", ",");

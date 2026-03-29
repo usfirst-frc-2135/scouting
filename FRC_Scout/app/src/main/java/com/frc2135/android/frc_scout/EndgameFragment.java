@@ -331,7 +331,6 @@ public class EndgameFragment extends Fragment
                 if (bError) {
                     Log.d(TAG, msg);
                     Toast toastS = Toast.makeText( getContext(), msg, Toast.LENGTH_LONG);
-                    View view1 = toastS.getView();
                     toastS.show();
                 }
                 else

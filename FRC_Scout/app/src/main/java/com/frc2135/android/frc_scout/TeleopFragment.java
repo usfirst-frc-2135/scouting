@@ -43,6 +43,7 @@ public class TeleopFragment extends Fragment
     private RadioButton m_accuracyNone;
 
     private CheckBox m_intakeAndShootCkbx;
+    private CheckBox m_shovelFuelCkbx;
 
     private RadioGroup m_passNz;
     private RadioButton m_passNzyes;
@@ -229,6 +230,8 @@ public class TeleopFragment extends Fragment
         else if(passValue == 1)
             m_passingLow.setChecked(true);
 
+        m_shovelFuelCkbx = v.findViewById(R.id.shovel_fuel);
+        m_shovelFuelCkbx.setChecked(m_matchData.getShovelFuel());
 
         m_defenseButtonGroup = v.findViewById(R.id.defense_buttons);
         m_defenseNone = v.findViewById(R.id.defense_none);
@@ -605,6 +608,7 @@ public class TeleopFragment extends Fragment
         m_matchData.setIntakeAndShoot(m_intakeAndShootCkbx.isChecked());
         m_matchData.setPassNeutralZone(getPassNeutralZone());
         m_matchData.setPassAllianceZone(getPassAllianceZone());
+        m_matchData.setShovelFuel(m_shovelFuelCkbx.isChecked());
         m_matchData.setDriveAbility(getDriveAbility());
 
     }
