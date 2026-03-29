@@ -317,7 +317,7 @@ public class EndgameFragment extends Fragment
                 }
                 //check passing rate
                 int passRate  = m_matchData.getPassingEffectivenessrate();
-                if (((passNZ == 1|| passAZ == 1) && passRate == 0) || (passRate == 5) || ((passNZ == 0|| passAZ == 0) && passRate > 0)){
+                if (((passNZ == 1|| passAZ == 1) && passRate == 0) || (passRate == 5) || ((passNZ == 0 && passAZ == 0) && passRate > 0)){
                     if ((passNZ == 1|| passAZ == 1) && passRate == 0)
                         msg += "\nTeleop: Passed from zone set, Passing rate not set!\n";
                     else if (passRate == 5)
