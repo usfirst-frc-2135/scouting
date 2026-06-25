@@ -3,7 +3,6 @@ package com.frc2135.android.frc_scout;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,20 +17,14 @@ import androidx.fragment.app.DialogFragment;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
-/** @noinspection ALL*/
 public class LoadAliasesDialog extends DialogFragment
 {
     private static final String TAG = "LoadAliasesDialog";
@@ -42,6 +35,7 @@ public class LoadAliasesDialog extends DialogFragment
     private Context m_appContext;
 
     @NonNull
+    @Override
     public Dialog onCreateDialog(Bundle SavedInstanceState)
     {
         setCancelable(true);
@@ -52,17 +46,14 @@ public class LoadAliasesDialog extends DialogFragment
         m_eventCodeField = v.findViewById(R.id.event_code_field);
         m_eventCodeField.setHint("Enter event code");
 
-        AlertDialog dialog = new AlertDialog.Builder(getActivity()).setView(v).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog, int which)
+        AlertDialog dialog = new AlertDialog.Builder(getActivity()).setView(v).setPositiveButton(android.R.string.ok, (dialog1, which) -> {
+            try
             {
-                try
-                {
-                    sendResult();
-                } catch (JSONException | IOException e)
-                {
-                    e.printStackTrace();
-                }
+                sendResult();
+            }
+            catch (JSONException | IOException e)
+            {
+                e.printStackTrace();
             }
         }).create();
 
@@ -86,7 +77,8 @@ public class LoadAliasesDialog extends DialogFragment
         return dialog;
     }
 
-    private void sendResult() throws JSONException, IOException
+    private void sendResult()
+            throws JSONException, IOException
     {
         Log.i(TAG, "sendResult() called");
         Intent i = new Intent(getActivity(), MatchListActivity.class);
@@ -115,88 +107,65 @@ public class LoadAliasesDialog extends DialogFragment
                 Log.i(TAG, "LoadAliasesDialog URL = " + urlStr);
 
                 // Load the data found at the URL into a JsonArrayRequest object.
-                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlStr, null, new Response.Listener<JSONArray>()
-                {
-                    @Override
-                    public void onResponse(JSONArray response)
-                    {
                         // Going to save the aliases JSONArray data to the device.
-                        Log.i(TAG, "going to save the aliases JSONArray data to the device");
-                        try
-                        {
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlStr, null,
+                        response -> {
+                            Log.i(TAG, "going to save the aliases JSONArray data to the device");
+                            try
+                            {
                             // Look thru existing files on device.
                             // File will be saved to this path on the device.
-                            String dataFileDir = m_appContext.getFilesDir().getPath();
-                            Log.i(TAG, "Data files path = " + dataFileDir);
-                            File dataDir = new File(dataFileDir);
-                            File[] fileList = dataDir.listFiles();
-                            if (fileList != null)
-                            {
-                                String aliasFileBaseName = m_eventCodeField.getText().toString().trim() + "_aliases.json";
-                                // Remove event matches data file if it exists already.
-                                for (File f1 : fileList)
+                                String dataFileDir = m_appContext.getFilesDir().getPath();
+                                Log.i(TAG, "Data files path = " + dataFileDir);
+                                File dataDir = new File(dataFileDir);
+                                File[] fileList = dataDir.listFiles();
+                                if (fileList != null)
                                 {
-                                    if (f1.getName().equals(aliasFileBaseName))
+                                    String aliasFileBaseName = m_eventCodeField.getText().toString().trim() + "_aliases.json";
+                                // Remove event matches data file if it exists already.
+                                    for (File f1 : fileList)
                                     {
-                                        Log.i(TAG, "DELETING existing aliases file on device: " + f1.getName());
-                                        boolean deleted = f1.delete();
-                                        if (!deleted)
-                                            Log.i(TAG, "DELETING existing aliases file: failed");
-                                        break;
+                                        if (f1.getName().equals(aliasFileBaseName))
+                                        {
+                                            Log.i(TAG, "DELETING existing aliases file on device: " + f1.getName());
+                                            boolean deleted = f1.delete();
+                                            if (!deleted)
+                                            {
+                                                Log.i(TAG, "DELETING existing aliases file: failed");
+                                            }
+                                            break;
+                                        }
                                     }
-                                }
 
                                 // Save comp data to matches JSON file 
-                                m_aliasesSerializer.saveAliasesData(aliasFileBaseName,response);
-                                Log.i(TAG, "SUCCESSFULLY downloaded aliases json file: " + dataFileDir + "/" + aliasFileBaseName);
-                                String tMsg = "Successfully downloaded aliases file for event: " + m_eventCode;
-                                Toast toast1 = Toast.makeText(m_appContext, tMsg, Toast.LENGTH_LONG);
-//REMOVE                                toast1.setGravity(Gravity.CENTER, 0, 0);
-                                toast1.show();
+                                    m_aliasesSerializer.saveAliasesData(aliasFileBaseName, response);
+                                    Log.i(TAG, "SUCCESSFULLY downloaded aliases json file: " + dataFileDir + "/" + aliasFileBaseName);
+                                    String tMsg = "Successfully downloaded aliases file for event: " + m_eventCode;
+                                    Toast.makeText(m_appContext, tMsg, Toast.LENGTH_LONG).show();
+                                }
                             }
-                        } 
-                        catch (JSONException | IOException e)
-                        {
-                            e.printStackTrace();
-                            Log.i(TAG, "--> IOException: "+e);
-                        }
-                    }
-                }, new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        // Failed to load the data from the URL.
-                        Log.i(TAG, "LoadAliasesDialog::sendResult() failed!");
-                        Log.i(TAG,"---> error = "+error);
-                        String toastMsg = "FAILED to download aliases file for event: '" + m_eventCode + "'. \n Check wifi connections or eventCode string.";
-                        Toast toast2 = Toast.makeText(m_appContext, toastMsg, Toast.LENGTH_LONG);
-//REMOVE                        View view2 = toast2.getView();
-//REMOVE                        view2.setBackgroundColor(Color.RED);
-//REMOVE                        toast2.setGravity(Gravity.CENTER, 0, 0);
-                        toast2.show();
-                    }
-                })
-                {
-                    /*@Override
-                    public Map<String, String> getHeaders()
-                    {
-                        // These params are used to access the URL data (I think).
-                        Map<String, String> params = new HashMap<>();
-                        //noinspection SpellCheckingInspection
-                        params.put("X-TBA-Auth-Key", "E7akoVihRO2ZbNHtW2nRrjuNTcZaOxWtfeYWwh4XILMsKsqLnH2ZQrKAnbevlWGn");
-                        return params;
-                    } */
-                };
-
+                            catch (JSONException | IOException e)
+                            {
+                                e.printStackTrace();
+                                Log.i(TAG, "--> IOException: " + e);
+                            }
+                        },
+                        error -> {
+                            Log.i(TAG, "LoadAliasesDialog::sendResult() failed!");
+                            Log.i(TAG, "---> error = " + error);
+                            String toastMsg = "FAILED to download aliases file for event: '" + m_eventCode + "'. \n Check wifi connections or eventCode string.";
                 //jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                            Toast.makeText(m_appContext, toastMsg, Toast.LENGTH_LONG).show();
+                        });
+
                 queue.add(jsonArrayRequest);
 
                 startActivity(i);
             }
         }
         else
+        {
             Log.i(TAG, "LoadAliasesDialog: no event code entered!");
+        }
     }
 }
-

@@ -29,7 +29,9 @@ public class QRFragment extends DialogFragment
 {
     private static final String TAG = "QRFragment";
 
-    /** @noinspection Convert2Lambda*/
+    /**
+     * @noinspection Convert2Lambda
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -38,7 +40,9 @@ public class QRFragment extends DialogFragment
         View v = requireActivity().getLayoutInflater().inflate(R.layout.qr_fragment, null);
         Bundle args = getArguments();
         if (args != null)
+        {
             stats = args.getString("stats");
+        }
 
         ImageView imageView = v.findViewById(R.id.match_data_qr);
 
@@ -52,9 +56,10 @@ public class QRFragment extends DialogFragment
         {
             Bitmap bitmap = qrCodeEncoder.encodeAsBitmap();
             imageView.setImageBitmap(bitmap);
-        } catch (WriterException e)
+        }
+        catch (WriterException e)
         {
-            Log.d(TAG, "qrCodeEncoder Error: " + e + "");
+            Log.d(TAG, "qrCodeEncoder Error: " + e);
         }
 
         AlertDialog dialog = new AlertDialog.Builder(getActivity()).setView(v).setTitle(stats).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
@@ -91,7 +96,8 @@ public class QRFragment extends DialogFragment
         try
         {
             date = dt.parse(d.toString());
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             Log.d("SignInFragment", Objects.requireNonNull(e.getMessage()));
         }

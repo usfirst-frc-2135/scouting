@@ -35,7 +35,8 @@ public class CompetitionDataSerializer
     }
 
     // Takes the JSONArray data from thebluealliance.com event matches and writes it out to <eventCode>_matches.json file.
-    public void saveEventData(JSONArray compData) throws JSONException, IOException
+    public void saveEventData(JSONArray compData)
+            throws JSONException, IOException
     {
 
         // Writes out the given compData JSONArray to '<eventCode>matches.json' file.
@@ -49,7 +50,8 @@ public class CompetitionDataSerializer
             compWriter = new OutputStreamWriter(out);
             compWriter.write(compData.toString());
             Log.d(TAG, "Device Data File created: " + file1);
-        } finally
+        }
+        finally
         {
             if (compWriter != null)
             {
@@ -58,7 +60,8 @@ public class CompetitionDataSerializer
         }
     }
 
-    public void saveCurrentCompetition(JSONObject compJSON) throws IOException
+    public void saveCurrentCompetition(JSONObject compJSON)
+            throws IOException
     {
         // Write out current_competition.json file.
         Log.d(TAG, "saveCurrentCompetition() starting");
@@ -70,10 +73,12 @@ public class CompetitionDataSerializer
             compWriter = new OutputStreamWriter(out);
             compWriter.write(compJSON.toString());
             Log.d(TAG, "Device Data File created: " + fileC);
-        } catch (IOException err)
+        }
+        catch (IOException err)
         {
             err.printStackTrace();
-        } finally
+        }
+        finally
         {
             if (compWriter != null)
             {
@@ -82,7 +87,8 @@ public class CompetitionDataSerializer
         }
     }
 
-    public CurrentCompetition loadCurrentComp() throws IOException, JSONException
+    public CurrentCompetition loadCurrentComp()
+            throws IOException, JSONException
     {
         // Reads in existing current_competition.json file on the device.
         Log.d(TAG, "loadCurrentComp() starting");
@@ -92,7 +98,7 @@ public class CompetitionDataSerializer
         File[] fileList = dirPath.listFiles();
         if (fileList != null)
         {
-            // Go thru files to find current_competition.json file, then load it if found.
+            // Go through files to find current_competition.json file, then load it if found.
             for (File fileX : fileList)
             {
                 String filename = fileX.getName().trim();
@@ -111,13 +117,16 @@ public class CompetitionDataSerializer
                         JSONObject object = (JSONObject) new JSONTokener(jsonString.toString()).nextValue();
                         currComp = new CurrentCompetition(object);
                         Log.d(TAG, "Loaded current competition file: " + filename);
-                    } catch (FileNotFoundException err)
+                    }
+                    catch (FileNotFoundException err)
                     {
                         Log.e(TAG, "ERROR loading current_competition.json: " + err);
-                    } catch (IOException err2)
+                    }
+                    catch (IOException err2)
                     {
                         err2.printStackTrace();
-                    } finally
+                    }
+                    finally
                     {
                         if (reader != null)
                         {

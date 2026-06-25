@@ -82,13 +82,13 @@ public final class QRCodeEncoder
         {
             this.format = BarcodeFormat.QR_CODE;
             encodeQRCodeContents(data, bundle, type);
-        } else if (data != null && data.length() > 0)
+        } else if (data != null && !data.isEmpty())
         {
             contents = data;
             displayContents = data;
             title = "Text";
         }
-        return contents != null && contents.length() > 0;
+        return contents != null && !contents.isEmpty();
     }
 
     private void encodeQRCodeContents(String data, Bundle bundle, String type)
@@ -96,7 +96,7 @@ public final class QRCodeEncoder
         switch (type)
         {
             case Contents.Type.TEXT:
-                if (data != null && data.length() > 0)
+                if (data != null && !data.isEmpty())
                 {
                     contents = data;
                     displayContents = data;
@@ -198,7 +198,7 @@ public final class QRCodeEncoder
                     }
 
                     // Make sure we've encoded at least one field.
-                    if (newDisplayContents.length() > 0)
+                    if (newDisplayContents.length() != 0)
                     {
                         newContents.append(';');
                         contents = newContents.toString();
@@ -280,7 +280,7 @@ public final class QRCodeEncoder
             return null;
         }
         String result = s.trim();
-        return result.length() == 0 ? null : result;
+        return result.isEmpty() ? null : result;
     }
 
     private static String escapeMECARD(String input)

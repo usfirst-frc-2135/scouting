@@ -13,7 +13,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
 
-/** @noinspection DataFlowIssue*/
+/**
+ * @noinspection DataFlowIssue
+ */
 public class MatchData
 {
     private static final String TAG = "MatchData";
@@ -32,25 +34,25 @@ public class MatchData
     private static final String JSON_KEY_AUTON_DEPOT = "autonDepot";
     private static final String JSON_KEY_AUTON_OUTPOST = "autonOutpost";
     private static final String JSON_KEY_AUTON_NZ = "autonNz";
-    private static final String JSON_KEY_AUTON_ACCURACY_RATE= "autonAccuracyRate";
+    private static final String JSON_KEY_AUTON_ACCURACY_RATE = "autonAccuracyRate";
     private static final String JSON_KEY_AUTON_HOPPER = "autonHopper";
-    private static final String JSON_KEY_AUTON_PRELOAD_ACCURACY_RATE= "autonPreloadAccRate";
-    private static final String JSON_KEY_AUTON_CLIMB= "autonClimb";
+    private static final String JSON_KEY_AUTON_PRELOAD_ACCURACY_RATE = "autonPreloadAccRate";
+    private static final String JSON_KEY_AUTON_CLIMB = "autonClimb";
 
     // Teleop data
-    private static final String JSON_KEY_HOPPERS_USED= "hoppersUsed";
-    private static final String JSON_KEY_ACCURACY_RATE= "accuracyRate";
-    private static final String JSON_KEY_INTAKE_AND_SHOOT= "intakeAndShoot";
-    private static final String JSON_KEY_PASSING_RATE= "passingRate";
+    private static final String JSON_KEY_HOPPERS_USED = "hoppersUsed";
+    private static final String JSON_KEY_ACCURACY_RATE = "accuracyRate";
+    private static final String JSON_KEY_INTAKE_AND_SHOOT = "intakeAndShoot";
+    private static final String JSON_KEY_PASSING_RATE = "passingRate";
     private static final String JSON_KEY_DEFENSE_RATE = "defenseRate";
     private static final String JSON_KEY_DRIVE_ABILITY = "driveAbility";
-    private static final String JSON_KEY_PASS_ALLIANCE_ZONE= "allianceZone";
-    private static final String JSON_KEY_PASS_NEUTRAL_ZONE= "neutralZone";
+    private static final String JSON_KEY_PASS_ALLIANCE_ZONE = "allianceZone";
+    private static final String JSON_KEY_PASS_NEUTRAL_ZONE = "neutralZone";
 
     // Endgame data
     private static final String JSON_KEY_START_CLIMB = "startClimb";
     private static final String JSON_KEY_CLIMB_LEVEL = "climbLevel";
-    private static final String JSON_KEY_ENDGAME_CLIMB_POS= "endgameClimbPos";
+    private static final String JSON_KEY_ENDGAME_CLIMB_POS = "endgameClimbPos";
 
     private static final String JSON_KEY_DIED = "died";
     private static final String JSON_KEY_COMMENTS = "comments";
@@ -82,7 +84,7 @@ public class MatchData
     private boolean m_shovelFuel;
     private int m_passingRate;
     private int m_defenseRate;
-    private int m_drivingability;
+    private int m_drivingAbility;
     private int m_passedAz;
     private int m_passedNz;
     private int m_teleopPhoto;
@@ -94,7 +96,6 @@ public class MatchData
     private int m_endgameClimbLevel;
 
     private String m_comment;
-    private String m_other1;
     private String m_other2;
     private String m_other3;
     private String m_other4;
@@ -114,14 +115,17 @@ public class MatchData
         for (int i = 0; i < teamName.length(); i++)
         {
             if (i < 3 && !Character.isDigit(teamName.charAt(i)))
+            {
                 continue;  // skip the first 3 chars that are not digits
+            }
             newTeamName.append(teamName.charAt(i));
         }
         return newTeamName.toString();
     }
 
-    ////////////////////////  Default constructor   //////////////////////////////
-    public MatchData(Context context) throws IOException, JSONException
+    /// /////////////////////  Default constructor   //////////////////////////////
+    public MatchData(Context context)
+            throws IOException, JSONException
     {
         m_name = "";
         m_teamNumber = "";
@@ -168,14 +172,15 @@ public class MatchData
 
         m_eventCode = CurrentCompetition.get(context).getEventCode();
         Log.d(TAG, "Default constructor m_eventCode set to " + m_eventCode);
-        m_other1 = "0";
+        String m_other1 = "0";
         m_other2 = "0";
         m_other3 = "0";
         m_other4 = "0";
     }
 
-    //////////////////////// constructor from JSON file  //////////////////////////////
-    public MatchData(JSONObject json) throws JSONException
+    /// ///////////////////// constructor from JSON file  //////////////////////////////
+    public MatchData(JSONObject json)
+            throws JSONException
     {
         Log.d(TAG, "MatchData being created using json data");
 
@@ -222,22 +227,23 @@ public class MatchData
         try
         {
             date = dt.parse(dateStr);
-        } catch (Exception err)
+        }
+        catch (Exception err)
         {
-            Log.d("timestamp Date string error: ",err.getMessage());
+            Log.d("timestamp Date string error: ", err.getMessage());
         }
         setTimestamp(date);
 
         m_matchID = json.getString(JSON_KEY_MATCH_ID);
     }
 
-    ////////////  m_matchID   /////////////////////
+    /// /////////  m_matchID   /////////////////////
     public String getMatchID()
     {
         return m_matchID;
     }
 
-    ////////////  m_name   /////////////////////
+    /// /////////  m_name   /////////////////////
     public void setName(String n)
     {
         m_name = n.substring(0, 1).toUpperCase() + n.substring(1).toLowerCase();
@@ -248,7 +254,7 @@ public class MatchData
         return m_name;
     }
 
-    ////////////  m_eventCode   /////////////////////
+    /// /////////  m_eventCode   /////////////////////
     public void setEventCode(String c)
     {
         m_eventCode = c;
@@ -259,7 +265,7 @@ public class MatchData
         return m_eventCode;
     }
 
-    ////////////  m_teamNumber   /////////////////////
+    /// /////////  m_teamNumber   /////////////////////
     public void setTeamNumber(String n)
     {
         m_teamNumber = n;
@@ -270,7 +276,7 @@ public class MatchData
         return m_teamNumber;
     }
 
-    ////////////  m_teamAlias   /////////////////////
+    /// /////////  m_teamAlias   /////////////////////
     public void setTeamAlias(String alias)
     {
         m_teamAlias = alias;
@@ -281,7 +287,7 @@ public class MatchData
         return m_teamAlias;
     }
 
-    ////////////  m_matchNumber   /////////////////////
+    /// /////////  m_matchNumber   /////////////////////
     public void setMatchNumber(String n)
     {
         m_matchNumber = n;
@@ -293,8 +299,10 @@ public class MatchData
     }
 
 
-
-    public void setAutonHopper(int numCoral) { m_autonHopper = numCoral; }
+    public void setAutonHopper(int numCoral)
+    {
+        m_autonHopper = numCoral;
+    }
 
     public int getAutonHopper()
     {
@@ -351,7 +359,7 @@ public class MatchData
         m_autonNz = autonNz;
     }
 
-    ///////////Teleop/////////
+    /// ////////Teleop/////////
 
     public void setHoppersUsed(int hoppersUsed)
     {
@@ -438,7 +446,7 @@ public class MatchData
         m_passingRate = passingRate;
     }
 
-    public int getPassingEffectivenessrate()
+    public int getPassingEffectivenessRate()
     {
         return m_passingRate;
     }
@@ -455,12 +463,12 @@ public class MatchData
 
     public void setDriveAbility(int driveAbility)
     {
-        m_drivingability = driveAbility;
+        m_drivingAbility = driveAbility;
     }
 
     public int getDriveAbility()
     {
-        return m_drivingability;
+        return m_drivingAbility;
     }
 
     public void setEndgameClimbLevel(int climbLevel)
@@ -492,7 +500,7 @@ public class MatchData
     {
         return m_passedAz;
     }
-    
+
     public void setTeleopPhoto(int teleopPhoto)
     {
         m_teleopPhoto = teleopPhoto;
@@ -523,7 +531,7 @@ public class MatchData
         return m_startClimb;
     }
 
-    ////////////  m_comment   /////////////////////
+    /// /////////  m_comment   /////////////////////
     public void setComment(String comment)
     {
         m_comment = comment;
@@ -534,7 +542,7 @@ public class MatchData
         return m_comment;
     }
 
-    ////////////  m_timestamp   /////////////////////
+    /// /////////  m_timestamp   /////////////////////
     public void setTimestamp(Date d)
     {
         m_timestamp = d;
@@ -564,17 +572,27 @@ public class MatchData
 
         tsvStr += stripTeamNumPrefix(m_teamNumber) + "\t";
 
-        if (!m_teamAlias.equals(""))
+        if (!m_teamAlias.isEmpty())
+        {
             tsvStr += m_teamAlias + "\t";
-        else tsvStr += "-" + "\t";
+        }
+        else
+        {
+            tsvStr += "-" + "\t";
+        }
 
         tsvStr += m_name + "\t";   // Scout name
 
         tsvStr += m_diedValue + "\t";
 
         if (m_autonPreload)
+        {
             tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
+        }
+        else
+        {
+            tsvStr += "0" + "\t";
+        }
 
         tsvStr += m_autonPreloadAccRate + "\t";
 
@@ -583,20 +601,40 @@ public class MatchData
         tsvStr += m_autonAccuracyRate + "\t";
 
         if (m_autonAz)
+        {
             tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
+        }
+        else
+        {
+            tsvStr += "0" + "\t";
+        }
 
         if (m_autonDepot)
+        {
             tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
+        }
+        else
+        {
+            tsvStr += "0" + "\t";
+        }
 
         if (m_autonOutpost)
+        {
             tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
+        }
+        else
+        {
+            tsvStr += "0" + "\t";
+        }
 
         if (m_autonNz)
+        {
             tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
+        }
+        else
+        {
+            tsvStr += "0" + "\t";
+        }
 
         tsvStr += m_autonClimb + "\t";
 
@@ -605,14 +643,19 @@ public class MatchData
         tsvStr += m_accuracyRate + "\t";
 
         if (m_intakeAndShoot)
+        {
             tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";
+        }
+        else
+        {
+            tsvStr += "0" + "\t";
+        }
 
         tsvStr += m_passingRate + "\t";
 
         tsvStr += m_defenseRate + "\t";
 
-        tsvStr += m_drivingability + "\t";
+        tsvStr += m_drivingAbility + "\t";
 
         tsvStr += m_passedAz + "\t";
         tsvStr += m_passedNz + "\t";
@@ -621,13 +664,23 @@ public class MatchData
         tsvStr += m_endgameClimbLevel + "\t";
         tsvStr += m_endgameClimbPos + "\t";   // climb position
 
-        if (!m_comment.equals(""))
+        if (!m_comment.isEmpty())
+        {
             tsvStr += m_comment + "\t";
-        else tsvStr += "-" + "\t";
+        }
+        else
+        {
+            tsvStr += "-" + "\t";
+        }
 
         if (m_shovelFuel)
+        {
             tsvStr += "1" + "\t";
-        else tsvStr += "0" + "\t";   // use extra spot 1 for shovelFuel
+        }
+        else
+        {
+            tsvStr += "0" + "\t";   // use extra spot 1 for shovelFuel
+        }
 
         tsvStr += m_other2 + "\t";   // extra spot 2 
         tsvStr += m_other3 + "\t";   // extra spot 3 
@@ -637,7 +690,8 @@ public class MatchData
         return tsvStr;
     }
 
-    public JSONObject toJSON() throws JSONException
+    public JSONObject toJSON()
+            throws JSONException
     {
         //This code uses the JSON class to convert the aspects of each match into data that can be saved to a file as JSON
         JSONObject json = new JSONObject();
@@ -686,7 +740,7 @@ public class MatchData
         json.put("divider", ",");
         json.put(JSON_KEY_DEFENSE_RATE, m_defenseRate);
         json.put("divider", ",");
-        json.put(JSON_KEY_DRIVE_ABILITY, m_drivingability);
+        json.put(JSON_KEY_DRIVE_ABILITY, m_drivingAbility);
         json.put("divider", ",");
         json.put(JSON_KEY_PASS_ALLIANCE_ZONE, m_passedAz);
         json.put("divider", ",");

@@ -1,9 +1,7 @@
 package com.frc2135.android.frc_scout;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -17,7 +15,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Objects;
 
 public class AliasesInfo
 {
@@ -67,7 +64,9 @@ public class AliasesInfo
             sAliasesInfo = null;
         }
         else
+        {
             Log.d(TAG, "No action needed: no existing sAliasesInfo");
+        }
     }
 
     public String getEventCode()
@@ -76,7 +75,8 @@ public class AliasesInfo
     }
 
     // Get the alias ("99" number) for the given teamnum (B/C/D num)
-    public String getAliasForTeamNum(String teamNumStr) throws JSONException
+    public String getAliasForTeamNum(String teamNumStr)
+            throws JSONException
     {
         String rtnVal = "";
         if (m_jsonData != null)
@@ -85,15 +85,15 @@ public class AliasesInfo
             teamNumStr = MatchData.stripTeamNumPrefix(teamNumStr);
 
             // Go thru the array of aliases data and find the one for the given teamNumStr.
-            for (int ctr = 0; ctr < m_jsonData.length(); ctr++) 
+            for (int ctr = 0; ctr < m_jsonData.length(); ctr++)
             {
-                JSONObject data1 =(JSONObject) m_jsonData.get(ctr);
-                String num = data1.getString("teamnum");
-//                Log.d(TAG, "For jsonData[" + ctr + "], teamnum = " + num);
+                JSONObject data1 = (JSONObject) m_jsonData.get(ctr);
+                //                Log.d(TAG, "For jsonData[" + ctr + "], teamnum = " + num);
+                String num = data1.getString("teamNum");
                 if (num.equals(teamNumStr))
                 {
                     rtnVal = data1.getString("aliasnum");
-                    Log.d(TAG, "Found alias for teamnum " + num + ": " + rtnVal);
+                    Log.d(TAG, "Found alias for teamNum " + num + ": " + rtnVal);
                     break;
                 }
             }
@@ -102,7 +102,8 @@ public class AliasesInfo
     }
 
     // Get the teamnum (B/C/D num) for the given alias ("99" number) 
-    public String getTeamNumForAlias(String myAlias) throws JSONException
+    public String getTeamNumForAlias(String myAlias)
+            throws JSONException
     {
         String rtnVal = "";
         if (m_jsonData != null)
@@ -110,20 +111,19 @@ public class AliasesInfo
             // Go thru the array of aliases data and find the one for the given aliasNum.
             for (int ctr = 0; ctr < m_jsonData.length(); ctr++)
             {
-                JSONObject data1 =(JSONObject) m_jsonData.get(ctr);
-                String aliasnum = data1.getString("aliasnum");
-                Log.d(TAG, "For jsonData[" + ctr + "], aliasnum = " + aliasnum);
-                if (aliasnum.equals(myAlias))
+                JSONObject data1 = (JSONObject) m_jsonData.get(ctr);
+                String aliasNum = data1.getString("aliasNum");
+                Log.d(TAG, "For jsonData[" + ctr + "], aliasNum = " + aliasNum);
+                if (aliasNum.equals(myAlias))
                 {
-                    rtnVal = data1.getString("teamnum");
-                    Log.d(TAG, "Found teamnum for alias " + aliasnum + ": " + rtnVal);
+                    rtnVal = data1.getString("teamNum");
+                    Log.d(TAG, "Found teamNum for alias " + aliasNum + ": " + rtnVal);
                     break;
                 }
             }
         }
         return rtnVal;
     }
-
 
     public void setEventCode(String eventCode)
     {
@@ -142,12 +142,9 @@ public class AliasesInfo
         if (file.exists())
         {
             Log.d(TAG, "Attempting to read in aliases JSON file");
-            BufferedReader reader;
-            try
+            try (InputStream in = context.openFileInput(file.getName().trim()); BufferedReader reader = new BufferedReader(new InputStreamReader(in)))
             {
-                // Open and read the file into a StringBuilder.
-                InputStream in = context.openFileInput(file.getName().trim());
-                reader = new BufferedReader(new InputStreamReader(in));
+
                 StringBuilder jsonString = new StringBuilder();
                 String line;
                 while ((line = reader.readLine()) != null)
@@ -163,33 +160,33 @@ public class AliasesInfo
                 // Show success Toast msg 
                 String msg = "Successfully read aliases file from device: " + m_eventCode + " _aliases.json file ";
                 Log.d(TAG, msg);
-                Toast toastS = Toast.makeText(context, msg, Toast.LENGTH_LONG);
-//REMOVE                toastS.setGravity(Gravity.CENTER, 0, 0);
-                toastS.show();
-                reader.close();
-            } catch (FileNotFoundException err)
+                Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+            }
+            catch (FileNotFoundException err)
             {
                 if (!bSilent)
                 {
                     // Show error Toast msg 
                     String errMsg = "ERROR reading aliases file from device: \n" + err;
                     Log.e(TAG, errMsg);
-                    Toast toastM = Toast.makeText(context, errMsg, Toast.LENGTH_LONG);
- //REMOVE                   View view2 = toastM.getView();
- //REMOVE                   Objects.requireNonNull(view2).setBackgroundColor(Color.RED);
- //REMOVE                   toastM.setGravity(Gravity.CENTER, 0, 0);
-                    toastM.show();
+                    Toast.makeText(context, errMsg, Toast.LENGTH_LONG).show();
                 }
-            } catch (JSONException jsonException)
+            }
+            catch (JSONException jsonException)
             {
                 Log.e(TAG, "ERROR (jsonException) reading aliases file\n");
                 jsonException.printStackTrace();
-            } catch (IOException ioException)
+            }
+            catch (IOException ioException)
             {
                 Log.e(TAG, "ERROR (ioException) reading aliases file\n");
                 ioException.printStackTrace();
             }
-        } else Log.d(TAG, "File doesn't exist: " + filename);
+        }
+        else
+        {
+            Log.d(TAG, "File doesn't exist: " + filename);
+        }
     }
 
     public boolean isAliasesDataLoaded()
@@ -198,54 +195,56 @@ public class AliasesInfo
         return m_bAliasesDataLoaded;
     }
 
-    /*public String[] getTeams(String matchNum) throws JSONException
-    {
-        String[] teams = new String[7];
-        teams[0] = "";   // initialize with empty strings
-        teams[1] = "";
-        teams[2] = "";
-        teams[3] = "";
-        teams[4] = "";
-        teams[5] = "";
-        teams[6] = "";
-        boolean bMatchNumFound = false;
-        if (m_jsonData != null)
-        {
-            JSONObject tempB;
-            JSONObject tempR;
-            JSONArray redTeams = new JSONArray();
-            JSONArray blueTeams = new JSONArray();
-            for (int i = 0; i < m_jsonData.length(); i++)
-            {
-                if ((((JSONObject) m_jsonData.get(i)).getString("comp_level") + ((JSONObject) m_jsonData.get(i)).getString("match_number")).equals(matchNum.trim().toLowerCase()))
-                {
-                    bMatchNumFound = true;
-                    JSONObject alliances = (JSONObject) m_jsonData.get(i);
-                    JSONObject color = (JSONObject) alliances.get("alliances");
-                    tempB = (JSONObject) color.get("blue");
-                    blueTeams = (JSONArray) tempB.get("team_keys");
-                    tempR = (JSONObject) color.get("red");
-                    redTeams = (JSONArray) tempR.get("team_keys");
-                    break;
-                }
-            }
-            if (bMatchNumFound)
-            {
-                teams[0] = "No team selected";
-                for (int i = 1; i < 4; i++)
-                {
-                    teams[i] = redTeams.getString(i - 1);
-                }
-                for (int i = 4; i < 7; i++)
-                {
-                    teams[i] = blueTeams.getString(i - 4);
-                }
-            }
-            else
-                Log.d(TAG, "getTeams(): matchNum '" + matchNum + "' NOT found!");
-        }
-        return teams;
-  }
+    //    public String[] getTeams(String matchNum)
+    //            throws JSONException
+    //    {
+    //        String[] teams = new String[7];
+    //        teams[0] = "";   // initialize with empty strings
+    //        teams[1] = "";
+    //        teams[2] = "";
+    //        teams[3] = "";
+    //        teams[4] = "";
+    //        teams[5] = "";
+    //        teams[6] = "";
+    //        boolean bMatchNumFound = false;
+    //        if (m_jsonData != null)
+    //        {
+    //            JSONObject tempB;
+    //            JSONObject tempR;
+    //            JSONArray redTeams = new JSONArray();
+    //            JSONArray blueTeams = new JSONArray();
+    //            for (int i = 0; i < m_jsonData.length(); i++)
+    //            {
+    //                if ((((JSONObject) m_jsonData.get(i)).getString("comp_level") + ((JSONObject) m_jsonData.get(i)).getString("match_number")).equals(matchNum.trim().toLowerCase()))
+    //                {
+    //                    bMatchNumFound = true;
+    //                    JSONObject alliances = (JSONObject) m_jsonData.get(i);
+    //                    JSONObject color = (JSONObject) alliances.get("alliances");
+    //                    tempB = (JSONObject) color.get("blue");
+    //                    blueTeams = (JSONArray) tempB.get("team_keys");
+    //                    tempR = (JSONObject) color.get("red");
+    //                    redTeams = (JSONArray) tempR.get("team_keys");
+    //                    break;
+    //                }
+    //            }
+    //            if (bMatchNumFound)
+    //            {
+    //                teams[0] = "No team selected";
+    //                for (int i = 1; i < 4; i++)
+    //                {
+    //                    teams[i] = redTeams.getString(i - 1);
+    //                }
+    //                for (int i = 4; i < 7; i++)
+    //                {
+    //                    teams[i] = blueTeams.getString(i - 4);
+    //                }
+    //            }
+    //            else
+    //            {
+    //                Log.d(TAG, "getTeams(): matchNum '" + matchNum + "' NOT found!");
+    //            }
+    //        }
+    //        return teams;
+    //    }
 
-     */
 }

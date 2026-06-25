@@ -9,106 +9,60 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.frc2135.android.frc_scout.databinding.ActivityScoutingTabbedBinding;
 
 public class ScoutingActivity extends AppCompatActivity
 {
     private static final String TAG = "ScoutingActivity";
 
     private MatchData m_matchData;
+    private ActivityScoutingTabbedBinding binding;
 
-    /** @noinspection Convert2Lambda*/
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 
         // Connects this Java class to the XML file activity_main, linking the UI to the controller layer.
-        setContentView(R.layout.activity_scouting_tabbed);
+        binding = ActivityScoutingTabbedBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         // Initializes FragmentManager so that we can host a fragment within our activity.
         final FragmentManager fm = getSupportFragmentManager();
-        final Fragment[] fragment = {fm.findFragmentById(R.id.fragmentContainer)};
-        fragment[0] = createFragment();
-
         // Designates that chosen fragment will be housed within fragmentContainer, a frame layout in the activity's XML.
-        fm.beginTransaction().add(R.id.fragmentContainer, fragment[0]).commit();
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-
-        navView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener()
+        if (fm.findFragmentById(R.id.fragmentContainer) == null)
         {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item)
+            fm.beginTransaction().add(R.id.fragmentContainer, createInitialFragment()).commit();
+        }
+
+        binding.navView.setOnItemSelectedListener(item -> {
+            updateCurrentFragmentData();
+
+            Fragment fragment;
+            int itemId = item.getItemId();
+            if (itemId == R.id.navigation_teleop)
             {
-                if (item.getItemId() == R.id.navigation_teleop)
-                {
-                    Fragment f = (ScoutingActivity.this).getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-                    if (f instanceof AutonFragment)
-                    {
-                        ((AutonFragment) f).updateAutonData();
-                    }
-                    if (f instanceof TeleopFragment)
-                    {
-                        ((TeleopFragment) f).updateTeleopData();
-                    }
-                    if (f instanceof EndgameFragment)
-                    {
-                        ((EndgameFragment) f).updateEndgameData();
-                    }
-
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
-                    TeleopFragment fragment1 = new TeleopFragment();
-                    fragmentTransaction.replace(R.id.fragmentContainer, fragment1);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
-                }
-                else if (item.getItemId() == R.id.navigation_auton)
-                {
-                    Fragment f1 = (ScoutingActivity.this).getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-                    if (f1 instanceof AutonFragment)
-                    {
-                        ((AutonFragment) f1).updateAutonData();
-                    }
-                    if (f1 instanceof TeleopFragment)
-                    {
-                        ((TeleopFragment) f1).updateTeleopData();
-                    }
-                    if (f1 instanceof EndgameFragment)
-                    {
-                        ((EndgameFragment) f1).updateEndgameData();
-                    }
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    AutonFragment fragment2 = new AutonFragment();
-                    fragmentTransaction.replace(R.id.fragmentContainer, fragment2);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
-                }
-                else if (item.getItemId() == R.id.navigation_endgame)
-                {
-                    Fragment f3 = (ScoutingActivity.this).getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-                    if (f3 instanceof AutonFragment)
-                    {
-                        ((AutonFragment) f3).updateAutonData();
-                    }
-                    if (f3 instanceof TeleopFragment)
-                    {
-                        ((TeleopFragment) f3).updateTeleopData();
-                    }
-                    if (f3 instanceof EndgameFragment)
-                    {
-                        ((EndgameFragment) f3).updateEndgameData();
-                    }
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    EndgameFragment fragment4 = new EndgameFragment();
-                    fragmentTransaction.replace(R.id.fragmentContainer, fragment4);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
-                }
-                return true;
+                fragment = new TeleopFragment();
             }
+            else if (itemId == R.id.navigation_auton)
+            {
+                fragment = new AutonFragment();
+            }
+            else if (itemId == R.id.navigation_endgame)
+            {
+                fragment = new EndgameFragment();
+            }
+            else
+            {
+                return false;
+            }
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainer, fragment)
+                    .addToBackStack(null)
+                    .commit();
+            return true;
         });
 
         String matchId = getIntent().getStringExtra("match_ID");
@@ -117,18 +71,27 @@ public class ScoutingActivity extends AppCompatActivity
     }
 
     //This method returns an instance of the class MatchFragment, so that whichever XML file is linked to Match Fragment will be placed in fragmentContainer
-    protected Fragment createFragment()
+    private void updateCurrentFragmentData()
     {
-        setContentView(R.layout.activity_scouting_tabbed);
-        return new com.frc2135.android.frc_scout.AutonFragment();
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+        if (f instanceof AutonFragment)
+        {
+            ((AutonFragment) f).updateAutonData();
+        }
+        else if (f instanceof TeleopFragment)
+        {
+            ((TeleopFragment) f).updateTeleopData();
+        }
+        else if (f instanceof EndgameFragment)
+        {
+            ((EndgameFragment) f).updateEndgameData();
+        }
     }
 
-//REMOVE    @Override
-//REMOVE    public void onBackPressed()
-//REMOVE    {
-//REMOVE        Log.d(TAG, "onBack Pressed");
-//REMOVE        super.onBackPressed();
-//REMOVE    }
+    protected Fragment createInitialFragment()
+    {
+        return new AutonFragment();
+    }
 
     protected MatchData getCurrentMatch()
     {

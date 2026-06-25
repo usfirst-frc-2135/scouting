@@ -26,14 +26,16 @@ public class CurrentCompetition
         Log.d(TAG, "constructor: m_eventCode = " + m_eventCode + "; m_compName = " + m_compName);
     }
 
-    public CurrentCompetition(JSONObject json) throws JSONException
+    public CurrentCompetition(JSONObject json)
+            throws JSONException
     {
         m_eventCode = json.getString("eventCode");
         m_compName = json.getString("compName");
         Log.d(TAG, "constructor from JSON file: m_eventCode = " + m_eventCode + "; m_compName = " + m_compName);
     }
 
-    public static CurrentCompetition get(Context c) throws IOException, JSONException
+    public static CurrentCompetition get(Context c)
+            throws IOException, JSONException
     {
         if (sCurrentCompetition == null)
         {
@@ -41,7 +43,9 @@ public class CurrentCompetition
             CompetitionDataSerializer compSerializer = new CompetitionDataSerializer(c);
             sCurrentCompetition = compSerializer.loadCurrentComp();
             if (sCurrentCompetition == null)
+            {
                 sCurrentCompetition = new CurrentCompetition(c.getApplicationContext());
+            }
         }
         return sCurrentCompetition;
     }
@@ -61,7 +65,8 @@ public class CurrentCompetition
         m_compName = cn;
     }
 
-    public JSONObject toJSON() throws JSONException
+    public JSONObject toJSON()
+            throws JSONException
     {
         JSONObject json = new JSONObject();
         json.put("compName", m_compName);

@@ -61,6 +61,8 @@ public class ScoutPreferences
             editor.apply();
         }
         else
+        {
             Log.d(TAG, "Ignoring night_mode setting: " + bMode);
+        }
     }
 }

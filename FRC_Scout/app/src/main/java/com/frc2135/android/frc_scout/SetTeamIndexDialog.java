@@ -25,7 +25,9 @@ public class SetTeamIndexDialog extends DialogFragment
     private EditText m_teamIndexField;
     private TextView m_teamIndexErrMsg;
 
-    /** @noinspection Convert2Lambda*/
+    /**
+     * @noinspection Convert2Lambda
+     */
     @NonNull
     public Dialog onCreateDialog(Bundle SavedInstanceState)
     {
@@ -47,12 +49,18 @@ public class SetTeamIndexDialog extends DialogFragment
             String indexStr = m_Scouter.getTeamIndexStr();
             Log.d(TAG, "From Scouter: teamFieldIndex = " + indexStr);
             if (m_Scouter.isValidTeamIndexStr(indexStr))
+            {
                 m_teamIndexField.setText(m_Scouter.getTeamIndexStr());
+            }
             else
+            {
                 m_teamIndexField.setText(str1);
+            }
         }
         else
+        {
             m_teamIndexField.setText(str1);
+        }
 
         m_teamIndexField.addTextChangedListener(new TextWatcher()
         {
@@ -76,7 +84,9 @@ public class SetTeamIndexDialog extends DialogFragment
                         m_teamIndexField.setTextColor(Color.RED);
                     }
                     else
+                    {
                         m_teamIndexField.setTextColor(Color.BLACK);
+                    }
                 }
             }
         });

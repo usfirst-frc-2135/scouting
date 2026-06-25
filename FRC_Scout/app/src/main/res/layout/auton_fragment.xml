@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor">
@@ -21,10 +20,10 @@
             android:background="@drawable/top_rounded_rect">
 
             <TextView
-                android:id="@+id/preload_title"
+                android:id="@+id/preload_titles"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="7dp"
                 android:text="PRELOAD"
                 android:textColor="@color/specialTextPrimary"
@@ -35,7 +34,7 @@
                 android:id="@+id/preload_checkbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="7dp"
                 android:buttonTint="#354c54"
                 android:text="Shot preloaded 8 fuel"
@@ -72,14 +71,14 @@
                 android:backgroundTint="#8DB0BA">
 
                 <RadioButton
-                    android:layout_marginStart="10dp"
                     android:id="@+id/auton_accuracy_no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
-                    android:textSize="20sp"
                     android:buttonTint="#354c54"
-                    android:text="N/A" />
+                    android:text="N/A"
+                    android:textSize="20sp" />
 
                 <RadioButton
                     android:id="@+id/auton_accuracy_a"
@@ -151,45 +150,45 @@
                     android:id="@+id/Hopper_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="1dp"
                     android:text="HOPPERS SHOT"
                     android:textColor="@color/specialTextPrimary"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/auton_Hopper_decr_button"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="70dp"
-                android:background="@drawable/rounded_rect"
-                android:backgroundTint="#c64e34"
-                android:text="@string/decrease"
-                android:textColor="#FFFFFF"
-                android:textSize="30dp" />
+                <Button
+                    android:id="@+id/auton_Hopper_decr_button"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginStart="70dp"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#c64e34"
+                    android:text="@string/decrease"
+                    android:textColor="#FFFFFF"
+                    android:textSize="30sp" />
 
-            <TextView
-                android:id="@+id/auton_Hopper_score_total"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:textAlignment="center"
-                android:textSize="25sp" />
+                <TextView
+                    android:id="@+id/auton_Hopper_score_total"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textAlignment="center"
+                    android:textSize="25sp" />
 
-            <Button
-                android:id="@+id/auton_Hopper_incr_button"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="30dp"
-                android:background="@drawable/rounded_rect"
-                android:backgroundTint="#c64e34"
-                android:text="@string/increase"
-                android:textColor="#FFFFFF"
-                android:textSize="30dp" />
+                <Button
+                    android:id="@+id/auton_Hopper_incr_button"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#c64e34"
+                    android:text="@string/increase"
+                    android:textColor="#FFFFFF"
+                    android:textSize="30sp" />
             </LinearLayout>
             <!-- end HOPPER +/- BUTTONS layout-->
 
@@ -201,14 +200,14 @@
                 android:background="@drawable/bottom_rounded_rect"
                 android:backgroundTint="#F0A271">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:text="ACCURACY RATE:"
-                        android:textColor="@color/specialTextPrimary"
-                        android:textStyle="bold"
-                        android:textSize="20sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="ACCURACY RATE:"
+                    android:textColor="@color/specialTextPrimary"
+                    android:textStyle="bold"
+                    android:textSize="20sp" />
 
                 <!-- start HOPPER ACCURACY RADIO BUTTONS-->
                 <RadioGroup
@@ -276,6 +275,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:paddingEnd="5dp"
+                        android:paddingStart="0dp"
                         android:textSize="22sp"
                         android:buttonTint="#c45120"
                         android:text="Few" />
@@ -311,80 +311,80 @@
         <!-- end HOPPER layout -->
 
         <!-- start FUEL layout -->
-                <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_rect"
+            android:backgroundTint="#D48C74"
+            android:orientation="vertical"
+            android:layout_marginTop="7dp">
+
+            <TextView
+                android:id="@+id/preload_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GOT FUEL FROM"
+                android:layout_marginTop="7dp"
+                android:layout_marginStart="5dp"
+                android:textColor="@color/specialTextPrimary"
+                android:background="#D48C74"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <!-- start FUEL CHECKBOX layout -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#e6a28b"
+                android:orientation="horizontal"
+                android:paddingTop="7dp"
+                android:background="@drawable/bottom_rounded_rect"
+                android:paddingBottom="5dp">
+
+                <CheckBox
+                    android:id="@+id/az_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:buttonTint="#8e5845"
+                    android:text="Alliance Zone"
+                    android:textColor="@color/specialTextPrimary"
+                    android:textSize="22sp" />
+
+                <CheckBox
+                    android:id="@+id/depot_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:buttonTint="#8e5845"
+                    android:text="Depot"
+                    android:textColor="@color/specialTextPrimary"
+                    android:textSize="22sp" />
+
+                <CheckBox
+                    android:id="@+id/outpost_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:buttonTint="#8e5845"
+                    android:text="Outpost"
+                    android:textColor="@color/specialTextPrimary"
+                    android:textSize="22sp" />
+
+                <CheckBox
+                    android:id="@+id/nz_checkbox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#D48C74"
-                    android:orientation="vertical"
-                    android:layout_marginTop="7dp">
+                    android:layout_marginStart="20dp"
+                    android:buttonTint="#8e5845"
+                    android:text="Neutral Zone"
+                    android:textColor="@color/specialTextPrimary"
+                    android:textSize="22sp" />
 
-                    <TextView
-                        android:id="@+id/preload_tsitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="GOT FUEL FROM"
-                        android:layout_marginTop="7dp"
-                        android:layout_marginStart="5dp"
-                        android:textColor="@color/specialTextPrimary"
-                        android:background="#D48C74"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
-
-                    <!-- start FUEL CHECKBOX layout -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="#e6a28b"
-                        android:orientation="horizontal"
-                        android:paddingTop="7dp"
-                        android:background="@drawable/bottom_rounded_rect"
-                        android:paddingBottom="5dp">
-
-                        <CheckBox
-                            android:id="@+id/az_checkbox"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="7dp"
-                            android:buttonTint="#8e5845"
-                            android:text="Alliance Zone"
-                            android:textColor="@color/specialTextPrimary"
-                            android:textSize="22sp" />
-
-                        <CheckBox
-                            android:id="@+id/depot_checkbox"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:buttonTint="#8e5845"
-                            android:text="Depot"
-                            android:textColor="@color/specialTextPrimary"
-                            android:textSize="22sp" />
-
-                        <CheckBox
-                            android:id="@+id/outpost_checkbox"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:buttonTint="#8e5845"
-                            android:text="Outpost"
-                            android:textColor="@color/specialTextPrimary"
-                            android:textSize="22sp" />
-
-                        <CheckBox
-                            android:id="@+id/nz_checkbox"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:buttonTint="#8e5845"
-                            android:text="Neutral Zone"
-                            android:textColor="@color/specialTextPrimary"
-                            android:textSize="22sp" />
-
-                    </LinearLayout>
-                    <!-- start FUEL CHECKBOX layout -->
-                </LinearLayout>
-                <!-- start FUEL layout -->
+            </LinearLayout>
+            <!-- start FUEL CHECKBOX layout -->
+        </LinearLayout>
+        <!-- start FUEL layout -->
 
         <!-- start CLIMB  layout -->
         <LinearLayout
@@ -399,7 +399,7 @@
                 android:layout_width="130dp"
                 android:layout_height="65dp"
                 android:layout_marginTop="7dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:backgroundTint="#C7CDD6"
                 android:background="@drawable/rounded_rect">
 
@@ -407,11 +407,11 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7dp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     android:textColor="@color/specialTextPrimary"
-                    android:text="CLIMB POSITION:"/>
+                    android:text="CLIMB POSITION:" />
 
             </LinearLayout>
 
@@ -419,7 +419,7 @@
             <LinearLayout
                 android:layout_width="430dp"
                 android:layout_height="330dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:background="@drawable/tower_angle_five">
 
                 <!-- start CLIMB POSITION RADIO BUTTONS -->
@@ -434,7 +434,7 @@
                         android:id="@+id/auton_climb_na"
                         android:layout_width="80dp"
                         android:layout_height="30dp"
-                        android:layout_marginLeft="0dp"
+                        android:layout_marginStart="0dp"
                         android:layout_marginTop="23dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#C7CDD6"
@@ -458,13 +458,13 @@
                         android:id="@+id/auton_climb_left"
                         android:layout_width="55dp"
                         android:layout_height="30dp"
-                        android:layout_marginLeft="0dp"
+                        android:layout_marginStart="0dp"
                         android:layout_marginTop="195dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#C7CDD6"
                         android:buttonTint="#717982"
                         android:text="L"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <RadioButton
                         android:id="@+id/auton_climb_front"

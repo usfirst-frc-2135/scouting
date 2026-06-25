@@ -3,7 +3,6 @@ package com.frc2135.android.frc_scout;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,12 +17,9 @@ import androidx.fragment.app.DialogFragment;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.File;
@@ -31,7 +27,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-/** @noinspection ALL*/
 public class LoadEventDialog extends DialogFragment
 {
     private static final String TAG = "LoadEventDialog";
@@ -42,6 +37,7 @@ public class LoadEventDialog extends DialogFragment
     private Context m_appContext;
 
     @NonNull
+    @Override
     public Dialog onCreateDialog(Bundle SavedInstanceState)
     {
         setCancelable(true);
@@ -52,17 +48,14 @@ public class LoadEventDialog extends DialogFragment
         m_eventCodeField = v.findViewById(R.id.event_code_field);
         m_eventCodeField.setHint("Enter event code for matches list");
 
-        AlertDialog dialog = new AlertDialog.Builder(getActivity()).setView(v).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog, int which)
+        AlertDialog dialog = new AlertDialog.Builder(getActivity()).setView(v).setPositiveButton(android.R.string.ok, (dialog1, which) -> {
+            try
             {
-                try
-                {
-                    sendResult();
-                } catch (JSONException | IOException e)
-                {
-                    e.printStackTrace();
-                }
+                sendResult();
+            }
+            catch (JSONException | IOException e)
+            {
+                e.printStackTrace();
             }
         }).create();
 
@@ -86,7 +79,8 @@ public class LoadEventDialog extends DialogFragment
         return dialog;
     }
 
-    private void sendResult() throws JSONException, IOException
+    private void sendResult()
+            throws JSONException, IOException
     {
         Log.i(TAG, "sendResult() called");
         Intent i = new Intent(getActivity(), MatchListActivity.class);
@@ -119,74 +113,60 @@ public class LoadEventDialog extends DialogFragment
                 Log.d(TAG, "LoadEventData URL = " + urlStr);
 
                 // Load the data found at the URL into a JsonArrayRequest object.
-                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlStr, null, new Response.Listener<JSONArray>()
-                {
-
-                    @Override
-                    public void onResponse(JSONArray response)
-                    {
                         // Going to save the event matches JSONArray data to the device.
-                        try
-                        {
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlStr, null,
+                        response -> {
+                            try
+                            {
                             // Look thru existing files on device.
                             // File will be saved to this path on the device.
-                            String dataFileDir = m_appContext.getFilesDir().getPath();
-                            Log.d(TAG, "Data files path = " + dataFileDir);
-                            File file = new File(dataFileDir);
-                            File[] fileList = file.listFiles();
-                            if (fileList != null)
-                            {
-                                String eventFileName = m_eventCodeField.getText().toString().trim() + "matches.json";
-                                // Remove event matches data file if it exists already.
-                                for (File f1 : fileList)
+                                String dataFileDir = m_appContext.getFilesDir().getPath();
+                                Log.d(TAG, "Data files path = " + dataFileDir);
+                                File file = new File(dataFileDir);
+                                File[] fileList = file.listFiles();
+                                if (fileList != null)
                                 {
-                                    if (f1.getName().equals(eventFileName))
+                                    String eventFileName = m_eventCodeField.getText().toString().trim() + "matches.json";
+                                // Remove event matches data file if it exists already.
+                                    for (File f1 : fileList)
                                     {
-                                        Log.d(TAG, "DELETING existing competition file on device: " + f1.getName());
-                                        boolean deleted = f1.delete();
-                                        if (!deleted)
-                                            Log.d(TAG, "DELETING existing competition file: failed");
-                                        break;
+                                        if (f1.getName().equals(eventFileName))
+                                        {
+                                            Log.d(TAG, "DELETING existing competition file on device: " + f1.getName());
+                                            boolean deleted = f1.delete();
+                                            if (!deleted)
+                                            {
+                                                Log.d(TAG, "DELETING existing competition file: failed");
+                                            }
+                                            break;
+                                        }
                                     }
-                                }
 
                                 // Save comp data to matches JSON file 
-                                m_compSerializer.saveEventData(response);
-                                String tMsg = " Successfully downloaded matches list for event: " + m_eventCode + " to device";
-                                Toast toast1 = Toast.makeText(m_appContext, tMsg, Toast.LENGTH_LONG);
-//REMOVE                                toast1.setGravity(Gravity.CENTER, 0, 0);
-                                toast1.show();
-                                Log.d(TAG, "SUCCESSFULLY downloaded matches.json file: " + dataFileDir + "/" + eventFileName);
+                                    m_compSerializer.saveEventData(response);
+                                    String tMsg = " Successfully downloaded matches list for event: " + m_eventCode + " to device";
+                                    Toast.makeText(m_appContext, tMsg, Toast.LENGTH_LONG).show();
+                                    Log.d(TAG, "SUCCESSFULLY downloaded matches.json file: " + dataFileDir + "/" + eventFileName);
                                 // Set up the CompetitionInfo with this event data.
-                                CompetitionInfo.get(m_appContext, m_eventCode, true);
+                                    CompetitionInfo.get(m_appContext, m_eventCode, true);
+                                }
                             }
-                        } catch (JSONException | IOException e)
-                        {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        // Failed to load the data from the URL.
-                        Log.d(TAG, "LoadEventData::sendResult() failed!");
-                        String toastMsg = " FAILED to download competition match data for event: '" + m_eventCode + "'. \n Check wifi connections or eventCode string.";
-                        Toast toast2 = Toast.makeText(m_appContext, toastMsg, Toast.LENGTH_LONG);
-//REMOVE                        View view2 = toast2.getView();
-//REMOVE                        view2.setBackgroundColor(Color.RED);
-//REMOVE                        toast2.setGravity(Gravity.CENTER, 0, 0);
-                        toast2.show();
-                    }
-                })
+                            catch (JSONException | IOException e)
+                            {
+                                e.printStackTrace();
+                            }
+                        },
+                        error -> {
+                            Log.d(TAG, "LoadEventData::sendResult() failed!");
+                            String toastMsg = " FAILED to download competition match data for event: '" + m_eventCode + "'. \n Check wifi connections or eventCode string.";
+                            Toast.makeText(m_appContext, toastMsg, Toast.LENGTH_LONG).show();
+                        })
                 {
                     @Override
                     public Map<String, String> getHeaders()
                     {
                         // These params are used to access the URL data (I think).
                         Map<String, String> params = new HashMap<>();
-                        //noinspection SpellCheckingInspection
                         params.put("X-TBA-Auth-Key", "E7akoVihRO2ZbNHtW2nRrjuNTcZaOxWtfeYWwh4XILMsKsqLnH2ZQrKAnbevlWGn");
                         return params;
                     }
@@ -196,12 +176,12 @@ public class LoadEventDialog extends DialogFragment
 
                 // Write out the current_competition.json file.
                 m_compSerializer.saveCurrentCompetition(CurrentCompetition.get(getContext()).toJSON());
-
                 startActivity(i);
             }
         }
         else
+        {
             Log.d(TAG, "LoadEventDialog: no event code entered!");
+        }
     }
 }
-

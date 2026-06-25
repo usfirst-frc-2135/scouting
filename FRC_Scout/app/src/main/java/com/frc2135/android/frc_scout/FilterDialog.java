@@ -18,7 +18,9 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
-/** @noinspection ALL*/
+/**
+ * @noinspection ALL
+ */
 public class FilterDialog extends DialogFragment
 {
 

@@ -1,9 +1,7 @@
 package com.frc2135.android.frc_scout;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -17,7 +15,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Objects;
 
 public class CompetitionInfo
 {
@@ -67,7 +64,9 @@ public class CompetitionInfo
             sCompetitionInfo = null;
         }
         else
+        {
             Log.d(TAG, "No action needed: no existing sCompetitionInfo");
+        }
     }
 
     public String getEventCode()
@@ -92,12 +91,11 @@ public class CompetitionInfo
         if (file.exists())
         {
             Log.d(TAG, "Attempting to read in matches JSON file");
-            BufferedReader reader;
-            try
+            try (InputStream in = context.openFileInput(file.getName().trim());
+                 BufferedReader reader = new BufferedReader(new InputStreamReader(in)))
             {
                 // Open and read the file into a StringBuilder.
-                InputStream in = context.openFileInput(file.getName().trim());
-                reader = new BufferedReader(new InputStreamReader(in));
+
                 StringBuilder jsonString = new StringBuilder();
                 String line;
                 while ((line = reader.readLine()) != null)
@@ -113,28 +111,24 @@ public class CompetitionInfo
                 // Show success Toast msg 
                 String msg = "Successfully read " + m_eventCode + " matches file from device";
                 Log.d(TAG, msg);
-                Toast toastS = Toast.makeText(context, msg, Toast.LENGTH_LONG);
-//REMOVE             toastS.setGravity(Gravity.CENTER, 0, 0);
-                toastS.show();
-                reader.close();
-            } catch (FileNotFoundException err)
+                Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+            }
+            catch (FileNotFoundException err)
             {
                 if (!bSilent)
                 {
                     // Show error Toast msg 
-                    String errMsg = "ERROR reading event "+m_eventCode + " matches file: \n" + err;
+                    String errMsg = "ERROR reading event " + m_eventCode + " matches file: \n" + err;
                     Log.e(TAG, errMsg);
-                    Toast toastM = Toast.makeText(context, errMsg, Toast.LENGTH_LONG);
-//REMOVE                    View view2 = toastM.getView();
-//REMOVE                    Objects.requireNonNull(view2).setBackgroundColor(Color.RED);
-//REMOVE                    toastM.setGravity(Gravity.CENTER, 0, 0);
-                    toastM.show();
+                    Toast.makeText(context, errMsg, Toast.LENGTH_LONG).show();
                 }
-            } catch (JSONException jsonException)
+            }
+            catch (JSONException jsonException)
             {
                 Log.e(TAG, "ERROR (jsonException) reading event matches file\n");
                 jsonException.printStackTrace();
-            } catch (IOException ioException)
+            }
+            catch (IOException ioException)
             {
                 Log.e(TAG, "ERROR (ioException) reading event matches file\n");
                 ioException.printStackTrace();
@@ -148,7 +142,8 @@ public class CompetitionInfo
         return m_bEventDataLoaded;
     }
 
-    public String[] getTeams(String matchNum) throws JSONException
+    public String[] getTeams(String matchNum)
+            throws JSONException
     {
         String[] teams = new String[7];
         teams[0] = "";   // initialize with empty strings
@@ -163,8 +158,8 @@ public class CompetitionInfo
         {
             JSONObject tempB;
             JSONObject tempR;
-            JSONArray redTeams = new JSONArray();
-            JSONArray blueTeams = new JSONArray();
+            JSONArray redTeams = null;
+            JSONArray blueTeams = null;
             for (int i = 0; i < m_jsonData.length(); i++)
             {
                 if ((((JSONObject) m_jsonData.get(i)).getString("comp_level") + ((JSONObject) m_jsonData.get(i)).getString("match_number")).equals(matchNum.trim().toLowerCase()))
@@ -192,7 +187,9 @@ public class CompetitionInfo
                 }
             }
             else
+            {
                 Log.d(TAG, "getTeams(): matchNum '" + matchNum + "' NOT found!");
+            }
         }
         return teams;
     }

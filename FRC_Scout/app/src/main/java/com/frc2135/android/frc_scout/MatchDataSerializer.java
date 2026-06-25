@@ -35,7 +35,8 @@ public class MatchDataSerializer
         Log.d(TAG, "Data files path = " + m_dataPath);
     }
 
-    public void saveScouterData() throws JSONException, IOException
+    public void saveScouterData()
+            throws JSONException, IOException
     {
         Log.d(TAG, "saveScouterData() starting");
 
@@ -48,10 +49,12 @@ public class MatchDataSerializer
             writerS = new OutputStreamWriter(out);
             writerS.write(arrayS.toString());
             Log.d(TAG, "Wrote Scouter file: " + m_FileName);
-        } catch (FileNotFoundException e)
+        }
+        catch (FileNotFoundException e)
         {
             Log.d(TAG, "ERROR writing Scouter file: " + e);
-        } finally
+        }
+        finally
         {
             if (writerS != null)
             {
@@ -60,7 +63,8 @@ public class MatchDataSerializer
         }
     }
 
-    public void saveMatchData(MatchData matchData1) throws JSONException, IOException
+    public void saveMatchData(MatchData matchData1)
+            throws JSONException, IOException
     {
         // Save this MatchData to JSON file.
         JSONArray array = new JSONArray();
@@ -75,10 +79,12 @@ public class MatchDataSerializer
             writerMatches = new OutputStreamWriter(out);
             writerMatches.write(array.toString());
             Log.d(TAG, "Wrote match file: " + fileM.getName());
-        } catch (FileNotFoundException e)
+        }
+        catch (FileNotFoundException e)
         {
             Log.d(TAG, "ERROR writing Match file " + matchFileName + ": " + e);
-        } finally
+        }
+        finally
         {
             if (writerMatches != null)
             {
@@ -109,7 +115,8 @@ public class MatchDataSerializer
     }
 <--- REMOVE*/
 
-    public ArrayList<MatchData> loadMatchData() throws IOException, JSONException
+    public ArrayList<MatchData> loadMatchData()
+            throws IOException, JSONException
     {
         // Create a new MatchHistory obj and load it with all the existing match files.
         ArrayList<MatchData> matchHistory = new ArrayList<>();
@@ -145,11 +152,13 @@ public class MatchDataSerializer
                         // Add this match to matchHistory
                         matchHistory.add(new MatchData(array.getJSONObject(0)));
                         Log.d(TAG, "Reading in file: " + filename);
-                    } catch (FileNotFoundException e)
+                    }
+                    catch (FileNotFoundException e)
                     {
                         //ignore this one; it happens when starting fresh
                         Log.e(TAG, "ERROR in loading file " + filename + ": " + e);
-                    } finally
+                    }
+                    finally
                     {
                         if (reader != null)
                         {
@@ -158,13 +167,16 @@ public class MatchDataSerializer
                     }
                 }
                 else
+                {
                     Log.d(TAG, "Ignoring file: " + filename);
+                }
             }
         }
         return matchHistory;
     }
 
-    public Scouter loadScouterData() throws IOException, JSONException
+    public Scouter loadScouterData()
+            throws IOException, JSONException
     {
         Log.d(TAG, "loadScouterData(): m_FileName = " + m_FileName);
         BufferedReader reader = null;
@@ -192,10 +204,12 @@ public class MatchDataSerializer
                 Log.d(TAG, "Most recent past scout = " + m_Scouter.getPastScouts()[0]);
                 Log.d(TAG, "Past teamIndexStr = " + m_Scouter.getTeamIndexStr());
             }
-        } catch (FileNotFoundException e)
+        }
+        catch (FileNotFoundException e)
         {
             //ignore this one; it happens when starting fresh
-        } finally
+        }
+        finally
         {
             if (reader != null)
             {

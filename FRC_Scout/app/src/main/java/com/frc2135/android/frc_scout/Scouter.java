@@ -33,7 +33,7 @@ public class Scouter
         MatchDataSerializer serializer = new MatchDataSerializer(mAppContext, FILENAME);
 
         // Load the previously saved Scouter data from Scouter.json file.
-        if (m_pastScouters.size() == 0)
+        if (m_pastScouters.isEmpty())
         {
             try
             {
@@ -45,7 +45,8 @@ public class Scouter
                     m_teamIndexStr = tmpScouter.getTeamIndexStr();
                     m_scoringTableSide = tmpScouter.getScoringTableSide();
                 }
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Log.e(TAG, "Error loading scouter: ", e);
             }
@@ -62,15 +63,14 @@ public class Scouter
             int i = 0;
             while (json.has(tag + i))
             {
-                m_pastScouters.add(json.getString(tag + i + ""));
+                m_pastScouters.add(json.getString(tag + i));
                 i++;
             }
             setTeamIndexStr(json.getString("teamIndex"));
             int scoringTableSideVal = json.getInt("scoringTableSide");
-            if(scoringTableSideVal == 1)
-               setScoringTableSide(true);
-            else setScoringTableSide(false);
-        } catch (Exception e)
+            setScoringTableSide(scoringTableSideVal == 1);
+        }
+        catch (Exception e)
         {
             Log.d(TAG, "Error loading Scouter JSON file");
             Log.e(TAG, e.toString());
@@ -111,16 +111,20 @@ public class Scouter
     public String getNextExpectedMatchNumber()
     {
         String newMatchNumber = "";
-        if (!m_mostRecentMatchNumber.equals(""))
+        if (!m_mostRecentMatchNumber.isEmpty())
         {
             StringBuilder prefix = new StringBuilder();
             StringBuilder numStr = new StringBuilder();
             for (int i = 0; i < m_mostRecentMatchNumber.length(); i++)
             {
                 if (Character.isDigit(m_mostRecentMatchNumber.charAt(i)))
+                {
                     numStr.append(m_mostRecentMatchNumber.charAt(i));
+                }
                 else
+                {
                     prefix.append(m_mostRecentMatchNumber.charAt(i));
+                }
             }
             newMatchNumber = prefix.toString();
             int newNum = Integer.parseInt(numStr.toString());
@@ -139,11 +143,14 @@ public class Scouter
     public String getTeamIndexColor()
     {
         String currentTeamIndex = getTeamIndexStr();
-        if (currentTeamIndex.equals("1") || currentTeamIndex.equals("2") || currentTeamIndex.equals("3")) {
+        if (currentTeamIndex.equals("1") || currentTeamIndex.equals("2") || currentTeamIndex.equals("3"))
+        {
             return "red";
-        } else if (currentTeamIndex.equals("4") || currentTeamIndex.equals("5") || currentTeamIndex.equals("6")) {
+        }
+        else if (currentTeamIndex.equals("4") || currentTeamIndex.equals("5") || currentTeamIndex.equals("6"))
+        {
             return "blue";
-    }
+        }
         return "";
     }
 
@@ -199,7 +206,8 @@ public class Scouter
         m_pastScouters.clear();
     }
 
-    public JSONObject toJSON() throws JSONException
+    public JSONObject toJSON()
+            throws JSONException
     {
         // Writes the Scouter data to Scouter.json file.
         JSONObject json = new JSONObject();
@@ -213,11 +221,13 @@ public class Scouter
         json.put("teamIndex", m_teamIndexStr);
         logMsg.append("teamIndex" + "=").append(m_teamIndexStr);
 
-        if(m_scoringTableSide) {
+        if (m_scoringTableSide)
+        {
             json.put("scoringTableSide", 1);
             logMsg.append("scoringTableSide=1");
         }
-        else {
+        else
+        {
             json.put("scoringTableSide", 0);
             logMsg.append("scoringTableSide=0");
         }

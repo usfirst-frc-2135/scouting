@@ -1,120 +1,42 @@
 package com.frc2135.android.frc_scout;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.Toast;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
-/** @noinspection ALL*/
+import com.frc2135.android.frc_scout.databinding.EndgameFragmentBinding;
+
 public class EndgameFragment extends Fragment
 {
-
-    private RadioGroup m_startGroup;
-    private RadioButton m_startNone;
-    private RadioButton m_startBefore;
-    private RadioButton m_startBell;
-    private RadioButton m_startTen;
-    private RadioButton m_startLess;
-
-    private RadioGroup m_endgameClimbLevelGroup;
-    private RadioButton m_levelNa;
-    private RadioButton m_levelThree;
-    private RadioButton m_levelTwo;
-    private RadioButton m_levelOne;
-
-    private RadioGroup m_endgameClimbButtonGroup;
-    private RadioButton m_endgameLeft;
-    private RadioButton m_endgameFront;
-    private RadioButton m_endgameRight;
-    private RadioButton m_endgameBack;
-    private RadioButton m_endgameNA;
-
-
-    private RadioGroup m_diedGroup;
-    private RadioButton m_diedNone;
-    private RadioButton m_diedMost;
-    private RadioButton m_diedMin;
-    private RadioButton m_diedThirty;
-    private RadioButton m_diedTt;
-    private RadioButton m_noShow;
-
-    private EditText m_commentText;
-    private MatchData m_matchData;
-    private View m_view;
-
-    public static final String QRTAG = "qr";
     private static final String TAG = "EndgameFragment";
+    public static final String QRTAG = "qr";
 
-    private void setupDoneButton(View view, boolean bEnable)
+    private MatchData m_matchData;
+    private EndgameFragmentBinding binding;
+
+    private void setupDoneButton(boolean bEnable)
     {
-        Button doneButton = view.findViewById(R.id.nav_to_menu_button);
-        Button doneButtonDisabled = view.findViewById(R.id.nav_to_menu_button_disabled);
-        if (doneButton != null && doneButtonDisabled != null) {
-        if (!bEnable)
-        {    // Disab;e DONE button
-            Log.d(TAG, "--> ! Disabling DONE ");
-            doneButton.setEnabled(false);
-            doneButtonDisabled.setVisibility(view.VISIBLE);
+        if (bEnable)
+        {
+            Log.d(TAG, "--> ! Enabling DONE");
+            binding.navToMenuButton.setEnabled(true);
+            binding.navToMenuButtonDisabled.setVisibility(View.INVISIBLE);
         }
         else
         {
-            Log.d(TAG, "--> ! Enabling DONE");
-            doneButton.setEnabled(true);
-            doneButtonDisabled.setVisibility(view.INVISIBLE);
-        }
-      }
-    }
-
-
-    public void setupWarnings(View view)
-    {
-        // Determine if the warning msgs should be shown or hidden, and thus if the QR and Done
-        // buttons should be disabled or not.
-        boolean bDisableButtons = false;
-
-        // Enable or disable the QR and DONE buttons.
-        String message = "This is error";
-        ImageButton qrButton = view.findViewById(R.id.gen_QR);
-        ImageButton qrButtonDisabled = view.findViewById(R.id.gen_QR_disabled);
-        qrButtonDisabled.setVisibility(view.INVISIBLE);
-        Button doneButton = view.findViewById(R.id.nav_to_menu_button);
-        Button doneButtonDisabled = view.findViewById(R.id.nav_to_menu_button_disabled);
-        doneButtonDisabled.setVisibility(view.INVISIBLE);
-        if(bDisableButtons)
-        {
-            Log.d(TAG, "--> ! Disabling DONE and QR buttons");
-
-            qrButton.setEnabled(false);
-            doneButton.setEnabled(false);
-            qrButtonDisabled.setVisibility(view.VISIBLE);
-            doneButtonDisabled.setVisibility(view.VISIBLE);
-
-        } else {
-            Log.d(TAG, "--> ! Enabling DONE and QR buttons");
-            qrButton.setEnabled(true);
-            doneButton.setEnabled(true);
-            qrButtonDisabled.setVisibility(view.INVISIBLE);
-            doneButtonDisabled.setVisibility(view.INVISIBLE);
+            Log.d(TAG, "--> ! Disabling DONE ");
+            binding.navToMenuButton.setEnabled(false);
+            binding.navToMenuButtonDisabled.setVisibility(View.VISIBLE);
         }
     }
 
@@ -130,25 +52,26 @@ public class EndgameFragment extends Fragment
             {
                 String teamNumber = m_matchData.getTeamNumber();
                 String teamAlias = m_matchData.getTeamAlias();
-                ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+                ActionBar actionBar = ((AppCompatActivity) activity).getSupportActionBar();
                 if (actionBar != null)
                 {
-                    if(!teamAlias.equals(""))
+                    if (!teamAlias.isEmpty())
+                    {
                         actionBar.setTitle("Endgame               Scouting Team " + teamAlias + "          Match " + m_matchData.getMatchNumber());
-                    else actionBar.setTitle("Endgame               Scouting Team " + teamNumber + "          Match " + m_matchData.getMatchNumber());
+                    }
+                    else
+                    {
+                        actionBar.setTitle("Endgame               Scouting Team " + teamNumber + "          Match " + m_matchData.getMatchNumber());
+                    }
                 }
             }
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
         //Creates a view using the specific fragment layout.
-        View v = inflater.inflate(R.layout.endgame_fragment, parent, false);
-
-
-
         //Connects the checkbox for if the robot dies and sets up a listener to detect when the checked status is changed
 //HOLD        m_diedCheckbox = v.findViewById(R.id.died_checkbox_true);
 //HOLD        m_diedCheckbox.setChecked(m_matchData.getDied());// Default is unchecked
@@ -160,343 +83,323 @@ public class EndgameFragment extends Fragment
 //HOLD                updateEndgameData();
 //HOLD            }
 //HOLD        });
+        binding = EndgameFragmentBinding.inflate(inflater, parent, false);
 
-        m_startGroup = v.findViewById(R.id.start_text);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
-        m_startNone = v.findViewById(R.id.start_none);//Sets up radio button that corresponds to 0
-        m_startBefore = v.findViewById(R.id.start_before);//Sets up radio button that corresponds to 1
-        m_startBell = v.findViewById(R.id.start_bell);//Sets up radio button that corresponds to 2
-        m_startTen = v.findViewById(R.id.start_ten);//Sets up radio button that corresponds to 3
-        m_startLess = v.findViewById(R.id.start_less);//Sets up radio button that corresponds to 4
+        int startClimb = m_matchData.getStartClimb();
+        if (startClimb == 0)
+        {
+            binding.startNone.setChecked(true);
+        }
+        else if (startClimb == 1)
+        {
+            binding.startBefore.setChecked(true);
+        }
+        else if (startClimb == 2)
+        {
+            binding.startBell.setChecked(true);
+        }
+        else if (startClimb == 3)
+        {
+            binding.startTen.setChecked(true);
+        }
+        else if (startClimb == 4)
+        {
+            binding.startLess.setChecked(true);
+        }
 
-        m_startNone.setChecked(false);
-        m_startBefore.setChecked(false);
-        m_startBell.setChecked(false);
-        m_startTen.setChecked(false);
-        m_startLess.setChecked(false);
+        int climbLevel = m_matchData.getEndgameClimbLevel();
+        if (climbLevel == 0)
+        {
+            binding.endgameLevelNa.setChecked(true);
+        }
+        else if (climbLevel == 1)
+        {
+            binding.endgameLevelOne.setChecked(true);
+        }
+        else if (climbLevel == 2)
+        {
+            binding.endgameLevelTwo.setChecked(true);
+        }
+        else if (climbLevel == 3)
+        {
+            binding.endgameLevelThree.setChecked(true);
+        }
 
-        int defValueStartClimb = m_matchData.getStartClimb();
-        if (defValueStartClimb == 0)
-            m_startNone.setChecked(true);
-        else if(defValueStartClimb == 1)
-            m_startBefore.setChecked(true);
-        else if(defValueStartClimb == 2)
-            m_startBell.setChecked(true);
-        else if(defValueStartClimb == 3)
-            m_startTen.setChecked(true);
-        else if(defValueStartClimb == 4)
-            m_startLess.setChecked(true);
-
-
-        m_endgameClimbLevelGroup = v.findViewById(R.id.endgame_level_climb_group);
-        m_levelNa= v.findViewById(R.id.endgame_level_na);
-        m_levelThree = v.findViewById(R.id.endgame_level_three);
-        m_levelTwo = v.findViewById(R.id.endgame_level_two);
-        m_levelOne = v.findViewById(R.id.endgame_level_one);
-
-        m_levelThree.setChecked(false);
-        m_levelTwo.setChecked(false);
-        m_levelOne.setChecked(false);
-        m_levelNa.setChecked(false);
-
-        int BaccValue = m_matchData.getEndgameClimbLevel();
-        if (BaccValue == 0)
-            m_levelNa.setChecked(true);
-        else if(BaccValue == 1)
-            m_levelOne.setChecked(true);
-        else if(BaccValue == 2)
-            m_levelTwo.setChecked(true);
-        else if(BaccValue == 3)
-            m_levelThree.setChecked(true);
-
-
-        m_endgameClimbButtonGroup = v.findViewById(R.id.endgame_climb_buttons);
-        m_endgameLeft = v.findViewById(R.id.endgame_climb_left);
-        m_endgameFront = v.findViewById(R.id.endgame_climb_front);
-        m_endgameRight = v.findViewById(R.id.endgame_climb_right);
-        m_endgameBack = v.findViewById(R.id.endgame_climb_back);
-        m_endgameNA = v.findViewById(R.id.endgame_climb_na);
-
-        m_endgameLeft.setChecked(false);
-        m_endgameFront.setChecked(false);
-        m_endgameRight.setChecked(false);
-        m_endgameBack.setChecked(false);
-        m_endgameNA.setChecked(false);
-
-        int CaccValue = m_matchData.getEndgameClimbPos();
-        if (CaccValue == 0)
-            m_endgameNA.setChecked(true);
-        else if(CaccValue == 1)
-            m_endgameBack.setChecked(true);
-        else if(CaccValue == 2)
-            m_endgameLeft.setChecked(true);
-        else if(CaccValue == 3)
-            m_endgameFront.setChecked(true);
-        else if(CaccValue == 4)
-            m_endgameRight.setChecked(true);
-
-
-        m_view = v;
-        m_diedGroup = v.findViewById(R.id.died_group);// Hooks up the radio group to the controller layer. The radio group contains all of the radio buttons
-        m_diedNone = v.findViewById(R.id.died_none);//Sets up radio button that corresponds to 1
-        m_diedMost = v.findViewById(R.id.died_most);//Sets up radio button that corresponds to 2
-        m_diedMin = v.findViewById(R.id.died_min);//Sets up radio button that corresponds to 3
-        m_diedThirty = v.findViewById(R.id.died_thirty);//Sets up radio button that corresponds to 4
-        m_diedTt = v.findViewById(R.id.died_tt);//Sets up radio button that corresponds to 5
-        m_noShow = v.findViewById(R.id.no_show);//Sets up radio button that corresponds to 6
-
-        m_diedNone.setChecked(false);
-        m_diedMost.setChecked(false);
-        m_diedMin.setChecked(false);
-        m_diedThirty.setChecked(false);
-        m_diedTt.setChecked(false);
-        m_noShow.setChecked(false);
+        int climbPos = m_matchData.getEndgameClimbPos();
+        if (climbPos == 0)
+        {
+            binding.endgameClimbNa.setChecked(true);
+        }
+        else if (climbPos == 1)
+        {
+            binding.endgameClimbBack.setChecked(true);
+        }
+        else if (climbPos == 2)
+        {
+            binding.endgameClimbLeft.setChecked(true);
+        }
+        else if (climbPos == 3)
+        {
+            binding.endgameClimbFront.setChecked(true);
+        }
+        else if (climbPos == 4)
+        {
+            binding.endgameClimbRight.setChecked(true);
+        }
 
         int diedValue = m_matchData.getDiedValue();
         if (diedValue == 0)
-            m_diedNone.setChecked(true);
+        {
+            binding.diedNone.setChecked(true);
+        }
         else if (diedValue == 1)
-            m_diedMost.setChecked(true);
-        else if(diedValue == 2)
-            m_diedMin.setChecked(true);
-        else if(diedValue == 3)
-            m_diedThirty.setChecked(true);
-        else if(diedValue == 4)
-            m_diedTt.setChecked(true);
-        else if(diedValue == 5)
-            m_noShow.setChecked(true);
-
-
+        {
+            binding.diedMost.setChecked(true);
+        }
+        else if (diedValue == 2)
+        {
+            binding.diedMin.setChecked(true);
+        }
+        else if (diedValue == 3)
+        {
+            binding.diedThirty.setChecked(true);
+        }
+        else if (diedValue == 4)
+        {
+            binding.diedTt.setChecked(true);
+        }
+        else if (diedValue == 5)
         //Sets up an EditText that allows users to input any additional comments
-        m_commentText = v.findViewById(R.id.comments);
-        m_commentText.setHint("Enter comments here");
-        m_commentText.setText(m_matchData.getComment());
-
-        ImageButton qrButton = v.findViewById(R.id.gen_QR);
-        ImageButton qrButtonDisabled = v.findViewById(R.id.gen_QR_disabled);
-        qrButton.setEnabled(true);
-        qrButtonDisabled.setVisibility(v.INVISIBLE);
-        qrButton.setOnClickListener(new View.OnClickListener()
         {
             //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
+            binding.noShow.setChecked(true);
+        }
 
-            @Override
-            public void onClick(View view)
+        binding.comments.setHint("Enter comments here");
+        binding.comments.setText(m_matchData.getComment());
+
+        binding.genQR.setEnabled(true);
+        binding.genQRDisabled.setVisibility(View.INVISIBLE);
+        binding.genQR.setOnClickListener(view -> {
+            updateEndgameData();
+            Log.d(TAG, "Clicked on QR Code");
+            StringBuilder msg = new StringBuilder();
+            boolean bError = false;
+            int passNZ = m_matchData.getPassNeutralZone();
+            int passAZ = m_matchData.getPassAllianceZone();
+            if (passNZ == 3 || passAZ == 3)
             {
-                //Uses intents to start the QR code dialog
-                updateEndgameData();
-                Log.d(TAG, "Clicked on QR Code");
-                String msg = "";
-                boolean bError = false;
-                int passNZ = m_matchData.getPassNeutralZone();
-                int passAZ = m_matchData.getPassAllianceZone();
-                if (passNZ == 3 || passAZ ==3)
+                if (passNZ == 3 && passAZ == 3)
                 {
-                    if (passNZ == 3 && passAZ == 3)
-                        msg = "Teleop: Passing From Neutral Zone and Alliance Zone buttons must be set!\n";
-                    else if (passNZ == 3)
-                        msg = "Teleop: Passing From Neutral Zone button must be set\n";
-                    else
-                        msg = "Teleop: Passing From Alliance Zone  button must be set\n";
-                    bError = true;
+                    msg.append("Teleop: Passing From Neutral Zone and Alliance Zone buttons must be set!\n");
                 }
-                // Check climb selections
-                int startClimb = m_matchData.getStartClimb();
-                int climbLevel = m_matchData.getEndgameClimbLevel();
-                int climbPosition = m_matchData.getEndgameClimbPos();
-                if( (startClimb == 0 && (climbLevel != 0 || climbPosition != 0)) ||
-                        (climbLevel == 0 && (startClimb != 0 || climbPosition != 0)) ||
-                        (climbPosition == 0 && (startClimb != 0 || climbLevel != 0)) ) {
-                    msg += "\nEndgame: Start Climb, Climb Level and Climb Position settings don't match!\n";
-                    bError = true;
-                }
-                //check driverability
-                int driverAbility = m_matchData.getDriveAbility();
-                if (driverAbility == 6) {
-                    msg += "\nTeleop: Driver ability not set!\n";
-                    bError = true;
-                }
-                //check passing rate
-                int passRate  = m_matchData.getPassingEffectivenessrate();
-                if (((passNZ == 1|| passAZ == 1) && passRate == 0) || (passRate == 5) || ((passNZ == 0 && passAZ == 0) && passRate > 0)){
-                    if ((passNZ == 1|| passAZ == 1) && passRate == 0)
-                        msg += "\nTeleop: Passed from zone set, Passing rate not set!\n";
-                    else if (passRate == 5)
-                        msg += "\nTeleop: Passing rate not set!\n";
-                    else
-                        msg += "\nTeleop: Passing rate set, Passed from zone not set!\n";
-                    bError = true;
-                }
-
-
-                if (bError) {
-                    Log.d(TAG, msg);
-                    Toast toastS = Toast.makeText( getContext(), msg, Toast.LENGTH_LONG);
-                    toastS.show();
+                else if (passNZ == 3)
+                {
+                    msg.append("Teleop: Passing From Neutral Zone button must be set\n");
                 }
                 else
                 {
-                    FragmentActivity fActivity = getActivity();
-                    if (fActivity != null)
-                    {
-                        FragmentManager fm = fActivity.getSupportFragmentManager();
-                        QRFragment dialog = QRFragment.newInstance(m_matchData);
-                        dialog.show(fm, QRTAG);
-                    }
-                    setupDoneButton(m_view, true);
+                    msg.append("Teleop: Passing From Alliance Zone  button must be set\n");
                 }
+                bError = true;
+            }
+                // Check climb selections
+            int sc = m_matchData.getStartClimb();
+            int cl = m_matchData.getEndgameClimbLevel();
+            int cp = m_matchData.getEndgameClimbPos();
+            if ((sc == 0 && (cl != 0 || cp != 0)) ||
+                    (cl == 0 && (sc != 0 || cp != 0)) ||
+                    (cp == 0 && (sc != 0 || cl != 0)))
+            {
+                msg.append("\nEndgame: Start Climb, Climb Level and Climb Position settings don't match!\n");
+                bError = true;
+            }
+                //check driverability
+            if (m_matchData.getDriveAbility() == 6)
+            {
+                msg.append("\nTeleop: Driver ability not set!\n");
+                bError = true;
+            }
+                //check passing rate
+            int passRate = m_matchData.getPassingEffectivenessRate();
+            if (((passNZ == 1 || passAZ == 1) && passRate == 0) || (passRate == 5) || ((passNZ == 0 && passAZ == 0) && passRate > 0))
+            {
+                if ((passNZ == 1 || passAZ == 1) && passRate == 0)
+                {
+                    msg.append("\nTeleop: Passed from zone set, Passing rate not set!\n");
+                }
+                else if (passRate == 5)
+                {
+                    msg.append("\nTeleop: Passing rate not set!\n");
+                }
+                else
+                {
+                    msg.append("\nTeleop: Passing rate set, Passed from zone not set!\n");
+                }
+                bError = true;
+            }
 
+            if (bError)
+            {
+                Log.d(TAG, msg.toString());
+                Toast.makeText(getContext(), msg.toString(), Toast.LENGTH_LONG).show();
+            }
+            else
+            {
+                FragmentManager fm = requireActivity().getSupportFragmentManager();
+                QRFragment dialog = QRFragment.newInstance(m_matchData);
+                dialog.show(fm, QRTAG);
+                setupDoneButton(true);
             }
         });
-
-
-        Button mNextButton = v.findViewById(R.id.nav_to_menu_button);
-        mNextButton.setOnClickListener(new View.OnClickListener()
-        {
-
-            @Override
-            public void onClick(View view)
-            {
-                updateEndgameData();  // save current endgame values in matchdata
 
                 // Save the latest Scouter and MatchData JSON files.
-                Log.d(TAG, "EndgameFragment DONE onClick() saving latest match and Scouter files\n");
-                if (!MatchHistory.get(getActivity()).saveScouterData())
-                {
-                    Log.d(TAG, "ERROR - unable to save Scouter Data!");
+        binding.navToMenuButton.setOnClickListener(view -> {
+            updateEndgameData();
+            Log.d(TAG, "EndgameFragment DONE onClick() saving latest match and Scouter files\n");
+            MatchHistory matchHistory = MatchHistory.get(getActivity());
+            if (!matchHistory.saveScouterData())
+            {
+                Log.d(TAG, "ERROR - unable to save Scouter Data!");
                     // TODO - issue a toast msg here??
-                }
-                if (!MatchHistory.get(getActivity()).saveMatchData(m_matchData))
-                {
-                    Log.d(TAG, "ERROR - unable to save Match Data!");
-                    // TODO - issue a toast msg here??
-                }
-
-                // Go back to MatchListActivity page
-                Intent i = new Intent(getActivity(), MatchListActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-                requireActivity().finish();
             }
+            if (!matchHistory.saveMatchData(m_matchData))
+            {
+                Log.d(TAG, "ERROR - unable to save Match Data!");
+                    // TODO - issue a toast msg here??
+            }
+                // Go back to MatchListActivity page
+            Intent i = new Intent(getActivity(), MatchListActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            requireActivity().finish();
         });
 
-        setupDoneButton(v, false);
-        return v;
+        setupDoneButton(false);
+        return binding.getRoot();
     }
 
     public int getDiedValue()
     {
         // Returns the current value for the Died radio buttons
-        int rtn = 0;
-        if (m_diedGroup.getCheckedRadioButtonId() == m_diedNone.getId())
+        int id = binding.diedGroup.getCheckedRadioButtonId();
+        if (id == R.id.died_none)
         {
-            rtn = 0;
+            return 0;
         }
-        else if (m_diedGroup.getCheckedRadioButtonId() == m_diedMost.getId())
+        if (id == R.id.died_most)
         {
-            rtn = 1;
+            return 1;
         }
-        else if (m_diedGroup.getCheckedRadioButtonId() == m_diedMin.getId())
+        if (id == R.id.died_min)
         {
-            rtn = 2;
+            return 2;
         }
-        else if (m_diedGroup.getCheckedRadioButtonId() == m_diedThirty.getId())
+        if (id == R.id.died_thirty)
         {
-            rtn = 3;
+            return 3;
         }
-        else if (m_diedGroup.getCheckedRadioButtonId() == m_diedTt.getId())
+        if (id == R.id.died_tt)
         {
-            rtn = 4;
+            return 4;
         }
-        else if (m_diedGroup.getCheckedRadioButtonId() == m_noShow.getId())
+        if (id == R.id.no_show)
         {
-            rtn = 5;
+            return 5;
         }
-        return rtn;
+        return 0;
     }
 
     public int getCurrentStartClimbing()
     {
         // Returns the integer climb level that is current checked in the radio buttons
-        int rtn = 0;
-        if (m_startGroup.getCheckedRadioButtonId() == m_startNone.getId())
+        int id = binding.startText.getCheckedRadioButtonId();
+        if (id == R.id.start_none)
         {
-            rtn = 0;
+            return 0;
         }
-        if (m_startGroup.getCheckedRadioButtonId() == m_startBefore.getId())
+        if (id == R.id.start_before)
         {
-            rtn = 1;
+            return 1;
         }
-        if (m_startGroup.getCheckedRadioButtonId() == m_startBell.getId())
+        if (id == R.id.start_bell)
         {
-            rtn = 2;
+            return 2;
         }
-        if (m_startGroup.getCheckedRadioButtonId() == m_startTen.getId())
+        if (id == R.id.start_ten)
         {
-            rtn = 3;
+            return 3;
         }
-        else if (m_startGroup.getCheckedRadioButtonId() == m_startLess.getId())
+        if (id == R.id.start_less)
         {
-            rtn = 4;
+            return 4;
         }
-        return rtn;
+        return 0;
     }
 
     public int getEndgameClimbPos()
     {
         // Returns the integer climb level that is current checked in the radio buttons
-        int rtn = 0;
-        if (m_endgameClimbButtonGroup.getCheckedRadioButtonId() == m_endgameNA.getId())
+        int id = binding.endgameClimbButtons.getCheckedRadioButtonId();
+        if (id == R.id.endgame_climb_na)
         {
-            rtn = 0;
+            return 0;
         }
-        if (m_endgameClimbButtonGroup.getCheckedRadioButtonId() == m_endgameBack.getId())
+        if (id == R.id.endgame_climb_back)
         {
-            rtn = 1;
+            return 1;
         }
-        if (m_endgameClimbButtonGroup.getCheckedRadioButtonId() == m_endgameLeft.getId())
+        if (id == R.id.endgame_climb_left)
         {
-            rtn = 2;
+            return 2;
         }
-        if (m_endgameClimbButtonGroup.getCheckedRadioButtonId() == m_endgameFront.getId())
+        if (id == R.id.endgame_climb_front)
         {
-            rtn = 3;
+            return 3;
         }
-        if (m_endgameClimbButtonGroup.getCheckedRadioButtonId() == m_endgameRight.getId())
+        if (id == R.id.endgame_climb_right)
         {
-            rtn = 4;
+            return 4;
         }
-        return rtn;
+        return 0;
     }
 
     public int getEndgameClimbLevel()
     {
         // Returns the integer climb level that is current checked in the radio buttons
-        int rtn = 0;
-        if (m_endgameClimbLevelGroup.getCheckedRadioButtonId() == m_levelNa.getId())
+        int id = binding.endgameLevelClimbGroup.getCheckedRadioButtonId();
+        if (id == R.id.endgame_level_na)
         {
-            rtn = 0;
+            return 0;
         }
-        if (m_endgameClimbLevelGroup.getCheckedRadioButtonId() == m_levelOne.getId())
+        if (id == R.id.endgame_level_one)
         {
-            rtn = 1;
+            return 1;
         }
-        if (m_endgameClimbLevelGroup.getCheckedRadioButtonId() == m_levelTwo.getId())
+        if (id == R.id.endgame_level_two)
         {
-            rtn = 2;
+            return 2;
         }
-        if (m_endgameClimbLevelGroup.getCheckedRadioButtonId() == m_levelThree.getId())
+        if (id == R.id.endgame_level_three)
         {
-            rtn = 3;
+            return 3;
         }
-        return rtn;
+        return 0;
     }
+
     public void updateEndgameData()
     {
         m_matchData.setStartClimb(getCurrentStartClimbing());
         m_matchData.setDiedValue(getDiedValue());
-        m_matchData.setComment(m_commentText.getText().toString());
+        m_matchData.setComment(binding.comments.getText().toString());
         m_matchData.setEndgameClimbPos(getEndgameClimbPos());
         m_matchData.setEndgameClimbLevel(getEndgameClimbLevel());
+    }
 
+    @Override
+    public void onDestroyView()
+    {
+        super.onDestroyView();
+        binding = null;
     }
 }
