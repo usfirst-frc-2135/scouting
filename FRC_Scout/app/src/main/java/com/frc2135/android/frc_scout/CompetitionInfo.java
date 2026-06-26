@@ -126,12 +126,12 @@ public class CompetitionInfo
             catch (JSONException jsonException)
             {
                 Log.e(TAG, "ERROR (jsonException) reading event matches file\n");
-                jsonException.printStackTrace();
+                Log.e(TAG, Log.getStackTraceString(jsonException));
             }
             catch (IOException ioException)
             {
                 Log.e(TAG, "ERROR (ioException) reading event matches file\n");
-                ioException.printStackTrace();
+                Log.e(TAG, Log.getStackTraceString(ioException));
             }
         }
     }

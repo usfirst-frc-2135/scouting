@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="FRC Scout 2026"
+            android:text="@string/app_name"
             android:textSize="48sp"
             android:textColor="#FF0F396B"
             android:textStyle="bold" />
@@ -22,40 +22,41 @@
             android:layout_width="440dp"
             android:layout_height="378dp"
             android:layout_gravity="center"
-            android:contentDescription="2135 Logo"
+            android:contentDescription="@string/our_team_logo"
             android:src="@drawable/t2135_logo" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Team 2135 Presentation Invasion"
+            android:text="@string/our_team_name"
             android:textSize="18sp"
             android:textColor="#FF0F396B" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="San Jose, CA"
+            android:text="@string/our_team_address"
             android:textSize="18sp"
             android:textColor="#FF0F396B" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="          "
+            android:text=""
             android:textSize="18sp"
             android:textColor="#FF0F396B" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Created by Nandita Jayanthi, 2020"
+            android:text="@string/app_original_author"
             android:textSize="18sp"
             android:textColor="#FF0F396B" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Version 2026-1.0"
+            android:text="@string/app_version"
             android:textSize="18sp"
             android:textColor="#FF0F396B" />
     </LinearLayout>

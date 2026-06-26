@@ -139,11 +139,11 @@ public class MatchListFragment extends ListFragment
         });
 
         // Set up Floating Action Button: the "+" button in a circle to start scouting a match.
-        FloatingActionButton fab = v1.findViewById(R.id.fab);
-        fab.setVisibility(View.VISIBLE);
+        FloatingActionButton start_match = v1.findViewById(R.id.start_match);
+        start_match.setVisibility(View.VISIBLE);
 
-            //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
-        fab.setOnClickListener(view -> {
+        //Setting an onClickListener makes it so that our button actually senses for when it is clicked, and when it is clicked, it will proceed with onClick()
+        start_match.setOnClickListener(view -> {
             MatchData matchA;
             try
             {
@@ -159,12 +159,12 @@ public class MatchListFragment extends ListFragment
             }
             catch (IOException | JSONException e)
             {
-                e.printStackTrace();
+                Log.e(TAG, Log.getStackTraceString(e));
             }
         });
 
         Spinner sortSpinner = v1.findViewById(R.id.sort_options);
-        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this.requireContext(), R.array.sort_array, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this.requireContext(), R.array.date_array, android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sortSpinner.setAdapter(adapter1);
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
@@ -277,7 +277,7 @@ public class MatchListFragment extends ListFragment
         }
     }
 
-    ////// Set up the 3-dot options menu in right hand top corner.
+    /// /// Set up the 3-dot options menu in right hand top corner.
     private void setMenuProvider()
     {
         requireActivity().addMenuProvider(new MenuProvider()
@@ -308,7 +308,7 @@ public class MatchListFragment extends ListFragment
                     Log.d(TAG, "Delete TBA matches files clicked");
                     Context context = getContext();
 
-                    // Look thru existing files on device to find any TBA matches json files.
+                    // Look through existing files on device to find any TBA matches json files.
                     int tbaFilesCnt = 0;
                     StringBuilder toastMsg = new StringBuilder();
                     toastMsg.append("Deleted existing TBA matches.json files:\n");
@@ -439,7 +439,7 @@ public class MatchListFragment extends ListFragment
         super.onPause();
     }
 
-    ////// Set up the match's context menu (Edit match / Delete).
+    /// /// Set up the match's context menu (Edit match / Delete).
     @Override
     public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, ContextMenu.ContextMenuInfo menuInfo)
     {

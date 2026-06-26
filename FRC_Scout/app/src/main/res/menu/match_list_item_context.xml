@@ -6,15 +6,15 @@
 
     <item
         android:id="@+id/edit_match_button"
-        android:title="Edit match"
+        android:title="@string/edit_match"
         android:icon="@android:drawable/ic_menu_edit"
         app:showAsAction="ifRoom|withText" />
 
 
     <item
         android:id="@+id/menu_item_delete_match"
+        android:title="@string/delete_match"
         android:icon="@android:drawable/ic_menu_delete"
-        android:title="Delete"
         app:showAsAction="ifRoom|withText" />
 
 </menu>

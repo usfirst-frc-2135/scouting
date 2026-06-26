@@ -2,11 +2,11 @@
 <resources>
     <!-- for light mode -->
     <color name="backgroundColor">#FCFCFC</color>
-    <color name="autonUpperCardColor">#fcd9df</color>
-    <color name="autonLowerCardColor">#efe2ff</color>
-    <color name="teleopUpperCardColor">#dff7d7</color>
-    <color name="teleopLowerCardColor">#ceeaf5</color>
-    <color name="endGameCardColor">#CEEAF5</color>
+    <!--    <color name="autonUpperCardColor">#fcd9df</color>-->
+    <!--    <color name="autonLowerCardColor">#efe2ff</color>-->
+    <!--    <color name="teleopUpperCardColor">#dff7d7</color>-->
+    <!--    <color name="teleopLowerCardColor">#ceeaf5</color>-->
+    <!--    <color name="endGameCardColor">#CEEAF5</color>-->
 
     <color name="bottomColor">#FCFCFC</color>
     <color name="hintColor">#a3a3a3</color>
@@ -15,20 +15,15 @@
     <color name="textSecondary">#8A000000</color> <!--8A for %54 opacity-->
     <color name="specialTextPrimary">#363636
     </color> <!--text color for scoring sections in auton and teleop in night mode-->
-    <color name="specialTextSecondary">#8A000000
-    </color> <!--text color for scoring sections in auton and teleop in night mode-->
+    <!--    <color name="specialTextSecondary">#8A000000</color> &lt;!&ndash;text color for scoring sections in auton and teleop in night mode&ndash;&gt;-->
 
     <color name="button1">#FFC107</color>
     <color name="button2">#DADADA</color>
     <color name="buttonText">#3F51B5</color>
 
     <!-- Color Palette-->
-    <color name="presYellow">#FFC107</color>
-    <color name="presBlue">#3F51B5</color>
-    <color name="green">#9FC209</color>
-    <color name="teal">#3F98B5</color>
-    <color name="red">#C2095A</color>
-    <color name="orange">#FC7A57</color>
+    <!--    <color name="presYellow">#FFC107</color>-->
+    <!--    <color name="presBlue">#3F51B5</color>-->
 
     <!-- random: used in places where I did something different w color combos-->
     <color name="matchListFilterText">#3F51B5</color>

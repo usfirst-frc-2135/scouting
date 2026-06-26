@@ -28,7 +28,7 @@ public class PreMatchActivity extends AppCompatActivity
     private AliasesInfo m_aliasesInfo;
     private static Scouter m_Scouter;
     private String m_inEdit;
-    //private CheckBox m_scoringTableSideChbx;// REMOVE LATER
+    // private CheckBox m_scoringTableSideCheckbox;// REMOVE LATER
     private PrematchActivityBinding binding;
 
     private void setTeamNumFromMatchNum()
@@ -64,7 +64,7 @@ public class PreMatchActivity extends AppCompatActivity
             catch (JSONException jsonException)
             {
                 Log.e(TAG, "For auto-load: couldn't get teams from m_compInfo");
-                jsonException.printStackTrace();
+                Log.e(TAG, Log.getStackTraceString(jsonException));
             }
         }
     }
@@ -159,7 +159,7 @@ public class PreMatchActivity extends AppCompatActivity
             }
         });
 /* REMOVE->
-        m_scoringTableSideChbx = findViewById(R.id.scoring_table_side_ckbx);
+        m_scoringTableSideCheckbox = findViewById(R.id.scoring_table_side_ckbx);
         if(m_Scouter != null)
             m_scoringTableSideChbx.setChecked(m_Scouter.getScoringTableSide());
         else m_scoringTableSideChbx.setChecked(false);
@@ -175,7 +175,7 @@ public class PreMatchActivity extends AppCompatActivity
         }
         else
         {
-            binding.matchNumberField.setText("qm1");
+            binding.matchNumberField.setText(R.string.qual_match_1);
         }
 
         binding.matchNumberField.addTextChangedListener(new TextWatcher()
@@ -220,7 +220,7 @@ public class PreMatchActivity extends AppCompatActivity
         });
 
         binding.teamNumberField.setOnFocusChangeListener((v, hasFocus) -> {
-            // Show drop down list of possible team numbers from TBA matchlist (if loaded).
+            // Show drop down list of possible team numbers from TBA matchList (if loaded).
             if (hasFocus)
             {
                 Log.d(TAG, "m_teamNumberField clicked");
@@ -261,7 +261,7 @@ public class PreMatchActivity extends AppCompatActivity
                     }
                     catch (JSONException | NullPointerException exception)
                     {
-                        exception.printStackTrace();
+                        Log.e(TAG, Log.getStackTraceString(exception));
                     }
                     if (bTeamsLoadedSuccessfully)
                     {
@@ -272,7 +272,7 @@ public class PreMatchActivity extends AppCompatActivity
             }
         });
 
-        binding.startScoutingButton.setOnClickListener(view -> {
+        binding.startMatchButton.setOnClickListener(view -> {
             if (checkValidData())
             {
                 updatePreMatchData();
@@ -306,7 +306,7 @@ public class PreMatchActivity extends AppCompatActivity
         String teamNum = teamNumEntry;
         String teamAlias = "";
 
-        // If aliases are used and if teamNumEntry starts with "99", then get its BCDnum.
+        // If aliases are used and if teamNumEntry starts with "99", then get its BCDNum.
         if (m_aliasesInfo != null && m_aliasesInfo.isAliasesDataLoaded() && teamNumEntry.length() >= 2 && teamNumEntry.charAt(0) == '9' && teamNumEntry.charAt(1) == '9')
         {
             try
@@ -321,7 +321,7 @@ public class PreMatchActivity extends AppCompatActivity
             catch (JSONException jsonException)
             {
                 Log.e(TAG, "For updatePreMatchData(): jsonException when getting teamNum from alias");
-                jsonException.printStackTrace();
+                Log.e(TAG, Log.getStackTraceString(jsonException));
             }
         }
         m_matchData.setTeamNumber(teamNum);
@@ -349,10 +349,10 @@ public class PreMatchActivity extends AppCompatActivity
         return true;
     }
 
-  //REMOVE  @Override
-  //REMOVE  public void onBackPressed()
-  //REMOVE  {
+    //REMOVE  @Override
+    //REMOVE  public void onBackPressed()
+    //REMOVE  {
     //REMOVELog.d(TAG, "onBack Pressed");
- //REMOVE       super.onBackPressed();
- //REMOVE   }
+    //REMOVE       super.onBackPressed();
+    //REMOVE   }
 }

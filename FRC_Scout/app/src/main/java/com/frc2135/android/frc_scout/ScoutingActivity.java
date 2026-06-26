@@ -17,7 +17,6 @@ public class ScoutingActivity extends AppCompatActivity
     private static final String TAG = "ScoutingActivity";
 
     private MatchData m_matchData;
-    private ActivityScoutingTabbedBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -25,7 +24,7 @@ public class ScoutingActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         // Connects this Java class to the XML file activity_main, linking the UI to the controller layer.
-        binding = ActivityScoutingTabbedBinding.inflate(getLayoutInflater());
+        ActivityScoutingTabbedBinding binding = ActivityScoutingTabbedBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         // Initializes FragmentManager so that we can host a fragment within our activity.

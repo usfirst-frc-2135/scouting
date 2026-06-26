@@ -25,7 +25,7 @@
                 android:layout_weight="1"
                 android:background="@color/colorSecondary"
                 android:gravity="center"
-                android:text="Sort By:"
+                android:text="@string/sort_by"
                 android:textAlignment="center"
                 android:textColor="@color/matchListFilterText"
                 android:textSize="20sp"
@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@color/colorSecondary"
-                android:contentDescription="IC Menu Search"
+                android:contentDescription="@string/ic_menu_search"
                 android:src="@android:drawable/ic_menu_search" />
 
             <Button
@@ -65,7 +65,7 @@
                 android:background="@color/colorSecondary"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:text="Filter List"
+                android:text="@string/filter_list"
                 android:textColor="@color/matchListFilterText"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -77,14 +77,12 @@
                 android:layout_weight="1"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:text="Dark Mode"
+                android:text="@string/dark_mode"
                 android:textColor="@color/matchListFilterText"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -101,15 +99,14 @@
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/start_match"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_margin="@dimen/start_match_margin"
         android:src="@drawable/add_icon_blue"
-        android:contentDescription="fab"
+        android:contentDescription="@string/start_match"
         app:fabCustomSize="80dp"
         app:maxImageSize="30dp" />
-
 
 </FrameLayout>

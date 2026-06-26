@@ -2,7 +2,6 @@ package com.frc2135.android.frc_scout;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
@@ -29,9 +28,6 @@ public class QRFragment extends DialogFragment
 {
     private static final String TAG = "QRFragment";
 
-    /**
-     * @noinspection Convert2Lambda
-     */
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -62,12 +58,8 @@ public class QRFragment extends DialogFragment
             Log.d(TAG, "qrCodeEncoder Error: " + e);
         }
 
-        AlertDialog dialog = new AlertDialog.Builder(getActivity()).setView(v).setTitle(stats).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog, int which)
-            {
-                //sendResult(Activity.RESULT_OK);
-            }
+        AlertDialog dialog = new AlertDialog.Builder(getActivity()).setView(v).setTitle(stats).setPositiveButton(android.R.string.ok, (dialog1, which) -> {
+            // sendResult(Activity.RESULT_OK);
         }).create();
 
         dialog.show();

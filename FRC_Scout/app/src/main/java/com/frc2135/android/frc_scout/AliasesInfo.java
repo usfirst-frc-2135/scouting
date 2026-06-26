@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+
 public class AliasesInfo
 {
     private static final String TAG = "AliasesInfo";
@@ -74,7 +75,7 @@ public class AliasesInfo
         return m_eventCode;
     }
 
-    // Get the alias ("99" number) for the given teamnum (B/C/D num)
+    // Get the alias ("99" number) for the given teamNum (B/C/D num)
     public String getAliasForTeamNum(String teamNumStr)
             throws JSONException
     {
@@ -84,15 +85,15 @@ public class AliasesInfo
             // Strip "frc" prefix from given teamNumStr if needed.
             teamNumStr = MatchData.stripTeamNumPrefix(teamNumStr);
 
-            // Go thru the array of aliases data and find the one for the given teamNumStr.
+            // Go through the array of aliases data and find the one for the given teamNumStr.
             for (int ctr = 0; ctr < m_jsonData.length(); ctr++)
             {
                 JSONObject data1 = (JSONObject) m_jsonData.get(ctr);
-                //                Log.d(TAG, "For jsonData[" + ctr + "], teamnum = " + num);
+                //                Log.d(TAG, "For jsonData[" + ctr + "], teamNum = " + num);
                 String num = data1.getString("teamNum");
                 if (num.equals(teamNumStr))
                 {
-                    rtnVal = data1.getString("aliasnum");
+                    rtnVal = data1.getString("aliasNum");
                     Log.d(TAG, "Found alias for teamNum " + num + ": " + rtnVal);
                     break;
                 }
@@ -101,14 +102,14 @@ public class AliasesInfo
         return rtnVal;
     }
 
-    // Get the teamnum (B/C/D num) for the given alias ("99" number) 
+    // Get the teamNum (B/C/D num) for the given alias ("99" number)
     public String getTeamNumForAlias(String myAlias)
             throws JSONException
     {
         String rtnVal = "";
         if (m_jsonData != null)
         {
-            // Go thru the array of aliases data and find the one for the given aliasNum.
+            // Go through the array of aliases data and find the one for the given aliasNum.
             for (int ctr = 0; ctr < m_jsonData.length(); ctr++)
             {
                 JSONObject data1 = (JSONObject) m_jsonData.get(ctr);
@@ -175,12 +176,12 @@ public class AliasesInfo
             catch (JSONException jsonException)
             {
                 Log.e(TAG, "ERROR (jsonException) reading aliases file\n");
-                jsonException.printStackTrace();
+                Log.e(TAG, Log.getStackTraceString(jsonException));
             }
             catch (IOException ioException)
             {
                 Log.e(TAG, "ERROR (ioException) reading aliases file\n");
-                ioException.printStackTrace();
+                Log.e(TAG, Log.getStackTraceString(ioException));
             }
         }
         else

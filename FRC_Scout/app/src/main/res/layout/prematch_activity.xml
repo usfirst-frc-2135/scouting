@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/textSecondary"
             android:paddingTop="50dp"
-            android:text="Competition Info"
+            android:text="@string/competition_info"
             android:textColor="@color/textPrimary"
             android:textSize="24sp" />
 
@@ -38,7 +38,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/textSecondary"
-                android:text="COMPETITION"
+                android:text="@string/competition_uc"
                 android:textColor="@color/textSecondary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -51,7 +51,7 @@
                 android:autofillHints="competition"
                 android:backgroundTint="@color/textSecondary"
                 android:ems="10"
-                android:hint="competition"
+                android:hint="@string/competition"
                 android:inputType="text"
                 android:paddingTop="25dp"
                 android:textColor="@color/textPrimary"
@@ -70,7 +70,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/textSecondary"
-                android:text="SCOUT NAME"
+                android:text="@string/scout_name_uc"
                 android:textColor="@color/textSecondary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -89,13 +89,6 @@
             </AutoCompleteTextView>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-        </LinearLayout>
-
         <TextView
             android:id="@+id/pre_match_title_match"
             style="?android:listSeparatorTextViewStyle"
@@ -103,7 +96,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/textPrimary"
             android:paddingTop="50dp"
-            android:text="Match Info"
+            android:text="@string/match_info"
             android:textColor="@color/textPrimary"
             android:textSize="24sp" />
 
@@ -118,7 +111,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/textSecondary"
-                android:text="MATCH NUMBER"
+                android:text="@string/match_number_uc"
                 android:textColor="@color/textSecondary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -146,7 +139,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/textSecondary"
-                android:text="TEAM NUMBER"
+                android:text="@string/team_number_uc"
                 android:textColor="@color/textSecondary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -169,15 +162,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="20dp"
-            android:text="Please fill in the missing fields!" />
+            android:text="@string/please_fill_in" />
 
         <Button
-            android:id="@+id/start_scouting_button"
+            android:id="@+id/start_match_button"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:background="@drawable/rounded_rect"
             android:backgroundTint="@color/button1"
-            android:text="Start Scouting"
+            android:text="@string/start_match"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@color/buttonText">
 
@@ -191,7 +184,7 @@
             android:background="@drawable/rounded_rect"
             android:backgroundTint="@color/button2"
             android:fadingEdge="horizontal|vertical"
-            android:text="cancel"
+            android:text="@string/cancel"
             android:textColor="@color/buttonText">
 
         </Button>

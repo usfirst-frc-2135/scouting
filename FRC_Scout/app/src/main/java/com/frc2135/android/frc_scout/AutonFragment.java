@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -77,13 +76,13 @@ public class AutonFragment extends Fragment
             if (m_matchData != null)
             {
                 Log.d(TAG, "New match ID = " + m_matchData.getMatchID());
-                ActionBar actionBar = ((AppCompatActivity) activity).getSupportActionBar();
+                ActionBar actionBar = activity.getSupportActionBar();
                 String teamNumber = m_matchData.getTeamNumber();
                 String teamAlias = m_matchData.getTeamAlias();
                 if (actionBar != null)
                 {
                     // Use teamAlias if there is one instead of teamNumber.
-                    if (!teamAlias.equals(""))
+                    if (!teamAlias.isEmpty())
                     {
                         actionBar.setTitle("Autonomous          Scouting Team " + teamAlias + "         Match " + m_matchData.getMatchNumber());
                     }

@@ -2,7 +2,6 @@ package com.frc2135.android.frc_scout;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -25,9 +24,7 @@ public class SetTeamIndexDialog extends DialogFragment
     private EditText m_teamIndexField;
     private TextView m_teamIndexErrMsg;
 
-    /**
-     * @noinspection Convert2Lambda
-     */
+
     @NonNull
     public Dialog onCreateDialog(Bundle SavedInstanceState)
     {
@@ -94,26 +91,16 @@ public class SetTeamIndexDialog extends DialogFragment
         // OK and Cancel button action handling: 
         AlertDialog.Builder abd = new AlertDialog.Builder(getActivity());
         abd.setView(v);
-        abd.setNeutralButton(android.R.string.cancel, new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog, int which)
-            {
-                dismiss();
-            }
-        });
+        abd.setNeutralButton(android.R.string.cancel, (dialog, which) -> dismiss());
 
-        abd.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog, int which)
+        abd.setPositiveButton(android.R.string.ok, (dialog, which) -> {
+            // If the data is valid, save to Scouter and end
+            if (checkValidData())
             {
-                // If the data is valid, save to Scouter and end
-                if (checkValidData())
+                if (m_Scouter != null)
                 {
-                    if (m_Scouter != null)
-                    {
-                        m_Scouter.setTeamIndexStr(m_teamIndexField.getText().toString());
-                        Log.d(TAG, "onOK: setting team index to " + m_teamIndexField.getText().toString());
-                    }
+                    m_Scouter.setTeamIndexStr(m_teamIndexField.getText().toString());
+                    Log.d(TAG, "onOK: setting team index to " + m_teamIndexField.getText().toString());
                 }
             }
         });

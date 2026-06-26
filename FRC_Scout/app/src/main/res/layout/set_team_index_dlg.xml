@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,7 +14,7 @@
             android:id="@+id/set_team_index_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Set the team index to use (1-6, or None):" />
+            android:text="@string/set_the_team_index_to_use" />
 
         <EditText
             android:id="@+id/set_team_index_field"
@@ -24,7 +23,7 @@
             android:layout_marginStart="16dp"
             android:ems="10"
             android:autofillHints="team index"
-            android:hint="team index"
+            android:hint="@string/team_index"
             android:inputType="text"
             android:paddingTop="25dp" />
 
@@ -32,8 +31,7 @@
             android:id="@+id/team_index_err"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Valid values are 1-6 or None" />
+            android:text="@string/valid_values" />
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

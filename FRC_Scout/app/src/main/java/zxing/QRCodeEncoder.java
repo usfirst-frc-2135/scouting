@@ -73,7 +73,8 @@ public final class QRCodeEncoder
             try
             {
                 format = BarcodeFormat.valueOf(formatString);
-            } catch (IllegalArgumentException iae)
+            }
+            catch (IllegalArgumentException iae)
             {
                 // Ignore it then
             }
@@ -82,7 +83,8 @@ public final class QRCodeEncoder
         {
             this.format = BarcodeFormat.QR_CODE;
             encodeQRCodeContents(data, bundle, type);
-        } else if (data != null && !data.isEmpty())
+        }
+        else if (data != null && !data.isEmpty())
         {
             contents = data;
             displayContents = data;
@@ -198,13 +200,14 @@ public final class QRCodeEncoder
                     }
 
                     // Make sure we've encoded at least one field.
-                    if (newDisplayContents.length() != 0)
+                    if (newDisplayContents.length() > 0)
                     {
                         newContents.append(';');
                         contents = newContents.toString();
                         displayContents = newDisplayContents.toString();
                         title = "Contact";
-                    } else
+                    }
+                    else
                     {
                         contents = null;
                         displayContents = null;
@@ -229,9 +232,13 @@ public final class QRCodeEncoder
         }
     }
 
-    public Bitmap encodeAsBitmap() throws WriterException
+    public Bitmap encodeAsBitmap()
+            throws WriterException
     {
-        if (!encoded) return null;
+        if (!encoded)
+        {
+            return null;
+        }
 
         Map<EncodeHintType, Object> hints = null;
         String encoding = guessAppropriateEncoding(contents);

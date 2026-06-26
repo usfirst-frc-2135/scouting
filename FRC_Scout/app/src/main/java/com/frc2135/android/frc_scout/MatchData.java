@@ -13,9 +13,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
 
-/**
- * @noinspection DataFlowIssue
- */
+
 public class MatchData
 {
     private static final String TAG = "MatchData";
@@ -52,6 +50,7 @@ public class MatchData
     // Endgame data
     private static final String JSON_KEY_START_CLIMB = "startClimb";
     private static final String JSON_KEY_CLIMB_LEVEL = "climbLevel";
+    @SuppressWarnings("GrazieInspectionRunner")
     private static final String JSON_KEY_ENDGAME_CLIMB_POS = "endgameClimbPos";
 
     private static final String JSON_KEY_DIED = "died";
@@ -89,16 +88,16 @@ public class MatchData
     private int m_passedNz;
     private int m_teleopPhoto;
 
-    //Endgame
+    // Endgame
     private int m_diedValue;
     private int m_endgameClimbPos;  // climb position
     private int m_startClimb;
     private int m_endgameClimbLevel;
 
     private String m_comment;
-    private String m_other2;
-    private String m_other3;
-    private String m_other4;
+    private final String m_other2;
+    private final String m_other3;
+    private final String m_other4;
     private String m_name;
     private String m_teamNumber;
     private String m_teamAlias;
@@ -172,7 +171,6 @@ public class MatchData
 
         m_eventCode = CurrentCompetition.get(context).getEventCode();
         Log.d(TAG, "Default constructor m_eventCode set to " + m_eventCode);
-        String m_other1 = "0";
         m_other2 = "0";
         m_other3 = "0";
         m_other4 = "0";
@@ -187,6 +185,7 @@ public class MatchData
         setName(json.getString(JSON_KEY_SCOUT_NAME));
         setEventCode(json.getString(JSON_KEY_EVENT_CODE));
         setTeamNumber(json.getString(JSON_KEY_TEAM_NUMBER));
+        setTeamAlias(json.optString(JSON_KEY_TEAM_ALIAS, ""));
         setMatchNumber(json.getString(JSON_KEY_MATCH_NUMBER));
 
         // Auton data
@@ -212,6 +211,9 @@ public class MatchData
         setPassAllianceZone(json.getInt(JSON_KEY_PASS_ALLIANCE_ZONE));
         setPassNeutralZone(json.getInt(JSON_KEY_PASS_NEUTRAL_ZONE));
         setShovelFuel(json.getBoolean(JSON_KEY_OTHER1));
+        m_other2 = json.optString(JSON_KEY_OTHER2, "0");
+        m_other3 = json.optString(JSON_KEY_OTHER3, "0");
+        m_other4 = json.optString(JSON_KEY_OTHER4, "0");
 
         //Endgame data
         setDiedValue(json.getInt(JSON_KEY_DIED));
@@ -219,18 +221,19 @@ public class MatchData
         setEndgameClimbLevel(json.getInt(JSON_KEY_CLIMB_LEVEL));
         setEndgameClimbPos(json.getInt(JSON_KEY_ENDGAME_CLIMB_POS));
 
-        setComment(json.getString(JSON_KEY_COMMENTS));
+        setComment(json.optString(JSON_KEY_COMMENTS, ""));
 
         String dateStr = json.getString(JSON_KEY_TIMESTAMP);
         SimpleDateFormat dt = new SimpleDateFormat("E MMM dd hh:mm:ss z yyyy", Locale.US);
-        Date date = null;
+        Date date;
         try
         {
             date = dt.parse(dateStr);
         }
         catch (Exception err)
         {
-            Log.d("timestamp Date string error: ", err.getMessage());
+            Log.d(TAG, "timestamp Date string error: " + err.getMessage());
+            date = Calendar.getInstance().getTime();
         }
         setTimestamp(date);
 
@@ -284,7 +287,7 @@ public class MatchData
 
     public String getTeamAlias()
     {
-        return m_teamAlias;
+        return m_teamAlias != null ? m_teamAlias : "";
     }
 
     /// /////////  m_matchNumber   /////////////////////
@@ -466,7 +469,7 @@ public class MatchData
         m_drivingAbility = driveAbility;
     }
 
-    public int getDriveAbility()
+    public int getDriverAbility()
     {
         return m_drivingAbility;
     }
@@ -539,7 +542,7 @@ public class MatchData
 
     public String getComment()
     {
-        return m_comment;
+        return m_comment != null ? m_comment : "";
     }
 
     /// /////////  m_timestamp   /////////////////////
@@ -572,7 +575,7 @@ public class MatchData
 
         tsvStr += stripTeamNumPrefix(m_teamNumber) + "\t";
 
-        if (!m_teamAlias.isEmpty())
+        if (m_teamAlias != null && !m_teamAlias.isEmpty())
         {
             tsvStr += m_teamAlias + "\t";
         }
@@ -664,7 +667,7 @@ public class MatchData
         tsvStr += m_endgameClimbLevel + "\t";
         tsvStr += m_endgameClimbPos + "\t";   // climb position
 
-        if (!m_comment.isEmpty())
+        if (m_comment != null && !m_comment.isEmpty())
         {
             tsvStr += m_comment + "\t";
         }

@@ -29,7 +29,7 @@
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:textColor="@color/specialTextPrimary"
-                android:text="START CLIMBING" />
+                android:text="@string/start_climbing" />
             <!-- start "START CLIMB RADIO BUTTONS" layout-->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -52,7 +52,7 @@
                         android:layout_weight="1"
                         android:buttonTint="@color/specialTextPrimary"
                         android:textColor="@color/specialTextPrimary"
-                        android:text="N/A" />
+                        android:text="@string/n_a" />
 
                     <RadioButton
                         android:id="@+id/start_before"
@@ -60,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:buttonTint="@color/specialTextPrimary"
-                        android:text="Before"
+                        android:text="@string/before"
                         android:textColor="@color/specialTextPrimary"
                         android:textSize="22sp" />
 
@@ -72,7 +72,7 @@
                         android:layout_weight="1"
                         android:textColor="@color/specialTextPrimary"
                         android:buttonTint="@color/specialTextPrimary"
-                        android:text="Bell" />
+                        android:text="@string/bell" />
 
                     <RadioButton
                         android:id="@+id/start_ten"
@@ -82,7 +82,7 @@
                         android:layout_weight="1"
                         android:textColor="@color/specialTextPrimary"
                         android:buttonTint="@color/specialTextPrimary"
-                        android:text="10s left" />
+                        android:text="@string/at_10s_left" />
 
                     <RadioButton
                         android:id="@+id/start_less"
@@ -92,7 +92,7 @@
                         android:layout_weight="1"
                         android:textColor="@color/specialTextPrimary"
                         android:buttonTint="@color/specialTextPrimary"
-                        android:text="less than 10s" />
+                        android:text="@string/less_than_10s" />
                 </RadioGroup>
             </LinearLayout>
             <!-- end START CLIMB RADIO BUTTONS layout-->
@@ -141,7 +141,7 @@
                             android:textSize="22sp"
                             android:textStyle="bold"
                             android:textColor="@color/specialTextPrimary"
-                            android:text="CLIMB LEVEL:" />
+                            android:text="@string/climb_level" />
                     </LinearLayout>
                     <!-- end CLIMB LEVEL TEXT layout-->
 
@@ -164,7 +164,7 @@
                             android:buttonTint="#db8ac1"
                             android:backgroundTint="#f3d8ea"
                             android:background="@drawable/rounded_rect"
-                            android:text="N/A" />
+                            android:text="@string/n_a" />
 
                         <RadioButton
                             android:id="@+id/endgame_level_three"
@@ -176,7 +176,7 @@
                             android:buttonTint="#db8ac1"
                             android:backgroundTint="#f3d8ea"
                             android:background="@drawable/rounded_rect"
-                            android:text="L3" />
+                            android:text="@string/level_three" />
 
                         <RadioButton
                             android:id="@+id/endgame_level_two"
@@ -188,7 +188,7 @@
                             android:buttonTint="#db8ac1"
                             android:backgroundTint="#f3d8ea"
                             android:background="@drawable/rounded_rect"
-                            android:text="L2" />
+                            android:text="@string/level_two" />
 
                         <RadioButton
                             android:id="@+id/endgame_level_one"
@@ -200,7 +200,7 @@
                             android:buttonTint="#db8ac1"
                             android:backgroundTint="#f3d8ea"
                             android:background="@drawable/rounded_rect"
-                            android:text="L1" />
+                            android:text="@string/level_one" />
 
                     </RadioGroup>
                     <!-- end CLIMB LEVEL RADIO BUTTONS layout-->
@@ -231,7 +231,7 @@
                             android:textSize="22sp"
                             android:textStyle="bold"
                             android:textColor="@color/specialTextPrimary"
-                            android:text="CLIMB POSITION:" />
+                            android:text="@string/climb_position" />
 
                     </LinearLayout>
                     <!-- end CLIMB POSITION TEXT layout-->
@@ -254,7 +254,7 @@
                             android:buttonTint="#717982"
                             android:backgroundTint="#C7CDD6"
                             android:background="@drawable/rounded_rect"
-                            android:text="N/A" />
+                            android:text="@string/n_a" />
 
                         <RadioButton
                             android:id="@+id/endgame_climb_back"
@@ -266,7 +266,7 @@
                             android:buttonTint="#717982"
                             android:backgroundTint="#C7CDD6"
                             android:background="@drawable/rounded_rect"
-                            android:text="B" />
+                            android:text="@string/back" />
 
                         <RadioButton
                             android:id="@+id/endgame_climb_left"
@@ -278,7 +278,7 @@
                             android:backgroundTint="#C7CDD6"
                             android:buttonTint="#717982"
                             android:background="@drawable/rounded_rect"
-                            android:text="L" />
+                            android:text="@string/left" />
 
                         <RadioButton
                             android:id="@+id/endgame_climb_front"
@@ -290,7 +290,7 @@
                             android:buttonTint="#717982"
                             android:backgroundTint="#C7CDD6"
                             android:background="@drawable/rounded_rect"
-                            android:text="F" />
+                            android:text="@string/front" />
 
                         <RadioButton
                             android:id="@+id/endgame_climb_right"
@@ -302,7 +302,7 @@
                             android:buttonTint="#818A95"
                             android:backgroundTint="#C7CDD6"
                             android:background="@drawable/rounded_rect"
-                            android:text="R" />
+                            android:text="@string/right" />
 
                     </RadioGroup>
                     <!-- end CLIMB POSITION RADIO BUTTONS section-->
@@ -331,7 +331,7 @@
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:textColor="@color/specialTextPrimary"
-                android:text="DIED" />
+                android:text="@string/died" />
             <!-- start DIED RADIO BUTTONS  -->
             <RadioGroup
                 android:id="@+id/died_group"
@@ -349,7 +349,7 @@
                     android:layout_weight="1"
                     android:textColor="@color/specialTextPrimary"
                     android:buttonTint="@color/specialTextPrimary"
-                    android:text="N/A" />
+                    android:text="@string/n_a" />
 
                 <RadioButton
                     android:id="@+id/died_most"
@@ -359,7 +359,7 @@
                     android:layout_weight="1"
                     android:textColor="@color/specialTextPrimary"
                     android:buttonTint="@color/specialTextPrimary"
-                    android:text="Most" />
+                    android:text="@string/most" />
 
                 <RadioButton
                     android:id="@+id/died_min"
@@ -369,7 +369,7 @@
                     android:layout_weight="1"
                     android:textColor="@color/specialTextPrimary"
                     android:buttonTint="@color/specialTextPrimary"
-                    android:text="1min+" />
+                    android:text="@string/more_than_1min" />
 
                 <RadioButton
                     android:id="@+id/died_thirty"
@@ -379,7 +379,7 @@
                     android:layout_weight="1"
                     android:textColor="@color/specialTextPrimary"
                     android:buttonTint="@color/specialTextPrimary"
-                    android:text="30s+" />
+                    android:text="@string/more_than_30s" />
 
                 <RadioButton
                     android:id="@+id/died_tt"
@@ -389,7 +389,7 @@
                     android:layout_weight="1"
                     android:textColor="@color/specialTextPrimary"
                     android:buttonTint="@color/specialTextPrimary"
-                    android:text="15-30s" />
+                    android:text="@string/between_15s_30s" />
 
                 <RadioButton
                     android:id="@+id/no_show"
@@ -399,7 +399,7 @@
                     android:layout_weight="1"
                     android:textColor="@color/specialTextPrimary"
                     android:buttonTint="@color/specialTextPrimary"
-                    android:text="No show" />
+                    android:text="@string/no_show" />
             </RadioGroup>
             <!-- end DIED RADIO BUTTONS  -->
         </LinearLayout>
@@ -431,7 +431,7 @@
                 android:textColor="@color/textPrimary"
                 android:textColorHint="@color/hintColor"
                 android:autofillHints="Enter comment here"
-                android:hint="Comment">
+                android:hint="@string/comment">
 
             </EditText>
         </LinearLayout>
@@ -455,7 +455,7 @@
                 android:backgroundTint="#3F98B5"
                 android:focusable="true"
                 android:src="@drawable/qr_code_icon"
-                android:contentDescription="QR code image"
+                android:contentDescription="@string/qr_code_image"
                 android:textColor="#3F51B5" />
 
             <ImageButton
@@ -466,7 +466,7 @@
                 android:backgroundTint="#6e848d"
                 android:focusable="true"
                 android:src="@drawable/qr_code_icon"
-                android:contentDescription="QR code image"
+                android:contentDescription="@string/qr_code_image"
                 android:textColor="#3F51B5" />
 
             <android.widget.Space
@@ -481,7 +481,7 @@
                 android:background="@drawable/rounded_rect"
                 android:backgroundTint="#FFC107"
                 android:focusable="true"
-                android:text="Done"
+                android:text="@string/done"
                 android:textColor="@color/textPrimary"
                 android:layout_toEndOf="@id/gen_QR"
                 android:textSize="36sp" />
@@ -494,7 +494,7 @@
                 android:background="@drawable/rounded_rect"
                 android:backgroundTint="#b19769"
                 android:focusable="true"
-                android:text="Done"
+                android:text="@string/done"
                 android:textColor="@color/textPrimary"
                 android:layout_toEndOf="@id/gen_QR"
                 android:textSize="36sp" />

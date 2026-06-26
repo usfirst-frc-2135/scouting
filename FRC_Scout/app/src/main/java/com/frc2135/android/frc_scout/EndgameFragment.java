@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -52,7 +51,7 @@ public class EndgameFragment extends Fragment
             {
                 String teamNumber = m_matchData.getTeamNumber();
                 String teamAlias = m_matchData.getTeamAlias();
-                ActionBar actionBar = ((AppCompatActivity) activity).getSupportActionBar();
+                ActionBar actionBar = activity.getSupportActionBar();
                 if (actionBar != null)
                 {
                     if (!teamAlias.isEmpty())
@@ -73,16 +72,16 @@ public class EndgameFragment extends Fragment
     {
         //Creates a view using the specific fragment layout.
         //Connects the checkbox for if the robot dies and sets up a listener to detect when the checked status is changed
-//HOLD        m_diedCheckbox = v.findViewById(R.id.died_checkbox_true);
-//HOLD        m_diedCheckbox.setChecked(m_matchData.getDied());// Default is unchecked
-//HOLD        m_diedCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-//HOLD        {
-//HOLD            @Override
-//HOLD            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-//HOLD            {
-//HOLD                updateEndgameData();
-//HOLD            }
-//HOLD        });
+        //HOLD        m_diedCheckbox = v.findViewById(R.id.died_checkbox_true);
+        //HOLD        m_diedCheckbox.setChecked(m_matchData.getDied());// Default is unchecked
+        //HOLD        m_diedCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        //HOLD        {
+        //HOLD            @Override
+        //HOLD            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+        //HOLD            {
+        //HOLD                updateEndgameData();
+        //HOLD            }
+        //HOLD        });
         binding = EndgameFragmentBinding.inflate(inflater, parent, false);
 
         int startClimb = m_matchData.getStartClimb();
@@ -203,24 +202,24 @@ public class EndgameFragment extends Fragment
                 }
                 bError = true;
             }
-                // Check climb selections
+            // Check climb selections
             int sc = m_matchData.getStartClimb();
             int cl = m_matchData.getEndgameClimbLevel();
             int cp = m_matchData.getEndgameClimbPos();
-            if ((sc == 0 && (cl != 0 || cp != 0)) ||
-                    (cl == 0 && (sc != 0 || cp != 0)) ||
-                    (cp == 0 && (sc != 0 || cl != 0)))
+            if (sc == 0 && (cl != 0 || cp != 0) ||
+                    cl == 0 && sc != 0 ||
+                    cp == 0 && sc != 0)
             {
                 msg.append("\nEndgame: Start Climb, Climb Level and Climb Position settings don't match!\n");
                 bError = true;
             }
-                //check driverability
-            if (m_matchData.getDriveAbility() == 6)
+            // check driverAbility
+            if (m_matchData.getDriverAbility() == 6)
             {
                 msg.append("\nTeleop: Driver ability not set!\n");
                 bError = true;
             }
-                //check passing rate
+            //check passing rate
             int passRate = m_matchData.getPassingEffectivenessRate();
             if (((passNZ == 1 || passAZ == 1) && passRate == 0) || (passRate == 5) || ((passNZ == 0 && passAZ == 0) && passRate > 0))
             {
@@ -253,7 +252,7 @@ public class EndgameFragment extends Fragment
             }
         });
 
-                // Save the latest Scouter and MatchData JSON files.
+        // Save the latest Scouter and MatchData JSON files.
         binding.navToMenuButton.setOnClickListener(view -> {
             updateEndgameData();
             Log.d(TAG, "EndgameFragment DONE onClick() saving latest match and Scouter files\n");
@@ -261,14 +260,14 @@ public class EndgameFragment extends Fragment
             if (!matchHistory.saveScouterData())
             {
                 Log.d(TAG, "ERROR - unable to save Scouter Data!");
-                    // TODO - issue a toast msg here??
+                // TODO - issue a toast msg here??
             }
             if (!matchHistory.saveMatchData(m_matchData))
             {
                 Log.d(TAG, "ERROR - unable to save Match Data!");
-                    // TODO - issue a toast msg here??
+                // TODO - issue a toast msg here??
             }
-                // Go back to MatchListActivity page
+            // Go back to MatchListActivity page
             Intent i = new Intent(getActivity(), MatchListActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
@@ -312,7 +311,7 @@ public class EndgameFragment extends Fragment
 
     public int getCurrentStartClimbing()
     {
-        // Returns the integer climb level that is current checked in the radio buttons
+        // Returns the integer climb level that is currently checked in the radio buttons
         int id = binding.startText.getCheckedRadioButtonId();
         if (id == R.id.start_none)
         {
@@ -339,7 +338,7 @@ public class EndgameFragment extends Fragment
 
     public int getEndgameClimbPos()
     {
-        // Returns the integer climb level that is current checked in the radio buttons
+        // Returns the integer climb level that is currently checked in the radio buttons
         int id = binding.endgameClimbButtons.getCheckedRadioButtonId();
         if (id == R.id.endgame_climb_na)
         {
@@ -366,7 +365,7 @@ public class EndgameFragment extends Fragment
 
     public int getEndgameClimbLevel()
     {
-        // Returns the integer climb level that is current checked in the radio buttons
+        // Returns the integer climb level that is currently checked in the radio buttons
         int id = binding.endgameLevelClimbGroup.getCheckedRadioButtonId();
         if (id == R.id.endgame_level_na)
         {

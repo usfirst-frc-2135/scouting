@@ -201,7 +201,7 @@ public class TeleopFragment extends Fragment
             binding.yesAz.setChecked(true);
         }
 
-        int driveValue = m_matchData.getDriveAbility();
+        int driveValue = m_matchData.getDriverAbility();
         if (driveValue == 0)
         {
             binding.drivingNa.setChecked(true);
@@ -233,14 +233,14 @@ public class TeleopFragment extends Fragment
         }
 
         m_photoNum = m_matchData.getTeleopPhoto();
-        Log.i(TAG, "onCreateView: from matchdata, image= " + m_photoNum);
+        Log.i(TAG, "onCreateView: from matchData, image= " + m_photoNum);
 
         ViewGroup.LayoutParams params = binding.photo.getLayoutParams();
         if (m_photoNum == 0)
         {
             Random random = new Random();
             double rand = random.nextDouble();
-            Log.i(TAG, "onCreateView: from matchdata, random = " + rand);
+            Log.i(TAG, "onCreateView: from matchData, random = " + rand);
 
             if (rand < 0.03)
             {
@@ -338,7 +338,7 @@ public class TeleopFragment extends Fragment
 
     public int getCurrentAccuracyLevel()
     {
-        // Returns the integer accuracy level that is current checked in the radio buttons
+        // Returns the integer accuracy level that is currently checked in the radio buttons
         int id = binding.accuracyButtons.getCheckedRadioButtonId();
         if (id == R.id.accuracy_NA)
         {
@@ -373,7 +373,7 @@ public class TeleopFragment extends Fragment
 
     public int getPassingEffectivenessRate()
     {
-        // Returns the integer climb level that is current checked in the radio buttons
+        // Returns the integer climb level that is currently checked in the radio buttons
         int id = binding.passingEffectivenessButtons.getCheckedRadioButtonId();
         if (id == R.id.passing_rate_na)
         {
@@ -400,7 +400,7 @@ public class TeleopFragment extends Fragment
 
     public int getCurrentDefenseLevel()
     {
-        // Returns the integer climb level that is current checked in the radio buttons
+        // Returns the integer climb level that is currently checked in the radio buttons
         int id = binding.defenseButtons.getCheckedRadioButtonId();
         if (id == R.id.defense_none)
         {
@@ -431,7 +431,7 @@ public class TeleopFragment extends Fragment
 
     public int getPassNeutralZone()
     {
-        // Returns the integer climb level that is current checked in the radio buttons
+        // Returns the integer climb level that is currently checked in the radio buttons
         int id = binding.passNz.getCheckedRadioButtonId();
         if (id == R.id.no_nz)
         {
@@ -446,7 +446,7 @@ public class TeleopFragment extends Fragment
 
     public int getPassAllianceZone()
     {
-        // Returns the integer climb level that is current checked in the radio buttons
+        // Returns the integer climb level that is currently checked in the radio buttons
         int id = binding.passAz.getCheckedRadioButtonId();
         if (id == R.id.no_az)
         {
@@ -459,9 +459,9 @@ public class TeleopFragment extends Fragment
         return 3;
     }
 
-    public int getDriveAbility()
+    public int getDriverAbility()
     {
-        // Returns the integer climb level that is current checked in the radio buttons
+        // Returns the integer climb level that is currently checked in the radio buttons
         int id = binding.drivingButtons.getCheckedRadioButtonId();
         if (id == R.id.driving_na)
         {
@@ -501,7 +501,7 @@ public class TeleopFragment extends Fragment
         m_matchData.setPassNeutralZone(getPassNeutralZone());
         m_matchData.setPassAllianceZone(getPassAllianceZone());
         m_matchData.setShovelFuel(binding.shovelFuel.isChecked());
-        m_matchData.setDriveAbility(getDriveAbility());
+        m_matchData.setDriveAbility(getDriverAbility());
     }
 
     @Override

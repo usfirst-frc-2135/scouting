@@ -76,7 +76,7 @@ public class CompetitionDataSerializer
         }
         catch (IOException err)
         {
-            err.printStackTrace();
+            Log.e(TAG, Log.getStackTraceString(err));
         }
         finally
         {
@@ -124,7 +124,7 @@ public class CompetitionDataSerializer
                     }
                     catch (IOException err2)
                     {
-                        err2.printStackTrace();
+                        Log.e(TAG, Log.getStackTraceString(err2));
                     }
                     finally
                     {

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,9 +27,9 @@ public class AliasesSerializer
     }
 
     // Takes the JSONArray data from Aliases file on scouting website and writes it out 
-    // to <eventCode>_teamAliases.json file on kindle device.
+    // to <eventCode>_teamAliases.json file on Kindle device.
     public void saveAliasesData(String aliasFileBaseName, JSONArray aliasData)
-            throws JSONException, IOException
+            throws IOException
     {
         Log.d(TAG, "saveAliasesData() starting");
         Writer aliasWriter = null;

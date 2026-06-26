@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="8"
-            android:contentDescription="QR code image" />
+            android:contentDescription="@string/qr_code_image" />
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

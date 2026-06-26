@@ -55,7 +55,7 @@ public class LoadEventDialog extends DialogFragment
             }
             catch (JSONException | IOException e)
             {
-                e.printStackTrace();
+                Log.e(TAG, Log.getStackTraceString(e));
             }
         }).create();
 
@@ -113,13 +113,13 @@ public class LoadEventDialog extends DialogFragment
                 Log.d(TAG, "LoadEventData URL = " + urlStr);
 
                 // Load the data found at the URL into a JsonArrayRequest object.
-                        // Going to save the event matches JSONArray data to the device.
+                // Going to save the event matches JSONArray data to the device.
                 JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlStr, null,
                         response -> {
                             try
                             {
-                            // Look thru existing files on device.
-                            // File will be saved to this path on the device.
+                                // Look through existing files on device.
+                                // File will be saved to this path on the device.
                                 String dataFileDir = m_appContext.getFilesDir().getPath();
                                 Log.d(TAG, "Data files path = " + dataFileDir);
                                 File file = new File(dataFileDir);
@@ -127,7 +127,7 @@ public class LoadEventDialog extends DialogFragment
                                 if (fileList != null)
                                 {
                                     String eventFileName = m_eventCodeField.getText().toString().trim() + "matches.json";
-                                // Remove event matches data file if it exists already.
+                                    // Remove event matches data file if it exists already.
                                     for (File f1 : fileList)
                                     {
                                         if (f1.getName().equals(eventFileName))
@@ -142,18 +142,18 @@ public class LoadEventDialog extends DialogFragment
                                         }
                                     }
 
-                                // Save comp data to matches JSON file 
+                                    // Save comp data to matches JSON file
                                     m_compSerializer.saveEventData(response);
                                     String tMsg = " Successfully downloaded matches list for event: " + m_eventCode + " to device";
                                     Toast.makeText(m_appContext, tMsg, Toast.LENGTH_LONG).show();
                                     Log.d(TAG, "SUCCESSFULLY downloaded matches.json file: " + dataFileDir + "/" + eventFileName);
-                                // Set up the CompetitionInfo with this event data.
+                                    // Set up the CompetitionInfo with this event data.
                                     CompetitionInfo.get(m_appContext, m_eventCode, true);
                                 }
                             }
                             catch (JSONException | IOException e)
                             {
-                                e.printStackTrace();
+                                Log.e(TAG, Log.getStackTraceString(e));
                             }
                         },
                         error -> {

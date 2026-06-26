@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,11 +14,10 @@
             android:id="@+id/event_code_field"
             android:layout_width="match_parent"
             android:autofillHints="Event Code"
-            android:hint="eventCode"
+            android:hint="@string/eventCode"
             android:inputType="text"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

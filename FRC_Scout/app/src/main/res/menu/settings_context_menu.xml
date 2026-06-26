@@ -3,21 +3,21 @@
     android:id="@+id/popup_menu">
     <item
         android:id="@+id/set_team_index"
-        android:title="Set Team Index" />
+        android:title="@string/set_team_index" />
     <item
         android:id="@+id/load_data_over_network"
-        android:title="Load Competition Data" />
+        android:title="@string/load_competition_data" />
     <item
         android:id="@+id/clear_scout_names"
-        android:title="Clear Scout Names" />
+        android:title="@string/clear_scout_names" />
     <item
         android:id="@+id/delete_tba_matches_file"
-        android:title="Delete TBA Event Files" />
+        android:title="@string/delete_tba_event_files" />
     <item
         android:id="@+id/load_aliases"
-        android:title="Load Aliases" />
+        android:title="@string/load_aliases" />
     <item
         android:id="@+id/about_item"
-        android:title="About" />
+        android:title="@string/about" />
 
 </menu>

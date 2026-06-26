@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,7 +25,7 @@
                 android:id="@+id/filter_team"
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
-                android:text="Team"
+                android:text="@string/team"
                 android:textSize="20sp" />
 
             <Spinner
@@ -51,7 +50,7 @@
                 android:id="@+id/filter_competition"
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
-                android:text="Competition"
+                android:text="@string/competition"
                 android:textSize="20sp" />
 
             <Spinner
@@ -75,7 +74,7 @@
                 android:id="@+id/scout_competition"
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
-                android:text="Scout"
+                android:text="@string/scout"
                 android:textSize="20sp" />
 
             <Spinner
@@ -99,7 +98,7 @@
                 android:id="@+id/match_competition"
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
-                android:text="Specific Match"
+                android:text="@string/specific_match"
                 android:textSize="20sp" />
 
             <EditText
@@ -107,11 +106,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textSize="20sp"
-                android:hint="Filter for this match"
+                android:hint="@string/filter_for_this_match"
                 android:inputType="text"
                 android:autofillHints="Match#" />
         </LinearLayout>
-
 
     </LinearLayout>
 
