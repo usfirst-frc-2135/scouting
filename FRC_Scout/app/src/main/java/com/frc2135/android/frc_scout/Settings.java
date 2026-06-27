@@ -184,6 +184,7 @@ public class Settings
             }
         }
 
+        //noinspection SizeReplaceableByIsEmpty
         if (numStr.length() == 0)
         {
             return m_mostRecentMatchNumber;
@@ -287,7 +288,8 @@ public class Settings
      * @return the serialized JSONObject
      * @throws JSONException if JSON creation fails
      */
-    public JSONObject toJSON() throws JSONException
+    public JSONObject toJSON()
+            throws JSONException
     {
         JSONObject json = new JSONObject();
 

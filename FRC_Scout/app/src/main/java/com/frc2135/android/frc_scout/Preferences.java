@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * Singleton class for managing application preferences using {@link SharedPreferences}.
- * Currently manages the dark mode setting for the application and handles theme application.
+ * Manages the dark mode setting for the application and handles theme application.
  */
 public class Preferences
 {
@@ -89,6 +89,7 @@ public class Preferences
      *
      * @return true if dark mode is enabled, false otherwise
      */
+    @SuppressWarnings("unused")
     public boolean isDarkMode()
     {
         return m_darkMode;
@@ -99,6 +100,7 @@ public class Preferences
      *
      * @param isDarkMode true to enable dark mode, false to disable it
      */
+    @SuppressWarnings("unused")
     public void setDarkMode(boolean isDarkMode)
     {
         setDarkMode(isDarkMode, true);
@@ -149,6 +151,7 @@ public class Preferences
      *
      * @param listener the listener to register
      */
+    @SuppressWarnings("unused")
     public void addListener(OnPreferenceChangeListener listener)
     {
         if (listener != null && !m_listeners.contains(listener))
@@ -162,6 +165,7 @@ public class Preferences
      *
      * @param listener the listener to unregister
      */
+    @SuppressWarnings("unused")
     public void removeListener(OnPreferenceChangeListener listener)
     {
         m_listeners.remove(listener);

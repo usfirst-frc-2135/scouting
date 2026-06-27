@@ -19,7 +19,7 @@ public class CurrentCompetition
 
     private static CurrentCompetition sCurrentCompetition;
 
-    public CurrentCompetition(Context mAppContext)
+    public CurrentCompetition(@SuppressWarnings("unused") Context mAppContext)
     {
         m_eventCode = "EVTX";
         m_compName = "COMPX";

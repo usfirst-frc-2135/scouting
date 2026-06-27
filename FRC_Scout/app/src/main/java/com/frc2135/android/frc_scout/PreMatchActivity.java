@@ -122,7 +122,7 @@ public class PreMatchActivity extends AppCompatActivity
         else m_scoringTableSideChbx.setChecked(false);
 <-REMOVE*/
 
-        String str = "@string/qual_match_1";
+        String str = "qm1";
         if (!m_matchData.getMatchNumber().isEmpty())
         {
             str = m_matchData.getMatchNumber();
