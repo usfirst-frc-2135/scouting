@@ -41,7 +41,7 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/competition_select"
+                android:id="@+id/event_select"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
 
@@ -54,7 +54,7 @@
                 android:textSize="20sp" />
 
             <Spinner
-                android:id="@+id/competition_options"
+                android:id="@+id/event_options"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
         </LinearLayout>

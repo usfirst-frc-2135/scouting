@@ -6,52 +6,52 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class MatchHistory
+public class MatchListData
 {
-    private static final String TAG = "MatchHistory";
+    private static final String TAG = "MatchListData";
     private static final String FILENAME = "settings.json";
 
-    private ArrayList<MatchData> m_TotalMatchHistory;
+    private ArrayList<MatchData> m_totalMatchListData;
     private final MatchDataSerializer m_serializer;
 
-    private static MatchHistory sMatchHistory;
-    private final Context m_AppContext;
+    private static MatchListData sMatchListData;
+    private final Context m_appContext;
 
-    private MatchHistory(Context appContext)
+    private MatchListData(Context appContext)
     {
-        m_AppContext = appContext;
-        m_serializer = new MatchDataSerializer(m_AppContext, FILENAME);
+        m_appContext = appContext;
+        m_serializer = new MatchDataSerializer(m_appContext, FILENAME);
         try
         {
-            Log.d(TAG, "m_Serializer loading MatchHistory");
-            m_TotalMatchHistory = m_serializer.loadMatchData();
-            Log.d(TAG, "Number of matches loaded from m_Serializer: " + m_TotalMatchHistory.size());
+            Log.d(TAG, "m_Serializer loading MatchListData");
+            m_totalMatchListData = m_serializer.loadMatchData();
+            Log.d(TAG, "Number of matches loaded from m_Serializer: " + m_totalMatchListData.size());
         }
         catch (Exception e)
         {
-            m_TotalMatchHistory = new ArrayList<>();
+            m_totalMatchListData = new ArrayList<>();
             Log.e(TAG, "Error loading matchHistory: ", e);
         }
     }
 
-    public static MatchHistory get(Context c)
+    public static MatchListData get(Context c)
     {
-        if (sMatchHistory == null)
+        if (sMatchListData == null)
         {
-            Log.d(TAG, "Creating a new sMatchHistory");
-            sMatchHistory = new MatchHistory(c.getApplicationContext());
+            Log.d(TAG, "Creating a new sMatchListData");
+            sMatchListData = new MatchListData(c.getApplicationContext());
         }
-        return sMatchHistory;
+        return sMatchListData;
     }
 
     public ArrayList<MatchData> getMatches()
     {
-        return m_TotalMatchHistory;
+        return m_totalMatchListData;
     }
 
     public MatchData getMatch(String matchStr)
     {
-        for (MatchData mX : m_TotalMatchHistory)
+        for (MatchData mX : m_totalMatchListData)
         {
             if (mX.getMatchID().equals(matchStr))
             {
@@ -64,13 +64,13 @@ public class MatchHistory
 
     public void deleteMatch(MatchData mY)
     {
-        m_TotalMatchHistory.remove(mY);
-        m_AppContext.deleteFile(mY.getMatchFileName());
+        m_totalMatchListData.remove(mY);
+        m_appContext.deleteFile(mY.getMatchFileName());
     }
 
     public void addMatch(MatchData mData)
     {
-        m_TotalMatchHistory.add(mData);
+        m_totalMatchListData.add(mData);
     }
 
     public boolean saveScoutNames()
@@ -103,13 +103,13 @@ public class MatchHistory
         }
     }
 
-/*-->REMOVE - this is never used
+    @SuppressWarnings("unused")
     public boolean saveAllData()
     {
         try
         {
             Log.d(TAG, "Saving all data to JSON files");
-            m_Serializer.saveAllData(m_TotalMatchHistory);
+            m_serializer.saveAllData(m_totalMatchListData);
             return true;
         }
         catch (Exception e)
@@ -118,7 +118,6 @@ public class MatchHistory
             return false;
         }
     }
-<---REMOVE*/
 
     public ArrayList<MatchData> sortByTimestamp1(ArrayList<MatchData> mdList)
     {
@@ -217,7 +216,7 @@ public class MatchHistory
     public String[] listTeams()
     {
         ArrayList<String> teams = new ArrayList<>();
-        for (MatchData mData : m_TotalMatchHistory)
+        for (MatchData mData : m_totalMatchListData)
         {
             String team = mData.getTeamNumber();
             if (!teams.contains(team))
@@ -237,7 +236,7 @@ public class MatchHistory
     public String[] listCompetitions()
     {
         ArrayList<String> competitions = new ArrayList<>();
-        for (MatchData mData : m_TotalMatchHistory)
+        for (MatchData mData : m_totalMatchListData)
         {
             String competition = mData.getEventCode();
             if (!competitions.contains(competition))
@@ -257,7 +256,7 @@ public class MatchHistory
     public String[] listScouts()
     {
         ArrayList<String> scouts = new ArrayList<>();
-        for (MatchData mData : m_TotalMatchHistory)
+        for (MatchData mData : m_totalMatchListData)
         {
             String scout = mData.getName();
             if (!scouts.contains(scout))

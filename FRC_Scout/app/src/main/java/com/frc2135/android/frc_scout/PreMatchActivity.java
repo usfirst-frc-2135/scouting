@@ -41,7 +41,7 @@ public class PreMatchActivity extends AppCompatActivity
         setContentView(binding.getRoot());
 
         String matchId = getIntent().getStringExtra("match_ID");
-        m_matchData = MatchHistory.get(getApplicationContext()).getMatch(matchId);
+        m_matchData = MatchListData.get(getApplicationContext()).getMatch(matchId);
         m_compInfo = CompetitionInfo.get(getApplicationContext(), m_matchData.getEventCode().trim(), false);
         m_aliasInfo = AliasesInfo.get(getApplicationContext(), m_matchData.getEventCode().trim(), false);
 
@@ -241,7 +241,7 @@ public class PreMatchActivity extends AppCompatActivity
             // Only delete match if not currently being edited
             if (!m_inEdit.equals("yes"))
             {
-                MatchHistory.get(getApplicationContext()).deleteMatch(m_matchData);
+                MatchListData.get(getApplicationContext()).deleteMatch(m_matchData);
             }
             Intent intent2 = new Intent(PreMatchActivity.this, MatchListActivity.class);
             startActivity(intent2);

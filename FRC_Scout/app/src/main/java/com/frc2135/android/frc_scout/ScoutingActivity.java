@@ -70,7 +70,7 @@ public class ScoutingActivity extends AppCompatActivity
 
         String matchId = getIntent().getStringExtra("match_ID");
         Log.d(TAG, "Current matchId = " + matchId);
-        m_matchData = MatchHistory.get(getApplicationContext()).getMatch(matchId);
+        m_matchData = MatchListData.get(getApplicationContext()).getMatch(matchId);
     }
 
     @Override

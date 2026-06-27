@@ -93,8 +93,8 @@ public class MatchDataSerializer
         }
     }
 
-/*---> REMOVE - this is never used
-    public void saveAllMatchData(ArrayList<MatchData> matchHistory) throws JSONException, IOException
+    public void saveAllMatchData(ArrayList<MatchData> matchHistory)
+            throws JSONException, IOException
     {
         Log.d(TAG, "saveAllMatchData() going to save MatchHistory matches to JSON files");
 
@@ -104,16 +104,14 @@ public class MatchDataSerializer
             saveMatchData(matchData1);
         }
     }
-<--- REMOVE*/
 
-/*---> REMOVE - this is never used
-    public void saveAllData(ArrayList<MatchData> matchHistory) throws JSONException, IOException
+    public void saveAllData(ArrayList<MatchData> matchHistory)
+            throws JSONException, IOException
     {
         Log.d(TAG, "saveAllData() going to save scout names and MatchHistory matches to JSON files");
         saveScoutNames();
         saveAllMatchData(matchHistory);
     }
-<--- REMOVE*/
 
     public ArrayList<MatchData> loadMatchData()
             throws IOException, JSONException

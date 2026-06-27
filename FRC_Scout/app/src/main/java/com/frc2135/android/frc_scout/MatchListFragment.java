@@ -69,32 +69,32 @@ public class MatchListFragment extends ListFragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
-        m_displayedMatches = MatchHistory.get(getActivity()).sortByTimestamp2(MatchHistory.get(getContext()).getMatches());
+        m_displayedMatches = MatchListData.get(getActivity()).sortByTimestamp2(MatchListData.get(getContext()).getMatches());
         Log.d(TAG, "OnCreateView(): displayedMatches size = " + m_displayedMatches.size());
         m_adapter = new MatchAdapter(m_displayedMatches);
         Intent intent = requireActivity().getIntent();
         if (intent.hasExtra("team"))
         {
-            m_adapter = new MatchAdapter(MatchHistory.get(getContext()).filterByTeam(m_displayedMatches, intent.getStringExtra("team")));
-            m_displayedMatches = MatchHistory.get(getContext()).filterByTeam(m_displayedMatches, intent.getStringExtra("team"));
+            m_adapter = new MatchAdapter(MatchListData.get(getContext()).filterByTeam(m_displayedMatches, intent.getStringExtra("team")));
+            m_displayedMatches = MatchListData.get(getContext()).filterByTeam(m_displayedMatches, intent.getStringExtra("team"));
             Log.d(TAG, "Filtered by team: displayedMatches size = " + m_displayedMatches.size());
         }
         if (intent.hasExtra("competition"))
         {
-            m_adapter = new MatchAdapter(MatchHistory.get(getContext()).filterByCompetition(m_displayedMatches, intent.getStringExtra("competition")));
-            m_displayedMatches = MatchHistory.get(getContext()).filterByCompetition(m_displayedMatches, intent.getStringExtra("competition"));
+            m_adapter = new MatchAdapter(MatchListData.get(getContext()).filterByCompetition(m_displayedMatches, intent.getStringExtra("competition")));
+            m_displayedMatches = MatchListData.get(getContext()).filterByCompetition(m_displayedMatches, intent.getStringExtra("competition"));
             Log.d(TAG, "Filtered by competition: displayedMatches size = " + m_displayedMatches.size());
         }
         if (intent.hasExtra("scout"))
         {
-            m_adapter = new MatchAdapter(MatchHistory.get(getContext()).filterByScout(m_displayedMatches, intent.getStringExtra("scout")));
-            m_displayedMatches = MatchHistory.get(getContext()).filterByScout(m_displayedMatches, intent.getStringExtra("scout"));
+            m_adapter = new MatchAdapter(MatchListData.get(getContext()).filterByScout(m_displayedMatches, intent.getStringExtra("scout")));
+            m_displayedMatches = MatchListData.get(getContext()).filterByScout(m_displayedMatches, intent.getStringExtra("scout"));
             Log.d(TAG, "Filtered by scout: displayedMatches size = " + m_displayedMatches.size());
         }
         if (intent.hasExtra("match"))
         {
-            m_adapter = new MatchAdapter(MatchHistory.get(getContext()).filterByMatchNumber(m_displayedMatches, intent.getStringExtra("match")));
-            m_displayedMatches = MatchHistory.get(getContext()).filterByMatchNumber(m_displayedMatches, intent.getStringExtra("match"));
+            m_adapter = new MatchAdapter(MatchListData.get(getContext()).filterByMatchNumber(m_displayedMatches, intent.getStringExtra("match")));
+            m_displayedMatches = MatchListData.get(getContext()).filterByMatchNumber(m_displayedMatches, intent.getStringExtra("match"));
             Log.d(TAG, "Filtered by match: displayedMatches size = " + m_displayedMatches.size());
         }
 
@@ -128,7 +128,7 @@ public class MatchListFragment extends ListFragment
             {
                 matchA = new MatchData(getContext());
                 Log.d(TAG, "Creating new MatchData for matchID: " + matchA.getMatchID());
-                MatchHistory.get(getContext()).addMatch(matchA);
+                MatchListData.get(getContext()).addMatch(matchA);
                 Log.d(TAG, "Added to m_displayedMatches: " + matchA.getMatchID());
                 m_adapter.notifyDataSetChanged();
                 Intent intentA = new Intent(getActivity(), PreMatchActivity.class);
@@ -153,13 +153,13 @@ public class MatchListFragment extends ListFragment
             {
                 if (parent.getItemAtPosition(position).toString().equals("Newest"))
                 {
-                    ArrayList<MatchData> temp = MatchHistory.get(getContext()).sortByTimestamp2(m_displayedMatches);
+                    ArrayList<MatchData> temp = MatchListData.get(getContext()).sortByTimestamp2(m_displayedMatches);
                     m_displayedMatches.clear();
                     m_displayedMatches.addAll(temp);
                 }
                 if (parent.getItemAtPosition(position).toString().equals("Oldest"))
                 {
-                    ArrayList<MatchData> temp = MatchHistory.get(getContext()).sortByTimestamp1(m_displayedMatches);
+                    ArrayList<MatchData> temp = MatchListData.get(getContext()).sortByTimestamp1(m_displayedMatches);
                     m_displayedMatches.clear();
                     m_displayedMatches.addAll(temp);
                 }
@@ -176,7 +176,7 @@ public class MatchListFragment extends ListFragment
         Button filterButton = v1.findViewById(R.id.filter_text);
         filterButton.setOnClickListener(v -> {
             FragmentManager fm = requireActivity().getSupportFragmentManager();
-            FilterDialog dialog = FilterDialog.newInstance();
+            MatchFilterDialog dialog = MatchFilterDialog.newInstance();
             dialog.show(fm, "filter_dialog");
         });
 
@@ -215,7 +215,7 @@ public class MatchListFragment extends ListFragment
                     MatchAdapter adapter = (MatchAdapter) getListAdapter();
                     if (adapter != null)
                     {
-                        MatchHistory matchHistory = MatchHistory.get(getActivity());
+                        MatchListData matchHistory = MatchListData.get(getActivity());
                         int aCount = adapter.getCount();
                         for (int i = aCount - 1; i >= 0; i--)
                         {
@@ -438,7 +438,7 @@ public class MatchListFragment extends ListFragment
         {
             Log.d(TAG, "Delete match button clicked");
             m_displayedMatches.remove(m);
-            MatchHistory.get(getActivity()).deleteMatch(m);
+            MatchListData.get(getActivity()).deleteMatch(m);
             m_adapter.notifyDataSetChanged();
         }
         else if (itemID == R.id.edit_match_button)
