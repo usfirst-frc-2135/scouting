@@ -252,14 +252,14 @@ public class EndgameFragment extends Fragment
             }
         });
 
-        // Save the latest Scouter and MatchData JSON files.
+        // Save the latest scout names and match data JSON files.
         binding.navToMenuButton.setOnClickListener(view -> {
             updateEndgameData();
-            Log.d(TAG, "EndgameFragment DONE onClick() saving latest match and Scouter files\n");
+            Log.d(TAG, "EndgameFragment DONE onClick() saving latest match and scout names\n");
             MatchHistory matchHistory = MatchHistory.get(getActivity());
-            if (!matchHistory.saveScouterData())
+            if (!matchHistory.saveScoutNames())
             {
-                Log.d(TAG, "ERROR - unable to save Scouter Data!");
+                Log.d(TAG, "ERROR - unable to save scout names!");
                 // TODO - issue a toast msg here??
             }
             if (!matchHistory.saveMatchData(m_matchData))

@@ -20,7 +20,7 @@ public class SetTeamIndexDialog extends DialogFragment
 {
     private static final String TAG = "SetTeamIndexDlg";
 
-    private Scouter m_Scouter;
+    private Settings m_settings;
     private EditText m_teamIndexField;
     private TextView m_teamIndexErrMsg;
 
@@ -28,8 +28,8 @@ public class SetTeamIndexDialog extends DialogFragment
     @NonNull
     public Dialog onCreateDialog(Bundle SavedInstanceState)
     {
-        setCancelable(true);
         Log.d(TAG, "onCreateDialog called");
+        setCancelable(true);
 
         View v = requireActivity().getLayoutInflater().inflate(R.layout.set_team_index_dlg, null);
         m_teamIndexField = v.findViewById(R.id.set_team_index_field);
@@ -38,26 +38,19 @@ public class SetTeamIndexDialog extends DialogFragment
         m_teamIndexErrMsg.setVisibility(View.INVISIBLE);
         m_teamIndexErrMsg.setTextColor(Color.RED);
 
-        // Get the existing index from Scouter, if any.
-        m_Scouter = Scouter.get(getContext());
+        // Get the existing index from scout name file, if any.
+        m_settings = Settings.get(getContext());
         String str1 = "None";
-        if (m_Scouter != null)
+        if (m_settings != null)
         {
-            String indexStr = m_Scouter.getTeamIndexStr();
-            Log.d(TAG, "From Scouter: teamFieldIndex = " + indexStr);
-            if (m_Scouter.isValidTeamIndexStr(indexStr))
+            String indexStr = m_settings.getTeamIndexStr();
+            Log.d(TAG, "From settings: teamFieldIndex = " + indexStr);
+            if (m_settings.isValidTeamIndexStr(indexStr))
             {
-                m_teamIndexField.setText(m_Scouter.getTeamIndexStr());
-            }
-            else
-            {
-                m_teamIndexField.setText(str1);
+                str1 = indexStr;
             }
         }
-        else
-        {
-            m_teamIndexField.setText(str1);
-        }
+        m_teamIndexField.setText(str1);
 
         m_teamIndexField.addTextChangedListener(new TextWatcher()
         {
@@ -73,37 +66,21 @@ public class SetTeamIndexDialog extends DialogFragment
             {
                 // Validate the teamIndex entry.
                 m_teamIndexErrMsg.setVisibility(View.INVISIBLE); // reset invalid teamIndex msg
-                if (m_Scouter != null)
+                if (m_settings != null)
                 {
-                    if (!m_Scouter.isValidTeamIndexStr(m_teamIndexField.getText().toString().trim()))
+                    int color = Color.BLACK;
+                    if (!m_settings.isValidTeamIndexStr(m_teamIndexField.getText().toString().trim()))
                     {
                         m_teamIndexErrMsg.setVisibility(View.VISIBLE); // show invalid teamIndex msg
-                        m_teamIndexField.setTextColor(Color.RED);
+                        color = Color.RED;
                     }
-                    else
-                    {
-                        m_teamIndexField.setTextColor(Color.BLACK);
-                    }
+                    m_teamIndexField.setTextColor(color);
                 }
             }
         });
 
         // OK and Cancel button action handling: 
-        AlertDialog.Builder abd = new AlertDialog.Builder(getActivity());
-        abd.setView(v);
-        abd.setNeutralButton(android.R.string.cancel, (dialog, which) -> dismiss());
-
-        abd.setPositiveButton(android.R.string.ok, (dialog, which) -> {
-            // If the data is valid, save to Scouter and end
-            if (checkValidData())
-            {
-                if (m_Scouter != null)
-                {
-                    m_Scouter.setTeamIndexStr(m_teamIndexField.getText().toString());
-                    Log.d(TAG, "onOK: setting team index to " + m_teamIndexField.getText().toString());
-                }
-            }
-        });
+        AlertDialog.Builder abd = getBuilder(v);
 
         AlertDialog alertDialog = abd.create();
         alertDialog.setTitle("Set Team Index");
@@ -113,6 +90,27 @@ public class SetTeamIndexDialog extends DialogFragment
         Button cancelButton = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL);
         cancelButton.setBackgroundColor(Color.parseColor("#3F51B5"));
         return alertDialog;
+    }
+
+    @NonNull
+    private AlertDialog.Builder getBuilder(View v)
+    {
+        AlertDialog.Builder abd = new AlertDialog.Builder(getActivity());
+        abd.setView(v);
+        abd.setNeutralButton(android.R.string.cancel, (dialog, which) -> dismiss());
+
+        abd.setPositiveButton(android.R.string.ok, (dialog, which) -> {
+            // If the data is valid, save to scout name file and end
+            if (checkValidData())
+            {
+                if (m_settings != null)
+                {
+                    m_settings.setTeamIndexStr(m_teamIndexField.getText().toString());
+                    Log.d(TAG, "onOK: setting team index to " + m_teamIndexField.getText().toString());
+                }
+            }
+        });
+        return abd;
     }
 
     public static SetTeamIndexDialog newInstance()
@@ -129,7 +127,7 @@ public class SetTeamIndexDialog extends DialogFragment
         m_teamIndexErrMsg.setVisibility(View.INVISIBLE);
 
         // Validate team index
-        if (!m_Scouter.isValidTeamIndexStr(m_teamIndexField.getText().toString().trim()))
+        if (!m_settings.isValidTeamIndexStr(m_teamIndexField.getText().toString().trim()))
         {
             m_teamIndexErrMsg.setVisibility(View.VISIBLE);
             Log.d(TAG, ">> checkValidData(): ERROR: teamIndex is not valid: " + m_teamIndexField.getText().toString().trim());

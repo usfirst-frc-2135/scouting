@@ -16,17 +16,17 @@ public class MatchListActivity extends AppCompatActivity
     {
 
         Log.i(TAG, "MatchListActivity created.");
-
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.match_list_activity);
 
-        FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
+        // Initializes FragmentManager so that we can host a fragment within our activity.
+        final FragmentManager fm = getSupportFragmentManager();
 
-        if (fragment == null)
+        // Designates that chosen fragment will be housed within fragmentContainer, a frame layout in the activity's XML.
+        if (fm.findFragmentById(R.id.fragmentContainer) == null)
         {
-            fragment = createMatchListFragment();
-            fm.beginTransaction().add(R.id.fragmentContainer, fragment).commit();
+            fm.beginTransaction().add(R.id.fragmentContainer, createMatchListFragment()).commit();
         }
 
     }
@@ -36,6 +36,5 @@ public class MatchListActivity extends AppCompatActivity
         setContentView(R.layout.match_list_activity);
         return new MatchListFragment();
     }
-
-
+    
 }

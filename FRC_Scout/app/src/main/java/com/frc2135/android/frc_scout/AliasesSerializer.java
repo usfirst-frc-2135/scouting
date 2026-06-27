@@ -28,10 +28,10 @@ public class AliasesSerializer
 
     // Takes the JSONArray data from Aliases file on scouting website and writes it out 
     // to <eventCode>_teamAliases.json file on Kindle device.
-    public void saveAliasesData(String aliasFileBaseName, JSONArray aliasData)
+    public void saveAliasesInfo(String aliasFileBaseName, JSONArray aliasData)
             throws IOException
     {
-        Log.d(TAG, "saveAliasesData() starting");
+        Log.d(TAG, "saveAliasesInfo() starting");
         Writer aliasWriter = null;
         try
         {

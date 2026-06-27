@@ -25,7 +25,7 @@ public class MatchDataSerializer
     private final Context m_Context;
     private final String m_FileName;
     private final String m_dataPath;
-    private Scouter m_Scouter;
+    private Settings m_settings;
 
     public MatchDataSerializer(Context context, String fName)
     {
@@ -35,24 +35,24 @@ public class MatchDataSerializer
         Log.d(TAG, "Data files path = " + m_dataPath);
     }
 
-    public void saveScouterData()
+    public void saveScoutNames()
             throws JSONException, IOException
     {
-        Log.d(TAG, "saveScouterData() starting");
+        Log.d(TAG, "saveScoutNames() starting");
 
-        JSONArray arrayS = new JSONArray(); // Creates a JSON array object to hold the Scouter data 
-        arrayS.put(Scouter.get(m_Context).toJSON());
+        JSONArray arrayS = new JSONArray(); // Creates a JSON array object to hold the scout names
+        arrayS.put(Settings.get(m_Context).toJSON());
         Writer writerS = null;
         try
         {
             OutputStream out = m_Context.openFileOutput(m_FileName, Context.MODE_PRIVATE);
             writerS = new OutputStreamWriter(out);
             writerS.write(arrayS.toString());
-            Log.d(TAG, "Wrote Scouter file: " + m_FileName);
+            Log.d(TAG, "Wrote scouts file: " + m_FileName);
         }
         catch (FileNotFoundException e)
         {
-            Log.d(TAG, "ERROR writing Scouter file: " + e);
+            Log.d(TAG, "ERROR writing scouts file: " + e);
         }
         finally
         {
@@ -109,8 +109,8 @@ public class MatchDataSerializer
 /*---> REMOVE - this is never used
     public void saveAllData(ArrayList<MatchData> matchHistory) throws JSONException, IOException
     {
-        Log.d(TAG, "saveAllData() going to save Scouter and MatchHistory matches to JSON files");
-        saveScouterData();
+        Log.d(TAG, "saveAllData() going to save scout names and MatchHistory matches to JSON files");
+        saveScoutNames();
         saveAllMatchData(matchHistory);
     }
 <--- REMOVE*/
@@ -175,10 +175,10 @@ public class MatchDataSerializer
         return matchHistory;
     }
 
-    public Scouter loadScouterData()
+    public Settings loadScoutNames()
             throws IOException, JSONException
     {
-        Log.d(TAG, "loadScouterData(): m_FileName = " + m_FileName);
+        Log.d(TAG, "loadScoutNames(): m_FileName = " + m_FileName);
         BufferedReader reader = null;
         try
         {
@@ -197,12 +197,12 @@ public class MatchDataSerializer
             JSONArray array = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
 
             //Build the array of matches from JSONObjects
-            Log.d(TAG, "Loaded Scouter data from file: " + m_FileName);
-            m_Scouter = new Scouter(array.getJSONObject(0));
-            if (m_Scouter.getPastScouts() != null)
+            Log.d(TAG, "Loaded scout names from file: " + m_FileName);
+            m_settings = new Settings(array.getJSONObject(0));
+            if (m_settings.getPastScouts() != null)
             {
-                Log.d(TAG, "Most recent past scout = " + m_Scouter.getPastScouts()[0]);
-                Log.d(TAG, "Past teamIndexStr = " + m_Scouter.getTeamIndexStr());
+                Log.d(TAG, "Most recent past scout = " + m_settings.getPastScouts()[0]);
+                Log.d(TAG, "Past teamIndexStr = " + m_settings.getTeamIndexStr());
             }
         }
         catch (FileNotFoundException e)
@@ -216,6 +216,6 @@ public class MatchDataSerializer
                 reader.close();
             }
         }
-        return m_Scouter;
+        return m_settings;
     }
 }

@@ -90,10 +90,10 @@ public class AutonFragment extends Fragment
                     {
                         actionBar.setTitle("Autonomous          Scouting Team " + teamNumber + "         Match " + m_matchData.getMatchNumber());
                     }
-                    Scouter myScouter = Scouter.get(getContext());
-                    if (myScouter != null)
+                    Settings scouts = Settings.get(getContext());
+                    if (scouts != null)
                     {
-                        String color = myScouter.getTeamIndexColor();
+                        String color = scouts.getTeamIndexColor();
                         if (color.equals("red"))
                         {
                             actionBar.setBackgroundDrawable(new ColorDrawable(Color.RED));

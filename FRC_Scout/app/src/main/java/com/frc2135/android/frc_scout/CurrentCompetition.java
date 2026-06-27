@@ -21,7 +21,7 @@ public class CurrentCompetition
 
     public CurrentCompetition(Context mAppContext)
     {
-        m_eventCode = "COMPX";
+        m_eventCode = "EVTX";
         m_compName = "COMPX";
         Log.d(TAG, "constructor: m_eventCode = " + m_eventCode + "; m_compName = " + m_compName);
     }

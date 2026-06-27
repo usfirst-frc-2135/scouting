@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 
+@SuppressWarnings("GrazieInspectionRunner")
 public class AliasesInfo
 {
     private static final String TAG = "AliasesInfo";
@@ -57,6 +58,7 @@ public class AliasesInfo
         return sAliasesInfo;
     }
 
+    @SuppressWarnings("unused")
     public static void clear()
     {
         if (sAliasesInfo != null)
@@ -190,62 +192,61 @@ public class AliasesInfo
         }
     }
 
-    public boolean isAliasesDataLoaded()
+    public boolean isAliasesInfoLoaded()
     {
         Log.d(TAG, "isAliasesDataLoaded() returning " + m_bAliasesDataLoaded);
         return m_bAliasesDataLoaded;
     }
 
-    //    public String[] getTeams(String matchNum)
-    //            throws JSONException
-    //    {
-    //        String[] teams = new String[7];
-    //        teams[0] = "";   // initialize with empty strings
-    //        teams[1] = "";
-    //        teams[2] = "";
-    //        teams[3] = "";
-    //        teams[4] = "";
-    //        teams[5] = "";
-    //        teams[6] = "";
-    //        boolean bMatchNumFound = false;
-    //        if (m_jsonData != null)
-    //        {
-    //            JSONObject tempB;
-    //            JSONObject tempR;
-    //            JSONArray redTeams = new JSONArray();
-    //            JSONArray blueTeams = new JSONArray();
-    //            for (int i = 0; i < m_jsonData.length(); i++)
-    //            {
-    //                if ((((JSONObject) m_jsonData.get(i)).getString("comp_level") + ((JSONObject) m_jsonData.get(i)).getString("match_number")).equals(matchNum.trim().toLowerCase()))
-    //                {
-    //                    bMatchNumFound = true;
-    //                    JSONObject alliances = (JSONObject) m_jsonData.get(i);
-    //                    JSONObject color = (JSONObject) alliances.get("alliances");
-    //                    tempB = (JSONObject) color.get("blue");
-    //                    blueTeams = (JSONArray) tempB.get("team_keys");
-    //                    tempR = (JSONObject) color.get("red");
-    //                    redTeams = (JSONArray) tempR.get("team_keys");
-    //                    break;
-    //                }
-    //            }
-    //            if (bMatchNumFound)
-    //            {
-    //                teams[0] = "No team selected";
-    //                for (int i = 1; i < 4; i++)
-    //                {
-    //                    teams[i] = redTeams.getString(i - 1);
-    //                }
-    //                for (int i = 4; i < 7; i++)
-    //                {
-    //                    teams[i] = blueTeams.getString(i - 4);
-    //                }
-    //            }
-    //            else
-    //            {
-    //                Log.d(TAG, "getTeams(): matchNum '" + matchNum + "' NOT found!");
-    //            }
-    //        }
-    //        return teams;
-    //    }
+    @SuppressWarnings("unused")
+    public String[] getTeams(String matchNum)
+            throws JSONException
+    {
+        String[] teams = new String[7];
+        for (int i = 0; i < 7; i++)   // initialize with empty strings
+        {
+            teams[i] = "";
+        }
+
+        boolean bMatchNumFound = false;
+        if (m_jsonData != null)
+        {
+            JSONObject tempB;
+            JSONObject tempR;
+            JSONArray redTeams = new JSONArray();
+            JSONArray blueTeams = new JSONArray();
+            for (int i = 0; i < m_jsonData.length(); i++)
+            {
+                if ((((JSONObject) m_jsonData.get(i)).getString("comp_level") + ((JSONObject) m_jsonData.get(i)).getString("match_number")).equals(matchNum.trim().toLowerCase()))
+                {
+                    bMatchNumFound = true;
+                    JSONObject alliances = (JSONObject) m_jsonData.get(i);
+                    JSONObject color = (JSONObject) alliances.get("alliances");
+                    tempB = (JSONObject) color.get("blue");
+                    blueTeams = (JSONArray) tempB.get("team_keys");
+                    tempR = (JSONObject) color.get("red");
+                    redTeams = (JSONArray) tempR.get("team_keys");
+                    break;
+                }
+            }
+            if (bMatchNumFound)
+            {
+                teams[0] = "No team selected";
+                for (int i = 1; i < 4; i++)
+                {
+                    teams[i] = redTeams.getString(i - 1);
+                }
+                for (int i = 4; i < 7; i++)
+                {
+                    teams[i] = blueTeams.getString(i - 4);
+                }
+            }
+            else
+            {
+                Log.d(TAG, "getTeams(): matchNum '" + matchNum + "' NOT found!");
+            }
+        }
+        return teams;
+    }
 
 }

@@ -49,16 +49,19 @@ public final class QRCodeEncoder
         encoded = encodeContents(data, bundle, type, format);
     }
 
+    @SuppressWarnings("unused")
     public String getContents()
     {
         return contents;
     }
 
+    @SuppressWarnings("unused")
     public String getDisplayContents()
     {
         return displayContents;
     }
 
+    @SuppressWarnings("unused")
     public String getTitle()
     {
         return title;
@@ -200,6 +203,7 @@ public final class QRCodeEncoder
                     }
 
                     // Make sure we've encoded at least one field.
+                    //noinspection SizeReplaceableByIsEmpty
                     if (newDisplayContents.length() > 0)
                     {
                         newContents.append(';');

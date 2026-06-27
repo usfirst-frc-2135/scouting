@@ -15,12 +15,13 @@
         <activity
             android:name="com.frc2135.android.frc_scout.MatchListActivity"
             android:exported="true"
+            android:label="List Matches"
             />
 
         <activity
             android:name="com.frc2135.android.frc_scout.PreMatchActivity"
             android:exported="true"
-            android:label="Input Match Data"
+            android:label="Input Match Info"
             />
 
         <activity
@@ -30,7 +31,7 @@
             />
 
         <activity
-            android:name="com.frc2135.android.frc_scout.Splash"
+            android:name="com.frc2135.android.frc_scout.SplashScreenActivity"
             android:exported="true"
             android:label="FRC Scout 2026"
             android:theme="@style/AppTheme.NoActionBar"

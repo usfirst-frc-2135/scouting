@@ -9,10 +9,10 @@ import java.util.Date;
 public class MatchHistory
 {
     private static final String TAG = "MatchHistory";
-    private static final String FILENAME = "Scouter.json";
+    private static final String FILENAME = "settings.json";
 
     private ArrayList<MatchData> m_TotalMatchHistory;
-    private final MatchDataSerializer m_Serializer;
+    private final MatchDataSerializer m_serializer;
 
     private static MatchHistory sMatchHistory;
     private final Context m_AppContext;
@@ -20,11 +20,11 @@ public class MatchHistory
     private MatchHistory(Context appContext)
     {
         m_AppContext = appContext;
-        m_Serializer = new MatchDataSerializer(m_AppContext, FILENAME);
+        m_serializer = new MatchDataSerializer(m_AppContext, FILENAME);
         try
         {
             Log.d(TAG, "m_Serializer loading MatchHistory");
-            m_TotalMatchHistory = m_Serializer.loadMatchData();
+            m_TotalMatchHistory = m_serializer.loadMatchData();
             Log.d(TAG, "Number of matches loaded from m_Serializer: " + m_TotalMatchHistory.size());
         }
         catch (Exception e)
@@ -73,17 +73,17 @@ public class MatchHistory
         m_TotalMatchHistory.add(mData);
     }
 
-    public boolean saveScouterData()
+    public boolean saveScoutNames()
     {
         try
         {
-            Log.d(TAG, "Saving scouter data to JSON file");
-            m_Serializer.saveScouterData();
+            Log.d(TAG, "Saving scout names to JSON file");
+            m_serializer.saveScoutNames();
             return true;
         }
         catch (Exception e)
         {
-            Log.e(TAG, "saveScouterData(): Error saving data:", e);
+            Log.e(TAG, "saveScoutNames(): Error saving scout names:", e);
             return false;
         }
     }
@@ -93,7 +93,7 @@ public class MatchHistory
         try
         {
             Log.d(TAG, "Saving saveMatchData data to JSON files");
-            m_Serializer.saveMatchData(matchData);
+            m_serializer.saveMatchData(matchData);
             return true;
         }
         catch (Exception e)

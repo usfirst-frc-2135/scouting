@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/textSecondary"
             android:paddingTop="50dp"
-            android:text="@string/competition_info"
+            android:text="@string/competition_uc"
             android:textColor="@color/textPrimary"
             android:textSize="24sp" />
 
@@ -38,7 +38,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/textSecondary"
-                android:text="@string/competition_uc"
+                android:text="@string/event_code_uc"
                 android:textColor="@color/textSecondary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -76,7 +76,7 @@
                 android:textStyle="bold" />
 
             <AutoCompleteTextView
-                android:id="@+id/scouter_name"
+                android:id="@+id/scout_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/textPrimary"
             android:paddingTop="50dp"
-            android:text="@string/match_info"
+            android:text="@string/match_info_uc"
             android:textColor="@color/textPrimary"
             android:textSize="24sp" />
 

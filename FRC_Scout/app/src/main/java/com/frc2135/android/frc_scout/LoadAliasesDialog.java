@@ -136,7 +136,7 @@ public class LoadAliasesDialog extends DialogFragment
                                     }
 
                                     // Save comp data to matches JSON file
-                                    m_aliasesSerializer.saveAliasesData(aliasFileBaseName, response);
+                                    m_aliasesSerializer.saveAliasesInfo(aliasFileBaseName, response);
                                     Log.i(TAG, "SUCCESSFULLY downloaded aliases json file: " + dataFileDir + "/" + aliasFileBaseName);
                                     String tMsg = "Successfully downloaded aliases file for event: " + m_eventCode;
                                     Toast.makeText(m_appContext, tMsg, Toast.LENGTH_LONG).show();

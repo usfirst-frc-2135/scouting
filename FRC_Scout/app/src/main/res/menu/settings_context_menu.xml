@@ -5,19 +5,19 @@
         android:id="@+id/set_team_index"
         android:title="@string/set_team_index" />
     <item
-        android:id="@+id/load_data_over_network"
-        android:title="@string/load_competition_data" />
-    <item
-        android:id="@+id/clear_scout_names"
-        android:title="@string/clear_scout_names" />
-    <item
-        android:id="@+id/delete_tba_matches_file"
-        android:title="@string/delete_tba_event_files" />
+        android:id="@+id/load_event_data_tba"
+        android:title="@string/load_event_data" />
     <item
         android:id="@+id/load_aliases"
         android:title="@string/load_aliases" />
     <item
-        android:id="@+id/about_item"
+        android:id="@+id/delete_event_data_tba"
+        android:title="@string/delete_tba_event_files" />
+    <item
+        android:id="@+id/clear_scout_names"
+        android:title="@string/clear_scout_names" />
+    <item
+        android:id="@+id/about_screen"
         android:title="@string/about" />
 
 </menu>

@@ -93,7 +93,6 @@ public class LoadEventDialog extends DialogFragment
         Log.d(TAG, "LoadEventDialog: eventCode = '" + eventCode + "'");
         if (!eventCode.isEmpty() && eventCode.length() > 4)
         {
-
             // Save the eventCode and competition name in CurrentCompetition object.
             CurrentCompetition.get(getContext()).setCompName(eventCode.substring(4));
             CurrentCompetition.get(getContext()).setEventCode(eventCode.trim());

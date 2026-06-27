@@ -23,27 +23,26 @@
     <string name="filter_list">Filter List</string>
     <!--    <string-array name="filter_array">-->
     <!--        <item>Team Number</item>-->
-    <!--        <item>Competition</item>-->
-    <!--        <item>Scout</item>-->
-    <!--        <item>Date</item>-->
+    <!--        <item>Event Code</item>-->
+    <!--        <item>Scout Name</item>-->
+    <!--        <item>Match Number</item>-->
     <!--    </string-array>-->
 
     <string name="dark_mode">Dark Mode</string>
     <string name="edit_match">Edit match</string>
-    <!--    <string name="delete">Delete</string>-->
     <string name="delete_match">Delete Match</string>
 
     <string name="set_team_index">Set Team Index</string>
-    <string name="load_competition_data">Load Competition Data</string>
+    <string name="load_event_data">Load Event Data</string>
+    <string name="load_aliases">Load Team Aliases</string>
+    <string name="delete_tba_event_files">Delete Event Data (TBA)</string>
     <string name="clear_scout_names">Clear Scout Names</string>
-    <string name="delete_tba_event_files">Delete TBA Event Files</string>
-    <string name="load_aliases">Load Aliases</string>
 
     <!--    pre-match screen -->
-    <string name="competition_info">Competition Info</string>
-    <string name="scout_name_uc">SCOUT NAME</string>
     <string name="competition_uc">COMPETITION</string>
-    <string name="match_info">Match Info</string>
+    <string name="scout_name_uc">SCOUT NAME</string>
+    <string name="event_code_uc">EVENT CODE</string>
+    <string name="match_info_uc">MATCH INFO</string>
     <string name="match_number_uc">MATCH NUMBER</string>
     <string name="team_number_uc">TEAM NUMBER</string>
     <string name="start_match">Start Match</string>
@@ -56,7 +55,7 @@
     <string name="qr_code_image">QR code image</string>
     <string name="done">Done</string>
 
-    <!--    competition and match screens (year non-specific) -->
+    <!--    Match scouting screens (year non-specific) -->
     <!--    <string name="autonomous">Autonomous</string>-->
     <string name="auton">Auton</string>
     <!--    <string name="teleoperated">Teleoperated</string>-->

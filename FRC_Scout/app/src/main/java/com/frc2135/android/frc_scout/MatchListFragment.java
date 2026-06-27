@@ -26,7 +26,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.MenuProvider;
@@ -108,34 +107,14 @@ public class MatchListFragment extends ListFragment
 
         m_darkToggle = v1.findViewById(R.id.dark_toggle);
 
-        // Set light or dark mode based on shared preferences (stored in static ScoutPreferences object).
-        boolean bNightMode = ScoutPreferences.get(getActivity()).getNightMode();
-        if (bNightMode)
-        {
-            Log.d(TAG, "Setting up dark mode");
-            m_darkToggle.setChecked(true);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }
-        else
-        {
-            Log.d(TAG, "Setting up light mode");
-            m_darkToggle.setChecked(false);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
+        // Set light or dark mode based on shared preferences.
+        Preferences prefs = Preferences.get(requireContext());
+        m_darkToggle.setChecked(prefs.getDarkMode());
+        prefs.applyTheme();
 
         m_darkToggle.setOnClickListener(v -> {
-            if (m_darkToggle.isChecked())
-            {
-                Log.d(TAG, "m_darkToggle toggled from light to dark");
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                ScoutPreferences.get(getActivity()).setNightMode(true);
-            }
-            else
-            {
-                Log.d(TAG, "m_darkToggle toggled from dark to light");
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                ScoutPreferences.get(getActivity()).setNightMode(false);
-            }
+            Log.d(TAG, "m_darkToggle toggled to: " + m_darkToggle.isChecked());
+            prefs.setDarkMode(m_darkToggle.isChecked(), true);
         });
 
         // Set up Floating Action Button: the "+" button in a circle to start scouting a match.
@@ -292,18 +271,28 @@ public class MatchListFragment extends ListFragment
             public boolean onMenuItemSelected(@NonNull MenuItem item)
             {
                 int itemID = item.getItemId();
-                if (itemID == R.id.clear_scout_names)
+                if (itemID == R.id.set_team_index)
                 {
-                    Log.d(TAG, "Clear Scout Names clicked");
-                    Scouter.get(getContext()).clear();
+                    Log.d(TAG, "Going to start SetTeamIndexDlg");
+                    FragmentManager fm2 = requireActivity().getSupportFragmentManager();
+                    SetTeamIndexDialog tiDlg = SetTeamIndexDialog.newInstance();
+                    tiDlg.show(fm2, "set_team_index_dialog");
                 }
-                else if (itemID == R.id.about_item)
+                else if (itemID == R.id.load_event_data_tba)
                 {
-                    Intent i = new Intent(getActivity(), Splash.class);
-                    startActivity(i);
-                    requireActivity().finish();
+                    Log.d(TAG, "Going to start LoadEventDialog");
+                    FragmentManager fm = requireActivity().getSupportFragmentManager();
+                    LoadEventDialog dialog = LoadEventDialog.newInstance();
+                    dialog.show(fm, "load_event_dialog");
                 }
-                else if (itemID == R.id.delete_tba_matches_file)
+                else if (itemID == R.id.load_aliases)
+                {
+                    Log.d(TAG, "Going to load aliases file");
+                    FragmentManager fm3 = requireActivity().getSupportFragmentManager();
+                    LoadAliasesDialog dialog = LoadAliasesDialog.newInstance();
+                    dialog.show(fm3, "load_aliases");
+                }
+                else if (itemID == R.id.delete_event_data_tba)
                 {
                     Log.d(TAG, "Delete TBA matches files clicked");
                     Context context = getContext();
@@ -348,26 +337,16 @@ public class MatchListFragment extends ListFragment
                     Log.d(TAG, toastMsg.toString());
                     Toast.makeText(context, toastMsg.toString(), Toast.LENGTH_LONG).show();
                 }
-                else if (itemID == R.id.load_data_over_network)
+                else if (itemID == R.id.clear_scout_names)
                 {
-                    FragmentManager fm = requireActivity().getSupportFragmentManager();
-                    Log.d(TAG, "Going to start LoadEventDialog");
-                    LoadEventDialog dialog = LoadEventDialog.newInstance();
-                    dialog.show(fm, "load_event_dialog");
+                    Log.d(TAG, "Clear Scout Names clicked");
+                    Settings.get(getContext()).clear();
                 }
-                else if (itemID == R.id.set_team_index)
+                else if (itemID == R.id.about_screen)
                 {
-                    FragmentManager fm2 = requireActivity().getSupportFragmentManager();
-                    Log.d(TAG, "Going to start SetTeamIndexDlg");
-                    SetTeamIndexDialog tiDlg = SetTeamIndexDialog.newInstance();
-                    tiDlg.show(fm2, "set_team_index_dialog");
-                }
-                else if (itemID == R.id.load_aliases)
-                {
-                    FragmentManager fm3 = requireActivity().getSupportFragmentManager();
-                    Log.d(TAG, "Going to load an aliases");
-                    LoadAliasesDialog dialog = LoadAliasesDialog.newInstance();
-                    dialog.show(fm3, "load_aliases");
+                    Intent i = new Intent(getActivity(), SplashScreenActivity.class);
+                    startActivity(i);
+                    requireActivity().finish();
                 }
                 return true;
             }
@@ -388,7 +367,7 @@ public class MatchListFragment extends ListFragment
         {
             if (convertView == null)
             {
-                convertView = requireActivity().getLayoutInflater().inflate(R.layout.list_item_match, null);
+                convertView = requireActivity().getLayoutInflater().inflate(R.layout.match_list_item, null);
             }
             MatchData m = getItem(position);
 
