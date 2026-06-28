@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -19,6 +20,9 @@ import com.frc2135.android.frc_scout.databinding.TeleopFragmentBinding;
 
 import java.util.Random;
 
+/**
+ * Fragment for recording teleoperated period scouting data.
+ */
 public class TeleopFragment extends Fragment
 {
     private static final String TAG = "TeleopFragment";
@@ -28,220 +32,160 @@ public class TeleopFragment extends Fragment
     private TeleopFragmentBinding binding;
     private int m_photoNum;
 
-    // Check if pointsTextView field is greater than the MAX_NUM*.
-    private boolean isGreaterThanMax(TextView field)
-    {
-        int num = Integer.parseInt(field.getText().toString());
-        return num > MAX_NUM_HOPPERS;
-    }
-
-    // Sets the new result integer value for the given TextView, either decrementing or 
-    // incrementing the shown value. If the decrement case falls below zero, returns 0. 
-    // Sets textView color to RED if out of expected range.
-    public void updateTotalsInt(TextView tView, boolean bIncr)
-    {
-        int result = Integer.parseInt(tView.getText().toString());
-        if (bIncr)
-        {
-            result += 1;
-        }
-        else
-        {
-            result -= 1;
-        }
-        if (result < 0)
-        {
-            result = 0;
-        }
-        tView.setText(String.valueOf(result));
-
-        if (isGreaterThanMax(tView))
-        {
-            tView.setTextColor(Color.RED);
-        }
-        else
-        {
-            Context context = getContext();
-            if (context != null)
-            {
-                tView.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
-            }
-        }
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         m_matchData = ((ScoutingActivity) requireActivity()).getCurrentMatch();
-        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
-        if (actionBar != null)
-        {
-            String teamNumber = m_matchData.getTeamNumber();
-            String teamAlias = m_matchData.getTeamAlias();
-            if (!teamAlias.isEmpty())
-            {
-                actionBar.setTitle("Teleoperated          Scouting Team " + teamAlias + "         Match " + m_matchData.getMatchNumber());
-            }
-            else
-            {
-                actionBar.setTitle("Teleoperated          Scouting Team " + teamNumber + "         Match " + m_matchData.getMatchNumber());
-            }
-        }
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
         binding = TeleopFragmentBinding.inflate(inflater, parent, false);
+        return binding.getRoot();
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
+    {
+        super.onViewCreated(view, savedInstanceState);
+        setupActionBar();
+        if (m_matchData != null)
+        {
+            loadMatchData();
+            setupListeners();
+        }
+    }
+
+    private void setupActionBar()
+    {
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        if (actionBar != null && m_matchData != null)
+        {
+            String teamNumber = m_matchData.getTeamNumber();
+            String teamAlias = m_matchData.getTeamAlias();
+            String teamDisplay = teamAlias.isEmpty() ? teamNumber : teamAlias;
+            actionBar.setTitle("Teleoperated          Scouting Team " + teamDisplay + "         Match " + m_matchData.getMatchNumber());
+        }
+    }
+
+    private void loadMatchData()
+    {
         binding.hopperUsedTotal.setText(String.valueOf(m_matchData.getHoppersUsed()));
-        binding.hopperUsedDecrButton.setOnClickListener(v -> updateTotalsInt(binding.hopperUsedTotal, false));
-        binding.hopperUsedIncrButton.setOnClickListener(v -> updateTotalsInt(binding.hopperUsedTotal, true));
+        updateScoreColor(binding.hopperUsedTotal);
 
         binding.intakeAndShoot.setChecked(m_matchData.getIntakeAndShoot());
-
-        int accValue = m_matchData.getAccuracyRate();
-        if (accValue == 0)
-        {
-            binding.accuracyNA.setChecked(true);
-        }
-        else if (accValue == 1)
-        {
-            binding.accuracyMost.setChecked(true);
-        }
-        else if (accValue == 2)
-        {
-            binding.accuracyThreeFourths.setChecked(true);
-        }
-        else if (accValue == 3)
-        {
-            binding.accuracyHalf.setChecked(true);
-        }
-        else if (accValue == 4)
-        {
-            binding.accuracyQuarter.setChecked(true);
-        }
-        else if (accValue == 5)
-        {
-            binding.accuracyFew.setChecked(true);
-        }
-        else if (accValue == 6)
-        {
-            binding.accuracyNone.setChecked(true);
-        }
-
-        int passValue = m_matchData.getPassingEffectivenessRate();
-        if (passValue == 0)
-        {
-            binding.passingRateNa.setChecked(true);
-        }
-        else if (passValue == 4)
-        {
-            binding.passingTons.setChecked(true);
-        }
-        else if (passValue == 3)
-        {
-            binding.passingLarge.setChecked(true);
-        }
-        else if (passValue == 2)
-        {
-            binding.passingMedium.setChecked(true);
-        }
-        else if (passValue == 1)
-        {
-            binding.passingLow.setChecked(true);
-        }
-
         binding.shovelFuel.setChecked(m_matchData.getShovelFuel());
 
-        int defValue = m_matchData.getDefenseRate();
-        if (defValue == 0)
-        {
-            binding.defenseNone.setChecked(true);
-        }
-        else if (defValue == 1)
-        {
-            binding.defenseLow.setChecked(true);
-        }
-        else if (defValue == 2)
-        {
-            binding.defenseMediumLow.setChecked(true);
-        }
-        else if (defValue == 3)
-        {
-            binding.defenseMedium.setChecked(true);
-        }
-        else if (defValue == 4)
-        {
-            binding.defenseMediumHigh.setChecked(true);
-        }
-        else if (defValue == 5)
-        {
-            binding.defenseHigh.setChecked(true);
-        }
+        initAccuracyRate(m_matchData.getAccuracyRate());
+        initPassingRate(m_matchData.getPassingEffectivenessRate());
+        initDefenseRate(m_matchData.getDefenseRate());
+        initPassNz(m_matchData.getPassNeutralZone());
+        initPassAz(m_matchData.getPassAllianceZone());
+        initDriverAbility(m_matchData.getDriverAbility());
 
-        int nzValue = m_matchData.getPassNeutralZone();
-        if (nzValue == 0)
-        {
-            binding.noNz.setChecked(true);
-        }
-        else if (nzValue == 1)
-        {
-            binding.yesNz.setChecked(true);
-        }
+        setupPhoto();
+    }
 
-        int azValue = m_matchData.getPassAllianceZone();
-        if (azValue == 0)
-        {
-            binding.noAz.setChecked(true);
-        }
-        else if (azValue == 1)
-        {
-            binding.yesAz.setChecked(true);
-        }
+    private void setupListeners()
+    {
+        binding.hopperUsedDecrButton.setOnClickListener(v -> updateTotalsInt(binding.hopperUsedTotal, false));
+        binding.hopperUsedIncrButton.setOnClickListener(v -> updateTotalsInt(binding.hopperUsedTotal, true));
+    }
 
-        int driveValue = m_matchData.getDriverAbility();
-        if (driveValue == 0)
+    private void initAccuracyRate(int value)
+    {
+        int id = switch (value)
         {
-            binding.drivingNa.setChecked(true);
-        }
-        else if (driveValue == 1)
-        {
-            binding.drivingSlow.setChecked(true);
-        }
-        else if (driveValue == 2)
-        {
-            binding.drivingJerky.setChecked(true);
-        }
-        else if (driveValue == 3)
-        {
-            binding.drivingAvg.setChecked(true);
-        }
-        else if (driveValue == 4)
-        {
-            binding.drivingFast.setChecked(true);
-        }
-        else if (driveValue == 5)
-        {
-            binding.drivingElite.setChecked(true);
-        }
+            case 0 -> R.id.accuracy_NA;
+            case 1 -> R.id.accuracy_most;
+            case 2 -> R.id.accuracy_three_fourths;
+            case 3 -> R.id.accuracy_half;
+            case 4 -> R.id.accuracy_quarter;
+            case 5 -> R.id.accuracy_few;
+            case 6 -> R.id.accuracy_none;
+            default -> -1;
+        };
+        if (id != -1) binding.accuracyButtons.check(id);
+    }
 
-        if (isGreaterThanMax(binding.hopperUsedTotal))
+    private void initPassingRate(int value)
+    {
+        int id = switch (value)
         {
-            binding.hopperUsedTotal.setTextColor(Color.RED);
-        }
+            case 0 -> R.id.passing_rate_na;
+            case 1 -> R.id.passing_low;
+            case 2 -> R.id.passing_medium;
+            case 3 -> R.id.passing_large;
+            case 4 -> R.id.passing_tons;
+            default -> -1;
+        };
+        if (id != -1) binding.passingEffectivenessButtons.check(id);
+    }
 
+    private void initDefenseRate(int value)
+    {
+        int id = switch (value)
+        {
+            case 0 -> R.id.defense_none;
+            case 1 -> R.id.defense_low;
+            case 2 -> R.id.defense_medium_low;
+            case 3 -> R.id.defense_medium;
+            case 4 -> R.id.defense_medium_high;
+            case 5 -> R.id.defense_high;
+            default -> -1;
+        };
+        if (id != -1) binding.defenseButtons.check(id);
+    }
+
+    private void initPassNz(int value)
+    {
+        int id = switch (value)
+        {
+            case 0 -> R.id.no_nz;
+            case 1 -> R.id.yes_nz;
+            default -> -1;
+        };
+        if (id != -1) binding.passNz.check(id);
+    }
+
+    private void initPassAz(int value)
+    {
+        int id = switch (value)
+        {
+            case 0 -> R.id.no_az;
+            case 1 -> R.id.yes_az;
+            default -> -1;
+        };
+        if (id != -1) binding.passAz.check(id);
+    }
+
+    private void initDriverAbility(int value)
+    {
+        int id = switch (value)
+        {
+            case 0 -> R.id.driving_na;
+            case 1 -> R.id.driving_slow;
+            case 2 -> R.id.driving_jerky;
+            case 3 -> R.id.driving_avg;
+            case 4 -> R.id.driving_fast;
+            case 5 -> R.id.driving_elite;
+            default -> -1;
+        };
+        if (id != -1) binding.drivingButtons.check(id);
+    }
+
+    private void setupPhoto()
+    {
         m_photoNum = m_matchData.getTeleopPhoto();
-        Log.i(TAG, "onCreateView: from matchData, image= " + m_photoNum);
+        Log.i(TAG, "setupPhoto: image= " + m_photoNum);
 
         ViewGroup.LayoutParams params = binding.photo.getLayoutParams();
         if (m_photoNum == 0)
         {
             Random random = new Random();
             double rand = random.nextDouble();
-            Log.i(TAG, "onCreateView: from matchData, random = " + rand);
-
             if (rand < 0.03)
             {
                 m_photoNum = 3;
@@ -323,176 +267,134 @@ public class TeleopFragment extends Fragment
                     width = 250;
                     break;
             }
-            if (resId != 0)
-            {
-                binding.photo.setBackgroundResource(resId);
-            }
+            if (resId != 0) binding.photo.setBackgroundResource(resId);
             if (width != -1)
             {
                 params.width = width;
                 binding.photo.setLayoutParams(params);
             }
         }
-        return binding.getRoot();
+    }
+
+    private boolean isGreaterThanMax(TextView field)
+    {
+        try
+        {
+            int num = Integer.parseInt(field.getText().toString());
+            return num > MAX_NUM_HOPPERS;
+        }
+        catch (NumberFormatException e)
+        {
+            return false;
+        }
+    }
+
+    private void updateScoreColor(TextView tView)
+    {
+        if (isGreaterThanMax(tView))
+        {
+            tView.setTextColor(Color.RED);
+        }
+        else
+        {
+            Context context = getContext();
+            if (context != null)
+            {
+                tView.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
+            }
+        }
+    }
+
+    public void updateTotalsInt(TextView tView, boolean bIncr)
+    {
+        try
+        {
+            int currentVal = Integer.parseInt(tView.getText().toString());
+            int newVal = bIncr ? currentVal + 1 : Math.max(0, currentVal - 1);
+            tView.setText(String.valueOf(newVal));
+            updateScoreColor(tView);
+        }
+        catch (NumberFormatException e)
+        {
+            Log.e(TAG, "Invalid number format in updateTotalsInt", e);
+        }
     }
 
     public int getCurrentAccuracyLevel()
     {
-        // Returns the integer accuracy level that is currently checked in the radio buttons
         int id = binding.accuracyButtons.getCheckedRadioButtonId();
-        if (id == R.id.accuracy_NA)
-        {
-            return 0;
-        }
-        if (id == R.id.accuracy_most)
-        {
-            return 1;
-        }
-        if (id == R.id.accuracy_three_fourths)
-        {
-            return 2;
-        }
-        if (id == R.id.accuracy_half)
-        {
-            return 3;
-        }
-        if (id == R.id.accuracy_quarter)
-        {
-            return 4;
-        }
-        if (id == R.id.accuracy_few)
-        {
-            return 5;
-        }
-        if (id == R.id.accuracy_none)
-        {
-            return 6;
-        }
+        if (id == R.id.accuracy_NA) return 0;
+        if (id == R.id.accuracy_most) return 1;
+        if (id == R.id.accuracy_three_fourths) return 2;
+        if (id == R.id.accuracy_half) return 3;
+        if (id == R.id.accuracy_quarter) return 4;
+        if (id == R.id.accuracy_few) return 5;
+        if (id == R.id.accuracy_none) return 6;
         return 0;
     }
 
     public int getPassingEffectivenessRate()
     {
-        // Returns the integer climb level that is currently checked in the radio buttons
         int id = binding.passingEffectivenessButtons.getCheckedRadioButtonId();
-        if (id == R.id.passing_rate_na)
-        {
-            return 0;
-        }
-        if (id == R.id.passing_low)
-        {
-            return 1;
-        }
-        if (id == R.id.passing_medium)
-        {
-            return 2;
-        }
-        if (id == R.id.passing_large)
-        {
-            return 3;
-        }
-        if (id == R.id.passing_tons)
-        {
-            return 4;
-        }
+        if (id == R.id.passing_rate_na) return 0;
+        if (id == R.id.passing_low) return 1;
+        if (id == R.id.passing_medium) return 2;
+        if (id == R.id.passing_large) return 3;
+        if (id == R.id.passing_tons) return 4;
         return 5;
     }
 
     public int getCurrentDefenseLevel()
     {
-        // Returns the integer climb level that is currently checked in the radio buttons
         int id = binding.defenseButtons.getCheckedRadioButtonId();
-        if (id == R.id.defense_none)
-        {
-            return 0;
-        }
-        if (id == R.id.defense_low)
-        {
-            return 1;
-        }
-        if (id == R.id.defense_medium_low)
-        {
-            return 2;
-        }
-        if (id == R.id.defense_medium)
-        {
-            return 3;
-        }
-        if (id == R.id.defense_medium_high)
-        {
-            return 4;
-        }
-        if (id == R.id.defense_high)
-        {
-            return 5;
-        }
+        if (id == R.id.defense_none) return 0;
+        if (id == R.id.defense_low) return 1;
+        if (id == R.id.defense_medium_low) return 2;
+        if (id == R.id.defense_medium) return 3;
+        if (id == R.id.defense_medium_high) return 4;
+        if (id == R.id.defense_high) return 5;
         return 0;
     }
 
     public int getPassNeutralZone()
     {
-        // Returns the integer climb level that is currently checked in the radio buttons
         int id = binding.passNz.getCheckedRadioButtonId();
-        if (id == R.id.no_nz)
-        {
-            return 0;
-        }
-        if (id == R.id.yes_nz)
-        {
-            return 1;
-        }
+        if (id == R.id.no_nz) return 0;
+        if (id == R.id.yes_nz) return 1;
         return 3;
     }
 
     public int getPassAllianceZone()
     {
-        // Returns the integer climb level that is currently checked in the radio buttons
         int id = binding.passAz.getCheckedRadioButtonId();
-        if (id == R.id.no_az)
-        {
-            return 0;
-        }
-        if (id == R.id.yes_az)
-        {
-            return 1;
-        }
+        if (id == R.id.no_az) return 0;
+        if (id == R.id.yes_az) return 1;
         return 3;
     }
 
     public int getDriverAbility()
     {
-        // Returns the integer climb level that is currently checked in the radio buttons
         int id = binding.drivingButtons.getCheckedRadioButtonId();
-        if (id == R.id.driving_na)
-        {
-            return 0;
-        }
-        if (id == R.id.driving_slow)
-        {
-            return 1;
-        }
-        if (id == R.id.driving_jerky)
-        {
-            return 2;
-        }
-        if (id == R.id.driving_avg)
-        {
-            return 3;
-        }
-        if (id == R.id.driving_fast)
-        {
-            return 4;
-        }
-        if (id == R.id.driving_elite)
-        {
-            return 5;
-        }
+        if (id == R.id.driving_na) return 0;
+        if (id == R.id.driving_slow) return 1;
+        if (id == R.id.driving_jerky) return 2;
+        if (id == R.id.driving_avg) return 3;
+        if (id == R.id.driving_fast) return 4;
+        if (id == R.id.driving_elite) return 5;
         return 6;
     }
 
     public void updateTeleopData()
     {
-        m_matchData.setHoppersUsed(Integer.parseInt(binding.hopperUsedTotal.getText().toString()));
+        if (m_matchData == null) return;
+        try
+        {
+            m_matchData.setHoppersUsed(Integer.parseInt(binding.hopperUsedTotal.getText().toString()));
+        }
+        catch (NumberFormatException e)
+        {
+            Log.e(TAG, "Invalid hopper score value", e);
+        }
         m_matchData.setAccuracyRate(getCurrentAccuracyLevel());
         m_matchData.setPassingRate(getPassingEffectivenessRate());
         m_matchData.setTeleopPhoto(m_photoNum);

@@ -17,6 +17,9 @@ import androidx.fragment.app.Fragment;
 
 import com.frc2135.android.frc_scout.databinding.AutonFragmentBinding;
 
+/**
+ * Fragment for recording autonomous period scouting data.
+ */
 public class AutonFragment extends Fragment
 {
     private static final String TAG = "AutonFragment";
@@ -24,46 +27,6 @@ public class AutonFragment extends Fragment
 
     private MatchData m_matchData;
     private AutonFragmentBinding binding;
-
-    // Check if given field is greater than expected max number.
-    private boolean isGreaterThanMax(TextView field)
-    {
-        int num = Integer.parseInt(field.getText().toString());
-        return num > MAX_NUM_HOPPERS;
-    }
-
-    // Sets the new result integer value for the given TextView, either decrementing or 
-    // incrementing the shown value. If the decrement case falls below zero, returns 0. 
-    // Sets textView color to RED if out of expected range.
-    public void updateTotalsInt(TextView tView, boolean bIncr)
-    {
-        int result = Integer.parseInt(tView.getText().toString()); // get current value as int
-        if (bIncr)
-        {
-            result += 1;
-        }
-        else
-        {
-            result -= 1;
-        }
-        if (result < 0)
-        {
-            result = 0;
-        }
-        tView.setText(String.valueOf(result));
-        if (isGreaterThanMax(tView))
-        {
-            tView.setTextColor(Color.RED);
-        }
-        else
-        {
-            Context context = getContext();
-            if (context != null)
-            {
-                tView.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
-            }
-        }
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -77,23 +40,18 @@ public class AutonFragment extends Fragment
             {
                 Log.d(TAG, "New match ID = " + m_matchData.getMatchID());
                 ActionBar actionBar = activity.getSupportActionBar();
-                String teamNumber = m_matchData.getTeamNumber();
-                String teamAlias = m_matchData.getTeamAlias();
                 if (actionBar != null)
                 {
+                    String teamNumber = m_matchData.getTeamNumber();
+                    String teamAlias = m_matchData.getTeamAlias();
                     // Use teamAlias if there is one instead of teamNumber.
-                    if (!teamAlias.isEmpty())
+                    String teamDisplay = teamAlias.isEmpty() ? teamNumber : teamAlias;
+                    actionBar.setTitle("Autonomous - Team " + teamDisplay + " - Match " + m_matchData.getMatchNumber());
+
+                    Settings settings = Settings.get(getContext());
+                    if (settings != null)
                     {
-                        actionBar.setTitle("Autonomous          Scouting Team " + teamAlias + "         Match " + m_matchData.getMatchNumber());
-                    }
-                    else
-                    {
-                        actionBar.setTitle("Autonomous          Scouting Team " + teamNumber + "         Match " + m_matchData.getMatchNumber());
-                    }
-                    Settings scouts = Settings.get(getContext());
-                    if (scouts != null)
-                    {
-                        String color = scouts.getTeamIndexColor();
+                        String color = settings.getTeamIndexColor();
                         if (color.equals("red"))
                         {
                             actionBar.setBackgroundDrawable(new ColorDrawable(Color.RED));
@@ -113,197 +71,178 @@ public class AutonFragment extends Fragment
     {
         binding = AutonFragmentBinding.inflate(inflater, parent, false);
 
-        binding.autonHopperScoreTotal.setText(String.valueOf(m_matchData.getAutonHopper()));
+        if (m_matchData != null)
+        {
+            binding.autonHopperScoreTotal.setText(String.valueOf(m_matchData.getAutonHopper()));
 
-        binding.autonHopperIncrButton.setOnClickListener(v -> updateTotalsInt(binding.autonHopperScoreTotal, true));
-        binding.autonHopperDecrButton.setOnClickListener(v -> updateTotalsInt(binding.autonHopperScoreTotal, false));
+            binding.autonHopperIncrButton.setOnClickListener(v -> updateTotalsInt(binding.autonHopperScoreTotal, true));
+            binding.autonHopperDecrButton.setOnClickListener(v -> updateTotalsInt(binding.autonHopperScoreTotal, false));
 
-        binding.preloadCheckbox.setChecked(m_matchData.getAutonPreload());
-        binding.azCheckbox.setChecked(m_matchData.getAutonAzCheckbox());
-        binding.depotCheckbox.setChecked(m_matchData.getAutonDepotCheckbox());
-        binding.outpostCheckbox.setChecked(m_matchData.getAutonOutpostCheckbox());
-        binding.nzCheckbox.setChecked(m_matchData.getAutonNzCheckbox());
+            binding.preloadCheckbox.setChecked(m_matchData.getAutonPreload());
+            binding.azCheckbox.setChecked(m_matchData.getAutonAzCheckbox());
+            binding.depotCheckbox.setChecked(m_matchData.getAutonDepotCheckbox());
+            binding.outpostCheckbox.setChecked(m_matchData.getAutonOutpostCheckbox());
+            binding.nzCheckbox.setChecked(m_matchData.getAutonNzCheckbox());
 
-        int preloadAccValue = m_matchData.getPreloadAccuracyLevel();
-        if (preloadAccValue == 0)
-        {
-            binding.autonAccuracyNo.setChecked(true);
-        }
-        else if (preloadAccValue == 1)
-        {
-            binding.autonAccuracyA.setChecked(true);
-        }
-        else if (preloadAccValue == 2)
-        {
-            binding.autonAccuracyM.setChecked(true);
-        }
-        else if (preloadAccValue == 3)
-        {
-            binding.autonAccuracyS.setChecked(true);
-        }
-        else if (preloadAccValue == 4)
-        {
-            binding.autonAccuracyF.setChecked(true);
-        }
-        else if (preloadAccValue == 5)
-        {
-            binding.autonAccuracyN.setChecked(true);
-        }
+            initPreloadAccuracy(m_matchData.getPreloadAccuracyLevel());
+            initAutonAccuracy(m_matchData.getAutonAccuracyRate());
+            initAutonClimb(m_matchData.getAutonClimb());
 
-        int accValue = m_matchData.getAutonAccuracyRate();
-        if (accValue == 0)
-        {
-            binding.autonAccuracyNa.setChecked(true);
-        }
-        else if (accValue == 1)
-        {
-            binding.autonAccuracyMost.setChecked(true);
-        }
-        else if (accValue == 2)
-        {
-            binding.autonAccuracyThreeFourths.setChecked(true);
-        }
-        else if (accValue == 3)
-        {
-            binding.autonAccuracyHalf.setChecked(true);
-        }
-        else if (accValue == 4)
-        {
-            binding.autonAccuracyQuarter.setChecked(true);
-        }
-        else if (accValue == 5)
-        {
-            binding.autonAccuracyFew.setChecked(true);
-        }
-        else if (accValue == 6)
-        {
-            binding.autonAccuracyNone.setChecked(true);
-        }
-
-        int climbValue = m_matchData.getAutonClimb();
-        if (climbValue == 0)
-        {
-            binding.autonClimbNa.setChecked(true);
-        }
-        else if (climbValue == 1)
-        {
-            binding.autonClimbBack.setChecked(true);
-        }
-        else if (climbValue == 2)
-        {
-            binding.autonClimbLeft.setChecked(true);
-        }
-        else if (climbValue == 3)
-        {
-            binding.autonClimbFront.setChecked(true);
-        }
-        else if (climbValue == 4)
-        {
-            binding.autonClimbRight.setChecked(true);
-        }
-
-        // Check Hopper levels for MAX
-        if (isGreaterThanMax(binding.autonHopperScoreTotal))
-        {
-            binding.autonHopperScoreTotal.setTextColor(Color.RED);
+            // Check Hopper levels for MAX
+            updateScoreColor(binding.autonHopperScoreTotal);
         }
 
         return binding.getRoot();
     }
 
+    private void initPreloadAccuracy(int value)
+    {
+        int id = switch (value)
+        {
+            case 0 -> R.id.auton_accuracy_no;
+            case 1 -> R.id.auton_accuracy_a;
+            case 2 -> R.id.auton_accuracy_m;
+            case 3 -> R.id.auton_accuracy_s;
+            case 4 -> R.id.auton_accuracy_f;
+            case 5 -> R.id.auton_accuracy_n;
+            default -> -1;
+        };
+        if (id != -1) binding.autonAccuracyBoxes.check(id);
+    }
+
+    private void initAutonAccuracy(int value)
+    {
+        int id = switch (value)
+        {
+            case 0 -> R.id.auton_accuracy_na;
+            case 1 -> R.id.auton_accuracy_most;
+            case 2 -> R.id.auton_accuracy_three_fourths;
+            case 3 -> R.id.auton_accuracy_half;
+            case 4 -> R.id.auton_accuracy_quarter;
+            case 5 -> R.id.auton_accuracy_few;
+            case 6 -> R.id.auton_accuracy_none;
+            default -> -1;
+        };
+        if (id != -1) binding.autonAccuracyButtons.check(id);
+    }
+
+    private void initAutonClimb(int value)
+    {
+        int id = switch (value)
+        {
+            case 0 -> R.id.auton_climb_na;
+            case 1 -> R.id.auton_climb_back;
+            case 2 -> R.id.auton_climb_left;
+            case 3 -> R.id.auton_climb_front;
+            case 4 -> R.id.auton_climb_right;
+            default -> -1;
+        };
+        if (id != -1) binding.autonClimbButtons.check(id);
+    }
+
+    // Check if given field is greater than expected max number.
+    private boolean isGreaterThanMax(TextView field)
+    {
+        try
+        {
+            int num = Integer.parseInt(field.getText().toString());
+            return num > MAX_NUM_HOPPERS;
+        }
+        catch (NumberFormatException e)
+        {
+            return false;
+        }
+    }
+
+    private void updateScoreColor(TextView tView)
+    {
+        if (isGreaterThanMax(tView))
+        {
+            tView.setTextColor(Color.RED);
+        }
+        else
+        {
+            Context context = getContext();
+            if (context != null)
+            {
+                tView.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
+            }
+        }
+    }
+
+    // Sets the new result integer value for the given TextView, either decrementing or
+    // incrementing the shown value. If the decrement case falls below zero, returns 0.
+    // Sets textView color to RED if out of expected range.
+    public void updateTotalsInt(TextView tView, boolean bIncr)
+    {
+        try
+        {
+            int currentVal = Integer.parseInt(tView.getText().toString());
+            int newVal;
+            if (bIncr)
+            {
+                newVal = currentVal + 1;
+            }
+            else
+            {
+                newVal = Math.max(0, currentVal - 1);
+            }
+            tView.setText(String.valueOf(newVal));
+            updateScoreColor(tView);
+        }
+        catch (NumberFormatException e)
+        {
+            Log.e(TAG, "Invalid number format in updateTotalsInt", e);
+        }
+    }
+
     public int getAutonAccuracyRate()
     {
         int id = binding.autonAccuracyButtons.getCheckedRadioButtonId();
-        if (id == R.id.auton_accuracy_na)
-        {
-            return 0;
-        }
-        if (id == R.id.auton_accuracy_most)
-        {
-            return 1;
-        }
-        if (id == R.id.auton_accuracy_three_fourths)
-        {
-            return 2;
-        }
-        if (id == R.id.auton_accuracy_half)
-        {
-            return 3;
-        }
-        if (id == R.id.auton_accuracy_quarter)
-        {
-            return 4;
-        }
-        if (id == R.id.auton_accuracy_few)
-        {
-            return 5;
-        }
-        if (id == R.id.auton_accuracy_none)
-        {
-            return 6;
-        }
+        if (id == R.id.auton_accuracy_na) return 0;
+        if (id == R.id.auton_accuracy_most) return 1;
+        if (id == R.id.auton_accuracy_three_fourths) return 2;
+        if (id == R.id.auton_accuracy_half) return 3;
+        if (id == R.id.auton_accuracy_quarter) return 4;
+        if (id == R.id.auton_accuracy_few) return 5;
+        if (id == R.id.auton_accuracy_none) return 6;
         return 0;
     }
 
     public int getPreloadAccuracyLevel()
     {
         int id = binding.autonAccuracyBoxes.getCheckedRadioButtonId();
-        if (id == R.id.auton_accuracy_no)
-        {
-            return 0;
-        }
-        if (id == R.id.auton_accuracy_a)
-        {
-            return 1;
-        }
-        if (id == R.id.auton_accuracy_m)
-        {
-            return 2;
-        }
-        if (id == R.id.auton_accuracy_s)
-        {
-            return 3;
-        }
-        if (id == R.id.auton_accuracy_f)
-        {
-            return 4;
-        }
-        if (id == R.id.auton_accuracy_n)
-        {
-            return 5;
-        }
+        if (id == R.id.auton_accuracy_no) return 0;
+        if (id == R.id.auton_accuracy_a) return 1;
+        if (id == R.id.auton_accuracy_m) return 2;
+        if (id == R.id.auton_accuracy_s) return 3;
+        if (id == R.id.auton_accuracy_f) return 4;
+        if (id == R.id.auton_accuracy_n) return 5;
         return 0;
     }
 
     public int getAutonClimb()
     {
         int id = binding.autonClimbButtons.getCheckedRadioButtonId();
-        if (id == R.id.auton_climb_na)
-        {
-            return 0;
-        }
-        if (id == R.id.auton_climb_back)
-        {
-            return 1;
-        }
-        if (id == R.id.auton_climb_left)
-        {
-            return 2;
-        }
-        if (id == R.id.auton_climb_front)
-        {
-            return 3;
-        }
-        if (id == R.id.auton_climb_right)
-        {
-            return 4;
-        }
+        if (id == R.id.auton_climb_na) return 0;
+        if (id == R.id.auton_climb_back) return 1;
+        if (id == R.id.auton_climb_left) return 2;
+        if (id == R.id.auton_climb_front) return 3;
+        if (id == R.id.auton_climb_right) return 4;
         return 0;
     }
 
     public void updateAutonData()
     {
-        m_matchData.setAutonHopper(Integer.parseInt(binding.autonHopperScoreTotal.getText().toString()));
+        if (m_matchData == null) return;
+        try
+        {
+            m_matchData.setAutonHopper(Integer.parseInt(binding.autonHopperScoreTotal.getText().toString()));
+        }
+        catch (NumberFormatException e)
+        {
+            Log.e(TAG, "Invalid hopper score value", e);
+        }
         m_matchData.setAutonPreload(binding.preloadCheckbox.isChecked());
         m_matchData.setAutonNzCheckbox(binding.nzCheckbox.isChecked());
         m_matchData.setAutonAzCheckbox(binding.azCheckbox.isChecked());
