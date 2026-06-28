@@ -6,49 +6,60 @@ import android.util.Log;
 import org.json.JSONArray;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.nio.file.Files;
+import java.nio.charset.StandardCharsets;
 
+/**
+ * Serializer class for saving team aliases data to persistent storage.
+ */
 public class AliasesSerializer
 {
     private static final String TAG = "AliasesSerializer";
 
-    // Data members
     private final String m_dataPath;
 
+    /**
+     * Constructs an AliasesSerializer.
+     *
+     * @param context the context used to retrieve the internal files directory
+     */
     public AliasesSerializer(Context context)
     {
-        // Data members
         m_dataPath = context.getFilesDir().getPath();
-        Log.i(TAG, "Data files dir = " + m_dataPath);
+        Log.d(TAG, "Data files directory: " + m_dataPath);
     }
 
-    // Takes the JSONArray data from Aliases file on scouting website and writes it out 
-    // to <eventCode>_teamAliases.json file on Kindle device.
-    public void saveAliasesInfo(String aliasFileBaseName, JSONArray aliasData)
-            throws IOException
+    /**
+     * Saves the provided JSONArray of aliases data to a JSON file on the device.
+     *
+     * @param filename the name of the file to save (e.g., "eventCode_aliases.json")
+     * @param aliasData the JSONArray containing team-to-alias mapping data
+     * @throws IOException if an error occurs during file writing
+     */
+    public void saveAliasesInfo(String filename, JSONArray aliasData) throws IOException
     {
-        Log.d(TAG, "saveAliasesInfo() starting");
-        Writer aliasWriter = null;
-        try
+        if (filename == null || aliasData == null)
         {
-            File file1 = new File(m_dataPath + "/" + aliasFileBaseName);
-            Log.i(TAG, "Alias file path on device: = " + m_dataPath + "/" + aliasFileBaseName);
-
-            OutputStream out = Files.newOutputStream(file1.toPath());
-            aliasWriter = new OutputStreamWriter(out);
-            aliasWriter.write(aliasData.toString());
-            Log.d(TAG, "Aliases Device Data File saved on device: " + file1);
+            Log.w(TAG, "Attempted to save aliases with null filename or data");
+            return;
         }
-        finally
+
+        Log.d(TAG, "Saving aliases info to: " + filename);
+        File file = new File(m_dataPath, filename);
+
+        try (FileOutputStream out = new FileOutputStream(file);
+             Writer writer = new OutputStreamWriter(out, StandardCharsets.UTF_8))
         {
-            if (aliasWriter != null)
-            {
-                aliasWriter.close();
-            }
+            writer.write(aliasData.toString());
+            Log.i(TAG, "Successfully saved aliases data to " + file.getAbsolutePath());
+        }
+        catch (IOException e)
+        {
+            Log.e(TAG, "Error saving aliases file: " + filename, e);
+            throw e;
         }
     }
 }

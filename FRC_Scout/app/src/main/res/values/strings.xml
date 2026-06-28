@@ -8,11 +8,6 @@
     <string name="app_original_author">Created by Nandita Jayanthi, 2020</string>
     <string name="app_version">Version 2026–1.0</string>
 
-    <!-- Strings used for fragments for navigation -->
-    <!--    <string name="title_home">Home</string>-->
-    <!--    <string name="title_dashboard">Dashboard</string>-->
-    <!--    <string name="title_notifications">Notifications</string>-->
-
     <!-- Match List screen -->
     <string name="sort_by">Sort By:</string>
     <string-array name="date_array">
@@ -121,6 +116,7 @@
 
     <string name="idk">IDK</string>
     <string name="n_a">N/A</string>
+    <string name="loading">Loading…</string>
 
     <string name="medium">Medium</string>
     <string name="large">Large</string>

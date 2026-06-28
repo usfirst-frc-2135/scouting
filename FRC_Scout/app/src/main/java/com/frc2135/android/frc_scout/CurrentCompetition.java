@@ -8,51 +8,81 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+/**
+ * Singleton class that maintains the currently active FRC competition information.
+ * Information is persisted to and loaded from a JSON file.
+ */
 public class CurrentCompetition
 {
-
     private static final String TAG = "CurrentCompetition";
+
+    // JSON Keys
+    private static final String KEY_EVENT_CODE = "eventCode";
+    private static final String KEY_COMP_NAME = "compName";
 
     // Data members
     private String m_eventCode;
     private String m_compName;
 
-    private static CurrentCompetition sCurrentCompetition;
+    private static volatile CurrentCompetition sCurrentCompetition;
 
-    public CurrentCompetition(@SuppressWarnings("unused") Context mAppContext)
+    /**
+     * Default constructor used when no saved competition data is found.
+     */
+    public CurrentCompetition()
     {
         m_eventCode = "EVTX";
         m_compName = "COMPX";
-        Log.d(TAG, "constructor: m_eventCode = " + m_eventCode + "; m_compName = " + m_compName);
+        Log.d(TAG, "Default constructor initialized: " + m_eventCode + " (" + m_compName + ")");
     }
 
+    /**
+     * Constructs a CurrentCompetition object from a {@link JSONObject}.
+     *
+     * @param json the source JSONObject
+     */
     public CurrentCompetition(JSONObject json)
-            throws JSONException
     {
-        m_eventCode = json.getString("eventCode");
-        m_compName = json.getString("compName");
-        Log.d(TAG, "constructor from JSON file: m_eventCode = " + m_eventCode + "; m_compName = " + m_compName);
+        m_eventCode = json.optString(KEY_EVENT_CODE, "EVTX");
+        m_compName = json.optString(KEY_COMP_NAME, "COMPX");
+        Log.d(TAG, "Initialized from JSON: " + m_eventCode + " (" + m_compName + ")");
     }
 
-    public static CurrentCompetition get(Context c)
-            throws IOException, JSONException
+    /**
+     * Returns the singleton instance of CurrentCompetition.
+     * Loads saved data from disk if it hasn't been initialized yet.
+     *
+     * @param context the application context for file operations
+     * @return the singleton CurrentCompetition instance
+     * @throws IOException if reading the settings file fails
+     * @throws JSONException if parsing the settings JSON fails
+     */
+    public static CurrentCompetition get(Context context) throws IOException, JSONException
     {
         if (sCurrentCompetition == null)
         {
-            // Read in current_competition.json file, if there is one on the device.
-            CompetitionDataSerializer compSerializer = new CompetitionDataSerializer(c);
-            sCurrentCompetition = compSerializer.loadCurrentComp();
-            if (sCurrentCompetition == null)
+            synchronized (CurrentCompetition.class)
             {
-                sCurrentCompetition = new CurrentCompetition(c.getApplicationContext());
+                if (sCurrentCompetition == null)
+                {
+                    Log.d(TAG, "Loading CurrentCompetition singleton");
+                    CompetitionDataSerializer serializer = new CompetitionDataSerializer(context.getApplicationContext());
+                    sCurrentCompetition = serializer.loadCurrentComp();
+                    
+                    if (sCurrentCompetition == null)
+                    {
+                        Log.d(TAG, "No saved competition found, using defaults");
+                        sCurrentCompetition = new CurrentCompetition();
+                    }
+                }
             }
         }
         return sCurrentCompetition;
     }
 
-    public void setEventCode(String ec)
+    public void setEventCode(String eventCode)
     {
-        m_eventCode = ec;
+        m_eventCode = (eventCode != null) ? eventCode.trim() : "EVTX";
     }
 
     public String getEventCode()
@@ -60,17 +90,22 @@ public class CurrentCompetition
         return m_eventCode;
     }
 
-    public void setCompName(String cn)
+    public void setCompName(String compName)
     {
-        m_compName = cn;
+        m_compName = (compName != null) ? compName.trim() : "COMPX";
     }
 
-    public JSONObject toJSON()
-            throws JSONException
+    /**
+     * Serializes the current competition data to a {@link JSONObject}.
+     *
+     * @return the serialized JSONObject
+     * @throws JSONException if serialization fails
+     */
+    public JSONObject toJSON() throws JSONException
     {
         JSONObject json = new JSONObject();
-        json.put("compName", m_compName);
-        json.put("eventCode", m_eventCode);
+        json.put(KEY_COMP_NAME, m_compName);
+        json.put(KEY_EVENT_CODE, m_eventCode);
         return json;
     }
 }

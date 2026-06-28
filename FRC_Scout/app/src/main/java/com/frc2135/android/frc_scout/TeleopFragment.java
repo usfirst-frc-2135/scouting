@@ -36,6 +36,7 @@ public class TeleopFragment extends Fragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate");
         m_matchData = ((ScoutingActivity) requireActivity()).getCurrentMatch();
     }
 
@@ -50,6 +51,7 @@ public class TeleopFragment extends Fragment
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
+        Log.d(TAG, "onViewCreated");
         setupActionBar();
         if (m_matchData != null)
         {
@@ -107,7 +109,10 @@ public class TeleopFragment extends Fragment
             case 6 -> R.id.accuracy_none;
             default -> -1;
         };
-        if (id != -1) binding.accuracyButtons.check(id);
+        if (id != -1)
+        {
+            binding.accuracyButtons.check(id);
+        }
     }
 
     private void initPassingRate(int value)
@@ -121,7 +126,10 @@ public class TeleopFragment extends Fragment
             case 4 -> R.id.passing_tons;
             default -> -1;
         };
-        if (id != -1) binding.passingEffectivenessButtons.check(id);
+        if (id != -1)
+        {
+            binding.passingEffectivenessButtons.check(id);
+        }
     }
 
     private void initDefenseRate(int value)
@@ -136,7 +144,10 @@ public class TeleopFragment extends Fragment
             case 5 -> R.id.defense_high;
             default -> -1;
         };
-        if (id != -1) binding.defenseButtons.check(id);
+        if (id != -1)
+        {
+            binding.defenseButtons.check(id);
+        }
     }
 
     private void initPassNz(int value)
@@ -147,7 +158,10 @@ public class TeleopFragment extends Fragment
             case 1 -> R.id.yes_nz;
             default -> -1;
         };
-        if (id != -1) binding.passNz.check(id);
+        if (id != -1)
+        {
+            binding.passNz.check(id);
+        }
     }
 
     private void initPassAz(int value)
@@ -158,7 +172,10 @@ public class TeleopFragment extends Fragment
             case 1 -> R.id.yes_az;
             default -> -1;
         };
-        if (id != -1) binding.passAz.check(id);
+        if (id != -1)
+        {
+            binding.passAz.check(id);
+        }
     }
 
     private void initDriverAbility(int value)
@@ -173,7 +190,10 @@ public class TeleopFragment extends Fragment
             case 5 -> R.id.driving_elite;
             default -> -1;
         };
-        if (id != -1) binding.drivingButtons.check(id);
+        if (id != -1)
+        {
+            binding.drivingButtons.check(id);
+        }
     }
 
     private void setupPhoto()
@@ -267,7 +287,10 @@ public class TeleopFragment extends Fragment
                     width = 250;
                     break;
             }
-            if (resId != 0) binding.photo.setBackgroundResource(resId);
+            if (resId != 0)
+            {
+                binding.photo.setBackgroundResource(resId);
+            }
             if (width != -1)
             {
                 params.width = width;
@@ -323,70 +346,157 @@ public class TeleopFragment extends Fragment
     public int getCurrentAccuracyLevel()
     {
         int id = binding.accuracyButtons.getCheckedRadioButtonId();
-        if (id == R.id.accuracy_NA) return 0;
-        if (id == R.id.accuracy_most) return 1;
-        if (id == R.id.accuracy_three_fourths) return 2;
-        if (id == R.id.accuracy_half) return 3;
-        if (id == R.id.accuracy_quarter) return 4;
-        if (id == R.id.accuracy_few) return 5;
-        if (id == R.id.accuracy_none) return 6;
+        if (id == R.id.accuracy_NA)
+        {
+            return 0;
+        }
+        if (id == R.id.accuracy_most)
+        {
+            return 1;
+        }
+        if (id == R.id.accuracy_three_fourths)
+        {
+            return 2;
+        }
+        if (id == R.id.accuracy_half)
+        {
+            return 3;
+        }
+        if (id == R.id.accuracy_quarter)
+        {
+            return 4;
+        }
+        if (id == R.id.accuracy_few)
+        {
+            return 5;
+        }
+        if (id == R.id.accuracy_none)
+        {
+            return 6;
+        }
         return 0;
     }
 
     public int getPassingEffectivenessRate()
     {
         int id = binding.passingEffectivenessButtons.getCheckedRadioButtonId();
-        if (id == R.id.passing_rate_na) return 0;
-        if (id == R.id.passing_low) return 1;
-        if (id == R.id.passing_medium) return 2;
-        if (id == R.id.passing_large) return 3;
-        if (id == R.id.passing_tons) return 4;
+        if (id == R.id.passing_rate_na)
+        {
+            return 0;
+        }
+        if (id == R.id.passing_low)
+        {
+            return 1;
+        }
+        if (id == R.id.passing_medium)
+        {
+            return 2;
+        }
+        if (id == R.id.passing_large)
+        {
+            return 3;
+        }
+        if (id == R.id.passing_tons)
+        {
+            return 4;
+        }
         return 5;
     }
 
     public int getCurrentDefenseLevel()
     {
         int id = binding.defenseButtons.getCheckedRadioButtonId();
-        if (id == R.id.defense_none) return 0;
-        if (id == R.id.defense_low) return 1;
-        if (id == R.id.defense_medium_low) return 2;
-        if (id == R.id.defense_medium) return 3;
-        if (id == R.id.defense_medium_high) return 4;
-        if (id == R.id.defense_high) return 5;
+        if (id == R.id.defense_none)
+        {
+            return 0;
+        }
+        if (id == R.id.defense_low)
+        {
+            return 1;
+        }
+        if (id == R.id.defense_medium_low)
+        {
+            return 2;
+        }
+        if (id == R.id.defense_medium)
+        {
+            return 3;
+        }
+        if (id == R.id.defense_medium_high)
+        {
+            return 4;
+        }
+        if (id == R.id.defense_high)
+        {
+            return 5;
+        }
         return 0;
     }
 
     public int getPassNeutralZone()
     {
         int id = binding.passNz.getCheckedRadioButtonId();
-        if (id == R.id.no_nz) return 0;
-        if (id == R.id.yes_nz) return 1;
+        if (id == R.id.no_nz)
+        {
+            return 0;
+        }
+        if (id == R.id.yes_nz)
+        {
+            return 1;
+        }
         return 3;
     }
 
     public int getPassAllianceZone()
     {
         int id = binding.passAz.getCheckedRadioButtonId();
-        if (id == R.id.no_az) return 0;
-        if (id == R.id.yes_az) return 1;
+        if (id == R.id.no_az)
+        {
+            return 0;
+        }
+        if (id == R.id.yes_az)
+        {
+            return 1;
+        }
         return 3;
     }
 
     public int getDriverAbility()
     {
         int id = binding.drivingButtons.getCheckedRadioButtonId();
-        if (id == R.id.driving_na) return 0;
-        if (id == R.id.driving_slow) return 1;
-        if (id == R.id.driving_jerky) return 2;
-        if (id == R.id.driving_avg) return 3;
-        if (id == R.id.driving_fast) return 4;
-        if (id == R.id.driving_elite) return 5;
+        if (id == R.id.driving_na)
+        {
+            return 0;
+        }
+        if (id == R.id.driving_slow)
+        {
+            return 1;
+        }
+        if (id == R.id.driving_jerky)
+        {
+            return 2;
+        }
+        if (id == R.id.driving_avg)
+        {
+            return 3;
+        }
+        if (id == R.id.driving_fast)
+        {
+            return 4;
+        }
+        if (id == R.id.driving_elite)
+        {
+            return 5;
+        }
         return 6;
     }
 
     public void updateTeleopData()
     {
-        if (m_matchData == null) return;
+        if (m_matchData == null)
+        {
+            return;
+        }
         try
         {
             m_matchData.setHoppersUsed(Integer.parseInt(binding.hopperUsedTotal.getText().toString()));
@@ -410,6 +520,7 @@ public class TeleopFragment extends Fragment
     public void onDestroyView()
     {
         super.onDestroyView();
+        Log.d(TAG, "onDestroyView");
         binding = null;
     }
 }

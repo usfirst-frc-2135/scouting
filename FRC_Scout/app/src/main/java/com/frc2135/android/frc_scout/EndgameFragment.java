@@ -31,6 +31,7 @@ public class EndgameFragment extends Fragment
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate");
         ScoutingActivity activity = (ScoutingActivity) getActivity();
         if (activity != null)
         {
@@ -49,6 +50,7 @@ public class EndgameFragment extends Fragment
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
+        Log.d(TAG, "onViewCreate");
         setupActionBar();
         loadMatchData();
         setupListeners();
@@ -58,7 +60,10 @@ public class EndgameFragment extends Fragment
     private void setupActionBar()
     {
         ScoutingActivity activity = (ScoutingActivity) getActivity();
-        if (activity == null || m_matchData == null) return;
+        if (activity == null || m_matchData == null)
+        {
+            return;
+        }
 
         ActionBar actionBar = activity.getSupportActionBar();
         if (actionBar != null)
@@ -70,7 +75,10 @@ public class EndgameFragment extends Fragment
 
     private void loadMatchData()
     {
-        if (m_matchData == null) return;
+        if (m_matchData == null)
+        {
+            return;
+        }
 
         initStartClimbing(m_matchData.getStartClimb());
         initClimbLevel(m_matchData.getEndgameClimbLevel());
@@ -83,6 +91,8 @@ public class EndgameFragment extends Fragment
 
     private void setupListeners()
     {
+        binding.genQR.setEnabled(true);
+        binding.genQRDisabled.setVisibility(View.INVISIBLE);
         binding.genQR.setOnClickListener(view -> {
             updateEndgameData();
             String validationMsg = validateEndgameData();
@@ -113,7 +123,7 @@ public class EndgameFragment extends Fragment
                 Log.e(TAG, "Failed to save Match Data!");
                 Toast.makeText(getContext(), "Error: Failed to save match data!", Toast.LENGTH_SHORT).show();
             }
-            
+
             Intent i = new Intent(getActivity(), MatchListActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
@@ -132,7 +142,10 @@ public class EndgameFragment extends Fragment
             case 4 -> R.id.start_less;
             default -> -1;
         };
-        if (id != -1) binding.startText.check(id);
+        if (id != -1)
+        {
+            binding.startText.check(id);
+        }
     }
 
     private void initClimbLevel(int value)
@@ -145,7 +158,10 @@ public class EndgameFragment extends Fragment
             case 3 -> R.id.endgame_level_three;
             default -> -1;
         };
-        if (id != -1) binding.endgameLevelClimbGroup.check(id);
+        if (id != -1)
+        {
+            binding.endgameLevelClimbGroup.check(id);
+        }
     }
 
     private void initClimbPos(int value)
@@ -159,7 +175,10 @@ public class EndgameFragment extends Fragment
             case 4 -> R.id.endgame_climb_right;
             default -> -1;
         };
-        if (id != -1) binding.endgameClimbButtons.check(id);
+        if (id != -1)
+        {
+            binding.endgameClimbButtons.check(id);
+        }
     }
 
     private void initDiedValue(int value)
@@ -174,24 +193,33 @@ public class EndgameFragment extends Fragment
             case 5 -> R.id.no_show;
             default -> -1;
         };
-        if (id != -1) binding.diedGroup.check(id);
+        if (id != -1)
+        {
+            binding.diedGroup.check(id);
+        }
     }
 
     private String validateEndgameData()
     {
         StringBuilder msg = new StringBuilder();
-        
+
         // Validation logic for teleop fields (stored in m_matchData)
         int passNZ = m_matchData.getPassNeutralZone();
         int passAZ = m_matchData.getPassAllianceZone();
         if (passNZ == 3 || passAZ == 3)
         {
             if (passNZ == 3 && passAZ == 3)
+            {
                 msg.append("Teleop: Passing From Neutral/Alliance Zone buttons must be set!\n");
+            }
             else if (passNZ == 3)
+            {
                 msg.append("Teleop: Passing From Neutral Zone button must be set\n");
+            }
             else
+            {
                 msg.append("Teleop: Passing From Alliance Zone button must be set\n");
+            }
         }
 
         // Validate climb selections
@@ -214,11 +242,17 @@ public class EndgameFragment extends Fragment
         if (((passNZ == 1 || passAZ == 1) && passRate == 0) || (passRate == 5) || ((passNZ == 0 && passAZ == 0) && passRate > 0))
         {
             if ((passNZ == 1 || passAZ == 1) && passRate == 0)
+            {
                 msg.append("\nTeleop: Passed from zone set, Passing rate not set!\n");
+            }
             else if (passRate == 5)
+            {
                 msg.append("\nTeleop: Passing rate not set!\n");
+            }
             else
+            {
                 msg.append("\nTeleop: Passing rate set, Passed from zone not set!\n");
+            }
         }
 
         return msg.toString();
@@ -227,50 +261,113 @@ public class EndgameFragment extends Fragment
     private int getDiedValue()
     {
         int id = binding.diedGroup.getCheckedRadioButtonId();
-        if (id == R.id.died_none) return 0;
-        if (id == R.id.died_most) return 1;
-        if (id == R.id.died_min) return 2;
-        if (id == R.id.died_thirty) return 3;
-        if (id == R.id.died_tt) return 4;
-        if (id == R.id.no_show) return 5;
+        if (id == R.id.died_none)
+        {
+            return 0;
+        }
+        if (id == R.id.died_most)
+        {
+            return 1;
+        }
+        if (id == R.id.died_min)
+        {
+            return 2;
+        }
+        if (id == R.id.died_thirty)
+        {
+            return 3;
+        }
+        if (id == R.id.died_tt)
+        {
+            return 4;
+        }
+        if (id == R.id.no_show)
+        {
+            return 5;
+        }
         return 0;
     }
 
     private int getStartClimb()
     {
         int id = binding.startText.getCheckedRadioButtonId();
-        if (id == R.id.start_none) return 0;
-        if (id == R.id.start_before) return 1;
-        if (id == R.id.start_bell) return 2;
-        if (id == R.id.start_ten) return 3;
-        if (id == R.id.start_less) return 4;
+        if (id == R.id.start_none)
+        {
+            return 0;
+        }
+        if (id == R.id.start_before)
+        {
+            return 1;
+        }
+        if (id == R.id.start_bell)
+        {
+            return 2;
+        }
+        if (id == R.id.start_ten)
+        {
+            return 3;
+        }
+        if (id == R.id.start_less)
+        {
+            return 4;
+        }
         return 0;
     }
 
     private int getClimbPos()
     {
         int id = binding.endgameClimbButtons.getCheckedRadioButtonId();
-        if (id == R.id.endgame_climb_na) return 0;
-        if (id == R.id.endgame_climb_back) return 1;
-        if (id == R.id.endgame_climb_left) return 2;
-        if (id == R.id.endgame_climb_front) return 3;
-        if (id == R.id.endgame_climb_right) return 4;
+        if (id == R.id.endgame_climb_na)
+        {
+            return 0;
+        }
+        if (id == R.id.endgame_climb_back)
+        {
+            return 1;
+        }
+        if (id == R.id.endgame_climb_left)
+        {
+            return 2;
+        }
+        if (id == R.id.endgame_climb_front)
+        {
+            return 3;
+        }
+        if (id == R.id.endgame_climb_right)
+        {
+            return 4;
+        }
         return 0;
     }
 
     private int getClimbLevel()
     {
         int id = binding.endgameLevelClimbGroup.getCheckedRadioButtonId();
-        if (id == R.id.endgame_level_na) return 0;
-        if (id == R.id.endgame_level_one) return 1;
-        if (id == R.id.endgame_level_two) return 2;
-        if (id == R.id.endgame_level_three) return 3;
+        if (id == R.id.endgame_level_na)
+        {
+            return 0;
+        }
+        if (id == R.id.endgame_level_one)
+        {
+            return 1;
+        }
+        if (id == R.id.endgame_level_two)
+        {
+            return 2;
+        }
+        if (id == R.id.endgame_level_three)
+        {
+            return 3;
+        }
         return 0;
     }
 
     public void updateEndgameData()
     {
-        if (m_matchData == null || binding == null) return;
+        if (m_matchData == null || binding == null)
+        {
+            return;
+        }
         m_matchData.setStartClimb(getStartClimb());
         m_matchData.setDiedValue(getDiedValue());
         m_matchData.setComment(binding.comments.getText().toString());
@@ -288,6 +385,7 @@ public class EndgameFragment extends Fragment
     public void onDestroyView()
     {
         super.onDestroyView();
+        Log.d(TAG, "onDestroyView");
         binding = null;
     }
 }

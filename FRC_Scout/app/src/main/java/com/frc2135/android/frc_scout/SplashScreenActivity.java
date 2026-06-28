@@ -29,6 +29,7 @@ public class SplashScreenActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle icicle)
     {
+        Log.d(TAG, "onCreate");
         // Apply theme preference before super.onCreate to ensure the correct theme is applied early
         Preferences.get(this).applyTheme();
 

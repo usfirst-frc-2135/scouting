@@ -36,7 +36,7 @@ public class PreMatchActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-        Log.i(TAG, "PreMatchActivity created.");
+        Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
 
         // Apply theme preference before setting content view
@@ -122,14 +122,17 @@ public class PreMatchActivity extends AppCompatActivity
         {
             public void onTextChanged(CharSequence c, int start, int before, int count)
             {
+                Log.d(TAG, "onTextChanged");
             }
 
             public void beforeTextChanged(CharSequence c, int start, int count, int after)
             {
+                Log.d(TAG, "beforeTextChanged");
             }
 
             public void afterTextChanged(Editable c)
             {
+                Log.d(TAG, "afterTextChanged");
                 binding.errorMessagePm.setVisibility(View.INVISIBLE);
             }
         };
@@ -155,14 +158,17 @@ public class PreMatchActivity extends AppCompatActivity
         {
             public void onTextChanged(CharSequence c, int start, int before, int count)
             {
+                Log.d(TAG, "onTextChanged");
             }
 
             public void beforeTextChanged(CharSequence c, int start, int count, int after)
             {
+                Log.d(TAG, "beforeTextChanged");
             }
 
             public void afterTextChanged(Editable c)
             {
+                Log.d(TAG, "afterTextChanged");
                 binding.errorMessagePm.setVisibility(View.INVISIBLE);
                 setTeamNumFromMatchNum();
             }
@@ -173,6 +179,7 @@ public class PreMatchActivity extends AppCompatActivity
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
+                Log.d(TAG, "onItemSelected");
                 binding.errorMessagePm.setVisibility(View.INVISIBLE);
                 if (parent != null && parent.getItemAtPosition(position) != null && m_matchData != null)
                 {
@@ -185,6 +192,7 @@ public class PreMatchActivity extends AppCompatActivity
             @Override
             public void onNothingSelected(AdapterView<?> parent)
             {
+                Log.d(TAG, "onNothingSelected");
                 binding.errorMessagePm.setVisibility(View.INVISIBLE);
                 binding.teamNumberField.setSelection(0);
             }

@@ -4,272 +4,291 @@ import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
+/**
+ * Singleton class for managing the collection of {@link MatchData}.
+ * Handles loading, saving, sorting, and filtering of match records.
+ */
 public class MatchListData
 {
     private static final String TAG = "MatchListData";
     private static final String FILENAME = "settings.json";
 
-    private ArrayList<MatchData> m_totalMatchListData;
+    private final List<MatchData> m_totalMatchListData;
     private final MatchDataSerializer m_serializer;
-
-    private static MatchListData sMatchListData;
     private final Context m_appContext;
+
+    private static volatile MatchListData sMatchListData;
 
     private MatchListData(Context appContext)
     {
-        m_appContext = appContext;
+        m_appContext = appContext.getApplicationContext();
         m_serializer = new MatchDataSerializer(m_appContext, FILENAME);
+        m_totalMatchListData = loadInitialData();
+    }
+
+    private List<MatchData> loadInitialData()
+    {
         try
         {
-            Log.d(TAG, "m_Serializer loading MatchListData");
-            m_totalMatchListData = m_serializer.loadMatchData();
-            Log.d(TAG, "Number of matches loaded from m_Serializer: " + m_totalMatchListData.size());
+            Log.d(TAG, "Loading match list data from serializer");
+            List<MatchData> data = m_serializer.loadMatchData();
+            if (data != null)
+            {
+                Log.d(TAG, "Successfully loaded " + data.size() + " matches");
+                return data;
+            }
         }
         catch (Exception e)
         {
-            m_totalMatchListData = new ArrayList<>();
-            Log.e(TAG, "Error loading matchHistory: ", e);
+            Log.e(TAG, "Error loading match history", e);
         }
+        return new ArrayList<>();
     }
 
-    public static MatchListData get(Context c)
+    /**
+     * Returns the thread-safe singleton instance of MatchListData.
+     *
+     * @param context the context used to initialize the instance
+     * @return the singleton instance
+     */
+    public static MatchListData get(Context context)
     {
         if (sMatchListData == null)
         {
-            Log.d(TAG, "Creating a new sMatchListData");
-            sMatchListData = new MatchListData(c.getApplicationContext());
+            synchronized (MatchListData.class)
+            {
+                if (sMatchListData == null)
+                {
+                    sMatchListData = new MatchListData(context);
+                }
+            }
         }
         return sMatchListData;
     }
 
-    public ArrayList<MatchData> getMatches()
+    /**
+     * @return the full list of scouted matches
+     */
+    public List<MatchData> getMatches()
     {
         return m_totalMatchListData;
     }
 
-    public MatchData getMatch(String matchStr)
+    /**
+     * Finds a match by its unique ID.
+     *
+     * @param matchId the unique identifier for the match
+     * @return the matching MatchData object, or null if not found
+     */
+    public MatchData getMatch(String matchId)
     {
-        for (MatchData mX : m_totalMatchListData)
+        if (matchId == null)
         {
-            if (mX.getMatchID().equals(matchStr))
-            {
-                return mX;
-            }
+            return null;
         }
-        Log.d(TAG, "no match found for getMatch(): " + matchStr);
-        return null;
+        return m_totalMatchListData.stream()
+                .filter(m -> matchId.equals(m.getMatchID()))
+                .findFirst()
+                .orElse(null);
     }
 
-    public void deleteMatch(MatchData mY)
+    /**
+     * Deletes a match from the list and its corresponding file on disk.
+     *
+     * @param match the MatchData object to delete
+     */
+    public void deleteMatch(MatchData match)
     {
-        m_totalMatchListData.remove(mY);
-        m_appContext.deleteFile(mY.getMatchFileName());
+        if (match != null)
+        {
+            m_totalMatchListData.remove(match);
+            m_appContext.deleteFile(match.getMatchFileName());
+            Log.d(TAG, "Deleted match: " + match.getMatchID());
+        }
     }
 
-    public void addMatch(MatchData mData)
+    /**
+     * Adds a new match to the collection.
+     *
+     * @param matchData the match data to add
+     */
+    public void addMatch(MatchData matchData)
     {
-        m_totalMatchListData.add(mData);
+        if (matchData != null)
+        {
+            m_totalMatchListData.add(matchData);
+        }
     }
 
+    /**
+     * Saves the current scout names to the settings file.
+     *
+     * @return true if successful, false otherwise
+     */
     public boolean saveScoutNames()
     {
         try
         {
-            Log.d(TAG, "Saving scout names to JSON file");
             m_serializer.saveScoutNames();
             return true;
         }
         catch (Exception e)
         {
-            Log.e(TAG, "saveScoutNames(): Error saving scout names:", e);
+            Log.e(TAG, "Failed to save scout names", e);
             return false;
         }
     }
 
+    /**
+     * Saves a specific match's data to its JSON file.
+     *
+     * @param matchData the match to save
+     * @return true if successful, false otherwise
+     */
     public boolean saveMatchData(MatchData matchData)
     {
         try
         {
-            Log.d(TAG, "Saving saveMatchData data to JSON files");
             m_serializer.saveMatchData(matchData);
             return true;
         }
         catch (Exception e)
         {
-            Log.e(TAG, "saveMatchData(): Error saving data:", e);
+            Log.e(TAG, "Failed to save match data for ID: " + (matchData != null ? matchData.getMatchID() : "null"), e);
             return false;
         }
     }
 
+    /**
+     * Saves all match data and settings to persistent storage.
+     *
+     * @return true if successful, false otherwise
+     */
     @SuppressWarnings("unused")
     public boolean saveAllData()
     {
         try
         {
-            Log.d(TAG, "Saving all data to JSON files");
-            m_serializer.saveAllData(m_totalMatchListData);
+            m_serializer.saveAllData(new ArrayList<>(m_totalMatchListData));
             return true;
         }
         catch (Exception e)
         {
-            Log.e(TAG, "saveAllData(): Error saving data:", e);
+            Log.e(TAG, "Failed to save all data", e);
             return false;
         }
     }
 
-    public ArrayList<MatchData> sortByTimestamp1(ArrayList<MatchData> mdList)
+    /**
+     * Sorts a list of matches by timestamp in ascending order (Oldest first).
+     */
+    public ArrayList<MatchData> sortByTimestamp1(List<MatchData> list)
     {
-        ArrayList<MatchData> sorted = new ArrayList<>();
-        boolean isAdded = false;
-        if (!mdList.isEmpty())
-        {
-            sorted.add(mdList.get(0));
-            for (int ctr1 = 1; ctr1 < mdList.size(); ctr1++)
-            {
-                for (int ctr2 = 0; ctr2 < sorted.size(); ctr2++)
-                {
-                    Date d1 = mdList.get(ctr1).getTimestamp();
-                    Date d2 = (sorted.get(ctr2)).getTimestamp();
-                    if (d1.before(d2))
-                    {
-                        sorted.add(ctr2, mdList.get(ctr1));
-                        ctr2 = sorted.size();
-                        isAdded = true;
-                    }
-                }
-                if (!isAdded)
-                {
-                    sorted.add(mdList.get(ctr1));
-                }
-                isAdded = false;
-            }
-        }
-        return sorted;
+        ArrayList<MatchData> sortedList = new ArrayList<>(list);
+        sortedList.sort(Comparator.comparing(MatchData::getTimestamp, Comparator.nullsLast(Comparator.naturalOrder())));
+        return sortedList;
     }
 
-    public ArrayList<MatchData> sortByTimestamp2(ArrayList<MatchData> mdList)
+    /**
+     * Sorts a list of matches by timestamp in descending order (Newest first).
+     */
+    public ArrayList<MatchData> sortByTimestamp2(List<MatchData> list)
     {
-        ArrayList<MatchData> sorted = new ArrayList<>();
-        ArrayList<MatchData> temp;
-        temp = sortByTimestamp1(mdList);
-        for (MatchData mData : temp)
-        {
-            sorted.add(0, mData);
-        }
-        return sorted;
+        ArrayList<MatchData> sortedList = new ArrayList<>(list);
+        sortedList.sort(Comparator.comparing(MatchData::getTimestamp, Comparator.nullsLast(Comparator.reverseOrder())));
+        return sortedList;
     }
 
-    public ArrayList<MatchData> filterByTeam(ArrayList<MatchData> mdList, String teamNumber)
+    public List<MatchData> filterByTeam(List<MatchData> list, String teamNumber)
     {
-        ArrayList<MatchData> sorted = new ArrayList<>();
-        for (MatchData mData : mdList)
+        if (teamNumber == null)
         {
-            if (mData.getTeamNumber().equals(teamNumber))
-            {
-                sorted.add(mData);
-            }
+            return new ArrayList<>(list);
         }
-        return sorted;
+        return list.stream()
+                .filter(m -> teamNumber.equals(m.getTeamNumber()))
+                .collect(Collectors.toList());
     }
 
-    public ArrayList<MatchData> filterByCompetition(ArrayList<MatchData> mdList, String comp)
+    public List<MatchData> filterByCompetition(List<MatchData> list, String eventCode)
     {
-        ArrayList<MatchData> sorted = new ArrayList<>();
-        for (MatchData mData : mdList)
+        if (eventCode == null)
         {
-            if (mData.getEventCode().equals(comp))
-            {
-                sorted.add(mData);
-            }
+            return new ArrayList<>(list);
         }
-        return sorted;
+        return list.stream()
+                .filter(m -> eventCode.equals(m.getEventCode()))
+                .collect(Collectors.toList());
     }
 
-    public ArrayList<MatchData> filterByScout(ArrayList<MatchData> mdList, String scoutName)
+    public List<MatchData> filterByScout(List<MatchData> list, String scoutName)
     {
-        ArrayList<MatchData> sorted = new ArrayList<>();
-        for (MatchData mData : mdList)
+        if (scoutName == null)
         {
-            if (mData.getName().equals(scoutName))
-            {
-                sorted.add(mData);
-            }
+            return new ArrayList<>(list);
         }
-        return sorted;
+        return list.stream()
+                .filter(m -> scoutName.equals(m.getName()))
+                .collect(Collectors.toList());
     }
 
-    public ArrayList<MatchData> filterByMatchNumber(ArrayList<MatchData> mdList, String matchNum)
+    public List<MatchData> filterByMatchNumber(List<MatchData> list, String matchNum)
     {
-        ArrayList<MatchData> sorted = new ArrayList<>();
-        for (MatchData mData : mdList)
+        if (matchNum == null)
         {
-            if (mData.getMatchNumber().equals(matchNum))
-            {
-                sorted.add(mData);
-            }
+            return new ArrayList<>(list);
         }
-        return sorted;
+        return list.stream()
+                .filter(m -> matchNum.equals(m.getMatchNumber()))
+                .collect(Collectors.toList());
     }
 
+    /**
+     * @return an array of unique team numbers present in the history, prefixed with "Select team"
+     */
     public String[] listTeams()
     {
-        ArrayList<String> teams = new ArrayList<>();
-        for (MatchData mData : m_totalMatchListData)
-        {
-            String team = mData.getTeamNumber();
-            if (!teams.contains(team))
-            {
-                teams.add(team);
-            }
-        }
-        String[] array = new String[teams.size() + 1];
-        array[0] = "Select team";
-        for (int i = 1; i < array.length; i++)
-        {
-            array[i] = teams.get(i - 1);
-        }
-        return array;
+        List<String> result = m_totalMatchListData.stream()
+                .map(MatchData::getTeamNumber)
+                .distinct()
+                .sorted()
+                .collect(Collectors.toList());
+
+        result.add(0, "Select team");
+        return result.toArray(new String[0]);
     }
 
+    /**
+     * @return an array of unique competition codes present in the history, prefixed with "Select competition"
+     */
     public String[] listCompetitions()
     {
-        ArrayList<String> competitions = new ArrayList<>();
-        for (MatchData mData : m_totalMatchListData)
-        {
-            String competition = mData.getEventCode();
-            if (!competitions.contains(competition))
-            {
-                competitions.add(competition);
-            }
-        }
-        String[] array = new String[competitions.size() + 1];
-        array[0] = "Select competition";
-        for (int i = 1; i < array.length; i++)
-        {
-            array[i] = competitions.get(i - 1);
-        }
-        return array;
+        List<String> result = m_totalMatchListData.stream()
+                .map(MatchData::getEventCode)
+                .distinct()
+                .sorted()
+                .collect(Collectors.toList());
+
+        result.add(0, "Select competition");
+        return result.toArray(new String[0]);
     }
 
+    /**
+     * @return an array of unique scout names present in the history, prefixed with "Select scout"
+     */
     public String[] listScouts()
     {
-        ArrayList<String> scouts = new ArrayList<>();
-        for (MatchData mData : m_totalMatchListData)
-        {
-            String scout = mData.getName();
-            if (!scouts.contains(scout))
-            {
-                scouts.add(scout);
-            }
-        }
-        String[] array = new String[scouts.size() + 1];
-        array[0] = "Select scout";
-        for (int i = 1; i < array.length; i++)
-        {
-            array[i] = scouts.get(i - 1);
-        }
-        return array;
+        List<String> result = m_totalMatchListData.stream()
+                .map(MatchData::getName)
+                .distinct()
+                .sorted()
+                .collect(Collectors.toList());
+
+        result.add(0, "Select scout");
+        return result.toArray(new String[0]);
     }
 }

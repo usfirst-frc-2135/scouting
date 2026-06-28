@@ -83,6 +83,7 @@ public class ScoutingActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
+        Log.d(TAG, "onCreateOptionsMenu");
         // Future: getMenuInflater().inflate(R.menu.scouting_menu, menu);
         return true;
     }
@@ -90,6 +91,7 @@ public class ScoutingActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
+        Log.d(TAG, "onOptionsItemsSelected");
         return super.onOptionsItemSelected(item);
     }
 

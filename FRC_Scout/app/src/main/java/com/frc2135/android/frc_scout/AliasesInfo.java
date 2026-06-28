@@ -16,18 +16,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-
-@SuppressWarnings("GrazieInspectionRunner")
+/**
+ * Singleton class for managing team aliases data.
+ * Loads and parses team number to alias mapping from a JSON file.
+ */
 public class AliasesInfo
 {
     private static final String TAG = "AliasesInfo";
 
-    // Data members
     private String m_eventCode;
     private JSONArray m_jsonData;
     private boolean m_bAliasesDataLoaded;
 
-    private static AliasesInfo sAliasesInfo;
+    private static volatile AliasesInfo sAliasesInfo;
 
     private AliasesInfo(String eventCode)
     {
@@ -36,40 +37,42 @@ public class AliasesInfo
         m_jsonData = null;
     }
 
+    /**
+     * Returns the singleton instance of AliasesInfo.
+     *
+     * @param context      the context used for file operations
+     * @param eventCode    the FRC event code
+     * @param bForceReload whether to force a reload of the JSON data
+     * @return the singleton AliasesInfo instance
+     */
     public static AliasesInfo get(Context context, String eventCode, boolean bForceReload)
     {
-        if (sAliasesInfo != null)
+        synchronized (AliasesInfo.class)
         {
-            String oldEventCode = sAliasesInfo.getEventCode();
-            if (bForceReload || !oldEventCode.equals(eventCode))
+            if (sAliasesInfo == null)
             {
-                sAliasesInfo.setEventCode(eventCode);
-                Log.d(TAG, "Resetting existing " + oldEventCode + " sAliasesInfo for new eventCode " + eventCode);
+                Log.d(TAG, "Creating a new sAliasesInfo for eventCode " + eventCode);
+                sAliasesInfo = new AliasesInfo(eventCode);
                 sAliasesInfo.readAliasesJSON(context, true);
             }
+            else
+            {
+                String oldEventCode = sAliasesInfo.getEventCode();
+                if (bForceReload || !oldEventCode.equalsIgnoreCase(eventCode))
+                {
+                    Log.d(TAG, "Resetting AliasesInfo: " + oldEventCode + " -> " + eventCode);
+                    sAliasesInfo.setEventCode(eventCode);
+                    sAliasesInfo.readAliasesJSON(context, true);
+                }
+            }
+            return sAliasesInfo;
         }
-        else
-        {
-            Log.d(TAG, "Creating a new sAliasesInfo for eventCode " + eventCode);
-            sAliasesInfo = new AliasesInfo(eventCode);
-            // Read in matches json file if there is one.
-            sAliasesInfo.readAliasesJSON(context, true);
-        }
-        return sAliasesInfo;
     }
 
     @SuppressWarnings("unused")
     public static void clear()
     {
-        if (sAliasesInfo != null)
-        {
-            Log.d(TAG, "Deleting existing sAliasesInfo");
-            sAliasesInfo = null;
-        }
-        else
-        {
-            Log.d(TAG, "No action needed: no existing sAliasesInfo");
-        }
+        sAliasesInfo = null;
     }
 
     public String getEventCode()
@@ -77,55 +80,58 @@ public class AliasesInfo
         return m_eventCode;
     }
 
-    // Get the alias ("99" number) for the given teamNum (B/C/D num)
+    /**
+     * Returns the alias ("99" number) for the given team number.
+     *
+     * @param teamNumStr the team number (e.g., "2135")
+     * @return the alias string, or empty string if not found
+     * @throws JSONException if parsing the JSON fails
+     */
     public String getAliasForTeamNum(String teamNumStr)
             throws JSONException
     {
-        String rtnVal = "";
-        if (m_jsonData != null)
+        if (m_jsonData == null || teamNumStr == null)
         {
-            // Strip "frc" prefix from given teamNumStr if needed.
-            teamNumStr = MatchData.stripTeamNumPrefix(teamNumStr);
+            return "";
+        }
 
-            // Go through the array of aliases data and find the one for the given teamNumStr.
-            for (int ctr = 0; ctr < m_jsonData.length(); ctr++)
+        String targetTeamNum = MatchData.stripTeamNumPrefix(teamNumStr);
+
+        for (int i = 0; i < m_jsonData.length(); i++)
+        {
+            JSONObject obj = m_jsonData.getJSONObject(i);
+            if (targetTeamNum.equals(obj.optString("teamNum")))
             {
-                JSONObject data1 = (JSONObject) m_jsonData.get(ctr);
-                //                Log.d(TAG, "For jsonData[" + ctr + "], teamNum = " + num);
-                String num = data1.getString("teamNum");
-                if (num.equals(teamNumStr))
-                {
-                    rtnVal = data1.getString("aliasNum");
-                    Log.d(TAG, "Found alias for teamNum " + num + ": " + rtnVal);
-                    break;
-                }
+                return obj.optString("aliasNum", "");
             }
         }
-        return rtnVal;
+        return "";
     }
 
-    // Get the teamNum (B/C/D num) for the given alias ("99" number)
+    /**
+     * Returns the actual team number for the given alias ("99" number).
+     *
+     * @param myAlias the alias string (e.g., "9901")
+     * @return the team number string, or empty string if not found
+     * @throws JSONException if parsing the JSON fails
+     */
     public String getTeamNumForAlias(String myAlias)
             throws JSONException
     {
-        String rtnVal = "";
-        if (m_jsonData != null)
+        if (m_jsonData == null || myAlias == null)
         {
-            // Go through the array of aliases data and find the one for the given aliasNum.
-            for (int ctr = 0; ctr < m_jsonData.length(); ctr++)
+            return "";
+        }
+
+        for (int i = 0; i < m_jsonData.length(); i++)
+        {
+            JSONObject obj = m_jsonData.getJSONObject(i);
+            if (myAlias.equals(obj.optString("aliasNum")))
             {
-                JSONObject data1 = (JSONObject) m_jsonData.get(ctr);
-                String aliasNum = data1.getString("aliasNum");
-                Log.d(TAG, "For jsonData[" + ctr + "], aliasNum = " + aliasNum);
-                if (aliasNum.equals(myAlias))
-                {
-                    rtnVal = data1.getString("teamNum");
-                    Log.d(TAG, "Found teamNum for alias " + aliasNum + ": " + rtnVal);
-                    break;
-                }
+                return obj.optString("teamNum", "");
             }
         }
-        return rtnVal;
+        return "";
     }
 
     public void setEventCode(String eventCode)
@@ -135,19 +141,28 @@ public class AliasesInfo
         m_jsonData = null;
     }
 
+    /**
+     * Reads the aliases JSON file from internal storage.
+     *
+     * @param context the context used to open the file
+     * @param bSilent if true, error Toast messages are suppressed
+     */
     public void readAliasesJSON(Context context, boolean bSilent)
     {
-        String filename = context.getFilesDir().getPath() + "/" + m_eventCode.trim().toLowerCase() + "_aliases.json";
-        Log.d(TAG, "Looking for aliases JSON file: " + filename);
-        File file = new File(filename);
+        if (m_eventCode == null || m_eventCode.trim().isEmpty())
+        {
+            return;
+        }
 
-        // Check if file exists before trying to read it.
+        String filename = m_eventCode.trim().toLowerCase() + "_aliases.json";
+        File file = new File(context.getFilesDir(), filename);
+        Log.d(TAG, "Looking for aliases file: " + file.getAbsolutePath());
+
         if (file.exists())
         {
-            Log.d(TAG, "Attempting to read in aliases JSON file");
-            try (InputStream in = context.openFileInput(file.getName().trim()); BufferedReader reader = new BufferedReader(new InputStreamReader(in)))
+            try (InputStream in = context.openFileInput(filename);
+                 BufferedReader reader = new BufferedReader(new InputStreamReader(in)))
             {
-
                 StringBuilder jsonString = new StringBuilder();
                 String line;
                 while ((line = reader.readLine()) != null)
@@ -155,98 +170,32 @@ public class AliasesInfo
                     jsonString.append(line);
                 }
 
-                // Parse the JSON.
                 m_jsonData = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
-                Log.d(TAG, "setting m_bAliasesDataLoaded = true");
                 m_bAliasesDataLoaded = true;
-
-                // Show success Toast msg 
-                String msg = "Successfully read aliases file from device: " + m_eventCode + " _aliases.json file ";
-                Log.d(TAG, msg);
-                Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+                Log.d(TAG, "Successfully loaded aliases for " + m_eventCode);
+                Toast.makeText(context, "Loaded aliases for " + m_eventCode, Toast.LENGTH_SHORT).show();
             }
-            catch (FileNotFoundException err)
+            catch (FileNotFoundException e)
             {
                 if (!bSilent)
                 {
-                    // Show error Toast msg 
-                    String errMsg = "ERROR reading aliases file from device: \n" + err;
-                    Log.e(TAG, errMsg);
-                    Toast.makeText(context, errMsg, Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "Aliases file not found: " + filename);
+                    Toast.makeText(context, "Aliases file not found", Toast.LENGTH_SHORT).show();
                 }
             }
-            catch (JSONException jsonException)
+            catch (JSONException | IOException e)
             {
-                Log.e(TAG, "ERROR (jsonException) reading aliases file\n");
-                Log.e(TAG, Log.getStackTraceString(jsonException));
-            }
-            catch (IOException ioException)
-            {
-                Log.e(TAG, "ERROR (ioException) reading aliases file\n");
-                Log.e(TAG, Log.getStackTraceString(ioException));
+                Log.e(TAG, "Error reading aliases file", e);
             }
         }
         else
         {
-            Log.d(TAG, "File doesn't exist: " + filename);
+            Log.d(TAG, "Aliases file does not exist: " + filename);
         }
     }
 
     public boolean isAliasesInfoLoaded()
     {
-        Log.d(TAG, "isAliasesDataLoaded() returning " + m_bAliasesDataLoaded);
         return m_bAliasesDataLoaded;
     }
-
-    @SuppressWarnings("unused")
-    public String[] getTeams(String matchNum)
-            throws JSONException
-    {
-        String[] teams = new String[7];
-        for (int i = 0; i < 7; i++)   // initialize with empty strings
-        {
-            teams[i] = "";
-        }
-
-        boolean bMatchNumFound = false;
-        if (m_jsonData != null)
-        {
-            JSONObject tempB;
-            JSONObject tempR;
-            JSONArray redTeams = new JSONArray();
-            JSONArray blueTeams = new JSONArray();
-            for (int i = 0; i < m_jsonData.length(); i++)
-            {
-                if ((((JSONObject) m_jsonData.get(i)).getString("comp_level") + ((JSONObject) m_jsonData.get(i)).getString("match_number")).equals(matchNum.trim().toLowerCase()))
-                {
-                    bMatchNumFound = true;
-                    JSONObject alliances = (JSONObject) m_jsonData.get(i);
-                    JSONObject color = (JSONObject) alliances.get("alliances");
-                    tempB = (JSONObject) color.get("blue");
-                    blueTeams = (JSONArray) tempB.get("team_keys");
-                    tempR = (JSONObject) color.get("red");
-                    redTeams = (JSONArray) tempR.get("team_keys");
-                    break;
-                }
-            }
-            if (bMatchNumFound)
-            {
-                teams[0] = "No team selected";
-                for (int i = 1; i < 4; i++)
-                {
-                    teams[i] = redTeams.getString(i - 1);
-                }
-                for (int i = 4; i < 7; i++)
-                {
-                    teams[i] = blueTeams.getString(i - 4);
-                }
-            }
-            else
-            {
-                Log.d(TAG, "getTeams(): matchNum '" + matchNum + "' NOT found!");
-            }
-        }
-        return teams;
-    }
-
 }

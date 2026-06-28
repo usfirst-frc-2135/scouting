@@ -10,133 +10,137 @@ import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.nio.file.Files;
+import java.nio.charset.StandardCharsets;
 
+/**
+ * Serializer class for managing competition-related data persistence.
+ * Handles match data for specific events and the current competition configuration.
+ */
 public class CompetitionDataSerializer
 {
     private static final String TAG = "CompetitionDataSerializer";
+    private static final String CURRENT_COMP_FILENAME = "current_competition.json";
 
-    // Data members
     private final Context m_context;
-    private final String m_dataPath;
+    private final File m_dataDir;
 
+    /**
+     * Constructs a CompetitionDataSerializer.
+     *
+     * @param context the context used to access internal storage
+     */
     public CompetitionDataSerializer(Context context)
     {
-        m_context = context;
-        m_dataPath = m_context.getFilesDir().getPath();
-        Log.d(TAG, "Data files dir = " + m_dataPath);
+        m_context = context.getApplicationContext();
+        m_dataDir = m_context.getFilesDir();
+        Log.d(TAG, "Initialized with data directory: " + m_dataDir.getAbsolutePath());
     }
 
-    // Takes the JSONArray data from thebluealliance.com event matches and writes it out to <eventCode>_matches.json file.
-    public void saveEventData(JSONArray compData)
-            throws JSONException, IOException
+    /**
+     * Saves match data for a competition event to a JSON file.
+     *
+     * @param compData the JSONArray containing match information
+     * @throws JSONException if parsing competition information fails
+     * @throws IOException   if writing the file fails
+     */
+    public void saveEventData(JSONArray compData) throws JSONException, IOException
     {
+        if (compData == null)
+        {
+            return;
+        }
 
-        // Writes out the given compData JSONArray to '<eventCode>matches.json' file.
-        Log.d(TAG, "saveEventData() starting");
-        Writer compWriter = null;
-        try
-        {
-            File file1 = new File(m_dataPath + "/" + CurrentCompetition.get(m_context).getEventCode() + "matches.json");
+        String eventCode = CurrentCompetition.get(m_context).getEventCode();
+        String filename = eventCode + "matches.json";
+        File file = new File(m_dataDir, filename);
 
-            OutputStream out = Files.newOutputStream(file1.toPath());
-            compWriter = new OutputStreamWriter(out);
-            compWriter.write(compData.toString());
-            Log.d(TAG, "Device Data File created: " + file1);
-        }
-        finally
-        {
-            if (compWriter != null)
-            {
-                compWriter.close();
-            }
-        }
-    }
+        Log.d(TAG, "Saving event data to: " + file.getAbsolutePath());
 
-    public void saveCurrentCompetition(JSONObject compJSON)
-            throws IOException
-    {
-        // Write out current_competition.json file.
-        Log.d(TAG, "saveCurrentCompetition() starting");
-        Writer compWriter = null;
-        try
+        try (FileOutputStream out = new FileOutputStream(file);
+             Writer writer = new OutputStreamWriter(out, StandardCharsets.UTF_8))
         {
-            File fileC = new File(m_dataPath + "/current_competition.json");
-            OutputStream out = Files.newOutputStream(fileC.toPath());
-            compWriter = new OutputStreamWriter(out);
-            compWriter.write(compJSON.toString());
-            Log.d(TAG, "Device Data File created: " + fileC);
-        }
-        catch (IOException err)
-        {
-            Log.e(TAG, Log.getStackTraceString(err));
-        }
-        finally
-        {
-            if (compWriter != null)
-            {
-                compWriter.close();
-            }
+            writer.write(compData.toString());
+            Log.i(TAG, "Successfully saved " + compData.length() + " matches for event: " + eventCode);
         }
     }
 
-    public CurrentCompetition loadCurrentComp()
-            throws IOException, JSONException
+    /**
+     * Persists the current competition configuration to internal storage.
+     *
+     * @param compJSON the JSONObject representing the current competition
+     * @throws IOException if writing the file fails
+     */
+    public void saveCurrentCompetition(JSONObject compJSON) throws IOException
     {
-        // Reads in existing current_competition.json file on the device.
-        Log.d(TAG, "loadCurrentComp() starting");
-        BufferedReader reader = null;
-        CurrentCompetition currComp = null;
-        File dirPath = new File(m_dataPath);
-        File[] fileList = dirPath.listFiles();
-        if (fileList != null)
+        if (compJSON == null)
         {
-            // Go through files to find current_competition.json file, then load it if found.
-            for (File fileX : fileList)
-            {
-                String filename = fileX.getName().trim();
-                if (filename.equals("current_competition.json"))
-                {
-                    try
-                    {
-                        InputStream in = m_context.openFileInput(filename);
-                        reader = new BufferedReader(new InputStreamReader(in));
-                        StringBuilder jsonString = new StringBuilder();
-                        String line;
-                        while ((line = reader.readLine()) != null)
-                        {
-                            jsonString.append(line);
-                        }
-                        JSONObject object = (JSONObject) new JSONTokener(jsonString.toString()).nextValue();
-                        currComp = new CurrentCompetition(object);
-                        Log.d(TAG, "Loaded current competition file: " + filename);
-                    }
-                    catch (FileNotFoundException err)
-                    {
-                        Log.e(TAG, "ERROR loading current_competition.json: " + err);
-                    }
-                    catch (IOException err2)
-                    {
-                        Log.e(TAG, Log.getStackTraceString(err2));
-                    }
-                    finally
-                    {
-                        if (reader != null)
-                        {
-                            reader.close();
-                        }
-                    }
-                    break;
-                }
-            }
+            return;
         }
-        return currComp;
+
+        File file = new File(m_dataDir, CURRENT_COMP_FILENAME);
+        Log.d(TAG, "Saving current competition configuration to: " + file.getAbsolutePath());
+
+        try (FileOutputStream out = new FileOutputStream(file);
+             Writer writer = new OutputStreamWriter(out, StandardCharsets.UTF_8))
+        {
+            writer.write(compJSON.toString());
+            Log.i(TAG, "Successfully saved current competition configuration");
+        }
+        catch (IOException e)
+        {
+            Log.e(TAG, "Error saving current competition: " + e.getMessage(), e);
+            throw e;
+        }
+    }
+
+    /**
+     * Loads the current competition configuration from internal storage.
+     *
+     * @return a {@link CurrentCompetition} instance, or null if no saved data is found
+     * @throws IOException   if reading the file fails
+     * @throws JSONException if parsing the JSON data fails
+     */
+    public CurrentCompetition loadCurrentComp() throws IOException, JSONException
+    {
+        File file = new File(m_dataDir, CURRENT_COMP_FILENAME);
+        if (!file.exists())
+        {
+            Log.d(TAG, "No current competition file found at: " + file.getAbsolutePath());
+            return null;
+        }
+
+        Log.d(TAG, "Loading current competition from: " + file.getAbsolutePath());
+        StringBuilder jsonString = new StringBuilder();
+
+        try (FileInputStream in = new FileInputStream(file);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8)))
+        {
+            String line;
+            while ((line = reader.readLine()) != null)
+            {
+                jsonString.append(line);
+            }
+
+            JSONObject object = (JSONObject) new JSONTokener(jsonString.toString()).nextValue();
+            CurrentCompetition currComp = new CurrentCompetition(object);
+            Log.i(TAG, "Successfully loaded current competition: " + currComp.getEventCode());
+            return currComp;
+        }
+        catch (FileNotFoundException e)
+        {
+            return null;
+        }
+        catch (IOException | JSONException e)
+        {
+            Log.e(TAG, "Error loading current competition: " + e.getMessage(), e);
+            throw e;
+        }
     }
 }

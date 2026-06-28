@@ -9,211 +9,200 @@ import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * Serializer class for managing match data and scout configuration persistence.
+ * Handles individual match JSON files and the main settings configuration.
+ */
 public class MatchDataSerializer
 {
     private static final String TAG = "MatchDataSerializer";
-    private final Context m_Context;
-    private final String m_FileName;
-    private final String m_dataPath;
-    private Settings m_settings;
+    private final Context m_context;
+    private final String m_settingsFileName;
+    private final File m_dataDir;
 
-    public MatchDataSerializer(Context context, String fName)
+    /**
+     * Constructs a MatchDataSerializer.
+     *
+     * @param context the context used to access internal storage
+     * @param settingsFileName the name of the main settings file
+     */
+    public MatchDataSerializer(Context context, String settingsFileName)
     {
-        m_Context = context;
-        m_FileName = fName;
-        m_dataPath = m_Context.getFilesDir().getPath();
-        Log.d(TAG, "Data files path = " + m_dataPath);
+        m_context = context.getApplicationContext();
+        m_settingsFileName = settingsFileName;
+        m_dataDir = m_context.getFilesDir();
+        Log.d(TAG, "Initialized with data directory: " + m_dataDir.getAbsolutePath());
     }
 
-    public void saveScoutNames()
-            throws JSONException, IOException
+    /**
+     * Persists current scout names and global settings.
+     *
+     * @throws JSONException if configuration data serialization fails
+     * @throws IOException if writing the settings file fails
+     */
+    public void saveScoutNames() throws JSONException, IOException
     {
-        Log.d(TAG, "saveScoutNames() starting");
+        Log.d(TAG, "Saving scout names configuration");
 
-        JSONArray arrayS = new JSONArray(); // Creates a JSON array object to hold the scout names
-        arrayS.put(Settings.get(m_Context).toJSON());
-        Writer writerS = null;
-        try
-        {
-            OutputStream out = m_Context.openFileOutput(m_FileName, Context.MODE_PRIVATE);
-            writerS = new OutputStreamWriter(out);
-            writerS.write(arrayS.toString());
-            Log.d(TAG, "Wrote scouts file: " + m_FileName);
-        }
-        catch (FileNotFoundException e)
-        {
-            Log.d(TAG, "ERROR writing scouts file: " + e);
-        }
-        finally
-        {
-            if (writerS != null)
-            {
-                writerS.close();
-            }
-        }
-    }
-
-    public void saveMatchData(MatchData matchData1)
-            throws JSONException, IOException
-    {
-        // Save this MatchData to JSON file.
         JSONArray array = new JSONArray();
-        array.put(matchData1.toJSON());
-        Writer writerMatches = null;
-        String matchFileName = matchData1.getMatchFileName();
-        String fullPathname = m_dataPath + "/" + matchFileName;
-        try
+        array.put(Settings.get(m_context).toJSON());
+
+        File file = new File(m_dataDir, m_settingsFileName);
+        try (FileOutputStream out = new FileOutputStream(file);
+             Writer writer = new OutputStreamWriter(out, StandardCharsets.UTF_8))
         {
-            File fileM = new File(fullPathname);
-            OutputStream out = new FileOutputStream(fileM);
-            writerMatches = new OutputStreamWriter(out);
-            writerMatches.write(array.toString());
-            Log.d(TAG, "Wrote match file: " + fileM.getName());
-        }
-        catch (FileNotFoundException e)
-        {
-            Log.d(TAG, "ERROR writing Match file " + matchFileName + ": " + e);
-        }
-        finally
-        {
-            if (writerMatches != null)
-            {
-                writerMatches.close();
-            }
+            writer.write(array.toString());
+            Log.i(TAG, "Successfully wrote settings file: " + m_settingsFileName);
         }
     }
 
-    public void saveAllMatchData(ArrayList<MatchData> matchHistory)
-            throws JSONException, IOException
+    /**
+     * Saves data for a single match to its unique JSON file.
+     *
+     * @param matchData the match record to save
+     * @throws JSONException if match data serialization fails
+     * @throws IOException if writing the match file fails
+     */
+    public void saveMatchData(MatchData matchData) throws JSONException, IOException
     {
-        Log.d(TAG, "saveAllMatchData() going to save MatchHistory matches to JSON files");
+        if (matchData == null) return;
 
-        // Write out all matchData files.
-        for (MatchData matchData1 : matchHistory)
+        JSONArray array = new JSONArray();
+        array.put(matchData.toJSON());
+
+        String filename = matchData.getMatchFileName();
+        File file = new File(m_dataDir, filename);
+
+        try (FileOutputStream out = new FileOutputStream(file);
+             Writer writer = new OutputStreamWriter(out, StandardCharsets.UTF_8))
         {
-            saveMatchData(matchData1);
+            writer.write(array.toString());
+            Log.i(TAG, "Successfully wrote match file: " + filename);
         }
     }
 
-    public void saveAllData(ArrayList<MatchData> matchHistory)
-            throws JSONException, IOException
+    /**
+     * Saves all match records in the provided list.
+     *
+     * @param matchHistory the list of match records to save
+     * @throws JSONException if any match record serialization fails
+     * @throws IOException if writing any match file fails
+     */
+    public void saveAllMatchData(List<MatchData> matchHistory) throws JSONException, IOException
     {
-        Log.d(TAG, "saveAllData() going to save scout names and MatchHistory matches to JSON files");
+        if (matchHistory == null) return;
+        Log.d(TAG, "Saving " + matchHistory.size() + " matches to disk");
+        for (MatchData match : matchHistory)
+        {
+            saveMatchData(match);
+        }
+    }
+
+    /**
+     * Saves both global settings and all provided match records.
+     *
+     * @param matchHistory the list of match records to save
+     * @throws JSONException if serialization fails
+     * @throws IOException if file writing fails
+     */
+    public void saveAllData(List<MatchData> matchHistory) throws JSONException, IOException
+    {
         saveScoutNames();
         saveAllMatchData(matchHistory);
     }
 
+    /**
+     * Loads all individual match data files from internal storage.
+     *
+     * @return a list of loaded MatchData objects
+     */
     public ArrayList<MatchData> loadMatchData()
-            throws IOException, JSONException
     {
-        // Create a new MatchHistory obj and load it with all the existing match files.
         ArrayList<MatchData> matchHistory = new ArrayList<>();
-        BufferedReader reader = null;
-        File file = new File(m_dataPath); // dir to use
+        Log.d(TAG, "Scanning for match data files");
 
-        Log.d(TAG, "Going to read in existing match files found at " + m_dataPath);
-        File[] jFilesList = file.listFiles();
-        if (jFilesList != null)
+        File[] files = m_dataDir.listFiles();
+        if (files == null) return matchHistory;
+
+        for (File file : files)
         {
-            for (File tFile : jFilesList)
+            String filename = file.getName();
+            // Match files are identified by their UUID-based filename length (usually 36 chars + .json)
+            if (filename.length() > 30 && filename.endsWith(".json") && !filename.contains("matches") && !filename.equals(m_settingsFileName))
             {
-                String filename = tFile.getName();
-
-                // Look for 30+ filename length - these are matchData JSON files
-                if (filename.length() > 30)
+                try
                 {
-                    try
-                    {
-                        // Read in matchData JSON file.
-                        InputStream in = m_Context.openFileInput(filename.trim());
-                        reader = new BufferedReader(new InputStreamReader(in));
-                        StringBuilder jsonString = new StringBuilder();
-                        String line;
-
-                        while ((line = reader.readLine()) != null)
-                        {
-                            //Line breaks are omitted and irrelevant
-                            jsonString.append(line);
-                        }
-                        JSONArray array = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
-
-                        // Add this match to matchHistory
-                        matchHistory.add(new MatchData(array.getJSONObject(0)));
-                        Log.d(TAG, "Reading in file: " + filename);
-                    }
-                    catch (FileNotFoundException e)
-                    {
-                        //ignore this one; it happens when starting fresh
-                        Log.e(TAG, "ERROR in loading file " + filename + ": " + e);
-                    }
-                    finally
-                    {
-                        if (reader != null)
-                        {
-                            reader.close();
-                        }
-                    }
+                    matchHistory.add(loadSingleMatch(file));
+                    Log.d(TAG, "Successfully loaded match file: " + filename);
                 }
-                else
+                catch (IOException | JSONException e)
                 {
-                    Log.d(TAG, "Ignoring file: " + filename);
+                    Log.e(TAG, "Error loading match file " + filename + ": " + e.getMessage());
                 }
             }
         }
         return matchHistory;
     }
 
-    public Settings loadScoutNames()
-            throws IOException, JSONException
+    private MatchData loadSingleMatch(File file) throws IOException, JSONException
     {
-        Log.d(TAG, "loadScoutNames(): m_FileName = " + m_FileName);
-        BufferedReader reader = null;
-        try
+        StringBuilder jsonString = new StringBuilder();
+        try (FileInputStream in = new FileInputStream(file);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8)))
         {
-            //Open and read the file into a StringBuilder
-            InputStream in = m_Context.openFileInput(m_FileName);
-            reader = new BufferedReader(new InputStreamReader(in));
-            StringBuilder jsonString = new StringBuilder();
             String line;
-
             while ((line = reader.readLine()) != null)
             {
-                //Line breaks are omitted and irrelevant
                 jsonString.append(line);
             }
-            //Parse the JSON.
             JSONArray array = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
+            return new MatchData(array.getJSONObject(0));
+        }
+    }
 
-            //Build the array of matches from JSONObjects
-            Log.d(TAG, "Loaded scout names from file: " + m_FileName);
-            m_settings = new Settings(array.getJSONObject(0));
-            if (m_settings.getPastScouts() != null)
+    /**
+     * Loads the main scout settings configuration.
+     *
+     * @return the loaded Settings object, or null if the file doesn't exist
+     * @throws IOException if reading the file fails
+     * @throws JSONException if parsing the JSON fails
+     */
+    public Settings loadScoutNames() throws IOException, JSONException
+    {
+        File file = new File(m_dataDir, m_settingsFileName);
+        if (!file.exists()) return null;
+
+        Log.d(TAG, "Loading settings from: " + m_settingsFileName);
+        StringBuilder jsonString = new StringBuilder();
+
+        try (FileInputStream in = new FileInputStream(file);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8)))
+        {
+            String line;
+            while ((line = reader.readLine()) != null)
             {
-                Log.d(TAG, "Most recent past scout = " + m_settings.getPastScouts()[0]);
-                Log.d(TAG, "Past teamIndexStr = " + m_settings.getTeamIndexStr());
+                jsonString.append(line);
             }
+            
+            JSONArray array = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
+            Settings settings = new Settings(array.getJSONObject(0));
+            Log.i(TAG, "Successfully loaded settings file");
+            return settings;
         }
         catch (FileNotFoundException e)
         {
-            //ignore this one; it happens when starting fresh
+            return null;
         }
-        finally
-        {
-            if (reader != null)
-            {
-                reader.close();
-            }
-        }
-        return m_settings;
     }
 }

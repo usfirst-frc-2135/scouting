@@ -32,6 +32,7 @@ public class AutonFragment extends Fragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate");
         ScoutingActivity activity = (ScoutingActivity) getActivity();
         if (activity != null)
         {
@@ -107,7 +108,10 @@ public class AutonFragment extends Fragment
             case 5 -> R.id.auton_accuracy_n;
             default -> -1;
         };
-        if (id != -1) binding.autonAccuracyBoxes.check(id);
+        if (id != -1)
+        {
+            binding.autonAccuracyBoxes.check(id);
+        }
     }
 
     private void initAutonAccuracy(int value)
@@ -123,7 +127,10 @@ public class AutonFragment extends Fragment
             case 6 -> R.id.auton_accuracy_none;
             default -> -1;
         };
-        if (id != -1) binding.autonAccuracyButtons.check(id);
+        if (id != -1)
+        {
+            binding.autonAccuracyButtons.check(id);
+        }
     }
 
     private void initAutonClimb(int value)
@@ -137,7 +144,10 @@ public class AutonFragment extends Fragment
             case 4 -> R.id.auton_climb_right;
             default -> -1;
         };
-        if (id != -1) binding.autonClimbButtons.check(id);
+        if (id != -1)
+        {
+            binding.autonClimbButtons.check(id);
+        }
     }
 
     // Check if given field is greater than expected max number.
@@ -199,42 +209,99 @@ public class AutonFragment extends Fragment
     public int getAutonAccuracyRate()
     {
         int id = binding.autonAccuracyButtons.getCheckedRadioButtonId();
-        if (id == R.id.auton_accuracy_na) return 0;
-        if (id == R.id.auton_accuracy_most) return 1;
-        if (id == R.id.auton_accuracy_three_fourths) return 2;
-        if (id == R.id.auton_accuracy_half) return 3;
-        if (id == R.id.auton_accuracy_quarter) return 4;
-        if (id == R.id.auton_accuracy_few) return 5;
-        if (id == R.id.auton_accuracy_none) return 6;
+        if (id == R.id.auton_accuracy_na)
+        {
+            return 0;
+        }
+        if (id == R.id.auton_accuracy_most)
+        {
+            return 1;
+        }
+        if (id == R.id.auton_accuracy_three_fourths)
+        {
+            return 2;
+        }
+        if (id == R.id.auton_accuracy_half)
+        {
+            return 3;
+        }
+        if (id == R.id.auton_accuracy_quarter)
+        {
+            return 4;
+        }
+        if (id == R.id.auton_accuracy_few)
+        {
+            return 5;
+        }
+        if (id == R.id.auton_accuracy_none)
+        {
+            return 6;
+        }
         return 0;
     }
 
     public int getPreloadAccuracyLevel()
     {
         int id = binding.autonAccuracyBoxes.getCheckedRadioButtonId();
-        if (id == R.id.auton_accuracy_no) return 0;
-        if (id == R.id.auton_accuracy_a) return 1;
-        if (id == R.id.auton_accuracy_m) return 2;
-        if (id == R.id.auton_accuracy_s) return 3;
-        if (id == R.id.auton_accuracy_f) return 4;
-        if (id == R.id.auton_accuracy_n) return 5;
+        if (id == R.id.auton_accuracy_no)
+        {
+            return 0;
+        }
+        if (id == R.id.auton_accuracy_a)
+        {
+            return 1;
+        }
+        if (id == R.id.auton_accuracy_m)
+        {
+            return 2;
+        }
+        if (id == R.id.auton_accuracy_s)
+        {
+            return 3;
+        }
+        if (id == R.id.auton_accuracy_f)
+        {
+            return 4;
+        }
+        if (id == R.id.auton_accuracy_n)
+        {
+            return 5;
+        }
         return 0;
     }
 
     public int getAutonClimb()
     {
         int id = binding.autonClimbButtons.getCheckedRadioButtonId();
-        if (id == R.id.auton_climb_na) return 0;
-        if (id == R.id.auton_climb_back) return 1;
-        if (id == R.id.auton_climb_left) return 2;
-        if (id == R.id.auton_climb_front) return 3;
-        if (id == R.id.auton_climb_right) return 4;
+        if (id == R.id.auton_climb_na)
+        {
+            return 0;
+        }
+        if (id == R.id.auton_climb_back)
+        {
+            return 1;
+        }
+        if (id == R.id.auton_climb_left)
+        {
+            return 2;
+        }
+        if (id == R.id.auton_climb_front)
+        {
+            return 3;
+        }
+        if (id == R.id.auton_climb_right)
+        {
+            return 4;
+        }
         return 0;
     }
 
     public void updateAutonData()
     {
-        if (m_matchData == null) return;
+        if (m_matchData == null)
+        {
+            return;
+        }
         try
         {
             m_matchData.setAutonHopper(Integer.parseInt(binding.autonHopperScoreTotal.getText().toString()));
@@ -257,6 +324,7 @@ public class AutonFragment extends Fragment
     public void onDestroyView()
     {
         super.onDestroyView();
+        Log.d(TAG, "onDestroyView");
         binding = null;
     }
 }
