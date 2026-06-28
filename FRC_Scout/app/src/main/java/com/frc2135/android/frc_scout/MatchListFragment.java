@@ -273,69 +273,29 @@ public class MatchListFragment extends ListFragment
                 int itemID = item.getItemId();
                 if (itemID == R.id.set_team_index)
                 {
-                    Log.d(TAG, "Going to start SetTeamIndexDlg");
-                    FragmentManager fm2 = requireActivity().getSupportFragmentManager();
-                    SetTeamIndexDialog tiDlg = SetTeamIndexDialog.newInstance();
-                    tiDlg.show(fm2, "set_team_index_dialog");
+                    Log.d(TAG, "Start SetTeamIndexDialog");
+                    FragmentManager fm = requireActivity().getSupportFragmentManager();
+                    SetTeamIndexDialog stiDlg = SetTeamIndexDialog.newInstance();
+                    stiDlg.show(fm, "set_team_index_dialog");
                 }
                 else if (itemID == R.id.load_event_data_tba)
                 {
-                    Log.d(TAG, "Going to start LoadEventDialog");
+                    Log.d(TAG, "Start LoadEventDialog");
                     FragmentManager fm = requireActivity().getSupportFragmentManager();
-                    LoadEventDialog dialog = LoadEventDialog.newInstance();
-                    dialog.show(fm, "load_event_dialog");
+                    LoadEventDialog leDlg = LoadEventDialog.newInstance();
+                    leDlg.show(fm, "load_event_dialog");
                 }
                 else if (itemID == R.id.load_aliases)
                 {
-                    Log.d(TAG, "Going to load aliases file");
-                    FragmentManager fm3 = requireActivity().getSupportFragmentManager();
-                    LoadAliasesDialog dialog = LoadAliasesDialog.newInstance();
-                    dialog.show(fm3, "load_aliases");
+                    Log.d(TAG, "Start LoadALiasesDialog");
+                    FragmentManager fm = requireActivity().getSupportFragmentManager();
+                    LoadAliasesDialog laDlg = LoadAliasesDialog.newInstance();
+                    laDlg.show(fm, "load_aliases");
                 }
                 else if (itemID == R.id.delete_event_data_tba)
                 {
                     Log.d(TAG, "Delete TBA matches files clicked");
-                    Context context = getContext();
-
-                    // Look through existing files on device to find any TBA matches json files.
-                    int tbaFilesCnt = 0;
-                    StringBuilder toastMsg = new StringBuilder();
-                    toastMsg.append("Deleted existing TBA matches.json files:\n");
-                    String dataFileDir = Objects.requireNonNull(context).getFilesDir().getPath();
-                    Log.d(TAG, "Data files path = " + dataFileDir);
-                    String MATCHES_JSON = "matches.json";
-                    File dataDir = new File(dataFileDir);
-                    File[] fileList = dataDir.listFiles();
-                    if (fileList != null)
-                    {
-                        // Remove any event matches data files found.
-                        for (File f1 : fileList)
-                        {
-                            if (f1.getName().contains(MATCHES_JSON))
-                            {
-                                Log.d(TAG, "DELETING existing TBA matches file on device: " + f1.getName());
-                                toastMsg.append(f1.getName()).append("\n");
-                                tbaFilesCnt += 1;
-                                boolean deleted = f1.delete();
-                                if (!deleted)
-                                {
-                                    Log.d(TAG, "DELETING existing competition file: failed");
-                                }
-                            }
-                        }
-                    }
-                    if (tbaFilesCnt > 0)
-                    {
-                        CompetitionInfo.clear();
-                    }
-                    else
-                    {
-                        toastMsg.replace(0, toastMsg.length(), "No existing TBA matches files found");
-                    }
-
-                    // Issue toast msg
-                    Log.d(TAG, toastMsg.toString());
-                    Toast.makeText(context, toastMsg.toString(), Toast.LENGTH_LONG).show();
+                    deleteTbaMatchFiles();
                 }
                 else if (itemID == R.id.clear_scout_names)
                 {
@@ -349,6 +309,51 @@ public class MatchListFragment extends ListFragment
                     requireActivity().finish();
                 }
                 return true;
+            }
+
+            private void deleteTbaMatchFiles()
+            {
+                Context context = getContext();
+
+                // Look through existing files on device to find any TBA matches json files.
+                int tbaFilesCnt = 0;
+                StringBuilder toastMsg = new StringBuilder();
+                toastMsg.append("Deleted existing TBA matches.json files:\n");
+                String dataFileDir = Objects.requireNonNull(context).getFilesDir().getPath();
+                Log.d(TAG, "Data files path = " + dataFileDir);
+                String MATCHES_JSON = "matches.json";
+                File dataDir = new File(dataFileDir);
+                File[] fileList = dataDir.listFiles();
+                if (fileList != null)
+                {
+                    // Remove any event matches data files found.
+                    for (File f1 : fileList)
+                    {
+                        if (f1.getName().contains(MATCHES_JSON))
+                        {
+                            Log.d(TAG, "DELETING existing TBA matches file on device: " + f1.getName());
+                            toastMsg.append(f1.getName()).append("\n");
+                            tbaFilesCnt += 1;
+                            boolean deleted = f1.delete();
+                            if (!deleted)
+                            {
+                                Log.d(TAG, "DELETING existing competition file: failed");
+                            }
+                        }
+                    }
+                }
+                if (tbaFilesCnt > 0)
+                {
+                    CompetitionInfo.clear();
+                }
+                else
+                {
+                    toastMsg.replace(0, toastMsg.length(), "No existing TBA matches files found");
+                }
+
+                // Issue toast msg
+                Log.d(TAG, toastMsg.toString());
+                Toast.makeText(context, toastMsg.toString(), Toast.LENGTH_LONG).show();
             }
         });
     }

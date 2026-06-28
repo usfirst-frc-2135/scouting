@@ -31,7 +31,7 @@ public class SetTeamIndexDialog extends DialogFragment
         Log.d(TAG, "onCreateDialog called");
         setCancelable(true);
 
-        View v = requireActivity().getLayoutInflater().inflate(R.layout.set_team_index_dlg, null);
+        View v = requireActivity().getLayoutInflater().inflate(R.layout.set_team_index_dialog, null);
         m_teamIndexField = v.findViewById(R.id.set_team_index_field);
         m_teamIndexField.setHint("Enter team index number (1-6 or 'None')");
         m_teamIndexErrMsg = v.findViewById(R.id.team_index_err);

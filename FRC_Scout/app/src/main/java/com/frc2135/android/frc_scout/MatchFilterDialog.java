@@ -34,9 +34,8 @@ public class MatchFilterDialog extends DialogFragment
     @NonNull
     public Dialog onCreateDialog(Bundle SavedInstanceState)
     {
-        setCancelable(false);
-
         Log.i(TAG, "onCreateDialog called");
+        setCancelable(false);
 
         View v = requireActivity().getLayoutInflater().inflate(R.layout.match_filter_dialog, null);
 
@@ -77,7 +76,7 @@ public class MatchFilterDialog extends DialogFragment
 
         m_matchListSpinner = v.findViewById(R.id.event_options);
         m_matchListSpinner.setEnabled(m_bFilterEvent);
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item, MatchListData.get(getActivity()).listCompetitions());
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(requireActivity(), android.R.layout.select_dialog_item, MatchListData.get(getActivity()).listCompetitions());
         m_matchListSpinner.setAdapter(adapter1);
 
         CheckBox scoutCheckbox = v.findViewById(R.id.scout_select);
@@ -89,7 +88,7 @@ public class MatchFilterDialog extends DialogFragment
 
         m_ScoutSpinner = v.findViewById(R.id.scout_options);
         m_ScoutSpinner.setEnabled(m_bFilterScout);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item, MatchListData.get(getActivity()).listScouts());
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(requireActivity(), android.R.layout.select_dialog_item, MatchListData.get(getActivity()).listScouts());
         m_ScoutSpinner.setAdapter(adapter2);
 
         AlertDialog dialog = new AlertDialog.Builder(getActivity()).setView(v).setPositiveButton(android.R.string.ok, (dialog1, which) -> sendResult()).create();

@@ -40,9 +40,8 @@ public class LoadEventDialog extends DialogFragment
     @Override
     public Dialog onCreateDialog(Bundle SavedInstanceState)
     {
+        Log.d(TAG, "onCreateDialog called");
         setCancelable(true);
-
-        Log.i(TAG, "onCreateDialog called");
 
         View v = requireActivity().getLayoutInflater().inflate(R.layout.load_event_data_dialog, null);
         m_eventCodeField = v.findViewById(R.id.event_code_field);
