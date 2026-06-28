@@ -2,45 +2,73 @@ package com.frc2135.android.frc_scout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.WindowMetrics;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Entry point of the application. Displays a splash screen for a short duration
+ * while initializing the app's theme and then transitions to {@link MatchListActivity}.
+ */
 @SuppressLint("CustomSplashScreen")
 public class SplashScreenActivity extends AppCompatActivity
 {
     private static final String TAG = "SplashScreen";
+    private static final int SPLASH_DISPLAY_LENGTH = 1475; // Duration of wait in milliseconds
 
     /**
      * Called when the activity is first created.
+     * Initializes the theme and schedules the transition to the main activity.
      */
     @Override
     public void onCreate(Bundle icicle)
     {
-        Log.i(TAG, "SplashActivity created.");
-        super.onCreate(icicle);
-
+        // Apply theme preference before super.onCreate to ensure the correct theme is applied early
         Preferences.get(this).applyTheme();
+
+        super.onCreate(icicle);
+        Log.i(TAG, "SplashScreenActivity created.");
 
         setContentView(R.layout.splash_screen_layout);
 
-        /* New Handler to start the Menu-Activity
-         * and close this Splash-Screen after some seconds.*/
-
-        int SPLASH_DISPLAY_LENGTH = 1475;   // Duration of wait
-        /* Create an Intent that will start the Menu-Activity. */
-        new Handler().postDelayed(() -> {
+        // Schedule transition to MatchListActivity
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
             Intent mainIntent = new Intent(SplashScreenActivity.this, MatchListActivity.class);
-            SplashScreenActivity.this.startActivity(mainIntent);
-            SplashScreenActivity.this.finish();
+            startActivity(mainIntent);
+            finish();
         }, SPLASH_DISPLAY_LENGTH);
 
-        // Retrieve display resolution (for debugging on different displays)
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        Log.i(TAG, "Display resolution " + displayMetrics.widthPixels + " x " + displayMetrics.heightPixels);
+        logDisplayResolution();
+    }
+
+    /**
+     * Retrieves and logs display resolution for debugging on different device screens.
+     * Uses modern WindowMetrics for API 30+ and legacy DisplayMetrics for older versions.
+     */
+    private void logDisplayResolution()
+    {
+        int width;
+        int height;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
+        {
+            WindowMetrics windowMetrics = getWindowManager().getCurrentWindowMetrics();
+            width = windowMetrics.getBounds().width();
+            height = windowMetrics.getBounds().height();
+        }
+        else
+        {
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+            width = displayMetrics.widthPixels;
+            height = displayMetrics.heightPixels;
+        }
+        Log.i(TAG, "Display resolution: " + width + " x " + height);
     }
 }

@@ -12,6 +12,10 @@ import androidx.fragment.app.FragmentManager;
 
 import com.frc2135.android.frc_scout.databinding.ScoutingActivityTabbedBinding;
 
+/**
+ * Activity for the main scouting process. It hosts three fragments: Autonomous, Teleoperated, and Endgame.
+ * Uses a {@link com.google.android.material.bottomnavigation.BottomNavigationView} for navigation between these stages.
+ */
 public class ScoutingActivity extends AppCompatActivity
 {
     private static final String TAG = "ScoutingActivity";
@@ -21,109 +25,77 @@ public class ScoutingActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        Log.i(TAG, "ScoutingActivity created.");
         super.onCreate(savedInstanceState);
+        Log.i(TAG, "ScoutingActivity created.");
 
-        // Connects this Java class to the XML file activity_main, linking the UI to the controller layer.
+        Preferences.get(this).applyTheme();
+
         ScoutingActivityTabbedBinding binding = ScoutingActivityTabbedBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Initializes FragmentManager so that we can host a fragment within our activity.
-        final FragmentManager fm = getSupportFragmentManager();
+        String matchId = getIntent().getStringExtra("match_ID");
+        Log.d(TAG, "Loading match with ID: " + matchId);
+        m_matchData = MatchListData.get(getApplicationContext()).getMatch(matchId);
 
-        // Designates that chosen fragment will be housed within fragmentContainer, a frame layout in the activity's XML.
+        // Initializes FragmentManager to host the scouting fragments
+        FragmentManager fm = getSupportFragmentManager();
+
+        // Load the initial fragment (Autonomous) if none exists
         if (fm.findFragmentById(R.id.fragmentContainer) == null)
         {
-            fm.beginTransaction().add(R.id.fragmentContainer, createScoutingActivityFragment()).commit();
+            fm.beginTransaction()
+                    .add(R.id.fragmentContainer, createScoutingActivityFragment())
+                    .commit();
         }
 
-        // Restores match data when a fragment is recreated
+        // Handle navigation between scouting stages
         binding.navView.setOnItemSelectedListener(item -> {
+            // Save data from the current fragment before switching
             updateCurrentFragmentData();
 
-            Fragment fragment;
             int itemId = item.getItemId();
-            if (itemId == R.id.navigation_teleop)
-            {
-                fragment = new TeleopFragment();
-            }
-            else if (itemId == R.id.navigation_auton)
+            Fragment fragment = null;
+
+            if (itemId == R.id.navigation_auton)
             {
                 fragment = new AutonFragment();
+            }
+            else if (itemId == R.id.navigation_teleop)
+            {
+                fragment = new TeleopFragment();
             }
             else if (itemId == R.id.navigation_endgame)
             {
                 fragment = new EndgameFragment();
             }
-            else
+
+            if (fragment != null)
             {
-                return false;
+                fm.beginTransaction()
+                        .replace(R.id.fragmentContainer, fragment)
+                        .commit();
+                return true;
             }
-
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragmentContainer, fragment)
-                    .addToBackStack(null)
-                    .commit();
-            return true;
+            return false;
         });
-
-        String matchId = getIntent().getStringExtra("match_ID");
-        Log.d(TAG, "Current matchId = " + matchId);
-        m_matchData = MatchListData.get(getApplicationContext()).getMatch(matchId);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        // TODO: getMenuInflater().inflate(R.menu, menu);
+        // Future: getMenuInflater().inflate(R.menu.scouting_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
-        // Handle action bar item clicks here. The action bar will automatically handle clicks on the Home/Up button,
-        // so long as you specify a parent activity in AndroidManifest.xml.
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onStart()
-    {
-        super.onStart();
-        Log.d(TAG, "onStart() called");
-    }
-
-    @Override
-    public void onPause()
-    {
-        super.onPause();
-        Log.d(TAG, "onPause() called");
-    }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-    }
-
-    @Override
-    public void onStop()
-    {
-        super.onStop();
-        Log.d(TAG, "onStop() called");
-    }
-
-    @Override
-    public void onDestroy()
-    {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy() called");
-    }
-
-    // This returns an instance of the MatchFragment class, so that the XML file linked to Match Fragment will be placed in fragmentContainer
+    /**
+     * Updates the MatchData object with the latest inputs from the currently visible fragment.
+     */
     private void updateCurrentFragmentData()
     {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
@@ -141,13 +113,31 @@ public class ScoutingActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Creates the initial fragment for this activity.
+     *
+     * @return a new instance of {@link AutonFragment}
+     */
     protected Fragment createScoutingActivityFragment()
     {
         return new AutonFragment();
     }
 
+    /**
+     * Provides access to the current {@link MatchData} for the hosted fragments.
+     *
+     * @return the current MatchData object
+     */
     protected MatchData getCurrentMatch()
     {
         return m_matchData;
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        Log.d(TAG, "onPause() - updating data");
+        updateCurrentFragmentData();
     }
 }

@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,18 +17,21 @@ import com.frc2135.android.frc_scout.databinding.PrematchActivityBinding;
 
 import org.json.JSONException;
 
+/**
+ * Activity for entering pre-match information such as scout name, match number, and team number.
+ * It autopopulates team numbers if event data is loaded and handles aliases.
+ */
 public class PreMatchActivity extends AppCompatActivity
 {
-    public static final String TAG = "PreMatchActivity";
+    private static final String TAG = "PreMatchActivity";
 
     private PrematchActivityBinding binding;
     private CompetitionInfo m_compInfo;
     private MatchData m_matchData;
     private AliasesInfo m_aliasInfo;
     private String m_teamIndexStr;
-    private static Settings m_scoutName;
-    private String m_inEdit;
-    // private CheckBox m_scoringTableSideCheckbox;// REMOVE LATER
+    private Settings m_settings;
+    private boolean m_isEditMode;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -37,60 +39,86 @@ public class PreMatchActivity extends AppCompatActivity
         Log.i(TAG, "PreMatchActivity created.");
         super.onCreate(savedInstanceState);
 
+        // Apply theme preference before setting content view
+        Preferences.get(this).applyTheme();
+
         binding = PrematchActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        loadInitialData();
+        setupActionBar();
+        setupViewDefaults();
+        setupListeners();
+    }
+
+    /**
+     * Loads initial data from Intents and singletons.
+     */
+    private void loadInitialData()
+    {
         String matchId = getIntent().getStringExtra("match_ID");
         m_matchData = MatchListData.get(getApplicationContext()).getMatch(matchId);
-        m_compInfo = CompetitionInfo.get(getApplicationContext(), m_matchData.getEventCode().trim(), false);
-        m_aliasInfo = AliasesInfo.get(getApplicationContext(), m_matchData.getEventCode().trim(), false);
 
-        m_scoutName = Settings.get(getApplicationContext());
-        m_teamIndexStr = (m_scoutName != null) ? m_scoutName.getTeamIndexStr() : "None";
-        m_inEdit = getIntent().getStringExtra("in_edit");
+        String eventCode = (m_matchData != null) ? m_matchData.getEventCode().trim() : "";
+        m_compInfo = CompetitionInfo.get(getApplicationContext(), eventCode, false);
+        m_aliasInfo = AliasesInfo.get(getApplicationContext(), eventCode, false);
 
+        m_settings = Settings.get(getApplicationContext());
+        m_teamIndexStr = (m_settings != null) ? m_settings.getTeamIndexStr() : "None";
 
+        String inEdit = getIntent().getStringExtra("in_edit");
+        m_isEditMode = "yes".equalsIgnoreCase(inEdit);
+    }
+
+    /**
+     * Configures the action bar title with the current team index.
+     */
+    private void setupActionBar()
+    {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)
         {
-            actionBar.setTitle("Pre-Match                                                Team Index = " + m_teamIndexStr);
+            actionBar.setTitle("Pre-Match - Team Index: " + m_teamIndexStr);
         }
+    }
 
+    /**
+     * Sets default values and hints for the UI components.
+     */
+    private void setupViewDefaults()
+    {
         binding.errorMessagePm.setVisibility(View.INVISIBLE);
         binding.errorMessagePm.setTextColor(Color.RED);
 
         binding.compName.setHint("Event code");
-        binding.compName.setText(m_matchData.getEventCode());
-        binding.compName.addTextChangedListener(new TextWatcher()
+        if (m_matchData != null)
         {
-            public void onTextChanged(CharSequence c, int start, int before, int count)
-            {
-            }
-
-            public void beforeTextChanged(CharSequence c, int start, int count, int after)
-            {
-            }
-
-            public void afterTextChanged(Editable c)
-            {
-                binding.errorMessagePm.setVisibility(View.INVISIBLE);
-            }
-        });
+            binding.compName.setText(m_matchData.getEventCode());
+        }
 
         binding.scoutName.setHint("Scout name");
-        if (m_matchData != null && !m_matchData.getName().isEmpty())
+        String scoutName = (m_matchData != null && !m_matchData.getName().isEmpty()) ? m_matchData.getName() :
+                (m_settings != null) ? m_settings.getMostRecentScoutName() : "";
+        binding.scoutName.setText(scoutName);
+
+        String matchNum = (m_matchData != null && !m_matchData.getMatchNumber().isEmpty()) ? m_matchData.getMatchNumber() :
+                (m_settings != null && !m_settings.getMostRecentMatchNumber().isEmpty()) ? m_settings.getNextExpectedMatchNumber() : "qm1";
+        binding.matchNumberField.setText(matchNum);
+
+        if (m_matchData != null)
         {
-            binding.scoutName.setText(m_matchData.getName());
+            binding.teamNumberField.setText(m_matchData.getTeamNumber());
         }
-        else if (m_scoutName != null)
-        {
-            String mostRecentScoutName = m_scoutName.getMostRecentScoutName();
-            if (!mostRecentScoutName.isEmpty())
-            {
-                binding.scoutName.setText(mostRecentScoutName);
-            }
-        }
-        binding.scoutName.addTextChangedListener(new TextWatcher()
+
+        setTeamNumFromMatchNum();
+    }
+
+    /**
+     * Attaches listeners to the UI components.
+     */
+    private void setupListeners()
+    {
+        TextWatcher hideErrorWatcher = new TextWatcher()
         {
             public void onTextChanged(CharSequence c, int start, int before, int count)
             {
@@ -104,34 +132,24 @@ public class PreMatchActivity extends AppCompatActivity
             {
                 binding.errorMessagePm.setVisibility(View.INVISIBLE);
             }
-        });
+        };
 
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(PreMatchActivity.this, android.R.layout.select_dialog_item, Settings.get(getApplicationContext()).getPastScouts());
-        binding.scoutName.setAdapter(adapter2);
-        binding.scoutName.setThreshold(0);
-        binding.scoutName.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus)
-            {
-                binding.scoutName.showDropDown();
-            }
-        });
-/* REMOVE->
-        m_scoringTableSideCheckbox = findViewById(R.id.scoring_table_side_ckbx);
-        if(m_scoutNames != null)
-            m_scoringTableSideChbx.setChecked(m_scoutNames.getScoringTableSide());
-        else m_scoringTableSideChbx.setChecked(false);
-<-REMOVE*/
+        binding.compName.addTextChangedListener(hideErrorWatcher);
+        binding.scoutName.addTextChangedListener(hideErrorWatcher);
 
-        String str = "qm1";
-        if (!m_matchData.getMatchNumber().isEmpty())
+        // Scout Name AutoComplete setup
+        if (m_settings != null)
         {
-            str = m_matchData.getMatchNumber();
+            ArrayAdapter<String> scoutAdapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, m_settings.getPastScouts());
+            binding.scoutName.setAdapter(scoutAdapter);
+            binding.scoutName.setThreshold(0);
+            binding.scoutName.setOnFocusChangeListener((v, hasFocus) -> {
+                if (hasFocus)
+                {
+                    binding.scoutName.showDropDown();
+                }
+            });
         }
-        else if (m_scoutName != null && !m_scoutName.getMostRecentMatchNumber().isEmpty())
-        {
-            str = m_scoutName.getNextExpectedMatchNumber();
-        }
-        binding.matchNumberField.setText(str);
 
         binding.matchNumberField.addTextChangedListener(new TextWatcher()
         {
@@ -145,13 +163,10 @@ public class PreMatchActivity extends AppCompatActivity
 
             public void afterTextChanged(Editable c)
             {
+                binding.errorMessagePm.setVisibility(View.INVISIBLE);
                 setTeamNumFromMatchNum();
             }
         });
-
-        binding.teamNumberField.setText(m_matchData.getTeamNumber());
-
-        setTeamNumFromMatchNum();
 
         binding.teamNumberField.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
@@ -159,10 +174,11 @@ public class PreMatchActivity extends AppCompatActivity
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 binding.errorMessagePm.setVisibility(View.INVISIBLE);
-                if (parent != null && parent.getItemAtPosition(position) != null)
+                if (parent != null && parent.getItemAtPosition(position) != null && m_matchData != null)
                 {
-                    Log.i(TAG, "!!!!! setting matchData teamNum = " + parent.getItemAtPosition(position).toString());
-                    m_matchData.setTeamNumber(parent.getItemAtPosition(position).toString());
+                    String selectedTeam = parent.getItemAtPosition(position).toString();
+                    Log.i(TAG, "Selected team: " + selectedTeam);
+                    m_matchData.setTeamNumber(selectedTeam);
                 }
             }
 
@@ -175,55 +191,9 @@ public class PreMatchActivity extends AppCompatActivity
         });
 
         binding.teamNumberField.setOnFocusChangeListener((v, hasFocus) -> {
-            // Show drop down list of possible team numbers from TBA matchList (if loaded).
             if (hasFocus)
             {
-                Log.d(TAG, "m_teamNumberField clicked");
-                String matchNumStr = binding.matchNumberField.getText().toString().trim().toLowerCase();
-                boolean bAliasUsed = m_aliasInfo != null && m_aliasInfo.isAliasesInfoLoaded();
-
-                if ((!matchNumStr.isEmpty() && m_compInfo != null && m_compInfo.isEventDataLoaded()))
-                {
-                    boolean bTeamsLoadedSuccessfully = false;
-                    try
-                    {
-                        String[] teams = m_compInfo.getTeams(binding.matchNumberField.getText().toString().trim());
-                        if (!teams[0].isEmpty())
-                        {
-                            bTeamsLoadedSuccessfully = true;
-
-                            // Strip off "frc" prefix from teamNumStr if needed.
-                            for (int i = 0; i < teams.length; i++)
-                            {
-                                String tNum = teams[i];
-                                tNum = MatchData.stripTeamNumPrefix(tNum);  // strip off prefix
-                                teams[i] = tNum;
-
-                                // If aliases are used, get the alias (99#) for BCD num.
-                                if (bAliasUsed)
-                                {
-                                    String alias = m_aliasInfo.getAliasForTeamNum(tNum);
-                                    if (!alias.isEmpty())
-                                    {
-                                        Log.d(TAG, "For team " + tNum + ", found an alias: " + alias);
-                                        teams[i] = alias;
-                                    }
-                                }
-                            }
-                        }
-                        ArrayAdapter<String> adapter3 = new ArrayAdapter<>(PreMatchActivity.this, android.R.layout.select_dialog_item, teams);
-                        binding.teamNumberField.setAdapter(adapter3);
-                    }
-                    catch (JSONException | NullPointerException exception)
-                    {
-                        Log.e(TAG, Log.getStackTraceString(exception));
-                    }
-                    if (bTeamsLoadedSuccessfully)
-                    {
-                        binding.teamNumberField.setDropDownHeight(620);
-                        binding.teamNumberField.showDropDown();
-                    }
-                }
+                showTeamNumberDropDown();
             }
         });
 
@@ -231,76 +201,139 @@ public class PreMatchActivity extends AppCompatActivity
             if (checkValidData())
             {
                 updatePreMatchData();
-                Intent intent1 = new Intent(PreMatchActivity.this, ScoutingActivity.class);
-                intent1.putExtra("match_ID", m_matchData.getMatchID());
-                startActivity(intent1);
+                Intent intent = new Intent(this, ScoutingActivity.class);
+                intent.putExtra("match_ID", m_matchData.getMatchID());
+                startActivity(intent);
             }
         });
 
         binding.preMatchCancelButton.setOnClickListener(view -> {
-            // Only delete match if not currently being edited
-            if (!m_inEdit.equals("yes"))
+            if (!m_isEditMode && m_matchData != null)
             {
                 MatchListData.get(getApplicationContext()).deleteMatch(m_matchData);
             }
-            Intent intent2 = new Intent(PreMatchActivity.this, MatchListActivity.class);
-            startActivity(intent2);
+            startActivity(new Intent(this, MatchListActivity.class));
+            finish();
         });
     }
 
-    private void setTeamNumFromMatchNum()
+    /**
+     * Shows a drop-down list of possible team numbers for the current match.
+     */
+    private void showTeamNumberDropDown()
     {
-        // If there is a match number and a team index, load that team number from event teams list.
-        String matchNumStr = binding.matchNumberField.getText().toString().trim();
-        if (!matchNumStr.isEmpty() && !m_teamIndexStr.isEmpty() && m_scoutName.isValidTeamIndexNum(m_teamIndexStr) && m_compInfo != null && m_compInfo.isEventDataLoaded())
+        Log.d(TAG, "Showing team number drop down");
+        String matchNumStr = binding.matchNumberField.getText().toString().trim().toLowerCase();
+        boolean bAliasUsed = m_aliasInfo != null && m_aliasInfo.isAliasesInfoLoaded();
+
+        if (!matchNumStr.isEmpty() && m_compInfo != null && m_compInfo.isEventDataLoaded())
         {
-            Log.d(TAG, "Looking for team number (index = " + m_teamIndexStr + ") for match " + matchNumStr);
             try
             {
                 String[] teams = m_compInfo.getTeams(matchNumStr);
-                int teamIndex = Integer.parseInt(m_teamIndexStr);
-                String tbaTeamNum = teams[teamIndex];
-
-                // Strip off "frc" prefix from teamNumStr if needed.
-                String teamNumStr = MatchData.stripTeamNumPrefix(tbaTeamNum);
-                Log.d(TAG, "Auto-loading team number using index " + m_teamIndexStr + ": " + teamNumStr);
-                // If aliases are used, get the alias for this team#.
-                if (m_aliasInfo != null && m_aliasInfo.isAliasesInfoLoaded())
+                if (teams.length > 0 && !teams[0].isEmpty())
                 {
-                    String alias = m_aliasInfo.getAliasForTeamNum(teamNumStr);
-                    if (!alias.isEmpty())
+                    // Process team numbers (strip prefix and apply aliases)
+                    for (int i = 0; i < teams.length; i++)
                     {
-                        // Found an alias; that means teamNumStr is the BCD num.
-                        // But we want to display the alias in this case.
-                        Log.d(TAG, "For team " + teamNumStr + ", found an alias: " + alias);
-                        teamNumStr = alias;
+                        String tNum = MatchData.stripTeamNumPrefix(teams[i]);
+                        if (bAliasUsed)
+                        {
+                            String alias = m_aliasInfo.getAliasForTeamNum(tNum);
+                            if (!alias.isEmpty())
+                            {
+                                tNum = alias;
+                            }
+                        }
+                        teams[i] = tNum;
                     }
+
+                    ArrayAdapter<String> teamAdapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, teams);
+                    binding.teamNumberField.setAdapter(teamAdapter);
+                    binding.teamNumberField.setDropDownHeight(620);
+                    binding.teamNumberField.showDropDown();
                 }
-                binding.teamNumberField.setText(teamNumStr);
             }
-            catch (JSONException jsonException)
+            catch (JSONException | NullPointerException exception)
             {
-                Log.e(TAG, "For auto-load: couldn't get teams from m_compInfo");
-                Log.e(TAG, Log.getStackTraceString(jsonException));
+                Log.e(TAG, "Error fetching teams for dropdown", exception);
             }
         }
     }
 
+    /**
+     * Autopopulates the team number field based on the match number and configured team index.
+     */
+    private void setTeamNumFromMatchNum()
+    {
+        if (m_settings == null || m_compInfo == null || !m_compInfo.isEventDataLoaded())
+        {
+            return;
+        }
+
+        String matchNumStr = binding.matchNumberField.getText().toString().trim();
+        if (!matchNumStr.isEmpty() && !m_teamIndexStr.isEmpty() && m_settings.isValidTeamIndexNum(m_teamIndexStr))
+        {
+            Log.d(TAG, "Auto-loading team number for index " + m_teamIndexStr);
+            try
+            {
+                String[] teams = m_compInfo.getTeams(matchNumStr);
+                int teamIndex = Integer.parseInt(m_teamIndexStr);
+
+                if (teamIndex < teams.length)
+                {
+                    String tbaTeamNum = teams[teamIndex];
+                    String teamNumStr = MatchData.stripTeamNumPrefix(tbaTeamNum);
+
+                    if (m_aliasInfo != null && m_aliasInfo.isAliasesInfoLoaded())
+                    {
+                        String alias = m_aliasInfo.getAliasForTeamNum(teamNumStr);
+                        if (!alias.isEmpty())
+                        {
+                            teamNumStr = alias;
+                        }
+                    }
+                    binding.teamNumberField.setText(teamNumStr);
+                }
+            }
+            catch (JSONException | NumberFormatException e)
+            {
+                Log.e(TAG, "Error in auto-loading team number", e);
+            }
+        }
+    }
+
+    /**
+     * Persists the entered pre-match data to the MatchData object and updates settings.
+     */
     public void updatePreMatchData()
     {
-        m_scoutName = Settings.get(getApplicationContext());
-        m_scoutName.addPastScoutNames(binding.scoutName.getText().toString());
-        m_scoutName.setMostRecentScoutName(binding.scoutName.getText().toString());
-        m_scoutName.setMostRecentMatchNumber(binding.matchNumberField.getText().toString().toLowerCase());
-        m_matchData.setName(binding.scoutName.getText().toString());
-        m_matchData.setEventCode(binding.compName.getText().toString());
-        m_matchData.setMatchNumber(binding.matchNumberField.getText().toString().trim().toLowerCase());
+        if (m_matchData == null)
+        {
+            return;
+        }
+
+        String scoutName = binding.scoutName.getText().toString().trim();
+        String eventCode = binding.compName.getText().toString().trim();
+        String matchNum = binding.matchNumberField.getText().toString().trim().toLowerCase();
         String teamNumEntry = binding.teamNumberField.getText().toString().trim();
+
+        if (m_settings != null)
+        {
+            m_settings.addPastScoutNames(scoutName);
+            m_settings.setMostRecentScoutName(scoutName);
+            m_settings.setMostRecentMatchNumber(matchNum);
+        }
+
+        m_matchData.setName(scoutName);
+        m_matchData.setEventCode(eventCode);
+        m_matchData.setMatchNumber(matchNum);
+
         String teamNum = teamNumEntry;
         String teamAlias = "";
 
-        // If aliases are used and if teamNumEntry starts with "99", then get its BCDNum.
-        if (m_aliasInfo != null && m_aliasInfo.isAliasesInfoLoaded() && teamNumEntry.length() >= 2 && teamNumEntry.charAt(0) == '9' && teamNumEntry.charAt(1) == '9')
+        // Handle alias detection (e.g., 99#)
+        if (m_aliasInfo != null && m_aliasInfo.isAliasesInfoLoaded() && teamNumEntry.startsWith("99"))
         {
             try
             {
@@ -308,38 +341,40 @@ public class PreMatchActivity extends AppCompatActivity
                 if (!bcdNum.isEmpty())
                 {
                     teamNum = bcdNum;
-                    teamAlias = teamNumEntry;  // this is the 99#
+                    teamAlias = teamNumEntry;
                 }
             }
-            catch (JSONException jsonException)
+            catch (JSONException e)
             {
-                Log.e(TAG, "For updatePreMatchData(): jsonException when getting teamNum from alias");
-                Log.e(TAG, Log.getStackTraceString(jsonException));
+                Log.e(TAG, "Error resolving team alias", e);
             }
         }
+
         m_matchData.setTeamNumber(teamNum);
         m_matchData.setTeamAlias(teamAlias);
-        Log.i(TAG, "--> setting MatchData teamNum = " + teamNum + ", alias = " + teamAlias);
+        Log.i(TAG, "Updated MatchData: Team=" + teamNum + ", Alias=" + teamAlias);
+    }
+
+    /**
+     * Validates that all required fields have been filled.
+     *
+     * @return true if data is valid, false otherwise
+     */
+    private boolean checkValidData()
+    {
+        boolean isValid = !binding.compName.getText().toString().trim().isEmpty() &&
+                !binding.scoutName.getText().toString().trim().isEmpty() &&
+                !binding.teamNumberField.getText().toString().trim().isEmpty() &&
+                !binding.matchNumberField.getText().toString().trim().isEmpty();
+
+        binding.errorMessagePm.setVisibility(isValid ? View.INVISIBLE : View.VISIBLE);
+        return isValid;
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+    protected void onDestroy()
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onDestroy();
+        binding = null;
     }
-
-    private boolean checkValidData()
-    {
-        binding.errorMessagePm.setVisibility(View.INVISIBLE);
-
-        // Make sure there are entries for the various fields on this page.
-        if (binding.compName.getText().toString().trim().isEmpty() || binding.scoutName.getText().toString().trim().isEmpty() || binding.teamNumberField.getText().toString().trim().isEmpty() || binding.matchNumberField.getText().toString().trim().isEmpty())
-        {
-            binding.errorMessagePm.setVisibility(View.VISIBLE);
-            return false;
-        }
-        binding.errorMessagePm.setVisibility(View.INVISIBLE);
-        return true;
-    }
-
 }
