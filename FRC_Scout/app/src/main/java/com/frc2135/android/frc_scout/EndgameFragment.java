@@ -205,6 +205,7 @@ public class EndgameFragment extends Fragment
 
         // Validation logic for teleop fields (stored in m_matchData)
         int passNZ = m_matchData.getPassNeutralZone();
+        //noinspection ExtractMethodRecommender
         int passAZ = m_matchData.getPassAllianceZone();
         if (passNZ == 3 || passAZ == 3)
         {

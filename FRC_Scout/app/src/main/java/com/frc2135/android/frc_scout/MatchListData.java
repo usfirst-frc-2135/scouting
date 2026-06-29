@@ -129,6 +129,7 @@ public class MatchListData
      *
      * @return true if successful, false otherwise
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean saveScoutNames()
     {
         try
@@ -149,6 +150,7 @@ public class MatchListData
      * @param matchData the match to save
      * @return true if successful, false otherwise
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean saveMatchData(MatchData matchData)
     {
         try
