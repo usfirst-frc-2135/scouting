@@ -205,6 +205,44 @@ public class MatchListData
         return sortedList;
     }
 
+    /**
+     * Sorts a list of matches by team number in ascending order.
+     */
+    public ArrayList<MatchData> sortByTeamNumber(List<MatchData> list)
+    {
+        ArrayList<MatchData> sortedList = new ArrayList<>(list);
+        sortedList.sort(Comparator.comparing(m -> {
+            try
+            {
+                return Integer.parseInt(m.getTeamNumber());
+            }
+            catch (NumberFormatException e)
+            {
+                return Integer.MAX_VALUE;
+            }
+        }));
+        return sortedList;
+    }
+
+    /**
+     * Sorts a list of matches by match number in ascending order.
+     */
+    public ArrayList<MatchData> sortByMatchNumber(List<MatchData> list)
+    {
+        ArrayList<MatchData> sortedList = new ArrayList<>(list);
+        sortedList.sort(Comparator.comparing(m -> {
+            try
+            {
+                return Integer.parseInt(m.getMatchNumber());
+            }
+            catch (NumberFormatException e)
+            {
+                return Integer.MAX_VALUE;
+            }
+        }));
+        return sortedList;
+    }
+
     public List<MatchData> filterByTeam(List<MatchData> list, String teamNumber)
     {
         if (teamNumber == null)

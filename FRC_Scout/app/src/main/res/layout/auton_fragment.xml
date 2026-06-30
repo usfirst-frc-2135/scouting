@@ -17,7 +17,7 @@
             android:layout_marginTop="12dp"
             android:paddingBottom="7dp"
             android:backgroundTint="#719da9"
-            android:background="@drawable/top_rounded_rect">
+            android:background="@drawable/rounded_rect_top">
 
             <TextView
                 android:id="@+id/preload_title"
@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@drawable/bottom_rounded_rect"
+            android:background="@drawable/rounded_rect_bottom"
             android:backgroundTint="#8DB0BA">
 
             <TextView
@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="@drawable/bottom_rounded_rect"
+                android:background="@drawable/rounded_rect_bottom"
                 android:backgroundTint="#8DB0BA">
 
                 <RadioButton
@@ -197,7 +197,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/bottom_rounded_rect"
+                android:background="@drawable/rounded_rect_bottom"
                 android:backgroundTint="#F0A271">
 
                 <TextView
@@ -215,7 +215,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:background="@drawable/bottom_rounded_rect"
+                    android:background="@drawable/rounded_rect_bottom"
                     android:backgroundTint="#F0A271">
 
                     <RadioButton
@@ -338,7 +338,7 @@
                 android:backgroundTint="#e6a28b"
                 android:orientation="horizontal"
                 android:paddingTop="7dp"
-                android:background="@drawable/bottom_rounded_rect"
+                android:background="@drawable/rounded_rect_bottom"
                 android:paddingBottom="5dp">
 
                 <CheckBox

@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:backgroundTint="#c1cbb8"
-                    android:background="@drawable/bottom_rounded_rect">
+                    android:background="@drawable/rounded_rect_bottom">
 
                     <RadioButton
                         android:id="@+id/start_none"
@@ -339,7 +339,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:backgroundTint="#c277a6 "
-                android:background="@drawable/bottom_rounded_rect">
+                android:background="@drawable/rounded_rect_bottom">
 
                 <RadioButton
                     android:id="@+id/died_none"

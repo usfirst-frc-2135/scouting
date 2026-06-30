@@ -6,27 +6,20 @@
     android:orientation="vertical"
     android:padding="24dp">
 
-    <TextView
-        android:id="@+id/set_team_index_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="@string/set_the_team_index_to_use"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/set_team_index_layout"
+        android:id="@+id/event_code_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:errorEnabled="true">
+        app:errorEnabled="true"
+        app:helperText="@string/event_code_helper">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/set_team_index_field"
+            android:id="@+id/event_code_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints="team index"
-            android:hint="@string/team_index"
+            android:autofillHints="Event Code"
+            android:hint="@string/event_code_uc"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 

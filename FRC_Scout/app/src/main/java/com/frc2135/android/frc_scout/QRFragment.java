@@ -1,18 +1,16 @@
 package com.frc2135.android.frc_scout;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.frc2135.android.frc_scout.databinding.QrFragmentBinding;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 
@@ -70,24 +68,13 @@ public class QRFragment extends DialogFragment
         String label = args.getString(ARG_LABEL, "Match Data QR");
 
         generateQRCode(stats);
+        binding.qrDataPreview.setText(stats);
 
-        AlertDialog dialog = new AlertDialog.Builder(requireActivity())
+        return new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle(label)
-                .setMessage(stats)
                 .setView(binding.getRoot())
                 .setPositiveButton(android.R.string.ok, (d, w) -> dismiss())
                 .create();
-
-        dialog.setOnShowListener(d -> {
-            Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-            if (okButton != null)
-            {
-                okButton.setBackgroundColor(Color.parseColor("#3F51B5"));
-                okButton.setTextColor(Color.WHITE);
-            }
-        });
-
-        return dialog;
     }
 
     private void generateQRCode(String text)

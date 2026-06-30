@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowMetrics;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class SplashScreenActivity extends AppCompatActivity
 {
     private static final String TAG = "SplashScreen";
-    private static final int SPLASH_DISPLAY_LENGTH = 1475; // Duration of wait in milliseconds
+    private static final int SPLASH_DISPLAY_LENGTH = 1500; // Duration of pause in milliseconds
 
     /**
      * Called when the activity is first created.
@@ -36,16 +37,40 @@ public class SplashScreenActivity extends AppCompatActivity
         super.onCreate(icicle);
         Log.i(TAG, "SplashScreenActivity created.");
 
-        setContentView(R.layout.splash_screen_layout);
+        setContentView(R.layout.splash_screen_activity);
 
-        // Schedule transition to MatchListActivity
+        // Simple fade-in animation
+        View container = findViewById(R.id.splash_container);
+        if (container != null)
+        {
+            container.setAlpha(0f);
+            container.animate()
+                    .alpha(1f)
+                    .setDuration(500)
+                    .withEndAction(() -> startMainTransition())
+                    .start();
+        }
+        else
+        {
+            // Fallback: transition immediately if container is missing
+            startMainTransition();
+        }
+
+        logDisplayResolution();
+    }
+
+    /**
+     * Schedules transition to MatchListActivity after the pause duration.
+     */
+    private void startMainTransition()
+    {
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             Intent mainIntent = new Intent(SplashScreenActivity.this, MatchListActivity.class);
             startActivity(mainIntent);
+            // Use fade-out transition
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             finish();
         }, SPLASH_DISPLAY_LENGTH);
-
-        logDisplayResolution();
     }
 
     /**

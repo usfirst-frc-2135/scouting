@@ -1,13 +1,11 @@
 package com.frc2135.android.frc_scout;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import androidx.appcompat.app.ActionBar;
@@ -16,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.frc2135.android.frc_scout.databinding.PrematchActivityBinding;
 
 import org.json.JSONException;
+
+import java.util.Objects;
 
 /**
  * Activity for entering pre-match information such as scout name, match number, and team number.
@@ -87,16 +87,13 @@ public class PreMatchActivity extends AppCompatActivity
      */
     private void setupViewDefaults()
     {
-        binding.errorMessagePm.setVisibility(View.INVISIBLE);
-        binding.errorMessagePm.setTextColor(Color.RED);
+        binding.errorMessagePm.setVisibility(View.GONE);
 
-        binding.compName.setHint("Event code");
         if (m_matchData != null)
         {
             binding.compName.setText(m_matchData.getEventCode());
         }
 
-        binding.scoutName.setHint("Scout name");
         String scoutName = (m_matchData != null && !m_matchData.getName().isEmpty()) ? m_matchData.getName() :
                 (m_settings != null) ? m_settings.getMostRecentScoutName() : "";
         binding.scoutName.setText(scoutName);
@@ -118,27 +115,29 @@ public class PreMatchActivity extends AppCompatActivity
      */
     private void setupListeners()
     {
-        TextWatcher hideErrorWatcher = new TextWatcher()
+        binding.compName.addTextChangedListener(new TextWatcher()
         {
-            public void onTextChanged(CharSequence c, int start, int before, int count)
-            {
-                Log.d(TAG, "onTextChanged");
-            }
-
-            public void beforeTextChanged(CharSequence c, int start, int count, int after)
-            {
-                Log.d(TAG, "beforeTextChanged");
-            }
+            public void onTextChanged(CharSequence c, int start, int before, int count) {}
+            public void beforeTextChanged(CharSequence c, int start, int count, int after) {}
 
             public void afterTextChanged(Editable c)
             {
-                Log.d(TAG, "afterTextChanged");
-                binding.errorMessagePm.setVisibility(View.INVISIBLE);
+                binding.compNameLayout.setError(null);
+                binding.errorMessagePm.setVisibility(View.GONE);
             }
-        };
+        });
 
-        binding.compName.addTextChangedListener(hideErrorWatcher);
-        binding.scoutName.addTextChangedListener(hideErrorWatcher);
+        binding.scoutName.addTextChangedListener(new TextWatcher()
+        {
+            public void onTextChanged(CharSequence c, int start, int before, int count) {}
+            public void beforeTextChanged(CharSequence c, int start, int count, int after) {}
+
+            public void afterTextChanged(Editable c)
+            {
+                binding.scoutNameLayout.setError(null);
+                binding.errorMessagePm.setVisibility(View.GONE);
+            }
+        });
 
         // Scout Name AutoComplete setup
         if (m_settings != null)
@@ -156,45 +155,26 @@ public class PreMatchActivity extends AppCompatActivity
 
         binding.matchNumberField.addTextChangedListener(new TextWatcher()
         {
-            public void onTextChanged(CharSequence c, int start, int before, int count)
-            {
-                Log.d(TAG, "onTextChanged");
-            }
-
-            public void beforeTextChanged(CharSequence c, int start, int count, int after)
-            {
-                Log.d(TAG, "beforeTextChanged");
-            }
+            public void onTextChanged(CharSequence c, int start, int before, int count) {}
+            public void beforeTextChanged(CharSequence c, int start, int count, int after) {}
 
             public void afterTextChanged(Editable c)
             {
-                Log.d(TAG, "afterTextChanged");
-                binding.errorMessagePm.setVisibility(View.INVISIBLE);
+                binding.matchNumberLayout.setError(null);
+                binding.errorMessagePm.setVisibility(View.GONE);
                 setTeamNumFromMatchNum();
             }
         });
 
-        binding.teamNumberField.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        binding.teamNumberField.addTextChangedListener(new TextWatcher()
         {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-                Log.d(TAG, "onItemSelected");
-                binding.errorMessagePm.setVisibility(View.INVISIBLE);
-                if (parent != null && parent.getItemAtPosition(position) != null && m_matchData != null)
-                {
-                    String selectedTeam = parent.getItemAtPosition(position).toString();
-                    Log.i(TAG, "Selected team: " + selectedTeam);
-                    m_matchData.setTeamNumber(selectedTeam);
-                }
-            }
+            public void onTextChanged(CharSequence c, int start, int before, int count) {}
+            public void beforeTextChanged(CharSequence c, int start, int count, int after) {}
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent)
+            public void afterTextChanged(Editable c)
             {
-                Log.d(TAG, "onNothingSelected");
-                binding.errorMessagePm.setVisibility(View.INVISIBLE);
-                binding.teamNumberField.setSelection(0);
+                binding.teamNumberLayout.setError(null);
+                binding.errorMessagePm.setVisibility(View.GONE);
             }
         });
 
@@ -322,7 +302,7 @@ public class PreMatchActivity extends AppCompatActivity
         }
 
         String scoutName = binding.scoutName.getText().toString().trim();
-        String eventCode = binding.compName.getText().toString().trim();
+        String eventCode = Objects.requireNonNull(binding.compName.getText()).toString().trim();
         String matchNum = binding.matchNumberField.getText().toString().trim().toLowerCase();
         String teamNumEntry = binding.teamNumberField.getText().toString().trim();
 
@@ -370,12 +350,19 @@ public class PreMatchActivity extends AppCompatActivity
      */
     private boolean checkValidData()
     {
-        boolean isValid = !binding.compName.getText().toString().trim().isEmpty() &&
-                !binding.scoutName.getText().toString().trim().isEmpty() &&
-                !binding.teamNumberField.getText().toString().trim().isEmpty() &&
-                !binding.matchNumberField.getText().toString().trim().isEmpty();
+        String eventCode = Objects.requireNonNull(binding.compName.getText()).toString().trim();
+        String scoutName = binding.scoutName.getText().toString().trim();
+        String matchNum = binding.matchNumberField.getText().toString().trim();
+        String teamNum = binding.teamNumberField.getText().toString().trim();
 
-        binding.errorMessagePm.setVisibility(isValid ? View.INVISIBLE : View.VISIBLE);
+        binding.compNameLayout.setError(eventCode.isEmpty() ? "Required" : null);
+        binding.scoutNameLayout.setError(scoutName.isEmpty() ? "Required" : null);
+        binding.matchNumberLayout.setError(matchNum.isEmpty() ? "Required" : null);
+        binding.teamNumberLayout.setError(teamNum.isEmpty() ? "Required" : null);
+
+        boolean isValid = !eventCode.isEmpty() && !scoutName.isEmpty() && !matchNum.isEmpty() && !teamNum.isEmpty();
+
+        binding.errorMessagePm.setVisibility(isValid ? View.GONE : View.VISIBLE);
         return isValid;
     }
 

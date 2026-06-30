@@ -1,9 +1,7 @@
 package com.frc2135.android.frc_scout;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,14 +10,17 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.frc2135.android.frc_scout.databinding.LoadEventDataDialogBinding;
+import com.frc2135.android.frc_scout.databinding.LoadEventDialogBinding;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Dialog for loading team aliases data for a specific event from the team's scouting website.
@@ -27,7 +28,7 @@ import java.io.IOException;
 public class LoadAliasesDialog extends DialogFragment
 {
     private static final String TAG = "LoadAliasesDialog";
-    private LoadEventDataDialogBinding binding;
+    private LoadEventDialogBinding binding;
 
     /**
      * Creates a new instance of LoadAliasesDialog.
@@ -46,21 +47,19 @@ public class LoadAliasesDialog extends DialogFragment
         Log.i(TAG, "onCreateDialog called");
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        binding = LoadEventDataDialogBinding.inflate(inflater);
+        binding = LoadEventDialogBinding.inflate(inflater);
 
         binding.eventCodeField.setHint("Enter event code for aliases");
 
-        AlertDialog dialog = new AlertDialog.Builder(requireActivity())
+        AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle("Load Team Aliases")
                 .setView(binding.getRoot())
-                .setPositiveButton(android.R.string.ok, null) // Listener set after show to prevent auto-dismiss
+                .setPositiveButton(android.R.string.ok, null)
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
                 .create();
 
         dialog.setOnShowListener(d -> {
             Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-            okButton.setBackgroundColor(Color.parseColor("#3F51B5"));
-            okButton.setTextColor(Color.WHITE);
             okButton.setOnClickListener(v -> handleOkClick(dialog));
         });
 
@@ -69,7 +68,7 @@ public class LoadAliasesDialog extends DialogFragment
 
     private void handleOkClick(AlertDialog dialog)
     {
-        String eventCode = binding.eventCodeField.getText().toString().trim();
+        String eventCode = Objects.requireNonNull(binding.eventCodeField.getText()).toString().trim();
         if (eventCode.isEmpty() || eventCode.length() <= 4)
         {
             binding.eventCodeField.setError("Event code must be longer than 4 characters");

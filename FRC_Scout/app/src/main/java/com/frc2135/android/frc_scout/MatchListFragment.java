@@ -5,31 +5,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ActionMode;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.MenuProvider;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.ListFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.frc2135.android.frc_scout.databinding.MatchListBinding;
+import com.frc2135.android.frc_scout.databinding.MatchListFragmentBinding;
+import com.google.android.material.card.MaterialCardView;
 
 import org.json.JSONException;
 
@@ -45,43 +41,40 @@ import java.util.Objects;
  * Fragment that displays a list of all scouted matches.
  * Provides functionality for filtering, sorting, deleting, and starting new scouting sessions.
  */
-public class MatchListFragment extends ListFragment
+public class MatchListFragment extends Fragment
 {
     private static final String TAG = "MatchListFragment";
     public static final String QRTAG = "qr";
 
     private List<MatchData> m_displayedMatches;
     private MatchAdapter m_adapter;
-    private MatchListBinding binding;
+    private MatchListFragmentBinding binding;
+
+    private String m_teamFilter;
+    private String m_eventFilter;
+    private String m_scoutFilter;
+    private String m_matchFilter;
+
+    private MatchData m_selectedMatch;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
-
-        ActionBar aBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
-        if (aBar != null)
-        {
-            aBar.setTitle("Recorded Matches");
-        }
         setupMenuProvider();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
-        binding = MatchListBinding.inflate(inflater, parent, false);
+        binding = MatchListFragmentBinding.inflate(inflater, parent, false);
 
         loadInitialMatches();
         applyIntentFilters();
 
-        m_adapter = new MatchAdapter(m_displayedMatches);
-        setListAdapter(m_adapter);
-
-        setupListView();
-        setupDarkModeToggle();
-        setupFab();
+        setupRecyclerView();
+        setupNewMatchButton();
         setupSortSpinner();
         setupFilterButton();
 
@@ -94,117 +87,49 @@ public class MatchListFragment extends ListFragment
         Log.d(TAG, "Loaded " + m_displayedMatches.size() + " matches initially.");
     }
 
-    /**
-     * Checks the hosting activity's Intent for filter parameters passed from {@link MatchFilterDialog}.
-     */
     private void applyIntentFilters()
     {
         Intent intent = requireActivity().getIntent();
         MatchListData data = MatchListData.get(requireContext());
 
-        if (intent.hasExtra("team"))
+        m_teamFilter = intent.getStringExtra("team");
+        if (m_teamFilter != null)
         {
-            String team = intent.getStringExtra("team");
-            m_displayedMatches = data.filterByTeam(m_displayedMatches, team);
-            Log.d(TAG, "Filtered by team: " + team);
+            m_displayedMatches = data.filterByTeam(m_displayedMatches, m_teamFilter);
         }
-        if (intent.hasExtra("competition"))
+
+        m_eventFilter = intent.getStringExtra("competition");
+        if (m_eventFilter != null)
         {
-            String comp = intent.getStringExtra("competition");
-            m_displayedMatches = data.filterByCompetition(m_displayedMatches, comp);
-            Log.d(TAG, "Filtered by competition: " + comp);
+            m_displayedMatches = data.filterByCompetition(m_displayedMatches, m_eventFilter);
         }
-        if (intent.hasExtra("scout"))
+
+        m_scoutFilter = intent.getStringExtra("scout");
+        if (m_scoutFilter != null)
         {
-            String scout = intent.getStringExtra("scout");
-            m_displayedMatches = data.filterByScout(m_displayedMatches, scout);
-            Log.d(TAG, "Filtered by scout: " + scout);
+            m_displayedMatches = data.filterByScout(m_displayedMatches, m_scoutFilter);
         }
-        if (intent.hasExtra("match"))
+
+        m_matchFilter = intent.getStringExtra("match");
+        if (m_matchFilter != null)
         {
-            String match = intent.getStringExtra("match");
-            m_displayedMatches = data.filterByMatchNumber(m_displayedMatches, match);
-            Log.d(TAG, "Filtered by match number: " + match);
+            m_displayedMatches = data.filterByMatchNumber(m_displayedMatches, m_matchFilter);
         }
     }
 
-    private void setupListView()
+    private void setupRecyclerView()
     {
-        ListView listView = binding.getRoot().findViewById(android.R.id.list);
-        registerForContextMenu(listView);
-        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        listView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener()
-        {
-            @Override
-            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked)
-            {
-                Log.d(TAG, "onItemCheckedStateChanged");
-            }
-
-            @Override
-            public boolean onCreateActionMode(ActionMode mode, Menu menu)
-            {
-                Log.d(TAG, "onCreateActionMode");
-                mode.getMenuInflater().inflate(R.menu.match_list_item_context, menu);
-                return true;
-            }
-
-            @Override
-            public boolean onPrepareActionMode(ActionMode mode, Menu menu)
-            {
-                Log.d(TAG, "onPrepareActionMode");
-                return false;
-            }
-
-            @Override
-            public boolean onActionItemClicked(ActionMode mode, MenuItem item)
-            {
-                Log.d(TAG, "onActionItemClicked");
-                if (item.getItemId() == R.id.menu_item_delete_match)
-                {
-                    Log.d(TAG, "onActionItemClicked");
-                    MatchListData matchHistory = MatchListData.get(requireContext());
-                    ListView lv = getListView();
-                    for (int i = m_adapter.getCount() - 1; i >= 0; i--)
-                    {
-                        if (lv.isItemChecked(i))
-                        {
-                            matchHistory.deleteMatch(m_adapter.getItem(i));
-                            m_displayedMatches.remove(m_adapter.getItem(i));
-                        }
-                    }
-                    mode.finish();
-                    m_adapter.notifyDataSetChanged();
-                    return true;
-                }
-                return false;
-            }
-
-            @Override
-            public void onDestroyActionMode(ActionMode mode)
-            {
-                Log.d(TAG, "onDestroyActionMode");
-            }
-        });
+        binding.matchRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        m_adapter = new MatchAdapter(m_displayedMatches);
+        binding.matchRecyclerView.setAdapter(m_adapter);
     }
 
-    private void setupDarkModeToggle()
-    {
-        Preferences prefs = Preferences.get(requireContext());
-        binding.darkToggle.setChecked(prefs.getDarkMode());
-        binding.darkToggle.setOnClickListener(v -> {
-            Log.d(TAG, "Theme toggle: " + binding.darkToggle.isChecked());
-            prefs.setDarkMode(binding.darkToggle.isChecked(), true);
-        });
-    }
-
-    private void setupFab()
+    private void setupNewMatchButton()
     {
         binding.startMatch.setOnClickListener(view -> {
             try
             {
                 MatchData newMatch = new MatchData(requireContext());
-                Log.d(TAG, "Creating new match: " + newMatch.getMatchID());
                 MatchListData.get(requireContext()).addMatch(newMatch);
 
                 Intent intent = new Intent(getActivity(), PreMatchActivity.class);
@@ -221,56 +146,39 @@ public class MatchListFragment extends ListFragment
 
     private void setupSortSpinner()
     {
-        Log.d(TAG, "setupSortSpinner");
-        ArrayAdapter<CharSequence> sortAdapter = ArrayAdapter.createFromResource(requireContext(),
-                R.array.date_array, android.R.layout.simple_spinner_item);
-        sortAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> sortAdapter = new ArrayAdapter<>(requireContext(),
+                android.R.layout.simple_dropdown_item_1line, getResources().getTextArray(R.array.date_array));
         binding.sortOptions.setAdapter(sortAdapter);
+        binding.sortOptions.setText(sortAdapter.getItem(0), false);
 
-        binding.sortOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+        binding.sortOptions.setOnItemClickListener((parent, view, position, id) -> {
+            String selection = parent.getItemAtPosition(position).toString();
+            MatchListData data = MatchListData.get(requireContext());
+
+            if (selection.equals("Newest"))
             {
-                String selection = parent.getItemAtPosition(position).toString();
-                MatchListData data = MatchListData.get(requireContext());
-
-                if (selection.equals("Newest"))
-                {
-                    m_displayedMatches = data.sortByTimestamp2(m_displayedMatches);
-                }
-                else if (selection.equals("Oldest"))
-                {
-                    m_displayedMatches = data.sortByTimestamp1(m_displayedMatches);
-                }
-
-                m_adapter.clear();
-                m_adapter.addAll(m_displayedMatches);
-                m_adapter.notifyDataSetChanged();
+                m_displayedMatches = data.sortByTimestamp2(m_displayedMatches);
+            }
+            else if (selection.equals("Oldest"))
+            {
+                m_displayedMatches = data.sortByTimestamp1(m_displayedMatches);
+            }
+            else if (selection.equals("Team Number"))
+            {
+                m_displayedMatches = data.sortByTeamNumber(m_displayedMatches);
+            }
+            else if (selection.equals("Match Number"))
+            {
+                m_displayedMatches = data.sortByMatchNumber(m_displayedMatches);
             }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent)
-            {
-                Log.d(TAG, "onNothingSelected");
-            }
+            m_adapter.updateData(m_displayedMatches);
         });
     }
 
     private void setupFilterButton()
     {
-        binding.filterText.setOnClickListener(v -> MatchFilterDialog.newInstance().show(requireActivity().getSupportFragmentManager(), "filter_dialog"));
-    }
-
-    @Override
-    public void onListItemClick(@NonNull ListView lView, @NonNull View view, int position, long id)
-    {
-        Log.d(TAG, "onListItemClick");
-        MatchData mData = m_adapter.getItem(position);
-        if (mData != null)
-        {
-            QRFragment.newInstance(mData).show(requireActivity().getSupportFragmentManager(), QRTAG);
-        }
+        binding.filterButton.setOnClickListener(v -> MatchFilterDialog.newInstance(m_teamFilter, m_eventFilter, m_scoutFilter, m_matchFilter).show(requireActivity().getSupportFragmentManager(), "filter_dialog"));
     }
 
     private void setupMenuProvider()
@@ -280,14 +188,34 @@ public class MatchListFragment extends ListFragment
             @Override
             public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
             {
-                Log.d(TAG, "onCreateMenu");
                 inflater.inflate(R.menu.settings_context_menu, menu);
+
+                MenuItem darkModeItem = menu.findItem(R.id.dark_mode_switch);
+                if (darkModeItem != null)
+                {
+                    View actionView = darkModeItem.getActionView();
+                    if (actionView != null)
+                    {
+                        CompoundButton darkSwitch = actionView.findViewById(R.id.dark_mode_switch_view);
+                        if (darkSwitch != null)
+                        {
+                            Preferences prefs = Preferences.get(requireContext());
+                            darkSwitch.setChecked(prefs.getDarkMode());
+                            darkSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                                Log.d(TAG, "Theme toggle: " + isChecked);
+                                if (isChecked != prefs.getDarkMode())
+                                {
+                                    prefs.setDarkMode(isChecked, true);
+                                }
+                            });
+                        }
+                    }
+                }
             }
 
             @Override
             public boolean onMenuItemSelected(@NonNull MenuItem item)
             {
-                Log.d(TAG, "onMenuItemSelected");
                 FragmentManager fm = requireActivity().getSupportFragmentManager();
                 int itemID = item.getItemId();
 
@@ -355,96 +283,136 @@ public class MatchListFragment extends ListFragment
         });
     }
 
-    private class MatchAdapter extends ArrayAdapter<MatchData>
+    private class MatchHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
     {
-        public MatchAdapter(List<MatchData> matchData)
+        @SuppressWarnings("FieldCanBeLocal")
+        private final MaterialCardView m_cardView;
+        private final TextView m_teamNumber;
+        private final TextView m_matchNumber;
+        private final TextView m_eventCode;
+        private final TextView m_date;
+        private MatchData m_match;
+
+        public MatchHolder(View itemView)
         {
-            super(requireActivity(), 0, matchData);
+            super(itemView);
+            m_cardView = itemView.findViewById(R.id.match_card);
+            m_teamNumber = itemView.findViewById(R.id.match_team_number);
+            m_matchNumber = itemView.findViewById(R.id.match_number);
+            m_eventCode = itemView.findViewById(R.id.match_event_code);
+            m_date = itemView.findViewById(R.id.match_date);
+            m_cardView.setOnClickListener(this);
+            m_cardView.setOnCreateContextMenuListener((menu, v, menuInfo) -> {
+                requireActivity().getMenuInflater().inflate(R.menu.match_item_context_menu, menu);
+                m_selectedMatch = m_match;
+            });
         }
 
-        @SuppressLint("InflateParams")
-        @NonNull
-        @Override
-        public View getView(int position, View convertView, @NonNull ViewGroup parent)
+        public void bind(MatchData match)
         {
-            View view = convertView;
-            if (view == null)
-            {
-                view = requireActivity().getLayoutInflater().inflate(R.layout.match_list_item, null);
-            }
-            MatchData m = getItem(position);
+            m_match = match;
+            m_teamNumber.setText(String.format("Team %s", match.getTeamNumber()));
+            m_matchNumber.setText(String.format("Match %s", match.getMatchNumber()));
+            m_eventCode.setText(match.getEventCode());
+            m_date.setText(getFormattedDate(match.getTimestamp()));
+        }
 
-            if (m != null)
-            {
-                TextView mMatchSummary = view.findViewById(R.id.match_tag_display);
-                String tStr = String.format("%s-%s-%s-%s",
-                        m.getEventCode(),
-                        m.getMatchNumber(),
-                        m.getTeamNumber(),
-                        getFormattedDate(m.getTimestamp()));
+        @Override
+        public void onClick(View v)
+        {
+            QRFragment.newInstance(m_match).show(requireActivity().getSupportFragmentManager(), QRTAG);
+        }
 
-                mMatchSummary.setText(tStr);
-                mMatchSummary.setTextColor(ContextCompat.getColor(requireContext(), R.color.textPrimary));
-            }
-            return view;
+        @Override
+        public boolean onLongClick(View v)
+        {
+            // Simple context menu or delete option could go here
+            return false;
         }
     }
 
-    /**
-     * Formats a date into a standardized string for the match list UI.
-     */
+    private class MatchAdapter extends RecyclerView.Adapter<MatchHolder>
+    {
+        private List<MatchData> m_matches;
+
+        public MatchAdapter(List<MatchData> matches)
+        {
+            m_matches = matches;
+        }
+
+        @NonNull
+        @Override
+        public MatchHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+        {
+            View view = LayoutInflater.from(requireActivity()).inflate(R.layout.match_list_item, parent, false);
+            return new MatchHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull MatchHolder holder, int position)
+        {
+            holder.bind(m_matches.get(position));
+        }
+
+        @Override
+        public int getItemCount()
+        {
+            return m_matches.size();
+        }
+
+        @SuppressLint("NotifyDataSetChanged")
+        public void updateData(List<MatchData> matches)
+        {
+            m_matches = matches;
+            notifyDataSetChanged();
+        }
+    }
+
     private static String getFormattedDate(Date date)
     {
         if (date == null)
         {
             return "unknown";
         }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
-        return sdf.format(date);
+        return new SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.US).format(date);
     }
 
     @Override
     public void onDestroyView()
     {
         super.onDestroyView();
-        Log.d(TAG, "onDestroyMenu");
         binding = null;
     }
 
-    /// /// Set up the match's context menu (Edit match / Delete).
     @Override
-    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, ContextMenu.ContextMenuInfo menuInfo)
+    public boolean onContextItemSelected(@NonNull MenuItem item)
     {
-        requireActivity().getMenuInflater().inflate(R.menu.match_list_item_context, menu);
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item)
-    {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        int position = Objects.requireNonNull(info).position;
-        MatchData m = m_adapter.getItem(position);
+        MatchData m = m_selectedMatch;
+        if (m == null)
+        {
+            return super.onContextItemSelected(item);
+        }
 
         int itemID = item.getItemId();
         if (itemID == R.id.menu_item_delete_match)
         {
             Log.d(TAG, "Delete match button clicked");
             m_displayedMatches.remove(m);
-            MatchListData.get(getActivity()).deleteMatch(m);
+            MatchListData.get(requireContext()).deleteMatch(m);
             m_adapter.notifyDataSetChanged();
+            m_selectedMatch = null;
         }
         else if (itemID == R.id.edit_match_button)
         {
             Log.d(TAG, "Edit match button clicked");
 
-            m_adapter = (MatchAdapter) getListAdapter();
-
             Intent data = new Intent(getActivity(), PreMatchActivity.class);
             data.putExtra("match_ID", Objects.requireNonNull(m).getMatchID());
             data.putExtra("in_edit", "yes");
-            getListView().clearFocus();
+            binding.matchRecyclerView.clearFocus();
 
             startActivity(data);
+            m_selectedMatch = null;
         }
         else
         {

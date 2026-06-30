@@ -191,7 +191,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="@drawable/bottom_rounded_rect"
+                android:background="@drawable/rounded_rect_bottom"
                 android:backgroundTint="#EAECFD">
 
                 <CheckBox
@@ -397,7 +397,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="@drawable/bottom_rounded_rect"
+                android:background="@drawable/rounded_rect_bottom"
                 android:backgroundTint="#F0FFFF">
 
                 <CheckBox
@@ -442,7 +442,7 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
                 android:backgroundTint="#c2d5f2"
-                android:background="@drawable/bottom_rounded_rect"
+                android:background="@drawable/rounded_rect_bottom"
                 android:orientation="horizontal">
 
                 <RadioButton
@@ -528,7 +528,7 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
                 android:backgroundTint="#b1b8f5"
-                android:background="@drawable/bottom_rounded_rect"
+                android:background="@drawable/rounded_rect_bottom"
                 android:orientation="horizontal">
 
                 <RadioButton

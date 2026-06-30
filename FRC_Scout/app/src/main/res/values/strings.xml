@@ -13,10 +13,13 @@
     <string-array name="date_array">
         <item>Newest</item>
         <item>Oldest</item>
+        <item>Team Number</item>
+        <item>Match Number</item>
     </string-array>
 
     <string name="ic_menu_search">IC Menu Search</string>
     <string name="filter_list">Filter List</string>
+    <string name="filter_instructions">Select criteria to filter the list:</string>
     <!--    <string-array name="filter_array">-->
     <!--        <item>Team Number</item>-->
     <!--        <item>Event Code</item>-->
@@ -29,7 +32,7 @@
     <string name="delete_match">Delete Match</string>
 
     <string name="set_team_index">Set Team Index</string>
-    <string name="load_event_data">Load Event Data</string>
+    <string name="load_event_data">Load Event Data (TBA)</string>
     <string name="load_aliases">Load Team Aliases</string>
     <string name="delete_tba_event_files">Delete Event Data (TBA)</string>
     <string name="clear_scout_names">Clear Scout Names</string>
@@ -43,7 +46,8 @@
     <string name="team_number_uc">TEAM NUMBER</string>
     <string name="start_match">Start Match</string>
     <string name="cancel">Cancel</string>
-
+    <string name="event_code_helper">e.g. 2026casac</string>
+    <string name="event_code_hint">2026casac</string>
     <!--    <string name="qual_match_1"-->
     <!--        tools:ignore="Typos">qm1</string>-->
 
@@ -70,7 +74,7 @@
 
     <string name="team">Team</string>
     <string name="scout">Scout</string>
-    <string name="specific_match">Specific Match</string>
+    <string name="specific_match">Match Number</string>
     <string name="team_index">team index</string>
 
     <!--    game specific strings -->

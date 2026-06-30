@@ -1,20 +1,19 @@
 package com.frc2135.android.frc_scout;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.frc2135.android.frc_scout.databinding.MatchFilterDialogBinding;
+
+import java.util.Objects;
 
 /**
  * Dialog for filtering the match history list by team, competition, scout, or match number.
@@ -25,13 +24,24 @@ public class MatchFilterDialog extends DialogFragment
     private MatchFilterDialogBinding binding;
 
     /**
-     * Creates a new instance of MatchFilterDialog.
+     * Creates a new instance of MatchFilterDialog with current filter values.
      *
+     * @param team    the currently filtered team, or null
+     * @param event   the currently filtered event, or null
+     * @param scout   the currently filtered scout, or null
+     * @param match   the currently filtered match number, or null
      * @return a new MatchFilterDialog instance
      */
-    public static MatchFilterDialog newInstance()
+    public static MatchFilterDialog newInstance(String team, String event, String scout, String match)
     {
-        return new MatchFilterDialog();
+        MatchFilterDialog fragment = new MatchFilterDialog();
+        Bundle args = new Bundle();
+        args.putString("team", team);
+        args.putString("event", event);
+        args.putString("scout", scout);
+        args.putString("match", match);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @NonNull
@@ -44,22 +54,58 @@ public class MatchFilterDialog extends DialogFragment
         binding = MatchFilterDialogBinding.inflate(inflater);
 
         setupFilters();
+        restorePreviousFilters();
 
-        AlertDialog dialog = new AlertDialog.Builder(requireActivity())
+        com.google.android.material.dialog.MaterialAlertDialogBuilder builder = new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireActivity())
                 .setTitle("Filter Matches")
                 .setView(binding.getRoot())
                 .setPositiveButton(android.R.string.ok, (d, w) -> applyFilters())
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
-                .setNeutralButton("Clear Filters", (d, w) -> clearAllFilters())
-                .create();
+                .setNeutralButton("Clear Filters", (d, w) -> clearAllFilters());
 
-        dialog.setOnShowListener(d -> {
-            Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-            okButton.setBackgroundColor(Color.parseColor("#3F51B5"));
-            okButton.setTextColor(Color.WHITE);
-        });
+        return builder.create();
+    }
 
-        return dialog;
+    /**
+     * Restores the filter values from arguments if they exist.
+     */
+    private void restorePreviousFilters()
+    {
+        Bundle args = getArguments();
+        if (args != null)
+        {
+            String team = args.getString("team");
+            if (team != null && !team.isEmpty())
+            {
+                binding.teamSelect.setChecked(true);
+                binding.teamLayout.setEnabled(true);
+                binding.teamOptions.setText(team, false);
+            }
+
+            String event = args.getString("event");
+            if (event != null && !event.isEmpty())
+            {
+                binding.eventSelect.setChecked(true);
+                binding.eventLayout.setEnabled(true);
+                binding.eventOptions.setText(event, false);
+            }
+
+            String scout = args.getString("scout");
+            if (scout != null && !scout.isEmpty())
+            {
+                binding.scoutSelect.setChecked(true);
+                binding.scoutLayout.setEnabled(true);
+                binding.scoutOptions.setText(scout, false);
+            }
+
+            String match = args.getString("match");
+            if (match != null && !match.isEmpty())
+            {
+                binding.matchSelect.setChecked(true);
+                binding.matchLayout.setEnabled(true);
+                binding.matchEntry.setText(match);
+            }
+        }
     }
 
     /**
@@ -70,26 +116,41 @@ public class MatchFilterDialog extends DialogFragment
         MatchListData data = MatchListData.get(requireContext());
 
         // Team Filter
-        binding.teamOptions.setEnabled(false);
-        binding.teamSelect.setOnCheckedChangeListener((v, checked) -> binding.teamOptions.setEnabled(checked));
-        ArrayAdapter<String> teamAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_dropdown_item, data.listTeams());
+        binding.teamLayout.setEnabled(false);
+        binding.teamSelect.setOnCheckedChangeListener((v, checked) -> {
+            binding.teamLayout.setEnabled(checked);
+            if (checked) binding.teamOptions.showDropDown();
+        });
+        ArrayAdapter<String> teamAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_dropdown_item_1line, data.listTeams());
         binding.teamOptions.setAdapter(teamAdapter);
 
         // Competition Filter
-        binding.eventOptions.setEnabled(false);
-        binding.eventSelect.setOnCheckedChangeListener((v, checked) -> binding.eventOptions.setEnabled(checked));
-        ArrayAdapter<String> eventAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_dropdown_item, data.listCompetitions());
+        binding.eventLayout.setEnabled(false);
+        binding.eventSelect.setOnCheckedChangeListener((v, checked) -> {
+            binding.eventLayout.setEnabled(checked);
+            if (checked) binding.eventOptions.showDropDown();
+        });
+        ArrayAdapter<String> eventAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_dropdown_item_1line, data.listCompetitions());
         binding.eventOptions.setAdapter(eventAdapter);
 
         // Scout Filter
-        binding.scoutOptions.setEnabled(false);
-        binding.scoutSelect.setOnCheckedChangeListener((v, checked) -> binding.scoutOptions.setEnabled(checked));
-        ArrayAdapter<String> scoutAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_dropdown_item, data.listScouts());
+        binding.scoutLayout.setEnabled(false);
+        binding.scoutSelect.setOnCheckedChangeListener((v, checked) -> {
+            binding.scoutLayout.setEnabled(checked);
+            if (checked) binding.scoutOptions.showDropDown();
+        });
+        ArrayAdapter<String> scoutAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_dropdown_item_1line, data.listScouts());
         binding.scoutOptions.setAdapter(scoutAdapter);
 
         // Match Number Filter
-        binding.matchEntry.setEnabled(false);
-        binding.matchSelect.setOnCheckedChangeListener((v, checked) -> binding.matchEntry.setEnabled(checked));
+        binding.matchLayout.setEnabled(false);
+        binding.matchSelect.setOnCheckedChangeListener((v, checked) -> {
+            binding.matchLayout.setEnabled(checked);
+            if (checked)
+            {
+                binding.matchEntry.requestFocus();
+            }
+        });
     }
 
     /**
@@ -100,28 +161,28 @@ public class MatchFilterDialog extends DialogFragment
         Log.d(TAG, "applyFilters() called");
         Intent intent = new Intent(requireActivity(), MatchListActivity.class);
 
-        if (binding.teamSelect.isChecked() && binding.teamOptions.getSelectedItem() != null)
+        if (binding.teamSelect.isChecked())
         {
-            String team = binding.teamOptions.getSelectedItem().toString();
-            if (!team.startsWith("Select"))
+            String team = binding.teamOptions.getText().toString();
+            if (!team.isEmpty() && !team.startsWith("Select"))
             {
                 intent.putExtra("team", team);
             }
         }
 
-        if (binding.eventSelect.isChecked() && binding.eventOptions.getSelectedItem() != null)
+        if (binding.eventSelect.isChecked())
         {
-            String comp = binding.eventOptions.getSelectedItem().toString();
-            if (!comp.startsWith("Select"))
+            String comp = binding.eventOptions.getText().toString();
+            if (!comp.isEmpty() && !comp.startsWith("Select"))
             {
                 intent.putExtra("competition", comp);
             }
         }
 
-        if (binding.scoutSelect.isChecked() && binding.scoutOptions.getSelectedItem() != null)
+        if (binding.scoutSelect.isChecked())
         {
-            String scout = binding.scoutOptions.getSelectedItem().toString();
-            if (!scout.startsWith("Select"))
+            String scout = binding.scoutOptions.getText().toString();
+            if (!scout.isEmpty() && !scout.startsWith("Select"))
             {
                 intent.putExtra("scout", scout);
             }
@@ -129,7 +190,7 @@ public class MatchFilterDialog extends DialogFragment
 
         if (binding.matchSelect.isChecked())
         {
-            String match = binding.matchEntry.getText().toString().trim();
+            String match = Objects.requireNonNull(binding.matchEntry.getText()).toString().trim();
             if (!match.isEmpty())
             {
                 intent.putExtra("match", match);

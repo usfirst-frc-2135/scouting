@@ -1,116 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp">
+        android:padding="20dp">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_instructions"
+            android:textAppearance="?attr/textAppearanceSubtitle2"
+            android:layout_marginBottom="16dp"
+            android:textColor="?android:attr/textColorSecondary" />
+
+        <!-- Team Filter -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
 
-            <CheckBox
+            <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/team_select"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                app:useMaterialThemeColors="true" />
 
-            <TextView
-                android:paddingTop="20dp"
-                android:id="@+id/filter_team"
-                android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:text="@string/team"
-                android:textSize="20sp" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/team_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/team"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp">
 
-            <Spinner
-                android:id="@+id/team_options"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
-
+                <AutoCompleteTextView
+                    android:id="@+id/team_options"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp" />
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
+        <!-- Competition Filter -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
 
-            <CheckBox
+            <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/event_select"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                app:useMaterialThemeColors="true" />
 
-            <TextView
-                android:paddingTop="20dp"
-                android:id="@+id/filter_competition"
-                android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:text="@string/competition"
-                android:textSize="20sp" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/event_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/competition"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp">
 
-            <Spinner
-                android:id="@+id/event_options"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                <AutoCompleteTextView
+                    android:id="@+id/event_options"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp" />
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
+        <!-- Scout Filter -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
 
-            <CheckBox
+            <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/scout_select"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                app:useMaterialThemeColors="true" />
 
-            <TextView
-                android:paddingTop="20dp"
-                android:id="@+id/scout_competition"
-                android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:text="@string/scout"
-                android:textSize="20sp" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/scout_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/scout"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp">
 
-            <Spinner
-                android:id="@+id/scout_options"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                <AutoCompleteTextView
+                    android:id="@+id/scout_options"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp" />
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
+        <!-- Match Number Filter -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <CheckBox
+            <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/match_select"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                app:useMaterialThemeColors="true" />
 
-            <TextView
-                android:paddingTop="10dp"
-                android:id="@+id/match_competition"
-                android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:text="@string/specific_match"
-                android:textSize="20sp" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/match_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/specific_match"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp">
 
-            <EditText
-                android:id="@+id/match_entry"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textSize="20sp"
-                android:hint="@string/filter_for_this_match"
-                android:inputType="text"
-                android:autofillHints="Match#" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/match_entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:autofillHints="none"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp" />
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
     </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

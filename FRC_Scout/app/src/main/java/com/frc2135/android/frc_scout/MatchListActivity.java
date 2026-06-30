@@ -30,6 +30,8 @@ public class MatchListActivity extends AppCompatActivity
         MatchListActivityBinding binding = MatchListActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        setSupportActionBar(binding.toolbar);
+
         // Initializes FragmentManager to host the match list fragment
         FragmentManager fm = getSupportFragmentManager();
 

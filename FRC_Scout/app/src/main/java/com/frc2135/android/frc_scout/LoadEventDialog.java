@@ -1,10 +1,10 @@
 package com.frc2135.android.frc_scout;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.Button;
@@ -12,11 +12,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.frc2135.android.frc_scout.databinding.LoadEventDataDialogBinding;
+import com.frc2135.android.frc_scout.databinding.LoadEventDialogBinding;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.json.JSONException;
 
@@ -24,6 +26,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Dialog for loading match data for a specific event from The Blue Alliance (TBA) API.
@@ -33,7 +36,7 @@ public class LoadEventDialog extends DialogFragment
     private static final String TAG = "LoadEventDialog";
     private static final String TBA_AUTH_KEY = "E7akoVihRO2ZbNHtW2nRrjuNTcZaOxWtfeYWwh4XILMsKsqLnH2ZQrKAnbevlWGn";
 
-    private LoadEventDataDialogBinding binding;
+    private LoadEventDialogBinding binding;
 
     /**
      * Creates a new instance of LoadEventDialog.
@@ -52,11 +55,24 @@ public class LoadEventDialog extends DialogFragment
         Log.d(TAG, "onCreateDialog called");
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        binding = LoadEventDataDialogBinding.inflate(inflater);
+        binding = LoadEventDialogBinding.inflate(inflater);
 
-        binding.eventCodeField.setHint("Enter event code for matches");
+        binding.eventCodeField.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-        AlertDialog dialog = new AlertDialog.Builder(requireActivity())
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+                binding.eventCodeLayout.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle("Load Event Matches")
                 .setView(binding.getRoot())
                 .setPositiveButton(android.R.string.ok, null)
@@ -65,8 +81,6 @@ public class LoadEventDialog extends DialogFragment
 
         dialog.setOnShowListener(d -> {
             Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-            okButton.setBackgroundColor(Color.parseColor("#3F51B5"));
-            okButton.setTextColor(Color.WHITE);
             okButton.setOnClickListener(v -> handleOkClick(dialog));
         });
 
@@ -75,12 +89,13 @@ public class LoadEventDialog extends DialogFragment
 
     private void handleOkClick(AlertDialog dialog)
     {
-        String eventCode = binding.eventCodeField.getText().toString().trim();
+        String eventCode = Objects.requireNonNull(binding.eventCodeField.getText()).toString().trim();
         if (eventCode.isEmpty() || eventCode.length() <= 4)
         {
-            binding.eventCodeField.setError("Event code must be longer than 4 characters");
+            binding.eventCodeLayout.setError("Event code must be longer than 4 characters");
             return;
         }
+        binding.eventCodeLayout.setError(null);
 
         downloadEventData(eventCode, dialog);
     }
