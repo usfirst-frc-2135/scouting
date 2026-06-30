@@ -10,12 +10,13 @@
 
     <!-- Match List screen -->
     <string name="sort_by">Sort By:</string>
-    <string-array name="date_array">
-        <item>Newest</item>
-        <item>Oldest</item>
-        <item>Team Number</item>
-        <item>Match Number</item>
+    <string-array name="sort_criteria_array">
+        <item>Date</item>
+        <item>Match</item>
+        <item>Team</item>
     </string-array>
+    <string name="ascending">Ascending</string>
+    <string name="descending">Descending</string>
 
     <string name="ic_menu_search">IC Menu Search</string>
     <string name="filter_list">Filter List</string>

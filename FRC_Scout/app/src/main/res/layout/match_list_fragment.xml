@@ -30,7 +30,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:hint="@string/sort_by"
                     android:layout_marginEnd="8dp">
 
@@ -41,6 +41,17 @@
                         android:inputType="none"
                         android:textSize="14sp" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/sort_order_button"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:padding="8dp"
+                    app:icon="@drawable/ic_sort_descending"
+                    app:iconPadding="0dp"
+                    android:contentDescription="@string/descending" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/filter_button"

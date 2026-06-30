@@ -186,60 +186,59 @@ public class MatchListData
     }
 
     /**
-     * Sorts a list of matches by timestamp in ascending order (Oldest first).
+     * Sorts a list of matches by the specified criteria and order.
+     * @param list the list to sort
+     * @param criteria "Date", "Team", or "Match"
+     * @param ascending true for ascending, false for descending
+     * @return a new sorted ArrayList
      */
-    public ArrayList<MatchData> sortByTimestamp1(List<MatchData> list)
+    public ArrayList<MatchData> sortMatches(List<MatchData> list, String criteria, boolean ascending)
     {
         ArrayList<MatchData> sortedList = new ArrayList<>(list);
-        sortedList.sort(Comparator.comparing(MatchData::getTimestamp, Comparator.nullsLast(Comparator.naturalOrder())));
-        return sortedList;
-    }
+        Comparator<MatchData> comparator;
 
-    /**
-     * Sorts a list of matches by timestamp in descending order (Newest first).
-     */
-    public ArrayList<MatchData> sortByTimestamp2(List<MatchData> list)
-    {
-        ArrayList<MatchData> sortedList = new ArrayList<>(list);
-        sortedList.sort(Comparator.comparing(MatchData::getTimestamp, Comparator.nullsLast(Comparator.reverseOrder())));
-        return sortedList;
-    }
+        switch (criteria)
+        {
+            case "Team":
+                comparator = Comparator.comparing(m -> {
+                    try
+                    {
+                        // Use regex to extract only the digits from the team number (e.g., "frc2135" -> 2135)
+                        String digits = m.getTeamNumber().replaceAll("\\D+", "");
+                        return digits.isEmpty() ? Integer.MAX_VALUE : Integer.parseInt(digits);
+                    }
+                    catch (NumberFormatException e)
+                    {
+                        return Integer.MAX_VALUE;
+                    }
+                });
+                break;
+            case "Match":
+                comparator = Comparator.comparing(m -> {
+                    try
+                    {
+                        // Use regex to extract only the digits from the match number (e.g., "qm12" -> 12)
+                        String digits = m.getMatchNumber().replaceAll("\\D+", "");
+                        return digits.isEmpty() ? Integer.MAX_VALUE : Integer.parseInt(digits);
+                    }
+                    catch (NumberFormatException e)
+                    {
+                        return Integer.MAX_VALUE;
+                    }
+                });
+                break;
+            case "Date":
+            default:
+                comparator = Comparator.comparing(MatchData::getTimestamp, Comparator.nullsLast(Comparator.naturalOrder()));
+                break;
+        }
 
-    /**
-     * Sorts a list of matches by team number in ascending order.
-     */
-    public ArrayList<MatchData> sortByTeamNumber(List<MatchData> list)
-    {
-        ArrayList<MatchData> sortedList = new ArrayList<>(list);
-        sortedList.sort(Comparator.comparing(m -> {
-            try
-            {
-                return Integer.parseInt(m.getTeamNumber());
-            }
-            catch (NumberFormatException e)
-            {
-                return Integer.MAX_VALUE;
-            }
-        }));
-        return sortedList;
-    }
+        if (!ascending)
+        {
+            comparator = comparator.reversed();
+        }
 
-    /**
-     * Sorts a list of matches by match number in ascending order.
-     */
-    public ArrayList<MatchData> sortByMatchNumber(List<MatchData> list)
-    {
-        ArrayList<MatchData> sortedList = new ArrayList<>(list);
-        sortedList.sort(Comparator.comparing(m -> {
-            try
-            {
-                return Integer.parseInt(m.getMatchNumber());
-            }
-            catch (NumberFormatException e)
-            {
-                return Integer.MAX_VALUE;
-            }
-        }));
+        sortedList.sort(comparator);
         return sortedList;
     }
 

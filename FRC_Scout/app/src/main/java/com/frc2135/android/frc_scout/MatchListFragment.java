@@ -57,6 +57,8 @@ public class MatchListFragment extends Fragment
 
     private MatchData m_selectedMatch;
 
+    private boolean m_sortAscending = false;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
@@ -83,7 +85,7 @@ public class MatchListFragment extends Fragment
 
     private void loadInitialMatches()
     {
-        m_displayedMatches = MatchListData.get(requireContext()).sortByTimestamp2(MatchListData.get(requireContext()).getMatches());
+        m_displayedMatches = MatchListData.get(requireContext()).sortMatches(MatchListData.get(requireContext()).getMatches(), "Date", false);
         Log.d(TAG, "Loaded " + m_displayedMatches.size() + " matches initially.");
     }
 
@@ -117,6 +119,16 @@ public class MatchListFragment extends Fragment
         }
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        // Ensure dropdown options are populated and correct
+        ArrayAdapter<CharSequence> sortAdapter = new ArrayAdapter<>(requireContext(),
+                android.R.layout.simple_dropdown_item_1line, getResources().getTextArray(R.array.sort_criteria_array));
+        binding.sortOptions.setAdapter(sortAdapter);
+    }
+
     private void setupRecyclerView()
     {
         binding.matchRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -147,33 +159,41 @@ public class MatchListFragment extends Fragment
     private void setupSortSpinner()
     {
         ArrayAdapter<CharSequence> sortAdapter = new ArrayAdapter<>(requireContext(),
-                android.R.layout.simple_dropdown_item_1line, getResources().getTextArray(R.array.date_array));
+                android.R.layout.simple_dropdown_item_1line, getResources().getTextArray(R.array.sort_criteria_array));
         binding.sortOptions.setAdapter(sortAdapter);
         binding.sortOptions.setText(sortAdapter.getItem(0), false);
 
-        binding.sortOptions.setOnItemClickListener((parent, view, position, id) -> {
-            String selection = parent.getItemAtPosition(position).toString();
-            MatchListData data = MatchListData.get(requireContext());
+        binding.sortOptions.setOnItemClickListener((parent, view, position, id) -> updateSorting());
 
-            if (selection.equals("Newest"))
-            {
-                m_displayedMatches = data.sortByTimestamp2(m_displayedMatches);
-            }
-            else if (selection.equals("Oldest"))
-            {
-                m_displayedMatches = data.sortByTimestamp1(m_displayedMatches);
-            }
-            else if (selection.equals("Team Number"))
-            {
-                m_displayedMatches = data.sortByTeamNumber(m_displayedMatches);
-            }
-            else if (selection.equals("Match Number"))
-            {
-                m_displayedMatches = data.sortByMatchNumber(m_displayedMatches);
-            }
-
-            m_adapter.updateData(m_displayedMatches);
+        binding.sortOrderButton.setOnClickListener(v -> {
+            m_sortAscending = !m_sortAscending;
+            updateSortButtonIcon();
+            updateSorting();
         });
+        updateSortButtonIcon();
+    }
+
+    private void updateSortButtonIcon()
+    {
+        if (m_sortAscending)
+        {
+            binding.sortOrderButton.setIconResource(R.drawable.ic_sort_ascending);
+            binding.sortOrderButton.setContentDescription(getString(R.string.ascending));
+        }
+        else
+        {
+            binding.sortOrderButton.setIconResource(R.drawable.ic_sort_descending);
+            binding.sortOrderButton.setContentDescription(getString(R.string.descending));
+        }
+    }
+
+    private void updateSorting()
+    {
+        String criteria = binding.sortOptions.getText().toString();
+        MatchListData data = MatchListData.get(requireContext());
+
+        m_displayedMatches = data.sortMatches(m_displayedMatches, criteria, m_sortAscending);
+        m_adapter.updateData(m_displayedMatches);
     }
 
     private void setupFilterButton()
