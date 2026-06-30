@@ -227,6 +227,30 @@ public class Settings
         };
     }
 
+    /**
+     * Returns a descriptive string for the current team index (e.g. "1 - Red 1").
+     *
+     * @return the team index description string
+     */
+    public String getTeamIndexDescription()
+    {
+        if (m_teamIndexStr == null || m_teamIndexStr.equals("None"))
+        {
+            return "None";
+        }
+
+        return switch (m_teamIndexStr)
+        {
+            case "1" -> "1 - Red 1";
+            case "2" -> "2 - Red 2";
+            case "3" -> "3 - Red 3";
+            case "4" -> "4 - Blue 1";
+            case "5" -> "5 - Blue 2";
+            case "6" -> "6 - Blue 3";
+            default -> "None";
+        };
+    }
+
     public void setTeamIndexStr(String indexStr)
     {
         m_teamIndexStr = (indexStr != null) ? indexStr : "None";

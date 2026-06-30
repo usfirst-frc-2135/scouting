@@ -77,6 +77,10 @@ public class LoadEventDialog extends DialogFragment
                 .setView(binding.getRoot())
                 .setPositiveButton(android.R.string.ok, null)
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
+                .setNeutralButton("Clear", (d, w) -> {
+                    binding.eventCodeField.setText("");
+                    binding.eventCodeLayout.setError(null);
+                })
                 .create();
 
         dialog.setOnShowListener(d -> {

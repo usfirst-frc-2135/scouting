@@ -18,26 +18,28 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.frc2135.android.frc_scout.databinding.LoadEventDialogBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import java.io.File;
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.util.Objects;
 
 /**
- * Dialog for loading team aliases data for a specific event from the team's scouting website.
+ * Dialog for loading scout names for a specific event from the team's scouting website.
  */
-public class LoadAliasesDialog extends DialogFragment
+public class LoadScoutsDialog extends DialogFragment
 {
-    private static final String TAG = "LoadAliasesDialog";
+    private static final String TAG = "LoadScoutsDialog";
     private LoadEventDialogBinding binding;
 
     /**
-     * Creates a new instance of LoadAliasesDialog.
+     * Creates a new instance of LoadScoutsDialog.
      *
-     * @return a new LoadAliasesDialog instance
+     * @return a new LoadScoutsDialog instance
      */
-    public static LoadAliasesDialog newInstance()
+    public static LoadScoutsDialog newInstance()
     {
-        return new LoadAliasesDialog();
+        return new LoadScoutsDialog();
     }
 
     @NonNull
@@ -49,10 +51,10 @@ public class LoadAliasesDialog extends DialogFragment
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         binding = LoadEventDialogBinding.inflate(inflater);
 
-        binding.eventCodeField.setHint("Enter event code for aliases");
+        binding.eventCodeField.setHint("Enter event code for scouts");
 
         AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity())
-                .setTitle("Load Team Aliases")
+                .setTitle("Load Scout Names")
                 .setView(binding.getRoot())
                 .setPositiveButton(android.R.string.ok, null)
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
@@ -79,46 +81,45 @@ public class LoadAliasesDialog extends DialogFragment
             return;
         }
 
-        downloadAliases(eventCode, dialog);
+        downloadScouts(eventCode, dialog);
     }
 
-    private void downloadAliases(String eventCode, AlertDialog dialog)
+    private void downloadScouts(String eventCode, AlertDialog dialog)
     {
-        Log.i(TAG, "Starting aliases download for: " + eventCode);
+        Log.i(TAG, "Starting scouts download for: " + eventCode);
 
-        // Disable button to prevent multiple requests
         Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         okButton.setEnabled(false);
         okButton.setText(R.string.loading);
 
-        String urlStr = "https://www.frc2135.org/json/" + eventCode + "_teamAliases.json";
+        String urlStr = "https://www.frc2135.org/json/" + eventCode + "_scoutNames.json";
         Log.i(TAG, "URL: " + urlStr);
 
         Context context = requireContext().getApplicationContext();
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlStr, null,
                 response -> {
-                    Log.i(TAG, "Successfully received aliases data");
+                    Log.i(TAG, "Successfully received scouts data");
                     try
                     {
-                        saveAliases(eventCode, response, context);
-                        Toast.makeText(context, "Successfully downloaded aliases for " + eventCode, Toast.LENGTH_LONG).show();
+                        processScouts(response, context);
+                        Toast.makeText(context, "Successfully downloaded scouts for " + eventCode, Toast.LENGTH_LONG).show();
                         if (isAdded())
                         {
                             dismiss();
                         }
                     }
-                    catch (IOException e)
+                    catch (JSONException | IOException e)
                     {
-                        Log.e(TAG, "Error saving aliases: " + e.getMessage());
-                        Toast.makeText(context, "Error saving aliases data", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "Error processing scouts: " + e.getMessage());
+                        Toast.makeText(context, "Error saving scout names", Toast.LENGTH_SHORT).show();
                         okButton.setEnabled(true);
                         okButton.setText(android.R.string.ok);
                     }
                 },
                 error -> {
                     Log.e(TAG, "Download failed: " + error.toString());
-                    String msg = "Failed to download aliases for '" + eventCode + "'. Check connection or event code.";
+                    String msg = "Failed to download scouts for '" + eventCode + "'. Check connection or event code.";
                     Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
                     okButton.setEnabled(true);
                     okButton.setText(android.R.string.ok);
@@ -127,34 +128,22 @@ public class LoadAliasesDialog extends DialogFragment
         VolleySingleton.getInstance(requireContext()).addToRequestQueue(request);
     }
 
-    private void saveAliases(String eventCode, org.json.JSONArray response, Context context)
-            throws IOException
+    private void processScouts(JSONArray response, Context context)
+            throws JSONException, IOException
     {
-        AliasesSerializer serializer = new AliasesSerializer(context);
-        String filename = eventCode.toLowerCase() + "_aliases.json";
-
-        File dataDir = context.getFilesDir();
-        File existingFile = new File(dataDir, filename);
-        if (existingFile.exists())
+        Settings settings = Settings.get(context);
+        for (int i = 0; i < response.length(); i++)
         {
-            Log.i(TAG, "Deleting existing aliases file: " + filename);
-            if (!existingFile.delete())
-            {
-                Log.w(TAG, "Failed to delete existing file: " + filename);
-            }
+            String name = response.getString(i);
+            settings.addPastScoutNames(name);
         }
-
-        serializer.saveAliasesInfo(filename, response);
-
-        // Update the singleton if it's already loaded the wrong event code
-        AliasesInfo.get(context, eventCode, true);
+        MatchListData.get(context).saveScoutNames();
     }
 
     @Override
     public void onDestroyView()
     {
         super.onDestroyView();
-        Log.d(TAG, "onDestroyView");
         binding = null;
     }
 }

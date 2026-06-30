@@ -2,10 +2,9 @@ package com.frc2135.android.frc_scout;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,6 +36,8 @@ public class SetTeamIndexDialog extends DialogFragment
         return new SetTeamIndexDialog();
     }
 
+    private final String[] m_options = {"None", "1 - Red 1", "2 - Red 2", "3 - Red 3", "4 - Blue 1", "5 - Blue 2", "6 - Blue 3"};
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
@@ -48,87 +49,72 @@ public class SetTeamIndexDialog extends DialogFragment
 
         m_settings = Settings.get(requireContext());
 
-        setupViewDefaults();
-        setupListeners();
+        setupDropdown();
 
         AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle("Set Team Index")
                 .setView(binding.getRoot())
                 .setPositiveButton(android.R.string.ok, (d, w) -> saveTeamIndex())
-                .setNeutralButton(android.R.string.cancel, (d, w) -> dismiss())
+                .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
+                .setNeutralButton("Clear", (d, w) -> {
+                    binding.setTeamIndexField.setText(m_options[0], false);
+                    saveTeamIndex();
+                })
                 .create();
 
         return dialog;
     }
 
-    private void setupViewDefaults()
+    private void setupDropdown()
     {
-        binding.setTeamIndexField.setHint("Enter 1-6 or 'None'");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(),
+                R.layout.set_team_index_dropdown_item, m_options);
+        binding.setTeamIndexField.setAdapter(adapter);
 
         String currentIndex = "None";
         if (m_settings != null)
         {
-            String indexStr = m_settings.getTeamIndexStr();
-            if (m_settings.isValidTeamIndexStr(indexStr))
+            currentIndex = m_settings.getTeamIndexStr();
+        }
+
+        // Map stored value to display value
+        String displayValue = m_options[0]; // Default to None
+        for (String option : m_options)
+        {
+            if (option.startsWith(currentIndex))
             {
-                currentIndex = indexStr;
+                displayValue = option;
+                break;
             }
         }
-        binding.setTeamIndexField.setText(currentIndex);
-    }
-
-    private void setupListeners()
-    {
-        binding.setTeamIndexField.addTextChangedListener(new TextWatcher()
-        {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-            {
-                Log.d(TAG, "beforeTextChanged");
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-                Log.d(TAG, "onTextChanged");
-            }
-
-            @Override
-            public void afterTextChanged(Editable s)
-            {
-                Log.d(TAG, "afterTextChanged");
-                validateInput();
-            }
-        });
-    }
-
-    private void validateInput()
-    {
-        String input = Objects.requireNonNull(binding.setTeamIndexField.getText()).toString().trim();
-        boolean isValid = m_settings != null && m_settings.isValidTeamIndexStr(input);
-
-        if (isValid)
-        {
-            binding.setTeamIndexLayout.setError(null);
-        }
-        else
-        {
-            binding.setTeamIndexLayout.setError(getString(R.string.valid_values));
-        }
+        binding.setTeamIndexField.setText(displayValue, false);
     }
 
     private void saveTeamIndex()
     {
-        String input = Objects.requireNonNull(binding.setTeamIndexField.getText()).toString().trim();
-        if (m_settings != null && m_settings.isValidTeamIndexStr(input))
+        String selection = Objects.requireNonNull(binding.setTeamIndexField.getText()).toString();
+        String indexToSave = "None";
+
+        if (!selection.equals("None"))
         {
-            Log.d(TAG, "Saving team index: " + input);
-            m_settings.setTeamIndexStr(input);
+            indexToSave = selection.substring(0, 1); // Extract "1", "2", etc.
         }
-        else
+
+        if (m_settings != null)
         {
-            Log.w(TAG, "Attempted to save invalid team index: " + input);
+            Log.d(TAG, "Saving team index: " + indexToSave);
+            m_settings.setTeamIndexStr(indexToSave);
+            MatchListData.get(requireContext()).saveScoutNames();
+            getParentFragmentManager().setFragmentResult("team_index_changed", new Bundle());
         }
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        // Re-set adapter to ensure it displays correctly
+        setupDropdown();
     }
 
     @Override

@@ -21,16 +21,18 @@ public class MatchListActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         Log.i(TAG, "MatchListActivity created.");
-        super.onCreate(savedInstanceState);
-
-        // Apply theme preference before setting content view
         Preferences.get(this).applyTheme();
+        super.onCreate(savedInstanceState);
 
         // Use View Binding for layout inflation
         MatchListActivityBinding binding = MatchListActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolbar);
+        if (getSupportActionBar() != null)
+        {
+            getSupportActionBar().setTitle("Recorded Matches");
+        }
 
         // Initializes FragmentManager to host the match list fragment
         FragmentManager fm = getSupportFragmentManager();

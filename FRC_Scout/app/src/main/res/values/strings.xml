@@ -18,8 +18,7 @@
     <string name="ascending">Ascending</string>
     <string name="descending">Descending</string>
 
-    <string name="ic_menu_search">IC Menu Search</string>
-    <string name="filter_list">Filter List</string>
+    <string name="filter_list">Filter</string>
     <string name="filter_instructions">Select criteria to filter the list:</string>
     <!--    <string-array name="filter_array">-->
     <!--        <item>Team Number</item>-->
@@ -168,5 +167,6 @@
     <string name="tons">Tons</string>
 
     <string name="please_fill_in">Please fill in the missing fields!</string>
+    <string name="load_scout_names">Load Scout Names</string>
 
 </resources>

@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -65,6 +66,11 @@ public class MatchListFragment extends Fragment
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
         setupMenuProvider();
+
+        getParentFragmentManager().setFragmentResultListener("team_index_changed", this, (requestKey, result) -> {
+            Log.d(TAG, "Team index changed, updating toolbar");
+            updateToolbarTeamIndex();
+        });
     }
 
     @Override
@@ -79,6 +85,10 @@ public class MatchListFragment extends Fragment
         setupNewMatchButton();
         setupSortSpinner();
         setupFilterButton();
+        updateToolbarTeamIndex();
+
+        // Use the toolbar from the fragment layout
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbar);
 
         return binding.getRoot();
     }
@@ -127,6 +137,15 @@ public class MatchListFragment extends Fragment
         ArrayAdapter<CharSequence> sortAdapter = new ArrayAdapter<>(requireContext(),
                 android.R.layout.simple_dropdown_item_1line, getResources().getTextArray(R.array.sort_criteria_array));
         binding.sortOptions.setAdapter(sortAdapter);
+
+        // Update the team index in the toolbar
+        updateToolbarTeamIndex();
+    }
+
+    private void updateToolbarTeamIndex()
+    {
+        String indexStr = Settings.get(requireContext()).getTeamIndexStr();
+        binding.toolbarTeamIndex.setText(String.format("Team Index %s", indexStr));
     }
 
     private void setupRecyclerView()
@@ -208,7 +227,7 @@ public class MatchListFragment extends Fragment
             @Override
             public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
             {
-                inflater.inflate(R.menu.settings_context_menu, menu);
+                inflater.inflate(R.menu.dark_mode_context_menu, menu);
 
                 MenuItem darkModeItem = menu.findItem(R.id.dark_mode_switch);
                 if (darkModeItem != null)
@@ -241,7 +260,7 @@ public class MatchListFragment extends Fragment
 
                 if (itemID == R.id.set_team_index)
                 {
-                    SetTeamIndexDialog.newInstance().show(fm, "set_team_index_dialog");
+                    SetTeamIndexDialog.newInstance().show(getParentFragmentManager(), "set_team_index_dialog");
                 }
                 else if (itemID == R.id.load_event_data_tba)
                 {
@@ -250,6 +269,10 @@ public class MatchListFragment extends Fragment
                 else if (itemID == R.id.load_aliases)
                 {
                     LoadAliasesDialog.newInstance().show(fm, "load_aliases");
+                }
+                else if (itemID == R.id.load_scout_names)
+                {
+                    LoadScoutsDialog.newInstance().show(fm, "load_scouts");
                 }
                 else if (itemID == R.id.delete_event_data_tba)
                 {
@@ -310,6 +333,7 @@ public class MatchListFragment extends Fragment
         private final TextView m_teamNumber;
         private final TextView m_matchNumber;
         private final TextView m_eventCode;
+        private final TextView m_scoutName;
         private final TextView m_date;
         private MatchData m_match;
 
@@ -320,6 +344,7 @@ public class MatchListFragment extends Fragment
             m_teamNumber = itemView.findViewById(R.id.match_team_number);
             m_matchNumber = itemView.findViewById(R.id.match_number);
             m_eventCode = itemView.findViewById(R.id.match_event_code);
+            m_scoutName = itemView.findViewById(R.id.match_scout_name);
             m_date = itemView.findViewById(R.id.match_date);
             m_cardView.setOnClickListener(this);
             m_cardView.setOnCreateContextMenuListener((menu, v, menuInfo) -> {
@@ -334,6 +359,7 @@ public class MatchListFragment extends Fragment
             m_teamNumber.setText(String.format("Team %s", match.getTeamNumber()));
             m_matchNumber.setText(String.format("Match %s", match.getMatchNumber()));
             m_eventCode.setText(match.getEventCode());
+            m_scoutName.setText(String.format("Scout: %s", match.getName()));
             m_date.setText(getFormattedDate(match.getTimestamp()));
         }
 

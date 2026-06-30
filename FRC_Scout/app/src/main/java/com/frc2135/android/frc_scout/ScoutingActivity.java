@@ -22,20 +22,25 @@ public class ScoutingActivity extends AppCompatActivity
 
     private MatchData m_matchData;
 
+    private ScoutingActivityTabbedBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        Preferences.get(this).applyTheme();
         super.onCreate(savedInstanceState);
         Log.i(TAG, "ScoutingActivity created.");
 
-        Preferences.get(this).applyTheme();
-
-        ScoutingActivityTabbedBinding binding = ScoutingActivityTabbedBinding.inflate(getLayoutInflater());
+        binding = ScoutingActivityTabbedBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        setSupportActionBar(binding.toolbar);
 
         String matchId = getIntent().getStringExtra("match_ID");
         Log.d(TAG, "Loading match with ID: " + matchId);
         m_matchData = MatchListData.get(getApplicationContext()).getMatch(matchId);
+
+        updateActionBarTitle();
 
         // Initializes FragmentManager to host the scouting fragments
         FragmentManager fm = getSupportFragmentManager();
@@ -74,6 +79,7 @@ public class ScoutingActivity extends AppCompatActivity
                 fm.beginTransaction()
                         .replace(R.id.fragmentContainer, fragment)
                         .commit();
+                updateActionBarTitle();
                 return true;
             }
             return false;
@@ -93,6 +99,35 @@ public class ScoutingActivity extends AppCompatActivity
     {
         Log.d(TAG, "onOptionsItemsSelected");
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Updates the action bar title based on current scouting stage and team/match info.
+     */
+    private void updateActionBarTitle()
+    {
+        if (m_matchData == null || getSupportActionBar() == null)
+        {
+            return;
+        }
+
+        String stage = "Scouting";
+        int selectedId = binding.navView.getSelectedItemId();
+        if (selectedId == R.id.navigation_auton)
+        {
+            stage = "Autonomous";
+        }
+        else if (selectedId == R.id.navigation_teleop)
+        {
+            stage = "Teleoperated";
+        }
+        else if (selectedId == R.id.navigation_endgame)
+        {
+            stage = "Endgame";
+        }
+
+        getSupportActionBar().setTitle(stage);
+        binding.toolbarTitle.setText(String.format("Team %s - %s", m_matchData.getTeamNumber(), m_matchData.getMatchNumber()));
     }
 
     /**

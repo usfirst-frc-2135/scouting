@@ -17,6 +17,9 @@
         android:id="@+id/load_aliases"
         android:title="@string/load_aliases" />
     <item
+        android:id="@+id/load_scout_names"
+        android:title="@string/load_scout_names" />
+    <item
         android:id="@+id/delete_event_data_tba"
         android:title="@string/delete_tba_event_files" />
     <item

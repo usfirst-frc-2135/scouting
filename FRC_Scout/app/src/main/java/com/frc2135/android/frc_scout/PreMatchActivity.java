@@ -37,14 +37,13 @@ public class PreMatchActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState)
     {
         Log.d(TAG, "onCreate");
-        super.onCreate(savedInstanceState);
-
-        // Apply theme preference before setting content view
         Preferences.get(this).applyTheme();
+        super.onCreate(savedInstanceState);
 
         binding = PrematchActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        setSupportActionBar(binding.toolbar);
         loadInitialData();
         setupActionBar();
         setupViewDefaults();
