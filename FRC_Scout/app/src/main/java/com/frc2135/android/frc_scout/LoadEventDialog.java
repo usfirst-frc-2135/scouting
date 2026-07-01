@@ -20,20 +20,29 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.frc2135.android.frc_scout.databinding.LoadEventDialogBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
 /**
  * Dialog for loading match data for a specific event from The Blue Alliance (TBA) API.
+ * This dialog handles event code validation, data download via Volley, and local persistence.
  */
 public class LoadEventDialog extends DialogFragment
 {
     private static final String TAG = "LoadEventDialog";
+    /**
+     * The base URL for The Blue Alliance API v3 event matches endpoint.
+     */
+    public static final String TBA_EVENT_MATCHES_URL = "https://www.thebluealliance.com/api/v3/event/";
+    /**
+     * The authentication key for The Blue Alliance API.
+     */
     private static final String TBA_AUTH_KEY = "E7akoVihRO2ZbNHtW2nRrjuNTcZaOxWtfeYWwh4XILMsKsqLnH2ZQrKAnbevlWGn";
 
     private LoadEventDialogBinding binding;
@@ -48,6 +57,12 @@ public class LoadEventDialog extends DialogFragment
         return new LoadEventDialog();
     }
 
+    /**
+     * Initializes the dialog, sets up the layout, and configures button listeners.
+     *
+     * @param savedInstanceState if the dialog is being re-initialized after previously being shut down
+     * @return the constructed {@link Dialog}
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
@@ -57,10 +72,26 @@ public class LoadEventDialog extends DialogFragment
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         binding = LoadEventDialogBinding.inflate(inflater);
 
+        // Pre-fill with current event code if available
+        try
+        {
+            CurrentEventCode currentEventCode = CurrentEventCode.get(requireContext());
+            if (currentEventCode != null && !currentEventCode.getEventCode().equals("EVTX"))
+            {
+                binding.eventCodeField.setText(currentEventCode.getEventCode());
+            }
+        }
+        catch (IOException | JSONException e)
+        {
+            Log.w(TAG, "Failed to load current event code for pre-fill", e);
+        }
+
         binding.eventCodeField.addTextChangedListener(new TextWatcher()
         {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
@@ -69,7 +100,9 @@ public class LoadEventDialog extends DialogFragment
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s)
+            {
+            }
         });
 
         AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity())
@@ -78,6 +111,15 @@ public class LoadEventDialog extends DialogFragment
                 .setPositiveButton(android.R.string.ok, null)
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
                 .setNeutralButton("Clear", (d, w) -> {
+                    String eventCode = Objects.requireNonNull(binding.eventCodeField.getText()).toString().trim();
+                    if (!eventCode.isEmpty())
+                    {
+                        EventInfoSerializer serializer = new EventInfoSerializer(requireContext());
+                        if (serializer.deleteEventInfo(requireContext(), eventCode))
+                        {
+                            Toast.makeText(requireContext(), "Cleared data for " + eventCode, Toast.LENGTH_SHORT).show();
+                        }
+                    }
                     binding.eventCodeField.setText("");
                     binding.eventCodeLayout.setError(null);
                 })
@@ -91,39 +133,75 @@ public class LoadEventDialog extends DialogFragment
         return dialog;
     }
 
+    /**
+     * Handles the OK button click, validates the event code, and initiates the data download.
+     *
+     * @param dialog the current {@link AlertDialog} instance
+     */
     private void handleOkClick(AlertDialog dialog)
     {
-        String eventCode = Objects.requireNonNull(binding.eventCodeField.getText()).toString().trim();
-        if (eventCode.isEmpty() || eventCode.length() <= 4)
+        Log.d(TAG, "handleOkClick called");
+        String eventCode = Objects.requireNonNull(binding.eventCodeField.getText()).toString().trim().toLowerCase(Locale.US);
+
+        if (eventCode.isEmpty())
         {
-            binding.eventCodeLayout.setError("Event code must be longer than 4 characters");
+            binding.eventCodeLayout.setError("Event code cannot be empty");
             return;
         }
-        binding.eventCodeLayout.setError(null);
 
-        downloadEventData(eventCode, dialog);
+        if (eventCode.length() < 6)
+        {
+            binding.eventCodeLayout.setError("Event code is too short (e.g., 2026casac)");
+            return;
+        }
+
+        if (!eventCode.matches("\\d{4}[a-z0-9]+"))
+        {
+            binding.eventCodeLayout.setError("Invalid event code format (e.g., 2026casac)");
+            return;
+        }
+
+        binding.eventCodeLayout.setError(null);
+        downloadEventInfo(dialog, eventCode);
     }
 
-    private void downloadEventData(String eventCode, AlertDialog dialog)
+    /**
+     * Downloads event match data from The Blue Alliance API for the specified event code.
+     * Updates the UI state to show loading during the request.
+     * On success, saves the data locally and dismisses the dialog.
+     *
+     * @param dialog    the dialog instance to update or dismiss upon completion
+     * @param eventCode the TBA event code (e.g., "2026casac")
+     */
+    private void downloadEventInfo(AlertDialog dialog, String eventCode)
     {
-        Log.d(TAG, "Starting event data download for: " + eventCode);
+        Log.d(TAG, "downloadEventInfo for: " + eventCode);
 
         Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         okButton.setEnabled(false);
-        okButton.setText(R.string.loading); // Fixed: used string literal to avoid missing resource error
+        okButton.setText(R.string.loading);
+        binding.eventCodeField.setEnabled(false);
 
-        String urlStr = "https://www.thebluealliance.com/api/v3/event/" + eventCode + "/matches";
+        String urlStr = TBA_EVENT_MATCHES_URL + eventCode + "/matches";
         Log.d(TAG, "URL: " + urlStr);
 
         Context context = requireContext().getApplicationContext();
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlStr, null,
                 response -> {
-                    Log.d(TAG, "Successfully received event data");
+                    Log.d(TAG, "Successfully received event data for: " + eventCode);
+                    if (response.length() == 0)
+                    {
+                        Log.w(TAG, "Received empty match list for: " + eventCode);
+                        Toast.makeText(context, "No matches found for " + eventCode, Toast.LENGTH_LONG).show();
+                        resetUiState(okButton);
+                        return;
+                    }
+
                     try
                     {
-                        saveEventData(eventCode, response, context);
-                        Toast.makeText(context, "Successfully downloaded matches for " + eventCode, Toast.LENGTH_LONG).show();
+                        saveEventInfo(context, eventCode, response);
+                        Toast.makeText(context, "Successfully downloaded " + response.length() + " matches for " + eventCode, Toast.LENGTH_LONG).show();
                         if (isAdded())
                         {
                             dismiss();
@@ -132,17 +210,34 @@ public class LoadEventDialog extends DialogFragment
                     catch (JSONException | IOException e)
                     {
                         Log.e(TAG, "Error saving event data: " + e.getMessage(), e);
-                        Toast.makeText(context, "Error saving competition data", Toast.LENGTH_SHORT).show();
-                        okButton.setEnabled(true);
-                        okButton.setText(android.R.string.ok);
+                        Toast.makeText(context, "Error saving competition data locally", Toast.LENGTH_SHORT).show();
+                        resetUiState(okButton);
                     }
                 },
                 error -> {
                     Log.e(TAG, "Download failed: " + error.toString());
-                    String msg = "Failed to download matches for '" + eventCode + "'. Check connection or event code.";
-                    Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
-                    okButton.setEnabled(true);
-                    okButton.setText(android.R.string.ok);
+                    StringBuilder msg = new StringBuilder("Failed to download matches. ");
+                    if (error.networkResponse != null)
+                    {
+                        if (error.networkResponse.statusCode == 401)
+                        {
+                            msg.append("Invalid TBA API Key.");
+                        }
+                        else if (error.networkResponse.statusCode == 404)
+                        {
+                            msg.append("Event code '").append(eventCode).append("' not found.");
+                        }
+                        else
+                        {
+                            msg.append("Server error (").append(error.networkResponse.statusCode).append(").");
+                        }
+                    }
+                    else
+                    {
+                        msg.append("Check your internet connection.");
+                    }
+                    Toast.makeText(context, msg.toString(), Toast.LENGTH_LONG).show();
+                    resetUiState(okButton);
                 })
         {
             @Override
@@ -157,40 +252,53 @@ public class LoadEventDialog extends DialogFragment
         VolleySingleton.getInstance(requireContext()).addToRequestQueue(request);
     }
 
-    private void saveEventData(String eventCode, org.json.JSONArray response, Context context)
-            throws JSONException, IOException
+    /**
+     * Resets the UI components to their interactive state after a download attempt.
+     *
+     * @param okButton the dialog's OK button
+     */
+    private void resetUiState(Button okButton)
     {
-        CompetitionDataSerializer serializer = new CompetitionDataSerializer(context);
-
-        // Update current competition settings
-        CurrentCompetition currentComp = CurrentCompetition.get(context);
-        currentComp.setEventCode(eventCode);
-        if (eventCode.length() > 4)
+        if (okButton != null)
         {
-            currentComp.setCompName(eventCode.substring(4));
+            okButton.setEnabled(true);
+            okButton.setText(android.R.string.ok);
         }
-        serializer.saveCurrentCompetition(currentComp.toJSON());
-
-        // Cleanup existing matches file if it exists
-        String eventFileName = eventCode.toLowerCase() + "matches.json";
-        File dataDir = context.getFilesDir();
-        File existingFile = new File(dataDir, eventFileName);
-        if (existingFile.exists())
+        if (binding != null)
         {
-            Log.d(TAG, "Deleting existing competition file: " + eventFileName);
-            if (!existingFile.delete())
-            {
-                Log.w(TAG, "Failed to delete existing competition file");
-            }
+            binding.eventCodeField.setEnabled(true);
         }
-
-        // Save new event data
-        serializer.saveEventData(response);
-
-        // Update the singleton
-        CompetitionInfo.get(context, eventCode, true);
     }
 
+    /**
+     * Saves the downloaded event match data to internal storage and updates application state.
+     *
+     * @param context   the application context
+     * @param eventCode the TBA event code
+     * @param response  the JSON array of matches received from the API
+     * @throws JSONException if parsing the response fails
+     * @throws IOException   if saving to disk fails
+     */
+    private void saveEventInfo(Context context, String eventCode, JSONArray response)
+            throws JSONException, IOException
+    {
+        EventInfoSerializer serializer = new EventInfoSerializer(context);
+
+        // Update current competition settings
+        CurrentEventCode currentEventCode = CurrentEventCode.get(context);
+        currentEventCode.setEventCode(eventCode);
+        serializer.saveCurrentEventCode(currentEventCode.toJSON());
+
+        // Save new event data
+        serializer.saveEventInfo(context, eventCode, response);
+
+        // Update the singleton
+        EventInfo.get(context, eventCode, true);
+    }
+
+    /**
+     * Cleans up the view binding when the dialog view is destroyed.
+     */
     @Override
     public void onDestroyView()
     {

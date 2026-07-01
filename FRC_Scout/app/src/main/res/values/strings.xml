@@ -1,6 +1,5 @@
 <resources>
 
-    <string name="about">About</string>
     <string name="app_name">FRC Scout 2026</string>
     <string name="our_team_name">Team 2135 Presentation Invasion</string>
     <string name="our_team_address">San Jose, CA</string>
@@ -8,7 +7,17 @@
     <string name="app_original_author">Created by Nandita Jayanthi, 2020</string>
     <string name="app_version">Version 2026–1.0</string>
 
-    <!-- Match List screen -->
+    <!--    Action menu toggle -->
+    <string name="dark_mode">Dark Mode</string>
+
+    <!--    Action menu items -->
+    <string name="set_team_index">Set Team Index</string>
+    <string name="load_event_data">Load Event Data (TBA)</string>
+    <string name="load_aliases">Load Team Aliases</string>
+    <string name="clear_scout_names">Clear Scout Names</string>
+    <string name="about">About</string>
+
+    <!--    Match List screen -->
     <string name="sort_by">Sort By:</string>
     <string-array name="sort_criteria_array">
         <item>Date</item>
@@ -18,36 +27,24 @@
     <string name="ascending">Ascending</string>
     <string name="descending">Descending</string>
 
+    <!--    Match List filter dropdown -->
     <string name="filter_list">Filter</string>
     <string name="filter_instructions">Select criteria to filter the list:</string>
-    <!--    <string-array name="filter_array">-->
-    <!--        <item>Team Number</item>-->
-    <!--        <item>Event Code</item>-->
-    <!--        <item>Scout Name</item>-->
-    <!--        <item>Match Number</item>-->
-    <!--    </string-array>-->
 
-    <string name="dark_mode">Dark Mode</string>
+    <!--    Match List card dropdown -->
     <string name="edit_match">Edit match</string>
     <string name="delete_match">Delete Match</string>
 
-    <string name="set_team_index">Set Team Index</string>
-    <string name="load_event_data">Load Event Data (TBA)</string>
-    <string name="load_aliases">Load Team Aliases</string>
-    <string name="delete_tba_event_files">Delete Event Data (TBA)</string>
-    <string name="clear_scout_names">Clear Scout Names</string>
-
-    <!--    pre-match screen -->
+    <!--    Pre-match screen -->
     <string name="competition_uc">COMPETITION</string>
-    <string name="scout_name_uc">SCOUT NAME</string>
     <string name="event_code_uc">EVENT CODE</string>
+    <string name="scout_name_uc">SCOUT NAME</string>
     <string name="match_info_uc">MATCH INFO</string>
     <string name="match_number_uc">MATCH NUMBER</string>
     <string name="team_number_uc">TEAM NUMBER</string>
     <string name="start_match">Start Match</string>
     <string name="cancel">Cancel</string>
     <string name="event_code_helper">e.g. 2026casac</string>
-    <string name="event_code_hint">2026casac</string>
     <!--    <string name="qual_match_1"-->
     <!--        tools:ignore="Typos">qm1</string>-->
 
@@ -62,11 +59,9 @@
     <string name="teleop">Teleop</string>
     <string name="endgame">Endgame</string>
     <string name="alliance">Alliance</string>
-    <string name="eventCode">eventCode</string>
     <string name="competition">Competition</string>
     <!--    <string name="match_number">Match Number</string>-->
     <!--    <string name="team_number">Team Number</string>-->
-    <string name="filter_for_this_match">Filter for this match</string>
 
     <!--    scouting setup strings -->
     <!--    <string name="scout_name">Name:</string>-->
@@ -155,7 +150,6 @@
     <string name="three_qtr">¾</string>
 
     <string name="set_the_team_index_to_use">Set the team index to use (1–6, or None):</string>
-    <string name="valid_values">Valid values are 1–6 or None</string>
     <string name="passing_zone">PASSING FROM ZONE</string>
     <string name="herded_lots_of_fuel">Herded a lot of fuel</string>
     <string name="less_than_10s">less than 10s</string>
@@ -168,5 +162,18 @@
 
     <string name="please_fill_in">Please fill in the missing fields!</string>
     <string name="load_scout_names">Load Scout Names</string>
+    <string name="sort_options">Select Sort Criteria:</string>
+
+    <!-- Accessibility Strings -->
+    <string name="event_code_desc">Enter the competition event code</string>
+    <string name="scout_name_desc">Enter or select your scout name</string>
+    <string name="match_number_desc">Enter or select the match number</string>
+    <string name="team_number_desc">Enter or select the team number</string>
+    <string name="event_icon_desc">Competition icon</string>
+    <string name="scout_icon_desc">Scout icon</string>
+    <string name="match_icon_desc">Match icon</string>
+    <string name="team_icon_desc">Team icon</string>
+
+    <!-- Accessibility Hints -->
 
 </resources>

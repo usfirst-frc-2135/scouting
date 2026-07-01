@@ -5,18 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
+    android:fitsSystemWindows="true"
     tools:context=".PreMatchActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:titleTextColor="@android:color/white" />
+            app:titleTextColor="@android:color/white">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="Pre-Match - Team Index: 1" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -26,161 +41,200 @@
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:padding="24dp">
 
             <TextView
                 android:id="@+id/pre_match_title_comp"
                 style="@style/TextAppearance.MaterialComponents.Subtitle2"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:letterSpacing="0.1"
                 android:text="@string/competition_uc"
-                android:textColor="@color/textSecondary"
                 android:textAllCaps="true"
-                android:letterSpacing="0.1" />
+                android:textColor="@color/textSecondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/comp_name_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_marginTop="16dp"
                 android:hint="@string/event_code_uc"
-                app:startIconDrawable="@android:drawable/ic_menu_today"
-                app:endIconMode="clear_text"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
                 app:boxCornerRadiusTopStart="12dp"
+                app:endIconMode="clear_text"
                 app:helperText="@string/event_code_helper"
-                app:helperTextEnabled="true">
+                app:helperTextEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pre_match_title_comp"
+                app:startIconContentDescription="@string/event_icon_desc"
+                app:startIconDrawable="@android:drawable/ic_menu_today">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/comp_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/event_code_desc"
                     android:inputType="text"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
                     android:textColor="@color/textPrimary" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/scout_name_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp"
+                android:layout_marginTop="20dp"
                 android:hint="@string/scout_name_uc"
-                app:startIconDrawable="@android:drawable/ic_menu_myplaces"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
-                app:boxCornerRadiusTopStart="12dp">
+                app:boxCornerRadiusTopStart="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/comp_name_layout"
+                app:startIconContentDescription="@string/scout_icon_desc"
+                app:startIconDrawable="@android:drawable/ic_menu_myplaces">
 
                 <AutoCompleteTextView
                     android:id="@+id/scout_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/scout_name_desc"
                     android:inputType="textPersonName"
-                    android:textColor="@color/textPrimary"
                     android:paddingTop="16dp"
-                    android:paddingBottom="16dp" />
+                    android:paddingBottom="16dp"
+                    android:textColor="@color/textPrimary" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/pre_match_title_match"
                 style="@style/TextAppearance.MaterialComponents.Subtitle2"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="32dp"
+                android:letterSpacing="0.1"
                 android:text="@string/match_info_uc"
-                android:textColor="@color/textSecondary"
                 android:textAllCaps="true"
-                android:letterSpacing="0.1" />
+                android:textColor="@color/textSecondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/scout_name_layout" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/match_number_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
                 android:hint="@string/match_number_uc"
-                app:startIconDrawable="@android:drawable/ic_menu_edit"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
-                app:boxCornerRadiusTopStart="12dp">
+                app:boxCornerRadiusTopStart="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pre_match_title_match"
+                app:startIconContentDescription="@string/match_icon_desc"
+                app:startIconDrawable="@android:drawable/ic_menu_edit">
 
                 <AutoCompleteTextView
                     android:id="@+id/match_number_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/match_number_desc"
                     android:inputType="text"
-                    android:textColor="@color/textPrimary"
                     android:paddingTop="16dp"
-                    android:paddingBottom="16dp" />
+                    android:paddingBottom="16dp"
+                    android:textColor="@color/textPrimary" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/team_number_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp"
+                android:layout_marginTop="20dp"
                 android:hint="@string/team_number_uc"
-                app:startIconDrawable="@android:drawable/ic_menu_info_details"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
-                app:boxCornerRadiusTopStart="12dp">
+                app:boxCornerRadiusTopStart="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/match_number_layout"
+                app:startIconContentDescription="@string/team_icon_desc"
+                app:startIconDrawable="@android:drawable/ic_menu_info_details">
 
                 <AutoCompleteTextView
                     android:id="@+id/team_number_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/team_number_desc"
                     android:inputType="text"
-                    android:textColor="@color/textPrimary"
                     android:paddingTop="16dp"
-                    android:paddingBottom="16dp" />
+                    android:paddingBottom="16dp"
+                    android:textColor="@color/textPrimary" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/error_message_pm"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
+                android:layout_marginTop="32dp"
                 android:gravity="center"
                 android:text="@string/please_fill_in"
                 android:textColor="?attr/colorError"
-                android:visibility="gone" />
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/team_number_layout" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/start_match_button"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="64dp"
-                android:layout_marginBottom="12dp"
-                android:text="@string/start_match"
-                android:textSize="18sp"
+                android:layout_marginTop="32dp"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
-                app:backgroundTint="@color/button1"
+                android:text="@string/start_match"
+                android:contentDescription="@string/start_match"
                 android:textColor="@color/buttonText"
+                android:textSize="18sp"
+                app:backgroundTint="@color/button1"
                 app:cornerRadius="12dp"
-                app:elevation="4dp" />
+                app:elevation="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/team_number_layout"
+                app:layout_goneMarginTop="32dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/pre_match_cancel_button"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="56dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/cancel"
+                android:contentDescription="@string/cancel"
                 android:textColor="@color/textSecondary"
-                app:cornerRadius="12dp" />
+                app:cornerRadius="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/start_match_button" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

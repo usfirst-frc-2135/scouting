@@ -21,9 +21,9 @@ import java.util.Locale;
  * Singleton class for managing competition event data.
  * Loads and parses match information from a JSON file specific to an event code.
  */
-public class CompetitionInfo
+public class EventInfo
 {
-    private static final String TAG = "CompetitionInfo";
+    private static final String TAG = "EventInfo";
 
     // JSON Keys
     private static final String KEY_ALLIANCES = "alliances";
@@ -36,64 +36,63 @@ public class CompetitionInfo
     // Data members
     private String m_eventCode;
     private JSONArray m_jsonData;
-    private boolean m_bEventDataLoaded;
+    private boolean m_bEventInfoLoaded;
+    private static volatile EventInfo sEventInfo;
 
-    private static volatile CompetitionInfo sCompetitionInfo;
-
-    private CompetitionInfo(String eventCode)
+    private EventInfo(String eventCode)
     {
         m_eventCode = eventCode;
-        m_bEventDataLoaded = false;
+        m_bEventInfoLoaded = false;
         m_jsonData = null;
     }
 
     /**
-     * Returns the singleton instance of CompetitionInfo.
+     * Returns the singleton instance of EventInfo.
      * If the event code changes or a reload is forced, the data is reloaded.
      *
      * @param context      the context used for file operations and Toast messages
      * @param eventCode    the FRC event code
      * @param bForceReload whether to force a reload of the JSON data
-     * @return the singleton CompetitionInfo instance
+     * @return the singleton EventInfo instance
      */
-    public static CompetitionInfo get(Context context, String eventCode, boolean bForceReload)
+    public static EventInfo get(Context context, String eventCode, boolean bForceReload)
     {
-        if (sCompetitionInfo == null)
+        if (sEventInfo == null)
         {
-            synchronized (CompetitionInfo.class)
+            synchronized (EventInfo.class)
             {
-                if (sCompetitionInfo == null)
+                if (sEventInfo == null)
                 {
-                    Log.d(TAG, "Creating new sCompetitionInfo for eventCode: " + eventCode);
-                    sCompetitionInfo = new CompetitionInfo(eventCode);
-                    sCompetitionInfo.readEventMatchesJSON(context, true);
+                    Log.d(TAG, "Creating new sEventInfo for eventCode: " + eventCode);
+                    sEventInfo = new EventInfo(eventCode);
+                    sEventInfo.readEventMatchesJSON(context, true);
                 }
             }
         }
 
         // Handle event code change or forced reload
-        synchronized (CompetitionInfo.class)
+        synchronized (EventInfo.class)
         {
-            String currentCode = sCompetitionInfo.getEventCode();
+            String currentCode = sEventInfo.getEventCode();
             if (bForceReload || !currentCode.equalsIgnoreCase(eventCode))
             {
                 Log.d(TAG, "Updating event data: " + currentCode + " -> " + eventCode);
-                sCompetitionInfo.setEventCode(eventCode);
-                sCompetitionInfo.readEventMatchesJSON(context, true);
+                sEventInfo.setEventCode(eventCode);
+                sEventInfo.readEventMatchesJSON(context, true);
             }
         }
-        return sCompetitionInfo;
+        return sEventInfo;
     }
 
     /**
-     * Clears the singleton instance of CompetitionInfo.
+     * Clears the singleton instance of EventInfo.
      */
     public static void clear()
     {
-        synchronized (CompetitionInfo.class)
+        synchronized (EventInfo.class)
         {
-            Log.d(TAG, "Clearing CompetitionInfo instance");
-            sCompetitionInfo = null;
+            Log.d(TAG, "Clearing EventInfo instance");
+            sEventInfo = null;
         }
     }
 
@@ -110,7 +109,7 @@ public class CompetitionInfo
     private void setEventCode(String eventCode)
     {
         m_eventCode = eventCode;
-        m_bEventDataLoaded = false;
+        m_bEventInfoLoaded = false;
         m_jsonData = null;
     }
 
@@ -127,7 +126,7 @@ public class CompetitionInfo
             return;
         }
 
-        String filename = m_eventCode.trim().toLowerCase(Locale.US) + "matches.json";
+        String filename = m_eventCode.trim().toLowerCase(Locale.US) + "_matches.json";
         File file = new File(context.getFilesDir(), filename);
         Log.d(TAG, "Reading matches JSON from: " + file.getAbsolutePath());
 
@@ -143,7 +142,7 @@ public class CompetitionInfo
                 }
 
                 m_jsonData = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
-                m_bEventDataLoaded = true;
+                m_bEventInfoLoaded = true;
 
                 String msg = "Successfully loaded " + m_eventCode + " matches";
                 Log.d(TAG, msg);
@@ -176,9 +175,9 @@ public class CompetitionInfo
         }
     }
 
-    public boolean isEventDataLoaded()
+    public boolean isEventInfoLoaded()
     {
-        return m_bEventDataLoaded;
+        return m_bEventInfoLoaded;
     }
 
     /**

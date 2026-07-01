@@ -1,7 +1,6 @@
 package com.frc2135.android.frc_scout;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -30,7 +28,6 @@ import com.google.android.material.card.MaterialCardView;
 
 import org.json.JSONException;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -66,11 +63,6 @@ public class MatchListFragment extends Fragment
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
         setupMenuProvider();
-
-        getParentFragmentManager().setFragmentResultListener("team_index_changed", this, (requestKey, result) -> {
-            Log.d(TAG, "Team index changed, updating toolbar");
-            updateToolbarTeamIndex();
-        });
     }
 
     @Override
@@ -85,10 +77,6 @@ public class MatchListFragment extends Fragment
         setupNewMatchButton();
         setupSortSpinner();
         setupFilterButton();
-        updateToolbarTeamIndex();
-
-        // Use the toolbar from the fragment layout
-        ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbar);
 
         return binding.getRoot();
     }
@@ -137,15 +125,6 @@ public class MatchListFragment extends Fragment
         ArrayAdapter<CharSequence> sortAdapter = new ArrayAdapter<>(requireContext(),
                 android.R.layout.simple_dropdown_item_1line, getResources().getTextArray(R.array.sort_criteria_array));
         binding.sortOptions.setAdapter(sortAdapter);
-
-        // Update the team index in the toolbar
-        updateToolbarTeamIndex();
-    }
-
-    private void updateToolbarTeamIndex()
-    {
-        String indexStr = Settings.get(requireContext()).getTeamIndexStr();
-        binding.toolbarTeamIndex.setText(String.format("Team Index %s", indexStr));
     }
 
     private void setupRecyclerView()
@@ -274,10 +253,6 @@ public class MatchListFragment extends Fragment
                 {
                     LoadScoutsDialog.newInstance().show(fm, "load_scouts");
                 }
-                else if (itemID == R.id.delete_event_data_tba)
-                {
-                    deleteTbaMatchFiles();
-                }
                 else if (itemID == R.id.clear_scout_names)
                 {
                     Settings.get(requireContext()).clear();
@@ -288,40 +263,6 @@ public class MatchListFragment extends Fragment
                     requireActivity().finish();
                 }
                 return true;
-            }
-
-            private void deleteTbaMatchFiles()
-            {
-                Context context = requireContext();
-                File dataDir = context.getFilesDir();
-                File[] fileList = dataDir.listFiles();
-                int deletedCount = 0;
-                StringBuilder deletedFiles = new StringBuilder();
-
-                if (fileList != null)
-                {
-                    for (File f : fileList)
-                    {
-                        if (f.getName().contains("matches.json"))
-                        {
-                            if (f.delete())
-                            {
-                                deletedCount++;
-                                deletedFiles.append(f.getName()).append("\n");
-                            }
-                        }
-                    }
-                }
-
-                if (deletedCount > 0)
-                {
-                    CompetitionInfo.clear();
-                    Toast.makeText(context, "Deleted:\n" + deletedFiles, Toast.LENGTH_LONG).show();
-                }
-                else
-                {
-                    Toast.makeText(context, "No match files found.", Toast.LENGTH_SHORT).show();
-                }
             }
         });
     }
@@ -443,10 +384,18 @@ public class MatchListFragment extends Fragment
         if (itemID == R.id.menu_item_delete_match)
         {
             Log.d(TAG, "Delete match button clicked");
-            m_displayedMatches.remove(m);
-            MatchListData.get(requireContext()).deleteMatch(m);
-            m_adapter.notifyDataSetChanged();
-            m_selectedMatch = null;
+            new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Delete Match")
+                    .setMessage("Are you sure you want to delete this match? This action cannot be undone.")
+                    .setPositiveButton("Delete", (dialog, which) -> {
+                        m_displayedMatches.remove(m);
+                        MatchListData.get(requireContext()).deleteMatch(m);
+                        m_adapter.notifyDataSetChanged();
+                        m_selectedMatch = null;
+                        Toast.makeText(requireContext(), "Match deleted", Toast.LENGTH_SHORT).show();
+                    })
+                    .setNegativeButton("Cancel", (dialog, which) -> m_selectedMatch = null)
+                    .show();
         }
         else if (itemID == R.id.edit_match_button)
         {

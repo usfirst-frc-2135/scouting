@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.frc2135.android.frc_scout.databinding.SetTeamIndexDialogBinding;
@@ -36,7 +35,7 @@ public class SetTeamIndexDialog extends DialogFragment
         return new SetTeamIndexDialog();
     }
 
-    private final String[] m_options = {"None", "1 - Red 1", "2 - Red 2", "3 - Red 3", "4 - Blue 1", "5 - Blue 2", "6 - Blue 3"};
+    private final String[] m_options = {"0 - None", "1 - Red 1", "2 - Red 2", "3 - Red 3", "4 - Blue 1", "5 - Blue 2", "6 - Blue 3"};
 
     @NonNull
     @Override
@@ -51,7 +50,7 @@ public class SetTeamIndexDialog extends DialogFragment
 
         setupDropdown();
 
-        AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity())
+        return new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle("Set Team Index")
                 .setView(binding.getRoot())
                 .setPositiveButton(android.R.string.ok, (d, w) -> saveTeamIndex())
@@ -61,8 +60,6 @@ public class SetTeamIndexDialog extends DialogFragment
                     saveTeamIndex();
                 })
                 .create();
-
-        return dialog;
     }
 
     private void setupDropdown()
@@ -71,7 +68,7 @@ public class SetTeamIndexDialog extends DialogFragment
                 R.layout.set_team_index_dropdown_item, m_options);
         binding.setTeamIndexField.setAdapter(adapter);
 
-        String currentIndex = "None";
+        String currentIndex = "0 - None";
         if (m_settings != null)
         {
             currentIndex = m_settings.getTeamIndexStr();
@@ -93,9 +90,9 @@ public class SetTeamIndexDialog extends DialogFragment
     private void saveTeamIndex()
     {
         String selection = Objects.requireNonNull(binding.setTeamIndexField.getText()).toString();
-        String indexToSave = "None";
+        String indexToSave = "0 - None";
 
-        if (!selection.equals("None"))
+        if (!selection.equals("0 - None"))
         {
             indexToSave = selection.substring(0, 1); // Extract "1", "2", etc.
         }

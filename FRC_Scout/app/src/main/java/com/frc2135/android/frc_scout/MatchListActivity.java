@@ -16,16 +16,18 @@ import com.frc2135.android.frc_scout.databinding.MatchListActivityBinding;
 public class MatchListActivity extends AppCompatActivity
 {
     private static final String TAG = "MatchListActivity";
+    private MatchListActivityBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        Log.i(TAG, "MatchListActivity created.");
+        Log.d(TAG, "onCreate");
+        // Apply theme preference before super.onCreate to ensure the correct theme is applied early
         Preferences.get(this).applyTheme();
         super.onCreate(savedInstanceState);
 
         // Use View Binding for layout inflation
-        MatchListActivityBinding binding = MatchListActivityBinding.inflate(getLayoutInflater());
+        binding = MatchListActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolbar);
@@ -33,6 +35,8 @@ public class MatchListActivity extends AppCompatActivity
         {
             getSupportActionBar().setTitle("Recorded Matches");
         }
+
+        updateToolbarTeamIndex();
 
         // Initializes FragmentManager to host the match list fragment
         FragmentManager fm = getSupportFragmentManager();
@@ -44,6 +48,24 @@ public class MatchListActivity extends AppCompatActivity
                     .add(R.id.fragmentContainer, createMatchListFragment())
                     .commit();
         }
+
+        getSupportFragmentManager().setFragmentResultListener("team_index_changed", this, (requestKey, result) -> {
+            Log.d(TAG, "Team index changed, updating toolbar");
+            updateToolbarTeamIndex();
+        });
+    }
+
+    public void updateToolbarTeamIndex()
+    {
+        String indexStr = Settings.get(this).getTeamIndexStr();
+        binding.toolbarTeamIndex.setText(String.format("Team Index %s", indexStr));
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        updateToolbarTeamIndex();
     }
 
     /**

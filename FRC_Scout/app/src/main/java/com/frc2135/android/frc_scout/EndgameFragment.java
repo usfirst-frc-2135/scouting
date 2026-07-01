@@ -68,8 +68,7 @@ public class EndgameFragment extends Fragment
         ActionBar actionBar = activity.getSupportActionBar();
         if (actionBar != null)
         {
-            String teamDisplay = m_matchData.getTeamAlias().isEmpty() ? m_matchData.getTeamNumber() : m_matchData.getTeamAlias();
-            actionBar.setTitle("Endgame - Team " + teamDisplay + " - Match " + m_matchData.getMatchNumber());
+            actionBar.setTitle("Endgame");
         }
     }
 

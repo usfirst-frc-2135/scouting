@@ -58,7 +58,7 @@ public class Settings
     private Settings(Context context)
     {
         m_pastScouts = new ArrayList<>();
-        m_teamIndexStr = "None";
+        m_teamIndexStr = "0 - None";
         m_scoringTableSide = false;
         m_mostRecentScoutName = "";
         m_mostRecentMatchNumber = "";
@@ -113,7 +113,7 @@ public class Settings
                 }
             }
 
-            setTeamIndexStr(json.optString(KEY_TEAM_INDEX, "None"));
+            setTeamIndexStr(json.optString(KEY_TEAM_INDEX, "0 - None"));
             int scoringTableSideVal = json.optInt(KEY_SCORING_TABLE_SIDE, 0);
             setScoringTableSide(scoringTableSideVal == 1);
         }
@@ -232,11 +232,12 @@ public class Settings
      *
      * @return the team index description string
      */
+    @SuppressWarnings("unused")
     public String getTeamIndexDescription()
     {
-        if (m_teamIndexStr == null || m_teamIndexStr.equals("None"))
+        if (m_teamIndexStr == null || m_teamIndexStr.equals("0 - None"))
         {
-            return "None";
+            return "0 - None";
         }
 
         return switch (m_teamIndexStr)
@@ -247,13 +248,13 @@ public class Settings
             case "4" -> "4 - Blue 1";
             case "5" -> "5 - Blue 2";
             case "6" -> "6 - Blue 3";
-            default -> "None";
+            default -> "0 - None";
         };
     }
 
     public void setTeamIndexStr(String indexStr)
     {
-        m_teamIndexStr = (indexStr != null) ? indexStr : "None";
+        m_teamIndexStr = (indexStr != null) ? indexStr : "0 - None";
     }
 
     /**
@@ -271,9 +272,10 @@ public class Settings
     /**
      * Returns true if given indexStr is valid: None, 1, 2, 3, 4, 5, or 6.
      */
+    @SuppressWarnings("unused")
     public boolean isValidTeamIndexStr(String indexStr)
     {
-        return "None".equals(indexStr) || isValidTeamIndexNum(indexStr);
+        return "0 - None".equals(indexStr) || isValidTeamIndexNum(indexStr);
     }
 
     public boolean getScoringTableSide()

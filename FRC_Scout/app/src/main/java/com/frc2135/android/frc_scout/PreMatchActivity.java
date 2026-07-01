@@ -24,9 +24,8 @@ import java.util.Objects;
 public class PreMatchActivity extends AppCompatActivity
 {
     private static final String TAG = "PreMatchActivity";
-
     private PrematchActivityBinding binding;
-    private CompetitionInfo m_compInfo;
+    private EventInfo m_eventInfo;
     private MatchData m_matchData;
     private AliasesInfo m_aliasInfo;
     private String m_teamIndexStr;
@@ -37,6 +36,7 @@ public class PreMatchActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState)
     {
         Log.d(TAG, "onCreate");
+        // Apply theme preference before super.onCreate to ensure the correct theme is applied early
         Preferences.get(this).applyTheme();
         super.onCreate(savedInstanceState);
 
@@ -59,11 +59,11 @@ public class PreMatchActivity extends AppCompatActivity
         m_matchData = MatchListData.get(getApplicationContext()).getMatch(matchId);
 
         String eventCode = (m_matchData != null) ? m_matchData.getEventCode().trim() : "";
-        m_compInfo = CompetitionInfo.get(getApplicationContext(), eventCode, false);
+        m_eventInfo = EventInfo.get(getApplicationContext(), eventCode, false);
         m_aliasInfo = AliasesInfo.get(getApplicationContext(), eventCode, false);
 
         m_settings = Settings.get(getApplicationContext());
-        m_teamIndexStr = (m_settings != null) ? m_settings.getTeamIndexStr() : "None";
+        m_teamIndexStr = (m_settings != null) ? m_settings.getTeamIndexStr() : "0 - None";
 
         String inEdit = getIntent().getStringExtra("in_edit");
         m_isEditMode = "yes".equalsIgnoreCase(inEdit);
@@ -77,7 +77,8 @@ public class PreMatchActivity extends AppCompatActivity
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)
         {
-            actionBar.setTitle("Pre-Match - Team Index: " + m_teamIndexStr);
+            actionBar.setTitle("Pre-Match");
+            binding.toolbarTitle.setText(String.format("Team Index: %s", m_teamIndexStr));
         }
     }
 
@@ -116,8 +117,13 @@ public class PreMatchActivity extends AppCompatActivity
     {
         binding.compName.addTextChangedListener(new TextWatcher()
         {
-            public void onTextChanged(CharSequence c, int start, int before, int count) {}
-            public void beforeTextChanged(CharSequence c, int start, int count, int after) {}
+            public void onTextChanged(CharSequence c, int start, int before, int count)
+            {
+            }
+
+            public void beforeTextChanged(CharSequence c, int start, int count, int after)
+            {
+            }
 
             public void afterTextChanged(Editable c)
             {
@@ -128,8 +134,13 @@ public class PreMatchActivity extends AppCompatActivity
 
         binding.scoutName.addTextChangedListener(new TextWatcher()
         {
-            public void onTextChanged(CharSequence c, int start, int before, int count) {}
-            public void beforeTextChanged(CharSequence c, int start, int count, int after) {}
+            public void onTextChanged(CharSequence c, int start, int before, int count)
+            {
+            }
+
+            public void beforeTextChanged(CharSequence c, int start, int count, int after)
+            {
+            }
 
             public void afterTextChanged(Editable c)
             {
@@ -154,8 +165,13 @@ public class PreMatchActivity extends AppCompatActivity
 
         binding.matchNumberField.addTextChangedListener(new TextWatcher()
         {
-            public void onTextChanged(CharSequence c, int start, int before, int count) {}
-            public void beforeTextChanged(CharSequence c, int start, int count, int after) {}
+            public void onTextChanged(CharSequence c, int start, int before, int count)
+            {
+            }
+
+            public void beforeTextChanged(CharSequence c, int start, int count, int after)
+            {
+            }
 
             public void afterTextChanged(Editable c)
             {
@@ -167,8 +183,13 @@ public class PreMatchActivity extends AppCompatActivity
 
         binding.teamNumberField.addTextChangedListener(new TextWatcher()
         {
-            public void onTextChanged(CharSequence c, int start, int before, int count) {}
-            public void beforeTextChanged(CharSequence c, int start, int count, int after) {}
+            public void onTextChanged(CharSequence c, int start, int before, int count)
+            {
+            }
+
+            public void beforeTextChanged(CharSequence c, int start, int count, int after)
+            {
+            }
 
             public void afterTextChanged(Editable c)
             {
@@ -213,11 +234,11 @@ public class PreMatchActivity extends AppCompatActivity
         String matchNumStr = binding.matchNumberField.getText().toString().trim().toLowerCase();
         boolean bAliasUsed = m_aliasInfo != null && m_aliasInfo.isAliasesInfoLoaded();
 
-        if (!matchNumStr.isEmpty() && m_compInfo != null && m_compInfo.isEventDataLoaded())
+        if (!matchNumStr.isEmpty() && m_eventInfo != null && m_eventInfo.isEventInfoLoaded())
         {
             try
             {
-                String[] teams = m_compInfo.getTeams(matchNumStr);
+                String[] teams = m_eventInfo.getTeams(matchNumStr);
                 if (teams.length > 0 && !teams[0].isEmpty())
                 {
                     // Process team numbers (strip prefix and apply aliases)
@@ -253,7 +274,7 @@ public class PreMatchActivity extends AppCompatActivity
      */
     private void setTeamNumFromMatchNum()
     {
-        if (m_settings == null || m_compInfo == null || !m_compInfo.isEventDataLoaded())
+        if (m_settings == null || m_eventInfo == null || !m_eventInfo.isEventInfoLoaded())
         {
             return;
         }
@@ -264,7 +285,7 @@ public class PreMatchActivity extends AppCompatActivity
             Log.d(TAG, "Auto-loading team number for index " + m_teamIndexStr);
             try
             {
-                String[] teams = m_compInfo.getTeams(matchNumStr);
+                String[] teams = m_eventInfo.getTeams(matchNumStr);
                 int teamIndex = Integer.parseInt(m_teamIndexStr);
 
                 if (teamIndex < teams.length)

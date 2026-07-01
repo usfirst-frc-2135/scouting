@@ -165,7 +165,7 @@ public class MatchData
         m_timestamp = Calendar.getInstance().getTime();
 
         m_matchID = UUID.randomUUID().toString();
-        m_eventCode = CurrentCompetition.get(context).getEventCode();
+        m_eventCode = CurrentEventCode.get(context).getEventCode();
 
         m_other2 = "0";
         m_other3 = "0";
@@ -222,10 +222,20 @@ public class MatchData
         m_version = json.optDouble(JSON_KEY_VERSION, 26.1);
 
         String dateStr = json.optString(JSON_KEY_TIMESTAMP, "");
-        SimpleDateFormat dt = new SimpleDateFormat("E MMM dd hh:mm:ss z yyyy", Locale.US);
+        // Use a consistent ISO format for storage; fall back to the old default format if parsing fails.
+        SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US);
+        SimpleDateFormat oldFormat = new SimpleDateFormat("E MMM dd hh:mm:ss z yyyy", Locale.US);
+
         try
         {
-            m_timestamp = dt.parse(dateStr);
+            if (dateStr.contains("T"))
+            {
+                m_timestamp = isoFormat.parse(dateStr);
+            }
+            else
+            {
+                m_timestamp = oldFormat.parse(dateStr);
+            }
         }
         catch (Exception e)
         {
@@ -287,6 +297,7 @@ public class MatchData
         m_teamAlias = alias;
     }
 
+    @SuppressWarnings("unused")
     public String getTeamAlias()
     {
         return m_teamAlias != null ? m_teamAlias : "";
@@ -653,7 +664,9 @@ public class MatchData
         json.put(JSON_KEY_OTHER3, m_other3);
         json.put(JSON_KEY_OTHER4, m_other4);
 
-        json.put(JSON_KEY_TIMESTAMP, m_timestamp.toString());
+        // Save timestamp in a stable, machine-readable format.
+        SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US);
+        json.put(JSON_KEY_TIMESTAMP, isoFormat.format(m_timestamp));
         json.put(JSON_KEY_MATCH_ID, m_matchID);
 
         return json;

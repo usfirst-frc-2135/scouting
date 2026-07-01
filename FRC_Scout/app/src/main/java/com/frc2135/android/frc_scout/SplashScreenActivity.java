@@ -20,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 @SuppressLint("CustomSplashScreen")
 public class SplashScreenActivity extends AppCompatActivity
 {
-    private static final String TAG = "SplashScreen";
+    private static final String TAG = "SplashScreenActivity";
     private static final int SPLASH_DISPLAY_LENGTH = 1500; // Duration of pause in milliseconds
 
     /**
@@ -33,9 +33,7 @@ public class SplashScreenActivity extends AppCompatActivity
         Log.d(TAG, "onCreate");
         // Apply theme preference before super.onCreate to ensure the correct theme is applied early
         Preferences.get(this).applyTheme();
-
         super.onCreate(icicle);
-        Log.i(TAG, "SplashScreenActivity created.");
 
         setContentView(R.layout.splash_screen_activity);
 
@@ -47,7 +45,7 @@ public class SplashScreenActivity extends AppCompatActivity
             container.animate()
                     .alpha(1f)
                     .setDuration(500)
-                    .withEndAction(() -> startMainTransition())
+                    .withEndAction(this::startMainTransition)
                     .start();
         }
         else
@@ -67,8 +65,16 @@ public class SplashScreenActivity extends AppCompatActivity
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             Intent mainIntent = new Intent(SplashScreenActivity.this, MatchListActivity.class);
             startActivity(mainIntent);
-            // Use fade-out transition
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+            // overridePendingTransition is deprecated in API 34.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+            {
+                overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, R.anim.fade_in, R.anim.fade_out);
+            }
+            else
+            {
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            }
             finish();
         }, SPLASH_DISPLAY_LENGTH);
     }

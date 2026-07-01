@@ -43,11 +43,7 @@ public class AutonFragment extends Fragment
                 ActionBar actionBar = activity.getSupportActionBar();
                 if (actionBar != null)
                 {
-                    String teamNumber = m_matchData.getTeamNumber();
-                    String teamAlias = m_matchData.getTeamAlias();
-                    // Use teamAlias if there is one instead of teamNumber.
-                    String teamDisplay = teamAlias.isEmpty() ? teamNumber : teamAlias;
-                    actionBar.setTitle("Autonomous - Team " + teamDisplay + " - Match " + m_matchData.getMatchNumber());
+                    actionBar.setTitle("Autonomous");
 
                     Settings settings = Settings.get(getContext());
                     if (settings != null)
