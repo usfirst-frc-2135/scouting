@@ -51,7 +51,7 @@ public class LoadScoutsDialog extends DialogFragment
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         binding = LoadEventDialogBinding.inflate(inflater);
 
-        binding.eventCodeField.setHint("Enter event code for scouts");
+        binding.eventCodeField.setHint(R.string.enter_event_code_for_scout_names);
 
         AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle("Load Scout Names")

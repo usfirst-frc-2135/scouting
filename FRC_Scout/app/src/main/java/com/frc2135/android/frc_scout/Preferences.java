@@ -79,40 +79,17 @@ public class Preferences
      *
      * @return true if dark mode is enabled, false otherwise
      */
-    public boolean getDarkMode()
-    {
-        return m_darkMode;
-    }
-
-    /**
-     * Checks whether dark mode is currently enabled.
-     *
-     * @return true if dark mode is enabled, false otherwise
-     */
-    @SuppressWarnings("unused")
     public boolean isDarkMode()
     {
         return m_darkMode;
     }
 
     /**
-     * Sets the dark mode preference and persists it to {@link SharedPreferences}.
+     * Sets the dark mode preference, persists it, and applies the theme.
      *
      * @param isDarkMode true to enable dark mode, false to disable it
      */
-    @SuppressWarnings("unused")
     public void setDarkMode(boolean isDarkMode)
-    {
-        setDarkMode(isDarkMode, true);
-    }
-
-    /**
-     * Sets the dark mode preference, persists it, and optionally applies the theme.
-     *
-     * @param isDarkMode true to enable dark mode, false to disable it
-     * @param applyTheme true to immediately apply the theme using {@link AppCompatDelegate}
-     */
-    public void setDarkMode(boolean isDarkMode, boolean applyTheme)
     {
         if (m_darkMode != isDarkMode)
         {
@@ -123,11 +100,7 @@ public class Preferences
                     .putBoolean(KEY_DARK_MODE, isDarkMode)
                     .apply();
 
-            if (applyTheme)
-            {
-                applyTheme();
-            }
-
+            applyTheme();
             notifyListeners();
         }
         else

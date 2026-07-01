@@ -20,17 +20,17 @@ import java.io.InputStreamReader;
  * Singleton class for managing team aliases data.
  * Loads and parses team number to alias mapping from a JSON file.
  */
-public class AliasesNames
+public class TeamAliases
 {
-    private static final String TAG = "AliasesNames";
+    private static final String TAG = "TeamAliases";
 
     private String m_eventCode;
     private JSONArray m_jsonData;
     private boolean m_bAliasesDataLoaded;
 
-    private static volatile AliasesNames sAliasesInfo;
+    private static volatile TeamAliases sTeamAliases;
 
-    private AliasesNames(String eventCode)
+    private TeamAliases(String eventCode)
     {
         m_eventCode = eventCode;
         m_bAliasesDataLoaded = false;
@@ -38,41 +38,41 @@ public class AliasesNames
     }
 
     /**
-     * Returns the singleton instance of AliasesInfo.
+     * Returns the singleton instance of TeamAliases.
      *
      * @param context      the context used for file operations
      * @param eventCode    the FRC event code
      * @param bForceReload whether to force a reload of the JSON data
-     * @return the singleton AliasesInfo instance
+     * @return the singleton TeamAliases instance
      */
-    public static AliasesNames get(Context context, String eventCode, boolean bForceReload)
+    public static TeamAliases get(Context context, String eventCode, boolean bForceReload)
     {
-        synchronized (AliasesNames.class)
+        synchronized (TeamAliases.class)
         {
-            if (sAliasesInfo == null)
+            if (sTeamAliases == null)
             {
-                Log.d(TAG, "Creating a new sAliasesInfo for eventCode " + eventCode);
-                sAliasesInfo = new AliasesNames(eventCode);
-                sAliasesInfo.readAliasesJSON(context, true);
+                Log.d(TAG, "Creating a new sTeamAliases for eventCode " + eventCode);
+                sTeamAliases = new TeamAliases(eventCode);
+                sTeamAliases.readAliasesJSON(context, true);
             }
             else
             {
-                String oldEventCode = sAliasesInfo.getEventCode();
+                String oldEventCode = sTeamAliases.getEventCode();
                 if (bForceReload || !oldEventCode.equalsIgnoreCase(eventCode))
                 {
-                    Log.d(TAG, "Resetting AliasesInfo: " + oldEventCode + " -> " + eventCode);
-                    sAliasesInfo.setEventCode(eventCode);
-                    sAliasesInfo.readAliasesJSON(context, true);
+                    Log.d(TAG, "Resetting TeamAliases: " + oldEventCode + " -> " + eventCode);
+                    sTeamAliases.setEventCode(eventCode);
+                    sTeamAliases.readAliasesJSON(context, true);
                 }
             }
-            return sAliasesInfo;
+            return sTeamAliases;
         }
     }
 
     @SuppressWarnings("unused")
     public static void clear()
     {
-        sAliasesInfo = null;
+        sTeamAliases = null;
     }
 
     public String getEventCode()
@@ -156,7 +156,7 @@ public class AliasesNames
 
         String filename = m_eventCode.trim().toLowerCase() + "_aliases.json";
         File file = new File(context.getFilesDir(), filename);
-        Log.d(TAG, "Looking for aliases file: " + file.getAbsolutePath());
+        Log.d(TAG, "Looking for team aliases file: " + file.getAbsolutePath());
 
         if (file.exists())
         {
@@ -194,7 +194,7 @@ public class AliasesNames
         }
     }
 
-    public boolean isAliasesInfoLoaded()
+    public boolean isTeamAliasesLoaded()
     {
         return m_bAliasesDataLoaded;
     }

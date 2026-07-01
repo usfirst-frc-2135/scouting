@@ -15,18 +15,18 @@ import java.nio.charset.StandardCharsets;
 /**
  * Serializer class for retrieving and saving team aliases data to persistent storage.
  */
-public class AliasesNamesSerializer
+public class TeamAliasesSerializer
 {
-    private static final String TAG = "AliasesInfoSerializer";
+    private static final String TAG = "TeamAliasesSerializer";
 
     private final String m_dataPath;
 
     /**
-     * Constructs an AliasesInfoSerializer.
+     * Constructs a TeamAliasesSerializer.
      *
      * @param context the context used to retrieve the internal files directory
      */
-    public AliasesNamesSerializer(Context context)
+    public TeamAliasesSerializer(Context context)
     {
         m_dataPath = context.getFilesDir().getPath();
         Log.d(TAG, "Data files directory: " + m_dataPath);
@@ -39,7 +39,7 @@ public class AliasesNamesSerializer
      * @param aliasData the JSONArray containing team-to-alias mapping data
      * @throws IOException if an error occurs during file writing
      */
-    public void saveAliasesInfo(String filename, JSONArray aliasData)
+    public void saveTeamAliases(String filename, JSONArray aliasData)
             throws IOException
     {
         if (filename == null || aliasData == null)

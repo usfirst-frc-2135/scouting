@@ -49,7 +49,7 @@ public class LoadAliasesDialog extends DialogFragment
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         binding = LoadEventDialogBinding.inflate(inflater);
 
-        binding.eventCodeField.setHint("Enter event code for aliases");
+        binding.eventCodeField.setHint(R.string.enter_event_code_for_team_aliases);
 
         AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle("Load Team Aliases")
@@ -130,7 +130,7 @@ public class LoadAliasesDialog extends DialogFragment
     private void saveAliases(String eventCode, org.json.JSONArray response, Context context)
             throws IOException
     {
-        AliasesNamesSerializer serializer = new AliasesNamesSerializer(context);
+        TeamAliasesSerializer serializer = new TeamAliasesSerializer(context);
         String filename = eventCode.toLowerCase() + "_aliases.json";
 
         File dataDir = context.getFilesDir();
@@ -144,10 +144,10 @@ public class LoadAliasesDialog extends DialogFragment
             }
         }
 
-        serializer.saveAliasesInfo(filename, response);
+        serializer.saveTeamAliases(filename, response);
 
         // Update the singleton if it's already loaded the wrong event code
-        AliasesNames.get(context, eventCode, true);
+        TeamAliases.get(context, eventCode, true);
     }
 
     @Override

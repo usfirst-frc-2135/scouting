@@ -12,8 +12,10 @@
 
     <!--    Action menu items -->
     <string name="set_team_index">Set Team Index</string>
-    <string name="load_event_data">Load Event Data (TBA)</string>
+    <string name="load_event_data">Load Event Matches (TBA)</string>
     <string name="load_aliases">Load Team Aliases</string>
+    <string name="enter_event_code_for_team_aliases">Enter event code for team aliases</string>
+    <string name="enter_event_code_for_scout_names">Enter event code for scout names</string>
     <string name="clear_scout_names">Clear Scout Names</string>
     <string name="about">About</string>
 

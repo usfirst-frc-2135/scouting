@@ -218,12 +218,12 @@ public class MatchListFragment extends Fragment
                         if (darkSwitch != null)
                         {
                             Preferences prefs = Preferences.get(requireContext());
-                            darkSwitch.setChecked(prefs.getDarkMode());
+                            darkSwitch.setChecked(prefs.isDarkMode());
                             darkSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
                                 Log.d(TAG, "Theme toggle: " + isChecked);
-                                if (isChecked != prefs.getDarkMode())
+                                if (isChecked != prefs.isDarkMode())
                                 {
-                                    prefs.setDarkMode(isChecked, true);
+                                    prefs.setDarkMode(isChecked);
                                 }
                             });
                         }

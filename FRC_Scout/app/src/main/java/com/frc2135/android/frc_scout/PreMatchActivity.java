@@ -27,7 +27,7 @@ public class PreMatchActivity extends AppCompatActivity
     private PrematchActivityBinding binding;
     private EventMatches m_eventMatches;
     private MatchData m_matchData;
-    private AliasesNames m_aliasNames;
+    private TeamAliases m_aliasNames;
     private String m_teamIndexStr;
     private Settings m_settings;
     private boolean m_isEditMode;
@@ -60,7 +60,7 @@ public class PreMatchActivity extends AppCompatActivity
 
         String eventCode = (m_matchData != null) ? m_matchData.getEventCode().trim() : "";
         m_eventMatches = EventMatches.get(getApplicationContext(), eventCode, false);
-        m_aliasNames = AliasesNames.get(getApplicationContext(), eventCode, false);
+        m_aliasNames = TeamAliases.get(getApplicationContext(), eventCode, false);
 
         m_settings = Settings.get(getApplicationContext());
         m_teamIndexStr = (m_settings != null) ? m_settings.getTeamIndexStr() : "0 - None";
@@ -232,7 +232,7 @@ public class PreMatchActivity extends AppCompatActivity
     {
         Log.d(TAG, "Showing team number drop down");
         String matchNumStr = binding.matchNumberField.getText().toString().trim().toLowerCase();
-        boolean bAliasUsed = m_aliasNames != null && m_aliasNames.isAliasesInfoLoaded();
+        boolean bAliasUsed = m_aliasNames != null && m_aliasNames.isTeamAliasesLoaded();
 
         if (!matchNumStr.isEmpty() && m_eventMatches != null && m_eventMatches.isEventMatchesLoaded())
         {
@@ -293,7 +293,7 @@ public class PreMatchActivity extends AppCompatActivity
                     String tbaTeamNum = teams[teamIndex];
                     String teamNumStr = MatchData.stripTeamNumPrefix(tbaTeamNum);
 
-                    if (m_aliasNames != null && m_aliasNames.isAliasesInfoLoaded())
+                    if (m_aliasNames != null && m_aliasNames.isTeamAliasesLoaded())
                     {
                         String alias = m_aliasNames.getAliasForTeamNum(teamNumStr);
                         if (!alias.isEmpty())
@@ -341,7 +341,7 @@ public class PreMatchActivity extends AppCompatActivity
         String teamAlias = "";
 
         // Handle alias detection (e.g., 99#)
-        if (m_aliasNames != null && m_aliasNames.isAliasesInfoLoaded() && teamNumEntry.startsWith("99"))
+        if (m_aliasNames != null && m_aliasNames.isTeamAliasesLoaded() && teamNumEntry.startsWith("99"))
         {
             try
             {
