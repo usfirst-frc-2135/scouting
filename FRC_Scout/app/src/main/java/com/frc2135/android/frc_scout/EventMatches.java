@@ -21,9 +21,9 @@ import java.util.Locale;
  * Singleton class for managing competition event data.
  * Loads and parses match information from a JSON file specific to an event code.
  */
-public class EventInfo
+public class EventMatches
 {
-    private static final String TAG = "EventInfo";
+    private static final String TAG = "EventMatches";
 
     // JSON Keys
     private static final String KEY_ALLIANCES = "alliances";
@@ -36,63 +36,63 @@ public class EventInfo
     // Data members
     private String m_eventCode;
     private JSONArray m_jsonData;
-    private boolean m_bEventInfoLoaded;
-    private static volatile EventInfo sEventInfo;
+    private boolean m_bEventMatchesLoaded;
+    private static volatile EventMatches sEventMatches;
 
-    private EventInfo(String eventCode)
+    private EventMatches(String eventCode)
     {
         m_eventCode = eventCode;
-        m_bEventInfoLoaded = false;
+        m_bEventMatchesLoaded = false;
         m_jsonData = null;
     }
 
     /**
-     * Returns the singleton instance of EventInfo.
+     * Returns the singleton instance of EventMatches.
      * If the event code changes or a reload is forced, the data is reloaded.
      *
      * @param context      the context used for file operations and Toast messages
      * @param eventCode    the FRC event code
      * @param bForceReload whether to force a reload of the JSON data
-     * @return the singleton EventInfo instance
+     * @return the singleton EventMatches instance
      */
-    public static EventInfo get(Context context, String eventCode, boolean bForceReload)
+    public static EventMatches get(Context context, String eventCode, boolean bForceReload)
     {
-        if (sEventInfo == null)
+        if (sEventMatches == null)
         {
-            synchronized (EventInfo.class)
+            synchronized (EventMatches.class)
             {
-                if (sEventInfo == null)
+                if (sEventMatches == null)
                 {
-                    Log.d(TAG, "Creating new sEventInfo for eventCode: " + eventCode);
-                    sEventInfo = new EventInfo(eventCode);
-                    sEventInfo.readEventMatchesJSON(context, true);
+                    Log.d(TAG, "Creating new sEventMatches for eventCode: " + eventCode);
+                    sEventMatches = new EventMatches(eventCode);
+                    sEventMatches.readEventMatchesJSON(context, true);
                 }
             }
         }
 
         // Handle event code change or forced reload
-        synchronized (EventInfo.class)
+        synchronized (EventMatches.class)
         {
-            String currentCode = sEventInfo.getEventCode();
+            String currentCode = sEventMatches.getEventCode();
             if (bForceReload || !currentCode.equalsIgnoreCase(eventCode))
             {
                 Log.d(TAG, "Updating event data: " + currentCode + " -> " + eventCode);
-                sEventInfo.setEventCode(eventCode);
-                sEventInfo.readEventMatchesJSON(context, true);
+                sEventMatches.setEventCode(eventCode);
+                sEventMatches.readEventMatchesJSON(context, true);
             }
         }
-        return sEventInfo;
+        return sEventMatches;
     }
 
     /**
-     * Clears the singleton instance of EventInfo.
+     * Clears the singleton instance of EventMatches.
      */
     public static void clear()
     {
-        synchronized (EventInfo.class)
+        synchronized (EventMatches.class)
         {
-            Log.d(TAG, "Clearing EventInfo instance");
-            sEventInfo = null;
+            Log.d(TAG, "Clearing EventMatches instance");
+            sEventMatches = null;
         }
     }
 
@@ -109,7 +109,7 @@ public class EventInfo
     private void setEventCode(String eventCode)
     {
         m_eventCode = eventCode;
-        m_bEventInfoLoaded = false;
+        m_bEventMatchesLoaded = false;
         m_jsonData = null;
     }
 
@@ -142,7 +142,7 @@ public class EventInfo
                 }
 
                 m_jsonData = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
-                m_bEventInfoLoaded = true;
+                m_bEventMatchesLoaded = true;
 
                 String msg = "Successfully loaded " + m_eventCode + " matches";
                 Log.d(TAG, msg);
@@ -175,9 +175,9 @@ public class EventInfo
         }
     }
 
-    public boolean isEventInfoLoaded()
+    public boolean isEventMatchesLoaded()
     {
-        return m_bEventInfoLoaded;
+        return m_bEventMatchesLoaded;
     }
 
     /**
@@ -186,7 +186,7 @@ public class EventInfo
      * @param matchNum the match identifier (e.g., "qm1")
      * @return an array of 7 strings: index 0 is a placeholder, 1-3 are Red teams, 4-6 are Blue teams
      */
-    public String[] getTeams(String matchNum)
+    public String[] getMatchTeams(String matchNum)
     {
         String[] teams = new String[7];
         for (int i = 0; i < 7; i++)

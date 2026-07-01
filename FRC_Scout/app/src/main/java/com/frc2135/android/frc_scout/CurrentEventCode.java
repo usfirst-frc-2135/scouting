@@ -63,7 +63,7 @@ public class CurrentEventCode
                 if (sCurrentEventCode == null)
                 {
                     Log.d(TAG, "Loading CurrentEventCode singleton");
-                    EventInfoSerializer serializer = new EventInfoSerializer(context.getApplicationContext());
+                    EventMatchesSerializer serializer = new EventMatchesSerializer(context.getApplicationContext());
                     sCurrentEventCode = serializer.loadCurrentEventCode();
 
                     if (sCurrentEventCode == null)

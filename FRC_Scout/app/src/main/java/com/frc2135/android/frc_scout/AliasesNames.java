@@ -20,17 +20,17 @@ import java.io.InputStreamReader;
  * Singleton class for managing team aliases data.
  * Loads and parses team number to alias mapping from a JSON file.
  */
-public class AliasesInfo
+public class AliasesNames
 {
-    private static final String TAG = "AliasesInfo";
+    private static final String TAG = "AliasesNames";
 
     private String m_eventCode;
     private JSONArray m_jsonData;
     private boolean m_bAliasesDataLoaded;
 
-    private static volatile AliasesInfo sAliasesInfo;
+    private static volatile AliasesNames sAliasesInfo;
 
-    private AliasesInfo(String eventCode)
+    private AliasesNames(String eventCode)
     {
         m_eventCode = eventCode;
         m_bAliasesDataLoaded = false;
@@ -45,14 +45,14 @@ public class AliasesInfo
      * @param bForceReload whether to force a reload of the JSON data
      * @return the singleton AliasesInfo instance
      */
-    public static AliasesInfo get(Context context, String eventCode, boolean bForceReload)
+    public static AliasesNames get(Context context, String eventCode, boolean bForceReload)
     {
-        synchronized (AliasesInfo.class)
+        synchronized (AliasesNames.class)
         {
             if (sAliasesInfo == null)
             {
                 Log.d(TAG, "Creating a new sAliasesInfo for eventCode " + eventCode);
-                sAliasesInfo = new AliasesInfo(eventCode);
+                sAliasesInfo = new AliasesNames(eventCode);
                 sAliasesInfo.readAliasesJSON(context, true);
             }
             else

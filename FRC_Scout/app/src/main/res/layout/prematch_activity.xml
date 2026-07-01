@@ -111,8 +111,8 @@
                     android:id="@+id/scout_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/scout_name_desc"
                     android:inputType="textPersonName"
+                    android:hint="@string/scout_name_desc"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
                     android:textColor="@color/textPrimary" />
@@ -153,8 +153,8 @@
                     android:id="@+id/match_number_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/match_number_desc"
                     android:inputType="text"
+                    android:hint="@string/match_number_desc"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
                     android:textColor="@color/textPrimary" />
@@ -181,8 +181,8 @@
                     android:id="@+id/team_number_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/team_number_desc"
                     android:inputType="text"
+                    android:hint="@string/team_number_desc"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
                     android:textColor="@color/textPrimary" />

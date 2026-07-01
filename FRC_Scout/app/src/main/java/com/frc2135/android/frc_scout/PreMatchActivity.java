@@ -25,9 +25,9 @@ public class PreMatchActivity extends AppCompatActivity
 {
     private static final String TAG = "PreMatchActivity";
     private PrematchActivityBinding binding;
-    private EventInfo m_eventInfo;
+    private EventMatches m_eventMatches;
     private MatchData m_matchData;
-    private AliasesInfo m_aliasInfo;
+    private AliasesNames m_aliasNames;
     private String m_teamIndexStr;
     private Settings m_settings;
     private boolean m_isEditMode;
@@ -59,8 +59,8 @@ public class PreMatchActivity extends AppCompatActivity
         m_matchData = MatchListData.get(getApplicationContext()).getMatch(matchId);
 
         String eventCode = (m_matchData != null) ? m_matchData.getEventCode().trim() : "";
-        m_eventInfo = EventInfo.get(getApplicationContext(), eventCode, false);
-        m_aliasInfo = AliasesInfo.get(getApplicationContext(), eventCode, false);
+        m_eventMatches = EventMatches.get(getApplicationContext(), eventCode, false);
+        m_aliasNames = AliasesNames.get(getApplicationContext(), eventCode, false);
 
         m_settings = Settings.get(getApplicationContext());
         m_teamIndexStr = (m_settings != null) ? m_settings.getTeamIndexStr() : "0 - None";
@@ -232,13 +232,13 @@ public class PreMatchActivity extends AppCompatActivity
     {
         Log.d(TAG, "Showing team number drop down");
         String matchNumStr = binding.matchNumberField.getText().toString().trim().toLowerCase();
-        boolean bAliasUsed = m_aliasInfo != null && m_aliasInfo.isAliasesInfoLoaded();
+        boolean bAliasUsed = m_aliasNames != null && m_aliasNames.isAliasesInfoLoaded();
 
-        if (!matchNumStr.isEmpty() && m_eventInfo != null && m_eventInfo.isEventInfoLoaded())
+        if (!matchNumStr.isEmpty() && m_eventMatches != null && m_eventMatches.isEventMatchesLoaded())
         {
             try
             {
-                String[] teams = m_eventInfo.getTeams(matchNumStr);
+                String[] teams = m_eventMatches.getMatchTeams(matchNumStr);
                 if (teams.length > 0 && !teams[0].isEmpty())
                 {
                     // Process team numbers (strip prefix and apply aliases)
@@ -247,7 +247,7 @@ public class PreMatchActivity extends AppCompatActivity
                         String tNum = MatchData.stripTeamNumPrefix(teams[i]);
                         if (bAliasUsed)
                         {
-                            String alias = m_aliasInfo.getAliasForTeamNum(tNum);
+                            String alias = m_aliasNames.getAliasForTeamNum(tNum);
                             if (!alias.isEmpty())
                             {
                                 tNum = alias;
@@ -274,7 +274,7 @@ public class PreMatchActivity extends AppCompatActivity
      */
     private void setTeamNumFromMatchNum()
     {
-        if (m_settings == null || m_eventInfo == null || !m_eventInfo.isEventInfoLoaded())
+        if (m_settings == null || m_eventMatches == null || !m_eventMatches.isEventMatchesLoaded())
         {
             return;
         }
@@ -285,7 +285,7 @@ public class PreMatchActivity extends AppCompatActivity
             Log.d(TAG, "Auto-loading team number for index " + m_teamIndexStr);
             try
             {
-                String[] teams = m_eventInfo.getTeams(matchNumStr);
+                String[] teams = m_eventMatches.getMatchTeams(matchNumStr);
                 int teamIndex = Integer.parseInt(m_teamIndexStr);
 
                 if (teamIndex < teams.length)
@@ -293,9 +293,9 @@ public class PreMatchActivity extends AppCompatActivity
                     String tbaTeamNum = teams[teamIndex];
                     String teamNumStr = MatchData.stripTeamNumPrefix(tbaTeamNum);
 
-                    if (m_aliasInfo != null && m_aliasInfo.isAliasesInfoLoaded())
+                    if (m_aliasNames != null && m_aliasNames.isAliasesInfoLoaded())
                     {
-                        String alias = m_aliasInfo.getAliasForTeamNum(teamNumStr);
+                        String alias = m_aliasNames.getAliasForTeamNum(teamNumStr);
                         if (!alias.isEmpty())
                         {
                             teamNumStr = alias;
@@ -341,11 +341,11 @@ public class PreMatchActivity extends AppCompatActivity
         String teamAlias = "";
 
         // Handle alias detection (e.g., 99#)
-        if (m_aliasInfo != null && m_aliasInfo.isAliasesInfoLoaded() && teamNumEntry.startsWith("99"))
+        if (m_aliasNames != null && m_aliasNames.isAliasesInfoLoaded() && teamNumEntry.startsWith("99"))
         {
             try
             {
-                String bcdNum = m_aliasInfo.getTeamNumForAlias(teamNumEntry);
+                String bcdNum = m_aliasNames.getTeamNumForAlias(teamNumEntry);
                 if (!bcdNum.isEmpty())
                 {
                     teamNum = bcdNum;

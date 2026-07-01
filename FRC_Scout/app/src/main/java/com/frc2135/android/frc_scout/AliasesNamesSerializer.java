@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * Serializer class for retrieving and saving team aliases data to persistent storage.
  */
-public class AliasesInfoSerializer
+public class AliasesNamesSerializer
 {
     private static final String TAG = "AliasesInfoSerializer";
 
@@ -26,7 +26,7 @@ public class AliasesInfoSerializer
      *
      * @param context the context used to retrieve the internal files directory
      */
-    public AliasesInfoSerializer(Context context)
+    public AliasesNamesSerializer(Context context)
     {
         m_dataPath = context.getFilesDir().getPath();
         Log.d(TAG, "Data files directory: " + m_dataPath);

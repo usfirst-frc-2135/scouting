@@ -114,8 +114,8 @@ public class LoadEventDialog extends DialogFragment
                     String eventCode = Objects.requireNonNull(binding.eventCodeField.getText()).toString().trim();
                     if (!eventCode.isEmpty())
                     {
-                        EventInfoSerializer serializer = new EventInfoSerializer(requireContext());
-                        if (serializer.deleteEventInfo(requireContext(), eventCode))
+                        EventMatchesSerializer serializer = new EventMatchesSerializer(requireContext());
+                        if (serializer.deleteEventMatches(eventCode) > 0)
                         {
                             Toast.makeText(requireContext(), "Cleared data for " + eventCode, Toast.LENGTH_SHORT).show();
                         }
@@ -162,7 +162,7 @@ public class LoadEventDialog extends DialogFragment
         }
 
         binding.eventCodeLayout.setError(null);
-        downloadEventInfo(dialog, eventCode);
+        downloadEventMatches(dialog, eventCode);
     }
 
     /**
@@ -173,9 +173,9 @@ public class LoadEventDialog extends DialogFragment
      * @param dialog    the dialog instance to update or dismiss upon completion
      * @param eventCode the TBA event code (e.g., "2026casac")
      */
-    private void downloadEventInfo(AlertDialog dialog, String eventCode)
+    private void downloadEventMatches(AlertDialog dialog, String eventCode)
     {
-        Log.d(TAG, "downloadEventInfo for: " + eventCode);
+        Log.d(TAG, "downloadEventMatches for: " + eventCode);
 
         Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         okButton.setEnabled(false);
@@ -200,7 +200,7 @@ public class LoadEventDialog extends DialogFragment
 
                     try
                     {
-                        saveEventInfo(context, eventCode, response);
+                        saveEventMatches(context, eventCode, response);
                         Toast.makeText(context, "Successfully downloaded " + response.length() + " matches for " + eventCode, Toast.LENGTH_LONG).show();
                         if (isAdded())
                         {
@@ -279,10 +279,10 @@ public class LoadEventDialog extends DialogFragment
      * @throws JSONException if parsing the response fails
      * @throws IOException   if saving to disk fails
      */
-    private void saveEventInfo(Context context, String eventCode, JSONArray response)
+    private void saveEventMatches(Context context, String eventCode, JSONArray response)
             throws JSONException, IOException
     {
-        EventInfoSerializer serializer = new EventInfoSerializer(context);
+        EventMatchesSerializer serializer = new EventMatchesSerializer(context);
 
         // Update current competition settings
         CurrentEventCode currentEventCode = CurrentEventCode.get(context);
@@ -290,10 +290,10 @@ public class LoadEventDialog extends DialogFragment
         serializer.saveCurrentEventCode(currentEventCode.toJSON());
 
         // Save new event data
-        serializer.saveEventInfo(context, eventCode, response);
+        serializer.saveEventMatches(eventCode, response);
 
         // Update the singleton
-        EventInfo.get(context, eventCode, true);
+        EventMatches.get(context, eventCode, true);
     }
 
     /**

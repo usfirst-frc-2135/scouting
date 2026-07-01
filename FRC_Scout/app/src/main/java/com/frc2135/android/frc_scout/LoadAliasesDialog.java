@@ -130,7 +130,7 @@ public class LoadAliasesDialog extends DialogFragment
     private void saveAliases(String eventCode, org.json.JSONArray response, Context context)
             throws IOException
     {
-        AliasesInfoSerializer serializer = new AliasesInfoSerializer(context);
+        AliasesNamesSerializer serializer = new AliasesNamesSerializer(context);
         String filename = eventCode.toLowerCase() + "_aliases.json";
 
         File dataDir = context.getFilesDir();
@@ -147,7 +147,7 @@ public class LoadAliasesDialog extends DialogFragment
         serializer.saveAliasesInfo(filename, response);
 
         // Update the singleton if it's already loaded the wrong event code
-        AliasesInfo.get(context, eventCode, true);
+        AliasesNames.get(context, eventCode, true);
     }
 
     @Override
