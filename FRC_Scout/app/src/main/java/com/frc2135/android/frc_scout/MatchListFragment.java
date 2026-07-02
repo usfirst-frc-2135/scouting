@@ -245,6 +245,7 @@ public class MatchListFragment extends Fragment
                 else if (itemID == R.id.clear_scout_names)
                 {
                     Settings.get(requireContext()).clear();
+                    ScoutNames.clear();
                     Toast.makeText(requireContext(), "Scout names cleared", Toast.LENGTH_SHORT).show();
                 }
                 else if (itemID == R.id.about_screen)

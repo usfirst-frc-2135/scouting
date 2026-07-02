@@ -19,7 +19,6 @@ import com.frc2135.android.frc_scout.databinding.LoadEventDialogBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -100,16 +99,16 @@ public class LoadScoutNamesDialog extends DialogFragment
                     Log.i(TAG, "Successfully received scouts data");
                     try
                     {
-                        processScouts(response, context);
+                        saveScouts(eventCode, response, context);
                         Toast.makeText(context, "Successfully downloaded scouts for " + eventCode, Toast.LENGTH_LONG).show();
                         if (isAdded())
                         {
                             dismiss();
                         }
                     }
-                    catch (JSONException | IOException e)
+                    catch (IOException e)
                     {
-                        Log.e(TAG, "Error processing scouts: " + e.getMessage());
+                        Log.e(TAG, "Error saving scouts: " + e.getMessage());
                         Toast.makeText(context, "Error saving scout names", Toast.LENGTH_SHORT).show();
                         okButton.setEnabled(true);
                         okButton.setText(android.R.string.ok);
@@ -126,16 +125,15 @@ public class LoadScoutNamesDialog extends DialogFragment
         VolleySingleton.getInstance(requireContext()).addToRequestQueue(request);
     }
 
-    private void processScouts(JSONArray response, Context context)
-            throws JSONException, IOException
+    private void saveScouts(String eventCode, JSONArray response, Context context)
+            throws IOException
     {
-        Settings settings = Settings.get(context);
-        for (int i = 0; i < response.length(); i++)
-        {
-            String name = response.getString(i);
-            settings.addPastScoutNames(name);
-        }
-        MatchListData.get(context).saveScoutNames();
+        ScoutNamesSerializer serializer = new ScoutNamesSerializer(context);
+        serializer.deleteScoutNames(eventCode);
+        serializer.saveScoutNames(eventCode, response);
+
+        // Update the singleton if it's already loaded the wrong event code
+        ScoutNames.get(context, eventCode, true);
     }
 
     @Override

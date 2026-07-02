@@ -15,6 +15,8 @@ import com.frc2135.android.frc_scout.databinding.PrematchActivityBinding;
 
 import org.json.JSONException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -28,6 +30,7 @@ public class PreMatchActivity extends AppCompatActivity
     private EventMatches m_eventMatches;
     private MatchData m_matchData;
     private TeamAliases m_aliasNames;
+    private ScoutNames m_scoutNames;
     private String m_teamIndexStr;
     private Settings m_settings;
     private boolean m_isEditMode;
@@ -61,6 +64,7 @@ public class PreMatchActivity extends AppCompatActivity
         String eventCode = (m_matchData != null) ? m_matchData.getEventCode().trim() : "";
         m_eventMatches = EventMatches.get(getApplicationContext(), eventCode, false);
         m_aliasNames = TeamAliases.get(getApplicationContext(), eventCode, false);
+        m_scoutNames = ScoutNames.get(getApplicationContext(), eventCode, false);
 
         m_settings = Settings.get(getApplicationContext());
         m_teamIndexStr = (m_settings != null) ? m_settings.getTeamIndexStr() : "0 - None";
@@ -150,9 +154,21 @@ public class PreMatchActivity extends AppCompatActivity
         });
 
         // Scout Name AutoComplete setup
-        if (m_settings != null)
+        List<String> scoutNames = new ArrayList<>();
+        if (m_scoutNames != null && m_scoutNames.isScoutNamesLoaded()) {
+            scoutNames.addAll(m_scoutNames.getScoutNames());
+        }
+        if (m_settings != null) {
+            for (String name : m_settings.getPastScouts()) {
+                if (!scoutNames.contains(name)) {
+                    scoutNames.add(name);
+                }
+            }
+        }
+
+        if (!scoutNames.isEmpty())
         {
-            ArrayAdapter<String> scoutAdapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, m_settings.getPastScouts());
+            ArrayAdapter<String> scoutAdapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, scoutNames);
             binding.scoutName.setAdapter(scoutAdapter);
             binding.scoutName.setThreshold(0);
             binding.scoutName.setOnFocusChangeListener((v, hasFocus) -> {
