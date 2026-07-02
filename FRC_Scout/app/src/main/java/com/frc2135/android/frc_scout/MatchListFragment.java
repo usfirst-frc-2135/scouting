@@ -44,7 +44,7 @@ public class MatchListFragment extends Fragment
     private static final String TAG = "MatchListFragment";
     public static final String QRTAG = "qr";
 
-    private List<MatchData> m_displayedMatches;
+    private List<MatchData> m_displayedMatches = new java.util.ArrayList<>();
     private MatchAdapter m_adapter;
     private MatchListFragmentBinding binding;
 
@@ -63,6 +63,15 @@ public class MatchListFragment extends Fragment
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
         setupMenuProvider();
+
+        getParentFragmentManager().setFragmentResultListener("match_filter_applied", this, (requestKey, result) -> {
+            Log.d(TAG, "Match filter applied, refreshing list");
+            m_eventFilter = result.getString("event code");
+            m_matchFilter = result.getString("match");
+            m_teamFilter = result.getString("team");
+            m_scoutFilter = result.getString("scout");
+            refreshList();
+        });
     }
 
     @Override
@@ -70,51 +79,28 @@ public class MatchListFragment extends Fragment
     {
         binding = MatchListFragmentBinding.inflate(inflater, parent, false);
 
-        loadInitialMatches();
-        applyIntentFilters();
-
         setupRecyclerView();
         setupNewMatchButton();
         setupSortSpinner();
         setupFilterButton();
+
+        loadInitialMatches();
 
         return binding.getRoot();
     }
 
     private void loadInitialMatches()
     {
-        m_displayedMatches = MatchListData.get(requireContext()).sortMatches(MatchListData.get(requireContext()).getMatches(), "Date", false);
-        Log.d(TAG, "Loaded " + m_displayedMatches.size() + " matches initially.");
+        refreshList();
     }
 
-    private void applyIntentFilters()
+    private void refreshList()
     {
-        Intent intent = requireActivity().getIntent();
         MatchListData data = MatchListData.get(requireContext());
-
-        m_teamFilter = intent.getStringExtra("team");
-        if (m_teamFilter != null)
-        {
-            m_displayedMatches = data.filterByTeam(m_displayedMatches, m_teamFilter);
-        }
-
-        m_eventFilter = intent.getStringExtra("competition");
-        if (m_eventFilter != null)
-        {
-            m_displayedMatches = data.filterByCompetition(m_displayedMatches, m_eventFilter);
-        }
-
-        m_scoutFilter = intent.getStringExtra("scout");
-        if (m_scoutFilter != null)
-        {
-            m_displayedMatches = data.filterByScout(m_displayedMatches, m_scoutFilter);
-        }
-
-        m_matchFilter = intent.getStringExtra("match");
-        if (m_matchFilter != null)
-        {
-            m_displayedMatches = data.filterByMatchNumber(m_displayedMatches, m_matchFilter);
-        }
+        List<MatchData> allMatches = data.getMatches();
+        m_displayedMatches = data.filterMatches(allMatches, m_teamFilter, m_eventFilter, m_scoutFilter, m_matchFilter);
+        updateSorting(); // This will apply current sort criteria and update the adapter
+        Log.d(TAG, "Refreshed list. Displaying " + m_displayedMatches.size() + " matches.");
     }
 
     @Override
@@ -191,7 +177,10 @@ public class MatchListFragment extends Fragment
         MatchListData data = MatchListData.get(requireContext());
 
         m_displayedMatches = data.sortMatches(m_displayedMatches, criteria, m_sortAscending);
-        m_adapter.updateData(m_displayedMatches);
+        if (m_adapter != null)
+        {
+            m_adapter.updateData(m_displayedMatches);
+        }
     }
 
     private void setupFilterButton()
@@ -247,15 +236,16 @@ public class MatchListFragment extends Fragment
                 }
                 else if (itemID == R.id.load_aliases)
                 {
-                    LoadAliasesDialog.newInstance().show(fm, "load_aliases");
+                    LoadTeamAliasesDialog.newInstance().show(fm, "load_aliases");
                 }
                 else if (itemID == R.id.load_scout_names)
                 {
-                    LoadScoutsDialog.newInstance().show(fm, "load_scouts");
+                    LoadScoutNamesDialog.newInstance().show(fm, "load_scouts");
                 }
                 else if (itemID == R.id.clear_scout_names)
                 {
                     Settings.get(requireContext()).clear();
+                    Toast.makeText(requireContext(), "Scout names cleared", Toast.LENGTH_SHORT).show();
                 }
                 else if (itemID == R.id.about_screen)
                 {
@@ -300,7 +290,7 @@ public class MatchListFragment extends Fragment
             m_teamNumber.setText(String.format("Team %s", match.getTeamNumber()));
             m_matchNumber.setText(String.format("Match %s", match.getMatchNumber()));
             m_eventCode.setText(match.getEventCode());
-            m_scoutName.setText(String.format("Scout: %s", match.getName()));
+            m_scoutName.setText(String.format("Scout: %s", match.getScoutName()));
             m_date.setText(getFormattedDate(match.getTimestamp()));
         }
 
@@ -388,9 +378,8 @@ public class MatchListFragment extends Fragment
                     .setTitle("Delete Match")
                     .setMessage("Are you sure you want to delete this match? This action cannot be undone.")
                     .setPositiveButton("Delete", (dialog, which) -> {
-                        m_displayedMatches.remove(m);
                         MatchListData.get(requireContext()).deleteMatch(m);
-                        m_adapter.notifyDataSetChanged();
+                        refreshList();
                         m_selectedMatch = null;
                         Toast.makeText(requireContext(), "Match deleted", Toast.LENGTH_SHORT).show();
                     })

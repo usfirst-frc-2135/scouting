@@ -18,7 +18,7 @@ import java.io.InputStreamReader;
 import java.util.Locale;
 
 /**
- * Singleton class for managing competition event data.
+ * Singleton class for managing event matches.
  * Loads and parses match information from a JSON file specific to an event code.
  */
 public class EventMatches

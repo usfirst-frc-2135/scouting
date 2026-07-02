@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="app_name">FRC Scout 2026</string>
     <string name="our_team_name">Team 2135 Presentation Invasion</string>
@@ -12,14 +12,18 @@
 
     <!--    Action menu items -->
     <string name="set_team_index">Set Team Index</string>
+    <string name="set_the_team_index_to_use">Set the team index to use (1–6, or None):</string>
     <string name="load_event_data">Load Event Matches (TBA)</string>
-    <string name="load_aliases">Load Team Aliases</string>
-    <string name="enter_event_code_for_team_aliases">Enter event code for team aliases</string>
-    <string name="enter_event_code_for_scout_names">Enter event code for scout names</string>
+    <string name="enter_event_code">Enter Event Code</string>
+    <string name="load_team_aliases">Load Team Aliases</string>
+    <string name="load_scout_names">Load Scout Names</string>
     <string name="clear_scout_names">Clear Scout Names</string>
     <string name="about">About</string>
+    <string name="title_match_list">Recorded Matches</string>
 
     <!--    Match List screen -->
+    <string name="team_index">team index</string>
+
     <string name="sort_by">Sort By:</string>
     <string-array name="sort_criteria_array">
         <item>Date</item>
@@ -30,6 +34,11 @@
     <string name="descending">Descending</string>
 
     <!--    Match List filter dropdown -->
+    <string name="event_code">Event Code</string>
+    <string name="match_number">Match Number</string>
+    <string name="team_number">Team Number</string>
+    <string name="scout_name">Scout Name</string>
+
     <string name="filter_list">Filter</string>
     <string name="filter_instructions">Select criteria to filter the list:</string>
 
@@ -38,17 +47,32 @@
     <string name="delete_match">Delete Match</string>
 
     <!--    Pre-match screen -->
-    <string name="competition_uc">COMPETITION</string>
-    <string name="event_code_uc">EVENT CODE</string>
-    <string name="scout_name_uc">SCOUT NAME</string>
-    <string name="match_info_uc">MATCH INFO</string>
-    <string name="match_number_uc">MATCH NUMBER</string>
-    <string name="team_number_uc">TEAM NUMBER</string>
+    <string name="match_configuration">MATCH CONFIGURATION</string>
+
+    <string name="event_code_desc">Enter the event code</string>
+    <string name="event_code_helper">e.g. 2026casac</string>
+    <string name="event_icon_desc">Event icon</string>
+
+    <string name="enter_match_number">Enter Match Number</string>
+    <string name="match_number_helper"
+        tools:ignore="Typos">e.g. qm1</string>
+    <string name="match_number_desc">Enter or select the match number</string>
+    <string name="match_icon_desc">Match icon</string>
+
+    <string name="enter_team_number">Enter Team Number</string>
+    <string name="team_number_helper">e.g. 2135</string>
+    <string name="team_number_desc">Enter or select the team number</string>
+    <string name="team_icon_desc">Team icon</string>
+
+    <string name="enter_scout_name">Enter Scout Name</string>
+    <string name="scout_name_helper">e.g. Jane D</string>
+    <string name="scout_name_desc">Enter or select your scout name</string>
+    <string name="scout_icon_desc">Scout icon</string>
+
+    <string name="please_fill_in">Please fill in the missing fields!</string>
+
     <string name="start_match">Start Match</string>
     <string name="cancel">Cancel</string>
-    <string name="event_code_helper">e.g. 2026casac</string>
-    <!--    <string name="qual_match_1"-->
-    <!--        tools:ignore="Typos">qm1</string>-->
 
     <!--    post-match submit strings -->
     <string name="qr_code_image">QR code image</string>
@@ -61,18 +85,6 @@
     <string name="teleop">Teleop</string>
     <string name="endgame">Endgame</string>
     <string name="alliance">Alliance</string>
-    <string name="competition">Competition</string>
-    <!--    <string name="match_number">Match Number</string>-->
-    <!--    <string name="team_number">Team Number</string>-->
-
-    <!--    scouting setup strings -->
-    <!--    <string name="scout_name">Name:</string>-->
-    <!--    <string name="date">Date:</string>-->
-
-    <string name="team">Team</string>
-    <string name="scout">Scout</string>
-    <string name="specific_match">Match Number</string>
-    <string name="team_index">team index</string>
 
     <!--    game specific strings -->
     <string name="alliance_zone">Alliance Zone</string>
@@ -85,96 +97,83 @@
     <!--    autonomous mode strings -->
     <string name="preload_title">PRELOAD</string>
     <string name="preload_accuracy_rate">PRELOAD ACCURACY RATE:</string>
-    <string name="shot_preloaded_fuel">Shot preloaded fuel</string>
-
-    <!--    teleop mode strings -->
-    <string name="got_fuel_from">GOT FUEL FROM</string>
-    <string name="hoppers_shot">HOPPERS SHOT</string>
-    <string name="accuracy_rate">ACCURACY RATE:</string>
-    <string name="increase">+</string>
-    <string name="decrease">-</string>
-    <string name="passing_rate">PASSING RATE</string>
-
-    <!--    endgame mode strings -->
-    <string name="climb_position">CLIMB POSITION:</string>
-    <string name="climb_level">CLIMB LEVEL:</string>
-    <string name="level_one">L1</string>
-    <string name="level_two">L2</string>
-    <string name="level_three">L3</string>
-    <string name="start_climbing">START CLIMBING</string>
-    <string name="before">Before</string>
-    <string name="bell">Bell</string>
-
-    <string name="defense">DEFENSE</string>
-    <string name="driving_ability">DRIVING ABILITY</string>
-    <string name="died">DIED</string>
-    <string name="no_show">No show</string>
-    <string name="comment">Comment</string>
-    <string name="comments">Comments</string>
-
-    <!--   miscellaneous strings -->
-    <string name="avg">Avg</string>
-
-    <string name="idk">IDK</string>
-    <string name="n_a">N/A</string>
-    <string name="loading">Loading…</string>
-
-    <string name="medium">Medium</string>
-    <string name="large">Large</string>
-
-    <string name="jerky">Jerky</string>
-    <string name="slow">Slow</string>
-    <string name="fast">Fast</string>
-    <string name="elite">Elite</string>
-
-    <string name="low">Low</string>
-    <string name="med_low">M low</string>
-    <string name="med_high">M high</string>
-    <string name="high">High</string>
-
-    <string name="front">F</string>
-    <string name="back">B</string>
-    <string name="left">L</string>
-    <string name="right">R</string>
-
     <string name="none">None</string>
     <string name="few">Few</string>
     <string name="some">Some</string>
     <string name="half">Half</string>
     <string name="most">Most</string>
     <string name="all">All</string>
+    <string name="shot_preloaded_fuel">Shot preloaded fuel</string>
+
+    <!--    teleop mode strings -->
+    <string name="got_fuel_from">GOT FUEL FROM</string>
+    <string name="hoppers_shot">HOPPERS SHOT</string>
+    <string name="one_qtr">¼</string>
+    <string name="one_half">½</string>
+    <string name="three_qtr">¾</string>
+    <string name="increase">+</string>
+    <string name="decrease">-</string>
+
+    <string name="accuracy_rate">ACCURACY RATE:</string>
+
+    <string name="passing_rate">PASSING RATE</string>
+    <string name="medium">Medium</string>
+    <string name="large">Large</string>
+    <string name="tons">Tons</string>
+
+    <string name="passing_zone">PASSING FROM ZONE</string>
+    <string name="herded_lots_of_fuel">Herded a lot of fuel</string>
+    <string name="intake_while_shooting">Intake and shoot at the same time</string>
+
+    <string name="defense">DEFENSE</string>
+    <string name="low">Low</string>
+    <string name="med_low">M low</string>
+    <string name="med_high">M high</string>
+    <string name="high">High</string>
+
+    <string name="driving_ability">DRIVING ABILITY</string>
+    <string name="slow">Slow</string>
+    <string name="jerky">Jerky</string>
+    <string name="avg">Avg</string>
+    <string name="fast">Fast</string>
+    <string name="elite">Elite</string>
+
+    <!--    endgame mode strings -->
+    <string name="climb_position">CLIMB POSITION:</string>
+    <string name="front">F</string>
+    <string name="back">B</string>
+    <string name="left">L</string>
+    <string name="right">R</string>
+
+    <string name="climb_level">CLIMB LEVEL:</string>
+    <string name="level_one">L1</string>
+    <string name="level_two">L2</string>
+    <string name="level_three">L3</string>
+
+    <string name="start_climbing">START CLIMBING</string>
+    <string name="before">Before</string>
+    <string name="bell">Bell</string>
+    <string name="at_10s_left">10s left</string>
+    <string name="less_than_10s">less than 10s</string>
+
+    <string name="died">DIED</string>
+    <string name="more_than_1min">1min+</string>
+    <string name="more_than_30s">30s+</string>
+    <string name="between_15s_30s">15–30s</string>
+    <string name="no_show">No show</string>
+
+    <string name="comments">Comments</string>
+    <string name="enter_comments_here">Enter comments here</string>
+
+    <!--   miscellaneous strings -->
+    <string name="idk">IDK</string>
+    <string name="n_a">N/A</string>
+    <string name="loading">Loading…</string>
 
     <string name="no">No</string>
     <string name="yes">Yes</string>
 
-    <string name="one_qtr">¼</string>
-    <string name="one_half">½</string>
-    <string name="three_qtr">¾</string>
-
-    <string name="set_the_team_index_to_use">Set the team index to use (1–6, or None):</string>
-    <string name="passing_zone">PASSING FROM ZONE</string>
-    <string name="herded_lots_of_fuel">Herded a lot of fuel</string>
-    <string name="less_than_10s">less than 10s</string>
-    <string name="at_10s_left">10s left</string>
-    <string name="more_than_1min">1min+</string>
-    <string name="more_than_30s">30s+</string>
-    <string name="between_15s_30s">15–30s</string>
-    <string name="intake_while_shooting">Intake and shoot at the same time</string>
-    <string name="tons">Tons</string>
-
-    <string name="please_fill_in">Please fill in the missing fields!</string>
-    <string name="load_scout_names">Load Scout Names</string>
-    <string name="sort_options">Select Sort Criteria:</string>
-
     <!-- Accessibility Strings -->
-    <string name="event_code_desc">Enter the competition event code</string>
-    <string name="scout_name_desc">Enter or select your scout name</string>
-    <string name="match_number_desc">Enter or select the match number</string>
-    <string name="team_number_desc">Enter or select the team number</string>
-    <string name="event_icon_desc">Competition icon</string>
-    <string name="scout_icon_desc">Scout icon</string>
-    <string name="match_icon_desc">Match icon</string>
-    <string name="team_icon_desc">Team icon</string>
 
     <!-- Accessibility Hints -->
 

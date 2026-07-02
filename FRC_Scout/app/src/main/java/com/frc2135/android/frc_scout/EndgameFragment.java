@@ -84,7 +84,6 @@ public class EndgameFragment extends Fragment
         initClimbPos(m_matchData.getEndgameClimbPos());
         initDiedValue(m_matchData.getDiedValue());
 
-        binding.comments.setHint("Enter comments here");
         binding.comments.setText(m_matchData.getComment());
     }
 

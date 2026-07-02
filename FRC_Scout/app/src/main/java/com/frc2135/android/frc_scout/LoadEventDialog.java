@@ -143,15 +143,9 @@ public class LoadEventDialog extends DialogFragment
         Log.d(TAG, "handleOkClick called");
         String eventCode = Objects.requireNonNull(binding.eventCodeField.getText()).toString().trim().toLowerCase(Locale.US);
 
-        if (eventCode.isEmpty())
+        if (eventCode.isEmpty() || eventCode.length() < 7)
         {
-            binding.eventCodeLayout.setError("Event code cannot be empty");
-            return;
-        }
-
-        if (eventCode.length() < 6)
-        {
-            binding.eventCodeLayout.setError("Event code is too short (e.g., 2026casac)");
+            binding.eventCodeLayout.setError("Event code must be at least 7 characters (e.g., 2026casac)");
             return;
         }
 
@@ -210,7 +204,7 @@ public class LoadEventDialog extends DialogFragment
                     catch (JSONException | IOException e)
                     {
                         Log.e(TAG, "Error saving event data: " + e.getMessage(), e);
-                        Toast.makeText(context, "Error saving competition data locally", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Error saving event matches locally", Toast.LENGTH_SHORT).show();
                         resetUiState(okButton);
                     }
                 },
@@ -284,7 +278,7 @@ public class LoadEventDialog extends DialogFragment
     {
         EventMatchesSerializer serializer = new EventMatchesSerializer(context);
 
-        // Update current competition settings
+        // Update current event code settings
         CurrentEventCode currentEventCode = CurrentEventCode.get(context);
         currentEventCode.setEventCode(eventCode);
         serializer.saveCurrentEventCode(currentEventCode.toJSON());

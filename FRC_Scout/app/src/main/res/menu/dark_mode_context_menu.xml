@@ -15,7 +15,7 @@
         android:title="@string/load_event_data" />
     <item
         android:id="@+id/load_aliases"
-        android:title="@string/load_aliases" />
+        android:title="@string/load_team_aliases" />
     <item
         android:id="@+id/load_scout_names"
         android:title="@string/load_scout_names" />

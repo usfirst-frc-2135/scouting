@@ -20,41 +20,17 @@
             android:layout_marginBottom="24dp"
             android:textColor="?android:attr/textColorSecondary" />
 
-        <!-- Team Filter -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/team_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/team"
-            android:layout_marginBottom="16dp"
-            app:startIconDrawable="@android:drawable/ic_menu_info_details"
-            app:startIconContentDescription="@string/team_icon_desc"
-            app:boxCornerRadiusBottomEnd="12dp"
-            app:boxCornerRadiusBottomStart="12dp"
-            app:boxCornerRadiusTopEnd="12dp"
-            app:boxCornerRadiusTopStart="12dp">
-
-            <AutoCompleteTextView
-                android:id="@+id/team_options"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="none"
-                android:hint="@string/team_number_uc"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Competition Filter -->
+        <!-- Event Code Filter -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/event_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/competition"
+            android:hint="@string/event_code"
             android:layout_marginBottom="16dp"
             app:startIconDrawable="@android:drawable/ic_menu_today"
             app:startIconContentDescription="@string/event_icon_desc"
+            app:endIconMode="clear_text"
             app:boxCornerRadiusBottomEnd="12dp"
             app:boxCornerRadiusBottomStart="12dp"
             app:boxCornerRadiusTopEnd="12dp"
@@ -70,16 +46,68 @@
                 android:paddingBottom="16dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Match Number Filter -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/match_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/match_number"
+            android:layout_marginBottom="16dp"
+            app:startIconDrawable="@android:drawable/ic_menu_edit"
+            app:startIconContentDescription="@string/match_icon_desc"
+            app:endIconMode="clear_text"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/match_entry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:contentDescription="@string/match_number_desc"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Team Filter -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/team_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/team_number"
+            android:layout_marginBottom="16dp"
+            app:startIconDrawable="@android:drawable/ic_menu_info_details"
+            app:startIconContentDescription="@string/team_icon_desc"
+            app:endIconMode="clear_text"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/team_options"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:contentDescription="@string/team_number_desc"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <!-- Scout Filter -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/scout_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/scout"
-            android:layout_marginBottom="16dp"
+            android:hint="@string/scout_name"
             app:startIconDrawable="@android:drawable/ic_menu_myplaces"
             app:startIconContentDescription="@string/scout_icon_desc"
+            app:endIconMode="clear_text"
             app:boxCornerRadiusBottomEnd="12dp"
             app:boxCornerRadiusBottomStart="12dp"
             app:boxCornerRadiusTopEnd="12dp"
@@ -91,31 +119,6 @@
                 android:layout_height="wrap_content"
                 android:inputType="none"
                 android:contentDescription="@string/scout_name_desc"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Match Number Filter -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/match_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/specific_match"
-            app:startIconDrawable="@android:drawable/ic_menu_edit"
-            app:startIconContentDescription="@string/match_icon_desc"
-            app:boxCornerRadiusBottomEnd="12dp"
-            app:boxCornerRadiusBottomStart="12dp"
-            app:boxCornerRadiusTopEnd="12dp"
-            app:boxCornerRadiusTopStart="12dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/match_entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:autofillHints="none"
-                android:contentDescription="@string/match_number_desc"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp" />
         </com.google.android.material.textfield.TextInputLayout>

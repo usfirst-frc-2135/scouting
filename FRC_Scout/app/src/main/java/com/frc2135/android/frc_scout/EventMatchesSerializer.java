@@ -26,7 +26,7 @@ import java.util.Locale;
 public class EventMatchesSerializer
 {
     private static final String TAG = "EventMatchesSerializer";
-    private static final String CURRENT_COMP_FILENAME = "current_competition.json";
+    private static final String CURRENT_EVENT_CODE_FILENAME = "current_event_code.json";
     private static final String MATCHES_FILE_SUFFIX = "_matches.json";
 
     private final File m_dataDir;
@@ -128,7 +128,7 @@ public class EventMatchesSerializer
     /**
      * Persists the current event configuration to internal storage.
      *
-     * @param eventMatchesJSON the JSONObject representing the current competition
+     * @param eventMatchesJSON the JSONObject representing the current event matches
      * @throws IOException if writing the file fails
      */
     public void saveCurrentEventCode(JSONObject eventMatchesJSON)
@@ -139,17 +139,17 @@ public class EventMatchesSerializer
             return;
         }
 
-        File file = new File(m_dataDir, CURRENT_COMP_FILENAME);
+        File file = new File(m_dataDir, CURRENT_EVENT_CODE_FILENAME);
         Log.d(TAG, "Saving current event configuration to: " + file.getAbsolutePath());
 
         try
         {
             writeStringToFile(file, eventMatchesJSON.toString());
-            Log.i(TAG, "Successfully saved current competition configuration");
+            Log.i(TAG, "Successfully saved current event matches configuration");
         }
         catch (IOException e)
         {
-            Log.e(TAG, "Error saving current competition: " + e.getMessage(), e);
+            Log.e(TAG, "Error saving current event matches: " + e.getMessage(), e);
             throw e;
         }
     }
@@ -164,7 +164,7 @@ public class EventMatchesSerializer
     public CurrentEventCode loadCurrentEventCode()
             throws IOException, JSONException
     {
-        File file = new File(m_dataDir, CURRENT_COMP_FILENAME);
+        File file = new File(m_dataDir, CURRENT_EVENT_CODE_FILENAME);
         if (!file.exists())
         {
             Log.d(TAG, "No current event code file found at: " + file.getAbsolutePath());
@@ -180,9 +180,9 @@ public class EventMatchesSerializer
         }
 
         JSONObject object = (JSONObject) new JSONTokener(jsonString).nextValue();
-        CurrentEventCode currComp = new CurrentEventCode(object);
-        Log.i(TAG, "Successfully loaded current event code: " + currComp.getEventCode());
-        return currComp;
+        CurrentEventCode currentEventCode = new CurrentEventCode(object);
+        Log.i(TAG, "Successfully loaded current event code: " + currentEventCode.getEventCode());
+        return currentEventCode;
     }
 
     /**

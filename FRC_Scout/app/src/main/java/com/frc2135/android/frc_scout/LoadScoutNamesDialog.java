@@ -27,7 +27,7 @@ import java.util.Objects;
 /**
  * Dialog for loading scout names for a specific event from the team's scouting website.
  */
-public class LoadScoutsDialog extends DialogFragment
+public class LoadScoutNamesDialog extends DialogFragment
 {
     private static final String TAG = "LoadScoutsDialog";
     private LoadEventDialogBinding binding;
@@ -37,9 +37,9 @@ public class LoadScoutsDialog extends DialogFragment
      *
      * @return a new LoadScoutsDialog instance
      */
-    public static LoadScoutsDialog newInstance()
+    public static LoadScoutNamesDialog newInstance()
     {
-        return new LoadScoutsDialog();
+        return new LoadScoutNamesDialog();
     }
 
     @NonNull
@@ -50,8 +50,6 @@ public class LoadScoutsDialog extends DialogFragment
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         binding = LoadEventDialogBinding.inflate(inflater);
-
-        binding.eventCodeField.setHint(R.string.enter_event_code_for_scout_names);
 
         AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle("Load Scout Names")
@@ -75,9 +73,9 @@ public class LoadScoutsDialog extends DialogFragment
     private void handleOkClick(AlertDialog dialog)
     {
         String eventCode = Objects.requireNonNull(binding.eventCodeField.getText()).toString().trim();
-        if (eventCode.isEmpty() || eventCode.length() <= 4)
+        if (eventCode.isEmpty() || eventCode.length() < 7)
         {
-            binding.eventCodeField.setError("Event code must be longer than 4 characters");
+            binding.eventCodeField.setError("Event code must be at least 7 characters (e.g., 2026casac)");
             return;
         }
 

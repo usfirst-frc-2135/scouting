@@ -187,8 +187,9 @@ public class MatchListData
 
     /**
      * Sorts a list of matches by the specified criteria and order.
-     * @param list the list to sort
-     * @param criteria "Date", "Team", or "Match"
+     *
+     * @param list      the list to sort
+     * @param criteria  "Date", "Team", or "Match"
      * @param ascending true for ascending, false for descending
      * @return a new sorted ArrayList
      */
@@ -242,6 +243,45 @@ public class MatchListData
         return sortedList;
     }
 
+    /**
+     * Filters a list of matches by multiple criteria simultaneously.
+     *
+     * @param list     the list to filter
+     * @param team     team number filter (exact match), or null
+     * @param event    event code filter (exact match), or null
+     * @param scout    scout name filter (exact match), or null
+     * @param matchNum match number filter (exact match), or null
+     * @return a new filtered list
+     */
+    public List<MatchData> filterMatches(List<MatchData> list, String team, String event, String scout, String matchNum)
+    {
+        if (list == null)
+        {
+            return new ArrayList<>();
+        }
+
+        return list.stream().filter(m -> {
+            boolean matches = true;
+            if (team != null && !team.isEmpty())
+            {
+                matches = team.equals(m.getTeamNumber());
+            }
+            if (matches && event != null && !event.isEmpty())
+            {
+                matches = event.equals(m.getEventCode());
+            }
+            if (matches && scout != null && !scout.isEmpty())
+            {
+                matches = scout.equals(m.getScoutName());
+            }
+            if (matches && matchNum != null && !matchNum.isEmpty())
+            {
+                matches = matchNum.equals(m.getMatchNumber());
+            }
+            return matches;
+        }).collect(Collectors.toList());
+    }
+
     public List<MatchData> filterByTeam(List<MatchData> list, String teamNumber)
     {
         if (teamNumber == null)
@@ -253,7 +293,7 @@ public class MatchListData
                 .collect(Collectors.toList());
     }
 
-    public List<MatchData> filterByCompetition(List<MatchData> list, String eventCode)
+    public List<MatchData> filterByEventCode(List<MatchData> list, String eventCode)
     {
         if (eventCode == null)
         {
@@ -271,7 +311,7 @@ public class MatchListData
             return new ArrayList<>(list);
         }
         return list.stream()
-                .filter(m -> scoutName.equals(m.getName()))
+                .filter(m -> scoutName.equals(m.getScoutName()))
                 .collect(Collectors.toList());
     }
 
@@ -302,9 +342,9 @@ public class MatchListData
     }
 
     /**
-     * @return an array of unique competition codes present in the history, prefixed with "Select competition"
+     * @return an array of unique event codes present in the history, prefixed with "Select event code"
      */
-    public String[] listCompetitions()
+    public String[] listEventCodes()
     {
         List<String> result = m_totalMatchListData.stream()
                 .map(MatchData::getEventCode)
@@ -312,7 +352,7 @@ public class MatchListData
                 .sorted()
                 .collect(Collectors.toList());
 
-        result.add(0, "Select competition");
+        result.add(0, "Select event code");
         return result.toArray(new String[0]);
     }
 
@@ -322,7 +362,7 @@ public class MatchListData
     public String[] listScouts()
     {
         List<String> result = m_totalMatchListData.stream()
-                .map(MatchData::getName)
+                .map(MatchData::getScoutName)
                 .distinct()
                 .sorted()
                 .collect(Collectors.toList());

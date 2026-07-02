@@ -91,10 +91,10 @@ public class PreMatchActivity extends AppCompatActivity
 
         if (m_matchData != null)
         {
-            binding.compName.setText(m_matchData.getEventCode());
+            binding.eventCode.setText(m_matchData.getEventCode());
         }
 
-        String scoutName = (m_matchData != null && !m_matchData.getName().isEmpty()) ? m_matchData.getName() :
+        String scoutName = (m_matchData != null && !m_matchData.getScoutName().isEmpty()) ? m_matchData.getScoutName() :
                 (m_settings != null) ? m_settings.getMostRecentScoutName() : "";
         binding.scoutName.setText(scoutName);
 
@@ -115,7 +115,7 @@ public class PreMatchActivity extends AppCompatActivity
      */
     private void setupListeners()
     {
-        binding.compName.addTextChangedListener(new TextWatcher()
+        binding.eventCode.addTextChangedListener(new TextWatcher()
         {
             public void onTextChanged(CharSequence c, int start, int before, int count)
             {
@@ -322,7 +322,7 @@ public class PreMatchActivity extends AppCompatActivity
         }
 
         String scoutName = binding.scoutName.getText().toString().trim();
-        String eventCode = Objects.requireNonNull(binding.compName.getText()).toString().trim();
+        String eventCode = Objects.requireNonNull(binding.eventCode.getText()).toString().trim();
         String matchNum = binding.matchNumberField.getText().toString().trim().toLowerCase();
         String teamNumEntry = binding.teamNumberField.getText().toString().trim();
 
@@ -333,7 +333,7 @@ public class PreMatchActivity extends AppCompatActivity
             m_settings.setMostRecentMatchNumber(matchNum);
         }
 
-        m_matchData.setName(scoutName);
+        m_matchData.setScoutName(scoutName);
         m_matchData.setEventCode(eventCode);
         m_matchData.setMatchNumber(matchNum);
 
@@ -370,7 +370,7 @@ public class PreMatchActivity extends AppCompatActivity
      */
     private boolean checkValidData()
     {
-        String eventCode = Objects.requireNonNull(binding.compName.getText()).toString().trim();
+        String eventCode = Objects.requireNonNull(binding.eventCode.getText()).toString().trim();
         String scoutName = binding.scoutName.getText().toString().trim();
         String matchNum = binding.matchNumberField.getText().toString().trim();
         String teamNum = binding.teamNumberField.getText().toString().trim();

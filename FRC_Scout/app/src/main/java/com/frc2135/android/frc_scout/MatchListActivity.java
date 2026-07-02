@@ -33,7 +33,7 @@ public class MatchListActivity extends AppCompatActivity
         setSupportActionBar(binding.toolbar);
         if (getSupportActionBar() != null)
         {
-            getSupportActionBar().setTitle("Recorded Matches");
+            getSupportActionBar().setTitle(R.string.title_match_list);
         }
 
         updateToolbarTeamIndex();

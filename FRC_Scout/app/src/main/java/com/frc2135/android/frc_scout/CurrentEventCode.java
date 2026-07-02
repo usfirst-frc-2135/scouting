@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 /**
- * Singleton class that maintains the currently active FRC competition information.
+ * Singleton class that maintains the currently active FRC event code information.
  * Information is persisted to and loaded from a JSON file.
  */
 public class CurrentEventCode
@@ -25,7 +25,7 @@ public class CurrentEventCode
     private static volatile CurrentEventCode sCurrentEventCode;
 
     /**
-     * Default constructor used when no saved competition data is found.
+     * Default constructor used when no saved event code is found.
      */
     public CurrentEventCode()
     {
@@ -68,7 +68,7 @@ public class CurrentEventCode
 
                     if (sCurrentEventCode == null)
                     {
-                        Log.d(TAG, "No saved competition found, using defaults");
+                        Log.d(TAG, "No saved event codes found, using defaults");
                         sCurrentEventCode = new CurrentEventCode();
                     }
                 }
@@ -88,7 +88,7 @@ public class CurrentEventCode
     }
 
     /**
-     * Serializes the current competition data to a {@link JSONObject}.
+     * Serializes the current event code data to a {@link JSONObject}.
      *
      * @return the serialized JSONObject
      * @throws JSONException if serialization fails

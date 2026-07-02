@@ -7,14 +7,8 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 /**
  * Singleton class for managing team aliases data.
@@ -27,14 +21,16 @@ public class TeamAliases
     private String m_eventCode;
     private JSONArray m_jsonData;
     private boolean m_bAliasesDataLoaded;
+    private final TeamAliasesSerializer m_serializer;
 
     private static volatile TeamAliases sTeamAliases;
 
-    private TeamAliases(String eventCode)
+    private TeamAliases(Context context, String eventCode)
     {
         m_eventCode = eventCode;
         m_bAliasesDataLoaded = false;
         m_jsonData = null;
+        m_serializer = new TeamAliasesSerializer(context);
     }
 
     /**
@@ -52,7 +48,7 @@ public class TeamAliases
             if (sTeamAliases == null)
             {
                 Log.d(TAG, "Creating a new sTeamAliases for eventCode " + eventCode);
-                sTeamAliases = new TeamAliases(eventCode);
+                sTeamAliases = new TeamAliases(context, eventCode);
                 sTeamAliases.readAliasesJSON(context, true);
             }
             else
@@ -154,43 +150,26 @@ public class TeamAliases
             return;
         }
 
-        String filename = m_eventCode.trim().toLowerCase() + "_aliases.json";
-        File file = new File(context.getFilesDir(), filename);
-        Log.d(TAG, "Looking for team aliases file: " + file.getAbsolutePath());
+        Log.d(TAG, "Looking for team aliases for: " + m_eventCode);
 
-        if (file.exists())
+        try
         {
-            try (InputStream in = context.openFileInput(filename);
-                 BufferedReader reader = new BufferedReader(new InputStreamReader(in)))
+            m_jsonData = m_serializer.loadTeamAliases(m_eventCode);
+            if (m_jsonData != null)
             {
-                StringBuilder jsonString = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null)
-                {
-                    jsonString.append(line);
-                }
-
-                m_jsonData = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
                 m_bAliasesDataLoaded = true;
                 Log.d(TAG, "Successfully loaded aliases for " + m_eventCode);
                 Toast.makeText(context, "Loaded aliases for " + m_eventCode, Toast.LENGTH_SHORT).show();
             }
-            catch (FileNotFoundException e)
+            else if (!bSilent)
             {
-                if (!bSilent)
-                {
-                    Log.e(TAG, "Aliases file not found: " + filename);
-                    Toast.makeText(context, "Aliases file not found", Toast.LENGTH_SHORT).show();
-                }
-            }
-            catch (JSONException | IOException e)
-            {
-                Log.e(TAG, "Error reading aliases file", e);
+                Log.e(TAG, "Aliases file not found for event: " + m_eventCode);
+                Toast.makeText(context, "Aliases file not found", Toast.LENGTH_SHORT).show();
             }
         }
-        else
+        catch (JSONException | IOException e)
         {
-            Log.d(TAG, "Aliases file does not exist: " + filename);
+            Log.e(TAG, "Error reading aliases file", e);
         }
     }
 
@@ -199,3 +178,4 @@ public class TeamAliases
         return m_bAliasesDataLoaded;
     }
 }
+

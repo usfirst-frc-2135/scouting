@@ -18,14 +18,13 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.frc2135.android.frc_scout.databinding.LoadEventDialogBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
 /**
  * Dialog for loading team aliases data for a specific event from the team's scouting website.
  */
-public class LoadAliasesDialog extends DialogFragment
+public class LoadTeamAliasesDialog extends DialogFragment
 {
     private static final String TAG = "LoadAliasesDialog";
     private LoadEventDialogBinding binding;
@@ -35,9 +34,9 @@ public class LoadAliasesDialog extends DialogFragment
      *
      * @return a new LoadAliasesDialog instance
      */
-    public static LoadAliasesDialog newInstance()
+    public static LoadTeamAliasesDialog newInstance()
     {
-        return new LoadAliasesDialog();
+        return new LoadTeamAliasesDialog();
     }
 
     @NonNull
@@ -48,9 +47,7 @@ public class LoadAliasesDialog extends DialogFragment
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         binding = LoadEventDialogBinding.inflate(inflater);
-
-        binding.eventCodeField.setHint(R.string.enter_event_code_for_team_aliases);
-
+        
         AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle("Load Team Aliases")
                 .setView(binding.getRoot())
@@ -73,9 +70,9 @@ public class LoadAliasesDialog extends DialogFragment
     private void handleOkClick(AlertDialog dialog)
     {
         String eventCode = Objects.requireNonNull(binding.eventCodeField.getText()).toString().trim();
-        if (eventCode.isEmpty() || eventCode.length() <= 4)
+        if (eventCode.isEmpty() || eventCode.length() < 7)
         {
-            binding.eventCodeField.setError("Event code must be longer than 4 characters");
+            binding.eventCodeField.setError("Event code must be at least 7 characters (e.g., 2026casac)");
             return;
         }
 
@@ -131,20 +128,8 @@ public class LoadAliasesDialog extends DialogFragment
             throws IOException
     {
         TeamAliasesSerializer serializer = new TeamAliasesSerializer(context);
-        String filename = eventCode.toLowerCase() + "_aliases.json";
-
-        File dataDir = context.getFilesDir();
-        File existingFile = new File(dataDir, filename);
-        if (existingFile.exists())
-        {
-            Log.i(TAG, "Deleting existing aliases file: " + filename);
-            if (!existingFile.delete())
-            {
-                Log.w(TAG, "Failed to delete existing file: " + filename);
-            }
-        }
-
-        serializer.saveTeamAliases(filename, response);
+        serializer.deleteTeamAliases(eventCode);
+        serializer.saveTeamAliases(eventCode, response);
 
         // Update the singleton if it's already loaded the wrong event code
         TeamAliases.get(context, eventCode, true);

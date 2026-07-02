@@ -428,10 +428,10 @@
                 android:textSize="20sp"
                 android:maxLength="400"
                 android:inputType="text"
+                android:autofillHints="none"
                 android:textColor="@color/textPrimary"
                 android:textColorHint="@color/hintColor"
-                android:autofillHints="Enter comment here"
-                android:hint="@string/comment">
+                android:hint="@string/enter_comments_here">
 
             </EditText>
         </LinearLayout>

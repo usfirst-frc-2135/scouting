@@ -21,13 +21,21 @@ public class MatchData
 {
     private static final String TAG = "MatchData";
 
+    public static final double M_JSON_FORMAT_VERSION = 26.1;
+
     // Keys used for reading/writing match JSON files.
+
+    // JSON keys non-specific to a game
+    private static final String JSON_KEY_MATCH_ID = "matchId";
+    private static final String JSON_KEY_TIMESTAMP = "timestamp";
     private static final String JSON_KEY_VERSION = "version";
-    private static final String JSON_KEY_SCOUT_NAME = "scoutName";
     private static final String JSON_KEY_EVENT_CODE = "eventCode";
+    private static final String JSON_KEY_MATCH_NUMBER = "matchNumber";
     private static final String JSON_KEY_TEAM_NUMBER = "teamNumber";
     private static final String JSON_KEY_TEAM_ALIAS = "teamAlias";
-    private static final String JSON_KEY_MATCH_NUMBER = "matchNumber";
+    private static final String JSON_KEY_SCOUT_NAME = "scoutName";
+
+    // Game-specific match data json keys
 
     // Auton data keys
     private static final String JSON_KEY_PRELOAD = "preload";
@@ -63,11 +71,18 @@ public class MatchData
     private static final String JSON_KEY_OTHER2 = "other2";
     private static final String JSON_KEY_OTHER3 = "other3";
     private static final String JSON_KEY_OTHER4 = "other4";
-    private static final String JSON_KEY_TIMESTAMP = "timestamp";
-    private static final String JSON_KEY_MATCH_ID = "matchId";
 
     // Data members
+    private final String m_matchID;
+    private Date m_timestamp;
+
     private final double m_version;
+    private String m_eventCode;
+    private String m_matchNumber;
+    private String m_teamNumber;
+    private String m_teamAlias;
+    private String m_scoutName;
+
     private boolean m_autonPreload;
     private int m_autonPreloadAccRate;
     private int m_autonHopper;
@@ -98,13 +113,6 @@ public class MatchData
     private final String m_other2;
     private final String m_other3;
     private final String m_other4;
-    private String m_name;
-    private String m_teamNumber;
-    private String m_teamAlias;
-    private String m_matchNumber;
-    private final String m_matchID;
-    private String m_eventCode;
-    private Date m_timestamp;
 
     /**
      * Utility to strip off non-digit prefixes (like "frc") from a team number string.
@@ -122,19 +130,23 @@ public class MatchData
     }
 
     /**
-     * Default constructor for creating a new match record.
+     * Default constructor for creating a new match data record.
      *
-     * @param context the application context for retrieving competition settings
-     * @throws IOException   if loading competition data fails
-     * @throws JSONException if parsing competition data fails
+     * @param context the application context for retrieving event match data settings
+     * @throws IOException   if loading match data fails
+     * @throws JSONException if parsing match data fails
      */
     public MatchData(Context context)
             throws IOException, JSONException
     {
-        m_name = "";
+        m_matchID = UUID.randomUUID().toString();
+        m_timestamp = Calendar.getInstance().getTime();
+        m_version = M_JSON_FORMAT_VERSION;
+        m_eventCode = CurrentEventCode.get(context).getEventCode();
+        m_matchNumber = "";
         m_teamNumber = "";
         m_teamAlias = "";
-        m_matchNumber = "";
+        m_scoutName = "";
 
         m_autonPreload = false;
         m_autonPreloadAccRate = 0;
@@ -162,15 +174,10 @@ public class MatchData
         m_endgameClimbPos = 0;
         m_diedValue = 0;
         m_comment = "";
-        m_timestamp = Calendar.getInstance().getTime();
-
-        m_matchID = UUID.randomUUID().toString();
-        m_eventCode = CurrentEventCode.get(context).getEventCode();
 
         m_other2 = "0";
         m_other3 = "0";
         m_other4 = "0";
-        m_version = 26.1;
     }
 
     /**
@@ -182,11 +189,35 @@ public class MatchData
     {
         Log.d(TAG, "Reconstructing MatchData from JSON");
 
-        setName(json.optString(JSON_KEY_SCOUT_NAME, ""));
+        m_matchID = json.optString(JSON_KEY_MATCH_ID, UUID.randomUUID().toString());
+        String dateStr = json.optString(JSON_KEY_TIMESTAMP, "");
+        // Use a consistent ISO format for storage; fall back to the old default format if parsing fails.
+        SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US);
+        SimpleDateFormat oldFormat = new SimpleDateFormat("MMM dd hh:mm:ss z yyyy", Locale.US);
+
+        try
+        {
+            if (dateStr.contains("T"))
+            {
+                m_timestamp = isoFormat.parse(dateStr);
+            }
+            else
+            {
+                m_timestamp = oldFormat.parse(dateStr);
+            }
+        }
+        catch (Exception e)
+        {
+            Log.w(TAG, "Failed to parse timestamp, using current time: " + e.getMessage());
+            m_timestamp = Calendar.getInstance().getTime();
+        }
+
+        m_version = json.optDouble(JSON_KEY_VERSION, 26.1);
         setEventCode(json.optString(JSON_KEY_EVENT_CODE, ""));
+        setMatchNumber(json.optString(JSON_KEY_MATCH_NUMBER, ""));
         setTeamNumber(json.optString(JSON_KEY_TEAM_NUMBER, ""));
         setTeamAlias(json.optString(JSON_KEY_TEAM_ALIAS, ""));
-        setMatchNumber(json.optString(JSON_KEY_MATCH_NUMBER, ""));
+        setScoutName(json.optString(JSON_KEY_SCOUT_NAME, ""));
 
         m_autonPreload = json.optBoolean(JSON_KEY_PRELOAD, false);
         m_autonPreloadAccRate = json.optInt(JSON_KEY_AUTON_PRELOAD_ACCURACY_RATE, 0);
@@ -218,30 +249,16 @@ public class MatchData
         m_other2 = json.optString(JSON_KEY_OTHER2, "0");
         m_other3 = json.optString(JSON_KEY_OTHER3, "0");
         m_other4 = json.optString(JSON_KEY_OTHER4, "0");
-        m_matchID = json.optString(JSON_KEY_MATCH_ID, UUID.randomUUID().toString());
-        m_version = json.optDouble(JSON_KEY_VERSION, 26.1);
+    }
 
-        String dateStr = json.optString(JSON_KEY_TIMESTAMP, "");
-        // Use a consistent ISO format for storage; fall back to the old default format if parsing fails.
-        SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US);
-        SimpleDateFormat oldFormat = new SimpleDateFormat("E MMM dd hh:mm:ss z yyyy", Locale.US);
+    public void setTimestamp(Date d)
+    {
+        m_timestamp = d;
+    }
 
-        try
-        {
-            if (dateStr.contains("T"))
-            {
-                m_timestamp = isoFormat.parse(dateStr);
-            }
-            else
-            {
-                m_timestamp = oldFormat.parse(dateStr);
-            }
-        }
-        catch (Exception e)
-        {
-            Log.w(TAG, "Failed to parse timestamp, using current time: " + e.getMessage());
-            m_timestamp = Calendar.getInstance().getTime();
-        }
+    public Date getTimestamp()
+    {
+        return m_timestamp;
     }
 
     public String getMatchID()
@@ -249,28 +266,6 @@ public class MatchData
         return m_matchID;
     }
 
-    public void setName(String name)
-    {
-        if (name == null || name.trim().isEmpty())
-        {
-            m_name = "";
-            return;
-        }
-        String trimmed = name.trim();
-        if (trimmed.length() == 1)
-        {
-            m_name = trimmed.toUpperCase();
-        }
-        else
-        {
-            m_name = trimmed.substring(0, 1).toUpperCase() + trimmed.substring(1).toLowerCase();
-        }
-    }
-
-    public String getName()
-    {
-        return m_name;
-    }
 
     public void setEventCode(String code)
     {
@@ -280,6 +275,16 @@ public class MatchData
     public String getEventCode()
     {
         return m_eventCode;
+    }
+
+    public void setMatchNumber(String num)
+    {
+        m_matchNumber = num;
+    }
+
+    public String getMatchNumber()
+    {
+        return m_matchNumber;
     }
 
     public void setTeamNumber(String num)
@@ -303,15 +308,29 @@ public class MatchData
         return m_teamAlias != null ? m_teamAlias : "";
     }
 
-    public void setMatchNumber(String num)
+    public void setScoutName(String name)
     {
-        m_matchNumber = num;
+        if (name == null || name.trim().isEmpty())
+        {
+            m_scoutName = "";
+            return;
+        }
+        String trimmed = name.trim();
+        if (trimmed.length() == 1)
+        {
+            m_scoutName = trimmed.toUpperCase();
+        }
+        else
+        {
+            m_scoutName = trimmed.substring(0, 1).toUpperCase() + trimmed.substring(1).toLowerCase();
+        }
     }
 
-    public String getMatchNumber()
+    public String getScoutName()
     {
-        return m_matchNumber;
+        return m_scoutName;
     }
+
 
     // Auton accessors
     public void setAutonHopper(int val)
@@ -557,16 +576,6 @@ public class MatchData
     }
 
     @SuppressWarnings("unused")
-    public void setTimestamp(Date d)
-    {
-        m_timestamp = d;
-    }
-
-    public Date getTimestamp()
-    {
-        return m_timestamp;
-    }
-
     /**
      * Encodes the match data into a Tab-Separated Values (TSV) string for QR code generation.
      *
@@ -585,7 +594,8 @@ public class MatchData
                 m_matchNumber,
                 stripTeamNumPrefix(m_teamNumber),
                 teamAliasClean,
-                m_name,
+                m_scoutName,
+
                 m_diedValue,
                 m_autonPreload ? 1 : 0,
                 m_autonPreloadAccRate,
@@ -626,13 +636,20 @@ public class MatchData
     {
         JSONObject json = new JSONObject();
 
+        // Save match ID and timestamp in a stable, machine-readable format.
+        json.put(JSON_KEY_MATCH_ID, m_matchID);
+        SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US);
+        json.put(JSON_KEY_TIMESTAMP, isoFormat.format(m_timestamp));
+
+        // Match data fields starting with those not specific for a game
         json.put(JSON_KEY_VERSION, m_version);
         json.put(JSON_KEY_EVENT_CODE, m_eventCode);
         json.put(JSON_KEY_MATCH_NUMBER, m_matchNumber);
         json.put(JSON_KEY_TEAM_NUMBER, m_teamNumber);
         json.put(JSON_KEY_TEAM_ALIAS, m_teamAlias);
-        json.put(JSON_KEY_SCOUT_NAME, m_name);
+        json.put(JSON_KEY_SCOUT_NAME, m_scoutName);
 
+        // Game-specific match data fields
         json.put(JSON_KEY_PRELOAD, m_autonPreload);
         json.put(JSON_KEY_AUTON_PRELOAD_ACCURACY_RATE, m_autonPreloadAccRate);
         json.put(JSON_KEY_AUTON_HOPPER, m_autonHopper);
@@ -663,11 +680,6 @@ public class MatchData
         json.put(JSON_KEY_OTHER2, m_other2);
         json.put(JSON_KEY_OTHER3, m_other3);
         json.put(JSON_KEY_OTHER4, m_other4);
-
-        // Save timestamp in a stable, machine-readable format.
-        SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US);
-        json.put(JSON_KEY_TIMESTAMP, isoFormat.format(m_timestamp));
-        json.put(JSON_KEY_MATCH_ID, m_matchID);
 
         return json;
     }
