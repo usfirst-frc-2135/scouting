@@ -129,12 +129,11 @@ public class MatchListData
      *
      * @return true if successful, false otherwise
      */
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean saveScoutNames()
     {
         try
         {
-            m_serializer.saveScoutNames();
+            m_serializer.saveSettings(Settings.get(m_appContext));
             return true;
         }
         catch (Exception e)
@@ -281,51 +280,7 @@ public class MatchListData
             return matches;
         }).collect(Collectors.toList());
     }
-
-    public List<MatchData> filterByTeam(List<MatchData> list, String teamNumber)
-    {
-        if (teamNumber == null)
-        {
-            return new ArrayList<>(list);
-        }
-        return list.stream()
-                .filter(m -> teamNumber.equals(m.getTeamNumber()))
-                .collect(Collectors.toList());
-    }
-
-    public List<MatchData> filterByEventCode(List<MatchData> list, String eventCode)
-    {
-        if (eventCode == null)
-        {
-            return new ArrayList<>(list);
-        }
-        return list.stream()
-                .filter(m -> eventCode.equals(m.getEventCode()))
-                .collect(Collectors.toList());
-    }
-
-    public List<MatchData> filterByScout(List<MatchData> list, String scoutName)
-    {
-        if (scoutName == null)
-        {
-            return new ArrayList<>(list);
-        }
-        return list.stream()
-                .filter(m -> scoutName.equals(m.getScoutName()))
-                .collect(Collectors.toList());
-    }
-
-    public List<MatchData> filterByMatchNumber(List<MatchData> list, String matchNum)
-    {
-        if (matchNum == null)
-        {
-            return new ArrayList<>(list);
-        }
-        return list.stream()
-                .filter(m -> matchNum.equals(m.getMatchNumber()))
-                .collect(Collectors.toList());
-    }
-
+    
     /**
      * @return an array of unique team numbers present in the history, prefixed with "Select team"
      */

@@ -3,10 +3,6 @@ package com.frc2135.android.frc_scout;
 import android.content.Context;
 import android.util.Log;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,12 +15,6 @@ public class Settings
 {
     private static final String TAG = "Settings";
     private static final String FILENAME = "settings.json";
-
-    // JSON Keys
-    private static final String KEY_PAST_SCOUTS = "pastScouts";
-    private static final String KEY_SCOUT_NAME_PREFIX = "scoutName"; // Legacy key prefix
-    private static final String KEY_TEAM_INDEX = "teamIndex";
-    private static final String KEY_SCORING_TABLE_SIDE = "scoringTableSide";
 
     private final List<String> m_pastScouts;
     private String m_teamIndexStr;
@@ -68,7 +58,7 @@ public class Settings
         try
         {
             Log.d(TAG, "Loading settings file");
-            Settings settings = serializer.loadScoutNames();
+            Settings settings = serializer.loadSettings();
             if (settings != null)
             {
                 Collections.addAll(m_pastScouts, settings.getPastScouts());
@@ -83,44 +73,15 @@ public class Settings
     }
 
     /**
-     * Constructs a Settings object from a JSONObject.
-     * Handles both current (JSONArray) and legacy (individual keys) formats for scout names.
-     *
-     * @param json the JSONObject containing settings data
+     * Default constructor for creating a new Settings object.
      */
-    public Settings(JSONObject json)
+    public Settings()
     {
-        Log.d(TAG, "Settings object being created from JSON data");
         m_pastScouts = new ArrayList<>();
-        try
-        {
-            if (json.has(KEY_PAST_SCOUTS))
-            {
-                JSONArray scoutsArray = json.getJSONArray(KEY_PAST_SCOUTS);
-                for (int i = 0; i < scoutsArray.length(); i++)
-                {
-                    m_pastScouts.add(scoutsArray.getString(i));
-                }
-            }
-            else
-            {
-                // Fallback to legacy format: scoutName0, scoutName1, ...
-                int i = 0;
-                while (json.has(KEY_SCOUT_NAME_PREFIX + i))
-                {
-                    m_pastScouts.add(json.getString(KEY_SCOUT_NAME_PREFIX + i));
-                    i++;
-                }
-            }
-
-            setTeamIndexStr(json.optString(KEY_TEAM_INDEX, "0 - None"));
-            int scoringTableSideVal = json.optInt(KEY_SCORING_TABLE_SIDE, 0);
-            setScoringTableSide(scoringTableSideVal == 1);
-        }
-        catch (Exception e)
-        {
-            Log.e(TAG, "Error loading settings from JSON: ", e);
-        }
+        m_teamIndexStr = "0 - None";
+        m_scoringTableSide = false;
+        m_mostRecentScoutName = "";
+        m_mostRecentMatchNumber = "";
     }
 
     /**
@@ -303,33 +264,9 @@ public class Settings
         return m_pastScouts.toArray(new String[0]);
     }
 
+    @SuppressWarnings("unused")
     public void clear()
     {
         m_pastScouts.clear();
-    }
-
-    /**
-     * Serializes settings to a JSONObject.
-     *
-     * @return the serialized JSONObject
-     * @throws JSONException if JSON creation fails
-     */
-    public JSONObject toJSON()
-            throws JSONException
-    {
-        JSONObject json = new JSONObject();
-
-        JSONArray scoutsArray = new JSONArray();
-        for (String name : m_pastScouts)
-        {
-            scoutsArray.put(name);
-        }
-        json.put(KEY_PAST_SCOUTS, scoutsArray);
-
-        json.put(KEY_TEAM_INDEX, m_teamIndexStr);
-        json.put(KEY_SCORING_TABLE_SIDE, m_scoringTableSide ? 1 : 0);
-
-        Log.d(TAG, "Serialized settings to JSON: " + json);
-        return json;
     }
 }

@@ -125,7 +125,8 @@ public class MatchListFragment extends Fragment
         binding.startMatch.setOnClickListener(view -> {
             try
             {
-                MatchData newMatch = new MatchData(requireContext());
+                MatchData newMatch = new MatchData();
+                newMatch.setEventCode(CurrentEventCode.get(requireContext()).getEventCode());
                 MatchListData.get(requireContext()).addMatch(newMatch);
 
                 Intent intent = new Intent(getActivity(), PreMatchActivity.class);

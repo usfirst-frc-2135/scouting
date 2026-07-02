@@ -126,6 +126,7 @@ public class TeamAliasesSerializer
      * @param eventCode the FRC event code
      * @return true if the file was successfully deleted, false otherwise
      */
+    @SuppressWarnings("UnusedReturnValue")
     public boolean deleteTeamAliases(String eventCode)
     {
         if (eventCode == null)

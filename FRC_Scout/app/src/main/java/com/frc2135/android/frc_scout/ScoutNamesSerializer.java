@@ -20,7 +20,8 @@ import java.nio.charset.StandardCharsets;
 /**
  * Serializer class for retrieving and saving scout names data to persistent storage.
  */
-public class ScoutNamesSerializer {
+public class ScoutNamesSerializer
+{
     private static final String TAG = "ScoutNamesSerializer";
     private static final String FILENAME_SUFFIX = "_scoutNames.json";
 
@@ -31,7 +32,8 @@ public class ScoutNamesSerializer {
      *
      * @param context the context used to retrieve the internal files directory
      */
-    public ScoutNamesSerializer(Context context) {
+    public ScoutNamesSerializer(Context context)
+    {
         m_dataDir = context.getFilesDir();
         Log.d(TAG, "Initialized with data directory: " + m_dataDir.getAbsolutePath());
     }
@@ -42,7 +44,8 @@ public class ScoutNamesSerializer {
      * @param eventCode the FRC event code
      * @return the filename
      */
-    private String getFilename(String eventCode) {
+    private String getFilename(String eventCode)
+    {
         return eventCode.trim().toLowerCase() + FILENAME_SUFFIX;
     }
 
@@ -53,8 +56,11 @@ public class ScoutNamesSerializer {
      * @param scoutData the JSONArray containing scout names
      * @throws IOException if an error occurs during file writing
      */
-    public void saveScoutNames(String eventCode, JSONArray scoutData) throws IOException {
-        if (eventCode == null || scoutData == null) {
+    public void saveScoutNames(String eventCode, JSONArray scoutData)
+            throws IOException
+    {
+        if (eventCode == null || scoutData == null)
+        {
             Log.w(TAG, "Attempted to save scout names with null eventCode or data");
             return;
         }
@@ -64,10 +70,13 @@ public class ScoutNamesSerializer {
         File file = new File(m_dataDir, filename);
 
         try (FileOutputStream out = new FileOutputStream(file);
-             Writer writer = new OutputStreamWriter(out, StandardCharsets.UTF_8)) {
+             Writer writer = new OutputStreamWriter(out, StandardCharsets.UTF_8))
+        {
             writer.write(scoutData.toString());
             Log.i(TAG, "Successfully saved scout names data to " + file.getAbsolutePath());
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             Log.e(TAG, "Error saving scout names file: " + filename, e);
             throw e;
         }
@@ -81,23 +90,29 @@ public class ScoutNamesSerializer {
      * @throws IOException   if an error occurs during file reading
      * @throws JSONException if the file content is not a valid JSON array
      */
-    public JSONArray loadScoutNames(String eventCode) throws IOException, JSONException {
-        if (eventCode == null) {
+    public JSONArray loadScoutNames(String eventCode)
+            throws IOException, JSONException
+    {
+        if (eventCode == null)
+        {
             return null;
         }
 
         String filename = getFilename(eventCode);
         File file = new File(m_dataDir, filename);
-        if (!file.exists()) {
+        if (!file.exists())
+        {
             Log.d(TAG, "Scout names file does not exist: " + filename);
             return null;
         }
 
         StringBuilder jsonString = new StringBuilder();
         try (FileInputStream in = new FileInputStream(file);
-             BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
+             BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8)))
+        {
             String line;
-            while ((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) != null)
+            {
                 jsonString.append(line);
             }
         }
@@ -111,18 +126,25 @@ public class ScoutNamesSerializer {
      * @param eventCode the FRC event code
      * @return true if the file was successfully deleted, false otherwise
      */
-    public boolean deleteScoutNames(String eventCode) {
-        if (eventCode == null) {
+    @SuppressWarnings("UnusedReturnValue")
+    public boolean deleteScoutNames(String eventCode)
+    {
+        if (eventCode == null)
+        {
             return false;
         }
 
         String filename = getFilename(eventCode);
         File file = new File(m_dataDir, filename);
-        if (file.exists()) {
+        if (file.exists())
+        {
             boolean deleted = file.delete();
-            if (deleted) {
+            if (deleted)
+            {
                 Log.i(TAG, "Successfully deleted scout names file: " + filename);
-            } else {
+            }
+            else
+            {
                 Log.w(TAG, "Failed to delete scout names file: " + filename);
             }
             return deleted;
