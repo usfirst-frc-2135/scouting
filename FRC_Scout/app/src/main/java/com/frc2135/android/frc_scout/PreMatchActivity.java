@@ -40,7 +40,7 @@ public class PreMatchActivity extends AppCompatActivity
     {
         Log.d(TAG, "onCreate");
         // Apply theme preference before super.onCreate to ensure the correct theme is applied early
-        Preferences.get(this).applyTheme();
+        Preferences.getInstance(this).applyTheme();
         super.onCreate(savedInstanceState);
 
         binding = PrematchActivityBinding.inflate(getLayoutInflater());
@@ -59,14 +59,14 @@ public class PreMatchActivity extends AppCompatActivity
     private void loadInitialData()
     {
         String matchId = getIntent().getStringExtra("match_ID");
-        m_matchData = MatchListData.get(getApplicationContext()).getMatch(matchId);
+        m_matchData = MatchListData.getInstance(getApplicationContext()).getMatch(matchId);
 
         String eventCode = (m_matchData != null) ? m_matchData.getEventCode().trim() : "";
         m_eventMatches = EventMatches.get(getApplicationContext(), eventCode, false);
         m_aliasNames = TeamAliases.get(getApplicationContext(), eventCode, false);
         m_scoutNames = ScoutNames.get(getApplicationContext(), eventCode, false);
 
-        m_settings = Settings.get(getApplicationContext());
+        m_settings = Settings.getInstance(getApplicationContext());
         m_teamIndexStr = (m_settings != null) ? m_settings.getTeamIndexStr() : "0 - None";
 
         String inEdit = getIntent().getStringExtra("in_edit");
@@ -81,8 +81,8 @@ public class PreMatchActivity extends AppCompatActivity
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)
         {
-            actionBar.setTitle("Pre-Match");
-            binding.toolbarTitle.setText(String.format("Team Index: %s", m_teamIndexStr));
+            actionBar.setTitle(R.string.pre_match);
+            binding.toolbarTitle.setText(getString(R.string.team_index_label, m_teamIndexStr));
         }
     }
 
@@ -238,7 +238,7 @@ public class PreMatchActivity extends AppCompatActivity
         binding.preMatchCancelButton.setOnClickListener(view -> {
             if (!m_isEditMode && m_matchData != null)
             {
-                MatchListData.get(getApplicationContext()).deleteMatch(m_matchData);
+                MatchListData.getInstance(getApplicationContext()).deleteMatch(m_matchData);
             }
             startActivity(new Intent(this, MatchListActivity.class));
             finish();
@@ -395,10 +395,11 @@ public class PreMatchActivity extends AppCompatActivity
         String matchNum = binding.matchNumberField.getText().toString().trim();
         String teamNum = binding.teamNumberField.getText().toString().trim();
 
-        binding.compNameLayout.setError(eventCode.isEmpty() ? "Required" : null);
-        binding.scoutNameLayout.setError(scoutName.isEmpty() ? "Required" : null);
-        binding.matchNumberLayout.setError(matchNum.isEmpty() ? "Required" : null);
-        binding.teamNumberLayout.setError(teamNum.isEmpty() ? "Required" : null);
+        String requiredError = getString(R.string.required);
+        binding.compNameLayout.setError(eventCode.isEmpty() ? requiredError : null);
+        binding.scoutNameLayout.setError(scoutName.isEmpty() ? requiredError : null);
+        binding.matchNumberLayout.setError(matchNum.isEmpty() ? requiredError : null);
+        binding.teamNumberLayout.setError(teamNum.isEmpty() ? requiredError : null);
 
         boolean isValid = !eventCode.isEmpty() && !scoutName.isEmpty() && !matchNum.isEmpty() && !teamNum.isEmpty();
 

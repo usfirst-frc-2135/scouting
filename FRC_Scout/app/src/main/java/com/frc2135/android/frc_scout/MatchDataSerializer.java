@@ -156,7 +156,7 @@ public class MatchDataSerializer
             throws JSONException, IOException
     {
         Log.d(TAG, "saveAllData()");
-        saveSettings(Settings.get(m_context));
+        saveSettings(Settings.getInstance(m_context));
         saveAllMatchData(matchHistory);
     }
 

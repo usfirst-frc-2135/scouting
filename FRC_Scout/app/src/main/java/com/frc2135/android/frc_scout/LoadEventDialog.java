@@ -75,7 +75,7 @@ public class LoadEventDialog extends DialogFragment
         // Pre-fill with current event code if available
         try
         {
-            CurrentEventCode currentEventCode = CurrentEventCode.get(requireContext());
+            CurrentEventCode currentEventCode = CurrentEventCode.getInstance(requireContext());
             if (currentEventCode != null && !currentEventCode.getEventCode().equals("EVTX"))
             {
                 binding.eventCodeField.setText(currentEventCode.getEventCode());
@@ -279,7 +279,7 @@ public class LoadEventDialog extends DialogFragment
         EventMatchesSerializer serializer = new EventMatchesSerializer(context);
 
         // Update current event code settings
-        CurrentEventCode currentEventCode = CurrentEventCode.get(context);
+        CurrentEventCode currentEventCode = CurrentEventCode.getInstance(context);
         currentEventCode.setEventCode(eventCode);
         serializer.saveCurrentEventCode(currentEventCode.toJSON());
 

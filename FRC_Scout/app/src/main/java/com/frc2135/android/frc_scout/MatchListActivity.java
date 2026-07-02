@@ -23,7 +23,7 @@ public class MatchListActivity extends AppCompatActivity
     {
         Log.d(TAG, "onCreate");
         // Apply theme preference before super.onCreate to ensure the correct theme is applied early
-        Preferences.get(this).applyTheme();
+        Preferences.getInstance(this).applyTheme();
         super.onCreate(savedInstanceState);
 
         // Use View Binding for layout inflation
@@ -57,8 +57,8 @@ public class MatchListActivity extends AppCompatActivity
 
     public void updateToolbarTeamIndex()
     {
-        String indexStr = Settings.get(this).getTeamIndexStr();
-        binding.toolbarTeamIndex.setText(String.format("Team Index %s", indexStr));
+        String indexStr = Settings.getInstance(this).getTeamIndexStr();
+        binding.toolbarTeamIndex.setText(String.format(getString(R.string.team_index_label), indexStr));
     }
 
     @Override

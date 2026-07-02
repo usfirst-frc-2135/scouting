@@ -21,7 +21,7 @@ public class Preferences
     private final android.content.SharedPreferences m_sharedPreferences;
     private final List<OnPreferenceChangeListener> m_listeners;
 
-    private static Preferences sPreferences;
+    private static volatile Preferences sPreferences;
 
     public interface OnPreferenceChangeListener
     {
@@ -42,12 +42,18 @@ public class Preferences
         m_listeners = new ArrayList<>();
     }
 
-    public static Preferences get(Context context)
+    public static Preferences getInstance(Context context)
     {
-        Log.d(TAG, "get()");
+        Log.d(TAG, "getInstance()");
         if (sPreferences == null)
         {
-            sPreferences = new Preferences(context);
+            synchronized (Preferences.class)
+            {
+                if (sPreferences == null)
+                {
+                    sPreferences = new Preferences(context);
+                }
+            }
         }
         return sPreferences;
     }
@@ -85,24 +91,35 @@ public class Preferences
     @SuppressWarnings("unused")
     public void addListener(OnPreferenceChangeListener listener)
     {
-        if (listener != null && !m_listeners.contains(listener))
+        synchronized (m_listeners)
         {
-            m_listeners.add(listener);
+            if (listener != null && !m_listeners.contains(listener))
+            {
+                m_listeners.add(listener);
+            }
         }
     }
 
     @SuppressWarnings("unused")
     public void removeListener(OnPreferenceChangeListener listener)
     {
-        if (listener != null)
+        synchronized (m_listeners)
         {
-            m_listeners.remove(listener);
+            if (listener != null)
+            {
+                m_listeners.remove(listener);
+            }
         }
     }
 
     private void notifyListeners()
     {
-        for (OnPreferenceChangeListener listener : m_listeners)
+        List<OnPreferenceChangeListener> listenersCopy;
+        synchronized (m_listeners)
+        {
+            listenersCopy = new ArrayList<>(m_listeners);
+        }
+        for (OnPreferenceChangeListener listener : listenersCopy)
         {
             listener.onDarkModeChanged(m_darkMode);
         }

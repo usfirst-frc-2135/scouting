@@ -45,7 +45,7 @@ public class AutonFragment extends Fragment
                 {
                     actionBar.setTitle("Autonomous");
 
-                    Settings settings = Settings.get(getContext());
+                    Settings settings = Settings.getInstance(getContext());
                     if (settings != null)
                     {
                         String color = settings.getTeamIndexColor();

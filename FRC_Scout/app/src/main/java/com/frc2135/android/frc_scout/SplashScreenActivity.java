@@ -8,10 +8,11 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.View;
 import android.view.WindowMetrics;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.frc2135.android.frc_scout.databinding.SplashScreenActivityBinding;
 
 /**
  * Entry point of the application. Displays a splash screen for a short duration
@@ -22,6 +23,7 @@ public class SplashScreenActivity extends AppCompatActivity
 {
     private static final String TAG = "SplashScreenActivity";
     private static final int SPLASH_DISPLAY_LENGTH = 1500; // Duration of pause in milliseconds
+    private SplashScreenActivityBinding binding;
 
     /**
      * Called when the activity is first created.
@@ -32,27 +34,19 @@ public class SplashScreenActivity extends AppCompatActivity
     {
         Log.d(TAG, "onCreate");
         // Apply theme preference before super.onCreate to ensure the correct theme is applied early
-        Preferences.get(this).applyTheme();
+        Preferences.getInstance(this).applyTheme();
         super.onCreate(icicle);
 
-        setContentView(R.layout.splash_screen_activity);
+        binding = SplashScreenActivityBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         // Simple fade-in animation
-        View container = findViewById(R.id.splash_container);
-        if (container != null)
-        {
-            container.setAlpha(0f);
-            container.animate()
-                    .alpha(1f)
-                    .setDuration(500)
-                    .withEndAction(this::startMainTransition)
-                    .start();
-        }
-        else
-        {
-            // Fallback: transition immediately if container is missing
-            startMainTransition();
-        }
+        binding.splashContainer.setAlpha(0f);
+        binding.splashContainer.animate()
+                .alpha(1f)
+                .setDuration(500)
+                .withEndAction(this::startMainTransition)
+                .start();
 
         logDisplayResolution();
     }
@@ -69,6 +63,7 @@ public class SplashScreenActivity extends AppCompatActivity
     {
         super.onDestroy();
         Log.d(TAG, "onDestroy");
+        binding = null;
     }
 
     /**

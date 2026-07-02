@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,7 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.frc2135.android.frc_scout.databinding.MatchListFragmentBinding;
-import com.google.android.material.card.MaterialCardView;
+import com.frc2135.android.frc_scout.databinding.MatchListItemBinding;
 
 import org.json.JSONException;
 
@@ -97,7 +96,7 @@ public class MatchListFragment extends Fragment
 
     private void refreshList()
     {
-        MatchListData data = MatchListData.get(requireContext());
+        MatchListData data = MatchListData.getInstance(requireContext());
         List<MatchData> allMatches = data.getMatches();
         m_displayedMatches = data.filterMatches(allMatches, m_teamFilter, m_eventFilter, m_scoutFilter, m_matchFilter);
         updateSorting(); // This will apply current sort criteria and update the adapter
@@ -128,8 +127,8 @@ public class MatchListFragment extends Fragment
             try
             {
                 MatchData newMatch = new MatchData();
-                newMatch.setEventCode(CurrentEventCode.get(requireContext()).getEventCode());
-                MatchListData.get(requireContext()).addMatch(newMatch);
+                newMatch.setEventCode(CurrentEventCode.getInstance(requireContext()).getEventCode());
+                MatchListData.getInstance(requireContext()).addMatch(newMatch);
 
                 Intent intent = new Intent(getActivity(), PreMatchActivity.class);
                 intent.putExtra("match_ID", newMatch.getMatchID());
@@ -177,7 +176,7 @@ public class MatchListFragment extends Fragment
     private void updateSorting()
     {
         String criteria = binding.sortOptions.getText().toString();
-        MatchListData data = MatchListData.get(requireContext());
+        MatchListData data = MatchListData.getInstance(requireContext());
 
         m_displayedMatches = data.sortMatches(m_displayedMatches, criteria, m_sortAscending);
         if (m_adapter != null)
@@ -209,7 +208,7 @@ public class MatchListFragment extends Fragment
                         CompoundButton darkSwitch = actionView.findViewById(R.id.dark_mode_switch_view);
                         if (darkSwitch != null)
                         {
-                            Preferences prefs = Preferences.get(requireContext());
+                            Preferences prefs = Preferences.getInstance(requireContext());
                             darkSwitch.setChecked(prefs.isDarkMode());
                             darkSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
                                 Log.d(TAG, "Theme toggle: " + isChecked);
@@ -257,26 +256,15 @@ public class MatchListFragment extends Fragment
 
     private class MatchHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
     {
-        @SuppressWarnings("FieldCanBeLocal")
-        private final MaterialCardView m_cardView;
-        private final TextView m_teamNumber;
-        private final TextView m_matchNumber;
-        private final TextView m_eventCode;
-        private final TextView m_scoutName;
-        private final TextView m_date;
+        private final MatchListItemBinding m_itemBinding;
         private MatchData m_match;
 
-        public MatchHolder(View itemView)
+        public MatchHolder(MatchListItemBinding itemBinding)
         {
-            super(itemView);
-            m_cardView = itemView.findViewById(R.id.match_card);
-            m_teamNumber = itemView.findViewById(R.id.match_team_number);
-            m_matchNumber = itemView.findViewById(R.id.match_number);
-            m_eventCode = itemView.findViewById(R.id.match_event_code);
-            m_scoutName = itemView.findViewById(R.id.match_scout_name);
-            m_date = itemView.findViewById(R.id.match_date);
-            m_cardView.setOnClickListener(this);
-            m_cardView.setOnCreateContextMenuListener((menu, v, menuInfo) -> {
+            super(itemBinding.getRoot());
+            m_itemBinding = itemBinding;
+            m_itemBinding.matchCard.setOnClickListener(this);
+            m_itemBinding.matchCard.setOnCreateContextMenuListener((menu, v, menuInfo) -> {
                 requireActivity().getMenuInflater().inflate(R.menu.match_item_context_menu, menu);
                 m_selectedMatch = m_match;
             });
@@ -285,11 +273,11 @@ public class MatchListFragment extends Fragment
         public void bind(MatchData match)
         {
             m_match = match;
-            m_teamNumber.setText(String.format("Team %s", match.getTeamNumber()));
-            m_matchNumber.setText(String.format("Match %s", match.getMatchNumber()));
-            m_eventCode.setText(match.getEventCode());
-            m_scoutName.setText(String.format("Scout: %s", match.getScoutName()));
-            m_date.setText(getFormattedDate(match.getTimestamp()));
+            m_itemBinding.matchTeamNumber.setText(String.format("Team %s", match.getTeamNumber()));
+            m_itemBinding.matchNumber.setText(String.format("Match %s", match.getMatchNumber()));
+            m_itemBinding.matchEventCode.setText(match.getEventCode());
+            m_itemBinding.matchScoutName.setText(String.format("Scout: %s", match.getScoutName()));
+            m_itemBinding.matchDate.setText(getFormattedDate(match.getTimestamp()));
         }
 
         @Override
@@ -319,8 +307,8 @@ public class MatchListFragment extends Fragment
         @Override
         public MatchHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
         {
-            View view = LayoutInflater.from(requireActivity()).inflate(R.layout.match_list_item, parent, false);
-            return new MatchHolder(view);
+            MatchListItemBinding itemBinding = MatchListItemBinding.inflate(LayoutInflater.from(requireActivity()), parent, false);
+            return new MatchHolder(itemBinding);
         }
 
         @Override
@@ -377,7 +365,7 @@ public class MatchListFragment extends Fragment
                     .setTitle("Delete Match")
                     .setMessage("Are you sure you want to delete this match? This action cannot be undone.")
                     .setPositiveButton("Delete", (dialog, which) -> {
-                        MatchListData.get(requireContext()).deleteMatch(m);
+                        MatchListData.getInstance(requireContext()).deleteMatch(m);
                         refreshList();
                         m_selectedMatch = null;
                         Toast.makeText(requireContext(), "Match deleted", Toast.LENGTH_SHORT).show();

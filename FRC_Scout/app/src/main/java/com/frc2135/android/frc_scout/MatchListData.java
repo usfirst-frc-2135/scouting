@@ -56,9 +56,9 @@ public class MatchListData
      * @param context the context used to initialize the instance
      * @return the singleton instance
      */
-    public static MatchListData get(Context context)
+    public static MatchListData getInstance(Context context)
     {
-        Log.d(TAG, "get()");
+        Log.d(TAG, "getInstance()");
         if (sMatchListData == null)
         {
             synchronized (MatchListData.class)
@@ -135,7 +135,7 @@ public class MatchListData
     {
         try
         {
-            m_serializer.saveSettings(Settings.get(m_appContext));
+            m_serializer.saveSettings(Settings.getInstance(m_appContext));
             return true;
         }
         catch (Exception e)

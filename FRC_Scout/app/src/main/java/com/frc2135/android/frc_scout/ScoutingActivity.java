@@ -27,7 +27,7 @@ public class ScoutingActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        Preferences.get(this).applyTheme();
+        Preferences.getInstance(this).applyTheme();
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
 
@@ -38,7 +38,7 @@ public class ScoutingActivity extends AppCompatActivity
 
         String matchId = getIntent().getStringExtra("match_ID");
         Log.d(TAG, "Loading match with ID: " + matchId);
-        m_matchData = MatchListData.get(getApplicationContext()).getMatch(matchId);
+        m_matchData = MatchListData.getInstance(getApplicationContext()).getMatch(matchId);
 
         updateActionBarTitle();
 

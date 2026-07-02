@@ -56,11 +56,11 @@ public class MatchFilterDialog extends DialogFragment
         restorePreviousFilters();
 
         com.google.android.material.dialog.MaterialAlertDialogBuilder builder = new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireActivity())
-                .setTitle("Filter Matches")
+                .setTitle(R.string.filter_matches)
                 .setView(binding.getRoot())
-                .setPositiveButton("Apply", (d, w) -> applyFilters())
+                .setPositiveButton(R.string.apply, (d, w) -> applyFilters())
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
-                .setNeutralButton("Clear All", null);
+                .setNeutralButton(R.string.clear_all, null);
 
         androidx.appcompat.app.AlertDialog dialog = builder.create();
         dialog.setOnShowListener(d -> dialog.getButton(Dialog.BUTTON_NEUTRAL).setOnClickListener(v -> {
@@ -113,7 +113,7 @@ public class MatchFilterDialog extends DialogFragment
      */
     private void setupFilters()
     {
-        MatchListData data = MatchListData.get(requireContext());
+        MatchListData data = MatchListData.getInstance(requireContext());
 
         // Event Code Filter
         ArrayAdapter<String> eventAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_dropdown_item_1line, data.listEventCodes());

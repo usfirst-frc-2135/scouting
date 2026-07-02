@@ -46,7 +46,7 @@ public class SetTeamIndexDialog extends DialogFragment
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         binding = SetTeamIndexDialogBinding.inflate(inflater);
 
-        m_settings = Settings.get(requireContext());
+        m_settings = Settings.getInstance(requireContext());
 
         setupDropdown();
 
@@ -101,7 +101,7 @@ public class SetTeamIndexDialog extends DialogFragment
         {
             Log.d(TAG, "Saving team index: " + indexToSave);
             m_settings.setTeamIndexStr(indexToSave);
-            MatchListData.get(requireContext()).saveScoutNames();
+            MatchListData.getInstance(requireContext()).saveScoutNames();
             getParentFragmentManager().setFragmentResult("team_index_changed", new Bundle());
         }
     }

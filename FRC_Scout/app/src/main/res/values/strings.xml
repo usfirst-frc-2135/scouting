@@ -32,7 +32,11 @@
     <string name="ascending">Ascending</string>
     <string name="descending">Descending</string>
 
-    <!--    Match List filter dropdown -->
+    <!--    Match List filter dialog -->
+    <string name="filter_matches">Filter Matches</string>
+    <string name="apply">Apply</string>
+    <string name="clear_all">Clear All</string>
+
     <string name="event_code">Event Code</string>
     <string name="match_number">Match Number</string>
     <string name="team_number">Team Number</string>
@@ -46,6 +50,10 @@
     <string name="delete_match">Delete Match</string>
 
     <!--    Pre-match screen -->
+    <!-- Pre-match activity -->
+    <string name="pre_match">Pre-Match</string>
+    <string name="team_index_label">Team Index %s</string>
+
     <string name="match_configuration">MATCH CONFIGURATION</string>
 
     <string name="event_code_helper">e.g. 2026casac</string>
@@ -64,10 +72,12 @@
     <string name="scout_name_helper">e.g. Jane D</string>
     <string name="scout_icon_desc">Scout icon</string>
 
-    <string name="please_fill_in">Please fill in the missing fields!</string>
-
+    <!-- Start Match button -->
     <string name="start_match">Start Match</string>
     <string name="cancel">Cancel</string>
+
+    <string name="please_fill_in">Please fill in the missing fields!</string>
+    <string name="required">Required</string>
 
     <!--    post-match submit strings -->
     <string name="qr_code_image">QR code image</string>

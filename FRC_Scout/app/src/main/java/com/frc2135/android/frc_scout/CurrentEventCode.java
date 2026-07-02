@@ -42,10 +42,10 @@ public class CurrentEventCode
      * @throws IOException   if reading the file fails
      * @throws JSONException if parsing the JSON fails
      */
-    public static CurrentEventCode get(Context context)
+    public static CurrentEventCode getInstance(Context context)
             throws IOException, JSONException
     {
-        Log.d(TAG, "get()");
+        Log.d(TAG, "getInstance()");
         if (sCurrentEventCode == null)
         {
             synchronized (CurrentEventCode.class)

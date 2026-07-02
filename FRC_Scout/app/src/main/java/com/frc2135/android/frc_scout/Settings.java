@@ -30,9 +30,9 @@ public class Settings
      * @param context the context used to initialize the instance
      * @return the singleton Settings instance
      */
-    public static Settings get(Context context)
+    public static Settings getInstance(Context context)
     {
-        Log.d(TAG, "get()");
+        Log.d(TAG, "getInstance()");
         if (sSettings == null)
         {
             synchronized (Settings.class)
