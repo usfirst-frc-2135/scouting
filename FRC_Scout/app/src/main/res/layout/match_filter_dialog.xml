@@ -86,6 +86,7 @@
             app:boxCornerRadiusTopStart="12dp">
 
             <AutoCompleteTextView
+                android:id="@+id/team_options"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/team_number"
@@ -96,6 +97,7 @@
 
         <!-- Scout Filter -->
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/scout_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -108,6 +110,7 @@
             app:boxCornerRadiusTopStart="12dp">
 
             <AutoCompleteTextView
+                android:id="@+id/scout_options"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/scout_name"
