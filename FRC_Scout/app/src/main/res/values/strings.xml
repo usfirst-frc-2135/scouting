@@ -17,7 +17,6 @@
     <string name="enter_event_code">Enter Event Code</string>
     <string name="load_team_aliases">Load Team Aliases</string>
     <string name="load_scout_names">Load Scout Names</string>
-    <string name="clear_scout_names">Clear Scout Names</string>
     <string name="about">About</string>
     <string name="title_match_list">Recorded Matches</string>
 
