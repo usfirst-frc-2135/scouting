@@ -9,7 +9,8 @@ import java.util.UUID;
  * Data model for a single scouted match.
  * Handles representation of match data and TSV encoding for QR codes.
  */
-public class MatchData {
+public class MatchData
+{
     private static final String TAG = "MatchData";
 
     public static final double M_JSON_FORMAT_VERSION = 26.1;
@@ -61,8 +62,10 @@ public class MatchData {
      * @param teamName the team identifier string
      * @return the numeric portion of the team identifier
      */
-    public static String stripTeamNumPrefix(String teamName) {
-        if (teamName == null) {
+    public static String stripTeamNumPrefix(String teamName)
+    {
+        if (teamName == null)
+        {
             return "";
         }
         return teamName.replaceAll("^\\D+", "");
@@ -71,7 +74,8 @@ public class MatchData {
     /**
      * Default constructor for creating a new match data record.
      */
-    public MatchData() {
+    public MatchData()
+    {
         m_matchID = UUID.randomUUID().toString();
         m_timestamp = Calendar.getInstance().getTime();
         m_version = M_JSON_FORMAT_VERSION;
@@ -113,299 +117,374 @@ public class MatchData {
         m_other4 = "0";
     }
 
-    public void setTimestamp(Date d) {
+    public void setTimestamp(Date d)
+    {
         m_timestamp = d;
     }
 
-    public Date getTimestamp() {
+    public Date getTimestamp()
+    {
         return m_timestamp;
     }
 
-    public String getMatchID() {
+    public String getMatchID()
+    {
         return m_matchID;
     }
 
-    public void setMatchID(String id) {
+    public void setMatchID(String id)
+    {
         m_matchID = id;
     }
 
-    public double getVersion() {
+    public double getVersion()
+    {
         return m_version;
     }
 
-    public void setVersion(double version) {
+    public void setVersion(double version)
+    {
         m_version = version;
     }
 
-    public void setEventCode(String code) {
+    public void setEventCode(String code)
+    {
         m_eventCode = code;
     }
 
-    public String getEventCode() {
+    public String getEventCode()
+    {
         return m_eventCode;
     }
 
-    public void setMatchNumber(String num) {
+    public void setMatchNumber(String num)
+    {
         m_matchNumber = num;
     }
 
-    public String getMatchNumber() {
+    public String getMatchNumber()
+    {
         return m_matchNumber;
     }
 
-    public void setTeamNumber(String num) {
+    public void setTeamNumber(String num)
+    {
         m_teamNumber = num;
     }
 
-    public String getTeamNumber() {
+    public String getTeamNumber()
+    {
         return m_teamNumber;
     }
 
-    public void setTeamAlias(String alias) {
+    public void setTeamAlias(String alias)
+    {
         m_teamAlias = alias;
     }
 
-    public String getTeamAlias() {
+    public String getTeamAlias()
+    {
         return m_teamAlias != null ? m_teamAlias : "";
     }
 
-    public void setScoutName(String name) {
-        if (name == null || name.trim().isEmpty()) {
+    public void setScoutName(String name)
+    {
+        if (name == null || name.trim().isEmpty())
+        {
             m_scoutName = "";
             return;
         }
         String trimmed = name.trim();
-        if (trimmed.length() == 1) {
+        if (trimmed.length() == 1)
+        {
             m_scoutName = trimmed.toUpperCase();
-        } else {
+        }
+        else
+        {
             m_scoutName = trimmed.substring(0, 1).toUpperCase() + trimmed.substring(1).toLowerCase();
         }
     }
 
-    public String getScoutName() {
+    public String getScoutName()
+    {
         return m_scoutName;
     }
 
     // Auton accessors
-    public void setAutonHopper(int val) {
+    public void setAutonHopper(int val)
+    {
         m_autonHopper = val;
     }
 
-    public int getAutonHopper() {
+    public int getAutonHopper()
+    {
         return m_autonHopper;
     }
 
-    public boolean getAutonPreload() {
+    public boolean getAutonPreload()
+    {
         return m_autonPreload;
     }
 
-    public void setAutonPreload(boolean val) {
+    public void setAutonPreload(boolean val)
+    {
         m_autonPreload = val;
     }
 
-    public boolean getAutonAzCheckbox() {
+    public boolean getAutonAzCheckbox()
+    {
         return m_autonAz;
     }
 
-    public void setAutonAzCheckbox(boolean val) {
+    public void setAutonAzCheckbox(boolean val)
+    {
         m_autonAz = val;
     }
 
-    public boolean getAutonDepotCheckbox() {
+    public boolean getAutonDepotCheckbox()
+    {
         return m_autonDepot;
     }
 
-    public void setAutonDepotCheckbox(boolean val) {
+    public void setAutonDepotCheckbox(boolean val)
+    {
         m_autonDepot = val;
     }
 
-    public boolean getAutonOutpostCheckbox() {
+    public boolean getAutonOutpostCheckbox()
+    {
         return m_autonOutpost;
     }
 
-    public void setAutonOutpostCheckbox(boolean val) {
+    public void setAutonOutpostCheckbox(boolean val)
+    {
         m_autonOutpost = val;
     }
 
-    public boolean getAutonNzCheckbox() {
+    public boolean getAutonNzCheckbox()
+    {
         return m_autonNz;
     }
 
-    public void setAutonNzCheckbox(boolean val) {
+    public void setAutonNzCheckbox(boolean val)
+    {
         m_autonNz = val;
     }
 
-    public void setAutonAccuracyRate(int val) {
+    public void setAutonAccuracyRate(int val)
+    {
         m_autonAccuracyRate = val;
     }
 
-    public int getAutonAccuracyRate() {
+    public int getAutonAccuracyRate()
+    {
         return m_autonAccuracyRate;
     }
 
-    public void setPreloadAccuracyLevel(int val) {
+    public void setPreloadAccuracyLevel(int val)
+    {
         m_autonPreloadAccRate = val;
     }
 
-    public int getPreloadAccuracyLevel() {
+    public int getPreloadAccuracyLevel()
+    {
         return m_autonPreloadAccRate;
     }
 
-    public void setAutonClimb(int val) {
+    public void setAutonClimb(int val)
+    {
         m_autonClimb = val;
     }
 
-    public int getAutonClimb() {
+    public int getAutonClimb()
+    {
         return m_autonClimb;
     }
 
     // Teleop accessors
-    public void setHoppersUsed(int val) {
+    public void setHoppersUsed(int val)
+    {
         m_hoppersUsed = val;
     }
 
-    public int getHoppersUsed() {
+    public int getHoppersUsed()
+    {
         return m_hoppersUsed;
     }
 
-    public void setAccuracyRate(int val) {
+    public void setAccuracyRate(int val)
+    {
         m_accuracyRate = val;
     }
 
-    public int getAccuracyRate() {
+    public int getAccuracyRate()
+    {
         return m_accuracyRate;
     }
 
-    public void setIntakeAndShoot(boolean val) {
+    public void setIntakeAndShoot(boolean val)
+    {
         m_intakeAndShoot = val;
     }
 
-    public boolean getIntakeAndShoot() {
+    public boolean getIntakeAndShoot()
+    {
         return m_intakeAndShoot;
     }
 
-    public void setShovelFuel(boolean val) {
+    public void setShovelFuel(boolean val)
+    {
         m_shovelFuel = val;
     }
 
-    public boolean getShovelFuel() {
+    public boolean getShovelFuel()
+    {
         return m_shovelFuel;
     }
 
-    public void setPassingRate(int val) {
+    public void setPassingRate(int val)
+    {
         m_passingRate = val;
     }
 
-    public int getPassingEffectivenessRate() {
+    public int getPassingEffectivenessRate()
+    {
         return m_passingRate;
     }
 
-    public void setDefenseRate(int val) {
+    public void setDefenseRate(int val)
+    {
         m_defenseRate = val;
     }
 
-    public int getDefenseRate() {
+    public int getDefenseRate()
+    {
         return m_defenseRate;
     }
 
-    public void setDriveAbility(int val) {
+    public void setDriveAbility(int val)
+    {
         m_drivingAbility = val;
     }
 
-    public int getDriverAbility() {
+    public int getDriverAbility()
+    {
         return m_drivingAbility;
     }
 
-    public void setPassNeutralZone(int val) {
+    public void setPassNeutralZone(int val)
+    {
         m_passedNz = val;
     }
 
-    public int getPassNeutralZone() {
+    public int getPassNeutralZone()
+    {
         return m_passedNz;
     }
 
-    public void setPassAllianceZone(int val) {
+    public void setPassAllianceZone(int val)
+    {
         m_passedAz = val;
     }
 
-    public int getPassAllianceZone() {
+    public int getPassAllianceZone()
+    {
         return m_passedAz;
     }
 
-    public void setTeleopPhoto(int val) {
+    public void setTeleopPhoto(int val)
+    {
         m_teleopPhoto = val;
     }
 
-    public int getTeleopPhoto() {
+    public int getTeleopPhoto()
+    {
         return m_teleopPhoto;
     }
 
     // Endgame accessors
-    public void setDiedValue(int val) {
+    public void setDiedValue(int val)
+    {
         m_diedValue = val;
     }
 
-    public int getDiedValue() {
+    public int getDiedValue()
+    {
         return m_diedValue;
     }
 
-    public void setStartClimb(int val) {
+    public void setStartClimb(int val)
+    {
         m_startClimb = val;
     }
 
-    public int getStartClimb() {
+    public int getStartClimb()
+    {
         return m_startClimb;
     }
 
-    public void setEndgameClimbLevel(int val) {
+    public void setEndgameClimbLevel(int val)
+    {
         m_endgameClimbLevel = val;
     }
 
-    public int getEndgameClimbLevel() {
+    public int getEndgameClimbLevel()
+    {
         return m_endgameClimbLevel;
     }
 
-    public void setEndgameClimbPos(int val) {
+    public void setEndgameClimbPos(int val)
+    {
         m_endgameClimbPos = val;
     }
 
-    public int getEndgameClimbPos() {
+    public int getEndgameClimbPos()
+    {
         return m_endgameClimbPos;
     }
 
-    public void setComment(String comment) {
+    public void setComment(String comment)
+    {
         m_comment = comment;
     }
 
-    public String getComment() {
+    public String getComment()
+    {
         return m_comment != null ? m_comment : "";
     }
 
-    public String getOther2() {
+    public String getOther2()
+    {
         return m_other2;
     }
 
-    public void setOther2(String value) {
+    public void setOther2(String value)
+    {
         m_other2 = value;
     }
 
-    public String getOther3() {
+    public String getOther3()
+    {
         return m_other3;
     }
 
-    public void setOther3(String value) {
+    public void setOther3(String value)
+    {
         m_other3 = value;
     }
 
-    public String getOther4() {
+    public String getOther4()
+    {
         return m_other4;
     }
 
-    public void setOther4(String value) {
+    public void setOther4(String value)
+    {
         m_other4 = value;
     }
 
-    public String getMatchFileName() {
+    public String getMatchFileName()
+    {
         return m_matchID + ".json";
     }
 
@@ -414,7 +493,8 @@ public class MatchData {
      *
      * @return the TSV encoded string
      */
-    public String encodeToTSV() {
+    public String encodeToTSV()
+    {
         String teamAliasClean = (m_teamAlias == null || m_teamAlias.isEmpty()) ? "-" : m_teamAlias;
         String commentClean = (m_comment == null || m_comment.trim().isEmpty()) ? "-" : m_comment.trim();
 

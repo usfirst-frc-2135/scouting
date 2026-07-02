@@ -7,14 +7,8 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Locale;
 
 /**
@@ -37,13 +31,16 @@ public class EventMatches
     private String m_eventCode;
     private JSONArray m_jsonData;
     private boolean m_bEventMatchesLoaded;
+    private final EventMatchesSerializer m_serializer;
+
     private static volatile EventMatches sEventMatches;
 
-    private EventMatches(String eventCode)
+    private EventMatches(Context context, String eventCode)
     {
         m_eventCode = eventCode;
         m_bEventMatchesLoaded = false;
         m_jsonData = null;
+        m_serializer = new EventMatchesSerializer(context);
     }
 
     /**
@@ -64,7 +61,7 @@ public class EventMatches
                 if (sEventMatches == null)
                 {
                     Log.d(TAG, "Creating new sEventMatches for eventCode: " + eventCode);
-                    sEventMatches = new EventMatches(eventCode);
+                    sEventMatches = new EventMatches(context, eventCode);
                     sEventMatches.readEventMatchesJSON(context, true);
                 }
             }
@@ -126,22 +123,13 @@ public class EventMatches
             return;
         }
 
-        String filename = m_eventCode.trim().toLowerCase(Locale.US) + "_matches.json";
-        File file = new File(context.getFilesDir(), filename);
-        Log.d(TAG, "Reading matches JSON from: " + file.getAbsolutePath());
+        Log.d(TAG, "Reading matches JSON for: " + m_eventCode);
 
-        if (file.exists())
+        try
         {
-            try (InputStream in = context.openFileInput(filename);
-                 BufferedReader reader = new BufferedReader(new InputStreamReader(in)))
+            m_jsonData = m_serializer.loadEventMatches(m_eventCode);
+            if (m_jsonData != null)
             {
-                StringBuilder jsonString = new StringBuilder();
-                for (String line = reader.readLine(); line != null; line = reader.readLine())
-                {
-                    jsonString.append(line);
-                }
-
-                m_jsonData = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
                 m_bEventMatchesLoaded = true;
 
                 String msg = "Successfully loaded " + m_eventCode + " matches";
@@ -151,18 +139,15 @@ public class EventMatches
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
             }
-            catch (FileNotFoundException e)
+            else if (!bSilent)
             {
-                handleError(context, "Matches file not found: " + filename, bSilent, e);
-            }
-            catch (JSONException | IOException e)
-            {
-                handleError(context, "Failed to parse match data for: " + m_eventCode, bSilent, e);
+                Log.e(TAG, "Matches file not found for event: " + m_eventCode);
+                Toast.makeText(context, "Matches file not found", Toast.LENGTH_SHORT).show();
             }
         }
-        else
+        catch (JSONException | IOException e)
         {
-            Log.d(TAG, "Matches file does not exist: " + filename);
+            handleError(context, "Failed to parse match data for: " + m_eventCode, bSilent, e);
         }
     }
 

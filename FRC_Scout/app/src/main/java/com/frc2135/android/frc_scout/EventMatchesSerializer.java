@@ -69,6 +69,41 @@ public class EventMatchesSerializer
     }
 
     /**
+     * Loads the event matches data for a specific event.
+     *
+     * @param eventCode the TBA event code
+     * @return the loaded JSONArray, or null if the file doesn't exist
+     * @throws IOException   if reading the file fails
+     * @throws JSONException if parsing the JSON data fails
+     */
+    public JSONArray loadEventMatches(String eventCode)
+            throws IOException, JSONException
+    {
+        if (eventCode == null || eventCode.trim().isEmpty())
+        {
+            return null;
+        }
+
+        String filename = getEventFileName(eventCode);
+        File file = new File(m_dataDir, filename);
+        if (!file.exists())
+        {
+            Log.d(TAG, "Matches file does not exist: " + filename);
+            return null;
+        }
+
+        Log.d(TAG, "Reading matches JSON from: " + file.getAbsolutePath());
+        String jsonString = readStringFromFile(file);
+
+        if (jsonString.isEmpty())
+        {
+            return null;
+        }
+
+        return (JSONArray) new JSONTokener(jsonString).nextValue();
+    }
+
+    /**
      * Deletes the event match data for a specific event from local storage.
      * If eventCode is null or empty, deletes all event match files.
      *

@@ -47,7 +47,7 @@ public class LoadTeamAliasesDialog extends DialogFragment
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         binding = LoadEventDialogBinding.inflate(inflater);
-        
+
         AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle("Load Team Aliases")
                 .setView(binding.getRoot())

@@ -155,12 +155,16 @@ public class PreMatchActivity extends AppCompatActivity
 
         // Scout Name AutoComplete setup
         List<String> scoutNames = new ArrayList<>();
-        if (m_scoutNames != null && m_scoutNames.isScoutNamesLoaded()) {
+        if (m_scoutNames != null && m_scoutNames.isScoutNamesLoaded())
+        {
             scoutNames.addAll(m_scoutNames.getScoutNames());
         }
-        if (m_settings != null) {
-            for (String name : m_settings.getPastScouts()) {
-                if (!scoutNames.contains(name)) {
+        if (m_settings != null)
+        {
+            for (String name : m_settings.getPastScouts())
+            {
+                if (!scoutNames.contains(name))
+                {
                     scoutNames.add(name);
                 }
             }

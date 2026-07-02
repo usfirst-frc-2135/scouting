@@ -280,7 +280,7 @@ public class MatchListData
             return matches;
         }).collect(Collectors.toList());
     }
-    
+
     /**
      * @return an array of unique team numbers present in the history, prefixed with "Select team"
      */
