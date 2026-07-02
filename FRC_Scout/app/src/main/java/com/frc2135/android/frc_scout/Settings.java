@@ -32,6 +32,7 @@ public class Settings
      */
     public static Settings get(Context context)
     {
+        Log.d(TAG, "get()");
         if (sSettings == null)
         {
             synchronized (Settings.class)
@@ -47,6 +48,7 @@ public class Settings
 
     private Settings(Context context)
     {
+        Log.d(TAG, "Settings constructor");
         m_pastScouts = new ArrayList<>();
         m_teamIndexStr = "0 - None";
         m_scoringTableSide = false;
@@ -77,6 +79,7 @@ public class Settings
      */
     public Settings()
     {
+        Log.d(TAG, "Settings default constructor");
         m_pastScouts = new ArrayList<>();
         m_teamIndexStr = "0 - None";
         m_scoringTableSide = false;

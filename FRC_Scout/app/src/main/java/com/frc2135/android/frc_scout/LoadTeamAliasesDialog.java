@@ -26,7 +26,7 @@ import java.util.Objects;
  */
 public class LoadTeamAliasesDialog extends DialogFragment
 {
-    private static final String TAG = "LoadAliasesDialog";
+    private static final String TAG = "LoadTeamAliasesDialog";
     private LoadEventDialogBinding binding;
 
     /**
@@ -43,7 +43,7 @@ public class LoadTeamAliasesDialog extends DialogFragment
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
     {
-        Log.i(TAG, "onCreateDialog called");
+        Log.d(TAG, "onCreateDialog called");
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         binding = LoadEventDialogBinding.inflate(inflater);
@@ -133,6 +133,13 @@ public class LoadTeamAliasesDialog extends DialogFragment
 
         // Update the singleton if it's already loaded the wrong event code
         TeamAliases.get(context, eventCode, true);
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        Log.d(TAG, "onResume");
     }
 
     @Override

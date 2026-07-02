@@ -290,6 +290,13 @@ public class LoadEventDialog extends DialogFragment
         EventMatches.get(context, eventCode, true);
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        Log.d(TAG, "onResume");
+    }
+
     /**
      * Cleans up the view binding when the dialog view is destroyed.
      */

@@ -29,7 +29,7 @@ public class ScoutingActivity extends AppCompatActivity
     {
         Preferences.get(this).applyTheme();
         super.onCreate(savedInstanceState);
-        Log.i(TAG, "ScoutingActivity created.");
+        Log.d(TAG, "onCreate");
 
         binding = ScoutingActivityTabbedBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -171,10 +171,25 @@ public class ScoutingActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onResume()
+    {
+        super.onResume();
+        Log.d(TAG, "onResume");
+    }
+
+    @Override
     protected void onPause()
     {
         super.onPause();
         Log.d(TAG, "onPause() - updating data");
         updateCurrentFragmentData();
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy");
+        binding = null;
     }
 }

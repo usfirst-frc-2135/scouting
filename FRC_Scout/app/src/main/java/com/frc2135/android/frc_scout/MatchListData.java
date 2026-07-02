@@ -25,6 +25,7 @@ public class MatchListData
 
     private MatchListData(Context appContext)
     {
+        Log.d(TAG, "MatchListData constructor");
         m_appContext = appContext.getApplicationContext();
         m_serializer = new MatchDataSerializer(m_appContext, FILENAME);
         m_totalMatchListData = loadInitialData();
@@ -57,6 +58,7 @@ public class MatchListData
      */
     public static MatchListData get(Context context)
     {
+        Log.d(TAG, "get()");
         if (sMatchListData == null)
         {
             synchronized (MatchListData.class)

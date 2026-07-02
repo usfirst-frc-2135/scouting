@@ -7,8 +7,6 @@
     android:background="@color/backgroundColor"
     android:orientation="vertical">
 
-
-
     <LinearLayout
         android:id="@+id/controls_container"
         android:layout_width="match_parent"
@@ -25,13 +23,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="@string/sort_by"
             android:layout_marginEnd="8dp">
 
             <AutoCompleteTextView
                 android:id="@+id/sort_options"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/sort_by"
                 android:inputType="none"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>

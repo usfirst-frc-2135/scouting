@@ -27,6 +27,7 @@ public class TeamAliases
 
     private TeamAliases(Context context, String eventCode)
     {
+        Log.d(TAG, "TeamAliases constructor");
         m_eventCode = eventCode;
         m_bAliasesDataLoaded = false;
         m_jsonData = null;
@@ -43,6 +44,7 @@ public class TeamAliases
      */
     public static TeamAliases get(Context context, String eventCode, boolean bForceReload)
     {
+        Log.d(TAG, "get()");
         synchronized (TeamAliases.class)
         {
             if (sTeamAliases == null)

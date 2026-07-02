@@ -1,28 +1,29 @@
 package com.frc2135.android.frc_scout;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
-/**
- * Singleton class for managing Volley {@link RequestQueue}.
- */
 public class VolleySingleton
 {
+    private static final String TAG = "VolleySingleton";
     private static volatile VolleySingleton sInstance;
     private RequestQueue mRequestQueue;
-    private static Context mContext;
- 
+    private final Context mContext;
+
     private VolleySingleton(Context context)
     {
+        Log.d(TAG, "VolleySingleton constructor");
         mContext = context.getApplicationContext();
         mRequestQueue = getRequestQueue();
     }
 
     public static VolleySingleton getInstance(Context context)
     {
+        Log.d(TAG, "getInstance()");
         if (sInstance == null)
         {
             synchronized (VolleySingleton.class)
@@ -40,7 +41,7 @@ public class VolleySingleton
     {
         if (mRequestQueue == null)
         {
-            // getApplicationContext() is key, it keeps you from leaking the
+            // getApplicationContext() is key, it keeps the VolleySingleton from leaking the
             // Activity or BroadcastReceiver if someone passes one in.
             mRequestQueue = Volley.newRequestQueue(mContext.getApplicationContext());
         }

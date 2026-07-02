@@ -65,7 +65,16 @@ public class MatchListActivity extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
+        Log.d(TAG, "onResume");
         updateToolbarTeamIndex();
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy");
+        binding = null;
     }
 
     /**

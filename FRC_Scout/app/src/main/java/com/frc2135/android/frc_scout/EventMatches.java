@@ -37,6 +37,7 @@ public class EventMatches
 
     private EventMatches(Context context, String eventCode)
     {
+        Log.d(TAG, "EventMatches constructor");
         m_eventCode = eventCode;
         m_bEventMatchesLoaded = false;
         m_jsonData = null;
@@ -54,6 +55,7 @@ public class EventMatches
      */
     public static EventMatches get(Context context, String eventCode, boolean bForceReload)
     {
+        Log.d(TAG, "get()");
         if (sEventMatches == null)
         {
             synchronized (EventMatches.class)

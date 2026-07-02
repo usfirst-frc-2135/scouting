@@ -26,7 +26,6 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/event_code"
             android:layout_marginBottom="16dp"
             app:startIconDrawable="@android:drawable/ic_menu_today"
             app:startIconContentDescription="@string/event_icon_desc"
@@ -40,8 +39,8 @@
                 android:id="@+id/event_options"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/event_code"
                 android:inputType="none"
-                android:contentDescription="@string/event_code_desc"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -52,7 +51,6 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/match_number"
             android:layout_marginBottom="16dp"
             app:startIconDrawable="@android:drawable/ic_menu_edit"
             app:startIconContentDescription="@string/match_icon_desc"
@@ -66,8 +64,8 @@
                 android:id="@+id/match_entry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/match_number"
                 android:inputType="text"
-                android:contentDescription="@string/match_number_desc"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -78,7 +76,6 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/team_number"
             android:layout_marginBottom="16dp"
             app:startIconDrawable="@android:drawable/ic_menu_info_details"
             app:startIconContentDescription="@string/team_icon_desc"
@@ -89,22 +86,19 @@
             app:boxCornerRadiusTopStart="12dp">
 
             <AutoCompleteTextView
-                android:id="@+id/team_options"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/team_number"
                 android:inputType="none"
-                android:contentDescription="@string/team_number_desc"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Scout Filter -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/scout_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/scout_name"
             app:startIconDrawable="@android:drawable/ic_menu_myplaces"
             app:startIconContentDescription="@string/scout_icon_desc"
             app:endIconMode="clear_text"
@@ -114,11 +108,10 @@
             app:boxCornerRadiusTopStart="12dp">
 
             <AutoCompleteTextView
-                android:id="@+id/scout_options"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/scout_name"
                 android:inputType="none"
-                android:contentDescription="@string/scout_name_desc"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp" />
         </com.google.android.material.textfield.TextInputLayout>

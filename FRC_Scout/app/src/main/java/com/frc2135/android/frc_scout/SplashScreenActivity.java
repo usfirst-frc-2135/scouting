@@ -57,6 +57,20 @@ public class SplashScreenActivity extends AppCompatActivity
         logDisplayResolution();
     }
 
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        Log.d(TAG, "onResume");
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy");
+    }
+
     /**
      * Schedules transition to MatchListActivity after the pause duration.
      */

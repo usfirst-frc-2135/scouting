@@ -9,66 +9,53 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 /**
- * Singleton class that maintains the currently active FRC event code information.
- * Information is persisted to and loaded from a JSON file.
+ * Singleton class for managing the current event code.
  */
 public class CurrentEventCode
 {
     private static final String TAG = "CurrentEventCode";
-
-    // JSON Keys
     private static final String KEY_EVENT_CODE = "eventCode";
 
-    // Data members
     private String m_eventCode;
 
     private static volatile CurrentEventCode sCurrentEventCode;
 
-    /**
-     * Default constructor used when no saved event code is found.
-     */
-    public CurrentEventCode()
+    private CurrentEventCode()
     {
-        m_eventCode = "EVTX";
-        Log.d(TAG, "Default constructor initialized: " + m_eventCode);
+        Log.d(TAG, "CurrentEventCode constructor");
+        m_eventCode = "";
     }
 
-    /**
-     * Constructs a CurrentEventCode object from a {@link JSONObject}.
-     *
-     * @param json the source JSONObject
-     */
     public CurrentEventCode(JSONObject json)
+            throws JSONException
     {
-        m_eventCode = json.optString(KEY_EVENT_CODE, "EVTX");
-        Log.d(TAG, "Initialized from JSON: " + m_eventCode);
+        Log.d(TAG, "CurrentEventCode constructor from JSON");
+        m_eventCode = json.getString(KEY_EVENT_CODE);
     }
 
     /**
      * Returns the singleton instance of CurrentEventCode.
-     * Loads saved data from disk if it hasn't been initialized yet.
+     * Loads from disk if not already loaded.
      *
-     * @param context the application context for file operations
+     * @param context the context used for file operations
      * @return the singleton CurrentEventCode instance
-     * @throws IOException   if reading the settings file fails
-     * @throws JSONException if parsing the settings JSON fails
+     * @throws IOException   if reading the file fails
+     * @throws JSONException if parsing the JSON fails
      */
     public static CurrentEventCode get(Context context)
             throws IOException, JSONException
     {
+        Log.d(TAG, "get()");
         if (sCurrentEventCode == null)
         {
             synchronized (CurrentEventCode.class)
             {
                 if (sCurrentEventCode == null)
                 {
-                    Log.d(TAG, "Loading CurrentEventCode singleton");
                     EventMatchesSerializer serializer = new EventMatchesSerializer(context.getApplicationContext());
                     sCurrentEventCode = serializer.loadCurrentEventCode();
-
                     if (sCurrentEventCode == null)
                     {
-                        Log.d(TAG, "No saved event codes found, using defaults");
                         sCurrentEventCode = new CurrentEventCode();
                     }
                 }
@@ -77,9 +64,9 @@ public class CurrentEventCode
         return sCurrentEventCode;
     }
 
-    public void setEventCode(String eventCode)
+    public void setEventCode(String code)
     {
-        m_eventCode = (eventCode != null) ? eventCode.trim() : "EVTX";
+        m_eventCode = code;
     }
 
     public String getEventCode()
@@ -88,10 +75,10 @@ public class CurrentEventCode
     }
 
     /**
-     * Serializes the current event code data to a {@link JSONObject}.
+     * Serializes the current event code to a JSONObject.
      *
      * @return the serialized JSONObject
-     * @throws JSONException if serialization fails
+     * @throws JSONException if JSON creation fails
      */
     public JSONObject toJSON()
             throws JSONException

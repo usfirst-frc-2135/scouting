@@ -28,7 +28,7 @@ import java.util.Objects;
  */
 public class LoadScoutNamesDialog extends DialogFragment
 {
-    private static final String TAG = "LoadScoutsDialog";
+    private static final String TAG = "LoadScoutNamesDialog";
     private LoadEventDialogBinding binding;
 
     /**
@@ -45,7 +45,7 @@ public class LoadScoutNamesDialog extends DialogFragment
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
     {
-        Log.i(TAG, "onCreateDialog called");
+        Log.d(TAG, "onCreateDialog called");
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         binding = LoadEventDialogBinding.inflate(inflater);
@@ -137,9 +137,17 @@ public class LoadScoutNamesDialog extends DialogFragment
     }
 
     @Override
+    public void onResume()
+    {
+        super.onResume();
+        Log.d(TAG, "onResume");
+    }
+
+    @Override
     public void onDestroyView()
     {
         super.onDestroyView();
+        Log.d(TAG, "onDestroyView");
         binding = null;
     }
 }

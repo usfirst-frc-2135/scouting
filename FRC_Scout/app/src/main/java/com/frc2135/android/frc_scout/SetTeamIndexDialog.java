@@ -110,6 +110,7 @@ public class SetTeamIndexDialog extends DialogFragment
     public void onResume()
     {
         super.onResume();
+        Log.d(TAG, "onResume");
         // Re-set adapter to ensure it displays correctly
         setupDropdown();
     }

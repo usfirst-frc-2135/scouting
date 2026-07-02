@@ -43,6 +43,7 @@ public class TeleopFragment extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
+        Log.d(TAG, "onCreateView");
         binding = TeleopFragmentBinding.inflate(inflater, parent, false);
         return binding.getRoot();
     }
@@ -511,6 +512,13 @@ public class TeleopFragment extends Fragment
         m_matchData.setPassAllianceZone(getPassAllianceZone());
         m_matchData.setShovelFuel(binding.shovelFuel.isChecked());
         m_matchData.setDriveAbility(getDriverAbility());
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        Log.d(TAG, "onResume");
     }
 
     @Override

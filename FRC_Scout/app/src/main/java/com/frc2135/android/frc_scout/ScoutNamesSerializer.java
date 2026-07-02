@@ -34,6 +34,7 @@ public class ScoutNamesSerializer
      */
     public ScoutNamesSerializer(Context context)
     {
+        Log.d(TAG, "ScoutNamesSerializer constructor");
         m_dataDir = context.getFilesDir();
         Log.d(TAG, "Initialized with data directory: " + m_dataDir.getAbsolutePath());
     }

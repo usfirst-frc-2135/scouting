@@ -34,6 +34,7 @@ public class TeamAliasesSerializer
      */
     public TeamAliasesSerializer(Context context)
     {
+        Log.d(TAG, "TeamAliasesSerializer constructor");
         m_dataDir = context.getFilesDir();
         Log.d(TAG, "Initialized with data directory: " + m_dataDir.getAbsolutePath());
     }

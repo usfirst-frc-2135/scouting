@@ -1,5 +1,6 @@
 package com.frc2135.android.frc_scout;
 
+import android.util.Log;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -76,6 +77,7 @@ public class MatchData
      */
     public MatchData()
     {
+        Log.d(TAG, "MatchData constructor");
         m_matchID = UUID.randomUUID().toString();
         m_timestamp = Calendar.getInstance().getTime();
         m_version = M_JSON_FORMAT_VERSION;

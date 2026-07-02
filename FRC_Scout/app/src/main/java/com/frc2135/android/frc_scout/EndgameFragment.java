@@ -42,6 +42,7 @@ public class EndgameFragment extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
+        Log.d(TAG, "onCreateView");
         binding = EndgameFragmentBinding.inflate(inflater, parent, false);
         return binding.getRoot();
     }
@@ -378,6 +379,13 @@ public class EndgameFragment extends Fragment
     {
         binding.navToMenuButton.setEnabled(bEnable);
         binding.navToMenuButtonDisabled.setVisibility(bEnable ? View.INVISIBLE : View.VISIBLE);
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        Log.d(TAG, "onResume");
     }
 
     @Override

@@ -407,9 +407,17 @@ public class PreMatchActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onResume()
+    {
+        super.onResume();
+        Log.d(TAG, "onResume");
+    }
+
+    @Override
     protected void onDestroy()
     {
         super.onDestroy();
+        Log.d(TAG, "onDestroy");
         binding = null;
     }
 }

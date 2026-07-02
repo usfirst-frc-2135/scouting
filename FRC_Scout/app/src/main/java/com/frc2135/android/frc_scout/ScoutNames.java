@@ -28,6 +28,7 @@ public class ScoutNames
 
     private ScoutNames(Context context, String eventCode)
     {
+        Log.d(TAG, "ScoutNames constructor");
         m_eventCode = eventCode;
         m_bScoutNamesLoaded = false;
         m_scoutNames = new ArrayList<>();
@@ -44,6 +45,7 @@ public class ScoutNames
      */
     public static ScoutNames get(Context context, String eventCode, boolean bForceReload)
     {
+        Log.d(TAG, "get()");
         synchronized (ScoutNames.class)
         {
             if (sScoutNames == null)
@@ -69,6 +71,7 @@ public class ScoutNames
     @SuppressWarnings("unused")
     public static void clear()
     {
+        Log.d(TAG, "clear()");
         sScoutNames = null;
     }
 

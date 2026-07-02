@@ -183,9 +183,17 @@ public class MatchFilterDialog extends DialogFragment
     }
 
     @Override
+    public void onResume()
+    {
+        super.onResume();
+        Log.d(TAG, "onResume");
+    }
+
+    @Override
     public void onDestroyView()
     {
         super.onDestroyView();
+        Log.d(TAG, "onDestroyView");
         binding = null;
     }
 }

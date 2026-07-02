@@ -90,6 +90,7 @@ public class MatchDataSerializer
 
     public MatchDataSerializer(Context context, String settingsFileName)
     {
+        Log.d(TAG, "MatchDataSerializer constructor");
         m_context = context.getApplicationContext();
         m_settingsFileName = settingsFileName;
         m_dataDir = m_context.getFilesDir();
@@ -116,6 +117,7 @@ public class MatchDataSerializer
     public void saveMatchData(MatchData matchData)
             throws JSONException, IOException
     {
+        Log.d(TAG, "saveMatchData()");
         if (matchData == null)
         {
             return;
@@ -138,6 +140,7 @@ public class MatchDataSerializer
     public void saveAllMatchData(List<MatchData> matchHistory)
             throws JSONException, IOException
     {
+        Log.d(TAG, "saveAllMatchData()");
         if (matchHistory == null)
         {
             return;
@@ -152,12 +155,14 @@ public class MatchDataSerializer
     public void saveAllData(List<MatchData> matchHistory)
             throws JSONException, IOException
     {
+        Log.d(TAG, "saveAllData()");
         saveSettings(Settings.get(m_context));
         saveAllMatchData(matchHistory);
     }
 
     public ArrayList<MatchData> loadMatchData()
     {
+        Log.d(TAG, "loadMatchData()");
         ArrayList<MatchData> matchHistory = new ArrayList<>();
         Log.d(TAG, "Scanning for match data files");
 
@@ -190,6 +195,7 @@ public class MatchDataSerializer
     private MatchData loadSingleMatch(File file)
             throws IOException, JSONException
     {
+        Log.d(TAG, "loadSingleMatch()");
         StringBuilder jsonString = new StringBuilder();
         try (FileInputStream in = new FileInputStream(file);
              BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8)))
@@ -207,6 +213,7 @@ public class MatchDataSerializer
     public Settings loadSettings()
             throws IOException, JSONException
     {
+        Log.d(TAG, "loadSettings()");
         File file = new File(m_dataDir, m_settingsFileName);
         if (!file.exists())
         {
@@ -290,14 +297,16 @@ public class MatchDataSerializer
     {
         MatchData m = new MatchData();
 
+        // Remove old date format in 2027
         m.setMatchID(json.optString(JSON_KEY_MATCH_ID, m.getMatchID()));
         String dateStr = json.optString(JSON_KEY_TIMESTAMP, "");
         SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US);
-        SimpleDateFormat oldFormat = new SimpleDateFormat("MMM dd hh:mm:ss z yyyy", Locale.US);
+        SimpleDateFormat oldFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
 
         try
         {
-            if (dateStr.contains("T"))
+            if (dateStr.startsWith("2026") || dateStr.startsWith("2027") ||
+                    dateStr.startsWith("2028") || dateStr.startsWith("2029"))
             {
                 m.setTimestamp(isoFormat.parse(dateStr));
             }

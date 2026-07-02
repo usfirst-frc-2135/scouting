@@ -77,6 +77,7 @@ public class MatchListFragment extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
+        Log.d(TAG, "onCreateView");
         binding = MatchListFragmentBinding.inflate(inflater, parent, false);
 
         setupRecyclerView();
@@ -107,6 +108,7 @@ public class MatchListFragment extends Fragment
     public void onResume()
     {
         super.onResume();
+        Log.d(TAG, "onResume");
         // Ensure dropdown options are populated and correct
         ArrayAdapter<CharSequence> sortAdapter = new ArrayAdapter<>(requireContext(),
                 android.R.layout.simple_dropdown_item_1line, getResources().getTextArray(R.array.sort_criteria_array));
@@ -354,6 +356,7 @@ public class MatchListFragment extends Fragment
     public void onDestroyView()
     {
         super.onDestroyView();
+        Log.d(TAG, "onDestroyView");
         binding = null;
     }
 

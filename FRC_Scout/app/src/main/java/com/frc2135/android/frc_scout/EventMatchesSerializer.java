@@ -38,6 +38,7 @@ public class EventMatchesSerializer
      */
     public EventMatchesSerializer(Context context)
     {
+        Log.d(TAG, "EventMatchesSerializer constructor");
         m_dataDir = context.getApplicationContext().getFilesDir();
         Log.d(TAG, "Initialized with data directory: " + m_dataDir.getAbsolutePath());
     }
@@ -52,6 +53,7 @@ public class EventMatchesSerializer
     public void saveEventMatches(String eventCode, JSONArray eventMatches)
             throws IOException
     {
+        Log.d(TAG, "saveEventMatches()");
         if (eventCode == null || eventMatches == null)
         {
             return;
@@ -79,6 +81,7 @@ public class EventMatchesSerializer
     public JSONArray loadEventMatches(String eventCode)
             throws IOException, JSONException
     {
+        Log.d(TAG, "loadEventMatches()");
         if (eventCode == null || eventCode.trim().isEmpty())
         {
             return null;
@@ -112,6 +115,7 @@ public class EventMatchesSerializer
      */
     public int deleteEventMatches(String eventCode)
     {
+        Log.d(TAG, "deleteEventMatches()");
         File[] fileList;
         int deletedCount = 0;
 
@@ -169,6 +173,7 @@ public class EventMatchesSerializer
     public void saveCurrentEventCode(JSONObject eventMatchesJSON)
             throws IOException
     {
+        Log.d(TAG, "saveCurrentEventCode()");
         if (eventMatchesJSON == null)
         {
             return;
@@ -199,6 +204,7 @@ public class EventMatchesSerializer
     public CurrentEventCode loadCurrentEventCode()
             throws IOException, JSONException
     {
+        Log.d(TAG, "loadCurrentEventCode()");
         File file = new File(m_dataDir, CURRENT_EVENT_CODE_FILENAME);
         if (!file.exists())
         {

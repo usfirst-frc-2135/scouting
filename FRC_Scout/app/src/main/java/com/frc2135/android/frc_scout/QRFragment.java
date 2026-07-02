@@ -123,6 +123,13 @@ public class QRFragment extends DialogFragment
     }
 
     @Override
+    public void onResume()
+    {
+        super.onResume();
+        Log.d(TAG, "onResume");
+    }
+
+    @Override
     public void onDestroyView()
     {
         super.onDestroyView();

@@ -66,6 +66,7 @@ public class AutonFragment extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
+        Log.d(TAG, "onCreateView");
         binding = AutonFragmentBinding.inflate(inflater, parent, false);
 
         if (m_matchData != null)
@@ -314,6 +315,13 @@ public class AutonFragment extends Fragment
         m_matchData.setAutonAccuracyRate(getAutonAccuracyRate());
         m_matchData.setPreloadAccuracyLevel(getPreloadAccuracyLevel());
         m_matchData.setAutonClimb(getAutonClimb());
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        Log.d(TAG, "onResume");
     }
 
     @Override
