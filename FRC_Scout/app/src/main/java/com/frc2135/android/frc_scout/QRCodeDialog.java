@@ -24,23 +24,23 @@ import zxing.QRCodeEncoder;
 /**
  * Dialog fragment that generates and displays a QR code for match data.
  */
-public class QRDialog extends DialogFragment
+public class QRCodeDialog extends DialogFragment
 {
-    private static final String TAG = "QRFragment";
+    private static final String TAG = "QRCodeDialog";
     private static final String ARG_STATS = "stats";
     private static final String ARG_LABEL = "match_label";
 
     private QrFragmentBinding m_binding;
 
     /**
-     * Creates a new instance of QRFragment for the given match data.
+     * Creates a new instance of QRCodeDialog for the given match data.
      *
      * @param matchData the match data to encode into the QR code
-     * @return a new QRFragment instance
+     * @return a new QRCodeDialog instance
      */
-    public static QRDialog newInstance(MatchData matchData)
+    public static QRCodeDialog newInstance(MatchData matchData)
     {
-        QRDialog fragment = new QRDialog();
+        QRCodeDialog fragment = new QRCodeDialog();
         Bundle bundle = new Bundle();
 
         String label = String.format("%s-%s-%s-%s",

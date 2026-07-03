@@ -12,19 +12,19 @@ import java.util.stream.Collectors;
  * Singleton class for managing the collection of {@link MatchData}.
  * Handles loading, saving, sorting, and filtering of match records.
  */
-public class MatchListData
+public class ScoutedMatches
 {
-    private static final String TAG = "MatchListData";
+    private static final String TAG = "ScoutedMatches";
 
     private final List<MatchData> m_totalMatchListData;
     private final MatchDataSerializer m_serializer;
     private final Context m_appContext;
 
-    private static volatile MatchListData sMatchListData;
+    private static volatile ScoutedMatches sScoutedMatches;
 
-    private MatchListData(Context appContext)
+    private ScoutedMatches(Context appContext)
     {
-        Log.d(TAG, "MatchListData constructor");
+        Log.d(TAG, "ScoutedMatches constructor");
         m_appContext = appContext.getApplicationContext();
         m_serializer = new MatchDataSerializer(m_appContext);
         m_totalMatchListData = loadInitialData();
@@ -50,25 +50,25 @@ public class MatchListData
     }
 
     /**
-     * Returns the thread-safe singleton instance of MatchListData.
+     * Returns the thread-safe singleton instance of ScoutedMatchesL.
      *
      * @param context the context used to initialize the instance
      * @return the singleton instance
      */
-    public static MatchListData getInstance(Context context)
+    public static ScoutedMatches getInstance(Context context)
     {
         Log.d(TAG, "getInstance()");
-        if (sMatchListData == null)
+        if (sScoutedMatches == null)
         {
-            synchronized (MatchListData.class)
+            synchronized (ScoutedMatches.class)
             {
-                if (sMatchListData == null)
+                if (sScoutedMatches == null)
                 {
-                    sMatchListData = new MatchListData(context);
+                    sScoutedMatches = new ScoutedMatches(context);
                 }
             }
         }
-        return sMatchListData;
+        return sScoutedMatches;
     }
 
     /**

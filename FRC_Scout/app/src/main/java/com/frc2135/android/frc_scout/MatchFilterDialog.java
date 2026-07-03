@@ -113,7 +113,7 @@ public class MatchFilterDialog extends DialogFragment
      */
     private void setupFilters()
     {
-        MatchListData data = MatchListData.getInstance(requireContext());
+        ScoutedMatches data = ScoutedMatches.getInstance(requireContext());
 
         // Event Code Filter
         ArrayAdapter<String> eventAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_dropdown_item_1line, data.listEventCodes());

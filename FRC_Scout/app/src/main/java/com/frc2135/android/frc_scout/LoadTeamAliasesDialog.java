@@ -127,7 +127,7 @@ public class LoadTeamAliasesDialog extends DialogFragment
     private void saveAliases(String eventCode, org.json.JSONArray response, Context context)
             throws IOException
     {
-        TeamAliases teamAliases = TeamAliases.get(context, eventCode, true);
+        TeamAliases teamAliases = TeamAliases.getInstance(context, eventCode, true);
         teamAliases.deleteTeamAliases(eventCode);
         teamAliases.saveTeamAliases(eventCode, response);
     }

@@ -38,7 +38,7 @@ public class ScoutingActivity extends AppCompatActivity
 
         String matchId = getIntent().getStringExtra("match_ID");
         Log.d(TAG, "Loading match with ID: " + matchId);
-        m_matchData = MatchListData.getInstance(getApplicationContext()).getMatch(matchId);
+        m_matchData = ScoutedMatches.getInstance(getApplicationContext()).getMatch(matchId);
 
         updateActionBarTitle();
 

@@ -42,10 +42,10 @@ public class TeamAliases extends BaseJSONSerializer
      * @param context the context used for file operations
      * @return the singleton TeamAliases instance
      */
-    public static TeamAliases get(Context context)
+    public static TeamAliases getInstance(Context context)
     {
         String eventCode = Settings.getInstance(context).getEventCode();
-        return get(context, eventCode, false);
+        return getInstance(context, eventCode, false);
     }
 
     /**
@@ -56,9 +56,9 @@ public class TeamAliases extends BaseJSONSerializer
      * @param bForceReload whether to force a reload of the JSON data
      * @return the singleton TeamAliases instance
      */
-    public static TeamAliases get(Context context, String eventCode, boolean bForceReload)
+    public static TeamAliases getInstance(Context context, String eventCode, boolean bForceReload)
     {
-        Log.d(TAG, "get()");
+        Log.d(TAG, "getInstance()");
         synchronized (TeamAliases.class)
         {
             if (sTeamAliases == null)

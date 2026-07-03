@@ -128,7 +128,7 @@ public class LoadScoutNamesDialog extends DialogFragment
     private void saveScouts(String eventCode, JSONArray response, Context context)
             throws IOException
     {
-        ScoutNames scoutNames = ScoutNames.get(context, eventCode, true);
+        ScoutNames scoutNames = ScoutNames.getInstance(context, eventCode, true);
         scoutNames.deleteScoutNames(eventCode);
         scoutNames.saveScoutNames(eventCode, response);
     }

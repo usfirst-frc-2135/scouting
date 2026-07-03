@@ -106,8 +106,8 @@ public class LoadEventDialog extends DialogFragment
                     String eventCode = Objects.requireNonNull(m_binding.eventCodeField.getText()).toString().trim();
                     if (!eventCode.isEmpty())
                     {
-                        EventMatchesSerializer serializer = new EventMatchesSerializer(requireContext());
-                        if (serializer.deleteEventMatches(eventCode) > 0)
+                        EventMatches eventMatches = EventMatches.getInstance(requireContext(), eventCode, false);
+                        if (eventMatches.deleteEventMatches(eventCode) > 0)
                         {
                             Toast.makeText(requireContext(), "Cleared data for " + eventCode, Toast.LENGTH_SHORT).show();
                         }
@@ -267,18 +267,16 @@ public class LoadEventDialog extends DialogFragment
     private void saveEventMatches(Context context, String eventCode, JSONArray response)
             throws IOException
     {
-        EventMatchesSerializer serializer = new EventMatchesSerializer(context);
+        EventMatches eventMatches = EventMatches.getInstance(context, eventCode, true);
+        eventMatches.deleteEventMatches(eventCode);
+        eventMatches.saveEventMatches(eventCode, response);
 
         // Update current event code settings
         Settings settings = Settings.getInstance(context);
         settings.setEventCode(eventCode);
-        MatchListData.getInstance(context).saveScoutNames();
+        ScoutedMatches.getInstance(context).saveScoutNames();
 
-        // Save new event data
-        serializer.saveEventMatches(eventCode, response);
-
-        // Update the singleton
-        EventMatches.get(context, eventCode, true);
+        // The singleton was updated by EventMatches.getInstance() call above with bForceReload=true
     }
 
     @Override

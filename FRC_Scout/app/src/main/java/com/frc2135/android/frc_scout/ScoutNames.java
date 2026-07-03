@@ -42,10 +42,10 @@ public class ScoutNames extends BaseJSONSerializer
      * @param context the context used for file operations
      * @return the singleton ScoutNames instance
      */
-    public static ScoutNames get(Context context)
+    public static ScoutNames getInstance(Context context)
     {
         String eventCode = Settings.getInstance(context).getEventCode();
-        return get(context, eventCode, false);
+        return getInstance(context, eventCode, false);
     }
 
     /**
@@ -56,9 +56,9 @@ public class ScoutNames extends BaseJSONSerializer
      * @param bForceReload whether to force a reload of the JSON data
      * @return the singleton ScoutNames instance
      */
-    public static ScoutNames get(Context context, String eventCode, boolean bForceReload)
+    public static ScoutNames getInstance(Context context, String eventCode, boolean bForceReload)
     {
-        Log.d(TAG, "get()");
+        Log.d(TAG, "getInstance()");
         synchronized (ScoutNames.class)
         {
             if (sScoutNames == null)

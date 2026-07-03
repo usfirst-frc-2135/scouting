@@ -93,7 +93,7 @@ public class MatchListFragment extends Fragment
 
     private void refreshList()
     {
-        MatchListData data = MatchListData.getInstance(requireContext());
+        ScoutedMatches data = ScoutedMatches.getInstance(requireContext());
         List<MatchData> allMatches = data.getMatches();
         m_displayedMatches = data.filterMatches(allMatches, m_teamFilter, m_eventFilter, m_scoutFilter, m_matchFilter);
         updateSorting(); // This will apply current sort criteria and update the adapter
@@ -123,7 +123,7 @@ public class MatchListFragment extends Fragment
         m_binding.startMatch.setOnClickListener(view -> {
             MatchData newMatch = new MatchData();
             newMatch.setEventCode(Settings.getInstance(requireContext()).getEventCode());
-            MatchListData.getInstance(requireContext()).addMatch(newMatch);
+            ScoutedMatches.getInstance(requireContext()).addMatch(newMatch);
 
             Intent intent = new Intent(getActivity(), PreMatchActivity.class);
             intent.putExtra("match_ID", newMatch.getMatchID());
@@ -166,7 +166,7 @@ public class MatchListFragment extends Fragment
     private void updateSorting()
     {
         String criteria = m_binding.sortOptions.getText().toString();
-        MatchListData data = MatchListData.getInstance(requireContext());
+        ScoutedMatches data = ScoutedMatches.getInstance(requireContext());
 
         m_displayedMatches = data.sortMatches(m_displayedMatches, criteria, m_sortAscending);
         if (m_adapter != null)
@@ -273,7 +273,7 @@ public class MatchListFragment extends Fragment
         @Override
         public void onClick(View v)
         {
-            QRDialog.newInstance(m_match).show(requireActivity().getSupportFragmentManager(), QRTAG);
+            QRCodeDialog.newInstance(m_match).show(requireActivity().getSupportFragmentManager(), QRTAG);
         }
 
         @Override
@@ -355,7 +355,7 @@ public class MatchListFragment extends Fragment
                     .setTitle("Delete Match")
                     .setMessage("Are you sure you want to delete this match? This action cannot be undone.")
                     .setPositiveButton("Delete", (dialog, which) -> {
-                        MatchListData.getInstance(requireContext()).deleteMatch(m);
+                        ScoutedMatches.getInstance(requireContext()).deleteMatch(m);
                         refreshList();
                         m_selectedMatch = null;
                         Toast.makeText(requireContext(), "Match deleted", Toast.LENGTH_SHORT).show();

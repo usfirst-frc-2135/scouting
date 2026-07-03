@@ -108,7 +108,8 @@ public class Settings extends BaseJSONSerializer
      * @throws JSONException if configuration data serialization fails
      * @throws IOException   if writing the settings file fails
      */
-    public void saveSettings() throws JSONException, IOException
+    public void saveSettings()
+            throws JSONException, IOException
     {
         Log.d(TAG, "saveSettings()");
         JSONArray array = new JSONArray();
@@ -124,7 +125,8 @@ public class Settings extends BaseJSONSerializer
      * @throws IOException   if reading the file fails
      * @throws JSONException if parsing the JSON fails
      */
-    public void loadSettings() throws IOException, JSONException
+    public void loadSettings()
+            throws IOException, JSONException
     {
         Log.d(TAG, "loadSettings()");
         File file = new File(m_dataDir, FILENAME);
@@ -142,7 +144,8 @@ public class Settings extends BaseJSONSerializer
      * @param json the source JSONObject
      * @throws JSONException if parsing fails
      */
-    public void fromJSON(JSONObject json) throws JSONException
+    public void fromJSON(JSONObject json)
+            throws JSONException
     {
         m_eventCode = json.optString(KEY_EVENT_CODE, "");
 
@@ -177,7 +180,8 @@ public class Settings extends BaseJSONSerializer
      * @return the serialized JSONObject
      * @throws JSONException if JSON creation fails
      */
-    public JSONObject toJSON() throws JSONException
+    public JSONObject toJSON()
+            throws JSONException
     {
         JSONObject json = new JSONObject();
         json.put(KEY_EVENT_CODE, m_eventCode);
@@ -266,6 +270,7 @@ public class Settings extends BaseJSONSerializer
             }
         }
 
+        //noinspection SizeReplaceableByIsEmpty
         if (numStr.length() == 0)
         {
             return m_mostRecentMatchNumber;
@@ -359,11 +364,13 @@ public class Settings extends BaseJSONSerializer
         return "0 - None".equals(indexStr) || isValidTeamIndexNum(indexStr);
     }
 
+    @SuppressWarnings("unused")
     public boolean getScoringTableSide()
     {
         return m_scoringTableSide;
     }
 
+    @SuppressWarnings("unused")
     public void setScoringTableSide(boolean val)
     {
         m_scoringTableSide = val;
@@ -410,7 +417,7 @@ public class Settings extends BaseJSONSerializer
         }
 
         Log.d(TAG, "Loading scout names for event: " + eventCode);
-        ScoutNames scoutNames = ScoutNames.get(context, eventCode, forceReload);
+        ScoutNames scoutNames = ScoutNames.getInstance(context, eventCode, forceReload);
         m_eventScoutNames.clear();
         if (scoutNames != null && scoutNames.isScoutNamesLoaded())
         {
@@ -433,9 +440,10 @@ public class Settings extends BaseJSONSerializer
      * @param scoutData the JSONArray of scout names
      * @throws IOException if saving fails
      */
-    public void saveEventScoutNames(Context context, String eventCode, JSONArray scoutData) throws IOException
+    public void saveEventScoutNames(Context context, String eventCode, JSONArray scoutData)
+            throws IOException
     {
-        ScoutNames scoutNames = ScoutNames.get(context, eventCode, true);
+        ScoutNames scoutNames = ScoutNames.getInstance(context, eventCode, true);
         scoutNames.deleteScoutNames(eventCode);
         scoutNames.saveScoutNames(eventCode, scoutData);
         loadEventScoutNames(context, eventCode, true);

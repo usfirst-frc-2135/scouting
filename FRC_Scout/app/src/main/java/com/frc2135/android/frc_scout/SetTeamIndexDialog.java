@@ -101,7 +101,7 @@ public class SetTeamIndexDialog extends DialogFragment
         {
             Log.d(TAG, "Saving team index: " + indexToSave);
             m_settings.setTeamIndexStr(indexToSave);
-            MatchListData.getInstance(requireContext()).saveScoutNames();
+            ScoutedMatches.getInstance(requireContext()).saveScoutNames();
             getParentFragmentManager().setFragmentResult("team_index_changed", new Bundle());
         }
     }

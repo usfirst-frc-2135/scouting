@@ -103,7 +103,7 @@ public class EndgameFragment extends Fragment
             else
             {
                 FragmentManager fm = requireActivity().getSupportFragmentManager();
-                QRDialog dialog = QRDialog.newInstance(m_matchData);
+                QRCodeDialog dialog = QRCodeDialog.newInstance(m_matchData);
                 dialog.show(fm, QRTAG);
                 setupDoneButton(true);
             }
@@ -112,7 +112,7 @@ public class EndgameFragment extends Fragment
         m_binding.navToMenuButton.setOnClickListener(view -> {
             updateEndgameData();
             Log.d(TAG, "Saving latest match and scout names");
-            MatchListData matchHistory = MatchListData.getInstance(getActivity());
+            ScoutedMatches matchHistory = ScoutedMatches.getInstance(getActivity());
             if (!matchHistory.saveScoutNames())
             {
                 Log.e(TAG, "Failed to save scout names!");

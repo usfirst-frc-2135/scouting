@@ -58,12 +58,12 @@ public class PreMatchActivity extends AppCompatActivity
     private void loadInitialData()
     {
         String matchId = getIntent().getStringExtra("match_ID");
-        m_matchData = MatchListData.getInstance(getApplicationContext()).getMatch(matchId);
+        m_matchData = ScoutedMatches.getInstance(getApplicationContext()).getMatch(matchId);
 
         String eventCode = (m_matchData != null) ? m_matchData.getEventCode().trim() : "";
-        m_eventMatches = EventMatches.get(getApplicationContext(), eventCode, false);
-        m_aliasNames = TeamAliases.get(getApplicationContext());
-        m_scoutNames = ScoutNames.get(getApplicationContext());
+        m_eventMatches = EventMatches.getInstance(getApplicationContext(), eventCode, false);
+        m_aliasNames = TeamAliases.getInstance(getApplicationContext());
+        m_scoutNames = ScoutNames.getInstance(getApplicationContext());
 
         m_settings = Settings.getInstance(getApplicationContext());
         m_teamIndexStr = (m_settings != null) ? m_settings.getTeamIndexStr() : "0 - None";
@@ -223,7 +223,7 @@ public class PreMatchActivity extends AppCompatActivity
         m_binding.preMatchCancelButton.setOnClickListener(view -> {
             if (!m_isEditMode && m_matchData != null)
             {
-                MatchListData.getInstance(getApplicationContext()).deleteMatch(m_matchData);
+                ScoutedMatches.getInstance(getApplicationContext()).deleteMatch(m_matchData);
             }
             startActivity(new Intent(this, MatchListActivity.class));
             finish();
