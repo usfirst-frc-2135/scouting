@@ -15,7 +15,6 @@ import com.frc2135.android.frc_scout.databinding.PreMatchActivityBinding;
 
 import org.json.JSONException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -154,21 +153,7 @@ public class PreMatchActivity extends AppCompatActivity
         });
 
         // Scout Name AutoComplete setup
-        List<String> scoutNames = new ArrayList<>();
-        if (m_scoutNames != null && m_scoutNames.isScoutNamesLoaded())
-        {
-            scoutNames.addAll(m_scoutNames.getScoutNames());
-        }
-        if (m_settings != null)
-        {
-            for (String name : m_settings.getPastScouts())
-            {
-                if (!scoutNames.contains(name))
-                {
-                    scoutNames.add(name);
-                }
-            }
-        }
+        List<String> scoutNames = m_scoutNames.getAllScoutNames(this);
 
         if (!scoutNames.isEmpty())
         {

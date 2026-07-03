@@ -128,12 +128,9 @@ public class LoadScoutNamesDialog extends DialogFragment
     private void saveScouts(String eventCode, JSONArray response, Context context)
             throws IOException
     {
-        ScoutNamesSerializer serializer = new ScoutNamesSerializer(context);
-        serializer.deleteScoutNames(eventCode);
-        serializer.saveScoutNames(eventCode, response);
-
-        // Update the singleton if it's already loaded the wrong event code
-        ScoutNames.get(context, eventCode, true);
+        ScoutNames scoutNames = ScoutNames.get(context, eventCode, true);
+        scoutNames.deleteScoutNames(eventCode);
+        scoutNames.saveScoutNames(eventCode, response);
     }
 
     @Override
