@@ -6,18 +6,9 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +18,7 @@ import java.util.Locale;
  * Serializer class for managing match data and scout configuration persistence.
  * Handles individual match JSON files and the main settings configuration.
  */
-public class MatchDataSerializer
+public class MatchDataSerializer extends BaseJSONSerializer
 {
     private static final String TAG = "MatchDataSerializer";
 
@@ -87,15 +78,13 @@ public class MatchDataSerializer
 
     private final Context m_context;
     private final String m_settingsFileName;
-    private final File m_dataDir;
 
     public MatchDataSerializer(Context context, String settingsFileName)
     {
+        super(context);
         Log.d(TAG, "MatchDataSerializer constructor");
         m_context = context.getApplicationContext();
         m_settingsFileName = settingsFileName;
-        m_dataDir = m_context.getFilesDir();
-        Log.d(TAG, "Initialized with data directory: " + m_dataDir.getAbsolutePath());
     }
 
     public void saveSettings(Settings settings)
@@ -107,12 +96,7 @@ public class MatchDataSerializer
         array.put(serializeSettings(settings));
 
         File file = new File(m_dataDir, m_settingsFileName);
-        try (FileOutputStream out = new FileOutputStream(file);
-             Writer writer = new OutputStreamWriter(out, StandardCharsets.UTF_8))
-        {
-            writer.write(array.toString());
-            Log.i(TAG, "Successfully wrote settings file: " + m_settingsFileName);
-        }
+        saveJSONArray(file, array);
     }
 
     public void saveMatchData(MatchData matchData)
@@ -129,13 +113,7 @@ public class MatchDataSerializer
 
         String filename = matchData.getMatchFileName();
         File file = new File(m_dataDir, filename);
-
-        try (FileOutputStream out = new FileOutputStream(file);
-             Writer writer = new OutputStreamWriter(out, StandardCharsets.UTF_8))
-        {
-            writer.write(array.toString());
-            Log.i(TAG, "Successfully wrote match file: " + filename);
-        }
+        saveJSONArray(file, array);
     }
 
     public void saveAllMatchData(List<MatchData> matchHistory)
@@ -197,18 +175,12 @@ public class MatchDataSerializer
             throws IOException, JSONException
     {
         Log.d(TAG, "loadSingleMatch()");
-        StringBuilder jsonString = new StringBuilder();
-        try (FileInputStream in = new FileInputStream(file);
-             BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8)))
+        JSONArray array = loadJSONArray(file);
+        if (array == null || array.length() == 0)
         {
-            String line;
-            while ((line = reader.readLine()) != null)
-            {
-                jsonString.append(line);
-            }
-            JSONArray array = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
-            return deserializeMatchData(array.getJSONObject(0));
+            throw new JSONException("Empty or invalid match data array in file: " + file.getName());
         }
+        return deserializeMatchData(array.getJSONObject(0));
     }
 
     public Settings loadSettings()
@@ -216,32 +188,15 @@ public class MatchDataSerializer
     {
         Log.d(TAG, "loadSettings()");
         File file = new File(m_dataDir, m_settingsFileName);
-        if (!file.exists())
+        JSONArray array = loadJSONArray(file);
+        if (array == null || array.length() == 0)
         {
             return null;
         }
 
-        Log.d(TAG, "Loading settings from: " + m_settingsFileName);
-        StringBuilder jsonString = new StringBuilder();
-
-        try (FileInputStream in = new FileInputStream(file);
-             BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8)))
-        {
-            String line;
-            while ((line = reader.readLine()) != null)
-            {
-                jsonString.append(line);
-            }
-
-            JSONArray array = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
-            Settings settings = deserializeSettings(array.getJSONObject(0));
-            Log.i(TAG, "Successfully loaded settings file");
-            return settings;
-        }
-        catch (FileNotFoundException e)
-        {
-            return null;
-        }
+        Settings settings = deserializeSettings(array.getJSONObject(0));
+        Log.i(TAG, "Successfully loaded settings file");
+        return settings;
     }
 
     public JSONObject serializeMatchData(MatchData m)

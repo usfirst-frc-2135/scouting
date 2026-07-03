@@ -5,29 +5,19 @@ import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONTokener;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 /**
  * Serializer class for managing event-related data persistence.
  * Handles match data for specific events and the current event code configuration.
  */
-public class EventMatchesSerializer
+public class EventMatchesSerializer extends BaseJSONSerializer
 {
     private static final String TAG = "EventMatchesSerializer";
     private static final String MATCHES_FILE_SUFFIX = "_matches.json";
-
-    private final File m_dataDir;
 
     /**
      * Constructs an EventMatchesSerializer.
@@ -36,9 +26,8 @@ public class EventMatchesSerializer
      */
     public EventMatchesSerializer(Context context)
     {
+        super(context);
         Log.d(TAG, "EventMatchesSerializer constructor");
-        m_dataDir = context.getApplicationContext().getFilesDir();
-        Log.d(TAG, "Initialized with data directory: " + m_dataDir.getAbsolutePath());
     }
 
     /**
@@ -87,21 +76,7 @@ public class EventMatchesSerializer
 
         String filename = getEventFileName(eventCode);
         File file = new File(m_dataDir, filename);
-        if (!file.exists())
-        {
-            Log.d(TAG, "Matches file does not exist: " + filename);
-            return null;
-        }
-
-        Log.d(TAG, "Reading matches JSON from: " + file.getAbsolutePath());
-        String jsonString = readStringFromFile(file);
-
-        if (jsonString.isEmpty())
-        {
-            return null;
-        }
-
-        return (JSONArray) new JSONTokener(jsonString).nextValue();
+        return loadJSONArray(file);
     }
 
     /**
@@ -160,37 +135,5 @@ public class EventMatchesSerializer
     private String getEventFileName(String eventCode)
     {
         return eventCode.trim().toLowerCase(Locale.US) + MATCHES_FILE_SUFFIX;
-    }
-
-    /**
-     * Helper to write a string to a file using UTF-8 encoding.
-     */
-    private void writeStringToFile(File file, String content)
-            throws IOException
-    {
-        try (FileOutputStream out = new FileOutputStream(file);
-             Writer writer = new OutputStreamWriter(out, StandardCharsets.UTF_8))
-        {
-            writer.write(content);
-        }
-    }
-
-    /**
-     * Helper to read a string from a file using UTF-8 encoding.
-     */
-    private String readStringFromFile(File file)
-            throws IOException
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-        try (FileInputStream in = new FileInputStream(file);
-             BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8)))
-        {
-            String line;
-            while ((line = reader.readLine()) != null)
-            {
-                stringBuilder.append(line);
-            }
-        }
-        return stringBuilder.toString();
     }
 }

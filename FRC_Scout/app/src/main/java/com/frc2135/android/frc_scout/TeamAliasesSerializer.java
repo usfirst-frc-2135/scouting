@@ -5,27 +5,17 @@ import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONTokener;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Serializer class for retrieving and saving team aliases data to persistent storage.
  */
-public class TeamAliasesSerializer
+public class TeamAliasesSerializer extends BaseJSONSerializer
 {
     private static final String TAG = "TeamAliasesSerializer";
     private static final String FILENAME_SUFFIX = "_teamAliases.json";
-
-    private final File m_dataDir;
 
     /**
      * Constructs a TeamAliasesSerializer.
@@ -34,9 +24,8 @@ public class TeamAliasesSerializer
      */
     public TeamAliasesSerializer(Context context)
     {
+        super(context);
         Log.d(TAG, "TeamAliasesSerializer constructor");
-        m_dataDir = context.getFilesDir();
-        Log.d(TAG, "Initialized with data directory: " + m_dataDir.getAbsolutePath());
     }
 
     /**
@@ -69,18 +58,7 @@ public class TeamAliasesSerializer
         String filename = getFilename(eventCode);
         Log.d(TAG, "Saving aliases info to: " + filename);
         File file = new File(m_dataDir, filename);
-
-        try (FileOutputStream out = new FileOutputStream(file);
-             Writer writer = new OutputStreamWriter(out, StandardCharsets.UTF_8))
-        {
-            writer.write(aliasData.toString());
-            Log.i(TAG, "Successfully saved aliases data to " + file.getAbsolutePath());
-        }
-        catch (IOException e)
-        {
-            Log.e(TAG, "Error saving aliases file: " + filename, e);
-            throw e;
-        }
+        saveJSONArray(file, aliasData);
     }
 
     /**
@@ -101,24 +79,7 @@ public class TeamAliasesSerializer
 
         String filename = getFilename(eventCode);
         File file = new File(m_dataDir, filename);
-        if (!file.exists())
-        {
-            Log.d(TAG, "Aliases file does not exist: " + filename);
-            return null;
-        }
-
-        StringBuilder jsonString = new StringBuilder();
-        try (FileInputStream in = new FileInputStream(file);
-             BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8)))
-        {
-            String line;
-            while ((line = reader.readLine()) != null)
-            {
-                jsonString.append(line);
-            }
-        }
-
-        return (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
+        return loadJSONArray(file);
     }
 
     /**
