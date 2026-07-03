@@ -7,19 +7,19 @@
         app:actionLayout="@layout/action_bar_switch"
         app:showAsAction="always" />
     <item
-        android:id="@+id/set_team_index"
+        android:id="@+id/set_team_index_dialog"
         android:title="@string/set_team_index" />
     <item
-        android:id="@+id/load_event_data_tba"
-        android:title="@string/load_event_data" />
+        android:id="@+id/load_tba_matches_dialog"
+        android:title="@string/load_tba_matches" />
     <item
-        android:id="@+id/load_aliases"
+        android:id="@+id/load_team_aliases_dialog"
         android:title="@string/load_team_aliases" />
     <item
-        android:id="@+id/load_scout_names"
+        android:id="@+id/load_scout_names_dialog"
         android:title="@string/load_scout_names" />
     <item
-        android:id="@+id/about_screen"
+        android:id="@+id/about_screen_dialog"
         android:title="@string/about" />
 
 </menu>

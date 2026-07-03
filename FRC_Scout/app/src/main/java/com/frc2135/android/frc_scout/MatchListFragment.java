@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.frc2135.android.frc_scout.databinding.ActionBarSwitchBinding;
 import com.frc2135.android.frc_scout.databinding.MatchListFragmentBinding;
 import com.frc2135.android.frc_scout.databinding.MatchListItemBinding;
 
@@ -44,10 +45,10 @@ public class MatchListFragment extends Fragment
     private MatchAdapter m_adapter;
     private MatchListFragmentBinding m_binding;
 
-    private String m_teamFilter;
     private String m_eventFilter;
-    private String m_scoutFilter;
     private String m_matchFilter;
+    private String m_teamFilter;
+    private String m_scoutFilter;
 
     private MatchData m_selectedMatch;
 
@@ -66,7 +67,7 @@ public class MatchListFragment extends Fragment
             m_matchFilter = result.getString("match");
             m_teamFilter = result.getString("team");
             m_scoutFilter = result.getString("scout");
-            refreshList();
+            refreshMatchList();
         });
     }
 
@@ -81,25 +82,20 @@ public class MatchListFragment extends Fragment
         setupSortSpinner();
         setupFilterButton();
 
-        loadInitialMatches();
+        refreshMatchList();
 
         return m_binding.getRoot();
-    }
-
-    private void loadInitialMatches()
-    {
-        refreshList();
     }
 
     /**
      * Refreshes the list of displayed matches based on current filters and sorting.
      */
-    private void refreshList()
+    private void refreshMatchList()
     {
         Log.d(TAG, "refreshList()");
-        ScoutedMatches data = ScoutedMatches.getInstance(requireContext());
-        List<MatchData> allMatches = data.getMatches();
-        m_displayedMatches = data.filterMatches(allMatches, m_teamFilter, m_eventFilter, m_scoutFilter, m_matchFilter);
+        ScoutedMatches scoutedMatches = ScoutedMatches.getInstance(requireContext());
+        List<MatchData> allMatches = scoutedMatches.getMatches();
+        m_displayedMatches = scoutedMatches.filterMatches(allMatches, m_eventFilter, m_matchFilter, m_teamFilter, m_scoutFilter);
         updateSorting(); // This will apply current sort criteria and update the adapter
         Log.d(TAG, "Refreshed list. Displaying " + m_displayedMatches.size() + " matches.");
     }
@@ -170,9 +166,9 @@ public class MatchListFragment extends Fragment
     private void updateSorting()
     {
         String criteria = m_binding.sortOptions.getText().toString();
-        ScoutedMatches data = ScoutedMatches.getInstance(requireContext());
+        ScoutedMatches scoutedMatches = ScoutedMatches.getInstance(requireContext());
 
-        m_displayedMatches = data.sortMatches(m_displayedMatches, criteria, m_sortAscending);
+        m_displayedMatches = scoutedMatches.sortMatches(m_displayedMatches, criteria, m_sortAscending);
         if (m_adapter != null)
         {
             m_adapter.updateData(m_displayedMatches);
@@ -181,7 +177,7 @@ public class MatchListFragment extends Fragment
 
     private void setupFilterButton()
     {
-        m_binding.filterButton.setOnClickListener(v -> MatchFilterDialog.newInstance(m_teamFilter, m_eventFilter, m_scoutFilter, m_matchFilter).show(requireActivity().getSupportFragmentManager(), "filter_dialog"));
+        m_binding.filterButton.setOnClickListener(v -> MatchFilterDialog.newInstance(m_eventFilter, m_matchFilter, m_teamFilter, m_scoutFilter).show(requireActivity().getSupportFragmentManager(), "filter_dialog"));
     }
 
     private void setupMenuProvider()
@@ -199,19 +195,17 @@ public class MatchListFragment extends Fragment
                     View actionView = darkModeItem.getActionView();
                     if (actionView != null)
                     {
-                        CompoundButton darkSwitch = actionView.findViewById(R.id.dark_mode_switch_view);
-                        if (darkSwitch != null)
-                        {
-                            Preferences prefs = Preferences.getInstance(requireContext());
-                            darkSwitch.setChecked(prefs.isDarkMode());
-                            darkSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                                Log.d(TAG, "Theme toggle: " + isChecked);
-                                if (isChecked != prefs.isDarkMode())
-                                {
-                                    prefs.setDarkMode(isChecked);
-                                }
-                            });
-                        }
+                        ActionBarSwitchBinding switchBinding = ActionBarSwitchBinding.bind(actionView);
+                        CompoundButton darkSwitch = switchBinding.darkModeSwitchView;
+                        Preferences prefs = Preferences.getInstance(requireContext());
+                        darkSwitch.setChecked(prefs.isDarkMode());
+                        darkSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                            Log.d(TAG, "Theme toggle: " + isChecked);
+                            if (isChecked != prefs.isDarkMode())
+                            {
+                                prefs.setDarkMode(isChecked);
+                            }
+                        });
                     }
                 }
             }
@@ -222,23 +216,23 @@ public class MatchListFragment extends Fragment
                 FragmentManager fm = requireActivity().getSupportFragmentManager();
                 int itemID = item.getItemId();
 
-                if (itemID == R.id.set_team_index)
+                if (itemID == R.id.set_team_index_dialog)
                 {
                     SetTeamIndexDialog.newInstance().show(getParentFragmentManager(), "set_team_index_dialog");
                 }
-                else if (itemID == R.id.load_event_data_tba)
+                else if (itemID == R.id.load_tba_matches_dialog)
                 {
                     LoadEventDialog.newInstance().show(fm, "load_event_dialog");
                 }
-                else if (itemID == R.id.load_aliases)
+                else if (itemID == R.id.load_team_aliases_dialog)
                 {
                     LoadTeamAliasesDialog.newInstance().show(fm, "load_aliases");
                 }
-                else if (itemID == R.id.load_scout_names)
+                else if (itemID == R.id.load_scout_names_dialog)
                 {
                     LoadScoutNamesDialog.newInstance().show(fm, "load_scouts");
                 }
-                else if (itemID == R.id.about_screen)
+                else if (itemID == R.id.about_screen_dialog)
                 {
                     startActivity(new Intent(getActivity(), SplashScreenActivity.class));
                     requireActivity().finish();
@@ -360,23 +354,23 @@ public class MatchListFragment extends Fragment
                     .setMessage("Are you sure you want to delete this match? This action cannot be undone.")
                     .setPositiveButton("Delete", (dialog, which) -> {
                         ScoutedMatches.getInstance(requireContext()).deleteMatch(m);
-                        refreshList();
+                        refreshMatchList();
                         m_selectedMatch = null;
                         Toast.makeText(requireContext(), "Match deleted", Toast.LENGTH_SHORT).show();
                     })
                     .setNegativeButton("Cancel", (dialog, which) -> m_selectedMatch = null)
                     .show();
         }
-        else if (itemID == R.id.edit_match_button)
+        else if (itemID == R.id.menu_item_edit_match)
         {
             Log.d(TAG, "Edit match button clicked");
 
-            Intent data = new Intent(getActivity(), PreMatchActivity.class);
-            data.putExtra("match_ID", Objects.requireNonNull(m).getMatchID());
-            data.putExtra("in_edit", "yes");
+            Intent preMatchIntent = new Intent(getActivity(), PreMatchActivity.class);
+            preMatchIntent.putExtra("match_ID", Objects.requireNonNull(m).getMatchID());
+            preMatchIntent.putExtra("in_edit", "yes");
             m_binding.matchRecyclerView.clearFocus();
 
-            startActivity(data);
+            startActivity(preMatchIntent);
             m_selectedMatch = null;
         }
         else

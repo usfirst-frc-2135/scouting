@@ -28,6 +28,8 @@ public class Settings extends BaseJSONSerializer
     private static final String KEY_SCOUT_NAME_PREFIX = "scoutName"; // Legacy key prefix
     private static final String KEY_TEAM_INDEX = "teamIndex";
     private static final String KEY_SCORING_TABLE_SIDE = "scoringTableSide";
+    private static final String KEY_MOST_RECENT_SCOUT_NAME = "mostRecentScoutName";
+    private static final String KEY_MOST_RECENT_MATCH_NUMBER = "mostRecentMatchNumber";
 
     private final List<String> m_pastScouts;
     private final List<String> m_eventScoutNames;
@@ -172,6 +174,8 @@ public class Settings extends BaseJSONSerializer
         m_teamIndexStr = json.optString(KEY_TEAM_INDEX, "0 - None");
         int scoringTableSideVal = json.optInt(KEY_SCORING_TABLE_SIDE, 0);
         m_scoringTableSide = (scoringTableSideVal == 1);
+        m_mostRecentScoutName = json.optString(KEY_MOST_RECENT_SCOUT_NAME, "");
+        m_mostRecentMatchNumber = json.optString(KEY_MOST_RECENT_MATCH_NUMBER, "");
     }
 
     /**
@@ -195,8 +199,25 @@ public class Settings extends BaseJSONSerializer
 
         json.put(KEY_TEAM_INDEX, m_teamIndexStr);
         json.put(KEY_SCORING_TABLE_SIDE, m_scoringTableSide ? 1 : 0);
+        json.put(KEY_MOST_RECENT_SCOUT_NAME, m_mostRecentScoutName);
+        json.put(KEY_MOST_RECENT_MATCH_NUMBER, m_mostRecentMatchNumber);
 
         return json;
+    }
+
+    /**
+     * Saves the settings to disk, swallowing and logging any exceptions.
+     */
+    private void saveSettingsSilent()
+    {
+        try
+        {
+            saveSettings();
+        }
+        catch (Exception e)
+        {
+            Log.e(TAG, "Failed to auto-save settings: ", e);
+        }
     }
 
     /**
@@ -220,6 +241,7 @@ public class Settings extends BaseJSONSerializer
             }
         }
         m_pastScouts.add(trimmedName);
+        saveSettingsSilent();
     }
 
     public String getMostRecentMatchNumber()
@@ -230,6 +252,7 @@ public class Settings extends BaseJSONSerializer
     public void setEventCode(String eventCode)
     {
         m_eventCode = (eventCode != null) ? eventCode : "";
+        saveSettingsSilent();
     }
 
     public String getEventCode()
@@ -240,6 +263,7 @@ public class Settings extends BaseJSONSerializer
     public void setMostRecentMatchNumber(String value)
     {
         m_mostRecentMatchNumber = (value != null) ? value : "";
+        saveSettingsSilent();
     }
 
     /**
@@ -351,6 +375,7 @@ public class Settings extends BaseJSONSerializer
     public void setTeamIndexStr(String indexStr)
     {
         m_teamIndexStr = (indexStr != null) ? indexStr : "0 - None";
+        saveSettingsSilent();
     }
 
     /**
@@ -384,6 +409,7 @@ public class Settings extends BaseJSONSerializer
     public void setScoringTableSide(boolean val)
     {
         m_scoringTableSide = val;
+        saveSettingsSilent();
     }
 
     public String getMostRecentScoutName()
@@ -399,6 +425,7 @@ public class Settings extends BaseJSONSerializer
     public void setMostRecentScoutName(String name)
     {
         m_mostRecentScoutName = (name != null) ? name : "";
+        saveSettingsSilent();
     }
 
     /**

@@ -1,5 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <!--    Splash Screen content -->
     <string name="app_name">FRC Scout 2026</string>
     <string name="our_team_name">Team 2135 Presentation Invasion</string>
     <string name="our_team_address">San Jose, CA</string>
@@ -7,23 +8,32 @@
     <string name="app_original_author">Created by Nandita Jayanthi, 2020</string>
     <string name="app_version">Version 2026–1.0</string>
 
-    <!--    Action menu toggle -->
+    <!--    Action bar content -->
+    <string name="title_match_list">Scouted Matches</string>
+    <string name="team_index">team index</string>
     <string name="dark_mode">Dark Mode</string>
 
-    <!--    Action menu items -->
+    <!--    Action bar menu items -->
     <string name="set_team_index">Set Team Index</string>
-    <string name="set_the_team_index_to_use">Set the team index to use (1–6, or None):</string>
-    <string name="load_event_data">Load TBA Matches</string>
-    <string name="enter_event_code">Enter Event Code</string>
+    <string name="load_tba_matches">Load TBA Matches</string>
     <string name="load_team_aliases">Load Team Aliases</string>
     <string name="load_scout_names">Load Scout Names</string>
     <string name="about">About</string>
-    <string name="title_match_list">Scouted Matches</string>
+
+    <string name="set_the_team_index_to_use">Set the team index to use (1–6, or None):</string>
+    <string name="team_index_none">0 - None</string>
+    <string name="team_index_1">1 - Red 1</string>
+    <string name="team_index_2">2 - Red 2</string>
+    <string name="team_index_3">3 - Red 3</string>
+    <string name="team_index_4">4 - Blue 1</string>
+    <string name="team_index_5">5 - Blue 2</string>
+    <string name="team_index_6">6 - Blue 3</string>
+    <string name="clear_index">Clear Index</string>
+    
+    <string name="enter_event_code">Enter Event Code</string>
 
     <!--    Match List screen -->
-    <string name="team_index">team index</string>
-
-    <string name="sort_by">Sort By:</string>
+    <string name="sort_by">Sort By</string>
     <string-array name="sort_criteria_array">
         <item>Date</item>
         <item>Match</item>
@@ -34,6 +44,8 @@
 
     <!--    Match List filter dialog -->
     <string name="filter_matches">Filter Matches</string>
+    <string name="filter_instructions">Select criteria to filter the list:</string>
+    <string name="filter_list">Filter</string>
     <string name="apply">Apply</string>
     <string name="clear_all">Clear All</string>
 
@@ -42,15 +54,11 @@
     <string name="team_number">Team Number</string>
     <string name="scout_name">Scout Name</string>
 
-    <string name="filter_list">Filter</string>
-    <string name="filter_instructions">Select criteria to filter the list:</string>
-
     <!--    Match List card dropdown -->
     <string name="edit_match">Edit match</string>
     <string name="delete_match">Delete Match</string>
 
     <!--    Pre-match screen -->
-    <!-- Pre-match activity -->
     <string name="pre_match">Pre-Match</string>
     <string name="team_index_label">Team Index %s</string>
 
@@ -91,7 +99,7 @@
     <string name="endgame">Endgame</string>
     <string name="alliance">Alliance</string>
 
-    <!--    game specific strings -->
+    <!--    Year-specific strings -->
     <string name="alliance_zone">Alliance Zone</string>
     <string name="neutral_zone">Neutral Zone</string>
     <string name="neutral">Neutral</string>

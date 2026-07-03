@@ -226,7 +226,8 @@ public class ScoutedMatches
                     return Integer.MAX_VALUE;
                 }
             });
-            default -> finalComparator = Comparator.comparing(MatchData::getTimestamp, Comparator.nullsLast(Comparator.naturalOrder()));
+            default ->
+                    finalComparator = Comparator.comparing(MatchData::getTimestamp, Comparator.nullsLast(Comparator.naturalOrder()));
         }
 
         if (!ascending)
@@ -248,7 +249,7 @@ public class ScoutedMatches
      * @param matchNum match number filter (exact match), or null
      * @return a new filtered list
      */
-    public List<MatchData> filterMatches(List<MatchData> list, String team, String event, String scout, String matchNum)
+    public List<MatchData> filterMatches(List<MatchData> list, String event, String matchNum, String team, String scout)
     {
         if (list == null)
         {
@@ -257,21 +258,21 @@ public class ScoutedMatches
 
         return list.stream().filter(m -> {
             boolean matches = true;
-            if (team != null && !team.isEmpty())
-            {
-                matches = Objects.equals(team, m.getTeamNumber());
-            }
-            if (matches && event != null && !event.isEmpty())
+            if (event != null && !event.isEmpty())
             {
                 matches = Objects.equals(event, m.getEventCode());
-            }
-            if (matches && scout != null && !scout.isEmpty())
-            {
-                matches = Objects.equals(scout, m.getScoutName());
             }
             if (matches && matchNum != null && !matchNum.isEmpty())
             {
                 matches = Objects.equals(matchNum, m.getMatchNumber());
+            }
+            if (matches && team != null && !team.isEmpty())
+            {
+                matches = Objects.equals(team, m.getTeamNumber());
+            }
+            if (matches && scout != null && !scout.isEmpty())
+            {
+                matches = Objects.equals(scout, m.getScoutName());
             }
             return matches;
         }).collect(Collectors.toList());

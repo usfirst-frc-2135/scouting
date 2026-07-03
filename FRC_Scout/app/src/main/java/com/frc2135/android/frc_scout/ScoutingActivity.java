@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.frc2135.android.frc_scout.databinding.ScoutingActivityTabbedBinding;
+import com.frc2135.android.frc_scout.databinding.ScoutingActivityBinding;
 
 /**
  * Activity for the main scouting process. It hosts three fragments: Autonomous, Teleoperated, and Endgame.
@@ -22,7 +22,7 @@ public class ScoutingActivity extends AppCompatActivity
 
     private MatchData m_matchData;
 
-    private ScoutingActivityTabbedBinding m_binding;
+    private ScoutingActivityBinding m_binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -31,7 +31,7 @@ public class ScoutingActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
 
-        m_binding = ScoutingActivityTabbedBinding.inflate(getLayoutInflater());
+        m_binding = ScoutingActivityBinding.inflate(getLayoutInflater());
         setContentView(m_binding.getRoot());
 
         setSupportActionBar(m_binding.toolbar);

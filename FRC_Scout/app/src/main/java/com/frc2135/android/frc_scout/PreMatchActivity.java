@@ -94,12 +94,12 @@ public class PreMatchActivity extends AppCompatActivity
 
         if (m_matchData != null)
         {
-            m_binding.eventCode.setText(m_matchData.getEventCode());
+            m_binding.pmEventCode.setText(m_matchData.getEventCode());
         }
 
         String scoutName = (m_matchData != null && !m_matchData.getScoutName().isEmpty()) ? m_matchData.getScoutName() :
                 (m_settings != null) ? m_settings.getMostRecentScoutName() : "";
-        m_binding.scoutName.setText(scoutName);
+        m_binding.scoutNameField.setText(scoutName);
 
         String matchNum = (m_matchData != null && !m_matchData.getMatchNumber().isEmpty()) ? m_matchData.getMatchNumber() :
                 (m_settings != null && !m_settings.getMostRecentMatchNumber().isEmpty()) ? m_settings.getNextExpectedMatchNumber() : "qm1";
@@ -118,7 +118,7 @@ public class PreMatchActivity extends AppCompatActivity
      */
     private void setupListeners()
     {
-        m_binding.eventCode.addTextChangedListener(new TextWatcher()
+        m_binding.pmEventCode.addTextChangedListener(new TextWatcher()
         {
             public void onTextChanged(CharSequence c, int start, int before, int count)
             {
@@ -130,12 +130,12 @@ public class PreMatchActivity extends AppCompatActivity
 
             public void afterTextChanged(Editable c)
             {
-                m_binding.compNameLayout.setError(null);
+                m_binding.pmEventCodeLayout.setError(null);
                 m_binding.errorMessagePm.setVisibility(View.GONE);
             }
         });
 
-        m_binding.scoutName.addTextChangedListener(new TextWatcher()
+        m_binding.scoutNameField.addTextChangedListener(new TextWatcher()
         {
             public void onTextChanged(CharSequence c, int start, int before, int count)
             {
@@ -158,12 +158,12 @@ public class PreMatchActivity extends AppCompatActivity
         if (!scoutNames.isEmpty())
         {
             ArrayAdapter<String> scoutAdapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, scoutNames);
-            m_binding.scoutName.setAdapter(scoutAdapter);
-            m_binding.scoutName.setThreshold(0);
-            m_binding.scoutName.setOnFocusChangeListener((v, hasFocus) -> {
+            m_binding.scoutNameField.setAdapter(scoutAdapter);
+            m_binding.scoutNameField.setThreshold(0);
+            m_binding.scoutNameField.setOnFocusChangeListener((v, hasFocus) -> {
                 if (hasFocus)
                 {
-                    m_binding.scoutName.showDropDown();
+                    m_binding.scoutNameField.showDropDown();
                 }
             });
         }
@@ -327,8 +327,8 @@ public class PreMatchActivity extends AppCompatActivity
             return;
         }
 
-        String scoutName = m_binding.scoutName.getText().toString().trim();
-        String eventCode = Objects.requireNonNull(m_binding.eventCode.getText()).toString().trim();
+        String scoutName = m_binding.scoutNameField.getText().toString().trim();
+        String eventCode = Objects.requireNonNull(m_binding.pmEventCode.getText()).toString().trim();
         String matchNum = m_binding.matchNumberField.getText().toString().trim().toLowerCase();
         String teamNumEntry = m_binding.teamNumberField.getText().toString().trim();
 
@@ -376,13 +376,13 @@ public class PreMatchActivity extends AppCompatActivity
      */
     private boolean checkValidData()
     {
-        String eventCode = Objects.requireNonNull(m_binding.eventCode.getText()).toString().trim();
-        String scoutName = m_binding.scoutName.getText().toString().trim();
+        String eventCode = Objects.requireNonNull(m_binding.pmEventCode.getText()).toString().trim();
+        String scoutName = m_binding.scoutNameField.getText().toString().trim();
         String matchNum = m_binding.matchNumberField.getText().toString().trim();
         String teamNum = m_binding.teamNumberField.getText().toString().trim();
 
         String requiredError = getString(R.string.required);
-        m_binding.compNameLayout.setError(eventCode.isEmpty() ? requiredError : null);
+        m_binding.pmEventCodeLayout.setError(eventCode.isEmpty() ? requiredError : null);
         m_binding.scoutNameLayout.setError(scoutName.isEmpty() ? requiredError : null);
         m_binding.matchNumberLayout.setError(matchNum.isEmpty() ? requiredError : null);
         m_binding.teamNumberLayout.setError(teamNum.isEmpty() ? requiredError : null);

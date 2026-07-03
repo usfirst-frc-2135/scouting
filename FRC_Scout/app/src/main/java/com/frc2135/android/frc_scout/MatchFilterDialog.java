@@ -31,7 +31,7 @@ public class MatchFilterDialog extends DialogFragment
      * @param match the currently filtered match number, or null
      * @return a new MatchFilterDialog instance
      */
-    public static MatchFilterDialog newInstance(String team, String event, String scout, String match)
+    public static MatchFilterDialog newInstance(String event, String match, String team, String scout)
     {
         MatchFilterDialog fragment = new MatchFilterDialog();
         Bundle args = new Bundle();
