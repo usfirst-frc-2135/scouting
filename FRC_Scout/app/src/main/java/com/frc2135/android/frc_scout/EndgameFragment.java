@@ -94,7 +94,7 @@ public class EndgameFragment extends Fragment
         m_binding.genQRDisabled.setVisibility(View.INVISIBLE);
         m_binding.genQR.setOnClickListener(view -> {
             updateEndgameData();
-            String validationMsg = validateEndgameData();
+            String validationMsg = m_matchData.validate();
             if (!validationMsg.isEmpty())
             {
                 Log.d(TAG, "Validation failed: " + validationMsg);
@@ -196,66 +196,6 @@ public class EndgameFragment extends Fragment
         {
             m_binding.diedGroup.check(id);
         }
-    }
-
-    private String validateEndgameData()
-    {
-        StringBuilder msg = new StringBuilder();
-
-        // Validation logic for teleop fields (stored in m_matchData)
-        int passNZ = m_matchData.getPassNeutralZone();
-        //noinspection ExtractMethodRecommender
-        int passAZ = m_matchData.getPassAllianceZone();
-        if (passNZ == 3 || passAZ == 3)
-        {
-            if (passNZ == 3 && passAZ == 3)
-            {
-                msg.append("Teleop: Passing From Neutral/Alliance Zone buttons must be set!\n");
-            }
-            else if (passNZ == 3)
-            {
-                msg.append("Teleop: Passing From Neutral Zone button must be set\n");
-            }
-            else
-            {
-                msg.append("Teleop: Passing From Alliance Zone button must be set\n");
-            }
-        }
-
-        // Validate climb selections
-        int sc = m_matchData.getStartClimb();
-        int cl = m_matchData.getEndgameClimbLevel();
-        int cp = m_matchData.getEndgameClimbPos();
-        if ((sc == 0 && (cl != 0 || cp != 0)) || (cl == 0 && sc != 0) || (cp == 0 && sc != 0))
-        {
-            msg.append("\nEndgame: Start Climb, Climb Level and Climb Position settings don't match!\n");
-        }
-
-        // Validate driver ability
-        if (m_matchData.getDriverAbility() == 6)
-        {
-            msg.append("\nTeleop: Driver ability not set!\n");
-        }
-
-        // Validate passing rate
-        int passRate = m_matchData.getPassingEffectivenessRate();
-        if (((passNZ == 1 || passAZ == 1) && passRate == 0) || (passRate == 5) || ((passNZ == 0 && passAZ == 0) && passRate > 0))
-        {
-            if ((passNZ == 1 || passAZ == 1) && passRate == 0)
-            {
-                msg.append("\nTeleop: Passed from zone set, Passing rate not set!\n");
-            }
-            else if (passRate == 5)
-            {
-                msg.append("\nTeleop: Passing rate not set!\n");
-            }
-            else
-            {
-                msg.append("\nTeleop: Passing rate set, Passed from zone not set!\n");
-            }
-        }
-
-        return msg.toString();
     }
 
     private int getDiedValue()

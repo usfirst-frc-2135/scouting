@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.frc2135.android.frc_scout.databinding.PrematchActivityBinding;
+import com.frc2135.android.frc_scout.databinding.PreMatchActivityBinding;
 
 import org.json.JSONException;
 
@@ -26,7 +26,7 @@ import java.util.Objects;
 public class PreMatchActivity extends AppCompatActivity
 {
     private static final String TAG = "PreMatchActivity";
-    private PrematchActivityBinding m_binding;
+    private PreMatchActivityBinding m_binding;
     private EventMatches m_eventMatches;
     private MatchData m_matchData;
     private TeamAliases m_aliasNames;
@@ -43,7 +43,7 @@ public class PreMatchActivity extends AppCompatActivity
         Preferences.getInstance(this).applyTheme();
         super.onCreate(savedInstanceState);
 
-        m_binding = PrematchActivityBinding.inflate(getLayoutInflater());
+        m_binding = PreMatchActivityBinding.inflate(getLayoutInflater());
         setContentView(m_binding.getRoot());
 
         setSupportActionBar(m_binding.toolbar);

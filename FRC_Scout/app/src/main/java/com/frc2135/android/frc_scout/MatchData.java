@@ -491,6 +491,66 @@ public class MatchData
     }
 
     /**
+     * Validates the match data.
+     *
+     * @return a validation message string, or empty if valid
+     */
+    public String validate()
+    {
+        StringBuilder msg = new StringBuilder();
+
+        // Teleop Passing validation
+        if (m_passedNz == 3 || m_passedAz == 3)
+        {
+            if (m_passedNz == 3 && m_passedAz == 3)
+            {
+                msg.append("Teleop: Passing From Neutral/Alliance Zone buttons must be set!\n");
+            }
+            else if (m_passedNz == 3)
+            {
+                msg.append("Teleop: Passing From Neutral Zone button must be set\n");
+            }
+            else
+            {
+                msg.append("Teleop: Passing From Alliance Zone button must be set\n");
+            }
+        }
+
+        // Climb selections validation
+        if ((m_startClimb == 0 && (m_endgameClimbLevel != 0 || m_endgameClimbPos != 0)) ||
+                (m_endgameClimbLevel == 0 && m_startClimb != 0) ||
+                (m_endgameClimbPos == 0 && m_startClimb != 0))
+        {
+            msg.append("\nEndgame: Start Climb, Climb Level and Climb Position settings don't match!\n");
+        }
+
+        // Driver ability validation
+        if (m_drivingAbility == 6)
+        {
+            msg.append("\nTeleop: Driver ability not set!\n");
+        }
+
+        // Passing rate validation
+        if (((m_passedNz == 1 || m_passedAz == 1) && m_passingRate == 0) || (m_passingRate == 5) || ((m_passedNz == 0 && m_passedAz == 0) && m_passingRate > 0))
+        {
+            if ((m_passedNz == 1 || m_passedAz == 1) && m_passingRate == 0)
+            {
+                msg.append("\nTeleop: Passed from zone set, Passing rate not set!\n");
+            }
+            else if (m_passingRate == 5)
+            {
+                msg.append("\nTeleop: Passing rate not set!\n");
+            }
+            else
+            {
+                msg.append("\nTeleop: Passing rate set, Passed from zone not set!\n");
+            }
+        }
+
+        return msg.toString();
+    }
+
+    /**
      * Encodes the match data into a Tab-Separated Values (TSV) string for QR code generation.
      *
      * @return the TSV encoded string
