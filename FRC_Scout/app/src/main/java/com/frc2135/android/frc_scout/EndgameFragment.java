@@ -25,7 +25,7 @@ public class EndgameFragment extends Fragment
     public static final String QRTAG = "qr";
 
     private MatchData m_matchData;
-    private EndgameFragmentBinding binding;
+    private EndgameFragmentBinding m_binding;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
@@ -43,8 +43,8 @@ public class EndgameFragment extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
         Log.d(TAG, "onCreateView");
-        binding = EndgameFragmentBinding.inflate(inflater, parent, false);
-        return binding.getRoot();
+        m_binding = EndgameFragmentBinding.inflate(inflater, parent, false);
+        return m_binding.getRoot();
     }
 
     @Override
@@ -85,14 +85,14 @@ public class EndgameFragment extends Fragment
         initClimbPos(m_matchData.getEndgameClimbPos());
         initDiedValue(m_matchData.getDiedValue());
 
-        binding.comments.setText(m_matchData.getComment());
+        m_binding.comments.setText(m_matchData.getComment());
     }
 
     private void setupListeners()
     {
-        binding.genQR.setEnabled(true);
-        binding.genQRDisabled.setVisibility(View.INVISIBLE);
-        binding.genQR.setOnClickListener(view -> {
+        m_binding.genQR.setEnabled(true);
+        m_binding.genQRDisabled.setVisibility(View.INVISIBLE);
+        m_binding.genQR.setOnClickListener(view -> {
             updateEndgameData();
             String validationMsg = validateEndgameData();
             if (!validationMsg.isEmpty())
@@ -109,7 +109,7 @@ public class EndgameFragment extends Fragment
             }
         });
 
-        binding.navToMenuButton.setOnClickListener(view -> {
+        m_binding.navToMenuButton.setOnClickListener(view -> {
             updateEndgameData();
             Log.d(TAG, "Saving latest match and scout names");
             MatchListData matchHistory = MatchListData.getInstance(getActivity());
@@ -143,7 +143,7 @@ public class EndgameFragment extends Fragment
         };
         if (id != -1)
         {
-            binding.startText.check(id);
+            m_binding.startText.check(id);
         }
     }
 
@@ -159,7 +159,7 @@ public class EndgameFragment extends Fragment
         };
         if (id != -1)
         {
-            binding.endgameLevelClimbGroup.check(id);
+            m_binding.endgameLevelClimbGroup.check(id);
         }
     }
 
@@ -176,7 +176,7 @@ public class EndgameFragment extends Fragment
         };
         if (id != -1)
         {
-            binding.endgameClimbButtons.check(id);
+            m_binding.endgameClimbButtons.check(id);
         }
     }
 
@@ -194,7 +194,7 @@ public class EndgameFragment extends Fragment
         };
         if (id != -1)
         {
-            binding.diedGroup.check(id);
+            m_binding.diedGroup.check(id);
         }
     }
 
@@ -260,7 +260,7 @@ public class EndgameFragment extends Fragment
 
     private int getDiedValue()
     {
-        int id = binding.diedGroup.getCheckedRadioButtonId();
+        int id = m_binding.diedGroup.getCheckedRadioButtonId();
         if (id == R.id.died_none)
         {
             return 0;
@@ -290,7 +290,7 @@ public class EndgameFragment extends Fragment
 
     private int getStartClimb()
     {
-        int id = binding.startText.getCheckedRadioButtonId();
+        int id = m_binding.startText.getCheckedRadioButtonId();
         if (id == R.id.start_none)
         {
             return 0;
@@ -316,7 +316,7 @@ public class EndgameFragment extends Fragment
 
     private int getClimbPos()
     {
-        int id = binding.endgameClimbButtons.getCheckedRadioButtonId();
+        int id = m_binding.endgameClimbButtons.getCheckedRadioButtonId();
         if (id == R.id.endgame_climb_na)
         {
             return 0;
@@ -342,7 +342,7 @@ public class EndgameFragment extends Fragment
 
     private int getClimbLevel()
     {
-        int id = binding.endgameLevelClimbGroup.getCheckedRadioButtonId();
+        int id = m_binding.endgameLevelClimbGroup.getCheckedRadioButtonId();
         if (id == R.id.endgame_level_na)
         {
             return 0;
@@ -364,21 +364,21 @@ public class EndgameFragment extends Fragment
 
     public void updateEndgameData()
     {
-        if (m_matchData == null || binding == null)
+        if (m_matchData == null || m_binding == null)
         {
             return;
         }
         m_matchData.setStartClimb(getStartClimb());
         m_matchData.setDiedValue(getDiedValue());
-        m_matchData.setComment(binding.comments.getText().toString());
+        m_matchData.setComment(m_binding.comments.getText().toString());
         m_matchData.setEndgameClimbPos(getClimbPos());
         m_matchData.setEndgameClimbLevel(getClimbLevel());
     }
 
     private void setupDoneButton(boolean bEnable)
     {
-        binding.navToMenuButton.setEnabled(bEnable);
-        binding.navToMenuButtonDisabled.setVisibility(bEnable ? View.INVISIBLE : View.VISIBLE);
+        m_binding.navToMenuButton.setEnabled(bEnable);
+        m_binding.navToMenuButtonDisabled.setVisibility(bEnable ? View.INVISIBLE : View.VISIBLE);
     }
 
     @Override
@@ -393,6 +393,6 @@ public class EndgameFragment extends Fragment
     {
         super.onDestroyView();
         Log.d(TAG, "onDestroyView");
-        binding = null;
+        m_binding = null;
     }
 }

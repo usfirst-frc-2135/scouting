@@ -19,7 +19,7 @@ public class TeamAliases
     private static final String TAG = "TeamAliases";
 
     private String m_eventCode;
-    private JSONArray m_jsonData;
+    private JSONArray m_aliasesJSON;
     private boolean m_bAliasesDataLoaded;
     private final TeamAliasesSerializer m_serializer;
 
@@ -30,7 +30,7 @@ public class TeamAliases
         Log.d(TAG, "TeamAliases constructor");
         m_eventCode = eventCode;
         m_bAliasesDataLoaded = false;
-        m_jsonData = null;
+        m_aliasesJSON = null;
         m_serializer = new TeamAliasesSerializer(context);
     }
 
@@ -88,16 +88,16 @@ public class TeamAliases
     public String getAliasForTeamNum(String teamNumStr)
             throws JSONException
     {
-        if (m_jsonData == null || teamNumStr == null)
+        if (m_aliasesJSON == null || teamNumStr == null)
         {
             return "";
         }
 
         String targetTeamNum = MatchData.stripTeamNumPrefix(teamNumStr);
 
-        for (int i = 0; i < m_jsonData.length(); i++)
+        for (int i = 0; i < m_aliasesJSON.length(); i++)
         {
-            JSONObject obj = m_jsonData.getJSONObject(i);
+            JSONObject obj = m_aliasesJSON.getJSONObject(i);
             if (targetTeamNum.equals(obj.optString("teamNum")))
             {
                 return obj.optString("aliasNum", "");
@@ -116,14 +116,14 @@ public class TeamAliases
     public String getTeamNumForAlias(String myAlias)
             throws JSONException
     {
-        if (m_jsonData == null || myAlias == null)
+        if (m_aliasesJSON == null || myAlias == null)
         {
             return "";
         }
 
-        for (int i = 0; i < m_jsonData.length(); i++)
+        for (int i = 0; i < m_aliasesJSON.length(); i++)
         {
-            JSONObject obj = m_jsonData.getJSONObject(i);
+            JSONObject obj = m_aliasesJSON.getJSONObject(i);
             if (myAlias.equals(obj.optString("aliasNum")))
             {
                 return obj.optString("teamNum", "");
@@ -136,7 +136,7 @@ public class TeamAliases
     {
         m_eventCode = eventCode;
         m_bAliasesDataLoaded = false;
-        m_jsonData = null;
+        m_aliasesJSON = null;
     }
 
     /**
@@ -156,8 +156,8 @@ public class TeamAliases
 
         try
         {
-            m_jsonData = m_serializer.loadTeamAliases(m_eventCode);
-            if (m_jsonData != null)
+            m_aliasesJSON = m_serializer.loadTeamAliases(m_eventCode);
+            if (m_aliasesJSON != null)
             {
                 m_bAliasesDataLoaded = true;
                 Log.d(TAG, "Successfully loaded aliases for " + m_eventCode);

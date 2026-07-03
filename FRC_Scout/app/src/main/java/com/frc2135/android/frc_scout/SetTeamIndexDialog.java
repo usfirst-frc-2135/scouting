@@ -23,7 +23,7 @@ public class SetTeamIndexDialog extends DialogFragment
     private static final String TAG = "SetTeamIndexDialog";
 
     private Settings m_settings;
-    private SetTeamIndexDialogBinding binding;
+    private SetTeamIndexDialogBinding m_binding;
 
     /**
      * Creates a new instance of SetTeamIndexDialog.
@@ -44,7 +44,7 @@ public class SetTeamIndexDialog extends DialogFragment
         Log.d(TAG, "onCreateDialog called");
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        binding = SetTeamIndexDialogBinding.inflate(inflater);
+        m_binding = SetTeamIndexDialogBinding.inflate(inflater);
 
         m_settings = Settings.getInstance(requireContext());
 
@@ -52,11 +52,11 @@ public class SetTeamIndexDialog extends DialogFragment
 
         return new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle("Set Team Index")
-                .setView(binding.getRoot())
+                .setView(m_binding.getRoot())
                 .setPositiveButton(android.R.string.ok, (d, w) -> saveTeamIndex())
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
                 .setNeutralButton("Clear", (d, w) -> {
-                    binding.setTeamIndexField.setText(m_options[0], false);
+                    m_binding.setTeamIndexField.setText(m_options[0], false);
                     saveTeamIndex();
                 })
                 .create();
@@ -66,7 +66,7 @@ public class SetTeamIndexDialog extends DialogFragment
     {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(),
                 R.layout.set_team_index_dropdown_item, m_options);
-        binding.setTeamIndexField.setAdapter(adapter);
+        m_binding.setTeamIndexField.setAdapter(adapter);
 
         String currentIndex = "0 - None";
         if (m_settings != null)
@@ -84,12 +84,12 @@ public class SetTeamIndexDialog extends DialogFragment
                 break;
             }
         }
-        binding.setTeamIndexField.setText(displayValue, false);
+        m_binding.setTeamIndexField.setText(displayValue, false);
     }
 
     private void saveTeamIndex()
     {
-        String selection = Objects.requireNonNull(binding.setTeamIndexField.getText()).toString();
+        String selection = Objects.requireNonNull(m_binding.setTeamIndexField.getText()).toString();
         String indexToSave = "0 - None";
 
         if (!selection.equals("0 - None"))
@@ -120,6 +120,6 @@ public class SetTeamIndexDialog extends DialogFragment
     {
         super.onDestroyView();
         Log.d(TAG, "onDestroyView");
-        binding = null;
+        m_binding = null;
     }
 }

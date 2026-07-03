@@ -23,7 +23,7 @@ public class SplashScreenActivity extends AppCompatActivity
 {
     private static final String TAG = "SplashScreenActivity";
     private static final int SPLASH_DISPLAY_LENGTH = 1500; // Duration of pause in milliseconds
-    private SplashScreenActivityBinding binding;
+    private SplashScreenActivityBinding m_binding;
 
     /**
      * Called when the activity is first created.
@@ -37,12 +37,12 @@ public class SplashScreenActivity extends AppCompatActivity
         Preferences.getInstance(this).applyTheme();
         super.onCreate(icicle);
 
-        binding = SplashScreenActivityBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        m_binding = SplashScreenActivityBinding.inflate(getLayoutInflater());
+        setContentView(m_binding.getRoot());
 
         // Simple fade-in animation
-        binding.splashContainer.setAlpha(0f);
-        binding.splashContainer.animate()
+        m_binding.splashContainer.setAlpha(0f);
+        m_binding.splashContainer.animate()
                 .alpha(1f)
                 .setDuration(500)
                 .withEndAction(this::startMainTransition)
@@ -63,7 +63,7 @@ public class SplashScreenActivity extends AppCompatActivity
     {
         super.onDestroy();
         Log.d(TAG, "onDestroy");
-        binding = null;
+        m_binding = null;
     }
 
     /**

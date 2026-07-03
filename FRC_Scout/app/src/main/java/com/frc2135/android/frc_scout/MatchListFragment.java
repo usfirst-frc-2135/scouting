@@ -45,7 +45,7 @@ public class MatchListFragment extends Fragment
 
     private List<MatchData> m_displayedMatches = new java.util.ArrayList<>();
     private MatchAdapter m_adapter;
-    private MatchListFragmentBinding binding;
+    private MatchListFragmentBinding m_binding;
 
     private String m_teamFilter;
     private String m_eventFilter;
@@ -77,7 +77,7 @@ public class MatchListFragment extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
         Log.d(TAG, "onCreateView");
-        binding = MatchListFragmentBinding.inflate(inflater, parent, false);
+        m_binding = MatchListFragmentBinding.inflate(inflater, parent, false);
 
         setupRecyclerView();
         setupNewMatchButton();
@@ -86,7 +86,7 @@ public class MatchListFragment extends Fragment
 
         loadInitialMatches();
 
-        return binding.getRoot();
+        return m_binding.getRoot();
     }
 
     private void loadInitialMatches()
@@ -111,19 +111,19 @@ public class MatchListFragment extends Fragment
         // Ensure dropdown options are populated and correct
         ArrayAdapter<CharSequence> sortAdapter = new ArrayAdapter<>(requireContext(),
                 android.R.layout.simple_dropdown_item_1line, getResources().getTextArray(R.array.sort_criteria_array));
-        binding.sortOptions.setAdapter(sortAdapter);
+        m_binding.sortOptions.setAdapter(sortAdapter);
     }
 
     private void setupRecyclerView()
     {
-        binding.matchRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        m_binding.matchRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         m_adapter = new MatchAdapter(m_displayedMatches);
-        binding.matchRecyclerView.setAdapter(m_adapter);
+        m_binding.matchRecyclerView.setAdapter(m_adapter);
     }
 
     private void setupNewMatchButton()
     {
-        binding.startMatch.setOnClickListener(view -> {
+        m_binding.startMatch.setOnClickListener(view -> {
             try
             {
                 MatchData newMatch = new MatchData();
@@ -146,12 +146,12 @@ public class MatchListFragment extends Fragment
     {
         ArrayAdapter<CharSequence> sortAdapter = new ArrayAdapter<>(requireContext(),
                 android.R.layout.simple_dropdown_item_1line, getResources().getTextArray(R.array.sort_criteria_array));
-        binding.sortOptions.setAdapter(sortAdapter);
-        binding.sortOptions.setText(sortAdapter.getItem(0), false);
+        m_binding.sortOptions.setAdapter(sortAdapter);
+        m_binding.sortOptions.setText(sortAdapter.getItem(0), false);
 
-        binding.sortOptions.setOnItemClickListener((parent, view, position, id) -> updateSorting());
+        m_binding.sortOptions.setOnItemClickListener((parent, view, position, id) -> updateSorting());
 
-        binding.sortOrderButton.setOnClickListener(v -> {
+        m_binding.sortOrderButton.setOnClickListener(v -> {
             m_sortAscending = !m_sortAscending;
             updateSortButtonIcon();
             updateSorting();
@@ -163,19 +163,19 @@ public class MatchListFragment extends Fragment
     {
         if (m_sortAscending)
         {
-            binding.sortOrderButton.setIconResource(R.drawable.ic_sort_ascending);
-            binding.sortOrderButton.setContentDescription(getString(R.string.ascending));
+            m_binding.sortOrderButton.setIconResource(R.drawable.ic_sort_ascending);
+            m_binding.sortOrderButton.setContentDescription(getString(R.string.ascending));
         }
         else
         {
-            binding.sortOrderButton.setIconResource(R.drawable.ic_sort_descending);
-            binding.sortOrderButton.setContentDescription(getString(R.string.descending));
+            m_binding.sortOrderButton.setIconResource(R.drawable.ic_sort_descending);
+            m_binding.sortOrderButton.setContentDescription(getString(R.string.descending));
         }
     }
 
     private void updateSorting()
     {
-        String criteria = binding.sortOptions.getText().toString();
+        String criteria = m_binding.sortOptions.getText().toString();
         MatchListData data = MatchListData.getInstance(requireContext());
 
         m_displayedMatches = data.sortMatches(m_displayedMatches, criteria, m_sortAscending);
@@ -187,7 +187,7 @@ public class MatchListFragment extends Fragment
 
     private void setupFilterButton()
     {
-        binding.filterButton.setOnClickListener(v -> MatchFilterDialog.newInstance(m_teamFilter, m_eventFilter, m_scoutFilter, m_matchFilter).show(requireActivity().getSupportFragmentManager(), "filter_dialog"));
+        m_binding.filterButton.setOnClickListener(v -> MatchFilterDialog.newInstance(m_teamFilter, m_eventFilter, m_scoutFilter, m_matchFilter).show(requireActivity().getSupportFragmentManager(), "filter_dialog"));
     }
 
     private void setupMenuProvider()
@@ -345,7 +345,7 @@ public class MatchListFragment extends Fragment
     {
         super.onDestroyView();
         Log.d(TAG, "onDestroyView");
-        binding = null;
+        m_binding = null;
     }
 
     @Override
@@ -380,7 +380,7 @@ public class MatchListFragment extends Fragment
             Intent data = new Intent(getActivity(), PreMatchActivity.class);
             data.putExtra("match_ID", Objects.requireNonNull(m).getMatchID());
             data.putExtra("in_edit", "yes");
-            binding.matchRecyclerView.clearFocus();
+            m_binding.matchRecyclerView.clearFocus();
 
             startActivity(data);
             m_selectedMatch = null;

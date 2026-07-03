@@ -16,7 +16,7 @@ import com.frc2135.android.frc_scout.databinding.MatchListActivityBinding;
 public class MatchListActivity extends AppCompatActivity
 {
     private static final String TAG = "MatchListActivity";
-    private MatchListActivityBinding binding;
+    private MatchListActivityBinding m_binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -27,10 +27,10 @@ public class MatchListActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         // Use View Binding for layout inflation
-        binding = MatchListActivityBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        m_binding = MatchListActivityBinding.inflate(getLayoutInflater());
+        setContentView(m_binding.getRoot());
 
-        setSupportActionBar(binding.toolbar);
+        setSupportActionBar(m_binding.toolbar);
         if (getSupportActionBar() != null)
         {
             getSupportActionBar().setTitle(R.string.title_match_list);
@@ -58,7 +58,7 @@ public class MatchListActivity extends AppCompatActivity
     public void updateToolbarTeamIndex()
     {
         String indexStr = Settings.getInstance(this).getTeamIndexStr();
-        binding.toolbarTeamIndex.setText(String.format(getString(R.string.team_index_label), indexStr));
+        m_binding.toolbarTeamIndex.setText(String.format(getString(R.string.team_index_label), indexStr));
     }
 
     @Override
@@ -74,7 +74,7 @@ public class MatchListActivity extends AppCompatActivity
     {
         super.onDestroy();
         Log.d(TAG, "onDestroy");
-        binding = null;
+        m_binding = null;
     }
 
     /**

@@ -26,7 +26,7 @@ public class AutonFragment extends Fragment
     private static final int MAX_NUM_HOPPERS = 1;
 
     private MatchData m_matchData;
-    private AutonFragmentBinding binding;
+    private AutonFragmentBinding m_binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -67,30 +67,30 @@ public class AutonFragment extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
         Log.d(TAG, "onCreateView");
-        binding = AutonFragmentBinding.inflate(inflater, parent, false);
+        m_binding = AutonFragmentBinding.inflate(inflater, parent, false);
 
         if (m_matchData != null)
         {
-            binding.autonHopperScoreTotal.setText(String.valueOf(m_matchData.getAutonHopper()));
+            m_binding.autonHopperScoreTotal.setText(String.valueOf(m_matchData.getAutonHopper()));
 
-            binding.autonHopperIncrButton.setOnClickListener(v -> updateTotalsInt(binding.autonHopperScoreTotal, true));
-            binding.autonHopperDecrButton.setOnClickListener(v -> updateTotalsInt(binding.autonHopperScoreTotal, false));
+            m_binding.autonHopperIncrButton.setOnClickListener(v -> updateTotalsInt(m_binding.autonHopperScoreTotal, true));
+            m_binding.autonHopperDecrButton.setOnClickListener(v -> updateTotalsInt(m_binding.autonHopperScoreTotal, false));
 
-            binding.preloadCheckbox.setChecked(m_matchData.getAutonPreload());
-            binding.azCheckbox.setChecked(m_matchData.getAutonAzCheckbox());
-            binding.depotCheckbox.setChecked(m_matchData.getAutonDepotCheckbox());
-            binding.outpostCheckbox.setChecked(m_matchData.getAutonOutpostCheckbox());
-            binding.nzCheckbox.setChecked(m_matchData.getAutonNzCheckbox());
+            m_binding.preloadCheckbox.setChecked(m_matchData.getAutonPreload());
+            m_binding.azCheckbox.setChecked(m_matchData.getAutonAzCheckbox());
+            m_binding.depotCheckbox.setChecked(m_matchData.getAutonDepotCheckbox());
+            m_binding.outpostCheckbox.setChecked(m_matchData.getAutonOutpostCheckbox());
+            m_binding.nzCheckbox.setChecked(m_matchData.getAutonNzCheckbox());
 
             initPreloadAccuracy(m_matchData.getPreloadAccuracyLevel());
             initAutonAccuracy(m_matchData.getAutonAccuracyRate());
             initAutonClimb(m_matchData.getAutonClimb());
 
             // Check Hopper levels for MAX
-            updateScoreColor(binding.autonHopperScoreTotal);
+            updateScoreColor(m_binding.autonHopperScoreTotal);
         }
 
-        return binding.getRoot();
+        return m_binding.getRoot();
     }
 
     private void initPreloadAccuracy(int value)
@@ -107,7 +107,7 @@ public class AutonFragment extends Fragment
         };
         if (id != -1)
         {
-            binding.autonAccuracyBoxes.check(id);
+            m_binding.autonAccuracyBoxes.check(id);
         }
     }
 
@@ -126,7 +126,7 @@ public class AutonFragment extends Fragment
         };
         if (id != -1)
         {
-            binding.autonAccuracyButtons.check(id);
+            m_binding.autonAccuracyButtons.check(id);
         }
     }
 
@@ -143,7 +143,7 @@ public class AutonFragment extends Fragment
         };
         if (id != -1)
         {
-            binding.autonClimbButtons.check(id);
+            m_binding.autonClimbButtons.check(id);
         }
     }
 
@@ -205,7 +205,7 @@ public class AutonFragment extends Fragment
 
     public int getAutonAccuracyRate()
     {
-        int id = binding.autonAccuracyButtons.getCheckedRadioButtonId();
+        int id = m_binding.autonAccuracyButtons.getCheckedRadioButtonId();
         if (id == R.id.auton_accuracy_na)
         {
             return 0;
@@ -239,7 +239,7 @@ public class AutonFragment extends Fragment
 
     public int getPreloadAccuracyLevel()
     {
-        int id = binding.autonAccuracyBoxes.getCheckedRadioButtonId();
+        int id = m_binding.autonAccuracyBoxes.getCheckedRadioButtonId();
         if (id == R.id.auton_accuracy_no)
         {
             return 0;
@@ -269,7 +269,7 @@ public class AutonFragment extends Fragment
 
     public int getAutonClimb()
     {
-        int id = binding.autonClimbButtons.getCheckedRadioButtonId();
+        int id = m_binding.autonClimbButtons.getCheckedRadioButtonId();
         if (id == R.id.auton_climb_na)
         {
             return 0;
@@ -301,17 +301,17 @@ public class AutonFragment extends Fragment
         }
         try
         {
-            m_matchData.setAutonHopper(Integer.parseInt(binding.autonHopperScoreTotal.getText().toString()));
+            m_matchData.setAutonHopper(Integer.parseInt(m_binding.autonHopperScoreTotal.getText().toString()));
         }
         catch (NumberFormatException e)
         {
             Log.e(TAG, "Invalid hopper score value", e);
         }
-        m_matchData.setAutonPreload(binding.preloadCheckbox.isChecked());
-        m_matchData.setAutonNzCheckbox(binding.nzCheckbox.isChecked());
-        m_matchData.setAutonAzCheckbox(binding.azCheckbox.isChecked());
-        m_matchData.setAutonDepotCheckbox(binding.depotCheckbox.isChecked());
-        m_matchData.setAutonOutpostCheckbox(binding.outpostCheckbox.isChecked());
+        m_matchData.setAutonPreload(m_binding.preloadCheckbox.isChecked());
+        m_matchData.setAutonNzCheckbox(m_binding.nzCheckbox.isChecked());
+        m_matchData.setAutonAzCheckbox(m_binding.azCheckbox.isChecked());
+        m_matchData.setAutonDepotCheckbox(m_binding.depotCheckbox.isChecked());
+        m_matchData.setAutonOutpostCheckbox(m_binding.outpostCheckbox.isChecked());
         m_matchData.setAutonAccuracyRate(getAutonAccuracyRate());
         m_matchData.setPreloadAccuracyLevel(getPreloadAccuracyLevel());
         m_matchData.setAutonClimb(getAutonClimb());
@@ -329,6 +329,6 @@ public class AutonFragment extends Fragment
     {
         super.onDestroyView();
         Log.d(TAG, "onDestroyView");
-        binding = null;
+        m_binding = null;
     }
 }

@@ -27,7 +27,7 @@ import java.util.Objects;
 public class LoadTeamAliasesDialog extends DialogFragment
 {
     private static final String TAG = "LoadTeamAliasesDialog";
-    private LoadEventDialogBinding binding;
+    private LoadEventDialogBinding m_binding;
 
     /**
      * Creates a new instance of LoadAliasesDialog.
@@ -46,16 +46,16 @@ public class LoadTeamAliasesDialog extends DialogFragment
         Log.d(TAG, "onCreateDialog called");
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        binding = LoadEventDialogBinding.inflate(inflater);
+        m_binding = LoadEventDialogBinding.inflate(inflater);
 
         AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle("Load Team Aliases")
-                .setView(binding.getRoot())
+                .setView(m_binding.getRoot())
                 .setPositiveButton(android.R.string.ok, null)
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
                 .setNeutralButton("Clear", (d, w) -> {
-                    binding.eventCodeField.setText("");
-                    binding.eventCodeField.setError(null);
+                    m_binding.eventCodeField.setText("");
+                    m_binding.eventCodeField.setError(null);
                 })
                 .create();
 
@@ -69,10 +69,10 @@ public class LoadTeamAliasesDialog extends DialogFragment
 
     private void handleOkClick(AlertDialog dialog)
     {
-        String eventCode = Objects.requireNonNull(binding.eventCodeField.getText()).toString().trim();
+        String eventCode = Objects.requireNonNull(m_binding.eventCodeField.getText()).toString().trim();
         if (eventCode.isEmpty() || eventCode.length() < 7)
         {
-            binding.eventCodeField.setError("Event code must be at least 7 characters (e.g., 2026casac)");
+            m_binding.eventCodeField.setError("Event code must be at least 7 characters (e.g., 2026casac)");
             return;
         }
 
@@ -147,6 +147,6 @@ public class LoadTeamAliasesDialog extends DialogFragment
     {
         super.onDestroyView();
         Log.d(TAG, "onDestroyView");
-        binding = null;
+        m_binding = null;
     }
 }

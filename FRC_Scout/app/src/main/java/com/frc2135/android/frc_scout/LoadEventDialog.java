@@ -45,7 +45,7 @@ public class LoadEventDialog extends DialogFragment
      */
     private static final String TBA_AUTH_KEY = "E7akoVihRO2ZbNHtW2nRrjuNTcZaOxWtfeYWwh4XILMsKsqLnH2ZQrKAnbevlWGn";
 
-    private LoadEventDialogBinding binding;
+    private LoadEventDialogBinding m_binding;
 
     /**
      * Creates a new instance of LoadEventDialog.
@@ -70,7 +70,7 @@ public class LoadEventDialog extends DialogFragment
         Log.d(TAG, "onCreateDialog called");
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        binding = LoadEventDialogBinding.inflate(inflater);
+        m_binding = LoadEventDialogBinding.inflate(inflater);
 
         // Pre-fill with current event code if available
         try
@@ -78,7 +78,7 @@ public class LoadEventDialog extends DialogFragment
             CurrentEventCode currentEventCode = CurrentEventCode.getInstance(requireContext());
             if (currentEventCode != null && !currentEventCode.getEventCode().equals("EVTX"))
             {
-                binding.eventCodeField.setText(currentEventCode.getEventCode());
+                m_binding.eventCodeField.setText(currentEventCode.getEventCode());
             }
         }
         catch (IOException | JSONException e)
@@ -86,7 +86,7 @@ public class LoadEventDialog extends DialogFragment
             Log.w(TAG, "Failed to load current event code for pre-fill", e);
         }
 
-        binding.eventCodeField.addTextChangedListener(new TextWatcher()
+        m_binding.eventCodeField.addTextChangedListener(new TextWatcher()
         {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
@@ -96,7 +96,7 @@ public class LoadEventDialog extends DialogFragment
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
-                binding.eventCodeLayout.setError(null);
+                m_binding.eventCodeLayout.setError(null);
             }
 
             @Override
@@ -107,11 +107,11 @@ public class LoadEventDialog extends DialogFragment
 
         AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle("Load Event Matches")
-                .setView(binding.getRoot())
+                .setView(m_binding.getRoot())
                 .setPositiveButton(android.R.string.ok, null)
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
                 .setNeutralButton("Clear", (d, w) -> {
-                    String eventCode = Objects.requireNonNull(binding.eventCodeField.getText()).toString().trim();
+                    String eventCode = Objects.requireNonNull(m_binding.eventCodeField.getText()).toString().trim();
                     if (!eventCode.isEmpty())
                     {
                         EventMatchesSerializer serializer = new EventMatchesSerializer(requireContext());
@@ -120,8 +120,8 @@ public class LoadEventDialog extends DialogFragment
                             Toast.makeText(requireContext(), "Cleared data for " + eventCode, Toast.LENGTH_SHORT).show();
                         }
                     }
-                    binding.eventCodeField.setText("");
-                    binding.eventCodeLayout.setError(null);
+                    m_binding.eventCodeField.setText("");
+                    m_binding.eventCodeLayout.setError(null);
                 })
                 .create();
 
@@ -141,21 +141,21 @@ public class LoadEventDialog extends DialogFragment
     private void handleOkClick(AlertDialog dialog)
     {
         Log.d(TAG, "handleOkClick called");
-        String eventCode = Objects.requireNonNull(binding.eventCodeField.getText()).toString().trim().toLowerCase(Locale.US);
+        String eventCode = Objects.requireNonNull(m_binding.eventCodeField.getText()).toString().trim().toLowerCase(Locale.US);
 
         if (eventCode.isEmpty() || eventCode.length() < 7)
         {
-            binding.eventCodeLayout.setError("Event code must be at least 7 characters (e.g., 2026casac)");
+            m_binding.eventCodeLayout.setError("Event code must be at least 7 characters (e.g., 2026casac)");
             return;
         }
 
         if (!eventCode.matches("\\d{4}[a-z0-9]+"))
         {
-            binding.eventCodeLayout.setError("Invalid event code format (e.g., 2026casac)");
+            m_binding.eventCodeLayout.setError("Invalid event code format (e.g., 2026casac)");
             return;
         }
 
-        binding.eventCodeLayout.setError(null);
+        m_binding.eventCodeLayout.setError(null);
         downloadEventMatches(dialog, eventCode);
     }
 
@@ -174,7 +174,7 @@ public class LoadEventDialog extends DialogFragment
         Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         okButton.setEnabled(false);
         okButton.setText(R.string.loading);
-        binding.eventCodeField.setEnabled(false);
+        m_binding.eventCodeField.setEnabled(false);
 
         String urlStr = TBA_EVENT_MATCHES_URL + eventCode + "/matches";
         Log.d(TAG, "URL: " + urlStr);
@@ -258,9 +258,9 @@ public class LoadEventDialog extends DialogFragment
             okButton.setEnabled(true);
             okButton.setText(android.R.string.ok);
         }
-        if (binding != null)
+        if (m_binding != null)
         {
-            binding.eventCodeField.setEnabled(true);
+            m_binding.eventCodeField.setEnabled(true);
         }
     }
 
@@ -305,6 +305,6 @@ public class LoadEventDialog extends DialogFragment
     {
         super.onDestroyView();
         Log.d(TAG, "onDestroyView");
-        binding = null;
+        m_binding = null;
     }
 }

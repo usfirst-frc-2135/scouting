@@ -29,7 +29,7 @@ public class TeleopFragment extends Fragment
     private static final int MAX_NUM_HOPPERS = 7;
 
     private MatchData m_matchData;
-    private TeleopFragmentBinding binding;
+    private TeleopFragmentBinding m_binding;
     private int m_photoNum;
 
     @Override
@@ -44,8 +44,8 @@ public class TeleopFragment extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
         Log.d(TAG, "onCreateView");
-        binding = TeleopFragmentBinding.inflate(inflater, parent, false);
-        return binding.getRoot();
+        m_binding = TeleopFragmentBinding.inflate(inflater, parent, false);
+        return m_binding.getRoot();
     }
 
     @Override
@@ -72,11 +72,11 @@ public class TeleopFragment extends Fragment
 
     private void loadMatchData()
     {
-        binding.hopperUsedTotal.setText(String.valueOf(m_matchData.getHoppersUsed()));
-        updateScoreColor(binding.hopperUsedTotal);
+        m_binding.hopperUsedTotal.setText(String.valueOf(m_matchData.getHoppersUsed()));
+        updateScoreColor(m_binding.hopperUsedTotal);
 
-        binding.intakeAndShoot.setChecked(m_matchData.getIntakeAndShoot());
-        binding.shovelFuel.setChecked(m_matchData.getShovelFuel());
+        m_binding.intakeAndShoot.setChecked(m_matchData.getIntakeAndShoot());
+        m_binding.shovelFuel.setChecked(m_matchData.getShovelFuel());
 
         initAccuracyRate(m_matchData.getAccuracyRate());
         initPassingRate(m_matchData.getPassingEffectivenessRate());
@@ -90,8 +90,8 @@ public class TeleopFragment extends Fragment
 
     private void setupListeners()
     {
-        binding.hopperUsedDecrButton.setOnClickListener(v -> updateTotalsInt(binding.hopperUsedTotal, false));
-        binding.hopperUsedIncrButton.setOnClickListener(v -> updateTotalsInt(binding.hopperUsedTotal, true));
+        m_binding.hopperUsedDecrButton.setOnClickListener(v -> updateTotalsInt(m_binding.hopperUsedTotal, false));
+        m_binding.hopperUsedIncrButton.setOnClickListener(v -> updateTotalsInt(m_binding.hopperUsedTotal, true));
     }
 
     private void initAccuracyRate(int value)
@@ -109,7 +109,7 @@ public class TeleopFragment extends Fragment
         };
         if (id != -1)
         {
-            binding.accuracyButtons.check(id);
+            m_binding.accuracyButtons.check(id);
         }
     }
 
@@ -126,7 +126,7 @@ public class TeleopFragment extends Fragment
         };
         if (id != -1)
         {
-            binding.passingEffectivenessButtons.check(id);
+            m_binding.passingEffectivenessButtons.check(id);
         }
     }
 
@@ -144,7 +144,7 @@ public class TeleopFragment extends Fragment
         };
         if (id != -1)
         {
-            binding.defenseButtons.check(id);
+            m_binding.defenseButtons.check(id);
         }
     }
 
@@ -158,7 +158,7 @@ public class TeleopFragment extends Fragment
         };
         if (id != -1)
         {
-            binding.passNz.check(id);
+            m_binding.passNz.check(id);
         }
     }
 
@@ -172,7 +172,7 @@ public class TeleopFragment extends Fragment
         };
         if (id != -1)
         {
-            binding.passAz.check(id);
+            m_binding.passAz.check(id);
         }
     }
 
@@ -190,7 +190,7 @@ public class TeleopFragment extends Fragment
         };
         if (id != -1)
         {
-            binding.drivingButtons.check(id);
+            m_binding.drivingButtons.check(id);
         }
     }
 
@@ -199,7 +199,7 @@ public class TeleopFragment extends Fragment
         m_photoNum = m_matchData.getTeleopPhoto();
         Log.i(TAG, "setupPhoto: image= " + m_photoNum);
 
-        ViewGroup.LayoutParams params = binding.photo.getLayoutParams();
+        ViewGroup.LayoutParams params = m_binding.photo.getLayoutParams();
         if (m_photoNum == 0)
         {
             Random random = new Random();
@@ -207,47 +207,47 @@ public class TeleopFragment extends Fragment
             if (rand < 0.03)
             {
                 m_photoNum = 3;
-                binding.photo.setBackgroundResource(R.drawable.me_and_charlotte);
+                m_binding.photo.setBackgroundResource(R.drawable.me_and_charlotte);
             }
             else if (rand < 0.05)
             {
                 m_photoNum = 5;
-                binding.photo.setBackgroundResource(R.drawable.me_and_charlotte_2);
+                m_binding.photo.setBackgroundResource(R.drawable.me_and_charlotte_2);
             }
             else if (rand < 0.3)
             {
                 m_photoNum = 4;
-                binding.photo.setBackgroundResource(R.drawable.frc_logo);
+                m_binding.photo.setBackgroundResource(R.drawable.frc_logo);
                 params.width = 450;
-                binding.photo.setLayoutParams(params);
+                m_binding.photo.setLayoutParams(params);
             }
             else if (rand < 0.4)
             {
                 m_photoNum = 2;
-                binding.photo.setBackgroundResource(R.drawable.rebuilt_logo);
+                m_binding.photo.setBackgroundResource(R.drawable.rebuilt_logo);
                 params.width = 250;
-                binding.photo.setLayoutParams(params);
+                m_binding.photo.setLayoutParams(params);
             }
             else if (rand < 0.5)
             {
                 m_photoNum = 6;
-                binding.photo.setBackgroundResource(R.drawable.t2135_logo2);
+                m_binding.photo.setBackgroundResource(R.drawable.t2135_logo2);
                 params.width = 260;
-                binding.photo.setLayoutParams(params);
+                m_binding.photo.setLayoutParams(params);
             }
             else
             {
                 m_photoNum = 1;
-                binding.photo.setBackgroundResource(R.drawable.rebuilt_fuel);
+                m_binding.photo.setBackgroundResource(R.drawable.rebuilt_fuel);
                 params.width = 250;
-                binding.photo.setLayoutParams(params);
+                m_binding.photo.setLayoutParams(params);
 
                 if (random.nextDouble() < 0.1)
                 {
                     m_photoNum = 7;
-                    binding.photo.setBackgroundResource(R.drawable.rebuilt_fuel_shiny);
+                    m_binding.photo.setBackgroundResource(R.drawable.rebuilt_fuel_shiny);
                     params.width = 250;
-                    binding.photo.setLayoutParams(params);
+                    m_binding.photo.setLayoutParams(params);
                 }
             }
             m_matchData.setTeleopPhoto(m_photoNum);
@@ -287,12 +287,12 @@ public class TeleopFragment extends Fragment
             }
             if (resId != 0)
             {
-                binding.photo.setBackgroundResource(resId);
+                m_binding.photo.setBackgroundResource(resId);
             }
             if (width != -1)
             {
                 params.width = width;
-                binding.photo.setLayoutParams(params);
+                m_binding.photo.setLayoutParams(params);
             }
         }
     }
@@ -343,7 +343,7 @@ public class TeleopFragment extends Fragment
 
     public int getCurrentAccuracyLevel()
     {
-        int id = binding.accuracyButtons.getCheckedRadioButtonId();
+        int id = m_binding.accuracyButtons.getCheckedRadioButtonId();
         if (id == R.id.accuracy_NA)
         {
             return 0;
@@ -377,7 +377,7 @@ public class TeleopFragment extends Fragment
 
     public int getPassingEffectivenessRate()
     {
-        int id = binding.passingEffectivenessButtons.getCheckedRadioButtonId();
+        int id = m_binding.passingEffectivenessButtons.getCheckedRadioButtonId();
         if (id == R.id.passing_rate_na)
         {
             return 0;
@@ -403,7 +403,7 @@ public class TeleopFragment extends Fragment
 
     public int getCurrentDefenseLevel()
     {
-        int id = binding.defenseButtons.getCheckedRadioButtonId();
+        int id = m_binding.defenseButtons.getCheckedRadioButtonId();
         if (id == R.id.defense_none)
         {
             return 0;
@@ -433,7 +433,7 @@ public class TeleopFragment extends Fragment
 
     public int getPassNeutralZone()
     {
-        int id = binding.passNz.getCheckedRadioButtonId();
+        int id = m_binding.passNz.getCheckedRadioButtonId();
         if (id == R.id.no_nz)
         {
             return 0;
@@ -447,7 +447,7 @@ public class TeleopFragment extends Fragment
 
     public int getPassAllianceZone()
     {
-        int id = binding.passAz.getCheckedRadioButtonId();
+        int id = m_binding.passAz.getCheckedRadioButtonId();
         if (id == R.id.no_az)
         {
             return 0;
@@ -461,7 +461,7 @@ public class TeleopFragment extends Fragment
 
     public int getDriverAbility()
     {
-        int id = binding.drivingButtons.getCheckedRadioButtonId();
+        int id = m_binding.drivingButtons.getCheckedRadioButtonId();
         if (id == R.id.driving_na)
         {
             return 0;
@@ -497,7 +497,7 @@ public class TeleopFragment extends Fragment
         }
         try
         {
-            m_matchData.setHoppersUsed(Integer.parseInt(binding.hopperUsedTotal.getText().toString()));
+            m_matchData.setHoppersUsed(Integer.parseInt(m_binding.hopperUsedTotal.getText().toString()));
         }
         catch (NumberFormatException e)
         {
@@ -507,10 +507,10 @@ public class TeleopFragment extends Fragment
         m_matchData.setPassingRate(getPassingEffectivenessRate());
         m_matchData.setTeleopPhoto(m_photoNum);
         m_matchData.setDefenseRate(getCurrentDefenseLevel());
-        m_matchData.setIntakeAndShoot(binding.intakeAndShoot.isChecked());
+        m_matchData.setIntakeAndShoot(m_binding.intakeAndShoot.isChecked());
         m_matchData.setPassNeutralZone(getPassNeutralZone());
         m_matchData.setPassAllianceZone(getPassAllianceZone());
-        m_matchData.setShovelFuel(binding.shovelFuel.isChecked());
+        m_matchData.setShovelFuel(m_binding.shovelFuel.isChecked());
         m_matchData.setDriveAbility(getDriverAbility());
     }
 
@@ -526,6 +526,6 @@ public class TeleopFragment extends Fragment
     {
         super.onDestroyView();
         Log.d(TAG, "onDestroyView");
-        binding = null;
+        m_binding = null;
     }
 }

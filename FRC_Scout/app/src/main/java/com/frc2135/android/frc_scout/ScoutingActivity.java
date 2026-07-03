@@ -22,7 +22,7 @@ public class ScoutingActivity extends AppCompatActivity
 
     private MatchData m_matchData;
 
-    private ScoutingActivityTabbedBinding binding;
+    private ScoutingActivityTabbedBinding m_binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -31,10 +31,10 @@ public class ScoutingActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
 
-        binding = ScoutingActivityTabbedBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        m_binding = ScoutingActivityTabbedBinding.inflate(getLayoutInflater());
+        setContentView(m_binding.getRoot());
 
-        setSupportActionBar(binding.toolbar);
+        setSupportActionBar(m_binding.toolbar);
 
         String matchId = getIntent().getStringExtra("match_ID");
         Log.d(TAG, "Loading match with ID: " + matchId);
@@ -54,7 +54,7 @@ public class ScoutingActivity extends AppCompatActivity
         }
 
         // Handle navigation between scouting stages
-        binding.navView.setOnItemSelectedListener(item -> {
+        m_binding.navView.setOnItemSelectedListener(item -> {
             // Save data from the current fragment before switching
             updateCurrentFragmentData();
 
@@ -112,7 +112,7 @@ public class ScoutingActivity extends AppCompatActivity
         }
 
         String stage = "Scouting";
-        int selectedId = binding.navView.getSelectedItemId();
+        int selectedId = m_binding.navView.getSelectedItemId();
         if (selectedId == R.id.navigation_auton)
         {
             stage = "Autonomous";
@@ -127,7 +127,7 @@ public class ScoutingActivity extends AppCompatActivity
         }
 
         getSupportActionBar().setTitle(stage);
-        binding.toolbarTitle.setText(String.format("Team %s - %s", m_matchData.getTeamNumber(), m_matchData.getMatchNumber()));
+        m_binding.toolbarTitle.setText(String.format("Team %s - %s", m_matchData.getTeamNumber(), m_matchData.getMatchNumber()));
     }
 
     /**
@@ -190,6 +190,6 @@ public class ScoutingActivity extends AppCompatActivity
     {
         super.onDestroy();
         Log.d(TAG, "onDestroy");
-        binding = null;
+        m_binding = null;
     }
 }

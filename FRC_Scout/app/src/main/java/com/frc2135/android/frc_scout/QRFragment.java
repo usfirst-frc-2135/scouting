@@ -30,7 +30,7 @@ public class QRFragment extends DialogFragment
     private static final String ARG_STATS = "stats";
     private static final String ARG_LABEL = "match_label";
 
-    private QrFragmentBinding binding;
+    private QrFragmentBinding m_binding;
 
     /**
      * Creates a new instance of QRFragment for the given match data.
@@ -61,18 +61,18 @@ public class QRFragment extends DialogFragment
     {
         Log.d(TAG, "onCreateDialog called");
 
-        binding = QrFragmentBinding.inflate(getLayoutInflater());
+        m_binding = QrFragmentBinding.inflate(getLayoutInflater());
 
         Bundle args = requireArguments();
         String stats = args.getString(ARG_STATS, "");
         String label = args.getString(ARG_LABEL, "Match Data QR");
 
         generateQRCode(stats);
-        binding.qrDataPreview.setText(stats);
+        m_binding.qrDataPreview.setText(stats);
 
         return new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle(label)
-                .setView(binding.getRoot())
+                .setView(m_binding.getRoot())
                 .setPositiveButton(android.R.string.ok, (d, w) -> dismiss())
                 .create();
     }
@@ -96,7 +96,7 @@ public class QRFragment extends DialogFragment
             Bitmap bitmap = qrCodeEncoder.encodeAsBitmap();
             if (bitmap != null)
             {
-                binding.matchDataQr.setImageBitmap(bitmap);
+                m_binding.matchDataQr.setImageBitmap(bitmap);
             }
         }
         catch (WriterException e)
@@ -134,6 +134,6 @@ public class QRFragment extends DialogFragment
     {
         super.onDestroyView();
         Log.d(TAG, "onDestroyView");
-        binding = null;
+        m_binding = null;
     }
 }
