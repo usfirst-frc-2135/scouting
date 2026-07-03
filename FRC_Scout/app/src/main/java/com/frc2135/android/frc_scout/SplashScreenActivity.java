@@ -71,6 +71,7 @@ public class SplashScreenActivity extends AppCompatActivity
      */
     private void startMainTransition()
     {
+        Log.d(TAG, "startMainTransition()");
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             Intent mainIntent = new Intent(SplashScreenActivity.this, MatchListActivity.class);
             startActivity(mainIntent);

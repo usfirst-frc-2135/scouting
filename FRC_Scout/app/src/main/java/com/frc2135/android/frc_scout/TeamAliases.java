@@ -87,6 +87,11 @@ public class TeamAliases extends BaseJSONSerializer
         sTeamAliases = null;
     }
 
+    /**
+     * Returns the event code associated with this alias mapping.
+     *
+     * @return the event code string
+     */
     public String getEventCode()
     {
         return m_eventCode;
@@ -271,6 +276,11 @@ public class TeamAliases extends BaseJSONSerializer
         }
     }
 
+    /**
+     * Checks whether team aliases have been successfully loaded from local storage.
+     *
+     * @return true if data is loaded
+     */
     public boolean isTeamAliasesLoaded()
     {
         return m_bAliasesDataLoaded;

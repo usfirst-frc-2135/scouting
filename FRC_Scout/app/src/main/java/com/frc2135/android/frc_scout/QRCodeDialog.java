@@ -106,7 +106,7 @@ public class QRCodeDialog extends DialogFragment
     }
 
     /**
-     * Formats a date into a standardized string for labeling.
+     * Formats a date into a standardized string for labeling (yyyy-MM-dd'T'HH:mm:ss).
      *
      * @param date the date to format
      * @return the formatted date string

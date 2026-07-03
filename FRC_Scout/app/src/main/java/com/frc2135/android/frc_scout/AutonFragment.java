@@ -293,8 +293,12 @@ public class AutonFragment extends Fragment
         return 0;
     }
 
+    /**
+     * Updates the MatchData object with the latest inputs from this fragment.
+     */
     public void updateAutonData()
     {
+        Log.d(TAG, "updateAutonData()");
         if (m_matchData == null)
         {
             return;

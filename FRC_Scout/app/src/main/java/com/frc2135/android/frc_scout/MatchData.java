@@ -119,76 +119,152 @@ public class MatchData
         m_other4 = "0";
     }
 
+    /**
+     * Sets the timestamp for when this match was scouted.
+     *
+     * @param d the date and time
+     */
     public void setTimestamp(Date d)
     {
         m_timestamp = d;
     }
 
+    /**
+     * Returns the timestamp for when this match was scouted.
+     *
+     * @return the date and time
+     */
     public Date getTimestamp()
     {
         return m_timestamp;
     }
 
+    /**
+     * Returns the unique identifier for this match record.
+     *
+     * @return the match UUID string
+     */
     public String getMatchID()
     {
         return m_matchID;
     }
 
+    /**
+     * Sets the unique identifier for this match record.
+     *
+     * @param id the match UUID string
+     */
     public void setMatchID(String id)
     {
         m_matchID = id;
     }
 
+    /**
+     * Returns the version of the match data format.
+     *
+     * @return the version number
+     */
     public double getVersion()
     {
         return m_version;
     }
 
+    /**
+     * Sets the version of the match data format.
+     *
+     * @param version the version number
+     */
     public void setVersion(double version)
     {
         m_version = version;
     }
 
+    /**
+     * Sets the FRC event code for this match.
+     *
+     * @param code the event code
+     */
     public void setEventCode(String code)
     {
         m_eventCode = code;
     }
 
+    /**
+     * Returns the FRC event code for this match.
+     *
+     * @return the event code
+     */
     public String getEventCode()
     {
         return m_eventCode;
     }
 
+    /**
+     * Sets the match identifier (e.g., "qm1").
+     *
+     * @param num the match number string
+     */
     public void setMatchNumber(String num)
     {
         m_matchNumber = num;
     }
 
+    /**
+     * Returns the match identifier.
+     *
+     * @return the match number string
+     */
     public String getMatchNumber()
     {
         return m_matchNumber;
     }
 
+    /**
+     * Sets the FRC team number for this match.
+     *
+     * @param num the team number string
+     */
     public void setTeamNumber(String num)
     {
         m_teamNumber = num;
     }
 
+    /**
+     * Returns the FRC team number.
+     *
+     * @return the team number string
+     */
     public String getTeamNumber()
     {
         return m_teamNumber;
     }
 
+    /**
+     * Sets the team alias if applicable (e.g. for regional variants).
+     *
+     * @param alias the team alias string
+     */
     public void setTeamAlias(String alias)
     {
         m_teamAlias = alias;
     }
 
+    /**
+     * Returns the team alias.
+     *
+     * @return the team alias string, or empty if none
+     */
     public String getTeamAlias()
     {
         return m_teamAlias != null ? m_teamAlias : "";
     }
 
+    /**
+     * Sets the name of the scout who recorded this match.
+     * Standardizes casing (e.g. "John" or "J").
+     *
+     * @param name the scout's name
+     */
     public void setScoutName(String name)
     {
         if (name == null || name.trim().isEmpty())

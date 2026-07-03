@@ -62,8 +62,12 @@ public class SetTeamIndexDialog extends DialogFragment
                 .create();
     }
 
+    /**
+     * Initializes the dropdown menu with the team index options.
+     */
     private void setupDropdown()
     {
+        Log.d(TAG, "setupDropdown()");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(),
                 R.layout.set_team_index_dropdown_item, m_options);
         m_binding.setTeamIndexField.setAdapter(adapter);
@@ -87,8 +91,12 @@ public class SetTeamIndexDialog extends DialogFragment
         m_binding.setTeamIndexField.setText(displayValue, false);
     }
 
+    /**
+     * Persists the selected team index to settings and the local filesystem.
+     */
     private void saveTeamIndex()
     {
+        Log.d(TAG, "saveTeamIndex()");
         String selection = Objects.requireNonNull(m_binding.setTeamIndexField.getText()).toString();
         String indexToSave = "0 - None";
 

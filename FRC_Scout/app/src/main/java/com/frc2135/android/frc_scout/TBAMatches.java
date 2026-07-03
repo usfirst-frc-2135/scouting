@@ -171,14 +171,14 @@ public class TBAMatches extends BaseJSONSerializer
      * Saves event data for a specific event to a JSON file.
      *
      * @param eventCode  the TBA event code
-     * @param TBAMatches the JSONArray containing match information
+     * @param eventMatches the JSONArray containing match information
      * @throws IOException if writing the file fails
      */
-    public void saveTBAMatches(String eventCode, JSONArray TBAMatches)
+    public void saveTBAMatches(String eventCode, JSONArray eventMatches)
             throws IOException
     {
         Log.d(TAG, "saveTBAMatches()");
-        if (eventCode == null || TBAMatches == null)
+        if (eventCode == null || eventMatches == null)
         {
             return;
         }
@@ -190,8 +190,8 @@ public class TBAMatches extends BaseJSONSerializer
         File file = new File(m_dataDir, eventFileName);
 
         Log.d(TAG, "Saving event data for " + eventCode + " to: " + file.getAbsolutePath());
-        writeStringToFile(file, TBAMatches.toString());
-        Log.i(TAG, "Successfully saved " + TBAMatches.length() + " matches for event: " + eventCode);
+        writeStringToFile(file, eventMatches.toString());
+        Log.i(TAG, "Successfully saved " + eventMatches.length() + " matches for event: " + eventCode);
     }
 
     /**

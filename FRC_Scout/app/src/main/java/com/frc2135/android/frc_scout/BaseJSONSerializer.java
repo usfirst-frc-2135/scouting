@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets;
  */
 public abstract class BaseJSONSerializer
 {
-    //    private static final String TAG = "BaseJSONSerializer";
+    private static final String TAG = "BaseJSONSerializer";
     protected final File m_dataDir;
 
     /**
@@ -75,8 +75,7 @@ public abstract class BaseJSONSerializer
         try (FileInputStream in = new FileInputStream(file);
              BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8)))
         {
-            String line;
-            while ((line = reader.readLine()) != null)
+            for (String line = reader.readLine(); line != null; line = reader.readLine())
             {
                 stringBuilder.append(line);
             }
@@ -112,7 +111,7 @@ public abstract class BaseJSONSerializer
     protected JSONArray loadJSONArray(File file)
             throws IOException, JSONException
     {
-        if (!file.exists())
+        if (file == null || !file.exists())
         {
             return null;
         }
@@ -154,7 +153,7 @@ public abstract class BaseJSONSerializer
     protected JSONObject loadJSONObject(File file)
             throws IOException, JSONException
     {
-        if (!file.exists())
+        if (file == null || !file.exists())
         {
             return null;
         }

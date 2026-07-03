@@ -88,11 +88,21 @@ public class ScoutNames extends BaseJSONSerializer
         sScoutNames = null;
     }
 
+    /**
+     * Returns the event code associated with this scout list.
+     *
+     * @return the event code string
+     */
     public String getEventCode()
     {
         return m_eventCode;
     }
 
+    /**
+     * Returns the raw list of scout names for the current event.
+     *
+     * @return a list of scout names
+     */
     public List<String> getScoutNames()
     {
         return m_scoutNames;
@@ -251,6 +261,11 @@ public class ScoutNames extends BaseJSONSerializer
         }
     }
 
+    /**
+     * Checks whether scout names have been successfully loaded from local storage.
+     *
+     * @return true if data is loaded
+     */
     public boolean isScoutNamesLoaded()
     {
         return m_bScoutNamesLoaded;

@@ -288,6 +288,11 @@ public class Settings extends BaseJSONSerializer
         }
     }
 
+    /**
+     * Returns the current team index string (e.g. "1").
+     *
+     * @return the team index string
+     */
     public String getTeamIndexStr()
     {
         return m_teamIndexStr;
@@ -338,6 +343,11 @@ public class Settings extends BaseJSONSerializer
         };
     }
 
+    /**
+     * Sets the team index string (e.g. "1").
+     *
+     * @param indexStr the team index string
+     */
     public void setTeamIndexStr(String indexStr)
     {
         m_teamIndexStr = (indexStr != null) ? indexStr : "0 - None";
@@ -381,11 +391,21 @@ public class Settings extends BaseJSONSerializer
         return m_mostRecentScoutName;
     }
 
+    /**
+     * Sets the most recent scout name used in the application.
+     *
+     * @param name the scout name
+     */
     public void setMostRecentScoutName(String name)
     {
         m_mostRecentScoutName = (name != null) ? name : "";
     }
 
+    /**
+     * Returns the array of unique scout names entered by the user.
+     *
+     * @return an array of scout names
+     */
     public String[] getPastScouts()
     {
         return m_pastScouts.toArray(new String[0]);

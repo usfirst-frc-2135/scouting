@@ -489,8 +489,12 @@ public class TeleopFragment extends Fragment
         return 6;
     }
 
+    /**
+     * Updates the MatchData object with the latest inputs from this fragment.
+     */
     public void updateTeleopData()
     {
+        Log.d(TAG, "updateTeleopData()");
         if (m_matchData == null)
         {
             return;

@@ -58,6 +58,11 @@ public class Preferences
         return sPreferences;
     }
 
+    /**
+     * Checks whether dark mode is currently enabled.
+     *
+     * @return true if dark mode is enabled
+     */
     public boolean isDarkMode()
     {
         return m_darkMode;

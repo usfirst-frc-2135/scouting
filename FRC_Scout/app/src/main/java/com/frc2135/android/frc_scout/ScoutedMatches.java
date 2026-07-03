@@ -6,6 +6,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -16,7 +17,7 @@ public class ScoutedMatches
 {
     private static final String TAG = "ScoutedMatches";
 
-    private final List<MatchData> m_totalMatchListData;
+    private final List<MatchData> m_scoutedMatches;
     private final MatchDataSerializer m_serializer;
     private final Context m_appContext;
 
@@ -27,7 +28,7 @@ public class ScoutedMatches
         Log.d(TAG, "ScoutedMatches constructor");
         m_appContext = appContext.getApplicationContext();
         m_serializer = new MatchDataSerializer(m_appContext);
-        m_totalMatchListData = loadInitialData();
+        m_scoutedMatches = loadInitialData();
     }
 
     private List<MatchData> loadInitialData()
@@ -50,7 +51,7 @@ public class ScoutedMatches
     }
 
     /**
-     * Returns the thread-safe singleton instance of ScoutedMatchesL.
+     * Returns the singleton instance of ScoutedMatches.
      *
      * @param context the context used to initialize the instance
      * @return the singleton instance
@@ -76,7 +77,7 @@ public class ScoutedMatches
      */
     public List<MatchData> getMatches()
     {
-        return m_totalMatchListData;
+        return m_scoutedMatches;
     }
 
     /**
@@ -91,8 +92,8 @@ public class ScoutedMatches
         {
             return null;
         }
-        return m_totalMatchListData.stream()
-                .filter(m -> matchId.equals(m.getMatchID()))
+        return m_scoutedMatches.stream()
+                .filter(m -> Objects.equals(matchId, m.getMatchID()))
                 .findFirst()
                 .orElse(null);
     }
@@ -106,7 +107,7 @@ public class ScoutedMatches
     {
         if (match != null)
         {
-            m_totalMatchListData.remove(match);
+            m_scoutedMatches.remove(match);
             m_appContext.deleteFile(match.getMatchFileName());
             Log.d(TAG, "Deleted match: " + match.getMatchID());
         }
@@ -121,12 +122,12 @@ public class ScoutedMatches
     {
         if (matchData != null)
         {
-            m_totalMatchListData.add(matchData);
+            m_scoutedMatches.add(matchData);
         }
     }
 
     /**
-     * Saves the current scout names to the settings file.
+     * Saves the current settings (scout names, etc.) to the settings file.
      *
      * @return true if successful, false otherwise
      */
@@ -176,7 +177,7 @@ public class ScoutedMatches
         try
         {
             saveScoutNames();
-            m_serializer.saveAllMatchData(new ArrayList<>(m_totalMatchListData));
+            m_serializer.saveAllMatchData(new ArrayList<>(m_scoutedMatches));
             return true;
         }
         catch (Exception e)
@@ -197,50 +198,43 @@ public class ScoutedMatches
     public ArrayList<MatchData> sortMatches(List<MatchData> list, String criteria, boolean ascending)
     {
         ArrayList<MatchData> sortedList = new ArrayList<>(list);
-        Comparator<MatchData> comparator;
+        Comparator<MatchData> finalComparator;
 
         switch (criteria)
         {
-            case "Team":
-                comparator = Comparator.comparing(m -> {
-                    try
-                    {
-                        // Use regex to extract only the digits from the team number (e.g., "frc2135" -> 2135)
-                        String digits = m.getTeamNumber().replaceAll("\\D+", "");
-                        return digits.isEmpty() ? Integer.MAX_VALUE : Integer.parseInt(digits);
-                    }
-                    catch (NumberFormatException e)
-                    {
-                        return Integer.MAX_VALUE;
-                    }
-                });
-                break;
-            case "Match":
-                comparator = Comparator.comparing(m -> {
-                    try
-                    {
-                        // Use regex to extract only the digits from the match number (e.g., "qm12" -> 12)
-                        String digits = m.getMatchNumber().replaceAll("\\D+", "");
-                        return digits.isEmpty() ? Integer.MAX_VALUE : Integer.parseInt(digits);
-                    }
-                    catch (NumberFormatException e)
-                    {
-                        return Integer.MAX_VALUE;
-                    }
-                });
-                break;
-            case "Date":
-            default:
-                comparator = Comparator.comparing(MatchData::getTimestamp, Comparator.nullsLast(Comparator.naturalOrder()));
-                break;
+            case "Team" -> finalComparator = Comparator.comparing(m -> {
+                try
+                {
+                    // Use regex to extract only the digits from the team number (e.g., "frc2135" -> 2135)
+                    String digits = m.getTeamNumber().replaceAll("\\D+", "");
+                    return digits.isEmpty() ? Integer.MAX_VALUE : Integer.parseInt(digits);
+                }
+                catch (NumberFormatException e)
+                {
+                    return Integer.MAX_VALUE;
+                }
+            });
+            case "Match" -> finalComparator = Comparator.comparing(m -> {
+                try
+                {
+                    // Use regex to extract only the digits from the match number (e.g., "qm12" -> 12)
+                    String digits = m.getMatchNumber().replaceAll("\\D+", "");
+                    return digits.isEmpty() ? Integer.MAX_VALUE : Integer.parseInt(digits);
+                }
+                catch (NumberFormatException e)
+                {
+                    return Integer.MAX_VALUE;
+                }
+            });
+            default -> finalComparator = Comparator.comparing(MatchData::getTimestamp, Comparator.nullsLast(Comparator.naturalOrder()));
         }
 
         if (!ascending)
         {
-            comparator = comparator.reversed();
+            finalComparator = finalComparator.reversed();
         }
 
-        sortedList.sort(comparator);
+        sortedList.sort(finalComparator);
         return sortedList;
     }
 
@@ -265,19 +259,19 @@ public class ScoutedMatches
             boolean matches = true;
             if (team != null && !team.isEmpty())
             {
-                matches = team.equals(m.getTeamNumber());
+                matches = Objects.equals(team, m.getTeamNumber());
             }
             if (matches && event != null && !event.isEmpty())
             {
-                matches = event.equals(m.getEventCode());
+                matches = Objects.equals(event, m.getEventCode());
             }
             if (matches && scout != null && !scout.isEmpty())
             {
-                matches = scout.equals(m.getScoutName());
+                matches = Objects.equals(scout, m.getScoutName());
             }
             if (matches && matchNum != null && !matchNum.isEmpty())
             {
-                matches = matchNum.equals(m.getMatchNumber());
+                matches = Objects.equals(matchNum, m.getMatchNumber());
             }
             return matches;
         }).collect(Collectors.toList());
@@ -288,7 +282,7 @@ public class ScoutedMatches
      */
     public String[] listTeams()
     {
-        List<String> result = m_totalMatchListData.stream()
+        List<String> result = m_scoutedMatches.stream()
                 .map(MatchData::getTeamNumber)
                 .distinct()
                 .sorted()
@@ -303,7 +297,7 @@ public class ScoutedMatches
      */
     public String[] listEventCodes()
     {
-        List<String> result = m_totalMatchListData.stream()
+        List<String> result = m_scoutedMatches.stream()
                 .map(MatchData::getEventCode)
                 .distinct()
                 .sorted()
@@ -318,7 +312,7 @@ public class ScoutedMatches
      */
     public String[] listScouts()
     {
-        List<String> result = m_totalMatchListData.stream()
+        List<String> result = m_scoutedMatches.stream()
                 .map(MatchData::getScoutName)
                 .distinct()
                 .sorted()

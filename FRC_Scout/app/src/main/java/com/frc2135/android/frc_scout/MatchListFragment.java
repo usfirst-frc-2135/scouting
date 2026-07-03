@@ -91,8 +91,12 @@ public class MatchListFragment extends Fragment
         refreshList();
     }
 
+    /**
+     * Refreshes the list of displayed matches based on current filters and sorting.
+     */
     private void refreshList()
     {
+        Log.d(TAG, "refreshList()");
         ScoutedMatches data = ScoutedMatches.getInstance(requireContext());
         List<MatchData> allMatches = data.getMatches();
         m_displayedMatches = data.filterMatches(allMatches, m_teamFilter, m_eventFilter, m_scoutFilter, m_matchFilter);

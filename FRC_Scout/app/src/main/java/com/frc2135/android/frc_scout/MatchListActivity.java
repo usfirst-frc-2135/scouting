@@ -55,8 +55,12 @@ public class MatchListActivity extends AppCompatActivity
         });
     }
 
+    /**
+     * Updates the toolbar text with the current team index from settings.
+     */
     public void updateToolbarTeamIndex()
     {
+        Log.d(TAG, "updateToolbarTeamIndex()");
         String indexStr = Settings.getInstance(this).getTeamIndexStr();
         m_binding.toolbarTeamIndex.setText(String.format(getString(R.string.team_index_label), indexStr));
     }

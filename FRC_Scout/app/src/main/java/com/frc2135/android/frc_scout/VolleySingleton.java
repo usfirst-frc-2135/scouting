@@ -21,6 +21,12 @@ public class VolleySingleton
         mRequestQueue = getRequestQueue();
     }
 
+    /**
+     * Returns the singleton instance of VolleySingleton.
+     *
+     * @param context the context used to initialize the instance
+     * @return the singleton VolleySingleton instance
+     */
     public static VolleySingleton getInstance(Context context)
     {
         Log.d(TAG, "getInstance()");
@@ -37,6 +43,11 @@ public class VolleySingleton
         return sInstance;
     }
 
+    /**
+     * Returns the request queue for Volley.
+     *
+     * @return the {@link RequestQueue}
+     */
     public RequestQueue getRequestQueue()
     {
         if (mRequestQueue == null)
@@ -48,6 +59,12 @@ public class VolleySingleton
         return mRequestQueue;
     }
 
+    /**
+     * Adds a request to the Volley request queue.
+     *
+     * @param req the request to add
+     * @param <T> the type of the request
+     */
     public <T> void addToRequestQueue(Request<T> req)
     {
         getRequestQueue().add(req);

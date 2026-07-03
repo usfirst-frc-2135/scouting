@@ -113,6 +113,7 @@ public class MatchFilterDialog extends DialogFragment
      */
     private void setupFilters()
     {
+        Log.d(TAG, "setupFilters()");
         ScoutedMatches data = ScoutedMatches.getInstance(requireContext());
 
         // Event Code Filter

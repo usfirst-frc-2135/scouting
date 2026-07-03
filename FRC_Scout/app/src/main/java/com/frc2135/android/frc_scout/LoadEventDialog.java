@@ -35,10 +35,12 @@ import java.util.Objects;
 public class LoadEventDialog extends DialogFragment
 {
     private static final String TAG = "LoadEventDialog";
+
     /**
      * The base URL for The Blue Alliance API v3 event matches endpoint.
      */
     public static final String TBA_EVENT_MATCHES_URL = "https://www.thebluealliance.com/api/v3/event/";
+
     /**
      * The authentication key for The Blue Alliance API.
      */
@@ -73,9 +75,13 @@ public class LoadEventDialog extends DialogFragment
 
         // Pre-fill with current event code if available
         Settings settings = Settings.getInstance(requireContext());
-        if (settings != null && !settings.getEventCode().equals("EVTX") && !settings.getEventCode().isEmpty())
+        if (settings != null)
         {
-            m_binding.eventCodeField.setText(settings.getEventCode());
+            String currentCode = settings.getEventCode();
+            if (!Objects.equals(currentCode, "EVTX") && !currentCode.isEmpty())
+            {
+                m_binding.eventCodeField.setText(currentCode);
+            }
         }
 
         m_binding.eventCodeField.addTextChangedListener(new TextWatcher()
@@ -148,7 +154,7 @@ public class LoadEventDialog extends DialogFragment
         }
 
         m_binding.eventCodeLayout.setError(null);
-        downloadEventMatches(dialog, eventCode);
+        downloadTBAMatches(dialog, eventCode);
     }
 
     /**
@@ -159,7 +165,7 @@ public class LoadEventDialog extends DialogFragment
      * @param dialog    the dialog instance to update or dismiss upon completion
      * @param eventCode the TBA event code (e.g., "2026casac")
      */
-    private void downloadEventMatches(AlertDialog dialog, String eventCode)
+    private void downloadTBAMatches(AlertDialog dialog, String eventCode)
     {
         Log.d(TAG, "downloadTBAMatches for: " + eventCode);
 
@@ -205,17 +211,12 @@ public class LoadEventDialog extends DialogFragment
                     StringBuilder msg = new StringBuilder("Failed to download matches. ");
                     if (error.networkResponse != null)
                     {
-                        if (error.networkResponse.statusCode == 401)
+                        int statusCode = error.networkResponse.statusCode;
+                        switch (statusCode)
                         {
-                            msg.append("Invalid TBA API Key.");
-                        }
-                        else if (error.networkResponse.statusCode == 404)
-                        {
-                            msg.append("Event code '").append(eventCode).append("' not found.");
-                        }
-                        else
-                        {
-                            msg.append("Server error (").append(error.networkResponse.statusCode).append(").");
+                            case 401 -> msg.append("Invalid TBA API Key.");
+                            case 404 -> msg.append("Event code '").append(eventCode).append("' not found.");
+                            default -> msg.append("Server error (").append(statusCode).append(").");
                         }
                     }
                     else

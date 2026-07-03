@@ -79,6 +79,14 @@ public class LoadTeamAliasesDialog extends DialogFragment
         downloadAliases(eventCode, dialog);
     }
 
+    /**
+     * Downloads team alias mapping data from the team website for the specified event code.
+     * Updates the UI state to show loading during the request.
+     * On success, saves the data locally and dismisses the dialog.
+     *
+     * @param eventCode the FRC event code (e.g., "2026casac")
+     * @param dialog    the dialog instance to update or dismiss upon completion
+     */
     private void downloadAliases(String eventCode, AlertDialog dialog)
     {
         Log.i(TAG, "Starting aliases download for: " + eventCode);
@@ -124,6 +132,14 @@ public class LoadTeamAliasesDialog extends DialogFragment
         VolleySingleton.getInstance(requireContext()).addToRequestQueue(request);
     }
 
+    /**
+     * Saves the downloaded team alias mappings to internal storage and updates application state.
+     *
+     * @param eventCode the FRC event code
+     * @param response  the JSON array of alias mappings received from the API
+     * @param context   the application context
+     * @throws IOException if saving to disk fails
+     */
     private void saveAliases(String eventCode, org.json.JSONArray response, Context context)
             throws IOException
     {

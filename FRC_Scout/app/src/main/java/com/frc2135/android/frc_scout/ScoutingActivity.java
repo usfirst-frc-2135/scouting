@@ -135,6 +135,7 @@ public class ScoutingActivity extends AppCompatActivity
      */
     private void updateCurrentFragmentData()
     {
+        Log.d(TAG, "updateCurrentFragmentData()");
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
         if (f instanceof AutonFragment)
         {

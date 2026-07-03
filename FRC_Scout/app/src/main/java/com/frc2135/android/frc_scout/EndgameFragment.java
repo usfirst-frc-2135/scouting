@@ -302,8 +302,12 @@ public class EndgameFragment extends Fragment
         return 0;
     }
 
+    /**
+     * Updates the MatchData object with the latest inputs from this fragment.
+     */
     public void updateEndgameData()
     {
+        Log.d(TAG, "updateEndgameData()");
         if (m_matchData == null || m_binding == null)
         {
             return;

@@ -321,6 +321,7 @@ public class PreMatchActivity extends AppCompatActivity
      */
     public void updatePreMatchData()
     {
+        Log.d(TAG, "updatePreMatchData()");
         if (m_matchData == null)
         {
             return;
