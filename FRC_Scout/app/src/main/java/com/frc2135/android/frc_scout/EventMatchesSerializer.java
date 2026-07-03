@@ -5,7 +5,6 @@ import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.BufferedReader;
@@ -26,7 +25,6 @@ import java.util.Locale;
 public class EventMatchesSerializer
 {
     private static final String TAG = "EventMatchesSerializer";
-    private static final String CURRENT_EVENT_CODE_FILENAME = "current_event_code.json";
     private static final String MATCHES_FILE_SUFFIX = "_matches.json";
 
     private final File m_dataDir;
@@ -162,68 +160,6 @@ public class EventMatchesSerializer
     private String getEventFileName(String eventCode)
     {
         return eventCode.trim().toLowerCase(Locale.US) + MATCHES_FILE_SUFFIX;
-    }
-
-    /**
-     * Persists the current event configuration to internal storage.
-     *
-     * @param eventMatchesJSON the JSONObject representing the current event matches
-     * @throws IOException if writing the file fails
-     */
-    public void saveCurrentEventCode(JSONObject eventMatchesJSON)
-            throws IOException
-    {
-        Log.d(TAG, "saveCurrentEventCode()");
-        if (eventMatchesJSON == null)
-        {
-            return;
-        }
-
-        File file = new File(m_dataDir, CURRENT_EVENT_CODE_FILENAME);
-        Log.d(TAG, "Saving current event configuration to: " + file.getAbsolutePath());
-
-        try
-        {
-            writeStringToFile(file, eventMatchesJSON.toString());
-            Log.i(TAG, "Successfully saved current event matches configuration");
-        }
-        catch (IOException e)
-        {
-            Log.e(TAG, "Error saving current event matches: " + e.getMessage(), e);
-            throw e;
-        }
-    }
-
-    /**
-     * Loads the current event configuration from internal storage.
-     *
-     * @return a {@link CurrentEventCode} instance, or null if no saved data is found
-     * @throws IOException   if reading the file fails
-     * @throws JSONException if parsing the JSON data fails
-     */
-    public CurrentEventCode loadCurrentEventCode()
-            throws IOException, JSONException
-    {
-        Log.d(TAG, "loadCurrentEventCode()");
-        File file = new File(m_dataDir, CURRENT_EVENT_CODE_FILENAME);
-        if (!file.exists())
-        {
-            Log.d(TAG, "No current event code file found at: " + file.getAbsolutePath());
-            return null;
-        }
-
-        Log.d(TAG, "Loading current event code from: " + file.getAbsolutePath());
-        String jsonString = readStringFromFile(file);
-
-        if (jsonString.isEmpty())
-        {
-            return null;
-        }
-
-        JSONObject object = (JSONObject) new JSONTokener(jsonString).nextValue();
-        CurrentEventCode currentEventCode = new CurrentEventCode(object);
-        Log.i(TAG, "Successfully loaded current event code: " + currentEventCode.getEventCode());
-        return currentEventCode;
     }
 
     /**

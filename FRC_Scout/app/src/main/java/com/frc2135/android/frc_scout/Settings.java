@@ -17,6 +17,7 @@ public class Settings
     private static final String FILENAME = "settings.json";
 
     private final List<String> m_pastScouts;
+    private String m_eventCode;
     private String m_teamIndexStr;
     private boolean m_scoringTableSide;
     private String m_mostRecentScoutName;
@@ -50,6 +51,7 @@ public class Settings
     {
         Log.d(TAG, "Settings constructor");
         m_pastScouts = new ArrayList<>();
+        m_eventCode = "";
         m_teamIndexStr = "0 - None";
         m_scoringTableSide = false;
         m_mostRecentScoutName = "";
@@ -64,6 +66,7 @@ public class Settings
             if (settings != null)
             {
                 Collections.addAll(m_pastScouts, settings.getPastScouts());
+                m_eventCode = settings.getEventCode();
                 m_teamIndexStr = settings.getTeamIndexStr();
                 m_scoringTableSide = settings.getScoringTableSide();
             }
@@ -81,6 +84,7 @@ public class Settings
     {
         Log.d(TAG, "Settings default constructor");
         m_pastScouts = new ArrayList<>();
+        m_eventCode = "";
         m_teamIndexStr = "0 - None";
         m_scoringTableSide = false;
         m_mostRecentScoutName = "";
@@ -113,6 +117,16 @@ public class Settings
     public String getMostRecentMatchNumber()
     {
         return m_mostRecentMatchNumber;
+    }
+
+    public void setEventCode(String eventCode)
+    {
+        m_eventCode = (eventCode != null) ? eventCode : "";
+    }
+
+    public String getEventCode()
+    {
+        return m_eventCode;
     }
 
     public void setMostRecentMatchNumber(String value)

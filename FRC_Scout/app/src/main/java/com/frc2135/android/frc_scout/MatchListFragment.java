@@ -25,9 +25,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.frc2135.android.frc_scout.databinding.MatchListFragmentBinding;
 import com.frc2135.android.frc_scout.databinding.MatchListItemBinding;
 
-import org.json.JSONException;
-
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -124,21 +121,14 @@ public class MatchListFragment extends Fragment
     private void setupNewMatchButton()
     {
         m_binding.startMatch.setOnClickListener(view -> {
-            try
-            {
-                MatchData newMatch = new MatchData();
-                newMatch.setEventCode(CurrentEventCode.getInstance(requireContext()).getEventCode());
-                MatchListData.getInstance(requireContext()).addMatch(newMatch);
+            MatchData newMatch = new MatchData();
+            newMatch.setEventCode(Settings.getInstance(requireContext()).getEventCode());
+            MatchListData.getInstance(requireContext()).addMatch(newMatch);
 
-                Intent intent = new Intent(getActivity(), PreMatchActivity.class);
-                intent.putExtra("match_ID", newMatch.getMatchID());
-                intent.putExtra("in_edit", "no");
-                startActivity(intent);
-            }
-            catch (IOException | JSONException e)
-            {
-                Log.e(TAG, "Error starting new match", e);
-            }
+            Intent intent = new Intent(getActivity(), PreMatchActivity.class);
+            intent.putExtra("match_ID", newMatch.getMatchID());
+            intent.putExtra("in_edit", "no");
+            startActivity(intent);
         });
     }
 

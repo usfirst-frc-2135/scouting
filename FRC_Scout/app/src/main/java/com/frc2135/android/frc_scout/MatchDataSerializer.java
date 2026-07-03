@@ -79,6 +79,7 @@ public class MatchDataSerializer
     private static final String JSON_KEY_OTHER4 = "other4";
 
     // Settings JSON Keys
+    private static final String KEY_EVENT_CODE = "eventCode";
     private static final String KEY_PAST_SCOUTS = "pastScouts";
     private static final String KEY_SCOUT_NAME_PREFIX = "scoutName"; // Legacy key prefix
     private static final String KEY_TEAM_INDEX = "teamIndex";
@@ -366,6 +367,8 @@ public class MatchDataSerializer
     {
         JSONObject json = new JSONObject();
 
+        json.put(KEY_EVENT_CODE, s.getEventCode());
+
         JSONArray scoutsArray = new JSONArray();
         for (String name : s.getPastScouts())
         {
@@ -383,6 +386,8 @@ public class MatchDataSerializer
             throws JSONException
     {
         Settings s = new Settings();
+        s.setEventCode(json.optString(KEY_EVENT_CODE, ""));
+
         if (json.has(KEY_PAST_SCOUTS))
         {
             JSONArray scoutsArray = json.getJSONArray(KEY_PAST_SCOUTS);

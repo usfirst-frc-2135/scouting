@@ -21,7 +21,6 @@ import com.frc2135.android.frc_scout.databinding.LoadEventDialogBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -73,17 +72,10 @@ public class LoadEventDialog extends DialogFragment
         m_binding = LoadEventDialogBinding.inflate(inflater);
 
         // Pre-fill with current event code if available
-        try
+        Settings settings = Settings.getInstance(requireContext());
+        if (settings != null && !settings.getEventCode().equals("EVTX") && !settings.getEventCode().isEmpty())
         {
-            CurrentEventCode currentEventCode = CurrentEventCode.getInstance(requireContext());
-            if (currentEventCode != null && !currentEventCode.getEventCode().equals("EVTX"))
-            {
-                m_binding.eventCodeField.setText(currentEventCode.getEventCode());
-            }
-        }
-        catch (IOException | JSONException e)
-        {
-            Log.w(TAG, "Failed to load current event code for pre-fill", e);
+            m_binding.eventCodeField.setText(settings.getEventCode());
         }
 
         m_binding.eventCodeField.addTextChangedListener(new TextWatcher()
@@ -201,7 +193,7 @@ public class LoadEventDialog extends DialogFragment
                             dismiss();
                         }
                     }
-                    catch (JSONException | IOException e)
+                    catch (IOException e)
                     {
                         Log.e(TAG, "Error saving event data: " + e.getMessage(), e);
                         Toast.makeText(context, "Error saving event matches locally", Toast.LENGTH_SHORT).show();
@@ -270,18 +262,17 @@ public class LoadEventDialog extends DialogFragment
      * @param context   the application context
      * @param eventCode the TBA event code
      * @param response  the JSON array of matches received from the API
-     * @throws JSONException if parsing the response fails
-     * @throws IOException   if saving to disk fails
+     * @throws IOException if saving to disk fails
      */
     private void saveEventMatches(Context context, String eventCode, JSONArray response)
-            throws JSONException, IOException
+            throws IOException
     {
         EventMatchesSerializer serializer = new EventMatchesSerializer(context);
 
         // Update current event code settings
-        CurrentEventCode currentEventCode = CurrentEventCode.getInstance(context);
-        currentEventCode.setEventCode(eventCode);
-        serializer.saveCurrentEventCode(currentEventCode.toJSON());
+        Settings settings = Settings.getInstance(context);
+        settings.setEventCode(eventCode);
+        MatchListData.getInstance(context).saveScoutNames();
 
         // Save new event data
         serializer.saveEventMatches(eventCode, response);
