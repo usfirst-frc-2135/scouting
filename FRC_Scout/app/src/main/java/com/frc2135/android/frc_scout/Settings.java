@@ -57,7 +57,7 @@ public class Settings
         m_mostRecentScoutName = "";
         m_mostRecentMatchNumber = "";
 
-        MatchDataSerializer serializer = new MatchDataSerializer(context.getApplicationContext(), FILENAME);
+        SettingsSerializer serializer = new SettingsSerializer(context.getApplicationContext(), FILENAME);
 
         try
         {

@@ -27,7 +27,7 @@ public class MatchListData
     {
         Log.d(TAG, "MatchListData constructor");
         m_appContext = appContext.getApplicationContext();
-        m_serializer = new MatchDataSerializer(m_appContext, FILENAME);
+        m_serializer = new MatchDataSerializer(m_appContext);
         m_totalMatchListData = loadInitialData();
     }
 
@@ -135,7 +135,8 @@ public class MatchListData
     {
         try
         {
-            m_serializer.saveSettings(Settings.getInstance(m_appContext));
+            SettingsSerializer serializer = new SettingsSerializer(m_appContext, FILENAME);
+            serializer.saveSettings(Settings.getInstance(m_appContext));
             return true;
         }
         catch (Exception e)
@@ -176,7 +177,8 @@ public class MatchListData
     {
         try
         {
-            m_serializer.saveAllData(new ArrayList<>(m_totalMatchListData));
+            saveScoutNames();
+            m_serializer.saveAllMatchData(new ArrayList<>(m_totalMatchListData));
             return true;
         }
         catch (Exception e)

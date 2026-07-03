@@ -1,6 +1,5 @@
 package com.frc2135.android.frc_scout;
 
-import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -15,8 +14,8 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Serializer class for managing match data and scout configuration persistence.
- * Handles individual match JSON files and the main settings configuration.
+ * Serializer class for managing match data persistence.
+ * Handles individual match JSON files.
  */
 public class MatchDataSerializer extends BaseJSONSerializer
 {
@@ -31,8 +30,6 @@ public class MatchDataSerializer extends BaseJSONSerializer
     private static final String JSON_KEY_TEAM_NUMBER = "teamNumber";
     private static final String JSON_KEY_TEAM_ALIAS = "teamAlias";
     private static final String JSON_KEY_SCOUT_NAME = "scoutName";
-
-    // Game-specific match data json keys
 
     // Auton data keys
     private static final String JSON_KEY_PRELOAD = "preload";
@@ -69,34 +66,10 @@ public class MatchDataSerializer extends BaseJSONSerializer
     private static final String JSON_KEY_OTHER3 = "other3";
     private static final String JSON_KEY_OTHER4 = "other4";
 
-    // Settings JSON Keys
-    private static final String KEY_EVENT_CODE = "eventCode";
-    private static final String KEY_PAST_SCOUTS = "pastScouts";
-    private static final String KEY_SCOUT_NAME_PREFIX = "scoutName"; // Legacy key prefix
-    private static final String KEY_TEAM_INDEX = "teamIndex";
-    private static final String KEY_SCORING_TABLE_SIDE = "scoringTableSide";
-
-    private final Context m_context;
-    private final String m_settingsFileName;
-
-    public MatchDataSerializer(Context context, String settingsFileName)
+    public MatchDataSerializer(android.content.Context context)
     {
         super(context);
         Log.d(TAG, "MatchDataSerializer constructor");
-        m_context = context.getApplicationContext();
-        m_settingsFileName = settingsFileName;
-    }
-
-    public void saveSettings(Settings settings)
-            throws JSONException, IOException
-    {
-        Log.d(TAG, "Saving settings configuration");
-
-        JSONArray array = new JSONArray();
-        array.put(serializeSettings(settings));
-
-        File file = new File(m_dataDir, m_settingsFileName);
-        saveJSONArray(file, array);
     }
 
     public void saveMatchData(MatchData matchData)
@@ -131,14 +104,6 @@ public class MatchDataSerializer extends BaseJSONSerializer
         }
     }
 
-    public void saveAllData(List<MatchData> matchHistory)
-            throws JSONException, IOException
-    {
-        Log.d(TAG, "saveAllData()");
-        saveSettings(Settings.getInstance(m_context));
-        saveAllMatchData(matchHistory);
-    }
-
     public ArrayList<MatchData> loadMatchData()
     {
         Log.d(TAG, "loadMatchData()");
@@ -155,7 +120,7 @@ public class MatchDataSerializer extends BaseJSONSerializer
         {
             String filename = file.getName();
             // Match files are identified by their UUID-based filename length (usually 36 chars + .json)
-            if (filename.length() > 30 && filename.endsWith(".json") && !filename.contains("matches") && !filename.contains("aliases") && !filename.contains("scoutNames") && !filename.equals(m_settingsFileName))
+            if (filename.length() > 30 && filename.endsWith(".json") && !filename.contains("matches") && !filename.contains("aliases") && !filename.contains("scoutNames"))
             {
                 try
                 {
@@ -181,22 +146,6 @@ public class MatchDataSerializer extends BaseJSONSerializer
             throw new JSONException("Empty or invalid match data array in file: " + file.getName());
         }
         return deserializeMatchData(array.getJSONObject(0));
-    }
-
-    public Settings loadSettings()
-            throws IOException, JSONException
-    {
-        Log.d(TAG, "loadSettings()");
-        File file = new File(m_dataDir, m_settingsFileName);
-        JSONArray array = loadJSONArray(file);
-        if (array == null || array.length() == 0)
-        {
-            return null;
-        }
-
-        Settings settings = deserializeSettings(array.getJSONObject(0));
-        Log.i(TAG, "Successfully loaded settings file");
-        return settings;
     }
 
     public JSONObject serializeMatchData(MatchData m)
@@ -253,7 +202,6 @@ public class MatchDataSerializer extends BaseJSONSerializer
     {
         MatchData m = new MatchData();
 
-        // Remove old date format in 2027
         m.setMatchID(json.optString(JSON_KEY_MATCH_ID, m.getMatchID()));
         String dateStr = json.optString(JSON_KEY_TIMESTAMP, "");
         SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US);
@@ -315,57 +263,5 @@ public class MatchDataSerializer extends BaseJSONSerializer
         m.setOther4(json.optString(JSON_KEY_OTHER4, "0"));
 
         return m;
-    }
-
-    public JSONObject serializeSettings(Settings s)
-            throws JSONException
-    {
-        JSONObject json = new JSONObject();
-
-        json.put(KEY_EVENT_CODE, s.getEventCode());
-
-        JSONArray scoutsArray = new JSONArray();
-        for (String name : s.getPastScouts())
-        {
-            scoutsArray.put(name);
-        }
-        json.put(KEY_PAST_SCOUTS, scoutsArray);
-
-        json.put(KEY_TEAM_INDEX, s.getTeamIndexStr());
-        json.put(KEY_SCORING_TABLE_SIDE, s.getScoringTableSide() ? 1 : 0);
-
-        return json;
-    }
-
-    public Settings deserializeSettings(JSONObject json)
-            throws JSONException
-    {
-        Settings s = new Settings();
-        s.setEventCode(json.optString(KEY_EVENT_CODE, ""));
-
-        if (json.has(KEY_PAST_SCOUTS))
-        {
-            JSONArray scoutsArray = json.getJSONArray(KEY_PAST_SCOUTS);
-            for (int i = 0; i < scoutsArray.length(); i++)
-            {
-                s.addPastScoutNames(scoutsArray.getString(i));
-            }
-        }
-        else
-        {
-            // Fallback to legacy format: scoutName0, scoutName1, ...
-            int i = 0;
-            while (json.has(KEY_SCOUT_NAME_PREFIX + i))
-            {
-                s.addPastScoutNames(json.getString(KEY_SCOUT_NAME_PREFIX + i));
-                i++;
-            }
-        }
-
-        s.setTeamIndexStr(json.optString(KEY_TEAM_INDEX, "0 - None"));
-        int scoringTableSideVal = json.optInt(KEY_SCORING_TABLE_SIDE, 0);
-        s.setScoringTableSide(scoringTableSideVal == 1);
-
-        return s;
     }
 }
