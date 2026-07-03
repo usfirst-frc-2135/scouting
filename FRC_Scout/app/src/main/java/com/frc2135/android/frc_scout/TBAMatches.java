@@ -17,9 +17,9 @@ import java.util.Locale;
  * Loads and parses match information from a JSON file specific to an event code.
  * Handles its own persistence by extending {@link BaseJSONSerializer}.
  */
-public class EventMatches extends BaseJSONSerializer
+public class TBAMatches extends BaseJSONSerializer
 {
-    private static final String TAG = "EventMatches";
+    private static final String TAG = "TBAMatches";
     private static final String MATCHES_FILE_SUFFIX = "_matches.json";
 
     // JSON Keys used by the blue alliance
@@ -33,79 +33,79 @@ public class EventMatches extends BaseJSONSerializer
     // Data members
     private String m_eventCode;
     private JSONArray m_jsonData;
-    private boolean m_bEventMatchesLoaded;
+    private boolean m_bTBAMatchesLoaded;
 
-    private static volatile EventMatches sEventMatches;
+    private static volatile TBAMatches sTBAMatches;
 
-    private EventMatches(Context context, String eventCode)
+    private TBAMatches(Context context, String eventCode)
     {
         super(context);
-        Log.d(TAG, "EventMatches constructor");
+        Log.d(TAG, "TBAMatches constructor");
         m_eventCode = eventCode;
-        m_bEventMatchesLoaded = false;
+        m_bTBAMatchesLoaded = false;
         m_jsonData = null;
     }
 
     /**
-     * Returns the singleton instance of EventMatches using the event code from Settings.
+     * Returns the singleton instance of TBAMatches using the event code from Settings.
      *
      * @param context the context used for file operations
-     * @return the singleton EventMatches instance
+     * @return the singleton TBAMatches instance
      */
-    public static EventMatches getInstance(Context context)
+    public static TBAMatches getInstance(Context context)
     {
         String eventCode = Settings.getInstance(context).getEventCode();
         return getInstance(context, eventCode, false);
     }
 
     /**
-     * Returns the singleton instance of EventMatches.
+     * Returns the singleton instance of TBAMatches.
      * If the event code changes or a reload is forced, the data is reloaded.
      *
      * @param context      the context used for file operations and Toast messages
      * @param eventCode    the FRC event code
      * @param bForceReload whether to force a reload of the JSON data
-     * @return the singleton EventMatches instance
+     * @return the singleton TBAMatches instance
      */
-    public static EventMatches getInstance(Context context, String eventCode, boolean bForceReload)
+    public static TBAMatches getInstance(Context context, String eventCode, boolean bForceReload)
     {
         Log.d(TAG, "getInstance()");
-        if (sEventMatches == null)
+        if (sTBAMatches == null)
         {
-            synchronized (EventMatches.class)
+            synchronized (TBAMatches.class)
             {
-                if (sEventMatches == null)
+                if (sTBAMatches == null)
                 {
-                    Log.d(TAG, "Creating new sEventMatches for eventCode: " + eventCode);
-                    sEventMatches = new EventMatches(context, eventCode);
-                    sEventMatches.readEventMatchesJSON(context, true);
+                    Log.d(TAG, "Creating new sTBAMatches for eventCode: " + eventCode);
+                    sTBAMatches = new TBAMatches(context, eventCode);
+                    sTBAMatches.readTBAMatchesJSON(context, true);
                 }
             }
         }
 
         // Handle event code change or forced reload
-        synchronized (EventMatches.class)
+        synchronized (TBAMatches.class)
         {
-            String currentCode = sEventMatches.getEventCode();
+            String currentCode = sTBAMatches.getEventCode();
             if (bForceReload || !currentCode.equalsIgnoreCase(eventCode))
             {
                 Log.d(TAG, "Updating event data: " + currentCode + " -> " + eventCode);
-                sEventMatches.setEventCode(eventCode);
-                sEventMatches.readEventMatchesJSON(context, true);
+                sTBAMatches.setEventCode(eventCode);
+                sTBAMatches.readTBAMatchesJSON(context, true);
             }
         }
-        return sEventMatches;
+        return sTBAMatches;
     }
 
     /**
-     * Clears the singleton instance of EventMatches.
+     * Clears the singleton instance of TBAMatches.
      */
     public static void clear()
     {
-        synchronized (EventMatches.class)
+        synchronized (TBAMatches.class)
         {
-            Log.d(TAG, "Clearing EventMatches instance");
-            sEventMatches = null;
+            Log.d(TAG, "Clearing TBAMatches instance");
+            sTBAMatches = null;
         }
     }
 
@@ -122,7 +122,7 @@ public class EventMatches extends BaseJSONSerializer
     private void setEventCode(String eventCode)
     {
         m_eventCode = eventCode;
-        m_bEventMatchesLoaded = false;
+        m_bTBAMatchesLoaded = false;
         m_jsonData = null;
     }
 
@@ -132,7 +132,7 @@ public class EventMatches extends BaseJSONSerializer
      * @param context the context used to open the file and show Toasts
      * @param bSilent if true, error Toast messages are suppressed
      */
-    public void readEventMatchesJSON(Context context, boolean bSilent)
+    public void readTBAMatchesJSON(Context context, boolean bSilent)
     {
         if (m_eventCode == null || m_eventCode.trim().isEmpty())
         {
@@ -143,10 +143,10 @@ public class EventMatches extends BaseJSONSerializer
 
         try
         {
-            m_jsonData = loadEventMatches(m_eventCode);
+            m_jsonData = loadTBAMatches(m_eventCode);
             if (m_jsonData != null)
             {
-                m_bEventMatchesLoaded = true;
+                m_bTBAMatchesLoaded = true;
 
                 String msg = "Successfully loaded " + m_eventCode + " matches";
                 Log.d(TAG, msg);
@@ -170,28 +170,28 @@ public class EventMatches extends BaseJSONSerializer
     /**
      * Saves event data for a specific event to a JSON file.
      *
-     * @param eventCode    the TBA event code
-     * @param eventMatches the JSONArray containing match information
+     * @param eventCode  the TBA event code
+     * @param TBAMatches the JSONArray containing match information
      * @throws IOException if writing the file fails
      */
-    public void saveEventMatches(String eventCode, JSONArray eventMatches)
+    public void saveTBAMatches(String eventCode, JSONArray TBAMatches)
             throws IOException
     {
-        Log.d(TAG, "saveEventMatches()");
-        if (eventCode == null || eventMatches == null)
+        Log.d(TAG, "saveTBAMatches()");
+        if (eventCode == null || TBAMatches == null)
         {
             return;
         }
 
         // Cleanup existing matches file if it exists
-        deleteEventMatches(eventCode);
+        deleteTBAMatches(eventCode);
 
         String eventFileName = getEventFileName(eventCode);
         File file = new File(m_dataDir, eventFileName);
 
         Log.d(TAG, "Saving event data for " + eventCode + " to: " + file.getAbsolutePath());
-        writeStringToFile(file, eventMatches.toString());
-        Log.i(TAG, "Successfully saved " + eventMatches.length() + " matches for event: " + eventCode);
+        writeStringToFile(file, TBAMatches.toString());
+        Log.i(TAG, "Successfully saved " + TBAMatches.length() + " matches for event: " + eventCode);
     }
 
     /**
@@ -202,10 +202,10 @@ public class EventMatches extends BaseJSONSerializer
      * @throws IOException   if reading the file fails
      * @throws JSONException if parsing the JSON data fails
      */
-    public JSONArray loadEventMatches(String eventCode)
+    public JSONArray loadTBAMatches(String eventCode)
             throws IOException, JSONException
     {
-        Log.d(TAG, "loadEventMatches()");
+        Log.d(TAG, "loadTBAMatches()");
         if (eventCode == null || eventCode.trim().isEmpty())
         {
             return null;
@@ -223,9 +223,9 @@ public class EventMatches extends BaseJSONSerializer
      * @param eventCode the TBA event code to clear (e.g., "2026casac"), or null to clear all
      * @return the number of files deleted
      */
-    public int deleteEventMatches(String eventCode)
+    public int deleteTBAMatches(String eventCode)
     {
-        Log.d(TAG, "deleteEventMatches()");
+        Log.d(TAG, "deleteTBAMatches()");
         File[] fileList;
         int deletedCount = 0;
 
@@ -258,7 +258,7 @@ public class EventMatches extends BaseJSONSerializer
 
         if (deletedCount > 0)
         {
-            EventMatches.clear();
+            TBAMatches.clear();
         }
         return deletedCount;
     }
@@ -283,9 +283,9 @@ public class EventMatches extends BaseJSONSerializer
         }
     }
 
-    public boolean isEventMatchesLoaded()
+    public boolean isTBAMatchesLoaded()
     {
-        return m_bEventMatchesLoaded;
+        return m_bTBAMatchesLoaded;
     }
 
     /**

@@ -98,7 +98,7 @@ public class LoadEventDialog extends DialogFragment
         });
 
         AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity())
-                .setTitle("Load Event Matches")
+                .setTitle("Load TBA Matches")
                 .setView(m_binding.getRoot())
                 .setPositiveButton(android.R.string.ok, null)
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
@@ -106,8 +106,8 @@ public class LoadEventDialog extends DialogFragment
                     String eventCode = Objects.requireNonNull(m_binding.eventCodeField.getText()).toString().trim();
                     if (!eventCode.isEmpty())
                     {
-                        EventMatches eventMatches = EventMatches.getInstance(requireContext(), eventCode, false);
-                        if (eventMatches.deleteEventMatches(eventCode) > 0)
+                        TBAMatches tbaMatches = TBAMatches.getInstance(requireContext(), eventCode, false);
+                        if (tbaMatches.deleteTBAMatches(eventCode) > 0)
                         {
                             Toast.makeText(requireContext(), "Cleared data for " + eventCode, Toast.LENGTH_SHORT).show();
                         }
@@ -161,7 +161,7 @@ public class LoadEventDialog extends DialogFragment
      */
     private void downloadEventMatches(AlertDialog dialog, String eventCode)
     {
-        Log.d(TAG, "downloadEventMatches for: " + eventCode);
+        Log.d(TAG, "downloadTBAMatches for: " + eventCode);
 
         Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         okButton.setEnabled(false);
@@ -186,7 +186,7 @@ public class LoadEventDialog extends DialogFragment
 
                     try
                     {
-                        saveEventMatches(context, eventCode, response);
+                        saveTBAMatches(context, eventCode, response);
                         Toast.makeText(context, "Successfully downloaded " + response.length() + " matches for " + eventCode, Toast.LENGTH_LONG).show();
                         if (isAdded())
                         {
@@ -264,19 +264,19 @@ public class LoadEventDialog extends DialogFragment
      * @param response  the JSON array of matches received from the API
      * @throws IOException if saving to disk fails
      */
-    private void saveEventMatches(Context context, String eventCode, JSONArray response)
+    private void saveTBAMatches(Context context, String eventCode, JSONArray response)
             throws IOException
     {
-        EventMatches eventMatches = EventMatches.getInstance(context, eventCode, true);
-        eventMatches.deleteEventMatches(eventCode);
-        eventMatches.saveEventMatches(eventCode, response);
+        TBAMatches tbaMatches = TBAMatches.getInstance(context, eventCode, true);
+        tbaMatches.deleteTBAMatches(eventCode);
+        tbaMatches.saveTBAMatches(eventCode, response);
 
         // Update current event code settings
         Settings settings = Settings.getInstance(context);
         settings.setEventCode(eventCode);
         ScoutedMatches.getInstance(context).saveScoutNames();
 
-        // The singleton was updated by EventMatches.getInstance() call above with bForceReload=true
+        // The singleton was updated by TBAMatches.getInstance() call above with bForceReload=true
     }
 
     @Override

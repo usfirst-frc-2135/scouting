@@ -26,7 +26,7 @@ public class PreMatchActivity extends AppCompatActivity
 {
     private static final String TAG = "PreMatchActivity";
     private PreMatchActivityBinding m_binding;
-    private EventMatches m_eventMatches;
+    private TBAMatches m_tbaMatches;
     private MatchData m_matchData;
     private TeamAliases m_aliasNames;
     private ScoutNames m_scoutNames;
@@ -61,7 +61,7 @@ public class PreMatchActivity extends AppCompatActivity
         m_matchData = ScoutedMatches.getInstance(getApplicationContext()).getMatch(matchId);
 
         String eventCode = (m_matchData != null) ? m_matchData.getEventCode().trim() : "";
-        m_eventMatches = EventMatches.getInstance(getApplicationContext(), eventCode, false);
+        m_tbaMatches = TBAMatches.getInstance(getApplicationContext(), eventCode, false);
         m_aliasNames = TeamAliases.getInstance(getApplicationContext());
         m_scoutNames = ScoutNames.getInstance(getApplicationContext());
 
@@ -239,11 +239,11 @@ public class PreMatchActivity extends AppCompatActivity
         String matchNumStr = m_binding.matchNumberField.getText().toString().trim().toLowerCase();
         boolean bAliasUsed = m_aliasNames != null && m_aliasNames.isTeamAliasesLoaded();
 
-        if (!matchNumStr.isEmpty() && m_eventMatches != null && m_eventMatches.isEventMatchesLoaded())
+        if (!matchNumStr.isEmpty() && m_tbaMatches != null && m_tbaMatches.isTBAMatchesLoaded())
         {
             try
             {
-                String[] teams = m_eventMatches.getMatchTeams(matchNumStr);
+                String[] teams = m_tbaMatches.getMatchTeams(matchNumStr);
                 if (teams.length > 0 && !teams[0].isEmpty())
                 {
                     // Process team numbers (strip prefix and apply aliases)
@@ -279,7 +279,7 @@ public class PreMatchActivity extends AppCompatActivity
      */
     private void setTeamNumFromMatchNum()
     {
-        if (m_settings == null || m_eventMatches == null || !m_eventMatches.isEventMatchesLoaded())
+        if (m_settings == null || m_tbaMatches == null || !m_tbaMatches.isTBAMatchesLoaded())
         {
             return;
         }
@@ -290,7 +290,7 @@ public class PreMatchActivity extends AppCompatActivity
             Log.d(TAG, "Auto-loading team number for index " + m_teamIndexStr);
             try
             {
-                String[] teams = m_eventMatches.getMatchTeams(matchNumStr);
+                String[] teams = m_tbaMatches.getMatchTeams(matchNumStr);
                 int teamIndex = Integer.parseInt(m_teamIndexStr);
 
                 if (teamIndex < teams.length)
