@@ -273,7 +273,7 @@ public class MatchListFragment extends Fragment
         @Override
         public void onClick(View v)
         {
-            QRFragment.newInstance(m_match).show(requireActivity().getSupportFragmentManager(), QRTAG);
+            QRDialog.newInstance(m_match).show(requireActivity().getSupportFragmentManager(), QRTAG);
         }
 
         @Override

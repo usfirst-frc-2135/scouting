@@ -247,13 +247,12 @@ public class TeamAliases extends BaseJSONSerializer
      * Deletes the aliases file from internal storage.
      *
      * @param eventCode the FRC event code
-     * @return true if the file was successfully deleted, false otherwise
      */
-    public boolean deleteTeamAliases(String eventCode)
+    public void deleteTeamAliases(String eventCode)
     {
         if (eventCode == null)
         {
-            return false;
+            return;
         }
 
         String filename = getFilename(eventCode);
@@ -269,9 +268,7 @@ public class TeamAliases extends BaseJSONSerializer
             {
                 Log.w(TAG, "Failed to delete aliases file: " + filename);
             }
-            return deleted;
         }
-        return false;
     }
 
     public boolean isTeamAliasesLoaded()

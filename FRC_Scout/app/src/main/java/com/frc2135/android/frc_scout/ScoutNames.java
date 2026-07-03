@@ -227,13 +227,12 @@ public class ScoutNames extends BaseJSONSerializer
      * Deletes the scout names file from internal storage.
      *
      * @param eventCode the FRC event code
-     * @return true if the file was successfully deleted, false otherwise
      */
-    public boolean deleteScoutNames(String eventCode)
+    public void deleteScoutNames(String eventCode)
     {
         if (eventCode == null)
         {
-            return false;
+            return;
         }
 
         String filename = getFilename(eventCode);
@@ -249,9 +248,7 @@ public class ScoutNames extends BaseJSONSerializer
             {
                 Log.w(TAG, "Failed to delete scout names file: " + filename);
             }
-            return deleted;
         }
-        return false;
     }
 
     public boolean isScoutNamesLoaded()

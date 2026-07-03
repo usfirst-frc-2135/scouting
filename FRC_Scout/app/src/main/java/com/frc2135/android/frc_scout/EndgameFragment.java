@@ -103,7 +103,7 @@ public class EndgameFragment extends Fragment
             else
             {
                 FragmentManager fm = requireActivity().getSupportFragmentManager();
-                QRFragment dialog = QRFragment.newInstance(m_matchData);
+                QRDialog dialog = QRDialog.newInstance(m_matchData);
                 dialog.show(fm, QRTAG);
                 setupDoneButton(true);
             }

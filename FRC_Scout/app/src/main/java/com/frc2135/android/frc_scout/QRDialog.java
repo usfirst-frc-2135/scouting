@@ -24,7 +24,7 @@ import zxing.QRCodeEncoder;
 /**
  * Dialog fragment that generates and displays a QR code for match data.
  */
-public class QRFragment extends DialogFragment
+public class QRDialog extends DialogFragment
 {
     private static final String TAG = "QRFragment";
     private static final String ARG_STATS = "stats";
@@ -38,9 +38,9 @@ public class QRFragment extends DialogFragment
      * @param matchData the match data to encode into the QR code
      * @return a new QRFragment instance
      */
-    public static QRFragment newInstance(MatchData matchData)
+    public static QRDialog newInstance(MatchData matchData)
     {
-        QRFragment fragment = new QRFragment();
+        QRDialog fragment = new QRDialog();
         Bundle bundle = new Bundle();
 
         String label = String.format("%s-%s-%s-%s",
