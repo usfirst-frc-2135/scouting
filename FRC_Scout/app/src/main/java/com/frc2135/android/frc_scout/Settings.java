@@ -3,25 +3,40 @@ package com.frc2135.android.frc_scout;
 import android.content.Context;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * Singleton class for managing application settings, including past scouts, team index, and match numbers.
  * Settings are persisted via a JSON file.
+ * Handles its own persistence by extending {@link BaseJSONSerializer}.
  */
-public class Settings
+public class Settings extends BaseJSONSerializer
 {
     private static final String TAG = "Settings";
     private static final String FILENAME = "settings.json";
 
+    // Settings JSON Keys
+    private static final String KEY_EVENT_CODE = "eventCode";
+    private static final String KEY_PAST_SCOUTS = "pastScouts";
+    private static final String KEY_SCOUT_NAME_PREFIX = "scoutName"; // Legacy key prefix
+    private static final String KEY_TEAM_INDEX = "teamIndex";
+    private static final String KEY_SCORING_TABLE_SIDE = "scoringTableSide";
+
     private final List<String> m_pastScouts;
+    private final List<String> m_eventScoutNames;
     private String m_eventCode;
     private String m_teamIndexStr;
     private boolean m_scoringTableSide;
     private String m_mostRecentScoutName;
     private String m_mostRecentMatchNumber;
+    private boolean m_bEventScoutNamesLoaded;
 
     private static volatile Settings sSettings;
 
@@ -49,27 +64,20 @@ public class Settings
 
     private Settings(Context context)
     {
+        super(context);
         Log.d(TAG, "Settings constructor");
         m_pastScouts = new ArrayList<>();
+        m_eventScoutNames = new ArrayList<>();
         m_eventCode = "";
         m_teamIndexStr = "0 - None";
         m_scoringTableSide = false;
         m_mostRecentScoutName = "";
         m_mostRecentMatchNumber = "";
-
-        SettingsSerializer serializer = new SettingsSerializer(context.getApplicationContext(), FILENAME);
+        m_bEventScoutNamesLoaded = false;
 
         try
         {
-            Log.d(TAG, "Loading settings file");
-            Settings settings = serializer.loadSettings();
-            if (settings != null)
-            {
-                Collections.addAll(m_pastScouts, settings.getPastScouts());
-                m_eventCode = settings.getEventCode();
-                m_teamIndexStr = settings.getTeamIndexStr();
-                m_scoringTableSide = settings.getScoringTableSide();
-            }
+            loadSettings();
         }
         catch (Exception e)
         {
@@ -78,17 +86,113 @@ public class Settings
     }
 
     /**
-     * Default constructor for creating a new Settings object.
+     * Default constructor for creating a new Settings object (internal use for deserialization).
      */
     public Settings()
     {
+        super(); // Internal use, no file I/O context needed
         Log.d(TAG, "Settings default constructor");
         m_pastScouts = new ArrayList<>();
+        m_eventScoutNames = new ArrayList<>();
         m_eventCode = "";
         m_teamIndexStr = "0 - None";
         m_scoringTableSide = false;
         m_mostRecentScoutName = "";
         m_mostRecentMatchNumber = "";
+        m_bEventScoutNamesLoaded = false;
+    }
+
+    /**
+     * Saves the current settings configuration to internal storage.
+     *
+     * @throws JSONException if configuration data serialization fails
+     * @throws IOException   if writing the settings file fails
+     */
+    public void saveSettings() throws JSONException, IOException
+    {
+        Log.d(TAG, "saveSettings()");
+        JSONArray array = new JSONArray();
+        array.put(toJSON());
+
+        File file = new File(m_dataDir, FILENAME);
+        saveJSONArray(file, array);
+    }
+
+    /**
+     * Loads the application settings from internal storage.
+     *
+     * @throws IOException   if reading the file fails
+     * @throws JSONException if parsing the JSON fails
+     */
+    public void loadSettings() throws IOException, JSONException
+    {
+        Log.d(TAG, "loadSettings()");
+        File file = new File(m_dataDir, FILENAME);
+        JSONArray array = loadJSONArray(file);
+        if (array != null && array.length() > 0)
+        {
+            fromJSON(array.getJSONObject(0));
+            Log.i(TAG, "Successfully loaded settings file");
+        }
+    }
+
+    /**
+     * Populates this Settings object from a {@link JSONObject}.
+     *
+     * @param json the source JSONObject
+     * @throws JSONException if parsing fails
+     */
+    public void fromJSON(JSONObject json) throws JSONException
+    {
+        m_eventCode = json.optString(KEY_EVENT_CODE, "");
+
+        if (json.has(KEY_PAST_SCOUTS))
+        {
+            JSONArray scoutsArray = json.getJSONArray(KEY_PAST_SCOUTS);
+            m_pastScouts.clear();
+            for (int i = 0; i < scoutsArray.length(); i++)
+            {
+                m_pastScouts.add(scoutsArray.getString(i));
+            }
+        }
+        else
+        {
+            // Fallback to legacy format: scoutName0, scoutName1, ...
+            int i = 0;
+            while (json.has(KEY_SCOUT_NAME_PREFIX + i))
+            {
+                m_pastScouts.add(json.getString(KEY_SCOUT_NAME_PREFIX + i));
+                i++;
+            }
+        }
+
+        m_teamIndexStr = json.optString(KEY_TEAM_INDEX, "0 - None");
+        int scoringTableSideVal = json.optInt(KEY_SCORING_TABLE_SIDE, 0);
+        m_scoringTableSide = (scoringTableSideVal == 1);
+    }
+
+    /**
+     * Serializes settings to a {@link JSONObject}.
+     *
+     * @return the serialized JSONObject
+     * @throws JSONException if JSON creation fails
+     */
+    public JSONObject toJSON() throws JSONException
+    {
+        JSONObject json = new JSONObject();
+        json.put(KEY_EVENT_CODE, m_eventCode);
+
+        JSONArray scoutsArray = new JSONArray();
+        for (String name : m_pastScouts)
+        {
+            scoutsArray.put(name);
+        }
+        json.put(KEY_PAST_SCOUTS, scoutsArray);
+
+        json.put(KEY_TEAM_INDEX, m_teamIndexStr);
+        json.put(KEY_SCORING_TABLE_SIDE, m_scoringTableSide ? 1 : 0);
+
+        return json;
     }
 
     /**
@@ -162,7 +266,6 @@ public class Settings
             }
         }
 
-        //noinspection SizeReplaceableByIsEmpty
         if (numStr.length() == 0)
         {
             return m_mostRecentMatchNumber;
@@ -285,5 +388,79 @@ public class Settings
     public void clear()
     {
         m_pastScouts.clear();
+    }
+
+    /**
+     * Loads event-specific scout names from local storage.
+     *
+     * @param context     the context for file operations
+     * @param eventCode   the FRC event code
+     * @param forceReload if true, forces a reload even if already loaded for this event
+     */
+    public void loadEventScoutNames(Context context, String eventCode, boolean forceReload)
+    {
+        if (eventCode == null || eventCode.trim().isEmpty())
+        {
+            return;
+        }
+
+        if (!forceReload && m_bEventScoutNamesLoaded && m_eventCode != null && m_eventCode.equalsIgnoreCase(eventCode))
+        {
+            return;
+        }
+
+        Log.d(TAG, "Loading scout names for event: " + eventCode);
+        ScoutNames scoutNames = ScoutNames.get(context, eventCode, forceReload);
+        m_eventScoutNames.clear();
+        if (scoutNames != null && scoutNames.isScoutNamesLoaded())
+        {
+            m_eventScoutNames.addAll(scoutNames.getScoutNames());
+            m_bEventScoutNamesLoaded = true;
+            Log.d(TAG, "Successfully loaded " + m_eventScoutNames.size() + " event scout names");
+        }
+        else
+        {
+            m_bEventScoutNamesLoaded = false;
+            Log.d(TAG, "No event scout names loaded for: " + eventCode);
+        }
+    }
+
+    /**
+     * Saves event-specific scout names to local storage.
+     *
+     * @param context   the context for file operations
+     * @param eventCode the FRC event code
+     * @param scoutData the JSONArray of scout names
+     * @throws IOException if saving fails
+     */
+    public void saveEventScoutNames(Context context, String eventCode, JSONArray scoutData) throws IOException
+    {
+        ScoutNames scoutNames = ScoutNames.get(context, eventCode, true);
+        scoutNames.deleteScoutNames(eventCode);
+        scoutNames.saveScoutNames(eventCode, scoutData);
+        loadEventScoutNames(context, eventCode, true);
+    }
+
+    /**
+     * Returns a combined list of all known scout names (past scouts + current event scouts).
+     *
+     * @return a list of unique scout names
+     */
+    public List<String> getAllScoutNames()
+    {
+        List<String> allNames = new ArrayList<>(m_eventScoutNames);
+        for (String name : m_pastScouts)
+        {
+            if (!allNames.contains(name))
+            {
+                allNames.add(name);
+            }
+        }
+        return allNames;
+    }
+
+    public boolean isEventScoutNamesLoaded()
+    {
+        return m_bEventScoutNamesLoaded;
     }
 }

@@ -27,6 +27,14 @@ public abstract class BaseJSONSerializer
     protected final File m_dataDir;
 
     /**
+     * Default constructor for internal use when file operations are not required.
+     */
+    protected BaseJSONSerializer()
+    {
+        m_dataDir = null;
+    }
+
+    /**
      * Constructs a BaseJSONSerializer.
      *
      * @param context the context used to retrieve the internal files directory

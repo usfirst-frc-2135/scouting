@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 public class MatchListData
 {
     private static final String TAG = "MatchListData";
-    private static final String FILENAME = "settings.json";
 
     private final List<MatchData> m_totalMatchListData;
     private final MatchDataSerializer m_serializer;
@@ -135,8 +134,7 @@ public class MatchListData
     {
         try
         {
-            SettingsSerializer serializer = new SettingsSerializer(m_appContext, FILENAME);
-            serializer.saveSettings(Settings.getInstance(m_appContext));
+            Settings.getInstance(m_appContext).saveSettings();
             return true;
         }
         catch (Exception e)

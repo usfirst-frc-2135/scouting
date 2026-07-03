@@ -17,7 +17,7 @@ import java.util.Locale;
 public class EventMatchesSerializer extends BaseJSONSerializer
 {
     private static final String TAG = "EventMatchesSerializer";
-    private static final String MATCHES_FILE_SUFFIX = "_matches.json";
+    private static final String FILENAME_SUFFIX = "_eventMatches.json";
 
     /**
      * Constructs an EventMatchesSerializer.
@@ -108,7 +108,7 @@ public class EventMatchesSerializer extends BaseJSONSerializer
         {
             for (File f : fileList)
             {
-                if (f.getName().endsWith(MATCHES_FILE_SUFFIX))
+                if (f.getName().endsWith(FILENAME_SUFFIX))
                 {
                     if (f.exists() && f.delete())
                     {
@@ -134,6 +134,6 @@ public class EventMatchesSerializer extends BaseJSONSerializer
      */
     private String getEventFileName(String eventCode)
     {
-        return eventCode.trim().toLowerCase(Locale.US) + MATCHES_FILE_SUFFIX;
+        return eventCode.trim().toLowerCase(Locale.US) + FILENAME_SUFFIX;
     }
 }
