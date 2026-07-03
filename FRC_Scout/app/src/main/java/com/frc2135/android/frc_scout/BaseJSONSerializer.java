@@ -23,6 +23,7 @@ import java.nio.charset.StandardCharsets;
  */
 public abstract class BaseJSONSerializer
 {
+    @SuppressWarnings("unused")
     private static final String TAG = "BaseJSONSerializer";
     protected final File m_dataDir;
 

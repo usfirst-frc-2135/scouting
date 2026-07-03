@@ -31,70 +31,65 @@
                 android:textColor="@color/specialTextPrimary"
                 android:text="@string/start_climbing" />
             <!-- start "START CLIMB RADIO BUTTONS" layout-->
-            <LinearLayout
+
+            <RadioGroup
+                android:id="@+id/start_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:backgroundTint="#c1cbb8"
+                android:background="@drawable/rounded_rect_bottom">
 
-                <RadioGroup
-                    android:id="@+id/start_text"
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/start_none"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:backgroundTint="#c1cbb8"
-                    android:background="@drawable/rounded_rect_bottom">
+                    android:textSize="22sp"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/specialTextPrimary"
+                    android:textColor="@color/specialTextPrimary"
+                    android:text="@string/n_a" />
 
-                    <RadioButton
-                        android:id="@+id/start_none"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="22sp"
-                        android:layout_weight="1"
-                        android:buttonTint="@color/specialTextPrimary"
-                        android:textColor="@color/specialTextPrimary"
-                        android:text="@string/n_a" />
+                <RadioButton
+                    android:id="@+id/start_before"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/specialTextPrimary"
+                    android:text="@string/before"
+                    android:textColor="@color/specialTextPrimary"
+                    android:textSize="22sp" />
 
-                    <RadioButton
-                        android:id="@+id/start_before"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:buttonTint="@color/specialTextPrimary"
-                        android:text="@string/before"
-                        android:textColor="@color/specialTextPrimary"
-                        android:textSize="22sp" />
+                <RadioButton
+                    android:id="@+id/start_bell"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="22sp"
+                    android:layout_weight="1"
+                    android:textColor="@color/specialTextPrimary"
+                    android:buttonTint="@color/specialTextPrimary"
+                    android:text="@string/bell" />
 
-                    <RadioButton
-                        android:id="@+id/start_bell"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="22sp"
-                        android:layout_weight="1"
-                        android:textColor="@color/specialTextPrimary"
-                        android:buttonTint="@color/specialTextPrimary"
-                        android:text="@string/bell" />
+                <RadioButton
+                    android:id="@+id/start_ten"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="22sp"
+                    android:layout_weight="1"
+                    android:textColor="@color/specialTextPrimary"
+                    android:buttonTint="@color/specialTextPrimary"
+                    android:text="@string/at_10s_left" />
 
-                    <RadioButton
-                        android:id="@+id/start_ten"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="22sp"
-                        android:layout_weight="1"
-                        android:textColor="@color/specialTextPrimary"
-                        android:buttonTint="@color/specialTextPrimary"
-                        android:text="@string/at_10s_left" />
-
-                    <RadioButton
-                        android:id="@+id/start_less"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="22sp"
-                        android:layout_weight="1"
-                        android:textColor="@color/specialTextPrimary"
-                        android:buttonTint="@color/specialTextPrimary"
-                        android:text="@string/less_than_10s" />
-                </RadioGroup>
-            </LinearLayout>
+                <RadioButton
+                    android:id="@+id/start_less"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="22sp"
+                    android:layout_weight="1"
+                    android:textColor="@color/specialTextPrimary"
+                    android:buttonTint="@color/specialTextPrimary"
+                    android:text="@string/less_than_10s" />
+            </RadioGroup>
             <!-- end START CLIMB RADIO BUTTONS layout-->
         </LinearLayout>
         <!-- end START CLIMB layout -->
@@ -103,7 +98,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="350dp"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:paddingTop="11dp"
             android:layout_marginTop="5dp"
             android:backgroundTint="#93A685"

@@ -52,6 +52,7 @@ public class TBAMatches extends BaseJSONSerializer
      * @param context the context used for file operations
      * @return the singleton TBAMatches instance
      */
+    @SuppressWarnings("unused")
     public static TBAMatches getInstance(Context context)
     {
         String eventCode = Settings.getInstance(context).getEventCode();
@@ -170,7 +171,7 @@ public class TBAMatches extends BaseJSONSerializer
     /**
      * Saves event data for a specific event to a JSON file.
      *
-     * @param eventCode  the TBA event code
+     * @param eventCode    the TBA event code
      * @param eventMatches the JSONArray containing match information
      * @throws IOException if writing the file fails
      */

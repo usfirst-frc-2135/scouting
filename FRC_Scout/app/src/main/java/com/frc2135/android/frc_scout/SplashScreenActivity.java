@@ -18,6 +18,7 @@ import com.frc2135.android.frc_scout.databinding.SplashScreenActivityBinding;
  * Entry point of the application. Displays a splash screen for a short duration
  * while initializing the app's theme and then transitions to {@link MatchListActivity}.
  */
+@SuppressWarnings("ALL")
 @SuppressLint("CustomSplashScreen")
 public class SplashScreenActivity extends AppCompatActivity
 {
@@ -69,6 +70,7 @@ public class SplashScreenActivity extends AppCompatActivity
     /**
      * Schedules transition to MatchListActivity after the pause duration.
      */
+    @SuppressWarnings("deprecation")
     private void startMainTransition()
     {
         Log.d(TAG, "startMainTransition()");

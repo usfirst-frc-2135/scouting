@@ -460,6 +460,7 @@ public class Settings extends BaseJSONSerializer
      * @param scoutData the JSONArray of scout names
      * @throws IOException if saving fails
      */
+    @SuppressWarnings("unused")
     public void saveEventScoutNames(Context context, String eventCode, JSONArray scoutData)
             throws IOException
     {
@@ -474,6 +475,7 @@ public class Settings extends BaseJSONSerializer
      *
      * @return a list of unique scout names
      */
+    @SuppressWarnings("unused")
     public List<String> getAllScoutNames()
     {
         List<String> allNames = new ArrayList<>(m_eventScoutNames);
@@ -487,6 +489,7 @@ public class Settings extends BaseJSONSerializer
         return allNames;
     }
 
+    @SuppressWarnings("unused")
     public boolean isEventScoutNamesLoaded()
     {
         return m_bEventScoutNamesLoaded;
