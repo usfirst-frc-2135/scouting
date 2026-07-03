@@ -8,30 +8,44 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
  * Singleton class for managing team aliases data.
  * Loads and parses team number to alias mapping from a JSON file.
+ * Handles its own persistence by extending {@link BaseJSONSerializer}.
  */
-public class TeamAliases
+public class TeamAliases extends BaseJSONSerializer
 {
     private static final String TAG = "TeamAliases";
+    private static final String FILENAME_SUFFIX = "_teamAliases.json";
 
     private String m_eventCode;
     private JSONArray m_aliasesJSON;
     private boolean m_bAliasesDataLoaded;
-    private final TeamAliasesSerializer m_serializer;
 
     private static volatile TeamAliases sTeamAliases;
 
     private TeamAliases(Context context, String eventCode)
     {
+        super(context);
         Log.d(TAG, "TeamAliases constructor");
         m_eventCode = eventCode;
         m_bAliasesDataLoaded = false;
         m_aliasesJSON = null;
-        m_serializer = new TeamAliasesSerializer(context);
+    }
+
+    /**
+     * Returns the singleton instance of TeamAliases using the event code from Settings.
+     *
+     * @param context the context used for file operations
+     * @return the singleton TeamAliases instance
+     */
+    public static TeamAliases get(Context context)
+    {
+        String eventCode = Settings.getInstance(context).getEventCode();
+        return get(context, eventCode, false);
     }
 
     /**
@@ -156,7 +170,7 @@ public class TeamAliases
 
         try
         {
-            m_aliasesJSON = m_serializer.loadTeamAliases(m_eventCode);
+            m_aliasesJSON = loadTeamAliases(m_eventCode);
             if (m_aliasesJSON != null)
             {
                 m_bAliasesDataLoaded = true;
@@ -175,9 +189,93 @@ public class TeamAliases
         }
     }
 
+    /**
+     * Gets the filename for a given event code.
+     *
+     * @param eventCode the FRC event code
+     * @return the filename
+     */
+    private String getFilename(String eventCode)
+    {
+        return eventCode.trim().toLowerCase() + FILENAME_SUFFIX;
+    }
+
+    /**
+     * Saves the provided JSONArray of aliases data to a JSON file on the device.
+     *
+     * @param eventCode the FRC event code
+     * @param aliasData the JSONArray containing team-to-alias mapping data
+     * @throws IOException if an error occurs during file writing
+     */
+    public void saveTeamAliases(String eventCode, JSONArray aliasData)
+            throws IOException
+    {
+        if (eventCode == null || aliasData == null)
+        {
+            Log.w(TAG, "Attempted to save aliases with null eventCode or data");
+            return;
+        }
+
+        String filename = getFilename(eventCode);
+        Log.d(TAG, "Saving aliases info to: " + filename);
+        File file = new File(m_dataDir, filename);
+        saveJSONArray(file, aliasData);
+    }
+
+    /**
+     * Loads the team aliases from the specified file.
+     *
+     * @param eventCode the FRC event code
+     * @return the loaded JSONArray, or null if the file doesn't exist
+     * @throws IOException   if an error occurs during file reading
+     * @throws JSONException if the file content is not a valid JSON array
+     */
+    public JSONArray loadTeamAliases(String eventCode)
+            throws IOException, JSONException
+    {
+        if (eventCode == null)
+        {
+            return null;
+        }
+
+        String filename = getFilename(eventCode);
+        File file = new File(m_dataDir, filename);
+        return loadJSONArray(file);
+    }
+
+    /**
+     * Deletes the aliases file from internal storage.
+     *
+     * @param eventCode the FRC event code
+     * @return true if the file was successfully deleted, false otherwise
+     */
+    public boolean deleteTeamAliases(String eventCode)
+    {
+        if (eventCode == null)
+        {
+            return false;
+        }
+
+        String filename = getFilename(eventCode);
+        File file = new File(m_dataDir, filename);
+        if (file.exists())
+        {
+            boolean deleted = file.delete();
+            if (deleted)
+            {
+                Log.i(TAG, "Successfully deleted aliases file: " + filename);
+            }
+            else
+            {
+                Log.w(TAG, "Failed to delete aliases file: " + filename);
+            }
+            return deleted;
+        }
+        return false;
+    }
+
     public boolean isTeamAliasesLoaded()
     {
         return m_bAliasesDataLoaded;
     }
 }
-

@@ -62,8 +62,8 @@ public class PreMatchActivity extends AppCompatActivity
 
         String eventCode = (m_matchData != null) ? m_matchData.getEventCode().trim() : "";
         m_eventMatches = EventMatches.get(getApplicationContext(), eventCode, false);
-        m_aliasNames = TeamAliases.get(getApplicationContext(), eventCode, false);
-        m_scoutNames = ScoutNames.get(getApplicationContext(), eventCode, false);
+        m_aliasNames = TeamAliases.get(getApplicationContext());
+        m_scoutNames = ScoutNames.get(getApplicationContext());
 
         m_settings = Settings.getInstance(getApplicationContext());
         m_teamIndexStr = (m_settings != null) ? m_settings.getTeamIndexStr() : "0 - None";

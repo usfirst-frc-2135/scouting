@@ -127,12 +127,9 @@ public class LoadTeamAliasesDialog extends DialogFragment
     private void saveAliases(String eventCode, org.json.JSONArray response, Context context)
             throws IOException
     {
-        TeamAliasesSerializer serializer = new TeamAliasesSerializer(context);
-        serializer.deleteTeamAliases(eventCode);
-        serializer.saveTeamAliases(eventCode, response);
-
-        // Update the singleton if it's already loaded the wrong event code
-        TeamAliases.get(context, eventCode, true);
+        TeamAliases teamAliases = TeamAliases.get(context, eventCode, true);
+        teamAliases.deleteTeamAliases(eventCode);
+        teamAliases.saveTeamAliases(eventCode, response);
     }
 
     @Override
