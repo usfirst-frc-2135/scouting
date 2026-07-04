@@ -32,7 +32,7 @@ import java.util.Objects;
  * Dialog for loading match data for a specific event from The Blue Alliance (TBA) API.
  * This dialog handles event code validation, data download via Volley, and local persistence.
  */
-public class LoadEventDialog extends DialogFragment
+public class LoadTBAMatchesDialog extends DialogFragment
 {
     private static final String TAG = "LoadEventDialog";
 
@@ -44,7 +44,7 @@ public class LoadEventDialog extends DialogFragment
     /**
      * The authentication key for The Blue Alliance API.
      */
-    private static final String TBA_AUTH_KEY = "E7akoVihRO2ZbNHtW2nRrjuNTcZaOxWtfeYWwh4XILMsKsqLnH2ZQrKAnbevlWGn";
+    private static final String TBA_AUTH_KEY = "MetfyxQxRpk0do2GygII8alQnV0qaQ8kF9KUIYDrFTMmQr2pPC8Cl4FGdoKlUaAu";
 
     private LoadEventDialogBinding m_binding;
 
@@ -53,9 +53,9 @@ public class LoadEventDialog extends DialogFragment
      *
      * @return a new LoadEventDialog instance
      */
-    public static LoadEventDialog newInstance()
+    public static LoadTBAMatchesDialog newInstance()
     {
-        return new LoadEventDialog();
+        return new LoadTBAMatchesDialog();
     }
 
     /**

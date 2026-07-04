@@ -23,22 +23,24 @@ public class Settings extends BaseJSONSerializer
     private static final String FILENAME = "settings.json";
 
     // Settings JSON Keys
+    private static final String KEY_SETTINGS_VERSION = "settingsVersion";
+    private static final String KEY_LAST_UPDATED = "lastUpdated";
     private static final String KEY_EVENT_CODE = "eventCode";
+    private static final String KEY_TEAM_INDEX = "teamIndex";
+    private static final String KEY_MOST_RECENT_MATCH_NUMBER = "mostRecentMatchNumber";
     private static final String KEY_PAST_SCOUTS = "pastScouts";
     private static final String KEY_SCOUT_NAME_PREFIX = "scoutName"; // Legacy key prefix
-    private static final String KEY_TEAM_INDEX = "teamIndex";
-    private static final String KEY_SCORING_TABLE_SIDE = "scoringTableSide";
     private static final String KEY_MOST_RECENT_SCOUT_NAME = "mostRecentScoutName";
-    private static final String KEY_MOST_RECENT_MATCH_NUMBER = "mostRecentMatchNumber";
+    private static final String KEY_SCORING_TABLE_SIDE = "scoringTableSide";
 
     private final List<String> m_pastScouts;
-    private final List<String> m_eventScoutNames;
     private String m_eventCode;
     private String m_teamIndexStr;
-    private boolean m_scoringTableSide;
-    private String m_mostRecentScoutName;
     private String m_mostRecentMatchNumber;
+    private String m_mostRecentScoutName;
+    private final List<String> m_eventScoutNames;
     private boolean m_bEventScoutNamesLoaded;
+    private boolean m_scoringTableSide;
 
     private static volatile Settings sSettings;
 
@@ -68,14 +70,14 @@ public class Settings extends BaseJSONSerializer
     {
         super(context);
         Log.d(TAG, "Settings constructor");
-        m_pastScouts = new ArrayList<>();
-        m_eventScoutNames = new ArrayList<>();
         m_eventCode = "";
         m_teamIndexStr = "0 - None";
-        m_scoringTableSide = false;
-        m_mostRecentScoutName = "";
         m_mostRecentMatchNumber = "";
+        m_pastScouts = new ArrayList<>();
+        m_mostRecentScoutName = "";
+        m_eventScoutNames = new ArrayList<>();
         m_bEventScoutNamesLoaded = false;
+        m_scoringTableSide = false;
 
         try
         {
@@ -94,14 +96,14 @@ public class Settings extends BaseJSONSerializer
     {
         super(); // Internal use, no file I/O context needed
         Log.d(TAG, "Settings default constructor");
-        m_pastScouts = new ArrayList<>();
-        m_eventScoutNames = new ArrayList<>();
         m_eventCode = "";
         m_teamIndexStr = "0 - None";
-        m_scoringTableSide = false;
-        m_mostRecentScoutName = "";
         m_mostRecentMatchNumber = "";
+        m_pastScouts = new ArrayList<>();
+        m_mostRecentScoutName = "";
+        m_eventScoutNames = new ArrayList<>();
         m_bEventScoutNamesLoaded = false;
+        m_scoringTableSide = false;
     }
 
     /**
@@ -114,11 +116,8 @@ public class Settings extends BaseJSONSerializer
             throws JSONException, IOException
     {
         Log.d(TAG, "saveSettings()");
-        JSONArray array = new JSONArray();
-        array.put(toJSON());
-
         File file = new File(m_dataDir, FILENAME);
-        saveJSONArray(file, array);
+        saveJSONObject(file, toJSON());
     }
 
     /**
@@ -132,11 +131,32 @@ public class Settings extends BaseJSONSerializer
     {
         Log.d(TAG, "loadSettings()");
         File file = new File(m_dataDir, FILENAME);
-        JSONArray array = loadJSONArray(file);
-        if (array != null && array.length() > 0)
+        if (!file.exists())
         {
-            fromJSON(array.getJSONObject(0));
-            Log.i(TAG, "Successfully loaded settings file");
+            return;
+        }
+
+        String content = readStringFromFile(file);
+        if (content == null || content.isEmpty())
+        {
+            return;
+        }
+
+        // Handle both legacy (JSONArray) and new (JSONObject) root formats
+        if (content.trim().startsWith("["))
+        {
+            JSONArray array = new JSONArray(content);
+            if (array.length() > 0)
+            {
+                fromJSON(array.getJSONObject(0));
+                Log.i(TAG, "Successfully loaded settings from legacy JSONArray format");
+            }
+        }
+        else
+        {
+            JSONObject json = new JSONObject(content);
+            fromJSON(json);
+            Log.i(TAG, "Successfully loaded settings from JSONObject format");
         }
     }
 
@@ -149,6 +169,7 @@ public class Settings extends BaseJSONSerializer
     public void fromJSON(JSONObject json)
             throws JSONException
     {
+        // Version check could be added here in the future
         m_eventCode = json.optString(KEY_EVENT_CODE, "");
 
         if (json.has(KEY_PAST_SCOUTS))
@@ -188,6 +209,8 @@ public class Settings extends BaseJSONSerializer
             throws JSONException
     {
         JSONObject json = new JSONObject();
+        json.put(KEY_SETTINGS_VERSION, 1);
+        json.put(KEY_LAST_UPDATED, QRCodeDialog.formattedDate(new java.util.Date()));
         json.put(KEY_EVENT_CODE, m_eventCode);
 
         JSONArray scoutsArray = new JSONArray();

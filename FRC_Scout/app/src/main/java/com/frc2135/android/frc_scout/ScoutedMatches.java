@@ -3,6 +3,11 @@ package com.frc2135.android.frc_scout;
 import android.content.Context;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -12,46 +17,33 @@ import java.util.stream.Collectors;
 /**
  * Singleton class for managing the collection of {@link MatchData}.
  * Handles loading, saving, sorting, and filtering of match records.
+ * Handles its own persistence by extending {@link BaseJSONSerializer}.
  */
-public class ScoutedMatches
+public class ScoutedMatches extends BaseJSONSerializer
 {
     private static final String TAG = "ScoutedMatches";
 
     private final List<MatchData> m_scoutedMatches;
-    private final MatchDataSerializer m_serializer;
     private final Context m_appContext;
 
     private static volatile ScoutedMatches sScoutedMatches;
 
     private ScoutedMatches(Context appContext)
     {
+        super(appContext);
         Log.d(TAG, "ScoutedMatches constructor");
         m_appContext = appContext.getApplicationContext();
-        m_serializer = new MatchDataSerializer(m_appContext);
         m_scoutedMatches = loadInitialData();
     }
 
     private List<MatchData> loadInitialData()
     {
-        try
-        {
-            Log.d(TAG, "Loading match list data from serializer");
-            List<MatchData> data = m_serializer.loadMatchData();
-            if (data != null)
-            {
-                Log.d(TAG, "Successfully loaded " + data.size() + " matches");
-                return data;
-            }
-        }
-        catch (Exception e)
-        {
-            Log.e(TAG, "Error loading match history", e);
-        }
-        return new ArrayList<>();
+        Log.d(TAG, "loadInitialData()");
+        return loadMatchData();
     }
 
     /**
-     * Returns the singleton instance of ScoutedMatches.
+     * Returns the thread-safe singleton instance of ScoutedMatches.
      *
      * @param context the context used to initialize the instance
      * @return the singleton instance
@@ -109,7 +101,7 @@ public class ScoutedMatches
         {
             m_scoutedMatches.remove(match);
             m_appContext.deleteFile(match.getMatchFileName());
-            Log.d(TAG, "Deleted match: " + match.getMatchID());
+            Log.d(TAG, "Deleted match file: " + match.getMatchFileName());
         }
     }
 
@@ -154,14 +146,25 @@ public class ScoutedMatches
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean saveMatchData(MatchData matchData)
     {
+        if (matchData == null)
+        {
+            return false;
+        }
+
         try
         {
-            m_serializer.saveMatchData(matchData);
+            Log.d(TAG, "saveMatchData()");
+            JSONArray array = new JSONArray();
+            array.put(matchData.toJSON());
+
+            String filename = matchData.getMatchFileName();
+            File file = new File(m_dataDir, filename);
+            saveJSONArray(file, array);
             return true;
         }
         catch (Exception e)
         {
-            Log.e(TAG, "Failed to save match data for ID: " + (matchData != null ? matchData.getMatchID() : "null"), e);
+            Log.e(TAG, "Failed to save match data for ID: " + matchData.getMatchID(), e);
             return false;
         }
     }
@@ -177,7 +180,11 @@ public class ScoutedMatches
         try
         {
             saveScoutNames();
-            m_serializer.saveAllMatchData(new ArrayList<>(m_scoutedMatches));
+            Log.d(TAG, "Saving all " + m_scoutedMatches.size() + " matches to disk");
+            for (MatchData match : m_scoutedMatches)
+            {
+                saveMatchData(match);
+            }
             return true;
         }
         catch (Exception e)
@@ -185,6 +192,53 @@ public class ScoutedMatches
             Log.e(TAG, "Failed to save all data", e);
             return false;
         }
+    }
+
+    /**
+     * Scans the data directory and loads all individual match files.
+     *
+     * @return a list of loaded MatchData objects
+     */
+    private ArrayList<MatchData> loadMatchData()
+    {
+        ArrayList<MatchData> matchHistory = new ArrayList<>();
+        Log.d(TAG, "Scanning for match data files");
+
+        File[] files = m_dataDir.listFiles();
+        if (files == null)
+        {
+            return matchHistory;
+        }
+
+        for (File file : files)
+        {
+            String filename = file.getName();
+            // Match files are identified by their UUID-based filename length (usually 36 chars + .json)
+            if (filename.length() > 30 && filename.endsWith(".json") && !filename.contains("matches") && !filename.contains("aliases") && !filename.contains("scoutNames") && !filename.equals("settings.json"))
+            {
+                try
+                {
+                    matchHistory.add(loadSingleMatch(file));
+                    Log.d(TAG, "Successfully loaded match file: " + filename);
+                }
+                catch (IOException | JSONException e)
+                {
+                    Log.e(TAG, "Error loading match file " + filename + ": " + e.getMessage());
+                }
+            }
+        }
+        return matchHistory;
+    }
+
+    private MatchData loadSingleMatch(File file)
+            throws IOException, JSONException
+    {
+        JSONArray array = loadJSONArray(file);
+        if (array == null || array.length() == 0)
+        {
+            throw new JSONException("Empty or invalid match data array in file: " + file.getName());
+        }
+        return new MatchData(array.getJSONObject(0));
     }
 
     /**
@@ -226,8 +280,7 @@ public class ScoutedMatches
                     return Integer.MAX_VALUE;
                 }
             });
-            default ->
-                    finalComparator = Comparator.comparing(MatchData::getTimestamp, Comparator.nullsLast(Comparator.naturalOrder()));
+            default -> finalComparator = Comparator.comparing(MatchData::getTimestamp, Comparator.nullsLast(Comparator.naturalOrder()));
         }
 
         if (!ascending)

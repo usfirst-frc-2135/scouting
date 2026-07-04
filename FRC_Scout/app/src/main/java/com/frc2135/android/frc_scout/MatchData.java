@@ -1,6 +1,11 @@
 package com.frc2135.android.frc_scout;
 
 import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -117,6 +122,134 @@ public class MatchData
         m_other2 = "0";
         m_other3 = "0";
         m_other4 = "0";
+    }
+
+    /**
+     * Constructs a MatchData object from a {@link JSONObject}.
+     *
+     * @param json the source JSONObject
+     */
+    public MatchData(JSONObject json)
+    {
+        m_matchID = json.optString("matchId", UUID.randomUUID().toString());
+
+        String dateStr = json.optString("timestamp", "");
+        SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US);
+        SimpleDateFormat oldFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
+
+        try
+        {
+            if (dateStr.contains("T"))
+            {
+                m_timestamp = isoFormat.parse(dateStr);
+            }
+            else if (!dateStr.isEmpty())
+            {
+                m_timestamp = oldFormat.parse(dateStr);
+            }
+            else
+            {
+                m_timestamp = Calendar.getInstance().getTime();
+            }
+        }
+        catch (Exception e)
+        {
+            Log.w(TAG, "Failed to parse timestamp: " + e.getMessage());
+            m_timestamp = Calendar.getInstance().getTime();
+        }
+
+        m_version = json.optDouble("version", M_JSON_FORMAT_VERSION);
+        m_eventCode = json.optString("eventCode", "");
+        m_matchNumber = json.optString("matchNumber", "");
+        m_teamNumber = json.optString("teamNumber", "");
+        m_teamAlias = json.optString("teamAlias", "");
+        setScoutName(json.optString("scoutName", ""));
+
+        m_autonPreload = json.optBoolean("preload", false);
+        m_autonPreloadAccRate = json.optInt("autonPreloadAccRate", 0);
+        m_autonHopper = json.optInt("autonHopper", 0);
+        m_autonAccuracyRate = json.optInt("autonAccuracyRate", 0);
+        m_autonAz = json.optBoolean("autonAz", false);
+        m_autonDepot = json.optBoolean("autonDepot", false);
+        m_autonOutpost = json.optBoolean("autonOutpost", false);
+        m_autonNz = json.optBoolean("autonNz", false);
+        m_autonClimb = json.optInt("autonClimb", 0);
+
+        m_hoppersUsed = json.optInt("hoppersUsed", 0);
+        m_accuracyRate = json.optInt("accuracyRate", 0);
+        m_intakeAndShoot = json.optBoolean("intakeAndShoot", false);
+        m_passingRate = json.optInt("passingRate", 5);
+        m_defenseRate = json.optInt("defenseRate", 0);
+        m_drivingAbility = json.optInt("driveAbility", 6);
+        m_passedAz = json.optInt("allianceZone", 3);
+        m_passedNz = json.optInt("neutralZone", 3);
+        m_teleopPhoto = json.optInt("teleopPhoto", 0);
+
+        m_diedValue = json.optInt("died", 0);
+        m_startClimb = json.optInt("startClimb", 0);
+        m_endgameClimbLevel = json.optInt("climbLevel", 0);
+        m_endgameClimbPos = json.optInt("endgameClimbPos", 0);
+        m_comment = json.optString("comments", "");
+
+        m_shovelFuel = json.optBoolean("other1", false);
+        m_other2 = json.optString("other2", "0");
+        m_other3 = json.optString("other3", "0");
+        m_other4 = json.optString("other4", "0");
+    }
+
+    /**
+     * Serializes this MatchData record to a {@link JSONObject}.
+     *
+     * @return the serialized JSONObject
+     * @throws JSONException if JSON creation fails
+     */
+    public JSONObject toJSON() throws JSONException
+    {
+        JSONObject json = new JSONObject();
+
+        json.put("matchId", m_matchID);
+        SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US);
+        json.put("timestamp", isoFormat.format(m_timestamp));
+
+        json.put("version", m_version);
+        json.put("eventCode", m_eventCode);
+        json.put("matchNumber", m_matchNumber);
+        json.put("teamNumber", m_teamNumber);
+        json.put("teamAlias", m_teamAlias);
+        json.put("scoutName", m_scoutName);
+
+        json.put("preload", m_autonPreload);
+        json.put("autonPreloadAccRate", m_autonPreloadAccRate);
+        json.put("autonHopper", m_autonHopper);
+        json.put("autonAccuracyRate", m_autonAccuracyRate);
+        json.put("autonAz", m_autonAz);
+        json.put("autonDepot", m_autonDepot);
+        json.put("autonOutpost", m_autonOutpost);
+        json.put("autonNz", m_autonNz);
+        json.put("autonClimb", m_autonClimb);
+
+        json.put("hoppersUsed", m_hoppersUsed);
+        json.put("accuracyRate", m_accuracyRate);
+        json.put("intakeAndShoot", m_intakeAndShoot);
+        json.put("passingRate", m_passingRate);
+        json.put("defenseRate", m_defenseRate);
+        json.put("driveAbility", m_drivingAbility);
+        json.put("allianceZone", m_passedAz);
+        json.put("neutralZone", m_passedNz);
+        json.put("teleopPhoto", m_teleopPhoto);
+
+        json.put("startClimb", m_startClimb);
+        json.put("climbLevel", m_endgameClimbLevel);
+        json.put("endgameClimbPos", m_endgameClimbPos);
+        json.put("died", m_diedValue);
+        json.put("comments", m_comment);
+
+        json.put("other1", m_shovelFuel);
+        json.put("other2", m_other2);
+        json.put("other3", m_other3);
+        json.put("other4", m_other4);
+
+        return json;
     }
 
     /**

@@ -222,7 +222,7 @@ public class MatchListFragment extends Fragment
                 }
                 else if (itemID == R.id.load_tba_matches_dialog)
                 {
-                    LoadEventDialog.newInstance().show(fm, "load_event_dialog");
+                    LoadTBAMatchesDialog.newInstance().show(fm, "load_event_dialog");
                 }
                 else if (itemID == R.id.load_team_aliases_dialog)
                 {
