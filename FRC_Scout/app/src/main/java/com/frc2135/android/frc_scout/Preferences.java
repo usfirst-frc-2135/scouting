@@ -42,6 +42,12 @@ public class Preferences
         m_listeners = new ArrayList<>();
     }
 
+    /**
+     * Returns the singleton instance of Preferences.
+     *
+     * @param context the context used to initialize the instance
+     * @return the singleton Preferences instance
+     */
     public static Preferences getInstance(Context context)
     {
         Log.d(TAG, "getInstance()");
@@ -68,6 +74,11 @@ public class Preferences
         return m_darkMode;
     }
 
+    /**
+     * Sets the dark mode preference and applies the theme.
+     *
+     * @param isEnabled true to enable dark mode, false for light mode
+     */
     public void setDarkMode(boolean isEnabled)
     {
         Log.d(TAG, "setDarkMode(): " + isEnabled);

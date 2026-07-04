@@ -25,7 +25,7 @@ public class SetTeamIndexDialog extends DialogFragment
     private Settings m_settings;
     private SetTeamIndexDialogBinding m_binding;
 
-    private String[] m_options;
+    private String[] m_indexOptions;
 
     /**
      * Creates a new instance of SetTeamIndexDialog.
@@ -43,20 +43,11 @@ public class SetTeamIndexDialog extends DialogFragment
     {
         Log.d(TAG, "onCreateDialog called");
 
-        m_options = new String[]{
-                getString(R.string.team_index_none),
-                getString(R.string.team_index_1),
-                getString(R.string.team_index_2),
-                getString(R.string.team_index_3),
-                getString(R.string.team_index_4),
-                getString(R.string.team_index_5),
-                getString(R.string.team_index_6)
-        };
-
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         m_binding = SetTeamIndexDialogBinding.inflate(inflater);
 
         m_settings = Settings.getInstance(requireContext());
+        m_indexOptions = m_settings.getTeamIndexOptions();
 
         setupTeamIndexDropdown();
 
@@ -66,7 +57,7 @@ public class SetTeamIndexDialog extends DialogFragment
                 .setPositiveButton(android.R.string.ok, (d, w) -> saveTeamIndex())
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
                 .setNeutralButton(R.string.clear_index, (d, w) -> {
-                    m_binding.setTeamIndexField.setText(m_options[0], false);
+                    m_settings.clearTeamIndexStr();
                     saveTeamIndex();
                 })
                 .create();
@@ -79,10 +70,10 @@ public class SetTeamIndexDialog extends DialogFragment
     {
         Log.d(TAG, "setupDropdown()");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(),
-                R.layout.set_team_index_dropdown_item, m_options);
+                R.layout.set_team_index_dropdown_item, m_indexOptions);
         m_binding.setTeamIndexField.setAdapter(adapter);
 
-        String currentIndex = (m_settings != null) ? m_settings.getTeamIndexStr() : m_options[0];
+        String currentIndex = (m_settings != null) ? m_settings.getTeamIndexStr() : "unknown";
         m_binding.setTeamIndexField.setText(currentIndex, false);
     }
 

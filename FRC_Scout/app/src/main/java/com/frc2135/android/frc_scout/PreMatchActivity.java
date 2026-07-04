@@ -66,7 +66,7 @@ public class PreMatchActivity extends AppCompatActivity
         m_scoutNames = ScoutNames.getInstance(getApplicationContext());
 
         m_settings = Settings.getInstance(getApplicationContext());
-        m_teamIndexStr = (m_settings != null) ? m_settings.getTeamIndexStr() : "0 - None";
+        m_teamIndexStr = (m_settings != null) ? m_settings.getTeamIndexStr() : "unknown";
 
         String inEdit = getIntent().getStringExtra("in_edit");
         m_isEditMode = "yes".equalsIgnoreCase(inEdit);
@@ -285,7 +285,7 @@ public class PreMatchActivity extends AppCompatActivity
         }
 
         String matchNumStr = m_binding.matchNumberField.getText().toString().trim();
-        if (!matchNumStr.isEmpty() && !m_teamIndexStr.isEmpty() && m_settings.isValidTeamIndexNum(m_teamIndexStr))
+        if (!matchNumStr.isEmpty() && !m_teamIndexStr.isEmpty() && m_settings.isValidTeamIndexStr(m_teamIndexStr))
         {
             Log.d(TAG, "Auto-loading team number for index " + m_teamIndexStr);
             try

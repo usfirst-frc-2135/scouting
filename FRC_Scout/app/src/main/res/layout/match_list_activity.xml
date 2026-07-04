@@ -27,7 +27,7 @@
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                tools:text="1 - Red 1" />
+                tools:text="@string/team_index_none" />
 
         </com.google.android.material.appbar.MaterialToolbar>
 

@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -17,10 +18,10 @@ import java.util.List;
  * Settings are persisted via a JSON file.
  * Handles its own persistence by extending {@link BaseJSONSerializer}.
  */
-public class Settings extends BaseJSONSerializer
+public final class Settings extends BaseJSONSerializer
 {
     private static final String TAG = "Settings";
-    private static final String FILENAME = "settings.json";
+    private static final String SETTINGS_FILENAME = "settings.json";
 
     // Settings JSON Keys
     private static final String KEY_SETTINGS_VERSION = "settingsVersion";
@@ -33,6 +34,8 @@ public class Settings extends BaseJSONSerializer
     private static final String KEY_MOST_RECENT_SCOUT_NAME = "mostRecentScoutName";
     private static final String KEY_SCORING_TABLE_SIDE = "scoringTableSide";
 
+    private static final String DEFAULT_EVENT_CODE = "EVTX";
+
     private final List<String> m_pastScouts;
     private String m_eventCode;
     private String m_teamIndexStr;
@@ -41,6 +44,7 @@ public class Settings extends BaseJSONSerializer
     private final List<String> m_eventScoutNames;
     private boolean m_bEventScoutNamesLoaded;
     private boolean m_scoringTableSide;
+    private final String[] m_teamIndexOptions;
 
     private static volatile Settings sSettings;
 
@@ -70,8 +74,17 @@ public class Settings extends BaseJSONSerializer
     {
         super(context);
         Log.d(TAG, "Settings constructor");
-        m_eventCode = "";
-        m_teamIndexStr = "0 - None";
+        m_eventCode = DEFAULT_EVENT_CODE;
+        m_teamIndexOptions = new String[]{
+                context.getString(R.string.team_index_none),
+                context.getString(R.string.team_index_1),  // red teams
+                context.getString(R.string.team_index_2),
+                context.getString(R.string.team_index_3),
+                context.getString(R.string.team_index_4),  // blue teams
+                context.getString(R.string.team_index_5),
+                context.getString(R.string.team_index_6)
+        };
+        m_teamIndexStr = m_teamIndexOptions[0];
         m_mostRecentMatchNumber = "";
         m_pastScouts = new ArrayList<>();
         m_mostRecentScoutName = "";
@@ -90,23 +103,6 @@ public class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Default constructor for creating a new Settings object (internal use for deserialization).
-     */
-    public Settings()
-    {
-        super(); // Internal use, no file I/O context needed
-        Log.d(TAG, "Settings default constructor");
-        m_eventCode = "";
-        m_teamIndexStr = "0 - None";
-        m_mostRecentMatchNumber = "";
-        m_pastScouts = new ArrayList<>();
-        m_mostRecentScoutName = "";
-        m_eventScoutNames = new ArrayList<>();
-        m_bEventScoutNamesLoaded = false;
-        m_scoringTableSide = false;
-    }
-
-    /**
      * Saves the current settings configuration to internal storage.
      *
      * @throws JSONException if configuration data serialization fails
@@ -116,7 +112,7 @@ public class Settings extends BaseJSONSerializer
             throws JSONException, IOException
     {
         Log.d(TAG, "saveSettings()");
-        File file = new File(m_dataDir, FILENAME);
+        File file = new File(m_dataDir, SETTINGS_FILENAME);
         saveJSONObject(file, toJSON());
     }
 
@@ -130,33 +126,32 @@ public class Settings extends BaseJSONSerializer
             throws IOException, JSONException
     {
         Log.d(TAG, "loadSettings()");
-        File file = new File(m_dataDir, FILENAME);
+        File file = new File(m_dataDir, SETTINGS_FILENAME);
         if (!file.exists())
         {
             return;
         }
 
-        String content = readStringFromFile(file);
-        if (content == null || content.isEmpty())
+        // Use the base class method to load the root object
+        JSONObject json = loadJSONObject(file);
+        if (json != null)
         {
+            fromJSON(json);
+            Log.i(TAG, "Successfully loaded settings from JSONObject format");
             return;
         }
 
-        // Handle both legacy (JSONArray) and new (JSONObject) root formats
-        if (content.trim().startsWith("["))
+        // Fallback for legacy format (wrapped in a JSONArray)
+        String content = readStringFromFile(file);
+        if (content != null && content.trim().startsWith("["))
         {
             JSONArray array = new JSONArray(content);
             if (array.length() > 0)
             {
                 fromJSON(array.getJSONObject(0));
                 Log.i(TAG, "Successfully loaded settings from legacy JSONArray format");
+                saveSettingsSilent(); // Migrate to new format immediately
             }
-        }
-        else
-        {
-            JSONObject json = new JSONObject(content);
-            fromJSON(json);
-            Log.i(TAG, "Successfully loaded settings from JSONObject format");
         }
     }
 
@@ -170,33 +165,32 @@ public class Settings extends BaseJSONSerializer
             throws JSONException
     {
         // Version check could be added here in the future
-        m_eventCode = json.optString(KEY_EVENT_CODE, "");
+        m_eventCode = json.optString(KEY_EVENT_CODE, DEFAULT_EVENT_CODE);
+        m_teamIndexStr = json.optString(KEY_TEAM_INDEX, "0 - None");
+        m_mostRecentMatchNumber = json.optString(KEY_MOST_RECENT_MATCH_NUMBER, "");
+        m_mostRecentScoutName = json.optString(KEY_MOST_RECENT_SCOUT_NAME, "");
 
         if (json.has(KEY_PAST_SCOUTS))
         {
             JSONArray scoutsArray = json.getJSONArray(KEY_PAST_SCOUTS);
             m_pastScouts.clear();
-            for (int i = 0; i < scoutsArray.length(); i++)
+            for (int idx = 0; idx < scoutsArray.length(); idx++)
             {
-                m_pastScouts.add(scoutsArray.getString(i));
+                m_pastScouts.add(scoutsArray.getString(idx));
             }
         }
         else
         {
             // Fallback to legacy format: scoutName0, scoutName1, ...
-            int i = 0;
-            while (json.has(KEY_SCOUT_NAME_PREFIX + i))
+            int legacyIndex = 0;
+            while (json.has(KEY_SCOUT_NAME_PREFIX + legacyIndex))
             {
-                m_pastScouts.add(json.getString(KEY_SCOUT_NAME_PREFIX + i));
-                i++;
+                m_pastScouts.add(json.getString(KEY_SCOUT_NAME_PREFIX + legacyIndex));
+                legacyIndex++;
             }
         }
 
-        m_teamIndexStr = json.optString(KEY_TEAM_INDEX, "0 - None");
-        int scoringTableSideVal = json.optInt(KEY_SCORING_TABLE_SIDE, 0);
-        m_scoringTableSide = (scoringTableSideVal == 1);
-        m_mostRecentScoutName = json.optString(KEY_MOST_RECENT_SCOUT_NAME, "");
-        m_mostRecentMatchNumber = json.optString(KEY_MOST_RECENT_MATCH_NUMBER, "");
+        m_scoringTableSide = json.optBoolean(KEY_SCORING_TABLE_SIDE, false);
     }
 
     /**
@@ -212,6 +206,9 @@ public class Settings extends BaseJSONSerializer
         json.put(KEY_SETTINGS_VERSION, 1);
         json.put(KEY_LAST_UPDATED, QRCodeDialog.formattedDate(new java.util.Date()));
         json.put(KEY_EVENT_CODE, m_eventCode);
+        json.put(KEY_TEAM_INDEX, m_teamIndexStr);
+        json.put(KEY_MOST_RECENT_MATCH_NUMBER, m_mostRecentMatchNumber);
+        json.put(KEY_MOST_RECENT_SCOUT_NAME, m_mostRecentScoutName);
 
         JSONArray scoutsArray = new JSONArray();
         for (String name : m_pastScouts)
@@ -220,10 +217,7 @@ public class Settings extends BaseJSONSerializer
         }
         json.put(KEY_PAST_SCOUTS, scoutsArray);
 
-        json.put(KEY_TEAM_INDEX, m_teamIndexStr);
-        json.put(KEY_SCORING_TABLE_SIDE, m_scoringTableSide ? 1 : 0);
-        json.put(KEY_MOST_RECENT_SCOUT_NAME, m_mostRecentScoutName);
-        json.put(KEY_MOST_RECENT_MATCH_NUMBER, m_mostRecentMatchNumber);
+        json.put(KEY_SCORING_TABLE_SIDE, m_scoringTableSide);
 
         return json;
     }
@@ -244,49 +238,124 @@ public class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Adds a scout name to the list of past scouts if it doesn't already exist.
+     * Sets the current FRC event code.
      *
-     * @param name the scout name to add
+     * @param eventCode the event code string
      */
-    public void addPastScoutNames(String name)
-    {
-        if (name == null || name.trim().isEmpty())
-        {
-            return;
-        }
-
-        String trimmedName = name.trim();
-        for (String existingName : m_pastScouts)
-        {
-            if (trimmedName.equalsIgnoreCase(existingName.trim()))
-            {
-                return;
-            }
-        }
-        m_pastScouts.add(trimmedName);
-        saveSettingsSilent();
-    }
-
-    public String getMostRecentMatchNumber()
-    {
-        return m_mostRecentMatchNumber;
-    }
-
     public void setEventCode(String eventCode)
     {
         m_eventCode = (eventCode != null) ? eventCode : "";
         saveSettingsSilent();
     }
 
+    /**
+     * Returns the current FRC event code.
+     *
+     * @return the event code string
+     */
     public String getEventCode()
     {
         return m_eventCode;
     }
 
+    /**
+     * Sets the team index string (e.g. "1 - Red 1").
+     *
+     * @param indexStr the team index string from m_teamIndexOptions
+     */
+    public void setTeamIndexStr(String indexStr)
+    {
+        m_teamIndexStr = (indexStr != null) ? indexStr : m_teamIndexOptions[0];
+        saveSettingsSilent();
+    }
+
+    /**
+     * Returns the current team index string (e.g. "1 - Red 1").
+     *
+     * @return the team index string
+     */
+    public String getTeamIndexStr()
+    {
+        return m_teamIndexStr;
+    }
+
+    /**
+     * Clears the current team index string.
+     *
+     */
+    public void clearTeamIndexStr()
+    {
+        m_teamIndexStr = m_teamIndexOptions[0];
+    }
+
+    /**
+     * Returns the team index options.
+     *
+     * @return team index string options
+     */
+    public String[] getTeamIndexOptions()
+    {
+        return m_teamIndexOptions;
+    }
+
+    /**
+     * Returns true if given indexStr is valid
+     *
+     * @param indexStr the index string to validate
+     * @return true if valid
+     */
+    public boolean isValidTeamIndexStr(String indexStr)
+    {
+        List<String> indexOptions = Arrays.asList(m_teamIndexOptions);
+        if (indexStr == null)
+        {
+            return false;
+        }
+        return indexOptions.contains(indexStr);
+    }
+
+    /**
+     * Returns "red", "blue", or "unknown" based on the current team index.
+     *
+     * @return the team color string ("red", "blue", or "unknown")
+     */
+    public String getTeamIndexColor()
+    {
+        if (m_teamIndexStr == null)
+        {
+            return "";
+        }
+
+        if (m_teamIndexStr.equals(m_teamIndexOptions[1]) || m_teamIndexStr.equals(m_teamIndexOptions[2]) || m_teamIndexStr.equals(m_teamIndexOptions[3]))
+        {
+            return "red";
+        }
+        if (m_teamIndexStr.equals(m_teamIndexOptions[4]) || m_teamIndexStr.equals(m_teamIndexOptions[5]) || m_teamIndexStr.equals(m_teamIndexOptions[6]))
+        {
+            return "blue";
+        }
+        return "unknown";
+    }
+
+    /**
+     * Sets the most recent match number used in the application.
+     *
+     * @param value the match number string
+     */
     public void setMostRecentMatchNumber(String value)
     {
         m_mostRecentMatchNumber = (value != null) ? value : "";
         saveSettingsSilent();
+    }
+
+    /**
+     * Returns the most recent match number used.
+     *
+     * @return the match number string
+     */
+    public String getMostRecentMatchNumber()
+    {
+        return m_mostRecentMatchNumber;
     }
 
     /**
@@ -336,105 +405,34 @@ public class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Returns the current team index string (e.g. "1").
+     * Adds a scout name to the list of past scouts if it doesn't already exist.
      *
-     * @return the team index string
+     * @param name the scout name to add
      */
-    public String getTeamIndexStr()
+    public void addPastScoutNames(String name)
     {
-        return m_teamIndexStr;
-    }
-
-    /**
-     * Returns "red", "blue", or empty string based on the current team index.
-     *
-     * @return the team color string
-     */
-    public String getTeamIndexColor()
-    {
-        if (m_teamIndexStr == null)
+        if (name == null || name.trim().isEmpty())
         {
-            return "";
+            return;
         }
 
-        return switch (m_teamIndexStr)
+        String trimmedName = name.trim();
+        for (String existingName : m_pastScouts)
         {
-            case "1", "2", "3" -> "red";
-            case "4", "5", "6" -> "blue";
-            default -> "";
-        };
-    }
-
-    /**
-     * Returns a descriptive string for the current team index (e.g. "1 - Red 1").
-     *
-     * @return the team index description string
-     */
-    @SuppressWarnings("unused")
-    public String getTeamIndexDescription()
-    {
-        if (m_teamIndexStr == null || m_teamIndexStr.equals("0 - None"))
-        {
-            return "0 - None";
+            if (trimmedName.equalsIgnoreCase(existingName.trim()))
+            {
+                return;
+            }
         }
-
-        return switch (m_teamIndexStr)
-        {
-            case "1" -> "1 - Red 1";
-            case "2" -> "2 - Red 2";
-            case "3" -> "3 - Red 3";
-            case "4" -> "4 - Blue 1";
-            case "5" -> "5 - Blue 2";
-            case "6" -> "6 - Blue 3";
-            default -> "0 - None";
-        };
-    }
-
-    /**
-     * Sets the team index string (e.g. "1").
-     *
-     * @param indexStr the team index string
-     */
-    public void setTeamIndexStr(String indexStr)
-    {
-        m_teamIndexStr = (indexStr != null) ? indexStr : "0 - None";
+        m_pastScouts.add(trimmedName);
         saveSettingsSilent();
     }
 
     /**
-     * Returns true if given indexStr is a valid team number: 1, 2, 3, 4, 5, or 6.
+     * Returns the most recent scout name used.
+     *
+     * @return the scout name
      */
-    public boolean isValidTeamIndexNum(String indexStr)
-    {
-        if (indexStr == null)
-        {
-            return false;
-        }
-        return indexStr.matches("[1-6]");
-    }
-
-    /**
-     * Returns true if given indexStr is valid: None, 1, 2, 3, 4, 5, or 6.
-     */
-    @SuppressWarnings("unused")
-    public boolean isValidTeamIndexStr(String indexStr)
-    {
-        return "0 - None".equals(indexStr) || isValidTeamIndexNum(indexStr);
-    }
-
-    @SuppressWarnings("unused")
-    public boolean getScoringTableSide()
-    {
-        return m_scoringTableSide;
-    }
-
-    @SuppressWarnings("unused")
-    public void setScoringTableSide(boolean val)
-    {
-        m_scoringTableSide = val;
-        saveSettingsSilent();
-    }
-
     public String getMostRecentScoutName()
     {
         return m_mostRecentScoutName;
@@ -461,7 +459,9 @@ public class Settings extends BaseJSONSerializer
         return m_pastScouts.toArray(new String[0]);
     }
 
-    @SuppressWarnings("unused")
+    /**
+     * Clears the list of past scout names.
+     */
     public void clear()
     {
         m_pastScouts.clear();
@@ -510,7 +510,6 @@ public class Settings extends BaseJSONSerializer
      * @param scoutData the JSONArray of scout names
      * @throws IOException if saving fails
      */
-    @SuppressWarnings("unused")
     public void saveEventScoutNames(Context context, String eventCode, JSONArray scoutData)
             throws IOException
     {
@@ -525,7 +524,6 @@ public class Settings extends BaseJSONSerializer
      *
      * @return a list of unique scout names
      */
-    @SuppressWarnings("unused")
     public List<String> getAllScoutNames()
     {
         List<String> allNames = new ArrayList<>(m_eventScoutNames);
@@ -539,9 +537,35 @@ public class Settings extends BaseJSONSerializer
         return allNames;
     }
 
-    @SuppressWarnings("unused")
+
+    /**
+     * Returns whether event-specific scout names have been loaded.
+     *
+     * @return true if loaded
+     */
     public boolean isEventScoutNamesLoaded()
     {
         return m_bEventScoutNamesLoaded;
+    }
+
+    /**
+     * Sets which side of the field the scoring table is on.
+     *
+     * @param val true for one side, false for the other
+     */
+    public void setScoringTableSide(boolean val)
+    {
+        m_scoringTableSide = val;
+        saveSettingsSilent();
+    }
+
+    /**
+     * Returns which side of the field the scoring table is on.
+     *
+     * @return the side value
+     */
+    public boolean getScoringTableSide()
+    {
+        return m_scoringTableSide;
     }
 }

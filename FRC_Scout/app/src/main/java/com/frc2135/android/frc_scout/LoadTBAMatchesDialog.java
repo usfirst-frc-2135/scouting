@@ -77,10 +77,10 @@ public class LoadTBAMatchesDialog extends DialogFragment
         Settings settings = Settings.getInstance(requireContext());
         if (settings != null)
         {
-            String currentCode = settings.getEventCode();
-            if (!Objects.equals(currentCode, "EVTX") && !currentCode.isEmpty())
+            String currentEventCode = settings.getEventCode();
+            if (!Objects.equals(currentEventCode, "EVTX") && !currentEventCode.isEmpty())
             {
-                m_binding.eventCodeField.setText(currentCode);
+                m_binding.eventCodeField.setText(currentEventCode);
             }
         }
 
