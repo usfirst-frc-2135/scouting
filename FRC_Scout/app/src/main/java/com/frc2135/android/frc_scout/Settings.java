@@ -272,6 +272,7 @@ public final class Settings extends BaseJSONSerializer
      * @param eventCode the event code string to validate
      * @return true if valid
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isValidEventCode(String eventCode)
     {
         if (eventCode == null || eventCode.isEmpty() || eventCode.length() < 7)

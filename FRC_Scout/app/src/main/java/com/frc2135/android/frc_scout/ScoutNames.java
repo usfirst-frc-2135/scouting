@@ -21,6 +21,7 @@ public class ScoutNames extends BaseJSONSerializer
 {
     private static final String TAG = "ScoutNames";
     private static final String FILENAME_SUFFIX = "_scoutNames.json";
+    private static final String SCOUT_NAME_JSON_KEY = "scoutName";
 
     private String m_eventCode;
     private List<String> m_scoutNames;
@@ -163,7 +164,7 @@ public class ScoutNames extends BaseJSONSerializer
                 for (int i = 0; i < jsonArray.length(); i++)
                 {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    String name = jsonObject.getString("scoutname");
+                    String name = jsonObject.getString(SCOUT_NAME_JSON_KEY);
                     if (!name.isEmpty())
                     {
                         m_scoutNames.add(name);

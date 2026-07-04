@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.frc2135.android.frc_scout.databinding.QrFragmentBinding;
+import com.frc2135.android.frc_scout.databinding.QrCodeDialogBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -30,7 +30,7 @@ public class QRCodeDialog extends DialogFragment
     private static final String ARG_STATS = "stats";
     private static final String ARG_LABEL = "match_label";
 
-    private QrFragmentBinding m_binding;
+    private QrCodeDialogBinding m_binding;
 
     /**
      * Creates a new instance of QRCodeDialog for the given match data.
@@ -61,7 +61,7 @@ public class QRCodeDialog extends DialogFragment
     {
         Log.d(TAG, "onCreateDialog called");
 
-        m_binding = QrFragmentBinding.inflate(getLayoutInflater());
+        m_binding = QrCodeDialogBinding.inflate(getLayoutInflater());
 
         Bundle args = requireArguments();
         String stats = args.getString(ARG_STATS, "");

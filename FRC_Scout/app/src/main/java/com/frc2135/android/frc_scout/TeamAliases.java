@@ -20,6 +20,8 @@ public class TeamAliases extends BaseJSONSerializer
 {
     private static final String TAG = "TeamAliases";
     private static final String FILENAME_SUFFIX = "_teamAliases.json";
+    private static final String TEAM_NUM_JSON_KEY = "teamNum";
+    private static final String ALIAS_NUM_JSON_KEY = "aliasNum";
 
     private String m_eventCode;
     private JSONArray m_aliasesJSON;
@@ -117,9 +119,9 @@ public class TeamAliases extends BaseJSONSerializer
         for (int i = 0; i < m_aliasesJSON.length(); i++)
         {
             JSONObject obj = m_aliasesJSON.getJSONObject(i);
-            if (targetTeamNum.equals(obj.optString("teamNum")))
+            if (targetTeamNum.equals(obj.optString(TEAM_NUM_JSON_KEY)))
             {
-                return obj.optString("aliasNum", "");
+                return obj.optString(ALIAS_NUM_JSON_KEY, "");
             }
         }
         return "";
@@ -143,9 +145,9 @@ public class TeamAliases extends BaseJSONSerializer
         for (int i = 0; i < m_aliasesJSON.length(); i++)
         {
             JSONObject obj = m_aliasesJSON.getJSONObject(i);
-            if (myAlias.equals(obj.optString("aliasNum")))
+            if (myAlias.equals(obj.optString(ALIAS_NUM_JSON_KEY)))
             {
-                return obj.optString("teamNum", "");
+                return obj.optString(TEAM_NUM_JSON_KEY, "");
             }
         }
         return "";
