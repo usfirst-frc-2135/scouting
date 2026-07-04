@@ -100,8 +100,8 @@ public class ScoutedMatches extends BaseJSONSerializer
         if (match != null)
         {
             m_scoutedMatches.remove(match);
-            m_appContext.deleteFile(match.getMatchFileName());
-            Log.d(TAG, "Deleted match file: " + match.getMatchFileName());
+            m_appContext.deleteFile(getMatchFileName(match));
+            Log.d(TAG, "Deleted match file: " + getMatchFileName(match));
         }
     }
 
@@ -138,7 +138,7 @@ public class ScoutedMatches extends BaseJSONSerializer
             JSONArray array = new JSONArray();
             array.put(matchData.toJSON());
 
-            String filename = matchData.getMatchFileName();
+            String filename = getMatchFileName(matchData);
             File file = new File(m_dataDir, filename);
             saveJSONArray(file, array);
             return true;
@@ -148,6 +148,21 @@ public class ScoutedMatches extends BaseJSONSerializer
             Log.e(TAG, "Failed to save match data for ID: " + matchData.getMatchID(), e);
             return false;
         }
+    }
+
+    /**
+     * Gets the filename for a given match's data.
+     *
+     * @param match the match data
+     * @return the filename string
+     */
+    public static String getMatchFileName(MatchData match)
+    {
+        if (match == null)
+        {
+            return "";
+        }
+        return match.getMatchID() + ".json";
     }
 
     /**
@@ -195,7 +210,11 @@ public class ScoutedMatches extends BaseJSONSerializer
         {
             String filename = file.getName();
             // Match files are identified by their UUID-based filename length (usually 36 chars + .json)
-            if (filename.length() > 30 && filename.endsWith(".json") && !filename.contains("matches") && !filename.contains("aliases") && !filename.contains("scoutNames"))
+            if (filename.length() > 30 &&
+                    filename.endsWith(".json") &&
+                    !filename.contains("matches") &&
+                    !filename.contains("teamAliases") &&
+                    !filename.contains("scoutNames"))
             {
                 try
                 {

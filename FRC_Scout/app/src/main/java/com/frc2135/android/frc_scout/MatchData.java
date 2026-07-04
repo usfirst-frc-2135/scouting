@@ -22,8 +22,11 @@ public class MatchData
     public static final double M_JSON_FORMAT_VERSION = 26.1;
 
     // Data members
+    // Unique identifier for this match (used in file names and QR codes)
     private String m_matchID;
+    // Date created for this match
     private Date m_timestamp;
+    // Version of the match data format
     private double m_version;
     private String m_eventCode;
     private String m_matchNumber;
@@ -704,11 +707,6 @@ public class MatchData
     public void setOther4(String value)
     {
         m_other4 = value;
-    }
-
-    public String getMatchFileName()
-    {
-        return m_matchID + ".json";
     }
 
     /**
