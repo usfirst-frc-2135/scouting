@@ -286,6 +286,7 @@ public final class Settings extends BaseJSONSerializer
     public void clearTeamIndexStr()
     {
         m_teamIndexStr = m_teamIndexOptions[0];
+        saveSettingsSilent();
     }
 
     /**

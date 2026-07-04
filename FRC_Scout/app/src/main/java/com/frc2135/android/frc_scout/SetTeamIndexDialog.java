@@ -58,7 +58,8 @@ public class SetTeamIndexDialog extends DialogFragment
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
                 .setNeutralButton(R.string.clear_index, (d, w) -> {
                     m_settings.clearTeamIndexStr();
-                    saveTeamIndex();
+                    m_binding.setTeamIndexField.setText(m_settings.getTeamIndexStr(), false);
+                    getParentFragmentManager().setFragmentResult("team_index_changed", new Bundle());
                 })
                 .create();
     }
