@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.frc2135.android.frc_scout.databinding.ActionBarSwitchBinding;
 import com.frc2135.android.frc_scout.databinding.MatchListFragmentBinding;
 import com.frc2135.android.frc_scout.databinding.MatchListItemBinding;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -349,8 +350,8 @@ public class MatchListFragment extends Fragment
         if (itemID == R.id.menu_item_delete_match)
         {
             Log.d(TAG, "Delete match button clicked");
-            new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
-                    .setTitle("Delete Match")
+            new MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(R.string.delete_match)
                     .setMessage("Are you sure you want to delete this match? This action cannot be undone.")
                     .setPositiveButton("Delete", (dialog, which) -> {
                         ScoutedMatches.getInstance(requireContext()).deleteMatch(m);

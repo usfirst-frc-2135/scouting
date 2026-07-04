@@ -54,7 +54,7 @@ public class LoadScoutNamesDialog extends DialogFragment
         m_binding = LoadEventDialogBinding.inflate(inflater);
 
         AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity())
-                .setTitle("Load Scout Names")
+                .setTitle(R.string.load_scout_names_title)
                 .setView(m_binding.getRoot())
                 .setPositiveButton(android.R.string.ok, null)
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())

@@ -66,7 +66,7 @@ public class TeleopFragment extends Fragment
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         if (actionBar != null && m_matchData != null)
         {
-            actionBar.setTitle("Teleoperated");
+            actionBar.setTitle(R.string.teleoperated_title);
         }
     }
 

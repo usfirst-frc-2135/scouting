@@ -43,7 +43,7 @@ public class AutonFragment extends Fragment
                 ActionBar actionBar = activity.getSupportActionBar();
                 if (actionBar != null)
                 {
-                    actionBar.setTitle("Autonomous");
+                    actionBar.setTitle(R.string.autonomous_title);
 
                     Settings settings = Settings.getInstance(getContext());
                     if (settings != null)

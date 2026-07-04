@@ -69,7 +69,7 @@ public class EndgameFragment extends Fragment
         ActionBar actionBar = activity.getSupportActionBar();
         if (actionBar != null)
         {
-            actionBar.setTitle("Endgame");
+            actionBar.setTitle(R.string.endgame_title);
         }
     }
 

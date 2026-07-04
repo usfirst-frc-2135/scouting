@@ -19,7 +19,9 @@
     <string name="load_team_aliases">Load Team Aliases</string>
     <string name="load_scout_names">Load Scout Names</string>
     <string name="about">About</string>
+    <string name="load_scout_names_title">Load Scout Names</string>
 
+    <string name="set_team_index_title">Set Team Index</string>
     <string name="set_the_team_index_to_use">Set the team index to use (1–6, or None):</string>
     <string name="team_index_none">0 - None</string>
     <string name="team_index_1">1 - Red 1</string>
@@ -30,7 +32,12 @@
     <string name="team_index_6">6 - Blue 3</string>
     <string name="clear_team_index">Clear Team Index</string>
 
+    <string name="load_tba_matches_title">Load TBA Matches</string>
     <string name="clear_tba_matches">Clear TBA Matches</string>
+
+    <string name="load_team_aliases_title">Load Team Aliases</string>
+    <string name="clear_team_aliases">Clear Team Aliases</string>
+
     <string name="enter_event_code">Enter Event Code</string>
 
     <!--    Match List screen -->
@@ -93,9 +100,10 @@
     <string name="done">Done</string>
 
     <!--    Match scouting screens (year non-specific) -->
-    <!--    <string name="autonomous">Autonomous</string>-->
+    <string name="autonomous_title">Autonomous</string>
+    <string name="teleoperated_title">Teleoperated</string>
+    <string name="endgame_title">Endgame</string>
     <string name="auton">Auton</string>
-    <!--    <string name="teleoperated">Teleoperated</string>-->
     <string name="teleop">Teleop</string>
     <string name="endgame">Endgame</string>
     <string name="alliance">Alliance</string>
@@ -186,10 +194,6 @@
 
     <string name="no">No</string>
     <string name="yes">Yes</string>
-    <string name="set_team_index_title">Set Team Index</string>
-    <string name="load_tba_matches_title">Load TBA Matches</string>
-    <string name="load_team_aliases_title">Load Team Aliases</string>
-    <string name="clear_team_aliases">Clear Team Aliases</string>
 
     <!-- Accessibility Strings -->
 
