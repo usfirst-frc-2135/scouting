@@ -227,16 +227,20 @@ public final class Settings extends BaseJSONSerializer
 
     /**
      * Saves the settings to disk, swallowing and logging any exceptions.
+     *
+     * @return true if successful, false otherwise
      */
-    private void saveSettingsSilent()
+    public boolean saveSettingsSilent()
     {
         try
         {
             saveSettings();
+            return true;
         }
         catch (Exception e)
         {
             Log.e(TAG, "Failed to auto-save settings: ", e);
+            return false;
         }
     }
 
@@ -545,7 +549,7 @@ public final class Settings extends BaseJSONSerializer
     {
         ScoutNames scoutNames = ScoutNames.getInstance(context, eventCode, true);
         scoutNames.deleteScoutNames(eventCode);
-        scoutNames.saveScoutNames(eventCode, scoutData);
+        scoutNames.writeScoutNames(eventCode, scoutData);
         loadEventScoutNames(context, eventCode, true);
     }
 

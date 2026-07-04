@@ -212,7 +212,7 @@ public class TeamAliases extends BaseJSONSerializer
      * @param aliasData the JSONArray containing team-to-alias mapping data
      * @throws IOException if an error occurs during file writing
      */
-    public void saveTeamAliases(String eventCode, JSONArray aliasData)
+    public void writeTeamAliases(String eventCode, JSONArray aliasData)
             throws IOException
     {
         if (eventCode == null || aliasData == null)

@@ -178,7 +178,7 @@ public class LoadScoutNamesDialog extends DialogFragment
     {
         ScoutNames scoutNames = ScoutNames.getInstance(context, eventCode, true);
         scoutNames.deleteScoutNames(eventCode);
-        scoutNames.saveScoutNames(eventCode, response);
+        scoutNames.writeScoutNames(eventCode, response);
     }
 
     @Override

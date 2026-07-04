@@ -203,7 +203,7 @@ public class ScoutNames extends BaseJSONSerializer
      * @param scoutData the JSONArray containing scout names
      * @throws IOException if an error occurs during file writing
      */
-    public void saveScoutNames(String eventCode, JSONArray scoutData)
+    public void writeScoutNames(String eventCode, JSONArray scoutData)
             throws IOException
     {
         if (eventCode == null || scoutData == null)

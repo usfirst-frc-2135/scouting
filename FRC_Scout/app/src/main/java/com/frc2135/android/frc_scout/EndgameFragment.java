@@ -112,11 +112,11 @@ public class EndgameFragment extends Fragment
         m_binding.navToMenuButton.setOnClickListener(view -> {
             updateEndgameData();
             Log.d(TAG, "Saving latest match and scout names");
-            ScoutedMatches matchHistory = ScoutedMatches.getInstance(getActivity());
-            if (!matchHistory.saveScoutNames())
+            if (!Settings.getInstance(getActivity()).saveSettingsSilent())
             {
-                Log.e(TAG, "Failed to save scout names!");
+                Log.e(TAG, "Failed to save settings!");
             }
+            ScoutedMatches matchHistory = ScoutedMatches.getInstance(getActivity());
             if (!matchHistory.saveMatchData(m_matchData))
             {
                 Log.e(TAG, "Failed to save Match Data!");

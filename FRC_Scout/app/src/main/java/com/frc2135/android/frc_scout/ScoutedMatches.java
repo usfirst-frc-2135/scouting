@@ -119,25 +119,6 @@ public class ScoutedMatches extends BaseJSONSerializer
     }
 
     /**
-     * Saves the current settings (scout names, etc.) to the settings file.
-     *
-     * @return true if successful, false otherwise
-     */
-    public boolean saveScoutNames()
-    {
-        try
-        {
-            Settings.getInstance(m_appContext).saveSettings();
-            return true;
-        }
-        catch (Exception e)
-        {
-            Log.e(TAG, "Failed to save scout names", e);
-            return false;
-        }
-    }
-
-    /**
      * Saves a specific match's data to its JSON file.
      *
      * @param matchData the match to save
@@ -179,7 +160,7 @@ public class ScoutedMatches extends BaseJSONSerializer
     {
         try
         {
-            saveScoutNames();
+            Settings.getInstance(m_appContext).saveSettingsSilent();
             Log.d(TAG, "Saving all " + m_scoutedMatches.size() + " matches to disk");
             for (MatchData match : m_scoutedMatches)
             {

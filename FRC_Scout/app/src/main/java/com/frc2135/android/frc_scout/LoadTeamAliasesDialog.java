@@ -177,7 +177,7 @@ public class LoadTeamAliasesDialog extends DialogFragment
     {
         TeamAliases teamAliases = TeamAliases.getInstance(context, eventCode, true);
         teamAliases.deleteTeamAliases(eventCode);
-        teamAliases.saveTeamAliases(eventCode, response);
+        teamAliases.writeTeamAliases(eventCode, response);
     }
 
     @Override
