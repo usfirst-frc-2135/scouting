@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -161,7 +162,12 @@ public class ScoutNames extends BaseJSONSerializer
                 m_scoutNames.clear();
                 for (int i = 0; i < jsonArray.length(); i++)
                 {
-                    m_scoutNames.add(jsonArray.getString(i));
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    String name = jsonObject.getString("scoutname");
+                    if (!name.isEmpty())
+                    {
+                        m_scoutNames.add(name);
+                    }
                 }
                 m_bScoutNamesLoaded = true;
                 Log.d(TAG, "Successfully loaded scout names for " + m_eventCode);

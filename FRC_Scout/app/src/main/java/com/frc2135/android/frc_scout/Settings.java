@@ -9,9 +9,11 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Singleton class for managing application settings, including past scouts, team index, and match numbers.
@@ -166,7 +168,7 @@ public final class Settings extends BaseJSONSerializer
     {
         // Version check could be added here in the future
         m_eventCode = json.optString(KEY_EVENT_CODE, DEFAULT_EVENT_CODE);
-        m_teamIndexStr = json.optString(KEY_TEAM_INDEX, "0 - None");
+        m_teamIndexStr = json.optString(KEY_TEAM_INDEX, m_teamIndexOptions[0]);
         m_mostRecentMatchNumber = json.optString(KEY_MOST_RECENT_MATCH_NUMBER, "");
         m_mostRecentScoutName = json.optString(KEY_MOST_RECENT_SCOUT_NAME, "");
 
@@ -204,7 +206,8 @@ public final class Settings extends BaseJSONSerializer
     {
         JSONObject json = new JSONObject();
         json.put(KEY_SETTINGS_VERSION, 1);
-        json.put(KEY_LAST_UPDATED, QRCodeDialog.formattedDate(new java.util.Date()));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
+        json.put(KEY_LAST_UPDATED, sdf.format(new java.util.Date()));
         json.put(KEY_EVENT_CODE, m_eventCode);
         json.put(KEY_TEAM_INDEX, m_teamIndexStr);
         json.put(KEY_MOST_RECENT_MATCH_NUMBER, m_mostRecentMatchNumber);
@@ -331,11 +334,12 @@ public final class Settings extends BaseJSONSerializer
      */
     public boolean isValidTeamIndexStr(String indexStr)
     {
-        List<String> indexOptions = Arrays.asList(m_teamIndexOptions);
         if (indexStr == null)
         {
             return false;
         }
+
+        List<String> indexOptions = Arrays.asList(m_teamIndexOptions);
         return indexOptions.contains(indexStr);
     }
 
@@ -359,6 +363,7 @@ public final class Settings extends BaseJSONSerializer
         {
             return "blue";
         }
+
         return "unknown";
     }
 
@@ -454,27 +459,6 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Returns the most recent scout name used.
-     *
-     * @return the scout name
-     */
-    public String getMostRecentScoutName()
-    {
-        return m_mostRecentScoutName;
-    }
-
-    /**
-     * Sets the most recent scout name used in the application.
-     *
-     * @param name the scout name
-     */
-    public void setMostRecentScoutName(String name)
-    {
-        m_mostRecentScoutName = (name != null) ? name : "";
-        saveSettingsSilent();
-    }
-
-    /**
      * Returns the array of unique scout names entered by the user.
      *
      * @return an array of scout names
@@ -490,6 +474,27 @@ public final class Settings extends BaseJSONSerializer
     public void clearPastScouts()
     {
         m_pastScouts.clear();
+    }
+
+    /**
+     * Sets the most recent scout name used in the application.
+     *
+     * @param name the scout name
+     */
+    public void setMostRecentScoutName(String name)
+    {
+        m_mostRecentScoutName = (name != null) ? name : "";
+        saveSettingsSilent();
+    }
+
+    /**
+     * Returns the most recent scout name used.
+     *
+     * @return the scout name
+     */
+    public String getMostRecentScoutName()
+    {
+        return m_mostRecentScoutName;
     }
 
     /**
