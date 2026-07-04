@@ -39,7 +39,7 @@ public class ScoutedMatches extends BaseJSONSerializer
     private List<MatchData> loadInitialData()
     {
         Log.d(TAG, "loadInitialData()");
-        return loadMatchData();
+        return loadScoutedMatchList();
     }
 
     /**
@@ -180,7 +180,7 @@ public class ScoutedMatches extends BaseJSONSerializer
      *
      * @return a list of loaded MatchData objects
      */
-    private ArrayList<MatchData> loadMatchData()
+    private ArrayList<MatchData> loadScoutedMatchList()
     {
         ArrayList<MatchData> matchHistory = new ArrayList<>();
         Log.d(TAG, "Scanning for match data files");
