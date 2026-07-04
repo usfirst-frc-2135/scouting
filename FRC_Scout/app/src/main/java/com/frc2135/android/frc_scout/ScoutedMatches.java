@@ -23,6 +23,10 @@ public class ScoutedMatches extends BaseJSONSerializer
 {
     private static final String TAG = "ScoutedMatches";
 
+    private static final String TBA_MATCHES_FILENAME = "tbaMatches";
+    private static final String TEAM_ALIASES_FILENAME = "teamAliases";
+    private static final String SCOUT_NAMES_FILENAME = "scoutNames";
+
     private final List<MatchData> m_scoutedMatches;
     private final Context m_appContext;
 
@@ -209,12 +213,12 @@ public class ScoutedMatches extends BaseJSONSerializer
         for (File file : files)
         {
             String filename = file.getName();
-            // Match files are identified by their UUID-based filename length (usually 36 chars + .json)
+            // Match files are identified by their UUID-based filename length (36 chars + .json)
             if (filename.length() > 30 &&
                     filename.endsWith(".json") &&
-                    !filename.contains("matches") &&
-                    !filename.contains("teamAliases") &&
-                    !filename.contains("scoutNames"))
+                    !filename.contains(TBA_MATCHES_FILENAME) &&
+                    !filename.contains(TEAM_ALIASES_FILENAME) &&
+                    !filename.contains(SCOUT_NAMES_FILENAME))
             {
                 try
                 {
