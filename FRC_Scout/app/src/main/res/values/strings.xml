@@ -28,8 +28,9 @@
     <string name="team_index_4">4 - Blue 1</string>
     <string name="team_index_5">5 - Blue 2</string>
     <string name="team_index_6">6 - Blue 3</string>
-    <string name="clear_index">Clear Index</string>
-    
+    <string name="clear_team_index">Clear Team Index</string>
+
+    <string name="clear_tba_matches">Clear TBA Matches</string>
     <string name="enter_event_code">Enter Event Code</string>
 
     <!--    Match List screen -->
@@ -185,6 +186,10 @@
 
     <string name="no">No</string>
     <string name="yes">Yes</string>
+    <string name="set_team_index_title">Set Team Index</string>
+    <string name="load_tba_matches_title">Load TBA Matches</string>
+    <string name="load_team_aliases_title">Load Team Aliases</string>
+    <string name="clear_team_aliases">Clear Team Aliases</string>
 
     <!-- Accessibility Strings -->
 

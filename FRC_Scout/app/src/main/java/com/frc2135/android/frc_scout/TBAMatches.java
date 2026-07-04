@@ -20,15 +20,15 @@ import java.util.Locale;
 public class TBAMatches extends BaseJSONSerializer
 {
     private static final String TAG = "TBAMatches";
-    private static final String MATCHES_FILE_SUFFIX = "_matches.json";
+    private static final String TBA_MATCHES_FILE_SUFFIX = "_tbaMatches.json";
 
     // JSON Keys used by the blue alliance
-    private static final String KEY_ALLIANCES = "alliances";
-    private static final String KEY_BLUE = "blue";
-    private static final String KEY_RED = "red";
-    private static final String KEY_TEAM_KEYS = "team_keys";
-    private static final String KEY_COMP_LEVEL = "comp_level";
-    private static final String KEY_MATCH_NUMBER = "match_number";
+    private static final String TBA_KEY_ALLIANCES = "alliances";
+    private static final String TBA_KEY_BLUE = "blue";
+    private static final String TBA_KEY_RED = "red";
+    private static final String TBA_KEY_TEAM_KEYS = "team_keys";
+    private static final String TBA_KEY_COMP_LEVEL = "comp_level";
+    private static final String TBA_KEY_MATCH_NUMBER = "match_number";
 
     // Data members
     private String m_eventCode;
@@ -135,7 +135,7 @@ public class TBAMatches extends BaseJSONSerializer
      */
     public void readTBAMatchesJSON(Context context, boolean bSilent)
     {
-        if (m_eventCode == null || m_eventCode.trim().isEmpty())
+        if (!Settings.getInstance(context).isValidEventCode(m_eventCode))
         {
             return;
         }
@@ -169,16 +169,16 @@ public class TBAMatches extends BaseJSONSerializer
     }
 
     /**
-     * Saves event data for a specific event to a JSON file.
+     * Writes event data for a specific event to a JSON file.
      *
      * @param eventCode    the TBA event code
      * @param eventMatches the JSONArray containing match information
      * @throws IOException if writing the file fails
      */
-    public void saveTBAMatches(String eventCode, JSONArray eventMatches)
+    public void writeTBAMatches(String eventCode, JSONArray eventMatches)
             throws IOException
     {
-        Log.d(TAG, "saveTBAMatches()");
+        Log.d(TAG, "writeTBAMatches()");
         if (eventCode == null || eventMatches == null)
         {
             return;
@@ -246,7 +246,7 @@ public class TBAMatches extends BaseJSONSerializer
         {
             for (File f : fileList)
             {
-                if (f.getName().endsWith(MATCHES_FILE_SUFFIX))
+                if (f.getName().endsWith(TBA_MATCHES_FILE_SUFFIX))
                 {
                     if (f.exists() && f.delete())
                     {
@@ -272,7 +272,7 @@ public class TBAMatches extends BaseJSONSerializer
      */
     private String getEventFileName(String eventCode)
     {
-        return eventCode.trim().toLowerCase(Locale.US) + MATCHES_FILE_SUFFIX;
+        return eventCode.trim().toLowerCase(Locale.US) + TBA_MATCHES_FILE_SUFFIX;
     }
 
     private void handleError(Context context, String msg, boolean bSilent, Exception e)
@@ -314,24 +314,24 @@ public class TBAMatches extends BaseJSONSerializer
                     continue;
                 }
 
-                String compLevel = matchObj.optString(KEY_COMP_LEVEL);
-                String matchNumber = matchObj.optString(KEY_MATCH_NUMBER);
+                String compLevel = matchObj.optString(TBA_KEY_COMP_LEVEL);
+                String matchNumber = matchObj.optString(TBA_KEY_MATCH_NUMBER);
 
                 if ((compLevel + matchNumber).equalsIgnoreCase(targetMatch))
                 {
-                    JSONObject alliances = matchObj.optJSONObject(KEY_ALLIANCES);
+                    JSONObject alliances = matchObj.optJSONObject(TBA_KEY_ALLIANCES);
                     if (alliances == null)
                     {
                         continue;
                     }
 
-                    JSONObject blueAlliance = alliances.optJSONObject(KEY_BLUE);
-                    JSONObject redAlliance = alliances.optJSONObject(KEY_RED);
+                    JSONObject blueAlliance = alliances.optJSONObject(TBA_KEY_BLUE);
+                    JSONObject redAlliance = alliances.optJSONObject(TBA_KEY_RED);
 
                     if (blueAlliance != null && redAlliance != null)
                     {
-                        JSONArray blueTeams = blueAlliance.optJSONArray(KEY_TEAM_KEYS);
-                        JSONArray redTeams = redAlliance.optJSONArray(KEY_TEAM_KEYS);
+                        JSONArray blueTeams = blueAlliance.optJSONArray(TBA_KEY_TEAM_KEYS);
+                        JSONArray redTeams = redAlliance.optJSONArray(TBA_KEY_TEAM_KEYS);
 
                         teams[0] = "No team selected";
                         if (redTeams != null)

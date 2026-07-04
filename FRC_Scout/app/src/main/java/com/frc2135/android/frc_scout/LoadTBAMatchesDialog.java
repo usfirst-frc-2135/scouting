@@ -40,18 +40,18 @@ public class LoadTBAMatchesDialog extends DialogFragment
      * The base URL for The Blue Alliance API v3 event matches endpoint.
      */
     public static final String TBA_EVENT_MATCHES_URL = "https://www.thebluealliance.com/api/v3/event/";
-
+    public static final String TBA_EVENT_MATCHES_SUFFIX = "/matches";
     /**
-     * The authentication key for The Blue Alliance API.
+     * The authentication key for The Blue Alliance API. (new for 2026)
      */
     private static final String TBA_AUTH_KEY = "MetfyxQxRpk0do2GygII8alQnV0qaQ8kF9KUIYDrFTMmQr2pPC8Cl4FGdoKlUaAu";
 
     private LoadEventDialogBinding m_binding;
 
     /**
-     * Creates a new instance of LoadEventDialog.
+     * Creates a new instance of LoadTBAMatchesDialog.
      *
-     * @return a new LoadEventDialog instance
+     * @return a new LoadTBAMatchesDialog instance
      */
     public static LoadTBAMatchesDialog newInstance()
     {
@@ -61,7 +61,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
     /**
      * Initializes the dialog, sets up the layout, and configures button listeners.
      *
-     * @param savedInstanceState if the dialog is being re-initialized after previously being shut down
+     * @param savedInstanceState if the dialog is being re-initialized from a previous saved state
      * @return the constructed {@link Dialog}
      */
     @NonNull
@@ -104,18 +104,19 @@ public class LoadTBAMatchesDialog extends DialogFragment
         });
 
         AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity())
-                .setTitle("Load TBA Matches")
+                .setTitle(R.string.load_tba_matches_title)
                 .setView(m_binding.getRoot())
                 .setPositiveButton(android.R.string.ok, null)
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
-                .setNeutralButton("Clear", (d, w) -> {
+                .setNeutralButton(R.string.clear_tba_matches, (d, w) -> {
+                    Log.d(TAG, "Clear TBA Matches called");
                     String eventCode = Objects.requireNonNull(m_binding.eventCodeField.getText()).toString().trim();
                     if (!eventCode.isEmpty())
                     {
                         TBAMatches tbaMatches = TBAMatches.getInstance(requireContext(), eventCode, false);
                         if (tbaMatches.deleteTBAMatches(eventCode) > 0)
                         {
-                            Toast.makeText(requireContext(), "Cleared data for " + eventCode, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(requireContext(), "Cleared TBA Matches for " + eventCode, Toast.LENGTH_SHORT).show();
                         }
                     }
                     m_binding.eventCodeField.setText("");
@@ -131,25 +132,15 @@ public class LoadTBAMatchesDialog extends DialogFragment
         return dialog;
     }
 
-    /**
-     * Handles the OK button click, validates the event code, and initiates the data download.
-     *
-     * @param dialog the current {@link AlertDialog} instance
-     */
     private void handleOkClick(AlertDialog dialog)
     {
         Log.d(TAG, "handleOkClick called");
         String eventCode = Objects.requireNonNull(m_binding.eventCodeField.getText()).toString().trim().toLowerCase(Locale.US);
 
-        if (eventCode.isEmpty() || eventCode.length() < 7)
+        Settings settings = Settings.getInstance(requireContext());
+        if (!settings.isValidEventCode(eventCode))
         {
-            m_binding.eventCodeLayout.setError("Event code must be at least 7 characters (e.g., 2026casac)");
-            return;
-        }
-
-        if (!eventCode.matches("\\d{4}[a-z0-9]+"))
-        {
-            m_binding.eventCodeLayout.setError("Invalid event code format (e.g., 2026casac)");
+            m_binding.eventCodeLayout.setError("Invalid event code (e.g., 2026casac)");
             return;
         }
 
@@ -174,7 +165,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
         okButton.setText(R.string.loading);
         m_binding.eventCodeField.setEnabled(false);
 
-        String urlStr = TBA_EVENT_MATCHES_URL + eventCode + "/matches";
+        String urlStr = TBA_EVENT_MATCHES_URL + eventCode + TBA_EVENT_MATCHES_SUFFIX;
         Log.d(TAG, "URL: " + urlStr);
 
         Context context = requireContext().getApplicationContext();
@@ -270,14 +261,11 @@ public class LoadTBAMatchesDialog extends DialogFragment
     {
         TBAMatches tbaMatches = TBAMatches.getInstance(context, eventCode, true);
         tbaMatches.deleteTBAMatches(eventCode);
-        tbaMatches.saveTBAMatches(eventCode, response);
+        tbaMatches.writeTBAMatches(eventCode, response);
 
-        // Update current event code settings
+        // Update current event code settings!
         Settings settings = Settings.getInstance(context);
         settings.setEventCode(eventCode);
-        ScoutedMatches.getInstance(context).saveScoutNames();
-
-        // The singleton was updated by TBAMatches.getInstance() call above with bForceReload=true
     }
 
     @Override

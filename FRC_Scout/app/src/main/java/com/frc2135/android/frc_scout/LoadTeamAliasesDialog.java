@@ -19,6 +19,7 @@ import com.frc2135.android.frc_scout.databinding.LoadEventDialogBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -27,12 +28,14 @@ import java.util.Objects;
 public class LoadTeamAliasesDialog extends DialogFragment
 {
     private static final String TAG = "LoadTeamAliasesDialog";
+    private static final String TEAM_ALIASES_URL = "https://www.frc2135.org/json/";
+    private static final String TEAM_ALIASES_SUFFIX = "_teamAliases.json";
     private LoadEventDialogBinding m_binding;
 
     /**
-     * Creates a new instance of LoadAliasesDialog.
+     * Creates a new instance of LoadTeamAliasesDialog.
      *
-     * @return a new LoadAliasesDialog instance
+     * @return a new LoadTeamAliasesDialog instance
      */
     public static LoadTeamAliasesDialog newInstance()
     {
@@ -49,11 +52,11 @@ public class LoadTeamAliasesDialog extends DialogFragment
         m_binding = LoadEventDialogBinding.inflate(inflater);
 
         AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity())
-                .setTitle("Load Team Aliases")
+                .setTitle(R.string.load_team_aliases_title)
                 .setView(m_binding.getRoot())
                 .setPositiveButton(android.R.string.ok, null)
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
-                .setNeutralButton("Clear", (d, w) -> {
+                .setNeutralButton(R.string.clear_team_aliases, (d, w) -> {
                     m_binding.eventCodeField.setText("");
                     m_binding.eventCodeField.setError(null);
                 })
@@ -69,14 +72,16 @@ public class LoadTeamAliasesDialog extends DialogFragment
 
     private void handleOkClick(AlertDialog dialog)
     {
-        String eventCode = Objects.requireNonNull(m_binding.eventCodeField.getText()).toString().trim();
-        if (eventCode.isEmpty() || eventCode.length() < 7)
+        String eventCode = Objects.requireNonNull(m_binding.eventCodeField.getText()).toString().trim().toLowerCase(Locale.US);
+
+        Settings settings = Settings.getInstance(requireContext());
+        if (!settings.isValidEventCode(eventCode))
         {
-            m_binding.eventCodeField.setError("Event code must be at least 7 characters (e.g., 2026casac)");
+            m_binding.eventCodeField.setError("Invalid event code (e.g., 2026casac)");
             return;
         }
 
-        downloadAliases(eventCode, dialog);
+        downloadTeamAliases(eventCode, dialog);
     }
 
     /**
@@ -87,7 +92,7 @@ public class LoadTeamAliasesDialog extends DialogFragment
      * @param eventCode the FRC event code (e.g., "2026casac")
      * @param dialog    the dialog instance to update or dismiss upon completion
      */
-    private void downloadAliases(String eventCode, AlertDialog dialog)
+    private void downloadTeamAliases(String eventCode, AlertDialog dialog)
     {
         Log.i(TAG, "Starting aliases download for: " + eventCode);
 
@@ -96,17 +101,25 @@ public class LoadTeamAliasesDialog extends DialogFragment
         okButton.setEnabled(false);
         okButton.setText(R.string.loading);
 
-        String urlStr = "https://www.frc2135.org/json/" + eventCode + "_teamAliases.json";
+        String urlStr = TEAM_ALIASES_URL + eventCode + TEAM_ALIASES_SUFFIX;
         Log.i(TAG, "URL: " + urlStr);
 
         Context context = requireContext().getApplicationContext();
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlStr, null,
                 response -> {
-                    Log.i(TAG, "Successfully received aliases data");
+                    Log.i(TAG, "Successfully received team aliases data");
+                    if (response.length() == 0)
+                    {
+                        Log.w(TAG, "Received empty team aliases for: " + eventCode);
+                        Toast.makeText(context, "No team aliases found for " + eventCode, Toast.LENGTH_LONG).show();
+                        resetUiState(okButton);
+                        return;
+                    }
+
                     try
                     {
-                        saveAliases(eventCode, response, context);
+                        saveTeamAliases(eventCode, response, context);
                         Toast.makeText(context, "Successfully downloaded aliases for " + eventCode, Toast.LENGTH_LONG).show();
                         if (isAdded())
                         {
@@ -119,6 +132,7 @@ public class LoadTeamAliasesDialog extends DialogFragment
                         Toast.makeText(context, "Error saving aliases data", Toast.LENGTH_SHORT).show();
                         okButton.setEnabled(true);
                         okButton.setText(android.R.string.ok);
+                        resetUiState(okButton);
                     }
                 },
                 error -> {
@@ -133,6 +147,24 @@ public class LoadTeamAliasesDialog extends DialogFragment
     }
 
     /**
+     * Resets the UI components to their interactive state after a download attempt.
+     *
+     * @param okButton the dialog's OK button
+     */
+    private void resetUiState(Button okButton)
+    {
+        if (okButton != null)
+        {
+            okButton.setEnabled(true);
+            okButton.setText(android.R.string.ok);
+        }
+        if (m_binding != null)
+        {
+            m_binding.eventCodeField.setEnabled(true);
+        }
+    }
+
+    /**
      * Saves the downloaded team alias mappings to internal storage and updates application state.
      *
      * @param eventCode the FRC event code
@@ -140,7 +172,7 @@ public class LoadTeamAliasesDialog extends DialogFragment
      * @param context   the application context
      * @throws IOException if saving to disk fails
      */
-    private void saveAliases(String eventCode, org.json.JSONArray response, Context context)
+    private void saveTeamAliases(String eventCode, org.json.JSONArray response, Context context)
             throws IOException
     {
         TeamAliases teamAliases = TeamAliases.getInstance(context, eventCode, true);

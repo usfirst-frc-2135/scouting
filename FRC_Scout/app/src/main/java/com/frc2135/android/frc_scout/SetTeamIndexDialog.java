@@ -52,11 +52,11 @@ public class SetTeamIndexDialog extends DialogFragment
         setupTeamIndexDropdown();
 
         return new MaterialAlertDialogBuilder(requireActivity())
-                .setTitle("Set Team Index")
+                .setTitle(R.string.set_team_index_title)
                 .setView(m_binding.getRoot())
                 .setPositiveButton(android.R.string.ok, (d, w) -> saveTeamIndex())
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
-                .setNeutralButton(R.string.clear_index, (d, w) -> {
+                .setNeutralButton(R.string.clear_team_index, (d, w) -> {
                     m_settings.clearTeamIndexStr();
                     m_binding.setTeamIndexField.setText(m_settings.getTeamIndexStr(), false);
                     getParentFragmentManager().setFragmentResult("team_index_changed", new Bundle());

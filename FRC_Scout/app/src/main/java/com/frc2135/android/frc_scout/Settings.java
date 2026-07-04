@@ -259,6 +259,30 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
+     * Returns true if given eventCode is valid.
+     * A valid event code must be at least 7 characters and follow the format: 4-digit year followed by an event identifier (e.g., 2026casac).
+     *
+     * @param eventCode the event code string to validate
+     * @return true if valid
+     */
+    public boolean isValidEventCode(String eventCode)
+    {
+        if (eventCode == null || eventCode.isEmpty() || eventCode.length() < 7)
+        {
+            Log.e(TAG, "Invalid event code (too short): " + eventCode);
+            return false;
+        }
+
+        if (!eventCode.matches("\\d{4}[a-z0-9]+"))
+        {
+            Log.e(TAG, "Invalid event code format: " + eventCode);
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Sets the team index string (e.g. "1 - Red 1").
      *
      * @param indexStr the team index string from m_teamIndexOptions

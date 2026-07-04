@@ -21,6 +21,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import org.json.JSONArray;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -29,6 +30,8 @@ import java.util.Objects;
 public class LoadScoutNamesDialog extends DialogFragment
 {
     private static final String TAG = "LoadScoutNamesDialog";
+    private static final String SCOUT_NAMES_URL = "https://www.frc2135.org/json/";
+    private static final String SCOUT_NAMES_SUFFIX = "_scoutNames.json";
     private LoadEventDialogBinding m_binding;
 
     /**
@@ -71,14 +74,16 @@ public class LoadScoutNamesDialog extends DialogFragment
 
     private void handleOkClick(AlertDialog dialog)
     {
-        String eventCode = Objects.requireNonNull(m_binding.eventCodeField.getText()).toString().trim();
-        if (eventCode.isEmpty() || eventCode.length() < 7)
+        String eventCode = Objects.requireNonNull(m_binding.eventCodeField.getText()).toString().trim().toLowerCase(Locale.US);
+
+        Settings settings = Settings.getInstance(requireContext());
+        if (!settings.isValidEventCode(eventCode))
         {
-            m_binding.eventCodeField.setError("Event code must be at least 7 characters (e.g., 2026casac)");
+            m_binding.eventCodeField.setError("Invalid event code (e.g., 2026casac)");
             return;
         }
 
-        downloadScouts(eventCode, dialog);
+        downloadScoutNames(eventCode, dialog);
     }
 
     /**
@@ -89,7 +94,7 @@ public class LoadScoutNamesDialog extends DialogFragment
      * @param eventCode the FRC event code (e.g., "2026casac")
      * @param dialog    the dialog instance to update or dismiss upon completion
      */
-    private void downloadScouts(String eventCode, AlertDialog dialog)
+    private void downloadScoutNames(String eventCode, AlertDialog dialog)
     {
         Log.i(TAG, "Starting scouts download for: " + eventCode);
 
@@ -97,17 +102,25 @@ public class LoadScoutNamesDialog extends DialogFragment
         okButton.setEnabled(false);
         okButton.setText(R.string.loading);
 
-        String urlStr = "https://www.frc2135.org/json/" + eventCode + "_scoutNames.json";
+        String urlStr = SCOUT_NAMES_URL + eventCode + SCOUT_NAMES_SUFFIX;
         Log.i(TAG, "URL: " + urlStr);
 
         Context context = requireContext().getApplicationContext();
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlStr, null,
                 response -> {
-                    Log.i(TAG, "Successfully received scouts data");
+                    Log.i(TAG, "Successfully received scout names data");
+                    if (response.length() == 0)
+                    {
+                        Log.w(TAG, "Received empty scout names for: " + eventCode);
+                        Toast.makeText(context, "No scout names found for " + eventCode, Toast.LENGTH_LONG).show();
+                        resetUiState(okButton);
+                        return;
+                    }
+
                     try
                     {
-                        saveScouts(eventCode, response, context);
+                        saveScoutNames(eventCode, response, context);
                         Toast.makeText(context, "Successfully downloaded scouts for " + eventCode, Toast.LENGTH_LONG).show();
                         if (isAdded())
                         {
@@ -120,6 +133,7 @@ public class LoadScoutNamesDialog extends DialogFragment
                         Toast.makeText(context, "Error saving scout names", Toast.LENGTH_SHORT).show();
                         okButton.setEnabled(true);
                         okButton.setText(android.R.string.ok);
+                        resetUiState(okButton);
                     }
                 },
                 error -> {
@@ -134,6 +148,24 @@ public class LoadScoutNamesDialog extends DialogFragment
     }
 
     /**
+     * Resets the UI components to their interactive state after a download attempt.
+     *
+     * @param okButton the dialog's OK button
+     */
+    private void resetUiState(Button okButton)
+    {
+        if (okButton != null)
+        {
+            okButton.setEnabled(true);
+            okButton.setText(android.R.string.ok);
+        }
+        if (m_binding != null)
+        {
+            m_binding.eventCodeField.setEnabled(true);
+        }
+    }
+
+    /**
      * Saves the downloaded scout names to internal storage and updates application state.
      *
      * @param eventCode the FRC event code
@@ -141,7 +173,7 @@ public class LoadScoutNamesDialog extends DialogFragment
      * @param context   the application context
      * @throws IOException if saving to disk fails
      */
-    private void saveScouts(String eventCode, JSONArray response, Context context)
+    private void saveScoutNames(String eventCode, JSONArray response, Context context)
             throws IOException
     {
         ScoutNames scoutNames = ScoutNames.getInstance(context, eventCode, true);
