@@ -214,7 +214,7 @@ public class ScoutedMatches extends BaseJSONSerializer
         {
             String filename = file.getName();
             // Match files are identified by their UUID-based filename length (usually 36 chars + .json)
-            if (filename.length() > 30 && filename.endsWith(".json") && !filename.contains("matches") && !filename.contains("aliases") && !filename.contains("scoutNames") && !filename.equals("settings.json"))
+            if (filename.length() > 30 && filename.endsWith(".json") && !filename.contains("matches") && !filename.contains("aliases") && !filename.contains("scoutNames"))
             {
                 try
                 {
@@ -280,7 +280,8 @@ public class ScoutedMatches extends BaseJSONSerializer
                     return Integer.MAX_VALUE;
                 }
             });
-            default -> finalComparator = Comparator.comparing(MatchData::getTimestamp, Comparator.nullsLast(Comparator.naturalOrder()));
+            default ->
+                    finalComparator = Comparator.comparing(MatchData::getTimestamp, Comparator.nullsLast(Comparator.naturalOrder()));
         }
 
         if (!ascending)

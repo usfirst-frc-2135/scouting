@@ -30,6 +30,7 @@ public abstract class BaseJSONSerializer
     /**
      * Default constructor for internal use when file operations are not required.
      */
+    @SuppressWarnings("unused")
     protected BaseJSONSerializer()
     {
         m_dataDir = null;

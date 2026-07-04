@@ -462,7 +462,7 @@ public final class Settings extends BaseJSONSerializer
     /**
      * Clears the list of past scout names.
      */
-    public void clear()
+    public void clearPastScouts()
     {
         m_pastScouts.clear();
     }
@@ -553,6 +553,7 @@ public final class Settings extends BaseJSONSerializer
      *
      * @param val true for one side, false for the other
      */
+    @SuppressWarnings("unused")
     public void setScoringTableSide(boolean val)
     {
         m_scoringTableSide = val;
@@ -564,6 +565,7 @@ public final class Settings extends BaseJSONSerializer
      *
      * @return the side value
      */
+    @SuppressWarnings("unused")
     public boolean getScoringTableSide()
     {
         return m_scoringTableSide;

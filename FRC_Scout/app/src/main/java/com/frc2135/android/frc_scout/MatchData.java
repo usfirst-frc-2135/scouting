@@ -188,6 +188,7 @@ public class MatchData
         m_diedValue = json.optInt("died", 0);
         m_startClimb = json.optInt("startClimb", 0);
         m_endgameClimbLevel = json.optInt("climbLevel", 0);
+        //noinspection GrazieInspectionRunner
         m_endgameClimbPos = json.optInt("endgameClimbPos", 0);
         m_comment = json.optString("comments", "");
 
@@ -203,7 +204,8 @@ public class MatchData
      * @return the serialized JSONObject
      * @throws JSONException if JSON creation fails
      */
-    public JSONObject toJSON() throws JSONException
+    public JSONObject toJSON()
+            throws JSONException
     {
         JSONObject json = new JSONObject();
 
@@ -240,6 +242,7 @@ public class MatchData
 
         json.put("startClimb", m_startClimb);
         json.put("climbLevel", m_endgameClimbLevel);
+        //noinspection GrazieInspectionRunner
         json.put("endgameClimbPos", m_endgameClimbPos);
         json.put("died", m_diedValue);
         json.put("comments", m_comment);
@@ -257,6 +260,7 @@ public class MatchData
      *
      * @param d the date and time
      */
+    @SuppressWarnings("unused")
     public void setTimestamp(Date d)
     {
         m_timestamp = d;
@@ -297,6 +301,7 @@ public class MatchData
      *
      * @return the version number
      */
+    @SuppressWarnings("unused")
     public double getVersion()
     {
         return m_version;
@@ -307,6 +312,7 @@ public class MatchData
      *
      * @param version the version number
      */
+    @SuppressWarnings("unused")
     public void setVersion(double version)
     {
         m_version = version;
@@ -664,31 +670,37 @@ public class MatchData
         return m_comment != null ? m_comment : "";
     }
 
+    @SuppressWarnings("unused")
     public String getOther2()
     {
         return m_other2;
     }
 
+    @SuppressWarnings("unused")
     public void setOther2(String value)
     {
         m_other2 = value;
     }
 
+    @SuppressWarnings("unused")
     public String getOther3()
     {
         return m_other3;
     }
 
+    @SuppressWarnings("unused")
     public void setOther3(String value)
     {
         m_other3 = value;
     }
 
+    @SuppressWarnings("unused")
     public String getOther4()
     {
         return m_other4;
     }
 
+    @SuppressWarnings("unused")
     public void setOther4(String value)
     {
         m_other4 = value;
