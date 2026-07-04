@@ -56,10 +56,23 @@
         android:text="@string/our_team_address"
         android:textColor="@color/textSecondary"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/app_version_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/team_name" />
+
+    <TextView
+        android:id="@+id/settings_summary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/textSecondary"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/app_version_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/team_address"
+        tools:text="Event: 2026casac\nIndex: 1 - Red 1\nScout: Jane D" />
 
     <TextView
         android:id="@+id/app_version_text"

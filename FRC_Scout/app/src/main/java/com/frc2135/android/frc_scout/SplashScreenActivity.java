@@ -41,6 +41,8 @@ public class SplashScreenActivity extends AppCompatActivity
         m_binding = SplashScreenActivityBinding.inflate(getLayoutInflater());
         setContentView(m_binding.getRoot());
 
+        populateSettingsSummary();
+
         // Simple fade-in animation
         m_binding.splashContainer.setAlpha(0f);
         m_binding.splashContainer.animate()
@@ -50,6 +52,26 @@ public class SplashScreenActivity extends AppCompatActivity
                 .start();
 
         logDisplayResolution();
+    }
+
+    /**
+     * Populates the settings summary text view with the current event code, team index, and most recent scout name.
+     */
+    private void populateSettingsSummary()
+    {
+        Settings settings = Settings.getInstance(this);
+        String eventCode = settings.getEventCode();
+        String teamIndex = settings.getTeamIndexStr();
+        String scoutName = settings.getMostRecentScoutName();
+
+        if (eventCode.isEmpty()) eventCode = "None";
+        if (scoutName.isEmpty()) scoutName = "None";
+
+        String summary = "Event: " + eventCode + "\n" +
+                "Index: " + teamIndex + "\n" +
+                "Scout: " + scoutName;
+
+        m_binding.settingsSummary.setText(summary);
     }
 
     @Override
