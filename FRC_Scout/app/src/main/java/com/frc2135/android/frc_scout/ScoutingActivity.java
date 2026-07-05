@@ -184,6 +184,10 @@ public class ScoutingActivity extends AppCompatActivity
         super.onPause();
         Log.d(TAG, "onPause() - updating data");
         updateCurrentFragmentData();
+        if (m_matchData != null)
+        {
+            ScoutedMatches.getInstance(getApplicationContext()).saveMatchData(m_matchData);
+        }
     }
 
     @Override

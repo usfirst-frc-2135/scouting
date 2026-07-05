@@ -24,6 +24,38 @@ public class EndgameFragment extends Fragment
     private static final String TAG = "EndgameFragment";
     public static final String QRTAG = "qr";
 
+    private static final int[] START_CLIMB_IDS = {
+            R.id.start_none,
+            R.id.start_before,
+            R.id.start_bell,
+            R.id.start_ten,
+            R.id.start_less
+    };
+
+    private static final int[] CLIMB_LEVEL_IDS = {
+            R.id.endgame_level_na,
+            R.id.endgame_level_one,
+            R.id.endgame_level_two,
+            R.id.endgame_level_three
+    };
+
+    private static final int[] CLIMB_POS_IDS = {
+            R.id.endgame_climb_na,
+            R.id.endgame_climb_back,
+            R.id.endgame_climb_left,
+            R.id.endgame_climb_front,
+            R.id.endgame_climb_right
+    };
+
+    private static final int[] DIED_VALUE_IDS = {
+            R.id.died_none,
+            R.id.died_most,
+            R.id.died_min,
+            R.id.died_thirty,
+            R.id.died_tt,
+            R.id.no_show
+    };
+
     private MatchData m_matchData;
     private EndgameFragmentBinding m_binding;
 
@@ -133,98 +165,45 @@ public class EndgameFragment extends Fragment
 
     private void initStartClimbing(int value)
     {
-        int id = switch (value)
+        if (value >= 0 && value < START_CLIMB_IDS.length)
         {
-            case 0 -> R.id.start_none;
-            case 1 -> R.id.start_before;
-            case 2 -> R.id.start_bell;
-            case 3 -> R.id.start_ten;
-            case 4 -> R.id.start_less;
-            default -> -1;
-        };
-        if (id != -1)
-        {
-            m_binding.startText.check(id);
+            m_binding.startText.check(START_CLIMB_IDS[value]);
         }
     }
 
     private void initClimbLevel(int value)
     {
-        int id = switch (value)
+        if (value >= 0 && value < CLIMB_LEVEL_IDS.length)
         {
-            case 0 -> R.id.endgame_level_na;
-            case 1 -> R.id.endgame_level_one;
-            case 2 -> R.id.endgame_level_two;
-            case 3 -> R.id.endgame_level_three;
-            default -> -1;
-        };
-        if (id != -1)
-        {
-            m_binding.endgameLevelClimbGroup.check(id);
+            m_binding.endgameLevelClimbGroup.check(CLIMB_LEVEL_IDS[value]);
         }
     }
 
     private void initClimbPos(int value)
     {
-        int id = switch (value)
+        if (value >= 0 && value < CLIMB_POS_IDS.length)
         {
-            case 0 -> R.id.endgame_climb_na;
-            case 1 -> R.id.endgame_climb_back;
-            case 2 -> R.id.endgame_climb_left;
-            case 3 -> R.id.endgame_climb_front;
-            case 4 -> R.id.endgame_climb_right;
-            default -> -1;
-        };
-        if (id != -1)
-        {
-            m_binding.endgameClimbButtons.check(id);
+            m_binding.endgameClimbButtons.check(CLIMB_POS_IDS[value]);
         }
     }
 
     private void initDiedValue(int value)
     {
-        int id = switch (value)
+        if (value >= 0 && value < DIED_VALUE_IDS.length)
         {
-            case 0 -> R.id.died_none;
-            case 1 -> R.id.died_most;
-            case 2 -> R.id.died_min;
-            case 3 -> R.id.died_thirty;
-            case 4 -> R.id.died_tt;
-            case 5 -> R.id.no_show;
-            default -> -1;
-        };
-        if (id != -1)
-        {
-            m_binding.diedGroup.check(id);
+            m_binding.diedGroup.check(DIED_VALUE_IDS[value]);
         }
     }
 
     private int getDiedValue()
     {
         int id = m_binding.diedGroup.getCheckedRadioButtonId();
-        if (id == R.id.died_none)
+        for (int i = 0; i < DIED_VALUE_IDS.length; i++)
         {
-            return 0;
-        }
-        if (id == R.id.died_most)
-        {
-            return 1;
-        }
-        if (id == R.id.died_min)
-        {
-            return 2;
-        }
-        if (id == R.id.died_thirty)
-        {
-            return 3;
-        }
-        if (id == R.id.died_tt)
-        {
-            return 4;
-        }
-        if (id == R.id.no_show)
-        {
-            return 5;
+            if (id == DIED_VALUE_IDS[i])
+            {
+                return i;
+            }
         }
         return 0;
     }
@@ -232,25 +211,12 @@ public class EndgameFragment extends Fragment
     private int getStartClimb()
     {
         int id = m_binding.startText.getCheckedRadioButtonId();
-        if (id == R.id.start_none)
+        for (int i = 0; i < START_CLIMB_IDS.length; i++)
         {
-            return 0;
-        }
-        if (id == R.id.start_before)
-        {
-            return 1;
-        }
-        if (id == R.id.start_bell)
-        {
-            return 2;
-        }
-        if (id == R.id.start_ten)
-        {
-            return 3;
-        }
-        if (id == R.id.start_less)
-        {
-            return 4;
+            if (id == START_CLIMB_IDS[i])
+            {
+                return i;
+            }
         }
         return 0;
     }
@@ -258,25 +224,12 @@ public class EndgameFragment extends Fragment
     private int getClimbPos()
     {
         int id = m_binding.endgameClimbButtons.getCheckedRadioButtonId();
-        if (id == R.id.endgame_climb_na)
+        for (int i = 0; i < CLIMB_POS_IDS.length; i++)
         {
-            return 0;
-        }
-        if (id == R.id.endgame_climb_back)
-        {
-            return 1;
-        }
-        if (id == R.id.endgame_climb_left)
-        {
-            return 2;
-        }
-        if (id == R.id.endgame_climb_front)
-        {
-            return 3;
-        }
-        if (id == R.id.endgame_climb_right)
-        {
-            return 4;
+            if (id == CLIMB_POS_IDS[i])
+            {
+                return i;
+            }
         }
         return 0;
     }
@@ -284,21 +237,12 @@ public class EndgameFragment extends Fragment
     private int getClimbLevel()
     {
         int id = m_binding.endgameLevelClimbGroup.getCheckedRadioButtonId();
-        if (id == R.id.endgame_level_na)
+        for (int i = 0; i < CLIMB_LEVEL_IDS.length; i++)
         {
-            return 0;
-        }
-        if (id == R.id.endgame_level_one)
-        {
-            return 1;
-        }
-        if (id == R.id.endgame_level_two)
-        {
-            return 2;
-        }
-        if (id == R.id.endgame_level_three)
-        {
-            return 3;
+            if (id == CLIMB_LEVEL_IDS[i])
+            {
+                return i;
+            }
         }
         return 0;
     }

@@ -26,7 +26,52 @@ import java.util.Random;
 public class TeleopFragment extends Fragment
 {
     private static final String TAG = "TeleopFragment";
-    private static final int MAX_NUM_HOPPERS = 7;
+
+    private static final int[] ACCURACY_IDS = {
+            R.id.accuracy_NA,
+            R.id.accuracy_most,
+            R.id.accuracy_three_fourths,
+            R.id.accuracy_half,
+            R.id.accuracy_quarter,
+            R.id.accuracy_few,
+            R.id.accuracy_none
+    };
+
+    private static final int[] PASSING_RATE_IDS = {
+            R.id.passing_rate_na,
+            R.id.passing_low,
+            R.id.passing_medium,
+            R.id.passing_large,
+            R.id.passing_tons
+    };
+
+    private static final int[] DEFENSE_RATE_IDS = {
+            R.id.defense_none,
+            R.id.defense_low,
+            R.id.defense_medium_low,
+            R.id.defense_medium,
+            R.id.defense_medium_high,
+            R.id.defense_high
+    };
+
+    private static final int[] PASS_NZ_IDS = {
+            R.id.no_nz,
+            R.id.yes_nz
+    };
+
+    private static final int[] PASS_AZ_IDS = {
+            R.id.no_az,
+            R.id.yes_az
+    };
+
+    private static final int[] DRIVING_ABILITY_IDS = {
+            R.id.driving_na,
+            R.id.driving_slow,
+            R.id.driving_jerky,
+            R.id.driving_avg,
+            R.id.driving_fast,
+            R.id.driving_elite
+    };
 
     private MatchData m_matchData;
     private TeleopFragmentBinding m_binding;
@@ -96,101 +141,49 @@ public class TeleopFragment extends Fragment
 
     private void initAccuracyRate(int value)
     {
-        int id = switch (value)
+        if (value >= 0 && value < ACCURACY_IDS.length)
         {
-            case 0 -> R.id.accuracy_NA;
-            case 1 -> R.id.accuracy_most;
-            case 2 -> R.id.accuracy_three_fourths;
-            case 3 -> R.id.accuracy_half;
-            case 4 -> R.id.accuracy_quarter;
-            case 5 -> R.id.accuracy_few;
-            case 6 -> R.id.accuracy_none;
-            default -> -1;
-        };
-        if (id != -1)
-        {
-            m_binding.accuracyButtons.check(id);
+            m_binding.accuracyButtons.check(ACCURACY_IDS[value]);
         }
     }
 
     private void initPassingRate(int value)
     {
-        int id = switch (value)
+        if (value >= 0 && value < PASSING_RATE_IDS.length)
         {
-            case 0 -> R.id.passing_rate_na;
-            case 1 -> R.id.passing_low;
-            case 2 -> R.id.passing_medium;
-            case 3 -> R.id.passing_large;
-            case 4 -> R.id.passing_tons;
-            default -> -1;
-        };
-        if (id != -1)
-        {
-            m_binding.passingEffectivenessButtons.check(id);
+            m_binding.passingEffectivenessButtons.check(PASSING_RATE_IDS[value]);
         }
     }
 
     private void initDefenseRate(int value)
     {
-        int id = switch (value)
+        if (value >= 0 && value < DEFENSE_RATE_IDS.length)
         {
-            case 0 -> R.id.defense_none;
-            case 1 -> R.id.defense_low;
-            case 2 -> R.id.defense_medium_low;
-            case 3 -> R.id.defense_medium;
-            case 4 -> R.id.defense_medium_high;
-            case 5 -> R.id.defense_high;
-            default -> -1;
-        };
-        if (id != -1)
-        {
-            m_binding.defenseButtons.check(id);
+            m_binding.defenseButtons.check(DEFENSE_RATE_IDS[value]);
         }
     }
 
     private void initPassNz(int value)
     {
-        int id = switch (value)
+        if (value >= 0 && value < PASS_NZ_IDS.length)
         {
-            case 0 -> R.id.no_nz;
-            case 1 -> R.id.yes_nz;
-            default -> -1;
-        };
-        if (id != -1)
-        {
-            m_binding.passNz.check(id);
+            m_binding.passNz.check(PASS_NZ_IDS[value]);
         }
     }
 
     private void initPassAz(int value)
     {
-        int id = switch (value)
+        if (value >= 0 && value < PASS_AZ_IDS.length)
         {
-            case 0 -> R.id.no_az;
-            case 1 -> R.id.yes_az;
-            default -> -1;
-        };
-        if (id != -1)
-        {
-            m_binding.passAz.check(id);
+            m_binding.passAz.check(PASS_AZ_IDS[value]);
         }
     }
 
     private void initDriverAbility(int value)
     {
-        int id = switch (value)
+        if (value >= 0 && value < DRIVING_ABILITY_IDS.length)
         {
-            case 0 -> R.id.driving_na;
-            case 1 -> R.id.driving_slow;
-            case 2 -> R.id.driving_jerky;
-            case 3 -> R.id.driving_avg;
-            case 4 -> R.id.driving_fast;
-            case 5 -> R.id.driving_elite;
-            default -> -1;
-        };
-        if (id != -1)
-        {
-            m_binding.drivingButtons.check(id);
+            m_binding.drivingButtons.check(DRIVING_ABILITY_IDS[value]);
         }
     }
 
@@ -302,7 +295,7 @@ public class TeleopFragment extends Fragment
         try
         {
             int num = Integer.parseInt(field.getText().toString());
-            return num > MAX_NUM_HOPPERS;
+            return num > MatchData.MAX_TELEOP_HOPPERS;
         }
         catch (NumberFormatException e)
         {
@@ -344,33 +337,12 @@ public class TeleopFragment extends Fragment
     public int getCurrentAccuracyLevel()
     {
         int id = m_binding.accuracyButtons.getCheckedRadioButtonId();
-        if (id == R.id.accuracy_NA)
+        for (int i = 0; i < ACCURACY_IDS.length; i++)
         {
-            return 0;
-        }
-        if (id == R.id.accuracy_most)
-        {
-            return 1;
-        }
-        if (id == R.id.accuracy_three_fourths)
-        {
-            return 2;
-        }
-        if (id == R.id.accuracy_half)
-        {
-            return 3;
-        }
-        if (id == R.id.accuracy_quarter)
-        {
-            return 4;
-        }
-        if (id == R.id.accuracy_few)
-        {
-            return 5;
-        }
-        if (id == R.id.accuracy_none)
-        {
-            return 6;
+            if (id == ACCURACY_IDS[i])
+            {
+                return i;
+            }
         }
         return 0;
     }
@@ -378,25 +350,12 @@ public class TeleopFragment extends Fragment
     public int getPassingEffectivenessRate()
     {
         int id = m_binding.passingEffectivenessButtons.getCheckedRadioButtonId();
-        if (id == R.id.passing_rate_na)
+        for (int i = 0; i < PASSING_RATE_IDS.length; i++)
         {
-            return 0;
-        }
-        if (id == R.id.passing_low)
-        {
-            return 1;
-        }
-        if (id == R.id.passing_medium)
-        {
-            return 2;
-        }
-        if (id == R.id.passing_large)
-        {
-            return 3;
-        }
-        if (id == R.id.passing_tons)
-        {
-            return 4;
+            if (id == PASSING_RATE_IDS[i])
+            {
+                return i;
+            }
         }
         return 5;
     }
@@ -404,29 +363,12 @@ public class TeleopFragment extends Fragment
     public int getCurrentDefenseLevel()
     {
         int id = m_binding.defenseButtons.getCheckedRadioButtonId();
-        if (id == R.id.defense_none)
+        for (int i = 0; i < DEFENSE_RATE_IDS.length; i++)
         {
-            return 0;
-        }
-        if (id == R.id.defense_low)
-        {
-            return 1;
-        }
-        if (id == R.id.defense_medium_low)
-        {
-            return 2;
-        }
-        if (id == R.id.defense_medium)
-        {
-            return 3;
-        }
-        if (id == R.id.defense_medium_high)
-        {
-            return 4;
-        }
-        if (id == R.id.defense_high)
-        {
-            return 5;
+            if (id == DEFENSE_RATE_IDS[i])
+            {
+                return i;
+            }
         }
         return 0;
     }
@@ -434,13 +376,12 @@ public class TeleopFragment extends Fragment
     public int getPassNeutralZone()
     {
         int id = m_binding.passNz.getCheckedRadioButtonId();
-        if (id == R.id.no_nz)
+        for (int i = 0; i < PASS_NZ_IDS.length; i++)
         {
-            return 0;
-        }
-        if (id == R.id.yes_nz)
-        {
-            return 1;
+            if (id == PASS_NZ_IDS[i])
+            {
+                return i;
+            }
         }
         return 3;
     }
@@ -448,13 +389,12 @@ public class TeleopFragment extends Fragment
     public int getPassAllianceZone()
     {
         int id = m_binding.passAz.getCheckedRadioButtonId();
-        if (id == R.id.no_az)
+        for (int i = 0; i < PASS_AZ_IDS.length; i++)
         {
-            return 0;
-        }
-        if (id == R.id.yes_az)
-        {
-            return 1;
+            if (id == PASS_AZ_IDS[i])
+            {
+                return i;
+            }
         }
         return 3;
     }
@@ -462,29 +402,12 @@ public class TeleopFragment extends Fragment
     public int getDriverAbility()
     {
         int id = m_binding.drivingButtons.getCheckedRadioButtonId();
-        if (id == R.id.driving_na)
+        for (int i = 0; i < DRIVING_ABILITY_IDS.length; i++)
         {
-            return 0;
-        }
-        if (id == R.id.driving_slow)
-        {
-            return 1;
-        }
-        if (id == R.id.driving_jerky)
-        {
-            return 2;
-        }
-        if (id == R.id.driving_avg)
-        {
-            return 3;
-        }
-        if (id == R.id.driving_fast)
-        {
-            return 4;
-        }
-        if (id == R.id.driving_elite)
-        {
-            return 5;
+            if (id == DRIVING_ABILITY_IDS[i])
+            {
+                return i;
+            }
         }
         return 6;
     }

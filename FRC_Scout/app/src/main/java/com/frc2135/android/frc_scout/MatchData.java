@@ -21,6 +21,9 @@ public class MatchData
 
     public static final double M_JSON_FORMAT_VERSION = 26.1;
 
+    public static final int MAX_AUTON_HOPPERS = 1;
+    public static final int MAX_TELEOP_HOPPERS = 7;
+
     // Data members
     // Unique identifier for this match (used in file names and QR codes)
     private String m_matchID;
@@ -441,7 +444,7 @@ public class MatchData
         return m_autonHopper;
     }
 
-    public boolean getAutonPreload()
+    public boolean isAutonPreload()
     {
         return m_autonPreload;
     }
@@ -451,42 +454,42 @@ public class MatchData
         m_autonPreload = val;
     }
 
-    public boolean getAutonAzCheckbox()
+    public boolean isAutonAz()
     {
         return m_autonAz;
     }
 
-    public void setAutonAzCheckbox(boolean val)
+    public void setAutonAz(boolean val)
     {
         m_autonAz = val;
     }
 
-    public boolean getAutonDepotCheckbox()
+    public boolean isAutonDepot()
     {
         return m_autonDepot;
     }
 
-    public void setAutonDepotCheckbox(boolean val)
+    public void setAutonDepot(boolean val)
     {
         m_autonDepot = val;
     }
 
-    public boolean getAutonOutpostCheckbox()
+    public boolean isAutonOutpost()
     {
         return m_autonOutpost;
     }
 
-    public void setAutonOutpostCheckbox(boolean val)
+    public void setAutonOutpost(boolean val)
     {
         m_autonOutpost = val;
     }
 
-    public boolean getAutonNzCheckbox()
+    public boolean isAutonNz()
     {
         return m_autonNz;
     }
 
-    public void setAutonNzCheckbox(boolean val)
+    public void setAutonNz(boolean val)
     {
         m_autonNz = val;
     }
@@ -717,6 +720,18 @@ public class MatchData
     public String validate()
     {
         StringBuilder msg = new StringBuilder();
+
+        // Auton Hopper validation
+        if (m_autonHopper > MAX_AUTON_HOPPERS)
+        {
+            msg.append("Auton: Hopper score exceeds maximum (").append(MAX_AUTON_HOPPERS).append(")!\n");
+        }
+
+        // Teleop Hopper validation
+        if (m_hoppersUsed > MAX_TELEOP_HOPPERS)
+        {
+            msg.append("Teleop: Hopper score exceeds maximum (").append(MAX_TELEOP_HOPPERS).append(")!\n");
+        }
 
         // Teleop Passing validation
         if (m_passedNz == 3 || m_passedAz == 3)

@@ -23,7 +23,33 @@ import com.frc2135.android.frc_scout.databinding.AutonFragmentBinding;
 public class AutonFragment extends Fragment
 {
     private static final String TAG = "AutonFragment";
-    private static final int MAX_NUM_HOPPERS = 1;
+
+    private static final int[] PRELOAD_ACCURACY_IDS = {
+            R.id.auton_accuracy_no,
+            R.id.auton_accuracy_a,
+            R.id.auton_accuracy_m,
+            R.id.auton_accuracy_s,
+            R.id.auton_accuracy_f,
+            R.id.auton_accuracy_n
+    };
+
+    private static final int[] AUTON_ACCURACY_IDS = {
+            R.id.auton_accuracy_na,
+            R.id.auton_accuracy_most,
+            R.id.auton_accuracy_three_fourths,
+            R.id.auton_accuracy_half,
+            R.id.auton_accuracy_quarter,
+            R.id.auton_accuracy_few,
+            R.id.auton_accuracy_none
+    };
+
+    private static final int[] AUTON_CLIMB_IDS = {
+            R.id.auton_climb_na,
+            R.id.auton_climb_back,
+            R.id.auton_climb_left,
+            R.id.auton_climb_front,
+            R.id.auton_climb_right
+    };
 
     private MatchData m_matchData;
     private AutonFragmentBinding m_binding;
@@ -76,11 +102,11 @@ public class AutonFragment extends Fragment
             m_binding.autonHopperIncrButton.setOnClickListener(v -> updateTotalsInt(m_binding.autonHopperScoreTotal, true));
             m_binding.autonHopperDecrButton.setOnClickListener(v -> updateTotalsInt(m_binding.autonHopperScoreTotal, false));
 
-            m_binding.preloadCheckbox.setChecked(m_matchData.getAutonPreload());
-            m_binding.azCheckbox.setChecked(m_matchData.getAutonAzCheckbox());
-            m_binding.depotCheckbox.setChecked(m_matchData.getAutonDepotCheckbox());
-            m_binding.outpostCheckbox.setChecked(m_matchData.getAutonOutpostCheckbox());
-            m_binding.nzCheckbox.setChecked(m_matchData.getAutonNzCheckbox());
+            m_binding.preloadCheckbox.setChecked(m_matchData.isAutonPreload());
+            m_binding.azCheckbox.setChecked(m_matchData.isAutonAz());
+            m_binding.depotCheckbox.setChecked(m_matchData.isAutonDepot());
+            m_binding.outpostCheckbox.setChecked(m_matchData.isAutonOutpost());
+            m_binding.nzCheckbox.setChecked(m_matchData.isAutonNz());
 
             initPreloadAccuracy(m_matchData.getPreloadAccuracyLevel());
             initAutonAccuracy(m_matchData.getAutonAccuracyRate());
@@ -95,55 +121,25 @@ public class AutonFragment extends Fragment
 
     private void initPreloadAccuracy(int value)
     {
-        int id = switch (value)
+        if (value >= 0 && value < PRELOAD_ACCURACY_IDS.length)
         {
-            case 0 -> R.id.auton_accuracy_no;
-            case 1 -> R.id.auton_accuracy_a;
-            case 2 -> R.id.auton_accuracy_m;
-            case 3 -> R.id.auton_accuracy_s;
-            case 4 -> R.id.auton_accuracy_f;
-            case 5 -> R.id.auton_accuracy_n;
-            default -> -1;
-        };
-        if (id != -1)
-        {
-            m_binding.autonAccuracyBoxes.check(id);
+            m_binding.autonAccuracyBoxes.check(PRELOAD_ACCURACY_IDS[value]);
         }
     }
 
     private void initAutonAccuracy(int value)
     {
-        int id = switch (value)
+        if (value >= 0 && value < AUTON_ACCURACY_IDS.length)
         {
-            case 0 -> R.id.auton_accuracy_na;
-            case 1 -> R.id.auton_accuracy_most;
-            case 2 -> R.id.auton_accuracy_three_fourths;
-            case 3 -> R.id.auton_accuracy_half;
-            case 4 -> R.id.auton_accuracy_quarter;
-            case 5 -> R.id.auton_accuracy_few;
-            case 6 -> R.id.auton_accuracy_none;
-            default -> -1;
-        };
-        if (id != -1)
-        {
-            m_binding.autonAccuracyButtons.check(id);
+            m_binding.autonAccuracyButtons.check(AUTON_ACCURACY_IDS[value]);
         }
     }
 
     private void initAutonClimb(int value)
     {
-        int id = switch (value)
+        if (value >= 0 && value < AUTON_CLIMB_IDS.length)
         {
-            case 0 -> R.id.auton_climb_na;
-            case 1 -> R.id.auton_climb_back;
-            case 2 -> R.id.auton_climb_left;
-            case 3 -> R.id.auton_climb_front;
-            case 4 -> R.id.auton_climb_right;
-            default -> -1;
-        };
-        if (id != -1)
-        {
-            m_binding.autonClimbButtons.check(id);
+            m_binding.autonClimbButtons.check(AUTON_CLIMB_IDS[value]);
         }
     }
 
@@ -153,7 +149,7 @@ public class AutonFragment extends Fragment
         try
         {
             int num = Integer.parseInt(field.getText().toString());
-            return num > MAX_NUM_HOPPERS;
+            return num > MatchData.MAX_AUTON_HOPPERS;
         }
         catch (NumberFormatException e)
         {
@@ -206,33 +202,12 @@ public class AutonFragment extends Fragment
     public int getAutonAccuracyRate()
     {
         int id = m_binding.autonAccuracyButtons.getCheckedRadioButtonId();
-        if (id == R.id.auton_accuracy_na)
+        for (int i = 0; i < AUTON_ACCURACY_IDS.length; i++)
         {
-            return 0;
-        }
-        if (id == R.id.auton_accuracy_most)
-        {
-            return 1;
-        }
-        if (id == R.id.auton_accuracy_three_fourths)
-        {
-            return 2;
-        }
-        if (id == R.id.auton_accuracy_half)
-        {
-            return 3;
-        }
-        if (id == R.id.auton_accuracy_quarter)
-        {
-            return 4;
-        }
-        if (id == R.id.auton_accuracy_few)
-        {
-            return 5;
-        }
-        if (id == R.id.auton_accuracy_none)
-        {
-            return 6;
+            if (id == AUTON_ACCURACY_IDS[i])
+            {
+                return i;
+            }
         }
         return 0;
     }
@@ -240,29 +215,12 @@ public class AutonFragment extends Fragment
     public int getPreloadAccuracyLevel()
     {
         int id = m_binding.autonAccuracyBoxes.getCheckedRadioButtonId();
-        if (id == R.id.auton_accuracy_no)
+        for (int i = 0; i < PRELOAD_ACCURACY_IDS.length; i++)
         {
-            return 0;
-        }
-        if (id == R.id.auton_accuracy_a)
-        {
-            return 1;
-        }
-        if (id == R.id.auton_accuracy_m)
-        {
-            return 2;
-        }
-        if (id == R.id.auton_accuracy_s)
-        {
-            return 3;
-        }
-        if (id == R.id.auton_accuracy_f)
-        {
-            return 4;
-        }
-        if (id == R.id.auton_accuracy_n)
-        {
-            return 5;
+            if (id == PRELOAD_ACCURACY_IDS[i])
+            {
+                return i;
+            }
         }
         return 0;
     }
@@ -270,25 +228,12 @@ public class AutonFragment extends Fragment
     public int getAutonClimb()
     {
         int id = m_binding.autonClimbButtons.getCheckedRadioButtonId();
-        if (id == R.id.auton_climb_na)
+        for (int i = 0; i < AUTON_CLIMB_IDS.length; i++)
         {
-            return 0;
-        }
-        if (id == R.id.auton_climb_back)
-        {
-            return 1;
-        }
-        if (id == R.id.auton_climb_left)
-        {
-            return 2;
-        }
-        if (id == R.id.auton_climb_front)
-        {
-            return 3;
-        }
-        if (id == R.id.auton_climb_right)
-        {
-            return 4;
+            if (id == AUTON_CLIMB_IDS[i])
+            {
+                return i;
+            }
         }
         return 0;
     }
@@ -312,10 +257,10 @@ public class AutonFragment extends Fragment
             Log.e(TAG, "Invalid hopper score value", e);
         }
         m_matchData.setAutonPreload(m_binding.preloadCheckbox.isChecked());
-        m_matchData.setAutonNzCheckbox(m_binding.nzCheckbox.isChecked());
-        m_matchData.setAutonAzCheckbox(m_binding.azCheckbox.isChecked());
-        m_matchData.setAutonDepotCheckbox(m_binding.depotCheckbox.isChecked());
-        m_matchData.setAutonOutpostCheckbox(m_binding.outpostCheckbox.isChecked());
+        m_matchData.setAutonNz(m_binding.nzCheckbox.isChecked());
+        m_matchData.setAutonAz(m_binding.azCheckbox.isChecked());
+        m_matchData.setAutonDepot(m_binding.depotCheckbox.isChecked());
+        m_matchData.setAutonOutpost(m_binding.outpostCheckbox.isChecked());
         m_matchData.setAutonAccuracyRate(getAutonAccuracyRate());
         m_matchData.setPreloadAccuracyLevel(getPreloadAccuracyLevel());
         m_matchData.setAutonClimb(getAutonClimb());
