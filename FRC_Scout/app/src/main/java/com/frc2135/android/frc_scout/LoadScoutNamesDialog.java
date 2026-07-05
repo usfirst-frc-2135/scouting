@@ -18,8 +18,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.frc2135.android.frc_scout.databinding.LoadEventDialogBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import org.json.JSONArray;
-
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Objects;
@@ -120,7 +118,8 @@ public class LoadScoutNamesDialog extends DialogFragment
 
                     try
                     {
-                        saveScoutNames(eventCode, response, context);
+                        Settings settings = Settings.getInstance(context);
+                        settings.saveEventScoutNames(context, eventCode, response);
                         Toast.makeText(context, "Successfully downloaded scouts for " + eventCode, Toast.LENGTH_LONG).show();
                         if (isAdded())
                         {
@@ -163,22 +162,6 @@ public class LoadScoutNamesDialog extends DialogFragment
         {
             m_binding.eventCodeField.setEnabled(true);
         }
-    }
-
-    /**
-     * Saves the downloaded scout names to internal storage and updates application state.
-     *
-     * @param eventCode the FRC event code
-     * @param response  the JSON array of scout names received from the API
-     * @param context   the application context
-     * @throws IOException if saving to disk fails
-     */
-    private void saveScoutNames(String eventCode, JSONArray response, Context context)
-            throws IOException
-    {
-        ScoutNames scoutNames = ScoutNames.getInstance(context, eventCode, true);
-        scoutNames.deleteScoutNames(eventCode);
-        scoutNames.writeScoutNames(eventCode, response);
     }
 
     @Override

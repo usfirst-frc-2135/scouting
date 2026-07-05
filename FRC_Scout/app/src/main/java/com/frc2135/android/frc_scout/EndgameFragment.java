@@ -102,6 +102,7 @@ public class EndgameFragment extends Fragment
             }
             else
             {
+                Log.d(TAG, "Validation successful: " + validationMsg);
                 FragmentManager fm = requireActivity().getSupportFragmentManager();
                 QRCodeDialog dialog = QRCodeDialog.newInstance(m_matchData);
                 dialog.show(fm, QRTAG);
@@ -322,7 +323,18 @@ public class EndgameFragment extends Fragment
     private void setupDoneButton(boolean bEnable)
     {
         m_binding.navToMenuButton.setEnabled(bEnable);
-        m_binding.navToMenuButtonDisabled.setVisibility(bEnable ? View.INVISIBLE : View.VISIBLE);
+        if (bEnable)
+        {
+            Log.d(TAG, "Enable Done Button");
+            m_binding.navToMenuButton.setVisibility(View.VISIBLE);
+            m_binding.navToMenuButtonDisabled.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            Log.d(TAG, "Disable Done Button");
+            m_binding.navToMenuButton.setVisibility(View.INVISIBLE);
+            m_binding.navToMenuButtonDisabled.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

@@ -291,7 +291,7 @@ public class PreMatchActivity extends AppCompatActivity
             try
             {
                 String[] teams = m_tbaMatches.getMatchTeams(matchNumStr);
-                int teamIndex = Integer.parseInt(m_teamIndexStr);
+                int teamIndex = m_settings.getTeamIndex();
 
                 if (teamIndex < teams.length)
                 {

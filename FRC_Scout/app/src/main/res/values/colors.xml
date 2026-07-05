@@ -20,8 +20,8 @@
     <color name="textSecondary">#757575</color>
     <color name="hintColor">#9E9E9E</color>
 
-    <color name="button1">#FFC107</color>
-    <color name="buttonText">#3F51B5</color>
+    <color name="startButton">#FFC107</color>
+    <color name="startText">#3F51B5</color>
     <color name="bottomColor">#FFFFFF</color>
     <color name="specialTextPrimary">#212121</color>
 </resources>

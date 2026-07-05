@@ -23,6 +23,7 @@ public class ScoutNames extends BaseJSONSerializer
     private static final String FILENAME_SUFFIX = "_scoutNames.json";
     private static final String SCOUT_NAME_JSON_KEY = "scoutName";
 
+    private final Context m_appContext;
     private String m_eventCode;
     private List<String> m_scoutNames;
     private boolean m_bScoutNamesLoaded;
@@ -33,6 +34,7 @@ public class ScoutNames extends BaseJSONSerializer
     {
         super(context);
         Log.d(TAG, "ScoutNames constructor");
+        m_appContext = context.getApplicationContext();
         m_eventCode = eventCode;
         m_bScoutNamesLoaded = false;
         m_scoutNames = new ArrayList<>();
@@ -164,8 +166,8 @@ public class ScoutNames extends BaseJSONSerializer
                 for (int i = 0; i < jsonArray.length(); i++)
                 {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    String name = jsonObject.getString(SCOUT_NAME_JSON_KEY);
-                    if (!name.isEmpty())
+                    String name = jsonObject.optString(SCOUT_NAME_JSON_KEY);
+                    if (!name.trim().isEmpty())
                     {
                         m_scoutNames.add(name);
                     }
@@ -217,6 +219,34 @@ public class ScoutNames extends BaseJSONSerializer
         Log.d(TAG, "Saving scout names info to: " + filename);
         File file = new File(m_dataDir, filename);
         saveJSONArray(file, scoutData);
+
+        // Create the summary JSONObject for Settings
+        try
+        {
+            JSONArray namesArray = new JSONArray();
+            for (int i = 0; i < scoutData.length(); i++)
+            {
+                JSONObject obj = scoutData.optJSONObject(i);
+                if (obj != null)
+                {
+                    String name = obj.optString(SCOUT_NAME_JSON_KEY);
+                    if (!name.isEmpty())
+                    {
+                        namesArray.put(name);
+                    }
+                }
+            }
+
+            JSONObject scoutNamesObj = new JSONObject();
+            scoutNamesObj.put("eventCode", eventCode);
+            scoutNamesObj.put("names", namesArray);
+
+            Settings.getInstance(m_appContext).setScoutNamesObject(scoutNamesObj);
+        }
+        catch (JSONException e)
+        {
+            Log.e(TAG, "Error creating scoutNames summary object for Settings", e);
+        }
     }
 
     /**

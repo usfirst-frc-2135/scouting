@@ -83,8 +83,8 @@
             android:layout_margin="24dp"
             android:contentDescription="@string/start_match"
             android:src="@drawable/add_icon_blue"
-            app:backgroundTint="@color/button1"
-            app:tint="@color/buttonText" />
+            app:backgroundTint="@color/startButton"
+            app:tint="@color/startText" />
 
     </FrameLayout>
 

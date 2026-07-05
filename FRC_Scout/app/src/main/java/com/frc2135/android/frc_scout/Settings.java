@@ -35,6 +35,7 @@ public final class Settings extends BaseJSONSerializer
     private static final String KEY_SCOUT_NAME_PREFIX = "scoutName"; // Legacy key prefix
     private static final String KEY_MOST_RECENT_SCOUT_NAME = "mostRecentScoutName";
     private static final String KEY_SCORING_TABLE_SIDE = "scoringTableSide";
+    private static final String KEY_SCOUT_NAMES_OBJECT = "scoutNames";
 
     private static final String DEFAULT_EVENT_CODE = "EVTX";
 
@@ -47,6 +48,7 @@ public final class Settings extends BaseJSONSerializer
     private boolean m_bEventScoutNamesLoaded;
     private boolean m_scoringTableSide;
     private final String[] m_teamIndexOptions;
+    private JSONObject m_scoutNamesObj;
 
     private static volatile Settings sSettings;
 
@@ -93,6 +95,7 @@ public final class Settings extends BaseJSONSerializer
         m_eventScoutNames = new ArrayList<>();
         m_bEventScoutNamesLoaded = false;
         m_scoringTableSide = false;
+        m_scoutNamesObj = null;
 
         try
         {
@@ -193,6 +196,7 @@ public final class Settings extends BaseJSONSerializer
         }
 
         m_scoringTableSide = json.optBoolean(KEY_SCORING_TABLE_SIDE, false);
+        m_scoutNamesObj = json.optJSONObject(KEY_SCOUT_NAMES_OBJECT);
     }
 
     /**
@@ -221,6 +225,7 @@ public final class Settings extends BaseJSONSerializer
         json.put(KEY_PAST_SCOUTS, scoutsArray);
 
         json.put(KEY_SCORING_TABLE_SIDE, m_scoringTableSide);
+        json.put(KEY_SCOUT_NAMES_OBJECT, m_scoutNamesObj);
 
         return json;
     }
@@ -312,8 +317,31 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Clears the current team index string.
+     * Returns the current team index as an integer (0-6).
      *
+     * @return the team index
+     */
+    public int getTeamIndex()
+    {
+        if (m_teamIndexStr == null || m_teamIndexStr.isEmpty())
+        {
+            return 0;
+        }
+
+        try
+        {
+            // The team index string format is "X - Label", where X is the index.
+            return Integer.parseInt(m_teamIndexStr.substring(0, 1));
+        }
+        catch (Exception e)
+        {
+            Log.e(TAG, "Error parsing team index: " + m_teamIndexStr, e);
+            return 0;
+        }
+    }
+
+    /**
+     * Clears the current team index string.
      */
     public void clearTeamIndexStr()
     {
@@ -355,16 +383,12 @@ public final class Settings extends BaseJSONSerializer
      */
     public String getTeamIndexColor()
     {
-        if (m_teamIndexStr == null)
-        {
-            return "";
-        }
-
-        if (m_teamIndexStr.equals(m_teamIndexOptions[1]) || m_teamIndexStr.equals(m_teamIndexOptions[2]) || m_teamIndexStr.equals(m_teamIndexOptions[3]))
+        int index = getTeamIndex();
+        if (index >= 1 && index <= 3)
         {
             return "red";
         }
-        if (m_teamIndexStr.equals(m_teamIndexOptions[4]) || m_teamIndexStr.equals(m_teamIndexOptions[5]) || m_teamIndexStr.equals(m_teamIndexOptions[6]))
+        if (index >= 4 && index <= 6)
         {
             return "blue";
         }
@@ -604,5 +628,16 @@ public final class Settings extends BaseJSONSerializer
     public boolean getScoringTableSide()
     {
         return m_scoringTableSide;
+    }
+
+    /**
+     * Stores a JSONObject containing scout names and event code.
+     *
+     * @param obj the JSONObject to store
+     */
+    public void setScoutNamesObject(JSONObject obj)
+    {
+        m_scoutNamesObj = obj;
+        saveSettingsSilent();
     }
 }
