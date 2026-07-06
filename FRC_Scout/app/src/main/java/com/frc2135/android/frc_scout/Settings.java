@@ -573,8 +573,8 @@ public final class Settings extends BaseJSONSerializer
             throws IOException
     {
         ScoutNames scoutNames = ScoutNames.getInstance(context, eventCode, true);
-        scoutNames.deleteScoutNames(eventCode);
-        scoutNames.writeScoutNames(eventCode, scoutData);
+        scoutNames.deleteScoutNamesFile(eventCode);
+        scoutNames.writeScoutNamesFile(eventCode, scoutData);
         loadEventScoutNames(context, eventCode, true);
     }
 

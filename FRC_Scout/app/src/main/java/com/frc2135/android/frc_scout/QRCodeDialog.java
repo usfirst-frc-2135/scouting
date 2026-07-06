@@ -22,7 +22,8 @@ import zxing.Contents;
 import zxing.QRCodeEncoder;
 
 /**
- * Dialog fragment that generates and displays a QR code for match data.
+ * Dialog fragment that generates and displays a QR code for a scouted match.
+ * The QR code encodes the match data in a Tab-Separated Values (TSV) format for easy data transfer.
  */
 public class QRCodeDialog extends DialogFragment
 {
@@ -33,7 +34,7 @@ public class QRCodeDialog extends DialogFragment
     private QrCodeDialogBinding m_binding;
 
     /**
-     * Creates a new instance of QRCodeDialog for the given match data.
+     * Creates a new instance of {@link QRCodeDialog} for the given match data.
      *
      * @param matchData the match data to encode into the QR code
      * @return a new QRCodeDialog instance
@@ -55,6 +56,13 @@ public class QRCodeDialog extends DialogFragment
         return fragment;
     }
 
+    /**
+     * Constructs the {@link androidx.appcompat.app.AlertDialog} instance, initializes View Binding,
+     * and triggers the QR code generation process based on the match data in arguments.
+     *
+     * @param savedInstanceState if the dialog is being re-initialized from a previous saved state
+     * @return the constructed {@link Dialog}
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)

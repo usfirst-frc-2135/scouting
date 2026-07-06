@@ -15,7 +15,9 @@ import com.frc2135.android.frc_scout.databinding.MatchFilterDialogBinding;
 import java.util.Objects;
 
 /**
- * Dialog for filtering the match history list by event, match number, or scout.
+ * Dialog for filtering the match history list by event, match number, team, or scout.
+ * This dialog uses the Fragment Result API to communicate the selected filter criteria
+ * back to the {@link MatchListFragment}.
  */
 public class MatchFilterDialog extends DialogFragment
 {
@@ -23,12 +25,12 @@ public class MatchFilterDialog extends DialogFragment
     private MatchFilterDialogBinding m_binding;
 
     /**
-     * Creates a new instance of MatchFilterDialog with current filter values.
+     * Creates a new instance of {@link MatchFilterDialog} with current filter values.
      *
-     * @param team  the currently filtered team, or null
      * @param event the currently filtered event, or null
-     * @param scout the currently filtered scout, or null
      * @param match the currently filtered match number, or null
+     * @param team  the currently filtered team, or null
+     * @param scout the currently filtered scout, or null
      * @return a new MatchFilterDialog instance
      */
     public static MatchFilterDialog newInstance(String event, String match, String team, String scout)
@@ -43,6 +45,13 @@ public class MatchFilterDialog extends DialogFragment
         return fragment;
     }
 
+    /**
+     * Constructs the {@link androidx.appcompat.app.AlertDialog} instance, initializes View Binding,
+     * and restores any existing filter values from arguments.
+     *
+     * @param savedInstanceState if the dialog is being re-initialized from a previous saved state
+     * @return the constructed {@link Dialog}
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)

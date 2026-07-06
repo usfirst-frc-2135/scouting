@@ -3,6 +3,8 @@ package com.frc2135.android.frc_scout;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.Button;
@@ -24,16 +26,18 @@ import java.util.Objects;
 
 /**
  * Dialog for loading team aliases data for a specific event from the team's scouting website.
+ * This dialog handles fetching, clearing, and saving team-specific alias mapping data.
  */
 public class LoadTeamAliasesDialog extends DialogFragment
 {
     private static final String TAG = "LoadTeamAliasesDialog";
+
     private static final String TEAM_ALIASES_URL = "https://www.frc2135.org/json/";
     private static final String TEAM_ALIASES_SUFFIX = "_teamAliases.json";
     private LoadEventDialogBinding m_binding;
 
     /**
-     * Creates a new instance of LoadTeamAliasesDialog.
+     * Creates a new instance of {@link LoadTeamAliasesDialog}.
      *
      * @return a new LoadTeamAliasesDialog instance
      */
@@ -42,6 +46,13 @@ public class LoadTeamAliasesDialog extends DialogFragment
         return new LoadTeamAliasesDialog();
     }
 
+    /**
+     * Constructs the {@link AlertDialog} instance, initializes View Binding, and sets up
+     * the event code input field and listeners for loading or clearing team aliases.
+     *
+     * @param savedInstanceState if the dialog is being re-initialized from a previous saved state
+     * @return the constructed {@link Dialog}
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
@@ -51,12 +62,41 @@ public class LoadTeamAliasesDialog extends DialogFragment
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         m_binding = LoadEventDialogBinding.inflate(inflater);
 
+        m_binding.eventCodeField.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+                m_binding.eventCodeLayout.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+            }
+        });
+
         AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle(R.string.load_team_aliases_title)
                 .setView(m_binding.getRoot())
                 .setPositiveButton(android.R.string.ok, null)
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
                 .setNeutralButton(R.string.clear_team_aliases, (d, w) -> {
+                    Log.d(TAG, "Clear Team Aliases called");
+                    String eventCode = Objects.requireNonNull(m_binding.eventCodeField.getText()).toString().trim();
+                    if (!eventCode.isEmpty())
+                    {
+                        TeamAliases teamAliases = TeamAliases.getInstance(requireContext(), eventCode, false);
+                        if (teamAliases.deleteTeamAliasesFile(eventCode) > 0)
+                        {
+                            Toast.makeText(requireContext(), "Cleared Team Aliases for " + eventCode, Toast.LENGTH_SHORT).show();
+                        }
+                    }
                     m_binding.eventCodeField.setText("");
                     m_binding.eventCodeField.setError(null);
                 })
@@ -70,6 +110,12 @@ public class LoadTeamAliasesDialog extends DialogFragment
         return dialog;
     }
 
+    /**
+     * Handles the logic when the OK button is clicked. Validates the event code
+     * and initiates the team aliases data download if the code is valid.
+     *
+     * @param dialog the active {@link AlertDialog} instance
+     */
     private void handleOkClick(AlertDialog dialog)
     {
         String eventCode = Objects.requireNonNull(m_binding.eventCodeField.getText()).toString().trim().toLowerCase(Locale.US);
@@ -81,7 +127,8 @@ public class LoadTeamAliasesDialog extends DialogFragment
             return;
         }
 
-        downloadTeamAliases(eventCode, dialog);
+        m_binding.eventCodeLayout.setError(null);
+        downloadTeamAliases(dialog, eventCode);
     }
 
     /**
@@ -89,10 +136,10 @@ public class LoadTeamAliasesDialog extends DialogFragment
      * Updates the UI state to show loading during the request.
      * On success, saves the data locally and dismisses the dialog.
      *
-     * @param eventCode the FRC event code (e.g., "2026casac")
      * @param dialog    the dialog instance to update or dismiss upon completion
+     * @param eventCode the FRC event code (e.g., "2026casac")
      */
-    private void downloadTeamAliases(String eventCode, AlertDialog dialog)
+    private void downloadTeamAliases(AlertDialog dialog, String eventCode)
     {
         Log.i(TAG, "Starting aliases download for: " + eventCode);
 
@@ -100,6 +147,7 @@ public class LoadTeamAliasesDialog extends DialogFragment
         Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         okButton.setEnabled(false);
         okButton.setText(R.string.loading);
+        m_binding.eventCodeField.setEnabled(false);
 
         String urlStr = TEAM_ALIASES_URL + eventCode + TEAM_ALIASES_SUFFIX;
         Log.i(TAG, "URL: " + urlStr);
@@ -108,19 +156,19 @@ public class LoadTeamAliasesDialog extends DialogFragment
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlStr, null,
                 response -> {
-                    Log.i(TAG, "Successfully received team aliases data");
+                    Log.i(TAG, "Successfully received team aliases data for:" + eventCode);
                     if (response.length() == 0)
                     {
                         Log.w(TAG, "Received empty team aliases for: " + eventCode);
-                        Toast.makeText(context, "No team aliases found for " + eventCode, Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "No team team aliases found for " + eventCode, Toast.LENGTH_LONG).show();
                         resetUiState(okButton);
                         return;
                     }
 
                     try
                     {
-                        saveTeamAliases(eventCode, response, context);
-                        Toast.makeText(context, "Successfully downloaded aliases for " + eventCode, Toast.LENGTH_LONG).show();
+                        saveTeamAliases(context, eventCode, response);
+                        Toast.makeText(context, "Successfully downloaded team aliases for " + eventCode, Toast.LENGTH_LONG).show();
                         if (isAdded())
                         {
                             dismiss();
@@ -128,19 +176,16 @@ public class LoadTeamAliasesDialog extends DialogFragment
                     }
                     catch (IOException e)
                     {
-                        Log.e(TAG, "Error saving aliases: " + e.getMessage());
-                        Toast.makeText(context, "Error saving aliases data", Toast.LENGTH_SHORT).show();
-                        okButton.setEnabled(true);
-                        okButton.setText(android.R.string.ok);
+                        Log.e(TAG, "Error saving team aliases: " + e.getMessage());
+                        Toast.makeText(context, "Error saving team aliases data", Toast.LENGTH_SHORT).show();
                         resetUiState(okButton);
                     }
                 },
                 error -> {
-                    Log.e(TAG, "Download failed: " + error.toString());
-                    String msg = "Failed to download aliases for '" + eventCode + "'. Check connection or event code.";
+                    Log.e(TAG, "Download team aliases failed: " + error.toString());
+                    String msg = "Failed to download team aliases for '" + eventCode + "'. Check connection or event code.";
                     Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
-                    okButton.setEnabled(true);
-                    okButton.setText(android.R.string.ok);
+                    resetUiState(okButton);
                 });
 
         VolleySingleton.getInstance(requireContext()).addToRequestQueue(request);
@@ -165,21 +210,24 @@ public class LoadTeamAliasesDialog extends DialogFragment
     }
 
     /**
-     * Saves the downloaded team alias mappings to internal storage and updates application state.
+     * Saves the downloaded team alias mappings to internal storage.
      *
+     * @param context   the application context
      * @param eventCode the FRC event code
      * @param response  the JSON array of alias mappings received from the API
-     * @param context   the application context
      * @throws IOException if saving to disk fails
      */
-    private void saveTeamAliases(String eventCode, org.json.JSONArray response, Context context)
+    private void saveTeamAliases(Context context, String eventCode, org.json.JSONArray response)
             throws IOException
     {
         TeamAliases teamAliases = TeamAliases.getInstance(context, eventCode, true);
-        teamAliases.deleteTeamAliases(eventCode);
-        teamAliases.writeTeamAliases(eventCode, response);
+        teamAliases.deleteTeamAliasesFile(eventCode);
+        teamAliases.writeTeamAliasesFile(eventCode, response);
     }
 
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     */
     @Override
     public void onResume()
     {
@@ -187,6 +235,9 @@ public class LoadTeamAliasesDialog extends DialogFragment
         Log.d(TAG, "onResume");
     }
 
+    /**
+     * Cleans up the View Binding reference when the fragment view is being destroyed.
+     */
     @Override
     public void onDestroyView()
     {

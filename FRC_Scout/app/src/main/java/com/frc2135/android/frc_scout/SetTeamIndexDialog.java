@@ -16,7 +16,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.util.Objects;
 
 /**
- * Dialog for setting the team index, which is used to autopopulate team numbers during scouting.
+ * Dialog for setting the team index (scouting position), which is used to autopopulate
+ * team numbers during pre-match scouting based on official event schedules.
  */
 public class SetTeamIndexDialog extends DialogFragment
 {
@@ -28,7 +29,7 @@ public class SetTeamIndexDialog extends DialogFragment
     private String[] m_indexOptions;
 
     /**
-     * Creates a new instance of SetTeamIndexDialog.
+     * Creates a new instance of {@link SetTeamIndexDialog}.
      *
      * @return a new SetTeamIndexDialog instance
      */
@@ -37,6 +38,13 @@ public class SetTeamIndexDialog extends DialogFragment
         return new SetTeamIndexDialog();
     }
 
+    /**
+     * Constructs the {@link androidx.appcompat.app.AlertDialog} instance, initializes View Binding,
+     * and sets up the team index dropdown menu and listeners.
+     *
+     * @param savedInstanceState if the dialog is being re-initialized from a previous saved state
+     * @return the constructed {@link Dialog}
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)

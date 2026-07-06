@@ -59,7 +59,8 @@ public class LoadTBAMatchesDialog extends DialogFragment
     }
 
     /**
-     * Initializes the dialog, sets up the layout, and configures button listeners.
+     * Constructs the {@link AlertDialog} instance, initializes View Binding, and sets up
+     * the event code input field with validation listeners.
      *
      * @param savedInstanceState if the dialog is being re-initialized from a previous saved state
      * @return the constructed {@link Dialog}
@@ -132,6 +133,12 @@ public class LoadTBAMatchesDialog extends DialogFragment
         return dialog;
     }
 
+    /**
+     * Handles the logic when the OK button is clicked. Validates the event code
+     * and initiates the match data download if the code is valid.
+     *
+     * @param dialog the active {@link AlertDialog} instance
+     */
     private void handleOkClick(AlertDialog dialog)
     {
         Log.d(TAG, "handleOkClick called");
@@ -158,7 +165,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
      */
     private void downloadTBAMatches(AlertDialog dialog, String eventCode)
     {
-        Log.d(TAG, "downloadTBAMatches for: " + eventCode);
+        Log.d(TAG, "Starting TBA matches download for: " + eventCode);
 
         Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         okButton.setEnabled(false);

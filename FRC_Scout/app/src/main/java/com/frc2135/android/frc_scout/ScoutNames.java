@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Singleton class for managing scout names data.
@@ -86,7 +87,7 @@ public class ScoutNames extends BaseJSONSerializer
     }
 
     @SuppressWarnings("unused")
-    public static void clear()
+    public static void clearScoutNames()
     {
         Log.d(TAG, "clear()");
         sScoutNames = null;
@@ -113,28 +114,10 @@ public class ScoutNames extends BaseJSONSerializer
     }
 
     /**
-     * Returns a combined list of event-specific scout names and past scouts from Settings.
+     * Sets the event code and resets the loaded scout names state.
      *
-     * @param context the context to access Settings
-     * @return a list of unique scout names
+     * @param eventCode the new FRC event code
      */
-    public List<String> getAllScoutNames(Context context)
-    {
-        List<String> allNames = new ArrayList<>(m_scoutNames);
-        Settings settings = Settings.getInstance(context);
-        if (settings != null)
-        {
-            for (String name : settings.getPastScouts())
-            {
-                if (!allNames.contains(name))
-                {
-                    allNames.add(name);
-                }
-            }
-        }
-        return allNames;
-    }
-
     public void setEventCode(String eventCode)
     {
         m_eventCode = eventCode;
@@ -159,7 +142,7 @@ public class ScoutNames extends BaseJSONSerializer
 
         try
         {
-            JSONArray jsonArray = loadScoutNames(m_eventCode);
+            JSONArray jsonArray = readScoutNamesFile(m_eventCode);
             if (jsonArray != null)
             {
                 m_scoutNames.clear();
@@ -184,7 +167,7 @@ public class ScoutNames extends BaseJSONSerializer
         }
         catch (JSONException | IOException e)
         {
-            Log.e(TAG, "Error reading scout names file", e);
+            handleError(context, "Failed to parse scout names for: " + m_eventCode, bSilent, e);
         }
     }
 
@@ -196,7 +179,7 @@ public class ScoutNames extends BaseJSONSerializer
      */
     private String getFilename(String eventCode)
     {
-        return eventCode.trim().toLowerCase() + FILENAME_SUFFIX;
+        return eventCode.trim().toLowerCase(Locale.US) + FILENAME_SUFFIX;
     }
 
     /**
@@ -206,7 +189,7 @@ public class ScoutNames extends BaseJSONSerializer
      * @param scoutData the JSONArray containing scout names
      * @throws IOException if an error occurs during file writing
      */
-    public void writeScoutNames(String eventCode, JSONArray scoutData)
+    public void writeScoutNamesFile(String eventCode, JSONArray scoutData)
             throws IOException
     {
         if (eventCode == null || scoutData == null)
@@ -217,6 +200,7 @@ public class ScoutNames extends BaseJSONSerializer
 
         String filename = getFilename(eventCode);
         Log.d(TAG, "Saving scout names info to: " + filename);
+
         File file = new File(m_dataDir, filename);
         saveJSONArray(file, scoutData);
 
@@ -257,7 +241,7 @@ public class ScoutNames extends BaseJSONSerializer
      * @throws IOException   if an error occurs during file reading
      * @throws JSONException if the file content is not a valid JSON array
      */
-    public JSONArray loadScoutNames(String eventCode)
+    public JSONArray readScoutNamesFile(String eventCode)
             throws IOException, JSONException
     {
         if (eventCode == null)
@@ -274,27 +258,43 @@ public class ScoutNames extends BaseJSONSerializer
      * Deletes the scout names file from internal storage.
      *
      * @param eventCode the FRC event code
+     * @return the number of files deleted (1 if successful, 0 otherwise)
      */
-    public void deleteScoutNames(String eventCode)
+    public int deleteScoutNamesFile(String eventCode)
     {
-        if (eventCode == null)
+        if (eventCode == null || eventCode.trim().isEmpty())
         {
-            return;
+            Log.i(TAG, "Invalid event code: " + eventCode);
+            return 0;
         }
 
         String filename = getFilename(eventCode);
         File file = new File(m_dataDir, filename);
-        if (file.exists())
+
+        if (file.exists() && file.delete())
         {
-            boolean deleted = file.delete();
-            if (deleted)
-            {
-                Log.i(TAG, "Successfully deleted scout names file: " + filename);
-            }
-            else
-            {
-                Log.w(TAG, "Failed to delete scout names file: " + filename);
-            }
+            Log.i(TAG, "Successfully deleted scout names file: " + filename);
+            return 1;
+        }
+
+        Log.w(TAG, "Failed to delete scout names file: " + filename);
+        return 0;
+    }
+
+    /**
+     * Log and optionally display an error message for an exception.
+     *
+     * @param context the context to show the Toast in
+     * @param msg     the error message
+     * @param bSilent if true, the Toast is suppressed
+     * @param e       the exception that occurred
+     */
+    private void handleError(Context context, String msg, boolean bSilent, Exception e)
+    {
+        Log.e(TAG, msg, e);
+        if (!bSilent)
+        {
+            Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -306,5 +306,28 @@ public class ScoutNames extends BaseJSONSerializer
     public boolean isScoutNamesLoaded()
     {
         return m_bScoutNamesLoaded;
+    }
+
+    /**
+     * Returns a combined list of event-specific scout names and past scouts from Settings.
+     *
+     * @param context the context to access Settings
+     * @return a list of unique scout names
+     */
+    public List<String> getAllScoutNames(Context context)
+    {
+        List<String> allNames = new ArrayList<>(m_scoutNames);
+        Settings settings = Settings.getInstance(context);
+        if (settings != null)
+        {
+            for (String name : settings.getPastScouts())
+            {
+                if (!allNames.contains(name))
+                {
+                    allNames.add(name);
+                }
+            }
+        }
+        return allNames;
     }
 }

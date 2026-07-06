@@ -111,6 +111,11 @@ public class TBAMatches extends BaseJSONSerializer
         }
     }
 
+    /**
+     * Returns the event code associated with this match data.
+     *
+     * @return the event code string
+     */
     public String getEventCode()
     {
         return m_eventCode;
@@ -170,6 +175,17 @@ public class TBAMatches extends BaseJSONSerializer
     }
 
     /**
+     * Gets the filename for a given event code.
+     *
+     * @param eventCode the FRC event code
+     * @return the filename
+     */
+    private String getFilename(String eventCode)
+    {
+        return eventCode.trim().toLowerCase(Locale.US) + TBA_MATCHES_FILE_SUFFIX;
+    }
+
+    /**
      * Writes event data for a specific event to a JSON file.
      *
      * @param eventCode  the TBA event code
@@ -182,13 +198,14 @@ public class TBAMatches extends BaseJSONSerializer
         Log.d(TAG, "Writing TBA matches to file for event: " + eventCode);
         if (eventCode == null || tbaMatches == null)
         {
+            Log.w(TAG, "Attempted to save TBA matches with null eventCode or data");
             return;
         }
 
         // Cleanup existing matches file if it exists
         deleteTBAMatchesFile(eventCode);
 
-        String eventFileName = getEventFileName(eventCode);
+        String eventFileName = getFilename(eventCode);
         File file = new File(m_dataDir, eventFileName);
 
         Log.d(TAG, "Saving TBA matches for " + eventCode + " to: " + file.getAbsolutePath());
@@ -213,7 +230,7 @@ public class TBAMatches extends BaseJSONSerializer
             return null;
         }
 
-        String eventFilename = getEventFileName(eventCode);
+        String eventFilename = getFilename(eventCode);
         File file = new File(m_dataDir, eventFilename);
         return loadJSONArray(file);
     }
@@ -238,21 +255,21 @@ public class TBAMatches extends BaseJSONSerializer
         }
         else
         {
-            String eventFilename = getEventFileName(eventCode);
+            String eventFilename = getFilename(eventCode);
             fileList = new File[]{new File(m_dataDir, eventFilename)};
         }
 
         // Walk through list deleting files
         if (fileList != null)
         {
-            for (File f : fileList)
+            for (File file : fileList)
             {
-                if (f.getName().endsWith(TBA_MATCHES_FILE_SUFFIX))
+                if (file.getName().endsWith(TBA_MATCHES_FILE_SUFFIX))
                 {
-                    if (f.exists() && f.delete())
+                    if (file.exists() && file.delete())
                     {
                         deletedCount++;
-                        Log.d(TAG, "Deleted event file: " + f.getName());
+                        Log.d(TAG, "Deleted event file: " + file.getName());
                     }
                 }
             }
@@ -266,16 +283,13 @@ public class TBAMatches extends BaseJSONSerializer
     }
 
     /**
-     * Helper to construct the filename for a given event code.
+     * Log and optionally display an error message for an exception.
      *
-     * @param eventCode the TBA event code
-     * @return the filename string
+     * @param context the context to show the Toast in
+     * @param msg     the error message
+     * @param bSilent if true, the Toast is suppressed
+     * @param e       the exception that occurred
      */
-    private String getEventFileName(String eventCode)
-    {
-        return eventCode.trim().toLowerCase(Locale.US) + TBA_MATCHES_FILE_SUFFIX;
-    }
-
     private void handleError(Context context, String msg, boolean bSilent, Exception e)
     {
         Log.e(TAG, msg, e);
@@ -285,6 +299,11 @@ public class TBAMatches extends BaseJSONSerializer
         }
     }
 
+    /**
+     * Checks whether match data from The Blue Alliance has been successfully loaded.
+     *
+     * @return true if data is loaded
+     */
     public boolean isTBAMatchesLoaded()
     {
         return m_bTBAMatchesLoaded;

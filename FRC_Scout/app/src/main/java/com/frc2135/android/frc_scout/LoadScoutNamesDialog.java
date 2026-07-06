@@ -3,6 +3,8 @@ package com.frc2135.android.frc_scout;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.Button;
@@ -24,6 +26,7 @@ import java.util.Objects;
 
 /**
  * Dialog for loading scout names for a specific event from the team's scouting website.
+ * This dialog handles fetching and saving a list of recognized scout names for autopopulation.
  */
 public class LoadScoutNamesDialog extends DialogFragment
 {
@@ -33,15 +36,22 @@ public class LoadScoutNamesDialog extends DialogFragment
     private LoadEventDialogBinding m_binding;
 
     /**
-     * Creates a new instance of LoadScoutsDialog.
+     * Creates a new instance of {@link LoadScoutNamesDialog}.
      *
-     * @return a new LoadScoutsDialog instance
+     * @return a new LoadScoutNamesDialog instance
      */
     public static LoadScoutNamesDialog newInstance()
     {
         return new LoadScoutNamesDialog();
     }
 
+    /**
+     * Constructs the {@link AlertDialog} instance, initializes View Binding, and sets up
+     * the event code input field and listeners for initiating the scout names download.
+     *
+     * @param savedInstanceState if the dialog is being re-initialized from a previous saved state
+     * @return the constructed {@link Dialog}
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
@@ -51,12 +61,41 @@ public class LoadScoutNamesDialog extends DialogFragment
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         m_binding = LoadEventDialogBinding.inflate(inflater);
 
+        m_binding.eventCodeField.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+                m_binding.eventCodeLayout.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+            }
+        });
+
         AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle(R.string.load_scout_names_title)
                 .setView(m_binding.getRoot())
                 .setPositiveButton(android.R.string.ok, null)
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
-                .setNeutralButton("Clear", (d, w) -> {
+                .setNeutralButton("Clear Scout Names", (d, w) -> {
+                    Log.d(TAG, "Clear Scout Names called");
+                    String eventCode = Objects.requireNonNull(m_binding.eventCodeField.getText()).toString().trim();
+                    if (!eventCode.isEmpty())
+                    {
+                        ScoutNames scoutNames = ScoutNames.getInstance(requireContext(), eventCode, false);
+                        if (scoutNames.deleteScoutNamesFile(eventCode) > 0)
+                        {
+                            Toast.makeText(requireContext(), "Cleared Team Aliases for " + eventCode, Toast.LENGTH_SHORT).show();
+                        }
+                    }
                     m_binding.eventCodeField.setText("");
                     m_binding.eventCodeField.setError(null);
                 })
@@ -70,6 +109,12 @@ public class LoadScoutNamesDialog extends DialogFragment
         return dialog;
     }
 
+    /**
+     * Handles the logic when the OK button is clicked. Validates the event code
+     * and initiates the scout names data download if the code is valid.
+     *
+     * @param dialog the active {@link AlertDialog} instance
+     */
     private void handleOkClick(AlertDialog dialog)
     {
         String eventCode = Objects.requireNonNull(m_binding.eventCodeField.getText()).toString().trim().toLowerCase(Locale.US);
@@ -81,6 +126,7 @@ public class LoadScoutNamesDialog extends DialogFragment
             return;
         }
 
+        m_binding.eventCodeLayout.setError(null);
         downloadScoutNames(eventCode, dialog);
     }
 
@@ -99,6 +145,7 @@ public class LoadScoutNamesDialog extends DialogFragment
         Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         okButton.setEnabled(false);
         okButton.setText(R.string.loading);
+        m_binding.eventCodeField.setEnabled(false);
 
         String urlStr = SCOUT_NAMES_URL + eventCode + SCOUT_NAMES_SUFFIX;
         Log.i(TAG, "URL: " + urlStr);
@@ -118,9 +165,8 @@ public class LoadScoutNamesDialog extends DialogFragment
 
                     try
                     {
-                        Settings settings = Settings.getInstance(context);
-                        settings.saveEventScoutNames(context, eventCode, response);
-                        Toast.makeText(context, "Successfully downloaded scouts for " + eventCode, Toast.LENGTH_LONG).show();
+                        saveScoutNames(context, eventCode, response);
+                        Toast.makeText(context, "Successfully downloaded scout names for " + eventCode, Toast.LENGTH_LONG).show();
                         if (isAdded())
                         {
                             dismiss();
@@ -128,19 +174,16 @@ public class LoadScoutNamesDialog extends DialogFragment
                     }
                     catch (IOException e)
                     {
-                        Log.e(TAG, "Error saving scouts: " + e.getMessage());
+                        Log.e(TAG, "Error saving scout names: " + e.getMessage());
                         Toast.makeText(context, "Error saving scout names", Toast.LENGTH_SHORT).show();
-                        okButton.setEnabled(true);
-                        okButton.setText(android.R.string.ok);
                         resetUiState(okButton);
                     }
                 },
                 error -> {
-                    Log.e(TAG, "Download failed: " + error.toString());
-                    String msg = "Failed to download scouts for '" + eventCode + "'. Check connection or event code.";
+                    Log.e(TAG, "Download scout names failed: " + error.toString());
+                    String msg = "Failed to download scout names for '" + eventCode + "'. Check connection or event code.";
                     Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
-                    okButton.setEnabled(true);
-                    okButton.setText(android.R.string.ok);
+                    resetUiState(okButton);
                 });
 
         VolleySingleton.getInstance(requireContext()).addToRequestQueue(request);
@@ -164,6 +207,24 @@ public class LoadScoutNamesDialog extends DialogFragment
         }
     }
 
+    /**
+     * Saves the downloaded team alias mappings to internal storage.
+     *
+     * @param context   the application context
+     * @param eventCode the FRC event code
+     * @param response  the JSON array of alias mappings received from the API
+     * @throws IOException if saving to disk fails
+     */
+    private void saveScoutNames(Context context, String eventCode, org.json.JSONArray response)
+            throws IOException
+    {
+        Settings settings = Settings.getInstance(context);
+        settings.saveEventScoutNames(context, eventCode, response);
+    }
+
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     */
     @Override
     public void onResume()
     {
@@ -171,6 +232,9 @@ public class LoadScoutNamesDialog extends DialogFragment
         Log.d(TAG, "onResume");
     }
 
+    /**
+     * Cleans up the View Binding reference when the fragment view is being destroyed.
+     */
     @Override
     public void onDestroyView()
     {
