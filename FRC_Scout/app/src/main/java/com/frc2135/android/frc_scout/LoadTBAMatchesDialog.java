@@ -78,7 +78,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
         if (settings != null)
         {
             String currentEventCode = settings.getEventCode();
-            if (!Objects.equals(currentEventCode, "EVTX") && !currentEventCode.isEmpty())
+            if (!currentEventCode.isEmpty() && !Objects.equals(currentEventCode, "EVTX"))
             {
                 m_binding.eventCodeField.setText(currentEventCode);
             }
@@ -114,7 +114,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
                     if (!eventCode.isEmpty())
                     {
                         TBAMatches tbaMatches = TBAMatches.getInstance(requireContext(), eventCode, false);
-                        if (tbaMatches.deleteTBAMatches(eventCode) > 0)
+                        if (tbaMatches.deleteTBAMatchesFile(eventCode) > 0)
                         {
                             Toast.makeText(requireContext(), "Cleared TBA Matches for " + eventCode, Toast.LENGTH_SHORT).show();
                         }
@@ -172,11 +172,11 @@ public class LoadTBAMatchesDialog extends DialogFragment
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlStr, null,
                 response -> {
-                    Log.d(TAG, "Successfully received event data for: " + eventCode);
+                    Log.d(TAG, "Successfully received TBA matches for: " + eventCode);
                     if (response.length() == 0)
                     {
-                        Log.w(TAG, "Received empty match list for: " + eventCode);
-                        Toast.makeText(context, "No matches found for " + eventCode, Toast.LENGTH_LONG).show();
+                        Log.w(TAG, "Received empty TBA matches list for: " + eventCode);
+                        Toast.makeText(context, "No TBA matches found for " + eventCode, Toast.LENGTH_LONG).show();
                         resetUiState(okButton);
                         return;
                     }
@@ -184,7 +184,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
                     try
                     {
                         saveTBAMatches(context, eventCode, response);
-                        Toast.makeText(context, "Successfully downloaded " + response.length() + " matches for " + eventCode, Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Successfully downloaded " + response.length() + " TBA matches for " + eventCode, Toast.LENGTH_LONG).show();
                         if (isAdded())
                         {
                             dismiss();
@@ -192,14 +192,14 @@ public class LoadTBAMatchesDialog extends DialogFragment
                     }
                     catch (IOException e)
                     {
-                        Log.e(TAG, "Error saving event data: " + e.getMessage(), e);
-                        Toast.makeText(context, "Error saving event matches locally", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "Error saving TBA matches: " + e.getMessage(), e);
+                        Toast.makeText(context, "Error saving TBA matches locally", Toast.LENGTH_SHORT).show();
                         resetUiState(okButton);
                     }
                 },
                 error -> {
-                    Log.e(TAG, "Download failed: " + error.toString());
-                    StringBuilder msg = new StringBuilder("Failed to download matches. ");
+                    Log.e(TAG, "Download TBA matches failed: " + error.toString());
+                    StringBuilder msg = new StringBuilder("Failed to download TBA matches. ");
                     if (error.networkResponse != null)
                     {
                         int statusCode = error.networkResponse.statusCode;
@@ -260,8 +260,8 @@ public class LoadTBAMatchesDialog extends DialogFragment
             throws IOException
     {
         TBAMatches tbaMatches = TBAMatches.getInstance(context, eventCode, true);
-        tbaMatches.deleteTBAMatches(eventCode);
-        tbaMatches.writeTBAMatches(eventCode, response);
+        tbaMatches.deleteTBAMatchesFile(eventCode);
+        tbaMatches.writeTBAMatchesFile(eventCode, response);
 
         // Update current event code settings!
         Settings settings = Settings.getInstance(context);

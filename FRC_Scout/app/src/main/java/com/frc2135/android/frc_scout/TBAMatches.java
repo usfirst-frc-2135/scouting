@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Locale;
 
 /**
@@ -32,7 +33,7 @@ public class TBAMatches extends BaseJSONSerializer
 
     // Data members
     private String m_eventCode;
-    private JSONArray m_jsonData;
+    private JSONArray m_tbaMatchesJSON;
     private boolean m_bTBAMatchesLoaded;
 
     private static volatile TBAMatches sTBAMatches;
@@ -43,7 +44,7 @@ public class TBAMatches extends BaseJSONSerializer
         Log.d(TAG, "TBAMatches constructor");
         m_eventCode = eventCode;
         m_bTBAMatchesLoaded = false;
-        m_jsonData = null;
+        m_tbaMatchesJSON = null;
     }
 
     /**
@@ -90,7 +91,7 @@ public class TBAMatches extends BaseJSONSerializer
             String currentCode = sTBAMatches.getEventCode();
             if (bForceReload || !currentCode.equalsIgnoreCase(eventCode))
             {
-                Log.d(TAG, "Updating event data: " + currentCode + " -> " + eventCode);
+                Log.d(TAG, "Updating TBA matches: " + currentCode + " -> " + eventCode);
                 sTBAMatches.setEventCode(eventCode);
                 sTBAMatches.readTBAMatchesJSON(context, true);
             }
@@ -101,7 +102,7 @@ public class TBAMatches extends BaseJSONSerializer
     /**
      * Clears the singleton instance of TBAMatches.
      */
-    public static void clear()
+    public static void clearTBAMatches()
     {
         synchronized (TBAMatches.class)
         {
@@ -124,7 +125,7 @@ public class TBAMatches extends BaseJSONSerializer
     {
         m_eventCode = eventCode;
         m_bTBAMatchesLoaded = false;
-        m_jsonData = null;
+        m_tbaMatchesJSON = null;
     }
 
     /**
@@ -140,16 +141,16 @@ public class TBAMatches extends BaseJSONSerializer
             return;
         }
 
-        Log.d(TAG, "Reading matches JSON for: " + m_eventCode);
+        Log.d(TAG, "Reading TBA matches JSON for: " + m_eventCode);
 
         try
         {
-            m_jsonData = loadTBAMatches(m_eventCode);
-            if (m_jsonData != null)
+            m_tbaMatchesJSON = readTBAMatchesFile(m_eventCode);
+            if (m_tbaMatchesJSON != null)
             {
                 m_bTBAMatchesLoaded = true;
 
-                String msg = "Successfully loaded " + m_eventCode + " matches";
+                String msg = "Successfully loaded " + m_eventCode + " TBA matches";
                 Log.d(TAG, msg);
                 if (!bSilent)
                 {
@@ -158,41 +159,41 @@ public class TBAMatches extends BaseJSONSerializer
             }
             else if (!bSilent)
             {
-                Log.e(TAG, "Matches file not found for event: " + m_eventCode);
-                Toast.makeText(context, "Matches file not found", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "TBAMatches file not found for event: " + m_eventCode);
+                Toast.makeText(context, "TBAMatches file not found", Toast.LENGTH_SHORT).show();
             }
         }
         catch (JSONException | IOException e)
         {
-            handleError(context, "Failed to parse match data for: " + m_eventCode, bSilent, e);
+            handleError(context, "Failed to parse TBA matches for: " + m_eventCode, bSilent, e);
         }
     }
 
     /**
      * Writes event data for a specific event to a JSON file.
      *
-     * @param eventCode    the TBA event code
-     * @param eventMatches the JSONArray containing match information
+     * @param eventCode  the TBA event code
+     * @param tbaMatches the JSONArray containing match information
      * @throws IOException if writing the file fails
      */
-    public void writeTBAMatches(String eventCode, JSONArray eventMatches)
+    public void writeTBAMatchesFile(String eventCode, JSONArray tbaMatches)
             throws IOException
     {
-        Log.d(TAG, "writeTBAMatches()");
-        if (eventCode == null || eventMatches == null)
+        Log.d(TAG, "Writing TBA matches to file for event: " + eventCode);
+        if (eventCode == null || tbaMatches == null)
         {
             return;
         }
 
         // Cleanup existing matches file if it exists
-        deleteTBAMatches(eventCode);
+        deleteTBAMatchesFile(eventCode);
 
         String eventFileName = getEventFileName(eventCode);
         File file = new File(m_dataDir, eventFileName);
 
-        Log.d(TAG, "Saving event data for " + eventCode + " to: " + file.getAbsolutePath());
-        writeStringToFile(file, eventMatches.toString());
-        Log.i(TAG, "Successfully saved " + eventMatches.length() + " matches for event: " + eventCode);
+        Log.d(TAG, "Saving TBA matches for " + eventCode + " to: " + file.getAbsolutePath());
+        writeStringToFile(file, tbaMatches.toString());
+        Log.i(TAG, "Successfully saved " + tbaMatches.length() + " TBA matches for event: " + eventCode);
     }
 
     /**
@@ -203,17 +204,17 @@ public class TBAMatches extends BaseJSONSerializer
      * @throws IOException   if reading the file fails
      * @throws JSONException if parsing the JSON data fails
      */
-    public JSONArray loadTBAMatches(String eventCode)
+    public JSONArray readTBAMatchesFile(String eventCode)
             throws IOException, JSONException
     {
-        Log.d(TAG, "loadTBAMatches()");
+        Log.d(TAG, "Reading TBA matches to file for event: " + eventCode);
         if (eventCode == null || eventCode.trim().isEmpty())
         {
             return null;
         }
 
-        String filename = getEventFileName(eventCode);
-        File file = new File(m_dataDir, filename);
+        String eventFilename = getEventFileName(eventCode);
+        File file = new File(m_dataDir, eventFilename);
         return loadJSONArray(file);
     }
 
@@ -224,9 +225,9 @@ public class TBAMatches extends BaseJSONSerializer
      * @param eventCode the TBA event code to clear (e.g., "2026casac"), or null to clear all
      * @return the number of files deleted
      */
-    public int deleteTBAMatches(String eventCode)
+    public int deleteTBAMatchesFile(String eventCode)
     {
-        Log.d(TAG, "deleteTBAMatches()");
+        Log.d(TAG, "Deleting TBA matches to file for event: " + eventCode);
         File[] fileList;
         int deletedCount = 0;
 
@@ -237,8 +238,8 @@ public class TBAMatches extends BaseJSONSerializer
         }
         else
         {
-            String filename = getEventFileName(eventCode);
-            fileList = new File[]{new File(m_dataDir, filename)};
+            String eventFilename = getEventFileName(eventCode);
+            fileList = new File[]{new File(m_dataDir, eventFilename)};
         }
 
         // Walk through list deleting files
@@ -259,7 +260,7 @@ public class TBAMatches extends BaseJSONSerializer
 
         if (deletedCount > 0)
         {
-            TBAMatches.clear();
+            TBAMatches.clearTBAMatches();
         }
         return deletedCount;
     }
@@ -298,17 +299,14 @@ public class TBAMatches extends BaseJSONSerializer
     public String[] getMatchTeams(String matchNum)
     {
         String[] teams = new String[7];
-        for (int i = 0; i < 7; i++)
-        {
-            teams[i] = "";
-        }
+        Arrays.fill(teams, "");
 
-        if (m_jsonData != null && matchNum != null)
+        if (m_tbaMatchesJSON != null && matchNum != null)
         {
             String targetMatch = matchNum.trim().toLowerCase(Locale.US);
-            for (int i = 0; i < m_jsonData.length(); i++)
+            for (int i = 0; i < m_tbaMatchesJSON.length(); i++)
             {
-                JSONObject matchObj = m_jsonData.optJSONObject(i);
+                JSONObject matchObj = m_tbaMatchesJSON.optJSONObject(i);
                 if (matchObj == null)
                 {
                     continue;

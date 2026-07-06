@@ -68,7 +68,7 @@
 
     <!--    Pre-match screen -->
     <string name="pre_match">Pre-Match</string>
-    <string name="team_index_label">Team Index %s</string>
+    <string name="team_index_label">Index %s</string>
 
     <string name="match_configuration">MATCH CONFIGURATION</string>
 
