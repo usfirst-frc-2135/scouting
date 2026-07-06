@@ -27,8 +27,8 @@ import zxing.QRCodeEncoder;
 public class QRCodeDialog extends DialogFragment
 {
     private static final String TAG = "QRCodeDialog";
-    private static final String ARG_STATS = "stats";
     private static final String ARG_LABEL = "match_label";
+    private static final String ARG_STATS = "stats";
 
     private QrCodeDialogBinding m_binding;
 
@@ -64,8 +64,8 @@ public class QRCodeDialog extends DialogFragment
         m_binding = QrCodeDialogBinding.inflate(getLayoutInflater());
 
         Bundle args = requireArguments();
-        String stats = args.getString(ARG_STATS, "");
         String label = args.getString(ARG_LABEL, "Match Data QR");
+        String stats = args.getString(ARG_STATS, "");
 
         generateQRCode(stats);
         m_binding.qrDataPreview.setText(stats);
