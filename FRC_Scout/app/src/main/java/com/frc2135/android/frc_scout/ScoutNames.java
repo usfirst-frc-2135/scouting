@@ -21,7 +21,6 @@ import java.util.Locale;
 public class ScoutNames extends BaseJSONSerializer
 {
     private static final String TAG = "ScoutNames";
-    private static final String FILENAME_SUFFIX = "_scoutNames.json";
     private static final String SCOUT_NAME_JSON_KEY = "scoutName";
 
     private final Context m_appContext;
@@ -179,7 +178,7 @@ public class ScoutNames extends BaseJSONSerializer
      */
     private String getFilename(String eventCode)
     {
-        return eventCode.trim().toLowerCase(Locale.US) + FILENAME_SUFFIX;
+        return eventCode.trim().toLowerCase(Locale.US) + Constants.SCOUT_NAMES_FILENAME_SUFFIX;
     }
 
     /**
