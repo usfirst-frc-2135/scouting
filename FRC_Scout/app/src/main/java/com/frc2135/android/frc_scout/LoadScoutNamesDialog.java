@@ -91,7 +91,7 @@ public class LoadScoutNamesDialog extends DialogFragment
                         ScoutNames scoutNames = ScoutNames.getInstance(requireContext(), eventCode, false);
                         if (scoutNames.deleteScoutNamesFile(eventCode) > 0)
                         {
-                            Toast.makeText(requireContext(), "Cleared Team Aliases for " + eventCode, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(requireContext(), "Cleared Scout Names for " + eventCode, Toast.LENGTH_SHORT).show();
                         }
                     }
                     m_binding.eventCodeField.setText("");

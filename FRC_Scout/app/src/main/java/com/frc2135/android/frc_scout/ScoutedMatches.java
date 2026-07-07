@@ -135,12 +135,12 @@ public class ScoutedMatches extends BaseJSONSerializer
         try
         {
             Log.d(TAG, "saveMatchData()");
-            JSONArray array = new JSONArray();
-            array.put(matchData.toJSON());
+            JSONArray newMatch = new JSONArray();
+            newMatch.put(matchData.toJSON());
 
             String filename = getMatchFileName(matchData);
             File file = new File(m_dataDir, filename);
-            saveJSONArray(file, array);
+            saveJSONArray(file, newMatch);
             return true;
         }
         catch (Exception e)

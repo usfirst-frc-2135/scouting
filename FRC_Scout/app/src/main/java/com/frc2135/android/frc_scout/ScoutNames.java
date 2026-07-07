@@ -166,7 +166,7 @@ public class ScoutNames extends BaseJSONSerializer
         }
         catch (JSONException | IOException e)
         {
-            handleError(context, "Failed to parse scout names for: " + m_eventCode, bSilent, e);
+            super.handleToastError(context, TAG, "Failed to parse scout names for: " + m_eventCode, bSilent, e);
         }
     }
 
@@ -202,34 +202,6 @@ public class ScoutNames extends BaseJSONSerializer
 
         File file = new File(m_dataDir, filename);
         saveJSONArray(file, scoutData);
-
-        // Create the summary JSONObject for Settings
-        try
-        {
-            JSONArray namesArray = new JSONArray();
-            for (int i = 0; i < scoutData.length(); i++)
-            {
-                JSONObject obj = scoutData.optJSONObject(i);
-                if (obj != null)
-                {
-                    String name = obj.optString(SCOUT_NAME_JSON_KEY);
-                    if (!name.isEmpty())
-                    {
-                        namesArray.put(name);
-                    }
-                }
-            }
-
-            JSONObject scoutNamesObj = new JSONObject();
-            scoutNamesObj.put("eventCode", eventCode);
-            scoutNamesObj.put("names", namesArray);
-
-            Settings.getInstance(m_appContext).setScoutNamesObject(scoutNamesObj);
-        }
-        catch (JSONException e)
-        {
-            Log.e(TAG, "Error creating scoutNames summary object for Settings", e);
-        }
     }
 
     /**
@@ -278,23 +250,6 @@ public class ScoutNames extends BaseJSONSerializer
 
         Log.w(TAG, "Failed to delete scout names file: " + filename);
         return 0;
-    }
-
-    /**
-     * Log and optionally display an error message for an exception.
-     *
-     * @param context the context to show the Toast in
-     * @param msg     the error message
-     * @param bSilent if true, the Toast is suppressed
-     * @param e       the exception that occurred
-     */
-    private void handleError(Context context, String msg, boolean bSilent, Exception e)
-    {
-        Log.e(TAG, msg, e);
-        if (!bSilent)
-        {
-            Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
-        }
     }
 
     /**

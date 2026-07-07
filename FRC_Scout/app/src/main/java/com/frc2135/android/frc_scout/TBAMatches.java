@@ -169,7 +169,7 @@ public class TBAMatches extends BaseJSONSerializer
         }
         catch (JSONException | IOException e)
         {
-            handleError(context, "Failed to parse TBA matches for: " + m_eventCode, bSilent, e);
+            super.handleToastError(context, TAG, "Failed to parse TBA matches for: " + m_eventCode, bSilent, e);
         }
     }
 
@@ -279,23 +279,6 @@ public class TBAMatches extends BaseJSONSerializer
             TBAMatches.clearTBAMatches();
         }
         return deletedCount;
-    }
-
-    /**
-     * Log and optionally display an error message for an exception.
-     *
-     * @param context the context to show the Toast in
-     * @param msg     the error message
-     * @param bSilent if true, the Toast is suppressed
-     * @param e       the exception that occurred
-     */
-    private void handleError(Context context, String msg, boolean bSilent, Exception e)
-    {
-        Log.e(TAG, msg, e);
-        if (!bSilent)
-        {
-            Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
-        }
     }
 
     /**
