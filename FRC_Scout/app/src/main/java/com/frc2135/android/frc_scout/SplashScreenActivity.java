@@ -107,6 +107,7 @@ public class SplashScreenActivity extends AppCompatActivity
             startActivity(mainIntent);
 
             // overridePendingTransition is deprecated in API 34.
+            // Android for Kindle is built on Android 9 (API 28)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
             {
                 overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, R.anim.fade_in, R.anim.fade_out);
@@ -129,6 +130,7 @@ public class SplashScreenActivity extends AppCompatActivity
         int width;
         int height;
 
+        // Android for Kindle is built on Android 9 (API 28)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
         {
             Log.d(TAG, "Using newer API > " + Build.VERSION_CODES.R);
