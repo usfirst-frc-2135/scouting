@@ -32,8 +32,6 @@ public class LoadTeamAliasesDialog extends DialogFragment
 {
     private static final String TAG = "LoadTeamAliasesDialog";
 
-    private static final String TEAM_ALIASES_URL = "https://www.frc2135.org/json/";
-    private static final String TEAM_ALIASES_SUFFIX = "_teamAliases.json";
     private LoadEventDialogBinding m_binding;
 
     /**
@@ -149,7 +147,7 @@ public class LoadTeamAliasesDialog extends DialogFragment
         okButton.setText(R.string.loading);
         m_binding.eventCodeField.setEnabled(false);
 
-        String urlStr = TEAM_ALIASES_URL + eventCode + TEAM_ALIASES_SUFFIX;
+        String urlStr = Constants.TEAM_WEBSITE_JSON_URL + eventCode + Constants.TEAM_ALIASES_FILENAME_SUFFIX;
         Log.i(TAG, "URL: " + urlStr);
 
         Context context = requireContext().getApplicationContext();

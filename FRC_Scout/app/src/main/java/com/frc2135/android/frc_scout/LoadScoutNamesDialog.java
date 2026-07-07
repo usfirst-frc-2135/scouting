@@ -31,8 +31,6 @@ import java.util.Objects;
 public class LoadScoutNamesDialog extends DialogFragment
 {
     private static final String TAG = "LoadScoutNamesDialog";
-    private static final String SCOUT_NAMES_URL = "https://www.frc2135.org/json/";
-    private static final String SCOUT_NAMES_SUFFIX = "_scoutNames.json";
     private LoadEventDialogBinding m_binding;
 
     /**
@@ -147,7 +145,7 @@ public class LoadScoutNamesDialog extends DialogFragment
         okButton.setText(R.string.loading);
         m_binding.eventCodeField.setEnabled(false);
 
-        String urlStr = SCOUT_NAMES_URL + eventCode + SCOUT_NAMES_SUFFIX;
+        String urlStr = Constants.TEAM_WEBSITE_JSON_URL + eventCode + Constants.SCOUT_NAMES_FILENAME_SUFFIX;
         Log.i(TAG, "URL: " + urlStr);
 
         Context context = requireContext().getApplicationContext();

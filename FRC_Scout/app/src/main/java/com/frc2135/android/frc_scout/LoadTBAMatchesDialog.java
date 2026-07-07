@@ -36,16 +36,6 @@ public class LoadTBAMatchesDialog extends DialogFragment
 {
     private static final String TAG = "LoadEventDialog";
 
-    /**
-     * The base URL for The Blue Alliance API v3 event matches endpoint.
-     */
-    public static final String TBA_EVENT_MATCHES_URL = "https://www.thebluealliance.com/api/v3/event/";
-    public static final String TBA_EVENT_MATCHES_SUFFIX = "/matches";
-    /**
-     * The authentication key for The Blue Alliance API. (new for 2026)
-     */
-    private static final String TBA_AUTH_KEY = "MetfyxQxRpk0do2GygII8alQnV0qaQ8kF9KUIYDrFTMmQr2pPC8Cl4FGdoKlUaAu";
-
     private LoadEventDialogBinding m_binding;
 
     /**
@@ -172,7 +162,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
         okButton.setText(R.string.loading);
         m_binding.eventCodeField.setEnabled(false);
 
-        String urlStr = TBA_EVENT_MATCHES_URL + eventCode + TBA_EVENT_MATCHES_SUFFIX;
+        String urlStr = Constants.TBA_EVENT_MATCHES_URL + eventCode + "/matches";
         Log.d(TAG, "URL: " + urlStr);
 
         Context context = requireContext().getApplicationContext();
@@ -229,7 +219,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
             public Map<String, String> getHeaders()
             {
                 Map<String, String> params = new HashMap<>();
-                params.put("X-TBA-Auth-Key", TBA_AUTH_KEY);
+                params.put("X-TBA-Auth-Key", Constants.TBA_AUTH_KEY);
                 return params;
             }
         };
