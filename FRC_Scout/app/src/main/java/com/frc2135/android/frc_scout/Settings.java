@@ -23,7 +23,6 @@ import java.util.Locale;
 public final class Settings extends BaseJSONSerializer
 {
     private static final String TAG = "Settings";
-    private static final String SETTINGS_FILENAME = "settings.json";
 
     // Settings JSON Keys
     private static final String KEY_SETTINGS_VERSION = "settingsVersion";
@@ -113,7 +112,7 @@ public final class Settings extends BaseJSONSerializer
             throws JSONException, IOException
     {
         Log.d(TAG, "saveSettings()");
-        File file = new File(m_dataDir, SETTINGS_FILENAME);
+        File file = new File(m_dataDir, Constants.SETTINGS_FILENAME);
         saveJSONObject(file, toJSON());
     }
 
@@ -127,7 +126,7 @@ public final class Settings extends BaseJSONSerializer
             throws IOException, JSONException
     {
         Log.d(TAG, "loadSettings()");
-        File file = new File(m_dataDir, SETTINGS_FILENAME);
+        File file = new File(m_dataDir, Constants.SETTINGS_FILENAME);
         if (!file.exists())
         {
             return;

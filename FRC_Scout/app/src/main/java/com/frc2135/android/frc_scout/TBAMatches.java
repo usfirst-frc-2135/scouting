@@ -21,7 +21,6 @@ import java.util.Locale;
 public class TBAMatches extends BaseJSONSerializer
 {
     private static final String TAG = "TBAMatches";
-    private static final String TBA_MATCHES_FILE_SUFFIX = "_tbaMatches.json";
 
     // JSON Keys used by the blue alliance
     private static final String TBA_KEY_ALLIANCES = "alliances";
@@ -182,7 +181,7 @@ public class TBAMatches extends BaseJSONSerializer
      */
     private String getFilename(String eventCode)
     {
-        return eventCode.trim().toLowerCase(Locale.US) + TBA_MATCHES_FILE_SUFFIX;
+        return eventCode.trim().toLowerCase(Locale.US) + Constants.TBA_MATCHES_FILE_SUFFIX;
     }
 
     /**
@@ -264,7 +263,7 @@ public class TBAMatches extends BaseJSONSerializer
         {
             for (File file : fileList)
             {
-                if (file.getName().endsWith(TBA_MATCHES_FILE_SUFFIX))
+                if (file.getName().endsWith(Constants.TBA_MATCHES_FILE_SUFFIX))
                 {
                     if (file.exists() && file.delete())
                     {
