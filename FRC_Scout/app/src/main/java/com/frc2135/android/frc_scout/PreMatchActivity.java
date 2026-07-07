@@ -13,8 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.frc2135.android.frc_scout.databinding.PreMatchActivityBinding;
 
-import org.json.JSONException;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -267,7 +265,7 @@ public class PreMatchActivity extends AppCompatActivity
                     m_binding.teamNumberField.showDropDown();
                 }
             }
-            catch (JSONException | NullPointerException exception)
+            catch (NullPointerException exception)
             {
                 Log.e(TAG, "Error fetching teams for dropdown", exception);
             }
@@ -309,7 +307,7 @@ public class PreMatchActivity extends AppCompatActivity
                     m_binding.teamNumberField.setText(teamNumStr);
                 }
             }
-            catch (JSONException | NumberFormatException e)
+            catch (NumberFormatException e)
             {
                 Log.e(TAG, "Error in auto-loading team number", e);
             }
@@ -349,18 +347,11 @@ public class PreMatchActivity extends AppCompatActivity
         // Handle alias detection (e.g., 99#)
         if (m_aliasNames != null && m_aliasNames.isTeamAliasesLoaded() && teamNumEntry.startsWith("99"))
         {
-            try
+            String bcdNum = m_aliasNames.getTeamNumForAlias(teamNumEntry);
+            if (!bcdNum.isEmpty())
             {
-                String bcdNum = m_aliasNames.getTeamNumForAlias(teamNumEntry);
-                if (!bcdNum.isEmpty())
-                {
-                    teamNum = bcdNum;
-                    teamAlias = teamNumEntry;
-                }
-            }
-            catch (JSONException e)
-            {
-                Log.e(TAG, "Error resolving team alias", e);
+                teamNum = bcdNum;
+                teamAlias = teamNumEntry;
             }
         }
 

@@ -10,7 +10,9 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Singleton class for managing team aliases data.
@@ -20,12 +22,12 @@ import java.util.Locale;
 public class TeamAliases extends BaseJSONSerializer
 {
     private static final String TAG = "TeamAliases";
-    private static final String TEAM_ALIASES_FILENAME_SUFFIX = "_teamAliases.json";
     private static final String TEAM_NUM_JSON_KEY = "teamNum";
     private static final String ALIAS_NUM_JSON_KEY = "aliasNum";
 
     private String m_eventCode;
-    private JSONArray m_teamAliasesJSON;
+    private Map<String, String> m_teamToAliasMap;
+    private Map<String, String> m_aliasToTeamMap;
     private boolean m_bTeamAliasesDataLoaded;
 
     private static volatile TeamAliases sTeamAliases;
@@ -36,7 +38,8 @@ public class TeamAliases extends BaseJSONSerializer
         Log.d(TAG, "TeamAliases constructor");
         m_eventCode = eventCode;
         m_bTeamAliasesDataLoaded = false;
-        m_teamAliasesJSON = null;
+        m_teamToAliasMap = new HashMap<>();
+        m_aliasToTeamMap = new HashMap<>();
     }
 
     /**
@@ -113,7 +116,8 @@ public class TeamAliases extends BaseJSONSerializer
     {
         m_eventCode = eventCode;
         m_bTeamAliasesDataLoaded = false;
-        m_teamAliasesJSON = null;
+        m_teamToAliasMap.clear();
+        m_aliasToTeamMap.clear();
     }
 
     /**
@@ -133,9 +137,10 @@ public class TeamAliases extends BaseJSONSerializer
 
         try
         {
-            m_teamAliasesJSON = readTeamAliasesFile(m_eventCode);
-            if (m_teamAliasesJSON != null)
+            JSONArray jsonArray = readTeamAliasesFile(m_eventCode);
+            if (jsonArray != null)
             {
+                parseAliasesJSON(jsonArray);
                 m_bTeamAliasesDataLoaded = true;
 
                 Log.d(TAG, "Successfully loaded aliases for " + m_eventCode);
@@ -153,6 +158,24 @@ public class TeamAliases extends BaseJSONSerializer
         }
     }
 
+    private void parseAliasesJSON(JSONArray jsonArray)
+            throws JSONException
+    {
+        m_teamToAliasMap.clear();
+        m_aliasToTeamMap.clear();
+        for (int i = 0; i < jsonArray.length(); i++)
+        {
+            JSONObject obj = jsonArray.getJSONObject(i);
+            String teamNum = obj.optString(TEAM_NUM_JSON_KEY);
+            String alias = obj.optString(ALIAS_NUM_JSON_KEY);
+            if (!teamNum.isEmpty() && !alias.isEmpty())
+            {
+                m_teamToAliasMap.put(teamNum, alias);
+                m_aliasToTeamMap.put(alias, teamNum);
+            }
+        }
+    }
+
     /**
      * Gets the filename for a given event code.
      *
@@ -161,7 +184,7 @@ public class TeamAliases extends BaseJSONSerializer
      */
     private String getFilename(String eventCode)
     {
-        return eventCode.trim().toLowerCase(Locale.US) + TEAM_ALIASES_FILENAME_SUFFIX;
+        return eventCode.trim().toLowerCase(Locale.US) + Constants.TEAM_ALIASES_FILENAME_SUFFIX;
     }
 
     /**
@@ -269,27 +292,16 @@ public class TeamAliases extends BaseJSONSerializer
      *
      * @param teamNumStr the team number (e.g., "2135")
      * @return the alias string, or empty string if not found
-     * @throws JSONException if parsing the JSON fails
      */
     public String getAliasForTeamNum(String teamNumStr)
-            throws JSONException
     {
-        if (m_teamAliasesJSON == null || teamNumStr == null)
+        if (teamNumStr == null)
         {
             return "";
         }
 
         String targetTeamNum = MatchData.extractTeamNumber(teamNumStr);
-
-        for (int i = 0; i < m_teamAliasesJSON.length(); i++)
-        {
-            JSONObject obj = m_teamAliasesJSON.getJSONObject(i);
-            if (targetTeamNum.equals(obj.optString(TEAM_NUM_JSON_KEY)))
-            {
-                return obj.optString(ALIAS_NUM_JSON_KEY, "");
-            }
-        }
-        return "";
+        return m_teamToAliasMap.getOrDefault(targetTeamNum, "");
     }
 
     /**
@@ -297,24 +309,14 @@ public class TeamAliases extends BaseJSONSerializer
      *
      * @param myAlias the alias string (e.g., "9901")
      * @return the team number string, or empty string if not found
-     * @throws JSONException if parsing the JSON fails
      */
     public String getTeamNumForAlias(String myAlias)
-            throws JSONException
     {
-        if (m_teamAliasesJSON == null || myAlias == null)
+        if (myAlias == null)
         {
             return "";
         }
 
-        for (int i = 0; i < m_teamAliasesJSON.length(); i++)
-        {
-            JSONObject obj = m_teamAliasesJSON.getJSONObject(i);
-            if (myAlias.equals(obj.optString(ALIAS_NUM_JSON_KEY)))
-            {
-                return obj.optString(TEAM_NUM_JSON_KEY, "");
-            }
-        }
-        return "";
+        return m_aliasToTeamMap.getOrDefault(myAlias, "");
     }
 }
