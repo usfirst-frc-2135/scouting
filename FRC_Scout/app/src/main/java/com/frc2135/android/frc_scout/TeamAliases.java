@@ -279,7 +279,7 @@ public class TeamAliases extends BaseJSONSerializer
             return "";
         }
 
-        String targetTeamNum = MatchData.stripTeamNumPrefix(teamNumStr);
+        String targetTeamNum = MatchData.extractTeamNumber(teamNumStr);
 
         for (int i = 0; i < m_teamAliasesJSON.length(); i++)
         {

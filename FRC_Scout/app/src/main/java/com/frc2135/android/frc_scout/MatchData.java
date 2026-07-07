@@ -19,6 +19,47 @@ public class MatchData
 {
     private static final String TAG = "MatchData";
 
+    // JSON Keys
+    private static final String KEY_MATCH_ID = "matchId";
+    private static final String KEY_TIMESTAMP = "timestamp";
+    private static final String KEY_VERSION = "version";
+    private static final String KEY_EVENT_CODE = "eventCode";
+    private static final String KEY_MATCH_NUMBER = "matchNumber";
+    private static final String KEY_TEAM_NUMBER = "teamNumber";
+    private static final String KEY_TEAM_ALIAS = "teamAlias";
+    private static final String KEY_SCOUT_NAME = "scoutName";
+
+    private static final String KEY_AUTON_PRELOAD = "preload";
+    private static final String KEY_AUTON_PRELOAD_ACC_RATE = "autonPreloadAccRate";
+    private static final String KEY_AUTON_HOPPER = "autonHopper";
+    private static final String KEY_AUTON_ACC_RATE = "autonAccuracyRate";
+    private static final String KEY_AUTON_AZ = "autonAz";
+    private static final String KEY_AUTON_DEPOT = "autonDepot";
+    private static final String KEY_AUTON_OUTPOST = "autonOutpost";
+    private static final String KEY_AUTON_NZ = "autonNz";
+    private static final String KEY_AUTON_CLIMB = "autonClimb";
+
+    private static final String KEY_TELEOP_HOPPERS_USED = "hoppersUsed";
+    private static final String KEY_TELEOP_ACC_RATE = "accuracyRate";
+    private static final String KEY_TELEOP_INTAKE_SHOOT = "intakeAndShoot";
+    private static final String KEY_TELEOP_PASSING_RATE = "passingRate";
+    private static final String KEY_TELEOP_DEFENSE_RATE = "defenseRate";
+    private static final String KEY_TELEOP_DRIVE_ABILITY = "driveAbility";
+    private static final String KEY_TELEOP_PASS_AZ = "allianceZone";
+    private static final String KEY_TELEOP_PASS_NZ = "neutralZone";
+    private static final String KEY_TELEOP_PHOTO = "teleopPhoto";
+
+    private static final String KEY_DIED = "died";
+    private static final String KEY_START_CLIMB = "startClimb";
+    private static final String KEY_CLIMB_LEVEL = "climbLevel";
+    private static final String KEY_ENDGAME_CLIMB_POS = "endgameClimbPos";
+    private static final String KEY_COMMENTS = "comments";
+
+    private static final String KEY_OTHER1 = "other1";
+    private static final String KEY_OTHER2 = "other2";
+    private static final String KEY_OTHER3 = "other3";
+    private static final String KEY_OTHER4 = "other4";
+
     public static final double M_JSON_FORMAT_VERSION = 26.1;
 
     public static final int MAX_AUTON_HOPPERS = 1;
@@ -69,18 +110,18 @@ public class MatchData
     private String m_other4;
 
     /**
-     * Utility to strip off non-digit prefixes (like "frc") from a team number string.
+     * Extracts the numeric portion from a team identifier (e.g., "frc2135" -> "2135").
      *
-     * @param teamName the team identifier string
-     * @return the numeric portion of the team identifier
+     * @param teamIdentifier the team identifier string
+     * @return the numeric portion of the team identifier, or an empty string if null
      */
-    public static String stripTeamNumPrefix(String teamName)
+    public static String extractTeamNumber(String teamIdentifier)
     {
-        if (teamName == null)
+        if (teamIdentifier == null || teamIdentifier.isEmpty())
         {
             return "";
         }
-        return teamName.replaceAll("^\\D+", "");
+        return teamIdentifier.replaceAll("^\\D+", "");
     }
 
     /**
@@ -137,9 +178,9 @@ public class MatchData
      */
     public MatchData(JSONObject json)
     {
-        m_matchID = json.optString("matchId", UUID.randomUUID().toString());
+        m_matchID = json.optString(KEY_MATCH_ID, UUID.randomUUID().toString());
 
-        String dateStr = json.optString("timestamp", "");
+        String dateStr = json.optString(KEY_TIMESTAMP, "");
         SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US);
         SimpleDateFormat oldFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
 
@@ -164,44 +205,44 @@ public class MatchData
             m_timestamp = Calendar.getInstance().getTime();
         }
 
-        m_version = json.optDouble("version", M_JSON_FORMAT_VERSION);
-        m_eventCode = json.optString("eventCode", "");
-        m_matchNumber = json.optString("matchNumber", "");
-        m_teamNumber = json.optString("teamNumber", "");
-        m_teamAlias = json.optString("teamAlias", "");
-        setScoutName(json.optString("scoutName", ""));
+        m_version = json.optDouble(KEY_VERSION, M_JSON_FORMAT_VERSION);
+        m_eventCode = json.optString(KEY_EVENT_CODE, "");
+        m_matchNumber = json.optString(KEY_MATCH_NUMBER, "");
+        m_teamNumber = json.optString(KEY_TEAM_NUMBER, "");
+        m_teamAlias = json.optString(KEY_TEAM_ALIAS, "");
+        setScoutName(json.optString(KEY_SCOUT_NAME, ""));
 
-        m_autonPreload = json.optBoolean("preload", false);
-        m_autonPreloadAccRate = json.optInt("autonPreloadAccRate", 0);
-        m_autonHopper = json.optInt("autonHopper", 0);
-        m_autonAccuracyRate = json.optInt("autonAccuracyRate", 0);
-        m_autonAz = json.optBoolean("autonAz", false);
-        m_autonDepot = json.optBoolean("autonDepot", false);
-        m_autonOutpost = json.optBoolean("autonOutpost", false);
-        m_autonNz = json.optBoolean("autonNz", false);
-        m_autonClimb = json.optInt("autonClimb", 0);
+        m_autonPreload = json.optBoolean(KEY_AUTON_PRELOAD, false);
+        m_autonPreloadAccRate = json.optInt(KEY_AUTON_PRELOAD_ACC_RATE, 0);
+        m_autonHopper = json.optInt(KEY_AUTON_HOPPER, 0);
+        m_autonAccuracyRate = json.optInt(KEY_AUTON_ACC_RATE, 0);
+        m_autonAz = json.optBoolean(KEY_AUTON_AZ, false);
+        m_autonDepot = json.optBoolean(KEY_AUTON_DEPOT, false);
+        m_autonOutpost = json.optBoolean(KEY_AUTON_OUTPOST, false);
+        m_autonNz = json.optBoolean(KEY_AUTON_NZ, false);
+        m_autonClimb = json.optInt(KEY_AUTON_CLIMB, 0);
 
-        m_hoppersUsed = json.optInt("hoppersUsed", 0);
-        m_accuracyRate = json.optInt("accuracyRate", 0);
-        m_intakeAndShoot = json.optBoolean("intakeAndShoot", false);
-        m_passingRate = json.optInt("passingRate", 5);
-        m_defenseRate = json.optInt("defenseRate", 0);
-        m_drivingAbility = json.optInt("driveAbility", 6);
-        m_passedAz = json.optInt("allianceZone", 3);
-        m_passedNz = json.optInt("neutralZone", 3);
-        m_teleopPhoto = json.optInt("teleopPhoto", 0);
+        m_hoppersUsed = json.optInt(KEY_TELEOP_HOPPERS_USED, 0);
+        m_accuracyRate = json.optInt(KEY_TELEOP_ACC_RATE, 0);
+        m_intakeAndShoot = json.optBoolean(KEY_TELEOP_INTAKE_SHOOT, false);
+        m_passingRate = json.optInt(KEY_TELEOP_PASSING_RATE, 5);
+        m_defenseRate = json.optInt(KEY_TELEOP_DEFENSE_RATE, 0);
+        m_drivingAbility = json.optInt(KEY_TELEOP_DRIVE_ABILITY, 6);
+        m_passedAz = json.optInt(KEY_TELEOP_PASS_AZ, 3);
+        m_passedNz = json.optInt(KEY_TELEOP_PASS_NZ, 3);
+        m_teleopPhoto = json.optInt(KEY_TELEOP_PHOTO, 0);
 
-        m_diedValue = json.optInt("died", 0);
-        m_startClimb = json.optInt("startClimb", 0);
-        m_endgameClimbLevel = json.optInt("climbLevel", 0);
+        m_diedValue = json.optInt(KEY_DIED, 0);
+        m_startClimb = json.optInt(KEY_START_CLIMB, 0);
+        m_endgameClimbLevel = json.optInt(KEY_CLIMB_LEVEL, 0);
         //noinspection GrazieInspectionRunner
-        m_endgameClimbPos = json.optInt("endgameClimbPos", 0);
-        m_comment = json.optString("comments", "");
+        m_endgameClimbPos = json.optInt(KEY_ENDGAME_CLIMB_POS, 0);
+        m_comment = json.optString(KEY_COMMENTS, "");
 
-        m_shovelFuel = json.optBoolean("other1", false);
-        m_other2 = json.optString("other2", "0");
-        m_other3 = json.optString("other3", "0");
-        m_other4 = json.optString("other4", "0");
+        m_shovelFuel = json.optBoolean(KEY_OTHER1, false);
+        m_other2 = json.optString(KEY_OTHER2, "0");
+        m_other3 = json.optString(KEY_OTHER3, "0");
+        m_other4 = json.optString(KEY_OTHER4, "0");
     }
 
     /**
@@ -215,48 +256,48 @@ public class MatchData
     {
         JSONObject json = new JSONObject();
 
-        json.put("matchId", m_matchID);
+        json.put(KEY_MATCH_ID, m_matchID);
         SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US);
-        json.put("timestamp", isoFormat.format(m_timestamp));
+        json.put(KEY_TIMESTAMP, isoFormat.format(m_timestamp));
 
-        json.put("version", m_version);
-        json.put("eventCode", m_eventCode);
-        json.put("matchNumber", m_matchNumber);
-        json.put("teamNumber", m_teamNumber);
-        json.put("teamAlias", m_teamAlias);
-        json.put("scoutName", m_scoutName);
+        json.put(KEY_VERSION, m_version);
+        json.put(KEY_EVENT_CODE, m_eventCode);
+        json.put(KEY_MATCH_NUMBER, m_matchNumber);
+        json.put(KEY_TEAM_NUMBER, m_teamNumber);
+        json.put(KEY_TEAM_ALIAS, m_teamAlias);
+        json.put(KEY_SCOUT_NAME, m_scoutName);
 
-        json.put("preload", m_autonPreload);
-        json.put("autonPreloadAccRate", m_autonPreloadAccRate);
-        json.put("autonHopper", m_autonHopper);
-        json.put("autonAccuracyRate", m_autonAccuracyRate);
-        json.put("autonAz", m_autonAz);
-        json.put("autonDepot", m_autonDepot);
-        json.put("autonOutpost", m_autonOutpost);
-        json.put("autonNz", m_autonNz);
-        json.put("autonClimb", m_autonClimb);
+        json.put(KEY_AUTON_PRELOAD, m_autonPreload);
+        json.put(KEY_AUTON_PRELOAD_ACC_RATE, m_autonPreloadAccRate);
+        json.put(KEY_AUTON_HOPPER, m_autonHopper);
+        json.put(KEY_AUTON_ACC_RATE, m_autonAccuracyRate);
+        json.put(KEY_AUTON_AZ, m_autonAz);
+        json.put(KEY_AUTON_DEPOT, m_autonDepot);
+        json.put(KEY_AUTON_OUTPOST, m_autonOutpost);
+        json.put(KEY_AUTON_NZ, m_autonNz);
+        json.put(KEY_AUTON_CLIMB, m_autonClimb);
 
-        json.put("hoppersUsed", m_hoppersUsed);
-        json.put("accuracyRate", m_accuracyRate);
-        json.put("intakeAndShoot", m_intakeAndShoot);
-        json.put("passingRate", m_passingRate);
-        json.put("defenseRate", m_defenseRate);
-        json.put("driveAbility", m_drivingAbility);
-        json.put("allianceZone", m_passedAz);
-        json.put("neutralZone", m_passedNz);
-        json.put("teleopPhoto", m_teleopPhoto);
+        json.put(KEY_TELEOP_HOPPERS_USED, m_hoppersUsed);
+        json.put(KEY_TELEOP_ACC_RATE, m_accuracyRate);
+        json.put(KEY_TELEOP_INTAKE_SHOOT, m_intakeAndShoot);
+        json.put(KEY_TELEOP_PASSING_RATE, m_passingRate);
+        json.put(KEY_TELEOP_DEFENSE_RATE, m_defenseRate);
+        json.put(KEY_TELEOP_DRIVE_ABILITY, m_drivingAbility);
+        json.put(KEY_TELEOP_PASS_AZ, m_passedAz);
+        json.put(KEY_TELEOP_PASS_NZ, m_passedNz);
+        json.put(KEY_TELEOP_PHOTO, m_teleopPhoto);
 
-        json.put("startClimb", m_startClimb);
-        json.put("climbLevel", m_endgameClimbLevel);
+        json.put(KEY_START_CLIMB, m_startClimb);
+        json.put(KEY_CLIMB_LEVEL, m_endgameClimbLevel);
         //noinspection GrazieInspectionRunner
-        json.put("endgameClimbPos", m_endgameClimbPos);
-        json.put("died", m_diedValue);
-        json.put("comments", m_comment);
+        json.put(KEY_ENDGAME_CLIMB_POS, m_endgameClimbPos);
+        json.put(KEY_DIED, m_diedValue);
+        json.put(KEY_COMMENTS, m_comment);
 
-        json.put("other1", m_shovelFuel);
-        json.put("other2", m_other2);
-        json.put("other3", m_other3);
-        json.put("other4", m_other4);
+        json.put(KEY_OTHER1, m_shovelFuel);
+        json.put(KEY_OTHER2, m_other2);
+        json.put(KEY_OTHER3, m_other3);
+        json.put(KEY_OTHER4, m_other4);
 
         return json;
     }
@@ -796,13 +837,12 @@ public class MatchData
         String teamAliasClean = (m_teamAlias == null || m_teamAlias.isEmpty()) ? "-" : m_teamAlias;
         String commentClean = (m_comment == null || m_comment.trim().isEmpty()) ? "-" : m_comment.trim();
 
-        // Ensure 32 arguments match exactly 32 format specifiers.
-        return String.format(Locale.US,
-                "%s\t%s\t%s\t%s\t%s\t%s\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%s\t%d\t%s\t%s\t%s",
+        // Using a list to manage values ensures easy addition/removal and avoids format string errors.
+        Object[] values = {
                 m_version,
                 m_eventCode,
                 m_matchNumber,
-                stripTeamNumPrefix(m_teamNumber),
+                extractTeamNumber(m_teamNumber),
                 teamAliasClean,
                 m_scoutName,
                 m_diedValue,
@@ -831,6 +871,17 @@ public class MatchData
                 m_other2,
                 m_other3,
                 m_other4
-        );
+        };
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < values.length; i++)
+        {
+            sb.append(values[i].toString());
+            if (i < values.length - 1)
+            {
+                sb.append("\t");
+            }
+        }
+        return sb.toString();
     }
 }

@@ -249,7 +249,7 @@ public class PreMatchActivity extends AppCompatActivity
                     // Process team numbers (strip prefix and apply aliases)
                     for (int i = 0; i < teams.length; i++)
                     {
-                        String tNum = MatchData.stripTeamNumPrefix(teams[i]);
+                        String tNum = MatchData.extractTeamNumber(teams[i]);
                         if (bAliasUsed)
                         {
                             String alias = m_aliasNames.getAliasForTeamNum(tNum);
@@ -296,7 +296,7 @@ public class PreMatchActivity extends AppCompatActivity
                 if (teamIndex < teams.length)
                 {
                     String tbaTeamNum = teams[teamIndex];
-                    String teamNumStr = MatchData.stripTeamNumPrefix(tbaTeamNum);
+                    String teamNumStr = MatchData.extractTeamNumber(tbaTeamNum);
 
                     if (m_aliasNames != null && m_aliasNames.isTeamAliasesLoaded())
                     {
