@@ -16,6 +16,7 @@ public final class Constants
     public static final String TEAM_ALIASES_FILENAME_SUFFIX = "_teamAliases.json";
     public static final String SCOUT_NAMES_FILENAME_SUFFIX = "_scoutNames.json";
     public static final String SETTINGS_FILENAME = "settings.json";
+    public static final String MATCH_DATA_FILE_SUFFIX = ".json";
 
     // URL Paths
     /**

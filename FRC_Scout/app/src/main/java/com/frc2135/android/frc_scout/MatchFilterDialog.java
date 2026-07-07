@@ -12,6 +12,8 @@ import androidx.fragment.app.DialogFragment;
 
 import com.frc2135.android.frc_scout.databinding.MatchFilterDialogBinding;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -126,7 +128,9 @@ public class MatchFilterDialog extends DialogFragment
         ScoutedMatches data = ScoutedMatches.getInstance(requireContext());
 
         // Event Code Filter
-        ArrayAdapter<String> eventAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_dropdown_item_1line, data.listEventCodes());
+        List<String> eventCodes = new ArrayList<>(data.listEventCodes());
+        eventCodes.add(0, "Select event code");
+        ArrayAdapter<String> eventAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_dropdown_item_1line, eventCodes);
         m_binding.eventOptions.setAdapter(eventAdapter);
         m_binding.eventOptions.setOnFocusChangeListener((v, focus) -> {
             if (focus)
@@ -136,7 +140,9 @@ public class MatchFilterDialog extends DialogFragment
         });
 
         // Team Filter
-        ArrayAdapter<String> teamAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_dropdown_item_1line, data.listTeams());
+        List<String> teams = new ArrayList<>(data.listTeams());
+        teams.add(0, "Select team");
+        ArrayAdapter<String> teamAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_dropdown_item_1line, teams);
         m_binding.teamOptions.setAdapter(teamAdapter);
         m_binding.teamOptions.setOnFocusChangeListener((v, focus) -> {
             if (focus)
@@ -146,7 +152,9 @@ public class MatchFilterDialog extends DialogFragment
         });
 
         // Scout Filter
-        ArrayAdapter<String> scoutAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_dropdown_item_1line, data.listScouts());
+        List<String> scouts = new ArrayList<>(data.listScouts());
+        scouts.add(0, "Select scout");
+        ArrayAdapter<String> scoutAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_dropdown_item_1line, scouts);
         m_binding.scoutOptions.setAdapter(scoutAdapter);
         m_binding.scoutOptions.setOnFocusChangeListener((v, focus) -> {
             if (focus)

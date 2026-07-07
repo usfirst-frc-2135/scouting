@@ -23,10 +23,6 @@ public class ScoutedMatches extends BaseJSONSerializer
 {
     private static final String TAG = "ScoutedMatches";
 
-    private static final String TBA_MATCHES_FILENAME = "tbaMatches";
-    private static final String TEAM_ALIASES_FILENAME = "teamAliases";
-    private static final String SCOUT_NAMES_FILENAME = "scoutNames";
-
     private final List<MatchData> m_scoutedMatches;
     private final Context m_appContext;
 
@@ -166,7 +162,7 @@ public class ScoutedMatches extends BaseJSONSerializer
         {
             return "";
         }
-        return match.getMatchID() + ".json";
+        return match.getMatchID() + Constants.MATCH_DATA_FILE_SUFFIX;
     }
 
     /**
@@ -213,12 +209,12 @@ public class ScoutedMatches extends BaseJSONSerializer
         for (File file : files)
         {
             String filename = file.getName();
-            // Match files are identified by their UUID-based filename length (36 chars + .json)
+            // Match files are identified by their UUID-based filename length (36 chars + extension)
             if (filename.length() > 30 &&
-                    filename.endsWith(".json") &&
-                    !filename.contains(TBA_MATCHES_FILENAME) &&
-                    !filename.contains(TEAM_ALIASES_FILENAME) &&
-                    !filename.contains(SCOUT_NAMES_FILENAME))
+                    filename.endsWith(Constants.MATCH_DATA_FILE_SUFFIX) &&
+                    !filename.contains(Constants.TBA_MATCHES_FILE_SUFFIX) &&
+                    !filename.contains(Constants.TEAM_ALIASES_FILENAME_SUFFIX) &&
+                    !filename.contains(Constants.SCOUT_NAMES_FILENAME_SUFFIX))
             {
                 try
                 {
@@ -261,28 +257,12 @@ public class ScoutedMatches extends BaseJSONSerializer
         switch (criteria)
         {
             case "Team" -> finalComparator = Comparator.comparing(m -> {
-                try
-                {
-                    // Use regex to extract only the digits from the team number (e.g., "frc2135" -> 2135)
-                    String digits = m.getTeamNumber().replaceAll("\\D+", "");
-                    return digits.isEmpty() ? Integer.MAX_VALUE : Integer.parseInt(digits);
-                }
-                catch (NumberFormatException e)
-                {
-                    return Integer.MAX_VALUE;
-                }
+                String digits = MatchData.extractTeamNumber(m.getTeamNumber());
+                return digits.isEmpty() ? Integer.MAX_VALUE : Integer.parseInt(digits);
             });
             case "Match" -> finalComparator = Comparator.comparing(m -> {
-                try
-                {
-                    // Use regex to extract only the digits from the match number (e.g., "qm12" -> 12)
-                    String digits = m.getMatchNumber().replaceAll("\\D+", "");
-                    return digits.isEmpty() ? Integer.MAX_VALUE : Integer.parseInt(digits);
-                }
-                catch (NumberFormatException e)
-                {
-                    return Integer.MAX_VALUE;
-                }
+                String digits = MatchData.extractMatchNumber(m.getMatchNumber());
+                return digits.isEmpty() ? Integer.MAX_VALUE : Integer.parseInt(digits);
             });
             default ->
                     finalComparator = Comparator.comparing(MatchData::getTimestamp, Comparator.nullsLast(Comparator.naturalOrder()));
@@ -337,47 +317,38 @@ public class ScoutedMatches extends BaseJSONSerializer
     }
 
     /**
-     * @return an array of unique team numbers present in the history, prefixed with "Select team"
+     * @return a list of unique team numbers present in the history
      */
-    public String[] listTeams()
+    public List<String> listTeams()
     {
-        List<String> result = m_scoutedMatches.stream()
+        return m_scoutedMatches.stream()
                 .map(MatchData::getTeamNumber)
                 .distinct()
                 .sorted()
                 .collect(Collectors.toList());
-
-        result.add(0, "Select team");
-        return result.toArray(new String[0]);
     }
 
     /**
-     * @return an array of unique event codes present in the history, prefixed with "Select event code"
+     * @return a list of unique event codes present in the history
      */
-    public String[] listEventCodes()
+    public List<String> listEventCodes()
     {
-        List<String> result = m_scoutedMatches.stream()
+        return m_scoutedMatches.stream()
                 .map(MatchData::getEventCode)
                 .distinct()
                 .sorted()
                 .collect(Collectors.toList());
-
-        result.add(0, "Select event code");
-        return result.toArray(new String[0]);
     }
 
     /**
-     * @return an array of unique scout names present in the history, prefixed with "Select scout"
+     * @return a list of unique scout names present in the history
      */
-    public String[] listScouts()
+    public List<String> listScouts()
     {
-        List<String> result = m_scoutedMatches.stream()
+        return m_scoutedMatches.stream()
                 .map(MatchData::getScoutName)
                 .distinct()
                 .sorted()
                 .collect(Collectors.toList());
-
-        result.add(0, "Select scout");
-        return result.toArray(new String[0]);
     }
 }

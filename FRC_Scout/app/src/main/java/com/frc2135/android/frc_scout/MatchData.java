@@ -125,6 +125,21 @@ public class MatchData
     }
 
     /**
+     * Extracts the numeric portion from a match identifier (e.g., "qm1" -> "1").
+     *
+     * @param matchIdentifier the match identifier string
+     * @return the numeric portion of the match identifier, or an empty string if null
+     */
+    public static String extractMatchNumber(String matchIdentifier)
+    {
+        if (matchIdentifier == null || matchIdentifier.isEmpty())
+        {
+            return "";
+        }
+        return matchIdentifier.replaceAll("^\\D+", "");
+    }
+
+    /**
      * Default constructor for creating a new match data record.
      */
     public MatchData()
