@@ -201,7 +201,7 @@ public class MatchData
 
         try
         {
-            if (dateStr.contains("T"))
+            if (dateStr.startsWith("202"))
             {
                 m_timestamp = isoFormat.parse(dateStr);
             }
