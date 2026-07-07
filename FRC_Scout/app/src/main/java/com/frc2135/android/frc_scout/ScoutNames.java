@@ -299,6 +299,45 @@ public class ScoutNames extends BaseJSONSerializer
     }
 
     /**
+     * Loads event-specific scout names from local storage.
+     *
+     * @param context     the context for file operations
+     * @param eventCode   the FRC event code
+     * @param forceReload if true, forces a reload even if already loaded for this event
+     */
+    public void loadEventScoutNames(Context context, String eventCode, boolean forceReload)
+    {
+        if (eventCode == null || eventCode.trim().isEmpty())
+        {
+            return;
+        }
+
+        if (!forceReload && m_bScoutNamesLoaded && m_eventCode != null && m_eventCode.equalsIgnoreCase(eventCode))
+        {
+            return;
+        }
+
+        Log.d(TAG, "Loading scout names for event: " + eventCode);
+        readScoutNamesJSON(context, true);
+    }
+
+    /**
+     * Saves event-specific scout names to local storage.
+     *
+     * @param context   the context for file operations
+     * @param eventCode the FRC event code
+     * @param scoutData the JSONArray of scout names
+     * @throws IOException if saving fails
+     */
+    public void saveEventScoutNames(Context context, String eventCode, JSONArray scoutData)
+            throws IOException
+    {
+        deleteScoutNamesFile(eventCode);
+        writeScoutNamesFile(eventCode, scoutData);
+        loadEventScoutNames(context, eventCode, true);
+    }
+
+    /**
      * Checks whether scout names have been successfully loaded from local storage.
      *
      * @return true if data is loaded

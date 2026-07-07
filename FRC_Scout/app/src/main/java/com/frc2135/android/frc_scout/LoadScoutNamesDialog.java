@@ -208,18 +208,18 @@ public class LoadScoutNamesDialog extends DialogFragment
     }
 
     /**
-     * Saves the downloaded team alias mappings to internal storage.
+     * Saves the downloaded scout names to internal storage.
      *
      * @param context   the application context
      * @param eventCode the FRC event code
-     * @param response  the JSON array of alias mappings received from the API
+     * @param response  the JSON array of scout names received from the API
      * @throws IOException if saving to disk fails
      */
     private void saveScoutNames(Context context, String eventCode, org.json.JSONArray response)
             throws IOException
     {
-        Settings settings = Settings.getInstance(context);
-        settings.saveEventScoutNames(context, eventCode, response);
+        ScoutNames scoutNames = ScoutNames.getInstance(context, eventCode, true);
+        scoutNames.saveEventScoutNames(context, eventCode, response);
     }
 
     /**

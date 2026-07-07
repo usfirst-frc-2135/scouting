@@ -44,8 +44,6 @@ public final class Settings extends BaseJSONSerializer
     private String m_teamIndexStr;
     private String m_mostRecentMatchNumber;
     private String m_mostRecentScoutName;
-    private final List<String> m_eventScoutNames;
-    private boolean m_bEventScoutNamesLoaded;
     private boolean m_scoringTableSide;
     private final String[] m_teamIndexOptions;
     private JSONObject m_scoutNamesObj;
@@ -92,8 +90,6 @@ public final class Settings extends BaseJSONSerializer
         m_mostRecentMatchNumber = "";
         m_pastScouts = new ArrayList<>();
         m_mostRecentScoutName = "";
-        m_eventScoutNames = new ArrayList<>();
-        m_bEventScoutNamesLoaded = false;
         m_scoringTableSide = false;
         m_scoutNamesObj = null;
 
@@ -525,89 +521,6 @@ public final class Settings extends BaseJSONSerializer
     public String getMostRecentScoutName()
     {
         return m_mostRecentScoutName;
-    }
-
-    /**
-     * Loads event-specific scout names from local storage.
-     *
-     * @param context     the context for file operations
-     * @param eventCode   the FRC event code
-     * @param forceReload if true, forces a reload even if already loaded for this event
-     */
-    public void loadEventScoutNames(Context context, String eventCode, boolean forceReload)
-    {
-        if (eventCode == null || eventCode.trim().isEmpty())
-        {
-            return;
-        }
-
-        if (!forceReload && m_bEventScoutNamesLoaded && m_eventCode != null && m_eventCode.equalsIgnoreCase(eventCode))
-        {
-            return;
-        }
-
-        Log.d(TAG, "Loading scout names for event: " + eventCode);
-        ScoutNames scoutNames = ScoutNames.getInstance(context, eventCode, forceReload);
-        m_eventScoutNames.clear();
-        if (scoutNames != null && scoutNames.isScoutNamesLoaded())
-        {
-            m_eventScoutNames.addAll(scoutNames.getScoutNames());
-            m_bEventScoutNamesLoaded = true;
-            Log.d(TAG, "Successfully loaded " + m_eventScoutNames.size() + " event scout names");
-        }
-        else
-        {
-            m_bEventScoutNamesLoaded = false;
-            Log.d(TAG, "No event scout names loaded for: " + eventCode);
-        }
-    }
-
-    /**
-     * Saves event-specific scout names to local storage.
-     *
-     * @param context   the context for file operations
-     * @param eventCode the FRC event code
-     * @param scoutData the JSONArray of scout names
-     * @throws IOException if saving fails
-     */
-    public void saveEventScoutNames(Context context, String eventCode, JSONArray scoutData)
-            throws IOException
-    {
-        ScoutNames scoutNames = ScoutNames.getInstance(context, eventCode, true);
-        scoutNames.deleteScoutNamesFile(eventCode);
-        scoutNames.writeScoutNamesFile(eventCode, scoutData);
-        loadEventScoutNames(context, eventCode, true);
-    }
-
-    /**
-     * Returns a combined list of all known scout names (past scouts + current event scouts).
-     *
-     * @return a list of unique scout names
-     */
-    @SuppressWarnings("unused")
-    public List<String> getAllScoutNames()
-    {
-        List<String> allNames = new ArrayList<>(m_eventScoutNames);
-        for (String name : m_pastScouts)
-        {
-            if (!allNames.contains(name))
-            {
-                allNames.add(name);
-            }
-        }
-        return allNames;
-    }
-
-
-    /**
-     * Returns whether event-specific scout names have been loaded.
-     *
-     * @return true if loaded
-     */
-    @SuppressWarnings("unused")
-    public boolean isEventScoutNamesLoaded()
-    {
-        return m_bEventScoutNamesLoaded;
     }
 
     /**
