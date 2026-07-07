@@ -297,6 +297,7 @@ public class MatchData
      *
      * @param id the match UUID string
      */
+    @SuppressWarnings("unused")
     public void setMatchID(String id)
     {
         m_matchID = id;
@@ -399,6 +400,7 @@ public class MatchData
      *
      * @return the team alias string, or empty if none
      */
+    @SuppressWarnings("unused")
     public String getTeamAlias()
     {
         return m_teamAlias != null ? m_teamAlias : "";

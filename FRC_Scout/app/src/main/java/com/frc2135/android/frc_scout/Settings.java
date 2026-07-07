@@ -500,6 +500,7 @@ public final class Settings extends BaseJSONSerializer
     /**
      * Clears the list of past scout names.
      */
+    @SuppressWarnings("unused")
     public void clearPastScouts()
     {
         m_pastScouts.clear();
@@ -583,6 +584,7 @@ public final class Settings extends BaseJSONSerializer
      *
      * @return a list of unique scout names
      */
+    @SuppressWarnings("unused")
     public List<String> getAllScoutNames()
     {
         List<String> allNames = new ArrayList<>(m_eventScoutNames);
@@ -602,6 +604,7 @@ public final class Settings extends BaseJSONSerializer
      *
      * @return true if loaded
      */
+    @SuppressWarnings("unused")
     public boolean isEventScoutNamesLoaded()
     {
         return m_bEventScoutNamesLoaded;
