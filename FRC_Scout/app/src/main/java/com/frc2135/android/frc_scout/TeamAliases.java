@@ -311,4 +311,36 @@ public class TeamAliases extends BaseJSONSerializer
 
         return m_aliasToTeamMap.getOrDefault(myAlias, "");
     }
+
+    /**
+     * Resolves a team number to its alias if one exists.
+     *
+     * @param teamNum the raw team number string
+     * @return the team alias if it exists, otherwise the original team number
+     */
+    public String resolveAlias(String teamNum)
+    {
+        if (teamNum == null || !isTeamAliasesLoaded())
+        {
+            return teamNum;
+        }
+        String alias = getAliasForTeamNum(teamNum);
+        return alias.isEmpty() ? teamNum : alias;
+    }
+
+    /**
+     * Resolves a possible alias (starts with "99") to the actual team number.
+     *
+     * @param entry the entered team number or alias string
+     * @return the actual team number if the entry is a recognized alias, otherwise the original entry
+     */
+    public String resolveTeamNumber(String entry)
+    {
+        if (entry == null || !isTeamAliasesLoaded() || !entry.startsWith("99"))
+        {
+            return entry;
+        }
+        String teamNum = getTeamNumForAlias(entry);
+        return teamNum.isEmpty() ? entry : teamNum;
+    }
 }
