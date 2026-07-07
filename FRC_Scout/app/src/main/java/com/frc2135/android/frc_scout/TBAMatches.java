@@ -189,16 +189,16 @@ public class TBAMatches extends BaseJSONSerializer
      *
      * @param eventCode  the TBA event code
      * @param tbaMatches the JSONArray containing match information
-     * @throws IOException if writing the file fails
+     * @param bSilent    if true, error Toast messages are suppressed
+     * @return true if successful, false otherwise
      */
-    public void writeTBAMatchesFile(String eventCode, JSONArray tbaMatches)
-            throws IOException
+    public boolean writeTBAMatchesFile(String eventCode, JSONArray tbaMatches, boolean bSilent)
     {
         Log.d(TAG, "Writing TBA matches to file for event: " + eventCode);
         if (eventCode == null || tbaMatches == null)
         {
             Log.w(TAG, "Attempted to save TBA matches with null eventCode or data");
-            return;
+            return false;
         }
 
         // Cleanup existing matches file if it exists
@@ -208,8 +208,17 @@ public class TBAMatches extends BaseJSONSerializer
         File file = new File(m_dataDir, eventFileName);
 
         Log.d(TAG, "Saving TBA matches for " + eventCode + " to: " + file.getAbsolutePath());
-        writeStringToFile(file, tbaMatches.toString());
-        Log.i(TAG, "Successfully saved " + tbaMatches.length() + " TBA matches for event: " + eventCode);
+        try
+        {
+            writeStringToFile(file, tbaMatches.toString());
+            Log.i(TAG, "Successfully saved " + tbaMatches.length() + " TBA matches for event: " + eventCode);
+            return true;
+        }
+        catch (IOException e)
+        {
+            super.handleToastError(m_appContext, TAG, "Failed to write TBA matches file for: " + eventCode, bSilent, e);
+            return false;
+        }
     }
 
     /**

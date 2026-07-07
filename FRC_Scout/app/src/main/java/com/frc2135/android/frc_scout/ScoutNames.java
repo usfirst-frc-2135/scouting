@@ -23,7 +23,6 @@ public class ScoutNames extends BaseJSONSerializer
     private static final String TAG = "ScoutNames";
     private static final String SCOUT_NAME_JSON_KEY = "scoutName";
 
-    private final Context m_appContext;
     private String m_eventCode;
     private List<String> m_scoutNames;
     private boolean m_bScoutNamesLoaded;
@@ -34,7 +33,6 @@ public class ScoutNames extends BaseJSONSerializer
     {
         super(context);
         Log.d(TAG, "ScoutNames constructor");
-        m_appContext = context.getApplicationContext();
         m_eventCode = eventCode;
         m_bScoutNamesLoaded = false;
         m_scoutNames = new ArrayList<>();
@@ -186,22 +184,31 @@ public class ScoutNames extends BaseJSONSerializer
      *
      * @param eventCode the FRC event code
      * @param scoutData the JSONArray containing scout names
-     * @throws IOException if an error occurs during file writing
+     * @param bSilent   if true, error Toast messages are suppressed
+     * @return true if successful, false otherwise
      */
-    public void writeScoutNamesFile(String eventCode, JSONArray scoutData)
-            throws IOException
+    public boolean writeScoutNamesFile(String eventCode, JSONArray scoutData, boolean bSilent)
     {
         if (eventCode == null || scoutData == null)
         {
             Log.w(TAG, "Attempted to save scout names with null eventCode or data");
-            return;
+            return false;
         }
 
         String filename = getFilename(eventCode);
         Log.d(TAG, "Saving scout names info to: " + filename);
 
-        File file = new File(m_dataDir, filename);
-        saveJSONArray(file, scoutData);
+        try
+        {
+            File file = new File(m_dataDir, filename);
+            saveJSONArray(file, scoutData);
+            return true;
+        }
+        catch (IOException e)
+        {
+            super.handleToastError(m_appContext, TAG, "Failed to write scout names file for: " + eventCode, bSilent, e);
+            return false;
+        }
     }
 
     /**
@@ -281,14 +288,17 @@ public class ScoutNames extends BaseJSONSerializer
      * @param context   the context for file operations
      * @param eventCode the FRC event code
      * @param scoutData the JSONArray of scout names
-     * @throws IOException if saving fails
+     * @return true if successful, false otherwise
      */
-    public void saveEventScoutNames(Context context, String eventCode, JSONArray scoutData)
-            throws IOException
+    public boolean saveEventScoutNames(Context context, String eventCode, JSONArray scoutData)
     {
         deleteScoutNamesFile(eventCode);
-        writeScoutNamesFile(eventCode, scoutData);
-        loadEventScoutNames(context, eventCode, true);
+        if (writeScoutNamesFile(eventCode, scoutData, false))
+        {
+            loadEventScoutNames(context, eventCode, true);
+            return true;
+        }
+        return false;
     }
 
     /**

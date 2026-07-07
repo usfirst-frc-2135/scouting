@@ -22,7 +22,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.json.JSONArray;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -178,19 +177,16 @@ public class LoadTBAMatchesDialog extends DialogFragment
                         return;
                     }
 
-                    try
+                    if (saveTBAMatches(context, eventCode, response))
                     {
-                        saveTBAMatches(context, eventCode, response);
                         Toast.makeText(context, "Successfully downloaded " + response.length() + " TBA matches for " + eventCode, Toast.LENGTH_LONG).show();
                         if (isAdded())
                         {
                             dismiss();
                         }
                     }
-                    catch (IOException e)
+                    else
                     {
-                        Log.e(TAG, "Error saving TBA matches: " + e.getMessage(), e);
-                        Toast.makeText(context, "Error saving TBA matches locally", Toast.LENGTH_SHORT).show();
                         resetUiState(okButton);
                     }
                 },
@@ -251,18 +247,20 @@ public class LoadTBAMatchesDialog extends DialogFragment
      * @param context   the application context
      * @param eventCode the TBA event code
      * @param response  the JSON array of matches received from the API
-     * @throws IOException if saving to disk fails
+     * @return true if successful, false otherwise
      */
-    private void saveTBAMatches(Context context, String eventCode, JSONArray response)
-            throws IOException
+    private boolean saveTBAMatches(Context context, String eventCode, JSONArray response)
     {
         TBAMatches tbaMatches = TBAMatches.getInstance(context, eventCode, true);
         tbaMatches.deleteTBAMatchesFile(eventCode);
-        tbaMatches.writeTBAMatchesFile(eventCode, response);
-
-        // Update current event code settings!
-        Settings settings = Settings.getInstance(context);
-        settings.setEventCode(eventCode);
+        if (tbaMatches.writeTBAMatchesFile(eventCode, response, false))
+        {
+            // Update current event code settings!
+            Settings settings = Settings.getInstance(context);
+            settings.setEventCode(eventCode);
+            return true;
+        }
+        return false;
     }
 
     @Override

@@ -47,7 +47,7 @@
             android:padding="24dp">
 
             <TextView
-                android:id="@+id/pre_match_title_comp"
+                android:id="@+id/pre_match_title"
                 style="@style/TextAppearance.MaterialComponents.Subtitle2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/pm_event_code_layout"
+                android:id="@+id/pre_match_event_code_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -73,12 +73,12 @@
                 app:helperTextEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/pre_match_title_comp"
+                app:layout_constraintTop_toBottomOf="@id/pre_match_title"
                 app:startIconContentDescription="@string/event_icon_desc"
                 app:startIconDrawable="@android:drawable/ic_menu_today">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/pm_event_code"
+                    android:id="@+id/pre_match_event_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/enter_event_code"
@@ -106,7 +106,7 @@
                 app:helperTextEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/pm_event_code_layout"
+                app:layout_constraintTop_toBottomOf="@id/pre_match_event_code_layout"
                 app:startIconContentDescription="@string/match_icon_desc"
                 app:startIconDrawable="@android:drawable/ic_menu_edit">
 
@@ -182,7 +182,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/error_message_pm"
+                android:id="@+id/pre_match_error_message"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"

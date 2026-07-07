@@ -20,7 +20,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.frc2135.android.frc_scout.databinding.LoadEventDialogBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import java.io.IOException;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -163,19 +162,16 @@ public class LoadTeamAliasesDialog extends DialogFragment
                         return;
                     }
 
-                    try
+                    if (saveTeamAliases(context, eventCode, response))
                     {
-                        saveTeamAliases(context, eventCode, response);
                         Toast.makeText(context, "Successfully downloaded team aliases for " + eventCode, Toast.LENGTH_LONG).show();
                         if (isAdded())
                         {
                             dismiss();
                         }
                     }
-                    catch (IOException e)
+                    else
                     {
-                        Log.e(TAG, "Error saving team aliases: " + e.getMessage());
-                        Toast.makeText(context, "Error saving team aliases data", Toast.LENGTH_SHORT).show();
                         resetUiState(okButton);
                     }
                 },
@@ -213,14 +209,13 @@ public class LoadTeamAliasesDialog extends DialogFragment
      * @param context   the application context
      * @param eventCode the FRC event code
      * @param response  the JSON array of alias mappings received from the API
-     * @throws IOException if saving to disk fails
+     * @return true if successful, false otherwise
      */
-    private void saveTeamAliases(Context context, String eventCode, org.json.JSONArray response)
-            throws IOException
+    private boolean saveTeamAliases(Context context, String eventCode, org.json.JSONArray response)
     {
         TeamAliases teamAliases = TeamAliases.getInstance(context, eventCode, true);
         teamAliases.deleteTeamAliasesFile(eventCode);
-        teamAliases.writeTeamAliasesFile(eventCode, response);
+        return teamAliases.writeTeamAliasesFile(eventCode, response, false);
     }
 
     /**

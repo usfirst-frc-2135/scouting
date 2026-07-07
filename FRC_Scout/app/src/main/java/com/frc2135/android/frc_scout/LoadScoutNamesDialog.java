@@ -20,7 +20,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.frc2135.android.frc_scout.databinding.LoadEventDialogBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import java.io.IOException;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -161,19 +160,16 @@ public class LoadScoutNamesDialog extends DialogFragment
                         return;
                     }
 
-                    try
+                    if (saveScoutNames(context, eventCode, response))
                     {
-                        saveScoutNames(context, eventCode, response);
                         Toast.makeText(context, "Successfully downloaded scout names for " + eventCode, Toast.LENGTH_LONG).show();
                         if (isAdded())
                         {
                             dismiss();
                         }
                     }
-                    catch (IOException e)
+                    else
                     {
-                        Log.e(TAG, "Error saving scout names: " + e.getMessage());
-                        Toast.makeText(context, "Error saving scout names", Toast.LENGTH_SHORT).show();
                         resetUiState(okButton);
                     }
                 },
@@ -211,13 +207,12 @@ public class LoadScoutNamesDialog extends DialogFragment
      * @param context   the application context
      * @param eventCode the FRC event code
      * @param response  the JSON array of scout names received from the API
-     * @throws IOException if saving to disk fails
+     * @return true if successful, false otherwise
      */
-    private void saveScoutNames(Context context, String eventCode, org.json.JSONArray response)
-            throws IOException
+    private boolean saveScoutNames(Context context, String eventCode, org.json.JSONArray response)
     {
         ScoutNames scoutNames = ScoutNames.getInstance(context, eventCode, true);
-        scoutNames.saveEventScoutNames(context, eventCode, response);
+        return scoutNames.saveEventScoutNames(context, eventCode, response);
     }
 
     /**

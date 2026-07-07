@@ -28,6 +28,7 @@ public abstract class BaseJSONSerializer
     @SuppressWarnings("unused")
     private static final String TAG = "BaseJSONSerializer";
     protected final File m_dataDir;
+    protected final Context m_appContext;
 
     /**
      * Default constructor for internal use when file operations are not required.
@@ -36,6 +37,7 @@ public abstract class BaseJSONSerializer
     protected BaseJSONSerializer()
     {
         m_dataDir = null;
+        m_appContext = null;
     }
 
     /**
@@ -45,7 +47,8 @@ public abstract class BaseJSONSerializer
      */
     protected BaseJSONSerializer(Context context)
     {
-        m_dataDir = context.getApplicationContext().getFilesDir();
+        m_appContext = context.getApplicationContext();
+        m_dataDir = m_appContext.getFilesDir();
     }
 
     /**

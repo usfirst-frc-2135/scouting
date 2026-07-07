@@ -148,7 +148,7 @@ public class TeamAliases extends BaseJSONSerializer
             }
             else if (!bSilent)
             {
-                Log.e(TAG, "Aliases file not found for event: " + m_eventCode);
+                Log.e(TAG, "Team Aliases file not found for event: " + m_eventCode);
                 Toast.makeText(context, "Aliases file not found", Toast.LENGTH_SHORT).show();
             }
         }
@@ -192,23 +192,32 @@ public class TeamAliases extends BaseJSONSerializer
      *
      * @param eventCode   the FRC event code
      * @param teamAliases the JSONArray containing team-to-alias mapping data
-     * @throws IOException if an error occurs during file writing
+     * @param bSilent     if true, error Toast messages are suppressed
+     * @return true if successful, false otherwise
      */
-    public void writeTeamAliasesFile(String eventCode, JSONArray teamAliases)
-            throws IOException
+    public boolean writeTeamAliasesFile(String eventCode, JSONArray teamAliases, boolean bSilent)
     {
         Log.d(TAG, "Writing team aliases to file for event: " + eventCode);
         if (eventCode == null || teamAliases == null)
         {
             Log.w(TAG, "Attempted to save team aliases with null eventCode or data");
-            return;
+            return false;
         }
 
         String aliasFilename = getFilename(eventCode);
-        File file = new File(m_dataDir, aliasFilename);
-
         Log.d(TAG, "Saving team aliases for " + eventCode + " to: " + aliasFilename);
-        saveJSONArray(file, teamAliases);
+
+        try
+        {
+            File file = new File(m_dataDir, aliasFilename);
+            saveJSONArray(file, teamAliases);
+            return true;
+        }
+        catch (IOException e)
+        {
+            super.handleToastError(m_appContext, TAG, "Failed to write team aliases file for: " + eventCode, bSilent, e);
+            return false;
+        }
     }
 
     /**
