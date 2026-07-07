@@ -64,8 +64,14 @@ public class SplashScreenActivity extends AppCompatActivity
         String teamIndex = settings.getTeamIndexStr();
         String scoutName = settings.getMostRecentScoutName();
 
-        if (eventCode.isEmpty()) eventCode = "None";
-        if (scoutName.isEmpty()) scoutName = "None";
+        if (eventCode.isEmpty())
+        {
+            eventCode = "None";
+        }
+        if (scoutName.isEmpty())
+        {
+            scoutName = "None";
+        }
 
         String summary = "Event: " + eventCode + "\n" +
                 "Index: " + teamIndex + "\n" +
@@ -117,6 +123,7 @@ public class SplashScreenActivity extends AppCompatActivity
      * Retrieves and logs display resolution for debugging on different device screens.
      * Uses modern WindowMetrics for API 30+ and legacy DisplayMetrics for older versions.
      */
+    @SuppressWarnings("deprecation")
     private void logDisplayResolution()
     {
         int width;
@@ -124,12 +131,14 @@ public class SplashScreenActivity extends AppCompatActivity
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
         {
+            Log.d(TAG, "Using newer API > " + Build.VERSION_CODES.R);
             WindowMetrics windowMetrics = getWindowManager().getCurrentWindowMetrics();
             width = windowMetrics.getBounds().width();
             height = windowMetrics.getBounds().height();
         }
         else
         {
+            Log.d(TAG, "Using older API < " + Build.VERSION_CODES.R);
             DisplayMetrics displayMetrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             width = displayMetrics.widthPixels;
