@@ -105,6 +105,7 @@ public class ScoutNames extends BaseJSONSerializer
      *
      * @return a list of scout names
      */
+    @SuppressWarnings("unused")
     public List<String> getScoutNames()
     {
         return m_scoutNames;
@@ -302,10 +303,26 @@ public class ScoutNames extends BaseJSONSerializer
     }
 
     /**
+     * Clears event-specific scout names from local storage.
+     *
+     * @param context   the context for file operations
+     * @param eventCode the FRC event code
+     * @return true if successful, false otherwise
+     */
+    public boolean deleteEventScoutNames(Context context, String eventCode)
+    {
+        deleteScoutNamesFile(eventCode);
+        m_bScoutNamesLoaded = false;
+        m_scoutNames = new ArrayList<>();
+        return true;
+    }
+
+    /**
      * Checks whether scout names have been successfully loaded from local storage.
      *
      * @return true if data is loaded
      */
+    @SuppressWarnings("unused")
     public boolean isScoutNamesLoaded()
     {
         return m_bScoutNamesLoaded;

@@ -26,9 +26,9 @@ public class TeamAliases extends BaseJSONSerializer
     private static final String ALIAS_NUM_JSON_KEY = "aliasNum";
 
     private String m_eventCode;
-    private Map<String, String> m_teamToAliasMap;
-    private Map<String, String> m_aliasToTeamMap;
-    private boolean m_bTeamAliasesDataLoaded;
+    private final Map<String, String> m_teamToAliasMap;
+    private final Map<String, String> m_aliasToTeamMap;
+    private boolean m_bTeamAliasesLoaded;
 
     private static volatile TeamAliases sTeamAliases;
 
@@ -37,7 +37,7 @@ public class TeamAliases extends BaseJSONSerializer
         super(context);
         Log.d(TAG, "TeamAliases constructor");
         m_eventCode = eventCode;
-        m_bTeamAliasesDataLoaded = false;
+        m_bTeamAliasesLoaded = false;
         m_teamToAliasMap = new HashMap<>();
         m_aliasToTeamMap = new HashMap<>();
     }
@@ -115,7 +115,7 @@ public class TeamAliases extends BaseJSONSerializer
     public void setEventCode(String eventCode)
     {
         m_eventCode = eventCode;
-        m_bTeamAliasesDataLoaded = false;
+        m_bTeamAliasesLoaded = false;
         m_teamToAliasMap.clear();
         m_aliasToTeamMap.clear();
     }
@@ -141,7 +141,7 @@ public class TeamAliases extends BaseJSONSerializer
             if (jsonArray != null)
             {
                 parseAliasesJSON(jsonArray);
-                m_bTeamAliasesDataLoaded = true;
+                m_bTeamAliasesLoaded = true;
 
                 Log.d(TAG, "Successfully loaded aliases for " + m_eventCode);
                 Toast.makeText(context, "Loaded aliases for " + m_eventCode, Toast.LENGTH_SHORT).show();
@@ -274,9 +274,10 @@ public class TeamAliases extends BaseJSONSerializer
      *
      * @return true if data is loaded
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isTeamAliasesLoaded()
     {
-        return m_bTeamAliasesDataLoaded;
+        return m_bTeamAliasesLoaded;
     }
 
     /**

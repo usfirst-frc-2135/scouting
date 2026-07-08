@@ -52,6 +52,7 @@ public class MatchData
     private static final String KEY_DIED = "died";
     private static final String KEY_START_CLIMB = "startClimb";
     private static final String KEY_CLIMB_LEVEL = "climbLevel";
+    @SuppressWarnings("GrazieInspectionRunner")
     private static final String KEY_ENDGAME_CLIMB_POS = "endgameClimbPos";
     private static final String KEY_COMMENTS = "comments";
 

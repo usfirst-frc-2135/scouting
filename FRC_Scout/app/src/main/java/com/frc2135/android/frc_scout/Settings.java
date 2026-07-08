@@ -34,18 +34,16 @@ public final class Settings extends BaseJSONSerializer
     private static final String KEY_SCOUT_NAME_PREFIX = "scoutName"; // Legacy key prefix
     private static final String KEY_MOST_RECENT_SCOUT_NAME = "mostRecentScoutName";
     private static final String KEY_SCORING_TABLE_SIDE = "scoringTableSide";
-    private static final String KEY_SCOUT_NAMES_OBJECT = "scoutNames";
 
     private static final String DEFAULT_EVENT_CODE = "EVTX";
 
-    private final List<String> m_pastScouts;
     private String m_eventCode;
     private String m_teamIndexStr;
+    private final String[] m_teamIndexOptions;
     private String m_mostRecentMatchNumber;
+    private final List<String> m_pastScouts;
     private String m_mostRecentScoutName;
     private boolean m_scoringTableSide;
-    private final String[] m_teamIndexOptions;
-    private JSONObject m_scoutNamesObj;
 
     private static volatile Settings sSettings;
 
@@ -90,7 +88,6 @@ public final class Settings extends BaseJSONSerializer
         m_pastScouts = new ArrayList<>();
         m_mostRecentScoutName = "";
         m_scoringTableSide = false;
-        m_scoutNamesObj = null;
 
         try
         {
@@ -191,7 +188,6 @@ public final class Settings extends BaseJSONSerializer
         }
 
         m_scoringTableSide = json.optBoolean(KEY_SCORING_TABLE_SIDE, false);
-        m_scoutNamesObj = json.optJSONObject(KEY_SCOUT_NAMES_OBJECT);
     }
 
     /**
@@ -220,7 +216,6 @@ public final class Settings extends BaseJSONSerializer
         json.put(KEY_PAST_SCOUTS, scoutsArray);
 
         json.put(KEY_SCORING_TABLE_SIDE, m_scoringTableSide);
-        json.put(KEY_SCOUT_NAMES_OBJECT, m_scoutNamesObj);
 
         return json;
     }
@@ -543,16 +538,5 @@ public final class Settings extends BaseJSONSerializer
     public boolean getScoringTableSide()
     {
         return m_scoringTableSide;
-    }
-
-    /**
-     * Stores a JSONObject containing scout names and event code.
-     *
-     * @param obj the JSONObject to store
-     */
-    public void setScoutNamesObject(JSONObject obj)
-    {
-        m_scoutNamesObj = obj;
-        saveSettingsSilent();
     }
 }
