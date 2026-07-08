@@ -59,7 +59,7 @@
                 android:text="@string/preload_accuracy_rate"
                 android:textColor="@color/specialTextPrimary"
                 android:textStyle="bold"
-                android:textSize="20sp" />
+                android:textSize="22sp" />
 
             <!-- start PRELOAD RADIO BUTTONS -->
             <RadioGroup
@@ -167,28 +167,35 @@
                     android:background="@drawable/rounded_rect"
                     android:backgroundTint="#c64e34"
                     android:text="@string/decrease"
+                    android:textAlignment="center"
                     android:textColor="#FFFFFF"
-                    android:textSize="30sp" />
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/auton_Hopper_score_total"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:textAlignment="center"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/auton_Hopper_incr_button"
                     android:layout_width="80dp"
                     android:layout_height="40dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_marginEnd="30dp"
                     android:background="@drawable/rounded_rect"
                     android:backgroundTint="#c64e34"
                     android:text="@string/increase"
+                    android:textAlignment="center"
                     android:textColor="#FFFFFF"
-                    android:textSize="30sp" />
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
             </LinearLayout>
             <!-- end HOPPER +/- BUTTONS layout-->
 

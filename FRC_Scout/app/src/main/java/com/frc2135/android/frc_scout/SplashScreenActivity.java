@@ -129,6 +129,7 @@ public class SplashScreenActivity extends AppCompatActivity
     {
         int width;
         int height;
+        int dpi;
 
         // Android for Kindle is built on Android 9 (API 28)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
@@ -137,6 +138,7 @@ public class SplashScreenActivity extends AppCompatActivity
             WindowMetrics windowMetrics = getWindowManager().getCurrentWindowMetrics();
             width = windowMetrics.getBounds().width();
             height = windowMetrics.getBounds().height();
+            dpi = (int) windowMetrics.getDensity();
         }
         else
         {
@@ -145,7 +147,8 @@ public class SplashScreenActivity extends AppCompatActivity
             getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             width = displayMetrics.widthPixels;
             height = displayMetrics.heightPixels;
+            dpi = displayMetrics.densityDpi;
         }
-        Log.i(TAG, "Display resolution: " + width + " x " + height);
+        Log.i(TAG, "Display resolution: " + width + " x " + height + " @ " + dpi + "dpi");
     }
 }
