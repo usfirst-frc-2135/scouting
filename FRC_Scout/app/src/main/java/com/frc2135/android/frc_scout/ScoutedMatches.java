@@ -39,7 +39,7 @@ public class ScoutedMatches extends BaseJSONSerializer
     private List<MatchData> loadInitialData()
     {
         Log.d(TAG, "loadInitialData()");
-        return loadScoutedMatchList();
+        return loadScoutedMatchesList();
     }
 
     /**
@@ -67,7 +67,7 @@ public class ScoutedMatches extends BaseJSONSerializer
     /**
      * @return the full list of scouted matches
      */
-    public List<MatchData> getMatches()
+    public List<MatchData> getMatchList()
     {
         return m_scoutedMatches;
     }
@@ -119,13 +119,28 @@ public class ScoutedMatches extends BaseJSONSerializer
     }
 
     /**
+     * Gets the filename for a given match's data.
+     *
+     * @param match the match data
+     * @return the filename string
+     */
+    public static String getMatchFileName(MatchData match)
+    {
+        if (match == null)
+        {
+            return "";
+        }
+        return Constants.MATCH_DATA_FILE_PREFIX + match.getMatchID() + Constants.MATCH_DATA_FILE_SUFFIX;
+    }
+
+    /**
      * Saves a specific match's data to its JSON file.
      *
      * @param matchData the match to save
      * @return true if successful, false otherwise
      */
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    public boolean saveMatchData(MatchData matchData)
+    public boolean saveMatchDataFile(MatchData matchData)
     {
         if (matchData == null)
         {
@@ -151,51 +166,11 @@ public class ScoutedMatches extends BaseJSONSerializer
     }
 
     /**
-     * Gets the filename for a given match's data.
-     *
-     * @param match the match data
-     * @return the filename string
-     */
-    public static String getMatchFileName(MatchData match)
-    {
-        if (match == null)
-        {
-            return "";
-        }
-        return Constants.MATCH_DATA_FILE_PREFIX + match.getMatchID() + Constants.MATCH_DATA_FILE_SUFFIX;
-    }
-
-    /**
-     * Saves all match data and settings to persistent storage.
-     *
-     * @return true if successful, false otherwise
-     */
-    @SuppressWarnings("unused")
-    public boolean saveAllData()
-    {
-        try
-        {
-            Settings.getInstance(m_appContext).saveSettingsSilent();
-            Log.d(TAG, "Saving all " + m_scoutedMatches.size() + " matches to disk");
-            for (MatchData match : m_scoutedMatches)
-            {
-                saveMatchData(match);
-            }
-            return true;
-        }
-        catch (Exception e)
-        {
-            Log.e(TAG, "Failed to save all data", e);
-            return false;
-        }
-    }
-
-    /**
      * Scans the data directory and loads all individual match files.
      *
      * @return a list of loaded MatchData objects
      */
-    private ArrayList<MatchData> loadScoutedMatchList()
+    private ArrayList<MatchData> loadScoutedMatchesList()
     {
         ArrayList<MatchData> matchHistory = new ArrayList<>();
         Log.d(TAG, "Scanning for match data files");
@@ -217,7 +192,7 @@ public class ScoutedMatches extends BaseJSONSerializer
             {
                 try
                 {
-                    matchHistory.add(loadSingleMatch(file));
+                    matchHistory.add(loadSingleMatchFile(file));
                     Log.d(TAG, "Successfully loaded match file: " + filename);
                 }
                 catch (IOException | JSONException e)
@@ -229,15 +204,15 @@ public class ScoutedMatches extends BaseJSONSerializer
         return matchHistory;
     }
 
-    private MatchData loadSingleMatch(File file)
+    private MatchData loadSingleMatchFile(File file)
             throws IOException, JSONException
     {
-        JSONArray array = loadJSONArray(file);
-        if (array == null || array.length() == 0)
+        JSONArray matchData = loadJSONArray(file);
+        if (matchData == null || matchData.length() == 0)
         {
             throw new JSONException("Empty or invalid match data array in file: " + file.getName());
         }
-        return new MatchData(array.getJSONObject(0));
+        return new MatchData(matchData.getJSONObject(0));
     }
 
     /**
@@ -248,29 +223,23 @@ public class ScoutedMatches extends BaseJSONSerializer
      * @param ascending true for ascending, false for descending
      * @return a new sorted ArrayList
      */
-    public ArrayList<MatchData> sortMatches(List<MatchData> list, String criteria, boolean ascending)
+    public ArrayList<MatchData> sortMatchList(List<MatchData> list, String criteria, boolean ascending)
     {
         ArrayList<MatchData> sortedList = new ArrayList<>(list);
-        Comparator<MatchData> finalComparator;
-
-        switch (criteria)
+        Comparator<MatchData> baseComparator = switch (criteria)
         {
-            case "Team" -> finalComparator = Comparator.comparing(m -> {
+            case "Team" -> Comparator.comparing(m -> {
                 String digits = MatchData.extractTeamNumber(m.getTeamNumber());
                 return digits.isEmpty() ? Integer.MAX_VALUE : Integer.parseInt(digits);
             });
-            case "Match" -> finalComparator = Comparator.comparing(m -> {
+            case "Match" -> Comparator.comparing(m -> {
                 String digits = MatchData.extractMatchNumber(m.getMatchNumber());
                 return digits.isEmpty() ? Integer.MAX_VALUE : Integer.parseInt(digits);
             });
-            default ->
-                    finalComparator = Comparator.comparing(MatchData::getTimestamp, Comparator.nullsLast(Comparator.naturalOrder()));
-        }
+            default -> Comparator.comparing(MatchData::getTimestamp, Comparator.nullsLast(Comparator.naturalOrder()));
+        };
 
-        if (!ascending)
-        {
-            finalComparator = finalComparator.reversed();
-        }
+        Comparator<MatchData> finalComparator = ascending ? baseComparator : baseComparator.reversed();
 
         sortedList.sort(finalComparator);
         return sortedList;
@@ -286,7 +255,7 @@ public class ScoutedMatches extends BaseJSONSerializer
      * @param matchNum match number filter (exact match), or null
      * @return a new filtered list
      */
-    public List<MatchData> filterMatches(List<MatchData> list, String event, String matchNum, String team, String scout)
+    public List<MatchData> filterMatchList(List<MatchData> list, String event, String matchNum, String team, String scout)
     {
         if (list == null)
         {

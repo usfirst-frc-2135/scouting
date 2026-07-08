@@ -95,8 +95,8 @@ public class MatchListFragment extends Fragment
     {
         Log.d(TAG, "refreshList()");
         ScoutedMatches scoutedMatches = ScoutedMatches.getInstance(requireContext());
-        List<MatchData> allMatches = scoutedMatches.getMatches();
-        m_displayedMatches = scoutedMatches.filterMatches(allMatches, m_eventFilter, m_matchFilter, m_teamFilter, m_scoutFilter);
+        List<MatchData> allMatches = scoutedMatches.getMatchList();
+        m_displayedMatches = scoutedMatches.filterMatchList(allMatches, m_eventFilter, m_matchFilter, m_teamFilter, m_scoutFilter);
         updateSorting(); // This will apply current sort criteria and update the adapter
         Log.d(TAG, "Refreshed list. Displaying " + m_displayedMatches.size() + " matches.");
     }
@@ -169,7 +169,7 @@ public class MatchListFragment extends Fragment
         String criteria = m_binding.sortOptions.getText().toString();
         ScoutedMatches scoutedMatches = ScoutedMatches.getInstance(requireContext());
 
-        m_displayedMatches = scoutedMatches.sortMatches(m_displayedMatches, criteria, m_sortAscending);
+        m_displayedMatches = scoutedMatches.sortMatchList(m_displayedMatches, criteria, m_sortAscending);
         if (m_adapter != null)
         {
             m_adapter.updateData(m_displayedMatches);

@@ -88,7 +88,7 @@ public class LoadScoutNamesDialog extends DialogFragment
                     if (!eventCode.isEmpty())
                     {
                         ScoutNames scoutNames = ScoutNames.getInstance(requireContext(), eventCode, false);
-                        if (scoutNames.deleteScoutNamesFile(eventCode) > 0)
+                        if (scoutNames.deleteEventScoutNames(requireContext(), eventCode) > 0)
                         {
                             Toast.makeText(requireContext(), "Cleared Scout Names for " + eventCode, Toast.LENGTH_SHORT).show();
                         }

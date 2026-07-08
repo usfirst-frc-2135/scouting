@@ -150,7 +150,7 @@ public class EndgameFragment extends Fragment
                 Log.e(TAG, "Failed to save settings!");
             }
             ScoutedMatches scoutedMatches = ScoutedMatches.getInstance(getActivity());
-            if (!scoutedMatches.saveMatchData(m_matchData))
+            if (!scoutedMatches.saveMatchDataFile(m_matchData))
             {
                 Log.e(TAG, "Failed to save Match Data!");
                 Toast.makeText(getContext(), "Error: Failed to save match data!", Toast.LENGTH_SHORT).show();

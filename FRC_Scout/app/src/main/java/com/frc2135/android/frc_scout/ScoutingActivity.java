@@ -186,7 +186,7 @@ public class ScoutingActivity extends AppCompatActivity
         updateCurrentFragmentData();
         if (m_matchData != null)
         {
-            ScoutedMatches.getInstance(getApplicationContext()).saveMatchData(m_matchData);
+            ScoutedMatches.getInstance(getApplicationContext()).saveMatchDataFile(m_matchData);
         }
     }
 

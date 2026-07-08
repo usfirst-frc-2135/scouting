@@ -66,7 +66,7 @@ public class MatchData
     public static final int MAX_AUTON_HOPPERS = 1;
     public static final int MAX_TELEOP_HOPPERS = 7;
 
-    // Data members
+    // --- Metadata Section ---
     // Unique identifier for this match (used in file names and QR codes)
     private String m_matchID;
     // Date created for this match
@@ -79,6 +79,7 @@ public class MatchData
     private String m_teamAlias;
     private String m_scoutName;
 
+    // --- Autonomous Section ---
     private boolean m_autonPreload;
     private int m_autonPreloadAccRate;
     private int m_autonHopper;
@@ -89,6 +90,7 @@ public class MatchData
     private boolean m_autonNz;
     private int m_autonClimb;
 
+    // --- Teleoperated Section ---
     private int m_hoppersUsed;
     private int m_accuracyRate;
     private boolean m_intakeAndShoot;
@@ -100,6 +102,7 @@ public class MatchData
     private int m_passedNz;
     private int m_teleopPhoto;
 
+    // --- Endgame Section ---
     private int m_diedValue;
     private int m_endgameClimbPos;
     private int m_startClimb;
@@ -772,20 +775,29 @@ public class MatchData
     }
 
     /**
-     * Validates the match data.
+     * Validates the match data entries.
      *
      * @return a validation message string, or empty if valid
      */
     public String validateEntries()
     {
-        StringBuilder msg = new StringBuilder();
+        return validateAuton() +
+                validateTeleop() +
+                validateEndgame();
+    }
 
-        // Auton Hopper validation
+    private String validateAuton()
+    {
         if (m_autonHopper > MAX_AUTON_HOPPERS)
         {
-            msg.append("Auton: Hopper score exceeds maximum (").append(MAX_AUTON_HOPPERS).append(")!\n");
+            return "Auton: Hopper score exceeds maximum (" + MAX_AUTON_HOPPERS + ")!\n";
         }
+        return "";
+    }
 
+    private String validateTeleop()
+    {
+        StringBuilder msg = new StringBuilder();
         // Teleop Hopper validation
         if (m_hoppersUsed > MAX_TELEOP_HOPPERS)
         {
@@ -831,16 +843,19 @@ public class MatchData
         {
             msg.append("\nTeleop: Driver ability not set!\n");
         }
+        return msg.toString();
+    }
 
+    private String validateEndgame()
+    {
         // Climb selections validation
         if ((m_startClimb == 0 && (m_endgameClimbLevel != 0 || m_endgameClimbPos != 0)) ||
                 (m_endgameClimbLevel == 0 && m_startClimb != 0) ||
                 (m_endgameClimbPos == 0 && m_startClimb != 0))
         {
-            msg.append("\nEndgame: Start Climb, Climb Level and Climb Position settings don't match!\n");
+            return "\nEndgame: Start Climb, Climb Level and Climb Position settings don't match!\n";
         }
-
-        return msg.toString();
+        return "";
     }
 
     /**

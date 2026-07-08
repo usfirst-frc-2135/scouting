@@ -307,14 +307,13 @@ public class ScoutNames extends BaseJSONSerializer
      *
      * @param context   the context for file operations
      * @param eventCode the FRC event code
-     * @return true if successful, false otherwise
+     * @return number of files if successful, zero otherwise
      */
-    public boolean deleteEventScoutNames(Context context, String eventCode)
+    public int deleteEventScoutNames(@SuppressWarnings("unused") Context context, String eventCode)
     {
-        deleteScoutNamesFile(eventCode);
         m_bScoutNamesLoaded = false;
         m_scoutNames = new ArrayList<>();
-        return true;
+        return deleteScoutNamesFile(eventCode);
     }
 
     /**
