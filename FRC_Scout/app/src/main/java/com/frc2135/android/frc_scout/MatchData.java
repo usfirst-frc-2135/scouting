@@ -776,7 +776,7 @@ public class MatchData
      *
      * @return a validation message string, or empty if valid
      */
-    public String validate()
+    public String validateEntries()
     {
         StringBuilder msg = new StringBuilder();
 
@@ -809,20 +809,6 @@ public class MatchData
             }
         }
 
-        // Climb selections validation
-        if ((m_startClimb == 0 && (m_endgameClimbLevel != 0 || m_endgameClimbPos != 0)) ||
-                (m_endgameClimbLevel == 0 && m_startClimb != 0) ||
-                (m_endgameClimbPos == 0 && m_startClimb != 0))
-        {
-            msg.append("\nEndgame: Start Climb, Climb Level and Climb Position settings don't match!\n");
-        }
-
-        // Driver ability validation
-        if (m_drivingAbility == 6)
-        {
-            msg.append("\nTeleop: Driver ability not set!\n");
-        }
-
         // Passing rate validation
         if (((m_passedNz == 1 || m_passedAz == 1) && m_passingRate == 0) || (m_passingRate == 5) || ((m_passedNz == 0 && m_passedAz == 0) && m_passingRate > 0))
         {
@@ -838,6 +824,20 @@ public class MatchData
             {
                 msg.append("\nTeleop: Passing rate set, Passed from zone not set!\n");
             }
+        }
+
+        // Driver ability validation
+        if (m_drivingAbility == 6)
+        {
+            msg.append("\nTeleop: Driver ability not set!\n");
+        }
+
+        // Climb selections validation
+        if ((m_startClimb == 0 && (m_endgameClimbLevel != 0 || m_endgameClimbPos != 0)) ||
+                (m_endgameClimbLevel == 0 && m_startClimb != 0) ||
+                (m_endgameClimbPos == 0 && m_startClimb != 0))
+        {
+            msg.append("\nEndgame: Start Climb, Climb Level and Climb Position settings don't match!\n");
         }
 
         return msg.toString();

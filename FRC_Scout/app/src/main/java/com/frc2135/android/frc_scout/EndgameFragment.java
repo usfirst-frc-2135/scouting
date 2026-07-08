@@ -126,7 +126,7 @@ public class EndgameFragment extends Fragment
         m_binding.genQRDisabled.setVisibility(View.INVISIBLE);
         m_binding.genQR.setOnClickListener(view -> {
             updateEndgameData();
-            String validationMsg = m_matchData.validate();
+            String validationMsg = m_matchData.validateEntries();
             if (!validationMsg.isEmpty())
             {
                 Log.d(TAG, "Validation failed: " + validationMsg);

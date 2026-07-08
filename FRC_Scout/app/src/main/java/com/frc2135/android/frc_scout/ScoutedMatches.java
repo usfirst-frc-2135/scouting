@@ -162,7 +162,7 @@ public class ScoutedMatches extends BaseJSONSerializer
         {
             return "";
         }
-        return match.getMatchID() + Constants.MATCH_DATA_FILE_SUFFIX;
+        return Constants.MATCH_DATA_FILE_PREFIX + match.getMatchID() + Constants.MATCH_DATA_FILE_SUFFIX;
     }
 
     /**
@@ -211,10 +211,9 @@ public class ScoutedMatches extends BaseJSONSerializer
             String filename = file.getName();
             // Match files are identified by their UUID-based filename length (36 chars + extension)
             if (filename.length() > 30 &&
-                    filename.endsWith(Constants.MATCH_DATA_FILE_SUFFIX) &&
-                    !filename.contains(Constants.TBA_MATCHES_FILE_SUFFIX) &&
-                    !filename.contains(Constants.TEAM_ALIASES_FILENAME_SUFFIX) &&
-                    !filename.contains(Constants.SCOUT_NAMES_FILENAME_SUFFIX))
+                    filename.startsWith(Constants.MATCH_DATA_FILE_PREFIX) &&
+                    filename.endsWith(Constants.MATCH_DATA_FILE_SUFFIX)
+            )
             {
                 try
                 {
