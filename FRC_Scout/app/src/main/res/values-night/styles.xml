@@ -21,6 +21,18 @@
         <!-- Error colors. -->
         <item name="colorError">@color/errorColor</item>
         <item name="colorOnError">@color/colorOnError</item>
+
+        <!-- Tooltip/Menu colors -->
+        <item name="textAppearanceSubtitle2">@style/AppSubtitle2</item>
+    </style>
+
+    <style name="AppSubtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textColor">@color/textSecondary</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
 </resources>

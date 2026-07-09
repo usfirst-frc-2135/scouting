@@ -84,7 +84,7 @@
             android:contentDescription="@string/start_match"
             android:src="@drawable/add_icon_blue"
             app:backgroundTint="@color/startButton"
-            app:tint="@color/startText" />
+            app:tint="@color/startMatchText" />
 
     </FrameLayout>
 

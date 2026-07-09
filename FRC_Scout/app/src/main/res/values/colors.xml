@@ -21,7 +21,7 @@
     <color name="hintColor">#9E9E9E</color>
 
     <color name="startButton">#FFC107</color>
-    <color name="startText">#3F51B5</color>
+    <color name="startMatchText">#3F51B5</color>
     <color name="bottomColor">#FFFFFF</color>
     <color name="specialTextPrimary">#212121</color>
 </resources>

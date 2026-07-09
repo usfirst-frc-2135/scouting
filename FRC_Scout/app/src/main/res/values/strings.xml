@@ -22,7 +22,7 @@
     <string name="load_scout_names_title">Load Scout Names</string>
 
     <string name="set_team_index_title">Set Team Index</string>
-    <string name="set_the_team_index_to_use">Set the team index to use (1–6, or None):</string>
+    <string name="set_the_team_index_to_use">Team index to use (1–6, or None):</string>
     <string name="team_index_none">0 - None</string>
     <string name="team_index_1">1 - Red 1</string>
     <string name="team_index_2">2 - Red 2</string>
@@ -37,8 +37,6 @@
 
     <string name="load_team_aliases_title">Load Team Aliases</string>
     <string name="clear_team_aliases">Clear Team Aliases</string>
-
-    <string name="enter_event_code">Enter Event Code</string>
 
     <!--    Match List screen -->
     <string name="sort_by">Sort By</string>
@@ -75,16 +73,13 @@
     <string name="event_code_helper">e.g. 2026casac</string>
     <string name="event_icon_desc">Event icon</string>
 
-    <string name="enter_match_number">Enter Match Number</string>
     <string name="match_number_helper"
         tools:ignore="Typos">e.g. qm1</string>
     <string name="match_icon_desc">Match icon</string>
 
-    <string name="enter_team_number">Enter Team Number</string>
     <string name="team_number_helper">e.g. 2135</string>
     <string name="team_icon_desc">Team icon</string>
 
-    <string name="enter_scout_name">Enter Scout Name</string>
     <string name="scout_name_helper">e.g. Jane D</string>
     <string name="scout_icon_desc">Scout icon</string>
 

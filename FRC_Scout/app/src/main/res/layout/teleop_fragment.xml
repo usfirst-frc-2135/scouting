@@ -214,7 +214,7 @@
                     android:layout_marginBottom="2dp"
                     android:layout_marginStart="10dp"
                     android:backgroundTint="#EAECFD"
-                    android:textSize="20sp" />
+                    android:textSize="22sp" />
             </LinearLayout>
             <!--end INTAKE AND SHOOT CHECKBOX layout -->
         </LinearLayout>
@@ -252,9 +252,9 @@
                     android:layout_marginStart="10dp"
                     android:paddingStart="10dp"
                     android:paddingEnd="0dp"
-                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
                     android:text="@string/neutral"
-                    android:textColor="#000000"
+                    android:textColor="@color/specialTextPrimary"
                     android:textSize="22sp" />
 
                 <!-- start NEUTRAL ZONE CHECKBOX -->
@@ -294,7 +294,7 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="5dp"
                     android:text="@string/alliance"
-                    android:textColor="#000000"
+                    android:textColor="@color/specialTextPrimary"
                     android:textSize="22sp" />
 
                 <RadioGroup
@@ -323,7 +323,7 @@
                         android:layout_weight="1"
                         android:buttonTint="#051650"
                         android:text="@string/yes"
-                        android:textSize="20sp" />
+                        android:textSize="22sp" />
                 </RadioGroup>
                 <!-- end NEUTRAL ZONE CHECKBOX layout -->
             </LinearLayout>
@@ -359,7 +359,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="20sp"
+                        android:textSize="22sp"
                         android:buttonTint="#051650"
                         android:text="@string/n_a" />
 
@@ -368,7 +368,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="20sp"
+                        android:textSize="22sp"
                         android:buttonTint="#051650"
                         android:text="@string/low" />
 
@@ -377,7 +377,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="20sp"
+                        android:textSize="22sp"
                         android:buttonTint="#051650"
                         android:text="@string/medium" />
 
@@ -386,7 +386,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="20sp"
+                        android:textSize="22sp"
                         android:buttonTint="#051650"
                         android:text="@string/large" />
 
@@ -395,7 +395,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="20sp"
+                        android:textSize="22sp"
                         android:buttonTint="#051650"
                         android:text="@string/tons" />
                 </RadioGroup>
@@ -420,7 +420,7 @@
                     android:layout_marginBottom="2dp"
                     android:layout_marginStart="10dp"
                     android:backgroundTint="#051650"
-                    android:textSize="20sp" />
+                    android:textSize="22sp" />
             </LinearLayout>
             <!--end HERDING FUEL CHECKBOX layout -->
         </LinearLayout>
@@ -460,7 +460,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:buttonTint="#051650"
                     android:text="@string/n_a" />
 
@@ -469,7 +469,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:buttonTint="#051650"
                     android:text="@string/low" />
 
@@ -478,7 +478,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:buttonTint="#051650"
                     android:text="@string/med_low" />
 
@@ -487,7 +487,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:buttonTint="#051650"
                     android:text="@string/medium" />
 
@@ -496,7 +496,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:buttonTint="#051650"
                     android:text="@string/med_high" />
 
@@ -505,7 +505,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:buttonTint="#051650"
                     android:text="@string/high" />
             </RadioGroup>
@@ -546,7 +546,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:buttonTint="#051650"
                     android:text="@string/n_a" />
 
@@ -555,7 +555,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:buttonTint="#051650"
                     android:text="@string/slow" />
 
@@ -564,7 +564,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:buttonTint="#051650"
                     android:text="@string/jerky" />
 
@@ -573,7 +573,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:buttonTint="#051650"
                     android:text="@string/avg" />
 
@@ -582,7 +582,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:buttonTint="#051650"
                     android:text="@string/fast" />
 
@@ -591,7 +591,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:buttonTint="#051650"
                     android:text="@string/elite" />
             </RadioGroup>
