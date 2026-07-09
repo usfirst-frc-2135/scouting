@@ -100,12 +100,12 @@ public class PreMatchActivity extends AppCompatActivity
                 (m_settings != null && !m_settings.getMostRecentMatchNumber().isEmpty()) ? m_settings.getNextExpectedMatchNumber() : "qm1";
         m_binding.matchNumberField.setText(matchNum);
 
+        setTeamNumFromMatchNum();
+
         if (m_matchData != null)
         {
             m_binding.teamNumberField.setText(m_matchData.getTeamNumber());
         }
-
-        setTeamNumFromMatchNum();
 
         String scoutName = (m_matchData != null && !m_matchData.getScoutName().isEmpty()) ? m_matchData.getScoutName() :
                 (m_settings != null) ? m_settings.getMostRecentScoutName() : "";

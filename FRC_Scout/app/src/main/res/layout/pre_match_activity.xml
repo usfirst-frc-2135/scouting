@@ -48,7 +48,6 @@
 
             <TextView
                 android:id="@+id/pre_match_title"
-                style="@style/TextAppearance.MaterialComponents.Subtitle2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:letterSpacing="0.1"
@@ -67,6 +66,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                app:endIconMode="clear_text"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"

@@ -129,20 +129,22 @@ public final class Settings extends BaseJSONSerializer
             return;
         }
 
-        // Use the base class method to load the root object
-        JSONObject json = loadJSONObject(file);
-        if (json != null)
+        String content = readStringFromFile(file);
+        if (content == null || content.trim().isEmpty())
         {
-            fromJSON(json);
-            Log.i(TAG, "Successfully loaded settings from JSONObject format");
             return;
         }
 
-        // Fallback for legacy format (wrapped in a JSONArray)
-        String content = readStringFromFile(file);
-        if (content != null && content.trim().startsWith("["))
+        String trimmed = content.trim();
+        if (trimmed.startsWith("{"))
         {
-            JSONArray array = new JSONArray(content);
+            JSONObject json = new JSONObject(trimmed);
+            fromJSON(json);
+            Log.i(TAG, "Successfully loaded settings from JSONObject format");
+        }
+        else if (trimmed.startsWith("["))
+        {
+            JSONArray array = new JSONArray(trimmed);
             if (array.length() > 0)
             {
                 fromJSON(array.getJSONObject(0));

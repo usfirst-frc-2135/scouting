@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -117,6 +118,15 @@ public class LoadTBAMatchesDialog extends DialogFragment
         dialog.setOnShowListener(d -> {
             Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
             okButton.setOnClickListener(v -> handleOkClick(dialog));
+        });
+
+        m_binding.eventCodeField.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE)
+            {
+                handleOkClick(dialog);
+                return true;
+            }
+            return false;
         });
 
         return dialog;
