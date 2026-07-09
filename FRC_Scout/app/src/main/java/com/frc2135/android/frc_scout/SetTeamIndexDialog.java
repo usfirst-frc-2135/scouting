@@ -4,10 +4,13 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.frc2135.android.frc_scout.databinding.SetTeamIndexDialogBinding;
@@ -59,7 +62,7 @@ public class SetTeamIndexDialog extends DialogFragment
 
         setupTeamIndexDropdown();
 
-        return new MaterialAlertDialogBuilder(requireActivity())
+        AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle(R.string.set_team_index_title)
                 .setView(m_binding.getRoot())
                 .setPositiveButton(android.R.string.ok, (d, w) -> saveTeamIndex())
@@ -70,6 +73,30 @@ public class SetTeamIndexDialog extends DialogFragment
                     getParentFragmentManager().setFragmentResult("team_index_changed", new Bundle());
                 })
                 .create();
+
+        m_binding.setTeamIndexField.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_UNSPECIFIED)
+            {
+                Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                if (okButton != null)
+                {
+                    okButton.setFocusableInTouchMode(true);
+                    okButton.requestFocus();
+                }
+                return true;
+            }
+            return false;
+        });
+
+        m_binding.setTeamIndexField.setOnItemClickListener((parent, view, position, id) -> {
+            Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            if (okButton != null)
+            {
+                okButton.requestFocus();
+            }
+        });
+
+        return dialog;
     }
 
     /**

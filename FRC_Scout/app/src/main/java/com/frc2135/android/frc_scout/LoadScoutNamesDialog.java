@@ -59,24 +59,16 @@ public class LoadScoutNamesDialog extends DialogFragment
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         m_binding = LoadEventDialogBinding.inflate(inflater);
 
-        m_binding.eventCodeField.addTextChangedListener(new TextWatcher()
+        // Pre-fill with current event code if available
+        Settings settings = Settings.getInstance(requireContext());
+        if (settings != null)
         {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            String currentEventCode = settings.getEventCode();
+            if (!currentEventCode.isEmpty() && !Objects.equals(currentEventCode, "EVTX"))
             {
+                m_binding.eventCodeField.setText(currentEventCode);
             }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-                m_binding.eventCodeLayout.setError(null);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s)
-            {
-            }
-        });
+        }
 
         AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle(R.string.load_scout_names_title)
@@ -99,15 +91,48 @@ public class LoadScoutNamesDialog extends DialogFragment
                 })
                 .create();
 
+        m_binding.eventCodeField.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+                m_binding.eventCodeLayout.setError(null);
+                String eventCode = s.toString().trim().toLowerCase(Locale.US);
+                if (Settings.getInstance(requireContext()).isValidEventCode(eventCode))
+                {
+                    Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    if (okButton != null)
+                    {
+                        okButton.requestFocus();
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+            }
+        });
+
         dialog.setOnShowListener(d -> {
             Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
             okButton.setOnClickListener(v -> handleOkClick(dialog));
         });
 
         m_binding.eventCodeField.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_DONE)
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_UNSPECIFIED)
             {
-                handleOkClick(dialog);
+                Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                if (okButton != null)
+                {
+                    okButton.setFocusableInTouchMode(true);
+                    okButton.requestFocus();
+                }
                 return true;
             }
             return false;
