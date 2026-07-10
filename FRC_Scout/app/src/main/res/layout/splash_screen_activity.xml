@@ -80,7 +80,7 @@
         android:layout_marginBottom="8dp"
         android:text="@string/app_version"
         android:textColor="@color/textSecondary"
-        android:textSize="13sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/author_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -92,7 +92,7 @@
         android:layout_marginBottom="24dp"
         android:text="@string/app_original_author"
         android:textColor="@color/textSecondary"
-        android:textSize="13sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

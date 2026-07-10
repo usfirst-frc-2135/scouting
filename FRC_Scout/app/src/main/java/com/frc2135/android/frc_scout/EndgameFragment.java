@@ -142,7 +142,7 @@ public class EndgameFragment extends Fragment
             }
         });
 
-        m_binding.navToMenuButton.setOnClickListener(view -> {
+        m_binding.endgameDoneButton.setOnClickListener(view -> {
             updateEndgameData();
             Log.d(TAG, "Saving latest match and scout names");
             if (!Settings.getInstance(getActivity()).saveSettingsSilent())
@@ -266,18 +266,18 @@ public class EndgameFragment extends Fragment
 
     private void setupDoneButton(boolean bEnable)
     {
-        m_binding.navToMenuButton.setEnabled(bEnable);
+        m_binding.endgameDoneButton.setEnabled(bEnable);
         if (bEnable)
         {
             Log.d(TAG, "Enable Done Button");
-            m_binding.navToMenuButton.setVisibility(View.VISIBLE);
-            m_binding.navToMenuButtonDisabled.setVisibility(View.INVISIBLE);
+            m_binding.endgameDoneButton.setVisibility(View.VISIBLE);
+            m_binding.endgameDoneButtonDisabled.setVisibility(View.INVISIBLE);
         }
         else
         {
             Log.d(TAG, "Disable Done Button");
-            m_binding.navToMenuButton.setVisibility(View.INVISIBLE);
-            m_binding.navToMenuButtonDisabled.setVisibility(View.VISIBLE);
+            m_binding.endgameDoneButton.setVisibility(View.INVISIBLE);
+            m_binding.endgameDoneButtonDisabled.setVisibility(View.VISIBLE);
         }
     }
 

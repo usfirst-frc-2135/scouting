@@ -485,7 +485,7 @@
 
             <Button
                 android:layout_marginStart="80dp"
-                android:id="@+id/nav_to_menu_button"
+                android:id="@+id/endgame_done_button"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:background="@drawable/rounded_rect"
@@ -498,7 +498,7 @@
 
             <Button
                 android:layout_marginStart="80dp"
-                android:id="@+id/nav_to_menu_button_disabled"
+                android:id="@+id/endgame_done_button_disabled"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:background="@drawable/rounded_rect"
