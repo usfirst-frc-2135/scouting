@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/backgroundColor">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:orientation="vertical"
@@ -443,89 +442,90 @@
             </LinearLayout>
 
             <!-- start layout that holds image-->
-            <LinearLayout
+            <!--            <LinearLayout-->
+            <!--                android:layout_width="430dp"-->
+            <!--                android:layout_height="330dp"-->
+            <!--                android:layout_marginStart="5dp"-->
+
+            <!-- start CLIMB POSITION RADIO BUTTONS -->
+            <RadioGroup
+                android:id="@+id/auton_climb_buttons"
+                android:orientation="horizontal"
                 android:layout_width="430dp"
                 android:layout_height="330dp"
                 android:layout_marginStart="5dp"
+                android:buttonTint="#717982"
                 android:background="@drawable/tower_angle_five">
 
-                <!-- start CLIMB POSITION RADIO BUTTONS -->
-                <RadioGroup
-                    android:id="@+id/auton_climb_buttons"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:buttonTint="#717982">
+                <RadioButton
+                    android:id="@+id/auton_climb_na"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="23dp"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#C7CDD6"
+                    android:buttonTint="#717982"
+                    android:text="@string/n_a"
+                    android:textColor="@color/customTextPrimary"
+                    android:textSize="22sp" />
 
-                    <RadioButton
-                        android:id="@+id/auton_climb_na"
-                        android:layout_width="80dp"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="0dp"
-                        android:layout_marginTop="23dp"
-                        android:background="@drawable/rounded_rect"
-                        android:backgroundTint="#C7CDD6"
-                        android:buttonTint="#717982"
-                        android:text="@string/n_a"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="22sp" />
+                <RadioButton
+                    android:id="@+id/auton_climb_back"
+                    android:layout_width="55dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="115dp"
+                    android:layout_marginTop="245dp"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#C7CDD6"
+                    android:buttonTint="#717982"
+                    android:text="@string/back"
+                    android:textColor="@color/customTextPrimary"
+                    android:textSize="22sp" />
 
-                    <RadioButton
-                        android:id="@+id/auton_climb_back"
-                        android:layout_width="55dp"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="115dp"
-                        android:layout_marginTop="245dp"
-                        android:background="@drawable/rounded_rect"
-                        android:backgroundTint="#C7CDD6"
-                        android:buttonTint="#717982"
-                        android:text="@string/back"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="22sp" />
+                <RadioButton
+                    android:id="@+id/auton_climb_left"
+                    android:layout_width="55dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="195dp"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#C7CDD6"
+                    android:buttonTint="#717982"
+                    android:text="@string/left"
+                    android:textColor="@color/customTextPrimary"
+                    android:textSize="22sp" />
 
-                    <RadioButton
-                        android:id="@+id/auton_climb_left"
-                        android:layout_width="55dp"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="0dp"
-                        android:layout_marginTop="195dp"
-                        android:background="@drawable/rounded_rect"
-                        android:backgroundTint="#C7CDD6"
-                        android:buttonTint="#717982"
-                        android:text="@string/left"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="22sp" />
+                <RadioButton
+                    android:id="@+id/auton_climb_front"
+                    android:layout_width="55dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="245dp"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#C7CDD6"
+                    android:buttonTint="#717982"
+                    android:text="@string/front"
+                    android:textColor="@color/customTextPrimary"
+                    android:textSize="22sp" />
 
-                    <RadioButton
-                        android:id="@+id/auton_climb_front"
-                        android:layout_width="55dp"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="245dp"
-                        android:background="@drawable/rounded_rect"
-                        android:backgroundTint="#C7CDD6"
-                        android:buttonTint="#717982"
-                        android:text="@string/front"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="22sp" />
+                <RadioButton
+                    android:id="@+id/auton_climb_right"
+                    android:layout_width="55dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="-35dp"
+                    android:layout_marginTop="140dp"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#C7CDD6"
+                    android:buttonTint="#717982"
+                    android:text="@string/right"
+                    android:textColor="@color/customTextPrimary"
+                    android:textSize="22sp" />
 
-                    <RadioButton
-                        android:id="@+id/auton_climb_right"
-                        android:layout_width="55dp"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="-35dp"
-                        android:layout_marginTop="140dp"
-                        android:background="@drawable/rounded_rect"
-                        android:backgroundTint="#C7CDD6"
-                        android:buttonTint="#717982"
-                        android:text="@string/right"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="22sp" />
+            </RadioGroup>
+            <!-- end CLIMB POSITION RADIO BUTTONS -->
 
-                </RadioGroup>
-                <!-- end CLIMB POSITION RADIO BUTTONS -->
-
-            </LinearLayout>
+            <!--            </LinearLayout>-->
             <!-- end layout that holds image-->
 
         </LinearLayout>
