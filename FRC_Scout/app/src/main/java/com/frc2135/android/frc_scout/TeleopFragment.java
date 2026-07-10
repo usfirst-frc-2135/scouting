@@ -1,7 +1,6 @@
 package com.frc2135.android.frc_scout;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -307,14 +306,14 @@ public class TeleopFragment extends Fragment
     {
         if (isGreaterThanMax(tView))
         {
-            tView.setTextColor(Color.RED);
+            tView.setTextColor(getResources().getColor(R.color.errorColor, requireContext().getTheme()));
         }
         else
         {
             Context context = getContext();
             if (context != null)
             {
-                tView.setTextColor(ContextCompat.getColor(context, R.color.specialTextPrimary));
+                tView.setTextColor(ContextCompat.getColor(context, R.color.customTextPrimary));
             }
         }
     }

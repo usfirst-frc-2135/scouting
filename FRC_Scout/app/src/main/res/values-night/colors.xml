@@ -20,8 +20,13 @@
     <color name="textSecondary">#B0B0B0</color>
     <color name="hintColor">#757575</color>
 
+    <!--    The bottom navigation bar -->
+    <color name="bottomColor">#1E1E1E</color>
+
+    <!--    The Start Match button-->
     <color name="startButton">#3F51B5</color>
     <color name="startMatchText">#FFFFFF</color>
-    <color name="bottomColor">#1E1E1E</color>
-    <color name="specialTextPrimary">#FFFFFF</color>
+
+    <!--    Used by auton, teleop, and endgame fragments for text-->
+    <color name="customTextPrimary">#212121</color>
 </resources>

@@ -1,23 +1,28 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="AppTheme"
+        parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
         <item name="colorOnPrimary">@color/colorOnPrimary</item>
+
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="colorSecondaryVariant">@color/colorSecondary</item>
         <item name="colorOnSecondary">@color/colorOnSecondary</item>
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+
         <!-- Background and surface. -->
         <item name="android:windowBackground">@color/backgroundColor</item>
         <item name="colorSurface">@color/surfaceColor</item>
         <item name="colorOnSurface">@color/colorOnSurface</item>
         <item name="android:colorBackground">@color/backgroundColor</item>
         <item name="colorOnBackground">@color/colorOnBackground</item>
+
         <!-- Error colors. -->
         <item name="colorError">@color/errorColor</item>
         <item name="colorOnError">@color/colorOnError</item>
@@ -26,7 +31,8 @@
         <item name="textAppearanceSubtitle2">@style/AppSubtitle2</item>
     </style>
 
-    <style name="AppSubtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+    <style name="AppSubtitle2"
+        parent="TextAppearance.MaterialComponents.Subtitle2">
         <item name="android:textColor">@color/textSecondary</item>
     </style>
 

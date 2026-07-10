@@ -10,7 +10,7 @@
 
     <!--    Action bar content -->
     <string name="title_match_list">Scouted Matches</string>
-    <string name="team_index">team index</string>
+    <string name="team_index">Team index</string>
     <string name="dark_mode">Dark Mode</string>
 
     <!--    Action bar menu items -->
@@ -189,6 +189,7 @@
 
     <string name="no">No</string>
     <string name="yes">Yes</string>
+    <string name="hopper_count_total">0</string>
 
     <!-- Accessibility Strings -->
 
