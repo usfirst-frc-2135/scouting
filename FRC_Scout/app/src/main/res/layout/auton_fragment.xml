@@ -26,7 +26,7 @@
                 android:layout_marginTop="7dp"
                 android:text="@string/preload_title"
                 android:textColor="@color/customTextPrimary"
-                android:textSize="22sp"
+                android:textSize="@dimen/font_medium"
                 android:textStyle="bold" />
 
             <CheckBox
@@ -38,7 +38,7 @@
                 android:buttonTint="#354c54"
                 android:text="@string/shot_preloaded_fuel"
                 android:textColor="@color/customTextPrimary"
-                android:textSize="22sp" />
+                android:textSize="@dimen/font_medium" />
 
         </LinearLayout>
         <!-- end PRELOAD CHECKBOX layout -->
@@ -57,7 +57,7 @@
                 android:layout_marginStart="10dp"
                 android:text="@string/preload_accuracy_rate"
                 android:textColor="@color/customTextPrimary"
-                android:textSize="22sp"
+                android:textSize="@dimen/font_medium"
                 android:textStyle="bold" />
 
             <!-- start PRELOAD RADIO BUTTONS -->
@@ -78,7 +78,7 @@
                     android:buttonTint="#354c54"
                     android:text="@string/n_a"
                     android:textColor="@color/customTextPrimary"
-                    android:textSize="22sp" />
+                    android:textSize="@dimen/font_medium" />
 
                 <RadioButton
                     android:id="@+id/auton_accuracy_a"
@@ -88,7 +88,7 @@
                     android:buttonTint="#354c54"
                     android:text="@string/all"
                     android:textColor="@color/customTextPrimary"
-                    android:textSize="22sp" />
+                    android:textSize="@dimen/font_medium" />
 
                 <RadioButton
                     android:id="@+id/auton_accuracy_m"
@@ -98,7 +98,7 @@
                     android:buttonTint="#354c54"
                     android:text="@string/most"
                     android:textColor="@color/customTextPrimary"
-                    android:textSize="22sp" />
+                    android:textSize="@dimen/font_medium" />
 
                 <RadioButton
                     android:id="@+id/auton_accuracy_s"
@@ -108,7 +108,7 @@
                     android:buttonTint="#354c54"
                     android:text="@string/half"
                     android:textColor="@color/customTextPrimary"
-                    android:textSize="22sp" />
+                    android:textSize="@dimen/font_medium" />
 
                 <RadioButton
                     android:id="@+id/auton_accuracy_f"
@@ -118,7 +118,7 @@
                     android:buttonTint="#354c54"
                     android:text="@string/some"
                     android:textColor="@color/customTextPrimary"
-                    android:textSize="22sp" />
+                    android:textSize="@dimen/font_medium" />
 
                 <RadioButton
                     android:id="@+id/auton_accuracy_n"
@@ -128,7 +128,7 @@
                     android:buttonTint="#354c54"
                     android:text="@string/none"
                     android:textColor="@color/customTextPrimary"
-                    android:textSize="22sp" />
+                    android:textSize="@dimen/font_medium" />
             </RadioGroup>
             <!-- end PRELOAD RADIO BUTTONS -->
 
@@ -158,7 +158,7 @@
                     android:layout_marginTop="1dp"
                     android:text="@string/hoppers_shot"
                     android:textColor="@color/customTextPrimary"
-                    android:textSize="22sp"
+                    android:textSize="@dimen/font_medium"
                     android:textStyle="bold" />
 
                 <Button
@@ -174,7 +174,7 @@
                     android:textAlignment="center"
                     android:text="@string/decrease"
                     android:textColor="@android:color/white"
-                    android:textSize="22sp"
+                    android:textSize="@dimen/font_medium"
                     android:textStyle="bold" />
 
                 <TextView
@@ -186,7 +186,7 @@
                     android:textAlignment="center"
                     android:text="@string/hopper_count_total"
                     android:textColor="@color/customTextPrimary"
-                    android:textSize="25sp" />
+                    android:textSize="@dimen/font_large" />
 
                 <Button
                     android:id="@+id/auton_Hopper_incr_button"
@@ -201,7 +201,7 @@
                     android:textAlignment="center"
                     android:text="@string/increase"
                     android:textColor="@android:color/white"
-                    android:textSize="22sp"
+                    android:textSize="@dimen/font_medium"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -221,7 +221,7 @@
                     android:layout_marginStart="10dp"
                     android:text="@string/accuracy_rate"
                     android:textColor="@color/customTextPrimary"
-                    android:textSize="22sp"
+                    android:textSize="@dimen/font_medium"
                     android:textStyle="bold" />
 
                 <!-- start HOPPER ACCURACY RADIO BUTTONS-->
@@ -242,7 +242,7 @@
                         android:buttonTint="#c64e34"
                         android:text="@string/n_a"
                         android:textColor="@color/customTextPrimary"
-                        android:textSize="22sp" />
+                        android:textSize="@dimen/font_medium" />
 
                     <RadioButton
                         android:layout_marginBottom="5dp"
@@ -253,7 +253,7 @@
                         android:buttonTint="#c64e34"
                         android:text="@string/most"
                         android:textColor="@color/customTextPrimary"
-                        android:textSize="22sp" />
+                        android:textSize="@dimen/font_medium" />
 
                     <RadioButton
                         android:id="@+id/auton_accuracy_three_fourths"
@@ -263,7 +263,7 @@
                         android:buttonTint="#c64e34"
                         android:text="@string/three_qtr"
                         android:textColor="@color/customTextPrimary"
-                        android:textSize="27sp" />
+                        android:textSize="@dimen/font_large" />
 
                     <RadioButton
                         android:id="@+id/auton_accuracy_half"
@@ -273,7 +273,7 @@
                         android:buttonTint="#c45120"
                         android:text="@string/one_half"
                         android:textColor="@color/customTextPrimary"
-                        android:textSize="27sp" />
+                        android:textSize="@dimen/font_large" />
 
                     <RadioButton
                         android:id="@+id/auton_accuracy_quarter"
@@ -285,7 +285,7 @@
                         android:buttonTint="#c45120"
                         android:text="@string/one_qtr"
                         android:textColor="@color/customTextPrimary"
-                        android:textSize="27sp" />
+                        android:textSize="@dimen/font_large" />
 
                     <RadioButton
                         android:layout_marginStart="21.5dp"
@@ -299,7 +299,7 @@
                         android:buttonTint="#c45120"
                         android:text="@string/few"
                         android:textColor="@color/customTextPrimary"
-                        android:textSize="22sp" />
+                        android:textSize="@dimen/font_medium" />
 
                     <RadioButton
                         android:layout_marginStart="5dp"
@@ -311,7 +311,7 @@
                         android:buttonTint="#c45120"
                         android:text="@string/none"
                         android:textColor="@color/customTextPrimary"
-                        android:textSize="22sp" />
+                        android:textSize="@dimen/font_medium" />
 
                     <RadioButton
                         android:layout_marginStart="4dp"
@@ -325,7 +325,7 @@
                         android:visibility="invisible"
                         android:text="@string/idk"
                         android:textColor="@color/customTextPrimary"
-                        android:textSize="22sp" />
+                        android:textSize="@dimen/font_medium" />
 
                 </RadioGroup>
                 <!-- end HOPPER ACCURACY RADIO BUTTONS-->
@@ -353,7 +353,7 @@
                 android:layout_marginStart="7dp"
                 android:background="#D48C74"
                 android:text="@string/got_fuel_from"
-                android:textSize="22sp"
+                android:textSize="@dimen/font_medium"
                 android:textColor="@color/customTextPrimary"
                 android:textStyle="bold" />
 
@@ -375,7 +375,7 @@
                     android:buttonTint="#8e5845"
                     android:text="@string/alliance_zone"
                     android:textColor="@color/customTextPrimary"
-                    android:textSize="22sp" />
+                    android:textSize="@dimen/font_medium" />
 
                 <CheckBox
                     android:id="@+id/depot_checkbox"
@@ -385,7 +385,7 @@
                     android:buttonTint="#8e5845"
                     android:text="@string/depot"
                     android:textColor="@color/customTextPrimary"
-                    android:textSize="22sp" />
+                    android:textSize="@dimen/font_medium" />
 
                 <CheckBox
                     android:id="@+id/outpost_checkbox"
@@ -395,7 +395,7 @@
                     android:buttonTint="#8e5845"
                     android:text="@string/outpost"
                     android:textColor="@color/customTextPrimary"
-                    android:textSize="22sp" />
+                    android:textSize="@dimen/font_medium" />
 
                 <CheckBox
                     android:id="@+id/nz_checkbox"
@@ -405,7 +405,7 @@
                     android:buttonTint="#8e5845"
                     android:text="@string/neutral_zone"
                     android:textColor="@color/customTextPrimary"
-                    android:textSize="22sp" />
+                    android:textSize="@dimen/font_medium" />
 
             </LinearLayout>
             <!-- start FUEL CHECKBOX layout -->
@@ -437,7 +437,7 @@
                     android:layout_marginStart="5dp"
                     android:text="@string/climb_position"
                     android:textColor="@color/customTextPrimary"
-                    android:textSize="22sp"
+                    android:textSize="@dimen/font_medium"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -468,7 +468,7 @@
                     android:buttonTint="#717982"
                     android:text="@string/n_a"
                     android:textColor="@color/customTextPrimary"
-                    android:textSize="22sp" />
+                    android:textSize="@dimen/font_medium" />
 
                 <RadioButton
                     android:id="@+id/auton_climb_back"
@@ -481,7 +481,7 @@
                     android:buttonTint="#717982"
                     android:text="@string/back"
                     android:textColor="@color/customTextPrimary"
-                    android:textSize="22sp" />
+                    android:textSize="@dimen/font_medium" />
 
                 <RadioButton
                     android:id="@+id/auton_climb_left"
@@ -494,7 +494,7 @@
                     android:buttonTint="#717982"
                     android:text="@string/left"
                     android:textColor="@color/customTextPrimary"
-                    android:textSize="22sp" />
+                    android:textSize="@dimen/font_medium" />
 
                 <RadioButton
                     android:id="@+id/auton_climb_front"
@@ -507,7 +507,7 @@
                     android:buttonTint="#717982"
                     android:text="@string/front"
                     android:textColor="@color/customTextPrimary"
-                    android:textSize="22sp" />
+                    android:textSize="@dimen/font_medium" />
 
                 <RadioButton
                     android:id="@+id/auton_climb_right"
@@ -520,7 +520,7 @@
                     android:buttonTint="#717982"
                     android:text="@string/right"
                     android:textColor="@color/customTextPrimary"
-                    android:textSize="22sp" />
+                    android:textSize="@dimen/font_medium" />
 
             </RadioGroup>
             <!-- end CLIMB POSITION RADIO BUTTONS -->

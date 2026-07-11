@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/sort_by"
                 android:inputType="none"
-                android:textSize="14sp" />
+                android:textSize="@dimen/font_xx_small" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton

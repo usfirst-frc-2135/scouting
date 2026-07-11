@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="@android:color/white"
-                android:textSize="18sp"
+                android:textSize="@dimen/font_small"
                 android:textStyle="bold"
                 tools:text="Pre-Match - Team Index: 1" />
 
@@ -53,7 +53,7 @@
                 android:text="@string/match_configuration"
                 android:textAllCaps="true"
                 android:textColor="@color/textSecondary"
-                android:textSize="16sp"
+                android:textSize="@dimen/font_x_small"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -205,7 +205,7 @@
                 android:text="@string/start_match"
                 android:contentDescription="@string/start_match"
                 android:textColor="@color/startMatchText"
-                android:textSize="18sp"
+                android:textSize="@dimen/font_small"
                 app:backgroundTint="@color/startButton"
                 app:cornerRadius="12dp"
                 app:elevation="4dp"
