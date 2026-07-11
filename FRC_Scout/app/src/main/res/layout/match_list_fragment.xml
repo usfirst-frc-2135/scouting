@@ -73,7 +73,7 @@
             android:clipToPadding="false"
             android:padding="4dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/match_list_item" />
+            tools:listitem="@layout/match_list_card" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/start_match"

@@ -23,8 +23,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.frc2135.android.frc_scout.databinding.ActionBarSwitchBinding;
+import com.frc2135.android.frc_scout.databinding.MatchListCardBinding;
 import com.frc2135.android.frc_scout.databinding.MatchListFragmentBinding;
-import com.frc2135.android.frc_scout.databinding.MatchListItemBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.text.SimpleDateFormat;
@@ -245,10 +245,10 @@ public class MatchListFragment extends Fragment
 
     private class MatchHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
     {
-        private final MatchListItemBinding m_itemBinding;
+        private final MatchListCardBinding m_itemBinding;
         private MatchData m_match;
 
-        public MatchHolder(MatchListItemBinding itemBinding)
+        public MatchHolder(MatchListCardBinding itemBinding)
         {
             super(itemBinding.getRoot());
             m_itemBinding = itemBinding;
@@ -296,7 +296,7 @@ public class MatchListFragment extends Fragment
         @Override
         public MatchHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
         {
-            MatchListItemBinding itemBinding = MatchListItemBinding.inflate(LayoutInflater.from(requireActivity()), parent, false);
+            MatchListCardBinding itemBinding = MatchListCardBinding.inflate(LayoutInflater.from(requireActivity()), parent, false);
             return new MatchHolder(itemBinding);
         }
 
