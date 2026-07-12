@@ -85,6 +85,10 @@ public class LoadScoutNamesDialog extends DialogFragment
                         {
                             Toast.makeText(requireContext(), "Cleared Scout Names for " + eventCode, Toast.LENGTH_SHORT).show();
                         }
+                        if (settings != null)
+                        {
+                            settings.clearPastScouts();
+                        }
                     }
                     m_binding.eventCodeField.setText("");
                     m_binding.eventCodeField.setError(null);
