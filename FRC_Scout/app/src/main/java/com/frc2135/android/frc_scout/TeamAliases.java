@@ -144,12 +144,14 @@ public class TeamAliases extends BaseJSONSerializer
                 m_bTeamAliasesLoaded = true;
 
                 Log.d(TAG, "Successfully loaded aliases for " + m_eventCode);
-                Toast.makeText(context, "Loaded aliases for " + m_eventCode, Toast.LENGTH_SHORT).show();
+                if (!bSilent)
+                {
+                    Toast.makeText(context, "Successfully loaded aliases for " + m_eventCode, Toast.LENGTH_SHORT).show();
+                }
             }
-            else if (!bSilent)
+            else
             {
-                Log.e(TAG, "Team Aliases file not found for event: " + m_eventCode);
-                Toast.makeText(context, "Aliases file not found", Toast.LENGTH_SHORT).show();
+                super.handleToastError(context, TAG, "Aliases file not found for " + m_eventCode, bSilent, null);
             }
         }
         catch (JSONException | IOException e)

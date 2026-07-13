@@ -154,17 +154,16 @@ public class TBAMatches extends BaseJSONSerializer
             {
                 m_bTBAMatchesLoaded = true;
 
-                String msg = "Successfully loaded " + m_eventCode + " TBA matches";
+                String msg = "Successfully loaded TBA matches for " + m_eventCode;
                 Log.d(TAG, msg);
                 if (!bSilent)
                 {
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
             }
-            else if (!bSilent)
+            else
             {
-                Log.e(TAG, "TBAMatches file not found for event: " + m_eventCode);
-                Toast.makeText(context, "TBAMatches file not found", Toast.LENGTH_SHORT).show();
+                super.handleToastError(context, TAG, "TBA matches file not found for " + m_eventCode, bSilent, null);
             }
         }
         catch (JSONException | IOException e)
