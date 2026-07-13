@@ -223,7 +223,7 @@ public class TeleopFragment extends Fragment
             else if (rand < 0.5)
             {
                 m_photoNum = 6;
-                m_binding.photo.setBackgroundResource(R.drawable.t2135_logo2);
+                m_binding.photo.setBackgroundResource(R.drawable.t2135_logo_square);
                 params.width = 260;
                 m_binding.photo.setLayoutParams(params);
             }
@@ -269,7 +269,7 @@ public class TeleopFragment extends Fragment
                     resId = R.drawable.me_and_charlotte_2;
                     break;
                 case 6:
-                    resId = R.drawable.t2135_logo2;
+                    resId = R.drawable.t2135_logo_square;
                     width = 260;
                     break;
                 case 7:

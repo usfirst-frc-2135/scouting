@@ -112,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="230dp"
                     android:layout_marginStart="1dp"
-                    android:background="@drawable/tower_angle_one">
+                    android:background="@drawable/tower_angle_upper">
 
                     <!-- start CLIMB LEVEL TEXT layout-->
                     <LinearLayout
@@ -208,7 +208,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="100dp"
                     android:layout_marginStart="1dp"
-                    android:background="@drawable/tower_angle_two">
+                    android:background="@drawable/tower_angle_lower">
 
                     <!-- start CLIMB POSITION TEXT layout-->
                     <LinearLayout

@@ -13,7 +13,7 @@
         android:layout_width="280dp"
         android:layout_height="280dp"
         android:contentDescription="@string/our_team_logo"
-        android:src="@drawable/t2135_logo"
+        android:src="@drawable/t2135_logo_round"
         app:layout_constraintBottom_toTopOf="@+id/app_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

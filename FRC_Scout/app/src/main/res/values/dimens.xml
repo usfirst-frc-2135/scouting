@@ -4,8 +4,8 @@
     <dimen name="font_xx_small">14sp</dimen>
     <dimen name="font_x_small">16sp</dimen>
     <dimen name="font_small">18sp</dimen>
-    <dimen name="font_medium">22sp</dimen>
-    <dimen name="font_large">26sp</dimen>
+    <dimen name="font_medium">20sp</dimen>
+    <dimen name="font_large">24sp</dimen>
     <dimen name="font_x_large"
         tools:ignore="UnusedResources">30sp
     </dimen>

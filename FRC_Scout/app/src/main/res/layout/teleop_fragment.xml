@@ -19,7 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                android:background="@drawable/rounded_rect"
+                android:background="@drawable/rounded_rect_top"
                 android:backgroundTint="#CACFF9"
                 android:orientation="vertical">
 
@@ -30,10 +30,11 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/teleop_hopper_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
-                        android:layout_marginTop="7dp"
+                        android:layout_marginTop="3dp"
                         android:text="@string/hoppers_shot"
                         android:textColor="@color/customTextPrimary"
                         android:textSize="@dimen/font_medium"
@@ -69,7 +70,6 @@
                             android:layout_height="match_parent"
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="5dp"
-                            android:paddingBottom="5dp"
                             android:textAlignment="center"
                             android:text="@string/hopper_count_total"
                             android:textColor="@color/customTextPrimary"
@@ -249,7 +249,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/algae_scored_label"
+                    android:id="@+id/passing_zone_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"

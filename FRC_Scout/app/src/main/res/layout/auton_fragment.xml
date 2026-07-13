@@ -157,18 +157,18 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/Hopper_label"
+                        android:id="@+id/auton_hopper_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
-                        android:layout_marginTop="1dp"
+                        android:layout_marginTop="3dp"
                         android:text="@string/hoppers_shot"
                         android:textColor="@color/customTextPrimary"
                         android:textSize="@dimen/font_medium"
                         android:textStyle="bold" />
 
                     <Button
-                        android:id="@+id/auton_Hopper_decr_button"
+                        android:id="@+id/auton_hopper_decr_button"
                         android:layout_width="80dp"
                         android:layout_height="40dp"
                         android:layout_marginStart="70dp"
@@ -184,18 +184,18 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/auton_Hopper_score_total"
-                        android:layout_width="50dp"
+                        android:id="@+id/auton_hopper_score_total"
+                        android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
-                        android:text="@string/hopper_count_total"
                         android:textAlignment="center"
+                        android:text="@string/hopper_count_total"
                         android:textColor="@color/customTextPrimary"
                         android:textSize="@dimen/font_large" />
 
                     <Button
-                        android:id="@+id/auton_Hopper_incr_button"
+                        android:id="@+id/auton_hopper_incr_button"
                         android:layout_width="80dp"
                         android:layout_height="40dp"
                         android:layout_marginTop="5dp"
@@ -454,7 +454,7 @@
                     android:layout_width="430dp"
                     android:layout_height="330dp"
                     android:layout_marginStart="5dp"
-                    android:background="@drawable/tower_angle_five"
+                    android:background="@drawable/tower_angle_full"
                     android:buttonTint="#717982"
                     android:orientation="horizontal">
 
