@@ -16,6 +16,7 @@
             android:paddingBottom="16dp">
 
             <!-- start Game Piece card layout-->
+            <!-- Section: GAME PIECE MANIPULATION -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,7 +32,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/teleop_hopper_count_title"
+                        android:id="@+id/teleop_hopper_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
@@ -42,7 +43,7 @@
                         android:textStyle="bold" />
 
                     <Button
-                        android:id="@+id/hopper_used_decr_button"
+                        android:id="@+id/teleop_hopper_decr_button"
                         android:layout_width="80dp"
                         android:layout_height="40dp"
                         android:layout_marginStart="70dp"
@@ -58,7 +59,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/hopper_used_total"
+                        android:id="@+id/teleop_hopper_total_text"
                         android:layout_width="70dp"
                         android:layout_height="match_parent"
                         android:layout_marginTop="5dp"
@@ -69,7 +70,7 @@
                         android:textSize="@dimen/font_large" />
 
                     <Button
-                        android:id="@+id/hopper_used_incr_button"
+                        android:id="@+id/teleop_hopper_incr_button"
                         android:layout_width="80dp"
                         android:layout_height="40dp"
                         android:layout_marginTop="5dp"
@@ -96,6 +97,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/teleop_accuracy_label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
@@ -106,7 +108,7 @@
                         android:textStyle="bold" />
 
                     <RadioGroup
-                        android:id="@+id/accuracy_buttons"
+                        android:id="@+id/teleop_accuracy_radio_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/rounded_rect_bottom"
@@ -114,7 +116,7 @@
                         android:orientation="horizontal">
 
                         <RadioButton
-                            android:id="@+id/accuracy_NA"
+                            android:id="@+id/teleop_accuracy_na"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="7dp"
@@ -125,7 +127,7 @@
                             android:textSize="@dimen/font_medium" />
 
                         <RadioButton
-                            android:id="@+id/accuracy_most"
+                            android:id="@+id/teleop_accuracy_most"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -135,7 +137,7 @@
                             android:textSize="@dimen/font_medium" />
 
                         <RadioButton
-                            android:id="@+id/accuracy_three_fourths"
+                            android:id="@+id/teleop_accuracy_three_fourths"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -145,7 +147,7 @@
                             android:textSize="@dimen/font_large" />
 
                         <RadioButton
-                            android:id="@+id/accuracy_half"
+                            android:id="@+id/teleop_accuracy_half"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -155,7 +157,7 @@
                             android:textSize="@dimen/font_large" />
 
                         <RadioButton
-                            android:id="@+id/accuracy_quarter"
+                            android:id="@+id/teleop_accuracy_quarter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="-537dp"
@@ -167,7 +169,7 @@
                             android:textSize="@dimen/font_large" />
 
                         <RadioButton
-                            android:id="@+id/accuracy_few"
+                            android:id="@+id/teleop_accuracy_few"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="21.5dp"
@@ -179,7 +181,7 @@
                             android:textSize="@dimen/font_medium" />
 
                         <RadioButton
-                            android:id="@+id/accuracy_none"
+                            android:id="@+id/teleop_accuracy_none"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
@@ -206,7 +208,6 @@
 
                     </RadioGroup>
                     <!-- end HOPPER ACCURACY RATING -->
-
                 </LinearLayout>
                 <!-- end HOPPER ACCURACY layout -->
 
@@ -219,7 +220,7 @@
                     android:orientation="horizontal">
 
                     <CheckBox
-                        android:id="@+id/intake_and_shoot"
+                        android:id="@+id/teleop_intake_shoot_checkbox"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
@@ -236,6 +237,7 @@
             <!-- end Game Piece card layout-->
 
             <!-- start PASSING SECTION card layout -->
+            <!-- Section: PASSING SECTION -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -253,7 +255,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/passing_zone_label"
+                        android:id="@+id/teleop_passing_zone_label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
@@ -270,6 +272,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/teleop_neutral_label"
                             android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
@@ -280,7 +283,7 @@
 
                         <!-- start NEUTRAL ZONE CHECKBOX -->
                         <RadioGroup
-                            android:id="@+id/pass_nz"
+                            android:id="@+id/teleop_pass_nz_radio_group"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="7dp"
@@ -288,7 +291,7 @@
                             android:orientation="horizontal">
 
                             <RadioButton
-                                android:id="@+id/no_nz"
+                                android:id="@+id/teleop_pass_nz_no"
                                 android:layout_width="10dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -298,7 +301,7 @@
                                 android:textSize="@dimen/font_medium" />
 
                             <RadioButton
-                                android:id="@+id/yes_nz"
+                                android:id="@+id/teleop_pass_nz_yes"
                                 android:layout_width="60dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -311,6 +314,7 @@
 
                         <!-- start OPPOSING ALLIANCE ZONE CHECKBOX -->
                         <TextView
+                            android:id="@+id/teleop_alliance_label"
                             android:layout_width="135dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="7dp"
@@ -319,14 +323,14 @@
                             android:textSize="@dimen/font_medium" />
 
                         <RadioGroup
-                            android:id="@+id/pass_az"
+                            android:id="@+id/teleop_pass_az_radio_group"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <RadioButton
-                                android:id="@+id/no_az"
+                                android:id="@+id/teleop_pass_az_no"
                                 android:layout_width="10dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -336,7 +340,7 @@
                                 android:textSize="@dimen/font_medium" />
 
                             <RadioButton
-                                android:id="@+id/yes_az"
+                                android:id="@+id/teleop_pass_az_yes"
                                 android:layout_width="60dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -346,12 +350,10 @@
                                 android:textSize="@dimen/font_medium" />
                         </RadioGroup>
                         <!-- end OPPOSING ALLIANCE ZONE CHECKBOX -->
-
                     </LinearLayout>
                     <!-- end PASSING FROM RADIO BUTTONS layout -->
 
                 </LinearLayout>
-                <!-- end PASSING FROM layout -->
 
                 <!-- start PASSING EFFECTIVENESS RATING layout -->
                 <LinearLayout
@@ -361,6 +363,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/teleop_passing_rate_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
@@ -370,7 +373,7 @@
                         android:textStyle="bold" />
 
                     <RadioGroup
-                        android:id="@+id/passing_effectiveness_buttons"
+                        android:id="@+id/teleop_passing_rate_radio_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
@@ -378,7 +381,7 @@
                         android:orientation="horizontal">
 
                         <RadioButton
-                            android:id="@+id/passing_rate_na"
+                            android:id="@+id/teleop_passing_rate_na"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -388,7 +391,7 @@
                             android:textSize="@dimen/font_medium" />
 
                         <RadioButton
-                            android:id="@+id/passing_low"
+                            android:id="@+id/teleop_passing_rate_low"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -398,7 +401,7 @@
                             android:textSize="@dimen/font_medium" />
 
                         <RadioButton
-                            android:id="@+id/passing_medium"
+                            android:id="@+id/teleop_passing_rate_medium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -408,7 +411,7 @@
                             android:textSize="@dimen/font_medium" />
 
                         <RadioButton
-                            android:id="@+id/passing_large"
+                            android:id="@+id/teleop_passing_rate_large"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -418,7 +421,7 @@
                             android:textSize="@dimen/font_medium" />
 
                         <RadioButton
-                            android:id="@+id/passing_tons"
+                            android:id="@+id/teleop_passing_rate_tons"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -427,7 +430,6 @@
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_medium" />
                     </RadioGroup>
-
                 </LinearLayout>
                 <!-- end PASSING EFFECTIVENESS RATING layout -->
 
@@ -440,7 +442,7 @@
                     android:orientation="horizontal">
 
                     <CheckBox
-                        android:id="@+id/shovel_fuel"
+                        android:id="@+id/teleop_herded_fuel_checkbox"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
@@ -456,6 +458,7 @@
             <!-- end PASSING SECTION card layout -->
 
             <!-- start DEFENSE card layout-->
+            <!-- Section: DEFENSE SECTION -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -465,9 +468,9 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/defense_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/teleop_defense_label"
                     android:layout_marginStart="7dp"
                     android:layout_marginTop="7dp"
                     android:text="@string/defense"
@@ -476,7 +479,7 @@
                     android:textStyle="bold" />
 
                 <RadioGroup
-                    android:id="@+id/defense_buttons"
+                    android:id="@+id/teleop_defense_radio_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="7dp"
@@ -486,7 +489,7 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/defense_none"
+                        android:id="@+id/teleop_defense_na"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -496,7 +499,7 @@
                         android:textSize="@dimen/font_medium" />
 
                     <RadioButton
-                        android:id="@+id/defense_low"
+                        android:id="@+id/teleop_defense_low"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -506,7 +509,7 @@
                         android:textSize="@dimen/font_medium" />
 
                     <RadioButton
-                        android:id="@+id/defense_medium_low"
+                        android:id="@+id/teleop_defense_med_low"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -516,7 +519,7 @@
                         android:textSize="@dimen/font_medium" />
 
                     <RadioButton
-                        android:id="@+id/defense_medium"
+                        android:id="@+id/teleop_defense_medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -526,7 +529,7 @@
                         android:textSize="@dimen/font_medium" />
 
                     <RadioButton
-                        android:id="@+id/defense_medium_high"
+                        android:id="@+id/teleop_defense_med_high"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -536,7 +539,7 @@
                         android:textSize="@dimen/font_medium" />
 
                     <RadioButton
-                        android:id="@+id/defense_high"
+                        android:id="@+id/teleop_defense_high"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -550,6 +553,7 @@
             <!-- end DEFENSE card layout -->
 
             <!-- start DRIVER ABILITY card layout -->
+            <!-- Section: DRIVER ABILITY -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -559,7 +563,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/teleop_driving_ability_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
@@ -570,7 +574,7 @@
                     android:textStyle="bold" />
 
                 <RadioGroup
-                    android:id="@+id/driving_buttons"
+                    android:id="@+id/teleop_driving_ability_radio_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="7dp"
@@ -580,7 +584,7 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/driving_na"
+                        android:id="@+id/teleop_driving_ability_na"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -590,7 +594,7 @@
                         android:textSize="@dimen/font_medium" />
 
                     <RadioButton
-                        android:id="@+id/driving_slow"
+                        android:id="@+id/teleop_driving_ability_slow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -600,7 +604,7 @@
                         android:textSize="@dimen/font_medium" />
 
                     <RadioButton
-                        android:id="@+id/driving_jerky"
+                        android:id="@+id/teleop_driving_ability_jerky"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -610,7 +614,7 @@
                         android:textSize="@dimen/font_medium" />
 
                     <RadioButton
-                        android:id="@+id/driving_avg"
+                        android:id="@+id/teleop_driving_ability_avg"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -620,7 +624,7 @@
                         android:textSize="@dimen/font_medium" />
 
                     <RadioButton
-                        android:id="@+id/driving_fast"
+                        android:id="@+id/teleop_driving_ability_fast"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -630,7 +634,7 @@
                         android:textSize="@dimen/font_medium" />
 
                     <RadioButton
-                        android:id="@+id/driving_elite"
+                        android:id="@+id/teleop_driving_ability_elite"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -644,8 +648,9 @@
             <!-- end DRIVER ABILITY card layout -->
 
             <!-- start PHOTO layout -->
+            <!-- Section: PHOTO -->
             <LinearLayout
-                android:id="@+id/photo"
+                android:id="@+id/teleop_photo_container"
                 android:layout_width="589dp"
                 android:layout_height="186dp"
                 android:layout_gravity="center"

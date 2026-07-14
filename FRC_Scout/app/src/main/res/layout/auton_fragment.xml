@@ -31,7 +31,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/preload_title"
+                        android:id="@+id/auton_preload_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
@@ -41,7 +41,7 @@
                         android:textStyle="bold" />
 
                     <CheckBox
-                        android:id="@+id/preload_checkbox"
+                        android:id="@+id/auton_preload_checkbox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
@@ -61,7 +61,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/preload_accuracy_title"
+                        android:id="@+id/auton_preload_accuracy_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
@@ -73,7 +73,7 @@
 
                     <!-- start PRELOAD RADIO BUTTONS -->
                     <RadioGroup
-                        android:id="@+id/auton_accuracy_boxes"
+                        android:id="@+id/auton_preload_accuracy_radio_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
@@ -82,7 +82,7 @@
                         android:orientation="horizontal">
 
                         <RadioButton
-                            android:id="@+id/auton_accuracy_no"
+                            android:id="@+id/auton_preload_accuracy_no"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -92,7 +92,7 @@
                             android:textSize="@dimen/font_medium" />
 
                         <RadioButton
-                            android:id="@+id/auton_accuracy_a"
+                            android:id="@+id/auton_preload_accuracy_all"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -102,7 +102,7 @@
                             android:textSize="@dimen/font_medium" />
 
                         <RadioButton
-                            android:id="@+id/auton_accuracy_m"
+                            android:id="@+id/auton_preload_accuracy_most"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -112,7 +112,7 @@
                             android:textSize="@dimen/font_medium" />
 
                         <RadioButton
-                            android:id="@+id/auton_accuracy_s"
+                            android:id="@+id/auton_preload_accuracy_half"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -122,7 +122,7 @@
                             android:textSize="@dimen/font_medium" />
 
                         <RadioButton
-                            android:id="@+id/auton_accuracy_f"
+                            android:id="@+id/auton_preload_accuracy_few"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -132,7 +132,7 @@
                             android:textSize="@dimen/font_medium" />
 
                         <RadioButton
-                            android:id="@+id/auton_accuracy_n"
+                            android:id="@+id/auton_preload_accuracy_none"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -165,7 +165,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/auton_hopper_shot_title"
+                        android:id="@+id/auton_hopper_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
@@ -182,9 +182,9 @@
                         android:layout_marginStart="70dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
-                        android:padding="0dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#c64e34"
+                        android:padding="0dp"
                         android:text="@string/decrease"
                         android:textAlignment="center"
                         android:textColor="@android:color/white"
@@ -192,13 +192,13 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/auton_hopper_score_total"
+                        android:id="@+id/auton_hopper_total_text"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
-                        android:textAlignment="center"
                         android:text="@string/hopper_count_total"
+                        android:textAlignment="center"
                         android:textColor="@color/customTextPrimary"
                         android:textSize="@dimen/font_large" />
 
@@ -209,9 +209,9 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginEnd="30dp"
-                        android:padding="0dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#c64e34"
+                        android:padding="0dp"
                         android:text="@string/increase"
                         android:textAlignment="center"
                         android:textColor="@android:color/white"
@@ -230,7 +230,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/auton_hopper_accuracy_title"
+                        android:id="@+id/auton_accuracy_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
@@ -242,7 +242,7 @@
 
                     <!-- start HOPPER ACCURACY RADIO BUTTONS-->
                     <RadioGroup
-                        android:id="@+id/auton_accuracy_buttons"
+                        android:id="@+id/auton_accuracy_radio_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/rounded_rect_bottom"
@@ -360,7 +360,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/fuel_source_title"
+                    android:id="@+id/auton_fuel_source_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
@@ -381,7 +381,7 @@
                     android:orientation="horizontal">
 
                     <CheckBox
-                        android:id="@+id/az_checkbox"
+                        android:id="@+id/auton_az_checkbox"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
@@ -391,7 +391,7 @@
                         android:textSize="@dimen/font_medium" />
 
                     <CheckBox
-                        android:id="@+id/depot_checkbox"
+                        android:id="@+id/auton_depot_checkbox"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
@@ -401,7 +401,7 @@
                         android:textSize="@dimen/font_medium" />
 
                     <CheckBox
-                        android:id="@+id/outpost_checkbox"
+                        android:id="@+id/auton_outpost_checkbox"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
@@ -411,7 +411,7 @@
                         android:textSize="@dimen/font_medium" />
 
                     <CheckBox
-                        android:id="@+id/nz_checkbox"
+                        android:id="@+id/auton_nz_checkbox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
@@ -430,7 +430,7 @@
             <LinearLayout
                 android:id="@+id/auton_climb_position"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="360dp"
                 android:layout_marginTop="7dp"
                 android:background="@drawable/rounded_rect"
                 android:backgroundTint="#93A685">
@@ -445,8 +445,8 @@
                     android:backgroundTint="#C7CDD6">
 
                     <TextView
-                        android:id="@+id/auton_climb_title"
                         android:layout_width="110dp"
+                        android:id="@+id/auton_climb_label"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="7dp"
@@ -460,7 +460,7 @@
                 <!-- start layout that holds image-->
                 <!-- start CLIMB POSITION RADIO BUTTONS -->
                 <RadioGroup
-                    android:id="@+id/auton_climb_buttons"
+                    android:id="@+id/auton_climb_radio_group"
                     android:layout_width="430dp"
                     android:layout_height="330dp"
                     android:layout_marginStart="5dp"

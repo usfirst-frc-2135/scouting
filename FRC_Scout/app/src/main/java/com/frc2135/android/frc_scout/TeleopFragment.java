@@ -27,49 +27,49 @@ public class TeleopFragment extends Fragment
     private static final String TAG = "TeleopFragment";
 
     private static final int[] ACCURACY_IDS = {
-            R.id.accuracy_NA,
-            R.id.accuracy_most,
-            R.id.accuracy_three_fourths,
-            R.id.accuracy_half,
-            R.id.accuracy_quarter,
-            R.id.accuracy_few,
-            R.id.accuracy_none
+            R.id.teleop_accuracy_na,
+            R.id.teleop_accuracy_most,
+            R.id.teleop_accuracy_three_fourths,
+            R.id.teleop_accuracy_half,
+            R.id.teleop_accuracy_quarter,
+            R.id.teleop_accuracy_few,
+            R.id.teleop_accuracy_none
     };
 
     private static final int[] PASSING_RATE_IDS = {
-            R.id.passing_rate_na,
-            R.id.passing_low,
-            R.id.passing_medium,
-            R.id.passing_large,
-            R.id.passing_tons
+            R.id.teleop_passing_rate_na,
+            R.id.teleop_passing_rate_low,
+            R.id.teleop_passing_rate_medium,
+            R.id.teleop_passing_rate_large,
+            R.id.teleop_passing_rate_tons
     };
 
     private static final int[] DEFENSE_RATE_IDS = {
-            R.id.defense_none,
-            R.id.defense_low,
-            R.id.defense_medium_low,
-            R.id.defense_medium,
-            R.id.defense_medium_high,
-            R.id.defense_high
+            R.id.teleop_defense_na,
+            R.id.teleop_defense_low,
+            R.id.teleop_defense_med_low,
+            R.id.teleop_defense_medium,
+            R.id.teleop_defense_med_high,
+            R.id.teleop_defense_high
     };
 
     private static final int[] PASS_NZ_IDS = {
-            R.id.no_nz,
-            R.id.yes_nz
+            R.id.teleop_pass_nz_no,
+            R.id.teleop_pass_nz_yes
     };
 
     private static final int[] PASS_AZ_IDS = {
-            R.id.no_az,
-            R.id.yes_az
+            R.id.teleop_pass_az_no,
+            R.id.teleop_pass_az_yes
     };
 
     private static final int[] DRIVING_ABILITY_IDS = {
-            R.id.driving_na,
-            R.id.driving_slow,
-            R.id.driving_jerky,
-            R.id.driving_avg,
-            R.id.driving_fast,
-            R.id.driving_elite
+            R.id.teleop_driving_ability_na,
+            R.id.teleop_driving_ability_slow,
+            R.id.teleop_driving_ability_jerky,
+            R.id.teleop_driving_ability_avg,
+            R.id.teleop_driving_ability_fast,
+            R.id.teleop_driving_ability_elite
     };
 
     private MatchData m_matchData;
@@ -116,11 +116,11 @@ public class TeleopFragment extends Fragment
 
     private void loadMatchData()
     {
-        m_binding.hopperUsedTotal.setText(String.valueOf(m_matchData.getHoppersUsed()));
-        updateScoreColor(m_binding.hopperUsedTotal);
+        m_binding.teleopHopperTotalText.setText(String.valueOf(m_matchData.getHoppersUsed()));
+        updateScoreColor(m_binding.teleopHopperTotalText);
 
-        m_binding.intakeAndShoot.setChecked(m_matchData.getIntakeAndShoot());
-        m_binding.shovelFuel.setChecked(m_matchData.getShovelFuel());
+        m_binding.teleopIntakeShootCheckbox.setChecked(m_matchData.getIntakeAndShoot());
+        m_binding.teleopHerdedFuelCheckbox.setChecked(m_matchData.getShovelFuel());
 
         initAccuracyRate(m_matchData.getAccuracyRate());
         initPassingRate(m_matchData.getPassingEffectivenessRate());
@@ -134,15 +134,15 @@ public class TeleopFragment extends Fragment
 
     private void setupListeners()
     {
-        m_binding.hopperUsedDecrButton.setOnClickListener(v -> updateTotalsInt(m_binding.hopperUsedTotal, false));
-        m_binding.hopperUsedIncrButton.setOnClickListener(v -> updateTotalsInt(m_binding.hopperUsedTotal, true));
+        m_binding.teleopHopperDecrButton.setOnClickListener(v -> updateTotalsInt(m_binding.teleopHopperTotalText, false));
+        m_binding.teleopHopperIncrButton.setOnClickListener(v -> updateTotalsInt(m_binding.teleopHopperTotalText, true));
     }
 
     private void initAccuracyRate(int value)
     {
         if (value >= 0 && value < ACCURACY_IDS.length)
         {
-            m_binding.accuracyButtons.check(ACCURACY_IDS[value]);
+            m_binding.teleopAccuracyRadioGroup.check(ACCURACY_IDS[value]);
         }
     }
 
@@ -150,7 +150,7 @@ public class TeleopFragment extends Fragment
     {
         if (value >= 0 && value < PASSING_RATE_IDS.length)
         {
-            m_binding.passingEffectivenessButtons.check(PASSING_RATE_IDS[value]);
+            m_binding.teleopPassingRateRadioGroup.check(PASSING_RATE_IDS[value]);
         }
     }
 
@@ -158,7 +158,7 @@ public class TeleopFragment extends Fragment
     {
         if (value >= 0 && value < DEFENSE_RATE_IDS.length)
         {
-            m_binding.defenseButtons.check(DEFENSE_RATE_IDS[value]);
+            m_binding.teleopDefenseRadioGroup.check(DEFENSE_RATE_IDS[value]);
         }
     }
 
@@ -166,7 +166,7 @@ public class TeleopFragment extends Fragment
     {
         if (value >= 0 && value < PASS_NZ_IDS.length)
         {
-            m_binding.passNz.check(PASS_NZ_IDS[value]);
+            m_binding.teleopPassNzRadioGroup.check(PASS_NZ_IDS[value]);
         }
     }
 
@@ -174,7 +174,7 @@ public class TeleopFragment extends Fragment
     {
         if (value >= 0 && value < PASS_AZ_IDS.length)
         {
-            m_binding.passAz.check(PASS_AZ_IDS[value]);
+            m_binding.teleopPassAzRadioGroup.check(PASS_AZ_IDS[value]);
         }
     }
 
@@ -182,7 +182,7 @@ public class TeleopFragment extends Fragment
     {
         if (value >= 0 && value < DRIVING_ABILITY_IDS.length)
         {
-            m_binding.drivingButtons.check(DRIVING_ABILITY_IDS[value]);
+            m_binding.teleopDrivingAbilityRadioGroup.check(DRIVING_ABILITY_IDS[value]);
         }
     }
 
@@ -191,7 +191,7 @@ public class TeleopFragment extends Fragment
         m_photoNum = m_matchData.getTeleopPhoto();
         Log.i(TAG, "setupPhoto: image= " + m_photoNum);
 
-        ViewGroup.LayoutParams params = m_binding.photo.getLayoutParams();
+        ViewGroup.LayoutParams params = m_binding.teleopPhotoContainer.getLayoutParams();
         if (m_photoNum == 0)
         {
             Random random = new Random();
@@ -199,47 +199,47 @@ public class TeleopFragment extends Fragment
             if (rand < 0.03)
             {
                 m_photoNum = 3;
-                m_binding.photo.setBackgroundResource(R.drawable.me_and_charlotte);
+                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.me_and_charlotte);
             }
             else if (rand < 0.05)
             {
                 m_photoNum = 5;
-                m_binding.photo.setBackgroundResource(R.drawable.me_and_charlotte_2);
+                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.me_and_charlotte_2);
             }
             else if (rand < 0.3)
             {
                 m_photoNum = 4;
-                m_binding.photo.setBackgroundResource(R.drawable.frc_logo);
+                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.frc_logo);
                 params.width = 450;
-                m_binding.photo.setLayoutParams(params);
+                m_binding.teleopPhotoContainer.setLayoutParams(params);
             }
             else if (rand < 0.4)
             {
                 m_photoNum = 2;
-                m_binding.photo.setBackgroundResource(R.drawable.rebuilt_logo);
+                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.rebuilt_logo);
                 params.width = 250;
-                m_binding.photo.setLayoutParams(params);
+                m_binding.teleopPhotoContainer.setLayoutParams(params);
             }
             else if (rand < 0.5)
             {
                 m_photoNum = 6;
-                m_binding.photo.setBackgroundResource(R.drawable.t2135_logo_square);
+                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.t2135_logo_square);
                 params.width = 260;
-                m_binding.photo.setLayoutParams(params);
+                m_binding.teleopPhotoContainer.setLayoutParams(params);
             }
             else
             {
                 m_photoNum = 1;
-                m_binding.photo.setBackgroundResource(R.drawable.rebuilt_fuel);
+                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.rebuilt_fuel);
                 params.width = 250;
-                m_binding.photo.setLayoutParams(params);
+                m_binding.teleopPhotoContainer.setLayoutParams(params);
 
                 if (random.nextDouble() < 0.1)
                 {
                     m_photoNum = 7;
-                    m_binding.photo.setBackgroundResource(R.drawable.rebuilt_fuel_shiny);
+                    m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.rebuilt_fuel_shiny);
                     params.width = 250;
-                    m_binding.photo.setLayoutParams(params);
+                    m_binding.teleopPhotoContainer.setLayoutParams(params);
                 }
             }
             m_matchData.setTeleopPhoto(m_photoNum);
@@ -279,12 +279,12 @@ public class TeleopFragment extends Fragment
             }
             if (resId != 0)
             {
-                m_binding.photo.setBackgroundResource(resId);
+                m_binding.teleopPhotoContainer.setBackgroundResource(resId);
             }
             if (width != -1)
             {
                 params.width = width;
-                m_binding.photo.setLayoutParams(params);
+                m_binding.teleopPhotoContainer.setLayoutParams(params);
             }
         }
     }
@@ -335,7 +335,7 @@ public class TeleopFragment extends Fragment
 
     public int getCurrentAccuracyLevel()
     {
-        int id = m_binding.accuracyButtons.getCheckedRadioButtonId();
+        int id = m_binding.teleopAccuracyRadioGroup.getCheckedRadioButtonId();
         for (int i = 0; i < ACCURACY_IDS.length; i++)
         {
             if (id == ACCURACY_IDS[i])
@@ -348,7 +348,7 @@ public class TeleopFragment extends Fragment
 
     public int getPassingEffectivenessRate()
     {
-        int id = m_binding.passingEffectivenessButtons.getCheckedRadioButtonId();
+        int id = m_binding.teleopPassingRateRadioGroup.getCheckedRadioButtonId();
         for (int i = 0; i < PASSING_RATE_IDS.length; i++)
         {
             if (id == PASSING_RATE_IDS[i])
@@ -361,7 +361,7 @@ public class TeleopFragment extends Fragment
 
     public int getCurrentDefenseLevel()
     {
-        int id = m_binding.defenseButtons.getCheckedRadioButtonId();
+        int id = m_binding.teleopDefenseRadioGroup.getCheckedRadioButtonId();
         for (int i = 0; i < DEFENSE_RATE_IDS.length; i++)
         {
             if (id == DEFENSE_RATE_IDS[i])
@@ -374,7 +374,7 @@ public class TeleopFragment extends Fragment
 
     public int getPassNeutralZone()
     {
-        int id = m_binding.passNz.getCheckedRadioButtonId();
+        int id = m_binding.teleopPassNzRadioGroup.getCheckedRadioButtonId();
         for (int i = 0; i < PASS_NZ_IDS.length; i++)
         {
             if (id == PASS_NZ_IDS[i])
@@ -387,7 +387,7 @@ public class TeleopFragment extends Fragment
 
     public int getPassAllianceZone()
     {
-        int id = m_binding.passAz.getCheckedRadioButtonId();
+        int id = m_binding.teleopPassAzRadioGroup.getCheckedRadioButtonId();
         for (int i = 0; i < PASS_AZ_IDS.length; i++)
         {
             if (id == PASS_AZ_IDS[i])
@@ -400,7 +400,7 @@ public class TeleopFragment extends Fragment
 
     public int getDriverAbility()
     {
-        int id = m_binding.drivingButtons.getCheckedRadioButtonId();
+        int id = m_binding.teleopDrivingAbilityRadioGroup.getCheckedRadioButtonId();
         for (int i = 0; i < DRIVING_ABILITY_IDS.length; i++)
         {
             if (id == DRIVING_ABILITY_IDS[i])
@@ -423,7 +423,7 @@ public class TeleopFragment extends Fragment
         }
         try
         {
-            m_matchData.setHoppersUsed(Integer.parseInt(m_binding.hopperUsedTotal.getText().toString()));
+            m_matchData.setHoppersUsed(Integer.parseInt(m_binding.teleopHopperTotalText.getText().toString()));
         }
         catch (NumberFormatException e)
         {
@@ -433,10 +433,10 @@ public class TeleopFragment extends Fragment
         m_matchData.setPassingRate(getPassingEffectivenessRate());
         m_matchData.setTeleopPhoto(m_photoNum);
         m_matchData.setDefenseRate(getCurrentDefenseLevel());
-        m_matchData.setIntakeAndShoot(m_binding.intakeAndShoot.isChecked());
+        m_matchData.setIntakeAndShoot(m_binding.teleopIntakeShootCheckbox.isChecked());
         m_matchData.setPassNeutralZone(getPassNeutralZone());
         m_matchData.setPassAllianceZone(getPassAllianceZone());
-        m_matchData.setShovelFuel(m_binding.shovelFuel.isChecked());
+        m_matchData.setShovelFuel(m_binding.teleopHerdedFuelCheckbox.isChecked());
         m_matchData.setDriveAbility(getDriverAbility());
     }
 

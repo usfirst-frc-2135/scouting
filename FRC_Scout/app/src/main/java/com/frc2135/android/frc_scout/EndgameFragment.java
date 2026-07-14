@@ -25,35 +25,35 @@ public class EndgameFragment extends Fragment
     public static final String QRTAG = "qr";
 
     private static final int[] START_CLIMB_IDS = {
-            R.id.start_none,
-            R.id.start_before,
-            R.id.start_bell,
-            R.id.start_ten,
-            R.id.start_less
+            R.id.endgame_start_climb_na,
+            R.id.endgame_start_climb_before,
+            R.id.endgame_start_climb_bell,
+            R.id.endgame_start_climb_ten,
+            R.id.endgame_start_climb_less
     };
 
     private static final int[] CLIMB_LEVEL_IDS = {
-            R.id.endgame_level_na,
-            R.id.endgame_level_one,
-            R.id.endgame_level_two,
-            R.id.endgame_level_three
+            R.id.endgame_climb_level_na,
+            R.id.endgame_climb_level_one,
+            R.id.endgame_climb_level_two,
+            R.id.endgame_climb_level_three
     };
 
     private static final int[] CLIMB_POS_IDS = {
-            R.id.endgame_climb_na,
-            R.id.endgame_climb_back,
-            R.id.endgame_climb_left,
-            R.id.endgame_climb_front,
-            R.id.endgame_climb_right
+            R.id.endgame_climb_pos_na,
+            R.id.endgame_climb_pos_back,
+            R.id.endgame_climb_pos_left,
+            R.id.endgame_climb_pos_front,
+            R.id.endgame_climb_pos_right
     };
 
     private static final int[] DIED_VALUE_IDS = {
-            R.id.died_none,
-            R.id.died_most,
-            R.id.died_min,
-            R.id.died_thirty,
-            R.id.died_tt,
-            R.id.no_show
+            R.id.endgame_died_na,
+            R.id.endgame_died_most,
+            R.id.endgame_died_min,
+            R.id.endgame_died_thirty,
+            R.id.endgame_died_tt,
+            R.id.endgame_died_no_show
     };
 
     private MatchData m_matchData;
@@ -83,7 +83,7 @@ public class EndgameFragment extends Fragment
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        Log.d(TAG, "onViewCreate");
+        Log.d(TAG, "onViewCreated");
         setupActionBar();
         loadMatchData();
         setupListeners();
@@ -117,14 +117,14 @@ public class EndgameFragment extends Fragment
         initClimbPos(m_matchData.getEndgameClimbPos());
         initDiedValue(m_matchData.getDiedValue());
 
-        m_binding.comments.setText(m_matchData.getComment());
+        m_binding.endgameCommentsInput.setText(m_matchData.getComment());
     }
 
     private void setupListeners()
     {
-        m_binding.genQR.setEnabled(true);
-        m_binding.genQRDisabled.setVisibility(View.INVISIBLE);
-        m_binding.genQR.setOnClickListener(view -> {
+        m_binding.endgameGenerateQrButton.setEnabled(true);
+        m_binding.endgameGenerateQrButtonDisabled.setVisibility(View.INVISIBLE);
+        m_binding.endgameGenerateQrButton.setOnClickListener(view -> {
             updateEndgameData();
             String validationMsg = m_matchData.validateEntries();
             if (!validationMsg.isEmpty())
@@ -167,7 +167,7 @@ public class EndgameFragment extends Fragment
     {
         if (value >= 0 && value < START_CLIMB_IDS.length)
         {
-            m_binding.startText.check(START_CLIMB_IDS[value]);
+            m_binding.endgameStartClimbRadioGroup.check(START_CLIMB_IDS[value]);
         }
     }
 
@@ -175,7 +175,7 @@ public class EndgameFragment extends Fragment
     {
         if (value >= 0 && value < CLIMB_LEVEL_IDS.length)
         {
-            m_binding.endgameLevelClimbGroup.check(CLIMB_LEVEL_IDS[value]);
+            m_binding.endgameClimbLevelRadioGroup.check(CLIMB_LEVEL_IDS[value]);
         }
     }
 
@@ -183,7 +183,7 @@ public class EndgameFragment extends Fragment
     {
         if (value >= 0 && value < CLIMB_POS_IDS.length)
         {
-            m_binding.endgameClimbButtons.check(CLIMB_POS_IDS[value]);
+            m_binding.endgameClimbPosRadioGroup.check(CLIMB_POS_IDS[value]);
         }
     }
 
@@ -191,13 +191,13 @@ public class EndgameFragment extends Fragment
     {
         if (value >= 0 && value < DIED_VALUE_IDS.length)
         {
-            m_binding.diedGroup.check(DIED_VALUE_IDS[value]);
+            m_binding.endgameDiedRadioGroup.check(DIED_VALUE_IDS[value]);
         }
     }
 
     private int getDiedValue()
     {
-        int id = m_binding.diedGroup.getCheckedRadioButtonId();
+        int id = m_binding.endgameDiedRadioGroup.getCheckedRadioButtonId();
         for (int i = 0; i < DIED_VALUE_IDS.length; i++)
         {
             if (id == DIED_VALUE_IDS[i])
@@ -210,7 +210,7 @@ public class EndgameFragment extends Fragment
 
     private int getStartClimb()
     {
-        int id = m_binding.startText.getCheckedRadioButtonId();
+        int id = m_binding.endgameStartClimbRadioGroup.getCheckedRadioButtonId();
         for (int i = 0; i < START_CLIMB_IDS.length; i++)
         {
             if (id == START_CLIMB_IDS[i])
@@ -223,7 +223,7 @@ public class EndgameFragment extends Fragment
 
     private int getClimbPos()
     {
-        int id = m_binding.endgameClimbButtons.getCheckedRadioButtonId();
+        int id = m_binding.endgameClimbPosRadioGroup.getCheckedRadioButtonId();
         for (int i = 0; i < CLIMB_POS_IDS.length; i++)
         {
             if (id == CLIMB_POS_IDS[i])
@@ -236,7 +236,7 @@ public class EndgameFragment extends Fragment
 
     private int getClimbLevel()
     {
-        int id = m_binding.endgameLevelClimbGroup.getCheckedRadioButtonId();
+        int id = m_binding.endgameClimbLevelRadioGroup.getCheckedRadioButtonId();
         for (int i = 0; i < CLIMB_LEVEL_IDS.length; i++)
         {
             if (id == CLIMB_LEVEL_IDS[i])
@@ -259,7 +259,7 @@ public class EndgameFragment extends Fragment
         }
         m_matchData.setStartClimb(getStartClimb());
         m_matchData.setDiedValue(getDiedValue());
-        m_matchData.setComment(m_binding.comments.getText().toString());
+        m_matchData.setComment(m_binding.endgameCommentsInput.getText().toString());
         m_matchData.setEndgameClimbPos(getClimbPos());
         m_matchData.setEndgameClimbLevel(getClimbLevel());
     }
