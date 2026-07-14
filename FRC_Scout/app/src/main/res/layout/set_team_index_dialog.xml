@@ -13,6 +13,7 @@
         android:text="@string/set_the_team_index_to_use"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
+    <!-- start Team index dropdown layout -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/set_team_index_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -26,5 +27,6 @@
             android:inputType="none"
             android:hint="@string/team_index" />
     </com.google.android.material.textfield.TextInputLayout>
+    <!-- end Team index dropdown layout -->
 
 </LinearLayout>

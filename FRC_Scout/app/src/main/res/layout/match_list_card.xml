@@ -12,6 +12,7 @@
     app:cardCornerRadius="12dp"
     app:cardElevation="2dp">
 
+    <!-- start Match card main layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -78,5 +79,6 @@
             tools:text="Mar 15, 2024 14:30" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- end Match card main layout -->
 
 </com.google.android.material.card.MaterialCardView>

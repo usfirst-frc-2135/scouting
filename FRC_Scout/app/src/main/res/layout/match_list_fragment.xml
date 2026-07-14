@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!-- start controls layout -->
     <LinearLayout
         android:id="@+id/controls_container"
         android:layout_width="match_parent"
@@ -59,7 +60,9 @@
             android:text="@string/filter_list"
             app:icon="@android:drawable/ic_menu_search" />
     </LinearLayout>
+    <!-- end controls layout -->
 
+    <!-- start recycler view layout -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -86,5 +89,6 @@
             app:tint="@color/startMatchText" />
 
     </FrameLayout>
+    <!-- end recycler view layout -->
 
 </LinearLayout>

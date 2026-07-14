@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:padding="24dp">
 
+    <!-- start event code input layout -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/event_code_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -22,5 +23,6 @@
             android:hint="@string/event_code"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
+    <!-- end event code input layout -->
 
 </LinearLayout>

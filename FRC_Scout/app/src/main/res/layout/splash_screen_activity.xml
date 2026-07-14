@@ -8,6 +8,7 @@
     android:alpha="0"
     tools:alpha="1">
 
+    <!-- start Branding layout -->
     <ImageView
         android:id="@+id/team_logo"
         android:layout_width="280dp"
@@ -59,6 +60,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/team_name" />
+    <!-- end Branding layout -->
 
     <TextView
         android:id="@+id/settings_summary"
@@ -73,6 +75,7 @@
         app:layout_constraintTop_toBottomOf="@+id/team_address"
         tools:text="Event: 2026casac\nIndex: 1 - Red 1\nScout: Jane D" />
 
+    <!-- start Metadata layout -->
     <TextView
         android:id="@+id/app_version_text"
         android:layout_width="wrap_content"
@@ -96,5 +99,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+    <!-- end Metadata layout -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

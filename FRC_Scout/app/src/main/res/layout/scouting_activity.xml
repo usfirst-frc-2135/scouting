@@ -8,6 +8,7 @@
     android:fitsSystemWindows="true"
     tools:context=".ScoutingActivity">
 
+    <!-- start AppBar layout -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
@@ -34,13 +35,17 @@
         </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
+    <!-- end AppBar layout -->
 
+    <!-- start Fragment container layout -->
     <FrameLayout
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    <!-- end Fragment container layout -->
 
+    <!-- start Bottom navigation layout -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="match_parent"
@@ -48,5 +53,6 @@
         android:layout_gravity="bottom"
         android:background="@color/bottomColor"
         app:menu="@menu/bottom_nav_menu" />
+    <!-- end Bottom navigation layout -->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

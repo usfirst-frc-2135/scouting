@@ -8,15 +8,15 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
-        <!-- start Teleop fragment layout -->
+        <!-- start Teleop fragment main layout -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingBottom="16dp">
 
-            <!-- start Game Piece card layout-->
             <!-- Section: GAME PIECE MANIPULATION -->
+            <!-- start GAME PIECE MANIPULATION card layout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
                 android:backgroundTint="#CACFF9"
                 android:orientation="vertical">
 
-                <!-- start HOPPER +/- BUTTONS -->
+                <!-- start HOPPER +/- BUTTONS layout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -86,9 +86,9 @@
                         android:textStyle="bold" />
 
                 </LinearLayout>
-                <!-- end HOPPER +/- BUTTONS -->
+                <!-- end HOPPER +/- BUTTONS layout -->
 
-                <!-- start HOPPER ACCURACY RATING -->
+                <!-- start HOPPER ACCURACY RATING layout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -207,9 +207,8 @@
                             android:visibility="invisible" />
 
                     </RadioGroup>
-                    <!-- end HOPPER ACCURACY RATING -->
                 </LinearLayout>
-                <!-- end HOPPER ACCURACY layout -->
+                <!-- end HOPPER ACCURACY RATING layout -->
 
                 <!-- start INTAKE AND SHOOT CHECKBOX layout -->
                 <LinearLayout
@@ -234,10 +233,10 @@
                 <!--end INTAKE AND SHOOT CHECKBOX layout -->
 
             </LinearLayout>
-            <!-- end Game Piece card layout-->
+            <!-- end GAME PIECE MANIPULATION card layout -->
 
-            <!-- start PASSING SECTION card layout -->
             <!-- Section: PASSING SECTION -->
+            <!-- start PASSING SECTION card layout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -281,7 +280,7 @@
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_medium" />
 
-                        <!-- start NEUTRAL ZONE CHECKBOX -->
+                        <!-- start NEUTRAL ZONE CHECKBOX layout -->
                         <RadioGroup
                             android:id="@+id/teleop_pass_nz_radio_group"
                             android:layout_width="wrap_content"
@@ -310,9 +309,9 @@
                                 android:textColor="@color/customTextPrimary"
                                 android:textSize="@dimen/font_medium" />
                         </RadioGroup>
-                        <!-- end NEUTRAL ZONE CHECKBOX -->
+                        <!-- end NEUTRAL ZONE CHECKBOX layout -->
 
-                        <!-- start OPPOSING ALLIANCE ZONE CHECKBOX -->
+                        <!-- start OPPOSING ALLIANCE ZONE CHECKBOX layout -->
                         <TextView
                             android:id="@+id/teleop_alliance_label"
                             android:layout_width="135dp"
@@ -349,11 +348,13 @@
                                 android:textColor="@color/customTextPrimary"
                                 android:textSize="@dimen/font_medium" />
                         </RadioGroup>
-                        <!-- end OPPOSING ALLIANCE ZONE CHECKBOX -->
+                        <!-- end OPPOSING ALLIANCE ZONE CHECKBOX layout -->
+
                     </LinearLayout>
                     <!-- end PASSING FROM RADIO BUTTONS layout -->
 
                 </LinearLayout>
+                <!-- end PASSING FROM layout -->
 
                 <!-- start PASSING EFFECTIVENESS RATING layout -->
                 <LinearLayout
@@ -430,6 +431,7 @@
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_medium" />
                     </RadioGroup>
+
                 </LinearLayout>
                 <!-- end PASSING EFFECTIVENESS RATING layout -->
 
@@ -457,8 +459,8 @@
             </LinearLayout>
             <!-- end PASSING SECTION card layout -->
 
-            <!-- start DEFENSE card layout-->
             <!-- Section: DEFENSE SECTION -->
+            <!-- start DEFENSE SECTION card layout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -468,9 +470,9 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/teleop_defense_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/teleop_defense_label"
                     android:layout_marginStart="7dp"
                     android:layout_marginTop="7dp"
                     android:text="@string/defense"
@@ -478,6 +480,7 @@
                     android:textSize="@dimen/font_medium"
                     android:textStyle="bold" />
 
+                <!-- start DEFENSE RADIO BUTTONS layout -->
                 <RadioGroup
                     android:id="@+id/teleop_defense_radio_group"
                     android:layout_width="match_parent"
@@ -548,12 +551,13 @@
                         android:textColor="@color/customTextPrimary"
                         android:textSize="@dimen/font_medium" />
                 </RadioGroup>
+                <!-- end DEFENSE RADIO BUTTONS layout -->
 
             </LinearLayout>
-            <!-- end DEFENSE card layout -->
+            <!-- end DEFENSE SECTION card layout -->
 
-            <!-- start DRIVER ABILITY card layout -->
             <!-- Section: DRIVER ABILITY -->
+            <!-- start DRIVER ABILITY card layout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -573,6 +577,7 @@
                     android:textSize="@dimen/font_medium"
                     android:textStyle="bold" />
 
+                <!-- start DRIVING ABILITY RADIO BUTTONS layout -->
                 <RadioGroup
                     android:id="@+id/teleop_driving_ability_radio_group"
                     android:layout_width="match_parent"
@@ -643,6 +648,7 @@
                         android:textColor="@color/customTextPrimary"
                         android:textSize="@dimen/font_medium" />
                 </RadioGroup>
+                <!-- end DRIVING ABILITY RADIO BUTTONS layout -->
 
             </LinearLayout>
             <!-- end DRIVER ABILITY card layout -->
@@ -662,7 +668,7 @@
             <!-- end PHOTO card layout -->
 
         </LinearLayout>
-        <!-- end Teleop fragment layout -->
+        <!-- end Teleop fragment main layout -->
 
     </androidx.core.widget.NestedScrollView>
 

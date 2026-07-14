@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- start QR code dialog layout -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -6,6 +7,7 @@
     android:orientation="vertical"
     android:padding="24dp">
 
+    <!-- start QR card layout -->
     <com.google.android.material.card.MaterialCardView android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardCornerRadius="8dp"
@@ -21,6 +23,7 @@
             android:contentDescription="@string/qr_code_image"
             android:scaleType="fitCenter" />
     </com.google.android.material.card.MaterialCardView>
+    <!-- end QR card layout -->
 
     <TextView
         android:id="@+id/qr_data_preview"
@@ -33,3 +36,4 @@
         android:fontFamily="monospace" />
 
 </LinearLayout>
+<!-- end QR code dialog layout -->

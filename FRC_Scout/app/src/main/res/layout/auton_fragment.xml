@@ -8,14 +8,15 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
-        <!-- start Autonomous fragment layout -->
+        <!-- start Autonomous fragment main layout -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingBottom="16dp">
 
-            <!-- start PRELOAD Game Piece card layout -->
+            <!-- Section: PRELOAD -->
+            <!-- start PRELOAD card layout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -71,7 +72,7 @@
                         android:textSize="@dimen/font_medium"
                         android:textStyle="bold" />
 
-                    <!-- start PRELOAD RADIO BUTTONS -->
+                    <!-- start PRELOAD RADIO BUTTONS layout -->
                     <RadioGroup
                         android:id="@+id/auton_preload_accuracy_radio_group"
                         android:layout_width="match_parent"
@@ -141,7 +142,7 @@
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_medium" />
                     </RadioGroup>
-                    <!-- end PRELOAD RADIO BUTTONS -->
+                    <!-- end PRELOAD RADIO BUTTONS layout -->
 
                 </LinearLayout>
                 <!-- end PRELOAD ACCURACY layout -->
@@ -149,7 +150,8 @@
             </LinearLayout>
             <!-- end PRELOAD card layout -->
 
-            <!-- start HOPPER Game Piece card layout -->
+            <!-- start HOPPER card layout -->
+            <!-- Section: HOPPER -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -158,7 +160,7 @@
                 android:backgroundTint="#EE965F"
                 android:orientation="vertical">
 
-                <!-- start HOPPER +/- BUTTONS layout-->
+                <!-- start HOPPER +/- BUTTONS layout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -182,9 +184,9 @@
                         android:layout_marginStart="70dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
+                        android:padding="0dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#c64e34"
-                        android:padding="0dp"
                         android:text="@string/decrease"
                         android:textAlignment="center"
                         android:textColor="@android:color/white"
@@ -197,8 +199,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
-                        android:text="@string/hopper_count_total"
                         android:textAlignment="center"
+                        android:text="@string/hopper_count_total"
                         android:textColor="@color/customTextPrimary"
                         android:textSize="@dimen/font_large" />
 
@@ -209,9 +211,9 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginEnd="30dp"
+                        android:padding="0dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#c64e34"
-                        android:padding="0dp"
                         android:text="@string/increase"
                         android:textAlignment="center"
                         android:textColor="@android:color/white"
@@ -219,9 +221,9 @@
                         android:textStyle="bold" />
 
                 </LinearLayout>
-                <!-- end HOPPER +/- BUTTONS layout-->
+                <!-- end HOPPER +/- BUTTONS layout -->
 
-                <!-- start HOPPER ACCURACY layout-->
+                <!-- start HOPPER ACCURACY layout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -240,7 +242,7 @@
                         android:textSize="@dimen/font_medium"
                         android:textStyle="bold" />
 
-                    <!-- start HOPPER ACCURACY RADIO BUTTONS-->
+                    <!-- start HOPPER ACCURACY RADIO BUTTONS layout -->
                     <RadioGroup
                         android:id="@+id/auton_accuracy_radio_group"
                         android:layout_width="match_parent"
@@ -342,15 +344,14 @@
                             android:visibility="invisible" />
 
                     </RadioGroup>
-                    <!-- end HOPPER ACCURACY RADIO BUTTONS-->
-
+                    <!-- end HOPPER ACCURACY RADIO BUTTONS layout -->
                 </LinearLayout>
-                <!-- end HOPPER ACCURACY layout-->
-
+                <!-- end HOPPER ACCURACY layout -->
             </LinearLayout>
             <!-- end HOPPER card layout -->
 
             <!-- start FUEL card layout -->
+            <!-- Section: FUEL -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -371,7 +372,7 @@
                     android:textSize="@dimen/font_medium"
                     android:textStyle="bold" />
 
-                <!-- start FUEL CHECKBOX layout -->
+                <!-- start FUEL CHECKBOXES layout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -421,11 +422,11 @@
                         android:textSize="@dimen/font_medium" />
 
                 </LinearLayout>
-                <!-- end FUEL CHECKBOX layout -->
-
+                <!-- end FUEL CHECKBOXES layout -->
             </LinearLayout>
-            <!-- end  FUEL card layout -->
+            <!-- end FUEL card layout -->
 
+            <!-- Section: CLIMB -->
             <!-- start CLIMB card layout -->
             <LinearLayout
                 android:id="@+id/auton_climb_position"
@@ -435,7 +436,7 @@
                 android:background="@drawable/rounded_rect"
                 android:backgroundTint="#93A685">
 
-                <!-- start CLIMB POSITION card title -->
+                <!-- start CLIMB POSITION title layout -->
                 <LinearLayout
                     android:layout_width="120dp"
                     android:layout_height="65dp"
@@ -445,8 +446,8 @@
                     android:backgroundTint="#C7CDD6">
 
                     <TextView
-                        android:layout_width="110dp"
                         android:id="@+id/auton_climb_label"
+                        android:layout_width="110dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="7dp"
@@ -455,10 +456,9 @@
                         android:textSize="@dimen/font_medium"
                         android:textStyle="bold" />
                 </LinearLayout>
-                <!-- end CLIMB POSITION card title -->
+                <!-- end CLIMB POSITION title layout -->
 
-                <!-- start layout that holds image-->
-                <!-- start CLIMB POSITION RADIO BUTTONS -->
+                <!-- start CLIMB POSITION RADIO BUTTONS layout -->
                 <RadioGroup
                     android:id="@+id/auton_climb_radio_group"
                     android:layout_width="430dp"
@@ -534,13 +534,12 @@
                         android:textSize="@dimen/font_medium" />
 
                 </RadioGroup>
-                <!-- end CLIMB POSITION RADIO BUTTONS -->
-
+                <!-- end CLIMB POSITION RADIO BUTTONS layout -->
             </LinearLayout>
             <!-- end CLIMB card layout -->
 
         </LinearLayout>
-        <!-- end Autonomous fragment layout -->
+        <!-- end Autonomous fragment main layout -->
 
     </androidx.core.widget.NestedScrollView>
 

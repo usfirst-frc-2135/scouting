@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <!-- start Main container layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,7 +21,7 @@
             android:layout_marginBottom="24dp"
             android:textColor="?android:attr/textColorSecondary" />
 
-        <!-- Event Code Filter -->
+        <!-- start Event Code Filter layout -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/event_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -44,8 +45,9 @@
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp" />
         </com.google.android.material.textfield.TextInputLayout>
+        <!-- end Event Code Filter layout -->
 
-        <!-- Match Number Filter -->
+        <!-- start Match Number Filter layout -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/match_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -69,8 +71,9 @@
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp" />
         </com.google.android.material.textfield.TextInputLayout>
+        <!-- end Match Number Filter layout -->
 
-        <!-- Team Filter -->
+        <!-- start Team Filter layout -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/team_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -94,8 +97,9 @@
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp" />
         </com.google.android.material.textfield.TextInputLayout>
+        <!-- end Team Filter layout -->
 
-        <!-- Scout Filter -->
+        <!-- start Scout Filter layout -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/scout_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -118,6 +122,8 @@
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp" />
         </com.google.android.material.textfield.TextInputLayout>
+        <!-- end Scout Filter layout -->
 
     </LinearLayout>
+    <!-- end Main container layout -->
 </ScrollView>

@@ -7,6 +7,7 @@
     android:fitsSystemWindows="true"
     tools:context=".MatchListActivity">
 
+    <!-- start AppBar layout -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
@@ -33,11 +34,14 @@
         </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
+    <!-- end AppBar layout -->
 
+    <!-- start Fragment container layout -->
     <FrameLayout
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    <!-- end Fragment container layout -->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
