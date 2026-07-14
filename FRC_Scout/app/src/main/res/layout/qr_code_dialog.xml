@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/match_data_qr"
-            android:layout_width="280dp"
-            android:layout_height="280dp"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/qr_code_image"
             android:scaleType="fitCenter" />

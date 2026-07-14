@@ -138,7 +138,7 @@
     <string name="large">Large</string>
     <string name="tons">Tons</string>
 
-    <string name="passing_zone">PASSING FROM ZONE</string>
+    <string name="passing_from_zone">PASSING FROM ZONE</string>
     <string name="herded_lots_of_fuel">Herded a lot of fuel</string>
     <string name="intake_while_shooting">Intake and shoot at the same time</string>
 

@@ -8,13 +8,14 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
+        <!-- start endgame fragment layout -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="24dp">
+            android:paddingBottom="16dp">
 
-            <!-- start "START CLIMB" layout -->
+            <!-- start "START CLIMB" card layout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -24,9 +25,11 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/start_climb_time_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
+                    android:layout_marginTop="7dp"
                     android:text="@string/start_climbing"
                     android:textColor="@color/customTextPrimary"
                     android:textSize="@dimen/font_medium"
@@ -37,6 +40,8 @@
                     android:id="@+id/start_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingStart="7dp"
+                    android:paddingEnd="7dp"
                     android:background="@drawable/rounded_rect_bottom"
                     android:backgroundTint="#c1cbb8"
                     android:orientation="horizontal">
@@ -95,38 +100,36 @@
                 <!-- end START CLIMB RADIO BUTTONS layout-->
 
             </LinearLayout>
-            <!-- end START CLIMB layout -->
+            <!-- end START CLIMB card layout -->
 
-            <!-- start CLIMB layout -->
+            <!-- start CLIMB POSITION card layout -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
-                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
                 android:background="@drawable/rounded_rect"
                 android:backgroundTint="#93A685"
-                android:orientation="vertical"
-                android:paddingTop="11dp">
+                android:orientation="vertical">
 
                 <!--start layout that holds first image-->
                 <LinearLayout
-                    android:id="@+id/imageOne"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/endgame_climb_level"
+                    android:layout_width="600dp"
                     android:layout_height="230dp"
-                    android:layout_marginStart="1dp"
                     android:background="@drawable/tower_angle_upper">
 
                     <!-- start CLIMB LEVEL TEXT layout-->
                     <LinearLayout
-                        android:layout_width="130dp"
+                        android:layout_width="120dp"
                         android:layout_height="65dp"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginStart="7dp"
                         android:layout_marginTop="7dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#f3d8ea">
 
                         <TextView
-                            android:id="@+id/Climb_title"
-                            android:layout_width="115dp"
+                            android:id="@+id/endgame_climb_title"
+                            android:layout_width="110dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:layout_marginTop="7dp"
@@ -142,9 +145,8 @@
                         android:id="@+id/endgame_level_climb_group"
                         android:layout_width="match_parent"
                         android:layout_height="230dp"
-                        android:layout_marginTop="0dp"
-                        android:orientation="vertical"
-                        android:paddingTop="20dp">
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical">
 
                         <RadioButton
                             android:id="@+id/endgame_level_na"
@@ -206,22 +208,21 @@
 
                 <!--start layout that holds second image-->
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="600dp"
                     android:layout_height="100dp"
-                    android:layout_marginStart="1dp"
                     android:background="@drawable/tower_angle_lower">
 
                     <!-- start CLIMB POSITION TEXT layout-->
                     <LinearLayout
-                        android:layout_width="130dp"
+                        android:layout_width="120dp"
                         android:layout_height="65dp"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginStart="7dp"
                         android:layout_marginTop="7dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#C7CDD6">
 
                         <TextView
-                            android:layout_width="150dp"
+                            android:layout_width="110dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:layout_marginTop="7dp"
@@ -259,7 +260,7 @@
                             android:layout_width="50dp"
                             android:layout_height="25dp"
                             android:layout_marginStart="90dp"
-                            android:layout_marginTop="30dp"
+                            android:layout_marginTop="60dp"
                             android:background="@drawable/rounded_rect"
                             android:backgroundTint="#C7CDD6"
                             android:buttonTint="#717982"
@@ -272,7 +273,7 @@
                             android:layout_width="50dp"
                             android:layout_height="25dp"
                             android:layout_marginStart="30dp"
-                            android:layout_marginTop="0dp"
+                            android:layout_marginTop="10dp"
                             android:background="@drawable/rounded_rect"
                             android:backgroundTint="#C7CDD6"
                             android:buttonTint="#717982"
@@ -285,7 +286,7 @@
                             android:layout_width="50dp"
                             android:layout_height="25dp"
                             android:layout_marginStart="-5dp"
-                            android:layout_marginTop="30dp"
+                            android:layout_marginTop="60dp"
                             android:background="@drawable/rounded_rect"
                             android:backgroundTint="#C7CDD6"
                             android:buttonTint="#717982"
@@ -298,7 +299,7 @@
                             android:layout_width="50dp"
                             android:layout_height="25dp"
                             android:layout_marginStart="-10dp"
-                            android:layout_marginTop="0dp"
+                            android:layout_marginTop="10dp"
                             android:background="@drawable/rounded_rect"
                             android:backgroundTint="#C7CDD6"
                             android:buttonTint="#818A95"
@@ -313,14 +314,13 @@
                 <!--end layout that holds second image-->
 
             </LinearLayout>
-            <!--end CLIMB section-->
+            <!-- start CLIMB POSITION card layout -->
 
-            <!-- start DIED layout -->
+            <!-- start DIED card layout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                android:layout_marginBottom="5dp"
                 android:background="@drawable/rounded_rect"
                 android:backgroundTint="#b2538e"
                 android:orientation="vertical">
@@ -329,16 +329,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
-                    android:layout_marginEnd="5dp"
+                    android:layout_marginTop="7dp"
                     android:text="@string/died"
                     android:textColor="@color/customTextPrimary"
                     android:textSize="@dimen/font_medium"
                     android:textStyle="bold" />
+
                 <!-- start DIED RADIO BUTTONS  -->
                 <RadioGroup
                     android:id="@+id/died_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingStart="7dp"
+                    android:paddingEnd="7dp"
                     android:background="@drawable/rounded_rect_bottom"
                     android:backgroundTint="#c277a6"
                     android:orientation="horizontal">
@@ -406,30 +409,31 @@
                 <!-- end DIED RADIO BUTTONS  -->
 
             </LinearLayout>
-            <!-- end DIED section -->
+            <!-- end DIED card layout -->
 
-            <!-- COMMENTS start -->
+            <!-- COMMENTS start (no card?) -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="7dp">
+                android:layout_marginTop="7dp"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/comments_title"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="7dp"
-                android:text="@string/comments"
-                android:textColor="@color/textPrimary"
-                android:textSize="@dimen/font_large" />
+                <TextView
+                    android:id="@+id/comments_title"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:text="@string/comments"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="@dimen/font_large"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/comments"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:autofillHints="none"
+                    android:autofillHints="Enter up to 400 characters."
                     android:hint="@string/enter_comments_here"
                     android:inputType="text"
                     android:maxLength="400"
@@ -440,12 +444,13 @@
                 </EditText>
 
             </LinearLayout>
-            <!-- COMMENTS end-->
+            <!-- end COMMENTS section -->
 
             <android.widget.Space
                 android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                android:layout_height="20dp" />
 
+            <!-- start QR Code and DONE buttons -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -474,10 +479,6 @@
                     android:src="@drawable/qr_code_icon"
                     android:textColor="#3F51B5" />
 
-                <android.widget.Space
-                    android:layout_width="90dp"
-                    android:layout_height="match_parent" />
-
                 <Button
                     android:id="@+id/endgame_done_button"
                     android:layout_width="150dp"
@@ -505,8 +506,11 @@
                     android:textSize="@dimen/font_huge" />
 
             </RelativeLayout>
+            <!-- end QR Code and DONE buttons -->
 
         </LinearLayout>
+        <!-- end endgame fragment layout -->
+
     </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
