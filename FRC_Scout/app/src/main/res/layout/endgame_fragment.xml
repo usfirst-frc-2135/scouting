@@ -45,6 +45,7 @@
                         android:id="@+id/start_none"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
                         android:layout_weight="1"
                         android:buttonTint="@color/customTextPrimary"
                         android:text="@string/n_a"
@@ -414,13 +415,14 @@
                 android:orientation="horizontal"
                 android:paddingTop="7dp">
 
-                <TextView
-                    android:id="@+id/comments_title"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/comments"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="@dimen/font_large" />
+            <TextView
+                android:id="@+id/comments_title"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:text="@string/comments"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/font_large" />
 
                 <EditText
                     android:id="@+id/comments"
