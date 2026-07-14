@@ -66,7 +66,7 @@ public class LoadScoutNamesDialog extends DialogFragment
             String currentEventCode = settings.getEventCode();
             if (!currentEventCode.isEmpty() && !Objects.equals(currentEventCode, "EVTX"))
             {
-                m_binding.eventCodeField.setText(currentEventCode);
+                m_binding.loadEventCodeInput.setText(currentEventCode);
             }
         }
 
@@ -77,7 +77,7 @@ public class LoadScoutNamesDialog extends DialogFragment
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
                 .setNeutralButton("Clear Scout Names", (d, w) -> {
                     Log.d(TAG, "Clear Scout Names called");
-                    String eventCode = Objects.requireNonNull(m_binding.eventCodeField.getText()).toString().trim();
+                    String eventCode = Objects.requireNonNull(m_binding.loadEventCodeInput.getText()).toString().trim();
                     if (!eventCode.isEmpty())
                     {
                         ScoutNames scoutNames = ScoutNames.getInstance(requireContext(), eventCode, false);
@@ -90,12 +90,12 @@ public class LoadScoutNamesDialog extends DialogFragment
                             settings.clearPastScouts();
                         }
                     }
-                    m_binding.eventCodeField.setText("");
-                    m_binding.eventCodeField.setError(null);
+                    m_binding.loadEventCodeInput.setText("");
+                    m_binding.loadEventCodeLayout.setError(null);
                 })
                 .create();
 
-        m_binding.eventCodeField.addTextChangedListener(new TextWatcher()
+        m_binding.loadEventCodeInput.addTextChangedListener(new TextWatcher()
         {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
@@ -105,7 +105,7 @@ public class LoadScoutNamesDialog extends DialogFragment
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
-                m_binding.eventCodeLayout.setError(null);
+                m_binding.loadEventCodeLayout.setError(null);
                 String eventCode = s.toString().trim().toLowerCase(Locale.US);
                 if (Settings.getInstance(requireContext()).isValidEventCode(eventCode))
                 {
@@ -128,7 +128,7 @@ public class LoadScoutNamesDialog extends DialogFragment
             okButton.setOnClickListener(v -> handleOkClick(dialog));
         });
 
-        m_binding.eventCodeField.setOnEditorActionListener((v, actionId, event) -> {
+        m_binding.loadEventCodeInput.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_UNSPECIFIED)
             {
                 Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
@@ -153,16 +153,16 @@ public class LoadScoutNamesDialog extends DialogFragment
      */
     private void handleOkClick(AlertDialog dialog)
     {
-        String eventCode = Objects.requireNonNull(m_binding.eventCodeField.getText()).toString().trim().toLowerCase(Locale.US);
+        String eventCode = Objects.requireNonNull(m_binding.loadEventCodeInput.getText()).toString().trim().toLowerCase(Locale.US);
 
         Settings settings = Settings.getInstance(requireContext());
         if (!settings.isValidEventCode(eventCode))
         {
-            m_binding.eventCodeField.setError("Invalid event code (e.g., 2026casac)");
+            m_binding.loadEventCodeLayout.setError("Invalid event code (e.g., 2026casac)");
             return;
         }
 
-        m_binding.eventCodeLayout.setError(null);
+        m_binding.loadEventCodeLayout.setError(null);
         downloadScoutNames(eventCode, dialog);
     }
 
@@ -181,7 +181,7 @@ public class LoadScoutNamesDialog extends DialogFragment
         Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         okButton.setEnabled(false);
         okButton.setText(R.string.loading);
-        m_binding.eventCodeField.setEnabled(false);
+        m_binding.loadEventCodeInput.setEnabled(false);
 
         String urlStr = Constants.TEAM_WEBSITE_JSON_URL + eventCode + Constants.SCOUT_NAMES_FILENAME_SUFFIX;
         Log.i(TAG, "URL: " + urlStr);
@@ -236,7 +236,7 @@ public class LoadScoutNamesDialog extends DialogFragment
         }
         if (m_binding != null)
         {
-            m_binding.eventCodeField.setEnabled(true);
+            m_binding.loadEventCodeInput.setEnabled(true);
         }
     }
 

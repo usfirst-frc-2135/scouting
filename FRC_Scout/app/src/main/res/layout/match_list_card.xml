@@ -2,7 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/match_card"
+    android:id="@+id/match_card_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="8dp"
@@ -19,33 +19,33 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/match_number"
+            android:id="@+id/match_card_number_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/font_medium"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/match_team_number"
+            app:layout_constraintEnd_toStartOf="@+id/match_card_team_text"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Match 42" />
 
         <TextView
-            android:id="@+id/match_event_code"
+            android:id="@+id/match_card_event_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:textColor="@color/textSecondary"
             android:textSize="@dimen/font_xx_small"
-            app:layout_constraintEnd_toStartOf="@+id/match_scout_name"
+            app:layout_constraintEnd_toStartOf="@+id/match_card_scout_text"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/match_number"
+            app:layout_constraintTop_toBottomOf="@id/match_card_number_text"
             tools:text="2024casac" />
 
         <TextView
-            android:id="@+id/match_team_number"
+            android:id="@+id/match_card_team_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/textSecondary"
@@ -56,18 +56,18 @@
             tools:text="Team 2135" />
 
         <TextView
-            android:id="@+id/match_scout_name"
+            android:id="@+id/match_card_scout_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:textColor="@color/textSecondary"
             android:textSize="@dimen/font_xx_small"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/match_team_number"
+            app:layout_constraintTop_toBottomOf="@id/match_card_team_text"
             tools:text="Scout: John Doe" />
 
         <TextView
-            android:id="@+id/match_date"
+            android:id="@+id/match_card_date_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -75,7 +75,7 @@
             android:textSize="@dimen/font_tiny"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/match_scout_name"
+            app:layout_constraintTop_toBottomOf="@id/match_card_scout_text"
             tools:text="Mar 15, 2024 14:30" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

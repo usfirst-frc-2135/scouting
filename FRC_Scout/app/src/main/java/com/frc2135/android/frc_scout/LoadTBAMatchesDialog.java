@@ -71,18 +71,18 @@ public class LoadTBAMatchesDialog extends DialogFragment
             String currentEventCode = settings.getEventCode();
             if (!currentEventCode.isEmpty() && !Objects.equals(currentEventCode, "EVTX"))
             {
-                m_binding.eventCodeField.setText(currentEventCode);
+                m_binding.loadEventCodeInput.setText(currentEventCode);
             }
         }
 
-        AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity())
+        AlertDialog dialog = new MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.load_tba_matches_title)
                 .setView(m_binding.getRoot())
                 .setPositiveButton(android.R.string.ok, null)
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
                 .setNeutralButton(R.string.clear_tba_matches, (d, w) -> {
                     Log.d(TAG, "Clear TBA Matches called");
-                    String eventCode = Objects.requireNonNull(m_binding.eventCodeField.getText()).toString().trim();
+                    String eventCode = Objects.requireNonNull(m_binding.loadEventCodeInput.getText()).toString().trim();
                     if (!eventCode.isEmpty())
                     {
                         TBAMatches tbaMatches = TBAMatches.getInstance(requireContext(), eventCode, false);
@@ -91,12 +91,12 @@ public class LoadTBAMatchesDialog extends DialogFragment
                             Toast.makeText(requireContext(), "Cleared TBA Matches for " + eventCode, Toast.LENGTH_SHORT).show();
                         }
                     }
-                    m_binding.eventCodeField.setText("");
-                    m_binding.eventCodeLayout.setError(null);
+                    m_binding.loadEventCodeInput.setText("");
+                    m_binding.loadEventCodeLayout.setError(null);
                 })
                 .create();
 
-        m_binding.eventCodeField.addTextChangedListener(new TextWatcher()
+        m_binding.loadEventCodeInput.addTextChangedListener(new TextWatcher()
         {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
@@ -106,7 +106,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
-                m_binding.eventCodeLayout.setError(null);
+                m_binding.loadEventCodeLayout.setError(null);
                 String eventCode = s.toString().trim().toLowerCase(Locale.US);
                 if (Settings.getInstance(requireContext()).isValidEventCode(eventCode))
                 {
@@ -129,7 +129,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
             okButton.setOnClickListener(v -> handleOkClick(dialog));
         });
 
-        m_binding.eventCodeField.setOnEditorActionListener((v, actionId, event) -> {
+        m_binding.loadEventCodeInput.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_UNSPECIFIED)
             {
                 Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
@@ -155,16 +155,16 @@ public class LoadTBAMatchesDialog extends DialogFragment
     private void handleOkClick(AlertDialog dialog)
     {
         Log.d(TAG, "handleOkClick called");
-        String eventCode = Objects.requireNonNull(m_binding.eventCodeField.getText()).toString().trim().toLowerCase(Locale.US);
+        String eventCode = Objects.requireNonNull(m_binding.loadEventCodeInput.getText()).toString().trim().toLowerCase(Locale.US);
 
         Settings settings = Settings.getInstance(requireContext());
         if (!settings.isValidEventCode(eventCode))
         {
-            m_binding.eventCodeLayout.setError("Invalid event code (e.g., 2026casac)");
+            m_binding.loadEventCodeLayout.setError("Invalid event code (e.g., 2026casac)");
             return;
         }
 
-        m_binding.eventCodeLayout.setError(null);
+        m_binding.loadEventCodeLayout.setError(null);
         downloadTBAMatches(dialog, eventCode);
     }
 
@@ -183,7 +183,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
         Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         okButton.setEnabled(false);
         okButton.setText(R.string.loading);
-        m_binding.eventCodeField.setEnabled(false);
+        m_binding.loadEventCodeInput.setEnabled(false);
 
         String urlStr = Constants.TBA_EVENT_MATCHES_URL + eventCode + "/matches";
         Log.d(TAG, "URL: " + urlStr);
@@ -261,7 +261,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
         }
         if (m_binding != null)
         {
-            m_binding.eventCodeField.setEnabled(true);
+            m_binding.loadEventCodeInput.setEnabled(true);
         }
     }
 

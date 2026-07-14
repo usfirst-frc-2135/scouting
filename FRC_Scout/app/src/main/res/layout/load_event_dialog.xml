@@ -8,7 +8,7 @@
 
     <!-- start event code input layout -->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/event_code_layout"
+        android:id="@+id/load_event_code_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
         app:helperText="@string/event_code_helper">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/event_code_field"
+            android:id="@+id/load_event_code_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/event_code"

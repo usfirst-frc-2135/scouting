@@ -43,7 +43,7 @@ public class PreMatchActivity extends AppCompatActivity
         m_binding = PreMatchActivityBinding.inflate(getLayoutInflater());
         setContentView(m_binding.getRoot());
 
-        setSupportActionBar(m_binding.toolbar);
+        setSupportActionBar(m_binding.preMatchActivityToolbar);
         loadInitialData();
         setupActionBar();
         setupViewDefaults();
@@ -80,7 +80,7 @@ public class PreMatchActivity extends AppCompatActivity
         if (actionBar != null)
         {
             actionBar.setTitle(R.string.pre_match);
-            m_binding.toolbarTitle.setText(getString(R.string.team_index_label, m_teamIndexStr));
+            m_binding.preMatchActivityToolbarTitle.setText(getString(R.string.team_index_label, m_teamIndexStr));
         }
     }
 
@@ -93,23 +93,23 @@ public class PreMatchActivity extends AppCompatActivity
 
         if (m_matchData != null)
         {
-            m_binding.preMatchEventCode.setText(m_matchData.getEventCode());
+            m_binding.preMatchEventCodeInput.setText(m_matchData.getEventCode());
         }
 
         String matchNum = (m_matchData != null && !m_matchData.getMatchNumber().isEmpty()) ? m_matchData.getMatchNumber() :
                 (m_settings != null && !m_settings.getMostRecentMatchNumber().isEmpty()) ? m_settings.getNextExpectedMatchNumber() : "qm1";
-        m_binding.matchNumberField.setText(matchNum);
+        m_binding.preMatchNumberInput.setText(matchNum);
 
         if (m_matchData != null)
         {
-            m_binding.teamNumberField.setText(m_matchData.getTeamNumber());
+            m_binding.preMatchTeamNumberInput.setText(m_matchData.getTeamNumber());
         }
 
         setTeamNumFromMatchNum();
 
         String scoutName = (m_matchData != null && !m_matchData.getScoutName().isEmpty()) ? m_matchData.getScoutName() :
                 (m_settings != null) ? m_settings.getMostRecentScoutName() : "";
-        m_binding.scoutNameField.setText(scoutName);
+        m_binding.preMatchScoutNameInput.setText(scoutName);
     }
 
     /**
@@ -117,7 +117,7 @@ public class PreMatchActivity extends AppCompatActivity
      */
     private void setupListeners()
     {
-        m_binding.preMatchEventCode.addTextChangedListener(new TextWatcher()
+        m_binding.preMatchEventCodeInput.addTextChangedListener(new TextWatcher()
         {
             public void onTextChanged(CharSequence c, int start, int before, int count)
             {
@@ -134,7 +134,7 @@ public class PreMatchActivity extends AppCompatActivity
             }
         });
 
-        m_binding.matchNumberField.addTextChangedListener(new TextWatcher()
+        m_binding.preMatchNumberInput.addTextChangedListener(new TextWatcher()
         {
             public void onTextChanged(CharSequence c, int start, int before, int count)
             {
@@ -146,13 +146,13 @@ public class PreMatchActivity extends AppCompatActivity
 
             public void afterTextChanged(Editable c)
             {
-                m_binding.matchNumberLayout.setError(null);
+                m_binding.preMatchNumberLayout.setError(null);
                 m_binding.preMatchErrorMessage.setVisibility(View.GONE);
                 setTeamNumFromMatchNum();
             }
         });
 
-        m_binding.teamNumberField.addTextChangedListener(new TextWatcher()
+        m_binding.preMatchTeamNumberInput.addTextChangedListener(new TextWatcher()
         {
             public void onTextChanged(CharSequence c, int start, int before, int count)
             {
@@ -164,19 +164,19 @@ public class PreMatchActivity extends AppCompatActivity
 
             public void afterTextChanged(Editable c)
             {
-                m_binding.teamNumberLayout.setError(null);
+                m_binding.preMatchTeamNumberLayout.setError(null);
                 m_binding.preMatchErrorMessage.setVisibility(View.GONE);
             }
         });
 
-        m_binding.teamNumberField.setOnFocusChangeListener((v, hasFocus) -> {
+        m_binding.preMatchTeamNumberInput.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus)
             {
                 showTeamNumberDropDown();
             }
         });
 
-        m_binding.scoutNameField.addTextChangedListener(new TextWatcher()
+        m_binding.preMatchScoutNameInput.addTextChangedListener(new TextWatcher()
         {
             public void onTextChanged(CharSequence c, int start, int before, int count)
             {
@@ -188,7 +188,7 @@ public class PreMatchActivity extends AppCompatActivity
 
             public void afterTextChanged(Editable c)
             {
-                m_binding.scoutNameLayout.setError(null);
+                m_binding.preMatchScoutNameLayout.setError(null);
                 m_binding.preMatchErrorMessage.setVisibility(View.GONE);
             }
         });
@@ -199,17 +199,17 @@ public class PreMatchActivity extends AppCompatActivity
         if (!scoutNames.isEmpty())
         {
             ArrayAdapter<String> scoutAdapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, scoutNames);
-            m_binding.scoutNameField.setAdapter(scoutAdapter);
-            m_binding.scoutNameField.setThreshold(0);
-            m_binding.scoutNameField.setOnFocusChangeListener((v, hasFocus) -> {
+            m_binding.preMatchScoutNameInput.setAdapter(scoutAdapter);
+            m_binding.preMatchScoutNameInput.setThreshold(0);
+            m_binding.preMatchScoutNameInput.setOnFocusChangeListener((v, hasFocus) -> {
                 if (hasFocus)
                 {
-                    m_binding.scoutNameField.showDropDown();
+                    m_binding.preMatchScoutNameInput.showDropDown();
                 }
             });
         }
 
-        m_binding.startMatchButton.setOnClickListener(view -> {
+        m_binding.preMatchStartButton.setOnClickListener(view -> {
             if (checkValidData())
             {
                 updatePreMatchData();
@@ -235,7 +235,7 @@ public class PreMatchActivity extends AppCompatActivity
     private void showTeamNumberDropDown()
     {
         Log.d(TAG, "Showing team number drop down");
-        String matchNumStr = m_binding.matchNumberField.getText().toString().trim().toLowerCase();
+        String matchNumStr = m_binding.preMatchNumberInput.getText().toString().trim().toLowerCase();
 
         if (!matchNumStr.isEmpty() && m_tbaMatches != null && m_tbaMatches.isTBAMatchesLoaded())
         {
@@ -252,9 +252,9 @@ public class PreMatchActivity extends AppCompatActivity
                     }
 
                     ArrayAdapter<String> teamAdapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, teams);
-                    m_binding.teamNumberField.setAdapter(teamAdapter);
-                    m_binding.teamNumberField.setDropDownHeight(620);
-                    m_binding.teamNumberField.showDropDown();
+                    m_binding.preMatchTeamNumberInput.setAdapter(teamAdapter);
+                    m_binding.preMatchTeamNumberInput.setDropDownHeight(620);
+                    m_binding.preMatchTeamNumberInput.showDropDown();
                 }
             }
             catch (NullPointerException exception)
@@ -274,7 +274,7 @@ public class PreMatchActivity extends AppCompatActivity
             return;
         }
 
-        String matchNumStr = m_binding.matchNumberField.getText().toString().trim();
+        String matchNumStr = m_binding.preMatchNumberInput.getText().toString().trim();
         if (!matchNumStr.isEmpty() && !m_teamIndexStr.isEmpty() && m_settings.isValidTeamIndexStr(m_teamIndexStr))
         {
             Log.d(TAG, "Auto-loading team number for match " + matchNumStr + " index " + m_teamIndexStr);
@@ -288,7 +288,7 @@ public class PreMatchActivity extends AppCompatActivity
                     String tbaTeamNum = teams[teamIndex];
                     String teamNumStr = MatchData.extractTeamNumber(tbaTeamNum);
                     Log.d(TAG, "Auto-loading team number for tbaTeamNum " + tbaTeamNum + " teamNumStr " + teamNumStr);
-                    m_binding.teamNumberField.setText((m_teamAliases != null) ? m_teamAliases.resolveAlias(teamNumStr) : teamNumStr);
+                    m_binding.preMatchTeamNumberInput.setText((m_teamAliases != null) ? m_teamAliases.resolveAlias(teamNumStr) : teamNumStr);
                 }
             }
             catch (NumberFormatException e)
@@ -309,10 +309,10 @@ public class PreMatchActivity extends AppCompatActivity
             return;
         }
 
-        String eventCode = Objects.requireNonNull(m_binding.preMatchEventCode.getText()).toString().trim();
-        String matchNum = m_binding.matchNumberField.getText().toString().trim().toLowerCase();
-        String teamNumEntry = m_binding.teamNumberField.getText().toString().trim();
-        String scoutName = m_binding.scoutNameField.getText().toString().trim();
+        String eventCode = Objects.requireNonNull(m_binding.preMatchEventCodeInput.getText()).toString().trim();
+        String matchNum = m_binding.preMatchNumberInput.getText().toString().trim().toLowerCase();
+        String teamNumEntry = m_binding.preMatchTeamNumberInput.getText().toString().trim();
+        String scoutName = m_binding.preMatchScoutNameInput.getText().toString().trim();
 
         if (m_settings != null)
         {
@@ -341,16 +341,16 @@ public class PreMatchActivity extends AppCompatActivity
      */
     private boolean checkValidData()
     {
-        String eventCode = Objects.requireNonNull(m_binding.preMatchEventCode.getText()).toString().trim();
-        String matchNum = m_binding.matchNumberField.getText().toString().trim();
-        String teamNum = m_binding.teamNumberField.getText().toString().trim();
-        String scoutName = m_binding.scoutNameField.getText().toString().trim();
+        String eventCode = Objects.requireNonNull(m_binding.preMatchEventCodeInput.getText()).toString().trim();
+        String matchNum = m_binding.preMatchNumberInput.getText().toString().trim();
+        String teamNum = m_binding.preMatchTeamNumberInput.getText().toString().trim();
+        String scoutName = m_binding.preMatchScoutNameInput.getText().toString().trim();
 
         String requiredError = getString(R.string.required);
         m_binding.preMatchEventCodeLayout.setError(eventCode.isEmpty() ? requiredError : null);
-        m_binding.matchNumberLayout.setError(matchNum.isEmpty() ? requiredError : null);
-        m_binding.teamNumberLayout.setError(teamNum.isEmpty() ? requiredError : null);
-        m_binding.scoutNameLayout.setError(scoutName.isEmpty() ? requiredError : null);
+        m_binding.preMatchNumberLayout.setError(matchNum.isEmpty() ? requiredError : null);
+        m_binding.preMatchTeamNumberLayout.setError(teamNum.isEmpty() ? requiredError : null);
+        m_binding.preMatchScoutNameLayout.setError(scoutName.isEmpty() ? requiredError : null);
 
         boolean isValid = !eventCode.isEmpty() && !matchNum.isEmpty() && !teamNum.isEmpty() && !scoutName.isEmpty();
 

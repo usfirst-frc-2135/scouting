@@ -76,7 +76,7 @@ public class QRCodeDialog extends DialogFragment
         String stats = args.getString(ARG_STATS, "");
 
         generateQRCode(stats);
-        m_binding.qrDataPreview.setText(stats);
+        m_binding.qrDialogDataPreview.setText(stats);
 
         return new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle(label)
@@ -104,7 +104,7 @@ public class QRCodeDialog extends DialogFragment
             Bitmap bitmap = qrCodeEncoder.encodeAsBitmap();
             if (bitmap != null)
             {
-                m_binding.matchDataQr.setImageBitmap(bitmap);
+                m_binding.qrDialogImage.setImageBitmap(bitmap);
             }
         }
         catch (WriterException e)

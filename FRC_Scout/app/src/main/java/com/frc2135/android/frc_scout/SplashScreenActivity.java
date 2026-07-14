@@ -44,8 +44,8 @@ public class SplashScreenActivity extends AppCompatActivity
         populateSettingsSummary();
 
         // Simple fade-in animation
-        m_binding.splashContainer.setAlpha(0f);
-        m_binding.splashContainer.animate()
+        m_binding.splashActivityContainer.setAlpha(0f);
+        m_binding.splashActivityContainer.animate()
                 .alpha(1f)
                 .setDuration(500)
                 .withEndAction(this::startMainTransition)
@@ -77,7 +77,7 @@ public class SplashScreenActivity extends AppCompatActivity
                 "Index: " + teamIndex + "\n" +
                 "Scout: " + scoutName;
 
-        m_binding.settingsSummary.setText(summary);
+        m_binding.splashSettingsSummaryText.setText(summary);
     }
 
     @Override

@@ -76,10 +76,10 @@ public class MatchFilterDialog extends DialogFragment
         androidx.appcompat.app.AlertDialog dialog = builder.create();
         dialog.setOnShowListener(d -> dialog.getButton(Dialog.BUTTON_NEUTRAL).setOnClickListener(v -> {
             Log.d(TAG, "Clear All clicked");
-            m_binding.eventOptions.setText("", false);
-            m_binding.matchEntry.setText("");
-            m_binding.teamOptions.setText("", false);
-            m_binding.scoutOptions.setText("", false);
+            m_binding.matchFilterEventInput.setText("", false);
+            m_binding.matchFilterMatchInput.setText("");
+            m_binding.matchFilterTeamInput.setText("", false);
+            m_binding.matchFilterScoutInput.setText("", false);
         }));
 
         return dialog;
@@ -96,25 +96,25 @@ public class MatchFilterDialog extends DialogFragment
             String team = args.getString("team");
             if (team != null && !team.isEmpty())
             {
-                m_binding.teamOptions.setText(team, false);
+                m_binding.matchFilterTeamInput.setText(team, false);
             }
 
             String event = args.getString("event");
             if (event != null && !event.isEmpty())
             {
-                m_binding.eventOptions.setText(event, false);
+                m_binding.matchFilterEventInput.setText(event, false);
             }
 
             String scout = args.getString("scout");
             if (scout != null && !scout.isEmpty())
             {
-                m_binding.scoutOptions.setText(scout, false);
+                m_binding.matchFilterScoutInput.setText(scout, false);
             }
 
             String match = args.getString("match");
             if (match != null && !match.isEmpty())
             {
-                m_binding.matchEntry.setText(match);
+                m_binding.matchFilterMatchInput.setText(match);
             }
         }
     }
@@ -131,11 +131,11 @@ public class MatchFilterDialog extends DialogFragment
         List<String> eventCodes = new ArrayList<>(data.listEventCodes());
         eventCodes.add(0, "Select event code");
         ArrayAdapter<String> eventAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_dropdown_item_1line, eventCodes);
-        m_binding.eventOptions.setAdapter(eventAdapter);
-        m_binding.eventOptions.setOnFocusChangeListener((v, focus) -> {
+        m_binding.matchFilterEventInput.setAdapter(eventAdapter);
+        m_binding.matchFilterEventInput.setOnFocusChangeListener((v, focus) -> {
             if (focus)
             {
-                m_binding.eventOptions.showDropDown();
+                m_binding.matchFilterEventInput.showDropDown();
             }
         });
 
@@ -143,11 +143,11 @@ public class MatchFilterDialog extends DialogFragment
         List<String> teams = new ArrayList<>(data.listTeams());
         teams.add(0, "Select team");
         ArrayAdapter<String> teamAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_dropdown_item_1line, teams);
-        m_binding.teamOptions.setAdapter(teamAdapter);
-        m_binding.teamOptions.setOnFocusChangeListener((v, focus) -> {
+        m_binding.matchFilterTeamInput.setAdapter(teamAdapter);
+        m_binding.matchFilterTeamInput.setOnFocusChangeListener((v, focus) -> {
             if (focus)
             {
-                m_binding.teamOptions.showDropDown();
+                m_binding.matchFilterTeamInput.showDropDown();
             }
         });
 
@@ -155,11 +155,11 @@ public class MatchFilterDialog extends DialogFragment
         List<String> scouts = new ArrayList<>(data.listScouts());
         scouts.add(0, "Select scout");
         ArrayAdapter<String> scoutAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_dropdown_item_1line, scouts);
-        m_binding.scoutOptions.setAdapter(scoutAdapter);
-        m_binding.scoutOptions.setOnFocusChangeListener((v, focus) -> {
+        m_binding.matchFilterScoutInput.setAdapter(scoutAdapter);
+        m_binding.matchFilterScoutInput.setOnFocusChangeListener((v, focus) -> {
             if (focus)
             {
-                m_binding.scoutOptions.showDropDown();
+                m_binding.matchFilterScoutInput.showDropDown();
             }
         });
     }
@@ -172,25 +172,25 @@ public class MatchFilterDialog extends DialogFragment
         Log.d(TAG, "applyFilters() called");
         Bundle result = new Bundle();
 
-        String event = m_binding.eventOptions.getText().toString().trim();
+        String event = m_binding.matchFilterEventInput.getText().toString().trim();
         if (!event.isEmpty())
         {
             result.putString("event code", event);
         }
 
-        String match = Objects.requireNonNull(m_binding.matchEntry.getText()).toString().trim();
+        String match = Objects.requireNonNull(m_binding.matchFilterMatchInput.getText()).toString().trim();
         if (!match.isEmpty())
         {
             result.putString("match", match);
         }
 
-        String team = m_binding.teamOptions.getText().toString().trim();
+        String team = m_binding.matchFilterTeamInput.getText().toString().trim();
         if (!team.isEmpty())
         {
             result.putString("team", team);
         }
 
-        String scout = m_binding.scoutOptions.getText().toString().trim();
+        String scout = m_binding.matchFilterScoutInput.getText().toString().trim();
         if (!scout.isEmpty())
         {
             result.putString("scout", scout);

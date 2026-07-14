@@ -34,7 +34,7 @@ public class ScoutingActivity extends AppCompatActivity
         m_binding = ScoutingActivityBinding.inflate(getLayoutInflater());
         setContentView(m_binding.getRoot());
 
-        setSupportActionBar(m_binding.toolbar);
+        setSupportActionBar(m_binding.scoutingActivityToolbar);
 
         String matchId = getIntent().getStringExtra("match_ID");
         Log.d(TAG, "Loading match with ID: " + matchId);
@@ -46,15 +46,15 @@ public class ScoutingActivity extends AppCompatActivity
         FragmentManager fm = getSupportFragmentManager();
 
         // Load the initial fragment (Autonomous) if none exists
-        if (fm.findFragmentById(R.id.fragmentContainer) == null)
+        if (fm.findFragmentById(R.id.scouting_activity_fragment_container) == null)
         {
             fm.beginTransaction()
-                    .add(R.id.fragmentContainer, createScoutingActivityFragment())
+                    .add(R.id.scouting_activity_fragment_container, createScoutingActivityFragment())
                     .commit();
         }
 
         // Handle navigation between scouting stages
-        m_binding.navView.setOnItemSelectedListener(item -> {
+        m_binding.scoutingActivityNavView.setOnItemSelectedListener(item -> {
             // Save data from the current fragment before switching
             updateCurrentFragmentData();
 
@@ -77,7 +77,7 @@ public class ScoutingActivity extends AppCompatActivity
             if (fragment != null)
             {
                 fm.beginTransaction()
-                        .replace(R.id.fragmentContainer, fragment)
+                        .replace(R.id.scouting_activity_fragment_container, fragment)
                         .commit();
                 updateActionBarTitle();
                 return true;
@@ -112,7 +112,7 @@ public class ScoutingActivity extends AppCompatActivity
         }
 
         String stage = "Scouting";
-        int selectedId = m_binding.navView.getSelectedItemId();
+        int selectedId = m_binding.scoutingActivityNavView.getSelectedItemId();
         if (selectedId == R.id.navigation_auton)
         {
             stage = "Autonomous";
@@ -127,7 +127,7 @@ public class ScoutingActivity extends AppCompatActivity
         }
 
         getSupportActionBar().setTitle(stage);
-        m_binding.toolbarTitle.setText(String.format("Team %s - %s", m_matchData.getTeamNumber(), m_matchData.getMatchNumber()));
+        m_binding.scoutingActivityToolbarTitle.setText(String.format("Team %s - %s", m_matchData.getTeamNumber(), m_matchData.getMatchNumber()));
     }
 
     /**
@@ -136,7 +136,7 @@ public class ScoutingActivity extends AppCompatActivity
     private void updateCurrentFragmentData()
     {
         Log.d(TAG, "updateCurrentFragmentData()");
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.scouting_activity_fragment_container);
         if (f instanceof AutonFragment)
         {
             ((AutonFragment) f).updateAutonData();

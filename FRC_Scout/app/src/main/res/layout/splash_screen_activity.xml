@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/splash_container"
+    android:id="@+id/splash_activity_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:alpha="0"
@@ -10,19 +10,19 @@
 
     <!-- start Branding layout -->
     <ImageView
-        android:id="@+id/team_logo"
+        android:id="@+id/splash_team_logo"
         android:layout_width="280dp"
         android:layout_height="280dp"
         android:contentDescription="@string/our_team_logo"
         android:src="@drawable/t2135_logo_round"
-        app:layout_constraintBottom_toTopOf="@+id/app_title"
+        app:layout_constraintBottom_toTopOf="@+id/splash_app_title_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/app_title"
+        android:id="@+id/splash_app_title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -30,66 +30,66 @@
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/font_huge"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/team_name"
+        app:layout_constraintBottom_toTopOf="@+id/splash_team_name_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/team_logo" />
+        app:layout_constraintTop_toBottomOf="@+id/splash_team_logo" />
 
     <TextView
-        android:id="@+id/team_name"
+        android:id="@+id/splash_team_name_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="@string/our_team_name"
         android:textColor="@color/textSecondary"
         android:textSize="@dimen/font_small"
-        app:layout_constraintBottom_toTopOf="@+id/team_address"
+        app:layout_constraintBottom_toTopOf="@+id/splash_team_address_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_title" />
+        app:layout_constraintTop_toBottomOf="@+id/splash_app_title_text" />
 
     <TextView
-        android:id="@+id/team_address"
+        android:id="@+id/splash_team_address_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="@string/our_team_address"
         android:textColor="@color/textSecondary"
         android:textSize="@dimen/font_x_small"
-        app:layout_constraintBottom_toTopOf="@+id/app_version_text"
+        app:layout_constraintBottom_toTopOf="@+id/splash_app_version_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/team_name" />
+        app:layout_constraintTop_toBottomOf="@+id/splash_team_name_text" />
     <!-- end Branding layout -->
 
     <TextView
-        android:id="@+id/settings_summary"
+        android:id="@+id/splash_settings_summary_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="@color/textSecondary"
         android:textSize="@dimen/font_x_small"
-        app:layout_constraintBottom_toTopOf="@+id/app_version_text"
+        app:layout_constraintBottom_toTopOf="@+id/splash_app_version_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/team_address"
+        app:layout_constraintTop_toBottomOf="@+id/splash_team_address_text"
         tools:text="Event: 2026casac\nIndex: 1 - Red 1\nScout: Jane D" />
 
     <!-- start Metadata layout -->
     <TextView
-        android:id="@+id/app_version_text"
+        android:id="@+id/splash_app_version_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="@string/app_version"
         android:textColor="@color/textSecondary"
         android:textSize="@dimen/font_xx_small"
-        app:layout_constraintBottom_toTopOf="@+id/author_text"
+        app:layout_constraintBottom_toTopOf="@+id/splash_author_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/author_text"
+        android:id="@+id/splash_author_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"

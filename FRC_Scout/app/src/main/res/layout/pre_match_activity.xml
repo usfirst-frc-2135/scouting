@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pre_match_activity_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -9,20 +10,20 @@
 
     <!-- start AppBar layout -->
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar"
+        android:id="@+id/pre_match_activity_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/pre_match_activity_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:titleTextColor="@android:color/white">
 
             <TextView
-                android:id="@+id/toolbar_title"
+                android:id="@+id/pre_match_activity_toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -49,7 +50,7 @@
             android:padding="24dp">
 
             <TextView
-                android:id="@+id/pre_match_title"
+                android:id="@+id/pre_match_title_label"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:letterSpacing="0.1"
@@ -78,12 +79,12 @@
                 app:helperTextEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/pre_match_title"
+                app:layout_constraintTop_toBottomOf="@id/pre_match_title_label"
                 app:startIconContentDescription="@string/event_icon_desc"
                 app:startIconDrawable="@android:drawable/ic_menu_today">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/pre_match_event_code"
+                    android:id="@+id/pre_match_event_code_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/event_code"
@@ -99,7 +100,7 @@
 
             <!-- start match number input layout -->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/match_number_layout"
+                android:id="@+id/pre_match_number_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -118,7 +119,7 @@
                 app:startIconDrawable="@android:drawable/ic_menu_edit">
 
                 <AutoCompleteTextView
-                    android:id="@+id/match_number_field"
+                    android:id="@+id/pre_match_number_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/match_number"
@@ -131,7 +132,7 @@
 
             <!-- start team number input layout -->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/team_number_layout"
+                android:id="@+id/pre_match_team_number_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -145,12 +146,12 @@
                 app:helperTextEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/match_number_layout"
+                app:layout_constraintTop_toBottomOf="@id/pre_match_number_layout"
                 app:startIconContentDescription="@string/team_icon_desc"
                 app:startIconDrawable="@android:drawable/ic_menu_info_details">
 
                 <AutoCompleteTextView
-                    android:id="@+id/team_number_field"
+                    android:id="@+id/pre_match_team_number_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/team_number"
@@ -163,7 +164,7 @@
 
             <!-- start scout name input layout -->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/scout_name_layout"
+                android:id="@+id/pre_match_scout_name_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -177,12 +178,12 @@
                 app:helperTextEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/team_number_layout"
+                app:layout_constraintTop_toBottomOf="@id/pre_match_team_number_layout"
                 app:startIconContentDescription="@string/scout_icon_desc"
                 app:startIconDrawable="@android:drawable/ic_menu_myplaces">
 
                 <AutoCompleteTextView
-                    android:id="@+id/scout_name_field"
+                    android:id="@+id/pre_match_scout_name_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/scout_name"
@@ -204,11 +205,11 @@
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/scout_name_layout" />
+                app:layout_constraintTop_toBottomOf="@id/pre_match_scout_name_layout" />
 
             <!-- start buttons layout -->
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/start_match_button"
+                android:id="@+id/pre_match_start_button"
                 android:layout_width="0dp"
                 android:layout_height="64dp"
                 android:layout_marginTop="32dp"
@@ -223,7 +224,7 @@
                 app:elevation="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/scout_name_layout"
+                app:layout_constraintTop_toBottomOf="@id/pre_match_scout_name_layout"
                 app:layout_goneMarginTop="32dp" />
 
             <com.google.android.material.button.MaterialButton
@@ -238,7 +239,7 @@
                 app:cornerRadius="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/start_match_button" />
+                app:layout_constraintTop_toBottomOf="@id/pre_match_start_button" />
             <!-- end buttons layout -->
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -30,7 +30,7 @@ public class MatchListActivity extends AppCompatActivity
         m_binding = MatchListActivityBinding.inflate(getLayoutInflater());
         setContentView(m_binding.getRoot());
 
-        setSupportActionBar(m_binding.toolbar);
+        setSupportActionBar(m_binding.matchListActivityToolbar);
         if (getSupportActionBar() != null)
         {
             getSupportActionBar().setTitle(R.string.title_match_list);
@@ -41,11 +41,11 @@ public class MatchListActivity extends AppCompatActivity
         // Initializes FragmentManager to host the match list fragment
         FragmentManager fm = getSupportFragmentManager();
 
-        // Designates that chosen fragment will be housed within fragmentContainer
-        if (fm.findFragmentById(R.id.fragmentContainer) == null)
+        // Designates that chosen fragment will be housed within match_list_activity_fragment_container
+        if (fm.findFragmentById(R.id.match_list_activity_fragment_container) == null)
         {
             fm.beginTransaction()
-                    .add(R.id.fragmentContainer, createMatchListFragment())
+                    .add(R.id.match_list_activity_fragment_container, createMatchListFragment())
                     .commit();
         }
 
@@ -62,7 +62,7 @@ public class MatchListActivity extends AppCompatActivity
     {
         Log.d(TAG, "updateToolbarTeamIndex()");
         String indexStr = Settings.getInstance(this).getTeamIndexStr();
-        m_binding.toolbarTeamIndex.setText(String.format(getString(R.string.team_index_label), indexStr));
+        m_binding.matchListActivityToolbarTeamIndex.setText(String.format(getString(R.string.team_index_label), indexStr));
     }
 
     @Override
