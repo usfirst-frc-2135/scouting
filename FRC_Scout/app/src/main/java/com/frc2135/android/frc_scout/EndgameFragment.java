@@ -64,11 +64,7 @@ public class EndgameFragment extends Fragment
     {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
-        ScoutingActivity activity = (ScoutingActivity) getActivity();
-        if (activity != null)
-        {
-            m_matchData = activity.getCurrentMatch();
-        }
+        m_matchData = ((ScoutingActivity) requireActivity()).getCurrentMatch();
     }
 
     @Override
@@ -92,14 +88,8 @@ public class EndgameFragment extends Fragment
 
     private void setupActionBar()
     {
-        ScoutingActivity activity = (ScoutingActivity) getActivity();
-        if (activity == null || m_matchData == null)
-        {
-            return;
-        }
-
-        ActionBar actionBar = activity.getSupportActionBar();
-        if (actionBar != null)
+        ActionBar actionBar = ((ScoutingActivity) requireActivity()).getSupportActionBar();
+        if (actionBar != null && m_matchData != null)
         {
             actionBar.setTitle(R.string.endgame_title);
         }
@@ -124,6 +114,7 @@ public class EndgameFragment extends Fragment
     {
         m_binding.endgameGenerateQrButton.setEnabled(true);
         m_binding.endgameGenerateQrButtonDisabled.setVisibility(View.INVISIBLE);
+
         m_binding.endgameGenerateQrButton.setOnClickListener(view -> {
             updateEndgameData();
             String validationMsg = m_matchData.validateEntries();
@@ -145,18 +136,18 @@ public class EndgameFragment extends Fragment
         m_binding.endgameDoneButton.setOnClickListener(view -> {
             updateEndgameData();
             Log.d(TAG, "Saving latest match and scout names");
-            if (!Settings.getInstance(getActivity()).saveSettingsSilent())
+            if (!Settings.getInstance(requireContext()).saveSettingsSilent())
             {
                 Log.e(TAG, "Failed to save settings!");
             }
-            ScoutedMatches scoutedMatches = ScoutedMatches.getInstance(getActivity());
+            ScoutedMatches scoutedMatches = ScoutedMatches.getInstance(requireContext());
             if (!scoutedMatches.saveMatchDataFile(m_matchData))
             {
                 Log.e(TAG, "Failed to save Match Data!");
-                Toast.makeText(getContext(), "Error: Failed to save match data!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Error: Failed to save match data!", Toast.LENGTH_SHORT).show();
             }
 
-            Intent i = new Intent(getActivity(), MatchListActivity.class);
+            Intent i = new Intent(requireContext(), MatchListActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
             requireActivity().finish();

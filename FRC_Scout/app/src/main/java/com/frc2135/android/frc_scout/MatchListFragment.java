@@ -126,7 +126,7 @@ public class MatchListFragment extends Fragment
             newMatch.setEventCode(Settings.getInstance(requireContext()).getEventCode());
             ScoutedMatches.getInstance(requireContext()).addMatch(newMatch);
 
-            Intent intent = new Intent(getActivity(), PreMatchActivity.class);
+            Intent intent = new Intent(requireContext(), PreMatchActivity.class);
             intent.putExtra("match_ID", newMatch.getMatchID());
             intent.putExtra("in_edit", "no");
             startActivity(intent);
@@ -235,8 +235,8 @@ public class MatchListFragment extends Fragment
                 }
                 else if (itemID == R.id.about_screen_dialog)
                 {
-                    startActivity(new Intent(getActivity(), SplashScreenActivity.class));
-                    requireActivity().finish();
+                    startActivity(new Intent(requireContext(), SplashScreenActivity.class));
+                requireActivity().finish();
                 }
                 return true;
             }
@@ -296,7 +296,7 @@ public class MatchListFragment extends Fragment
         @Override
         public MatchHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
         {
-            MatchListCardBinding itemBinding = MatchListCardBinding.inflate(LayoutInflater.from(requireActivity()), parent, false);
+            MatchListCardBinding itemBinding = MatchListCardBinding.inflate(LayoutInflater.from(requireContext()), parent, false);
             return new MatchHolder(itemBinding);
         }
 
@@ -366,7 +366,7 @@ public class MatchListFragment extends Fragment
         {
             Log.d(TAG, "Edit match button clicked");
 
-            Intent preMatchIntent = new Intent(getActivity(), PreMatchActivity.class);
+            Intent preMatchIntent = new Intent(requireContext(), PreMatchActivity.class);
             preMatchIntent.putExtra("match_ID", Objects.requireNonNull(m).getMatchID());
             preMatchIntent.putExtra("in_edit", "yes");
             m_binding.matchListRecyclerView.clearFocus();

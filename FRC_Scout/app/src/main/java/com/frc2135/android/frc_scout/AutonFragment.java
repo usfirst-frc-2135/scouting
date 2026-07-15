@@ -59,30 +59,27 @@ public class AutonFragment extends Fragment
     {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
-        ScoutingActivity activity = (ScoutingActivity) getActivity();
-        if (activity != null)
+        ScoutingActivity activity = (ScoutingActivity) requireActivity();
+        m_matchData = activity.getCurrentMatch();
+        if (m_matchData != null)
         {
-            m_matchData = activity.getCurrentMatch();
-            if (m_matchData != null)
+            Log.d(TAG, "New match ID = " + m_matchData.getMatchID());
+            ActionBar actionBar = activity.getSupportActionBar();
+            if (actionBar != null)
             {
-                Log.d(TAG, "New match ID = " + m_matchData.getMatchID());
-                ActionBar actionBar = activity.getSupportActionBar();
-                if (actionBar != null)
-                {
-                    actionBar.setTitle(R.string.autonomous_title);
+                actionBar.setTitle(R.string.autonomous_title);
 
-                    Settings settings = Settings.getInstance(getContext());
-                    if (settings != null)
+                Settings settings = Settings.getInstance(requireContext());
+                if (settings != null)
+                {
+                    String color = settings.getTeamIndexColor();
+                    if (color.equals("red"))
                     {
-                        String color = settings.getTeamIndexColor();
-                        if (color.equals("red"))
-                        {
-                            actionBar.setBackgroundDrawable(new ColorDrawable(Color.RED));
-                        }
-                        else if (color.equals("blue"))
-                        {
-                            actionBar.setBackgroundDrawable(new ColorDrawable(Color.BLUE));
-                        }
+                        actionBar.setBackgroundDrawable(new ColorDrawable(Color.RED));
+                    }
+                    else if (color.equals("blue"))
+                    {
+                        actionBar.setBackgroundDrawable(new ColorDrawable(Color.BLUE));
                     }
                 }
             }

@@ -54,7 +54,7 @@ public class SetTeamIndexDialog extends DialogFragment
     {
         Log.d(TAG, "onCreateDialog called");
 
-        LayoutInflater inflater = requireActivity().getLayoutInflater();
+        LayoutInflater inflater = getLayoutInflater();
         m_binding = SetTeamIndexDialogBinding.inflate(inflater);
 
         m_settings = Settings.getInstance(requireContext());
@@ -62,7 +62,7 @@ public class SetTeamIndexDialog extends DialogFragment
 
         setupTeamIndexDropdown();
 
-        AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity())
+        AlertDialog dialog = new MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.set_team_index_title)
                 .setView(m_binding.getRoot())
                 .setPositiveButton(android.R.string.ok, (d, w) -> saveTeamIndex())

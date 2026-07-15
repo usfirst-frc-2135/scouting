@@ -98,11 +98,8 @@ public class TeleopFragment extends Fragment
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "onViewCreated");
         setupActionBar();
-        if (m_matchData != null)
-        {
-            loadMatchData();
-            setupListeners();
-        }
+        loadMatchData();
+        setupListeners();
     }
 
     private void setupActionBar()
@@ -116,6 +113,11 @@ public class TeleopFragment extends Fragment
 
     private void loadMatchData()
     {
+        if (m_matchData == null)
+        {
+            return;
+        }
+
         m_binding.teleopHopperTotalText.setText(String.valueOf(m_matchData.getHoppersUsed()));
         updateScoreColor(m_binding.teleopHopperTotalText);
 

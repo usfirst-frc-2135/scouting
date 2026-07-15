@@ -78,7 +78,7 @@ public class QRCodeDialog extends DialogFragment
         generateQRCode(stats);
         m_binding.qrDialogDataPreview.setText(stats);
 
-        return new MaterialAlertDialogBuilder(requireActivity())
+        return new MaterialAlertDialogBuilder(requireContext())
                 .setTitle(label)
                 .setView(m_binding.getRoot())
                 .setPositiveButton(android.R.string.ok, (d, w) -> dismiss())

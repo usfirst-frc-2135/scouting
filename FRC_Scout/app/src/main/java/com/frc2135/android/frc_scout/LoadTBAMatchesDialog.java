@@ -61,7 +61,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
     {
         Log.d(TAG, "onCreateDialog called");
 
-        LayoutInflater inflater = requireActivity().getLayoutInflater();
+        LayoutInflater inflater = getLayoutInflater();
         m_binding = LoadEventDialogBinding.inflate(inflater);
 
         // Pre-fill with current event code if available
