@@ -133,12 +133,12 @@ public class EndgameFragment extends Fragment
             String validationMsg = m_matchData.validateEntries();
             if (!validationMsg.isEmpty())
             {
-                Log.d(TAG, "Validation failed: " + validationMsg);
+                Log.w(TAG, "Match data validation failed: " + validationMsg);
                 Toast.makeText(getContext(), validationMsg, Toast.LENGTH_LONG).show();
             }
             else
             {
-                Log.d(TAG, "Validation successful: " + validationMsg);
+                Log.i(TAG, "Match data validation successful: " + validationMsg);
                 FragmentManager fm = requireActivity().getSupportFragmentManager();
                 QRCodeDialog dialog = QRCodeDialog.newInstance(m_matchData);
                 dialog.show(fm, QRTAG);

@@ -76,14 +76,14 @@ public class LoadScoutNamesDialog extends DialogFragment
                 .setPositiveButton(android.R.string.ok, null)
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
                 .setNeutralButton("Clear Scout Names", (d, w) -> {
-                    Log.d(TAG, "Clear Scout Names called");
+                    Log.i(TAG, "Clear Scout Names called");
                     String eventCode = Objects.requireNonNull(m_binding.loadEventCodeInput.getText()).toString().trim();
                     if (!eventCode.isEmpty())
                     {
                         ScoutNames scoutNames = ScoutNames.getInstance(requireContext(), eventCode, false);
                         if (scoutNames.deleteEventScoutNames(requireContext(), eventCode) > 0)
                         {
-                            Toast.makeText(requireContext(), "Cleared Scout Names for " + eventCode, Toast.LENGTH_SHORT).show();
+                            displayToastMessages(requireContext(), TAG, "Cleared Scout Names for " + eventCode, false, null);
                         }
                         if (settings != null)
                         {
@@ -190,18 +190,17 @@ public class LoadScoutNamesDialog extends DialogFragment
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlStr, null,
                 response -> {
-                    Log.i(TAG, "Successfully received scout names data");
+                    Log.i(TAG, "Successfully received scout names file for " + eventCode);
                     if (response.length() == 0)
                     {
-                        Log.w(TAG, "Received empty scout names for: " + eventCode);
-                        Toast.makeText(context, "No scout names found for " + eventCode, Toast.LENGTH_LONG).show();
+                        displayToastMessages(requireContext(), TAG, "No scout names in file for " + eventCode, false, null);
                         resetUiState(okButton);
                         return;
                     }
 
                     if (saveScoutNames(context, eventCode, response))
                     {
-                        Toast.makeText(context, "Successfully downloaded scout names for " + eventCode, Toast.LENGTH_LONG).show();
+                        displayToastMessages(context, TAG, "Successfully downloaded " + response.length() + " scout names for " + eventCode, false, null);
                         if (isAdded())
                         {
                             dismiss();
@@ -213,9 +212,7 @@ public class LoadScoutNamesDialog extends DialogFragment
                     }
                 },
                 error -> {
-                    Log.e(TAG, "Download scout names failed: " + error.toString());
-                    String msg = "Failed to download scout names for '" + eventCode + "'. Check connection or event code.";
-                    Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+                    displayToastMessages(context, TAG, "Failed to download scout names for '" + eventCode + "'. Check connection or event code.", false, null);
                     resetUiState(okButton);
                 });
 
@@ -252,6 +249,35 @@ public class LoadScoutNamesDialog extends DialogFragment
     {
         ScoutNames scoutNames = ScoutNames.getInstance(context, eventCode, true);
         return scoutNames.saveEventScoutNames(context, eventCode, response);
+    }
+
+    /**
+     * Log and optionally display an error message for an exception.
+     *
+     * @param context the context to show the Toast in
+     * @param tag     the log tag
+     * @param msg     the error message
+     * @param bSilent if true, the Toast is suppressed
+     * @param e       the exception that occurred
+     */
+    protected void displayToastMessages(Context context, String tag, String msg, boolean bSilent, Exception e)
+    {
+        int length;
+        if (e == null)
+        {
+            length = Toast.LENGTH_SHORT;
+            Log.i(tag, msg);
+        }
+        else
+        {
+            length = Toast.LENGTH_LONG;
+            Log.e(tag, msg, e);
+        }
+
+        if (!bSilent && context != null)
+        {
+            Toast.makeText(context, msg, length).show();
+        }
     }
 
     /**

@@ -77,14 +77,14 @@ public class LoadTeamAliasesDialog extends DialogFragment
                 .setPositiveButton(android.R.string.ok, null)
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
                 .setNeutralButton(R.string.clear_team_aliases, (d, w) -> {
-                    Log.d(TAG, "Clear Team Aliases called");
+                    Log.i(TAG, "Clear Team Aliases called");
                     String eventCode = Objects.requireNonNull(m_binding.loadEventCodeInput.getText()).toString().trim();
                     if (!eventCode.isEmpty())
                     {
                         TeamAliases teamAliases = TeamAliases.getInstance(requireContext(), eventCode, false);
                         if (teamAliases.deleteTeamAliasesFile(eventCode) > 0)
                         {
-                            Toast.makeText(requireContext(), "Cleared Team Aliases for " + eventCode, Toast.LENGTH_SHORT).show();
+                            displayToastMessages(requireContext(), TAG, "Cleared Team Aliases for " + eventCode, false, null);
                         }
                     }
                     m_binding.loadEventCodeInput.setText("");
@@ -188,18 +188,17 @@ public class LoadTeamAliasesDialog extends DialogFragment
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlStr, null,
                 response -> {
-                    Log.i(TAG, "Successfully received team aliases data for:" + eventCode);
+                    Log.i(TAG, "Successfully received team aliases file for:" + eventCode);
                     if (response.length() == 0)
                     {
-                        Log.w(TAG, "Received empty team aliases for: " + eventCode);
-                        Toast.makeText(context, "No team team aliases found for " + eventCode, Toast.LENGTH_LONG).show();
+                        displayToastMessages(requireContext(), TAG, "No team team aliases in file for " + eventCode, false, null);
                         resetUiState(okButton);
                         return;
                     }
 
                     if (saveTeamAliases(context, eventCode, response))
                     {
-                        Toast.makeText(context, "Successfully downloaded team aliases for " + eventCode, Toast.LENGTH_LONG).show();
+                        displayToastMessages(requireContext(), TAG, "Successfully downloaded " + response.length() + " team aliases for " + eventCode, false, null);
                         if (isAdded())
                         {
                             dismiss();
@@ -211,9 +210,7 @@ public class LoadTeamAliasesDialog extends DialogFragment
                     }
                 },
                 error -> {
-                    Log.e(TAG, "Download team aliases failed: " + error.toString());
-                    String msg = "Failed to download team aliases for '" + eventCode + "'. Check connection or event code.";
-                    Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+                    displayToastMessages(requireContext(), TAG, "Failed to download team aliases for '" + eventCode + "'. Check connection or event code.", false, null);
                     resetUiState(okButton);
                 });
 
@@ -251,6 +248,35 @@ public class LoadTeamAliasesDialog extends DialogFragment
         TeamAliases teamAliases = TeamAliases.getInstance(context, eventCode, true);
         teamAliases.deleteTeamAliasesFile(eventCode);
         return teamAliases.writeTeamAliasesFile(eventCode, response, false);
+    }
+
+    /**
+     * Log and optionally display an error message for an exception.
+     *
+     * @param context the context to show the Toast in
+     * @param tag     the log tag
+     * @param msg     the error message
+     * @param bSilent if true, the Toast is suppressed
+     * @param e       the exception that occurred
+     */
+    protected void displayToastMessages(Context context, String tag, String msg, boolean bSilent, Exception e)
+    {
+        int length;
+        if (e == null)
+        {
+            length = Toast.LENGTH_SHORT;
+            Log.i(tag, msg);
+        }
+        else
+        {
+            length = Toast.LENGTH_LONG;
+            Log.e(tag, msg, e);
+        }
+
+        if (!bSilent && context != null)
+        {
+            Toast.makeText(context, msg, length).show();
+        }
     }
 
     /**

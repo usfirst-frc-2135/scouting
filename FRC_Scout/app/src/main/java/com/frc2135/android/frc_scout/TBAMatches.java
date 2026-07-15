@@ -2,7 +2,6 @@ package com.frc2135.android.frc_scout;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -153,22 +152,16 @@ public class TBAMatches extends BaseJSONSerializer
             if (m_tbaMatchesJSON != null)
             {
                 m_bTBAMatchesLoaded = true;
-
-                String msg = "Successfully loaded TBA matches for " + m_eventCode;
-                Log.d(TAG, msg);
-                if (!bSilent)
-                {
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
-                }
+                super.displayToastMessages(context, TAG, "Successfully loaded TBA matches for " + m_eventCode, false, null);
             }
             else
             {
-                super.handleToastError(context, TAG, "TBA matches file not found for " + m_eventCode, bSilent, null);
+                super.displayToastMessages(context, TAG, "TBA matches file not found for " + m_eventCode, bSilent, null);
             }
         }
         catch (JSONException | IOException e)
         {
-            super.handleToastError(context, TAG, "Failed to parse TBA matches for: " + m_eventCode, bSilent, e);
+            super.displayToastMessages(context, TAG, "Failed to parse TBA matches for: " + m_eventCode, bSilent, e);
         }
     }
 
@@ -215,7 +208,7 @@ public class TBAMatches extends BaseJSONSerializer
         }
         catch (IOException e)
         {
-            super.handleToastError(m_appContext, TAG, "Failed to write TBA matches file for: " + eventCode, bSilent, e);
+            super.displayToastMessages(m_appContext, TAG, "Failed to write TBA matches file for: " + eventCode, bSilent, e);
             return false;
         }
     }
@@ -251,7 +244,7 @@ public class TBAMatches extends BaseJSONSerializer
      */
     public int deleteTBAMatchesFile(String eventCode)
     {
-        Log.d(TAG, "Deleting TBA matches to file for event: " + eventCode);
+        Log.d(TAG, "Deleting TBA matches file for event: " + eventCode);
         File[] fileList;
         int deletedCount = 0;
 

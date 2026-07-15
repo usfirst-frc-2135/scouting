@@ -181,12 +181,23 @@ public abstract class BaseJSONSerializer
      * @param bSilent if true, the Toast is suppressed
      * @param e       the exception that occurred
      */
-    protected void handleToastError(Context context, String tag, String msg, boolean bSilent, Exception e)
+    protected void displayToastMessages(Context context, String tag, String msg, boolean bSilent, Exception e)
     {
-        Log.e(tag, msg, e);
-        if (!bSilent && context != null)
+        int length;
+        if (e == null)
         {
-            Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+            length = Toast.LENGTH_SHORT;
+            Log.i(tag, msg);
+        }
+        else
+        {
+            length = Toast.LENGTH_LONG;
+            Log.e(tag, msg, e);
+        }
+
+        if (context != null && !bSilent)
+        {
+            Toast.makeText(context, msg, length).show();
         }
     }
 }

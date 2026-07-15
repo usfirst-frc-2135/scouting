@@ -2,7 +2,6 @@ package com.frc2135.android.frc_scout;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -143,31 +142,33 @@ public class ScoutNames extends BaseJSONSerializer
             JSONArray jsonArray = readScoutNamesFile(m_eventCode);
             if (jsonArray != null)
             {
-                m_scoutNames.clear();
-                for (int i = 0; i < jsonArray.length(); i++)
-                {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    String name = jsonObject.optString(SCOUT_NAME_JSON_KEY);
-                    if (!name.trim().isEmpty())
-                    {
-                        m_scoutNames.add(name);
-                    }
-                }
+                parseScoutNamesJSON(jsonArray);
                 m_bScoutNamesLoaded = true;
-                Log.d(TAG, "Successfully loaded scout names for " + m_eventCode);
-                if (!bSilent)
-                {
-                    Toast.makeText(context, "Successfully loaded scout names for " + m_eventCode, Toast.LENGTH_SHORT).show();
-                }
+                super.displayToastMessages(context, TAG, "Successfully loaded scout names for " + m_eventCode, false, null);
             }
             else
             {
-                super.handleToastError(context, TAG, "Scout names file not found for " + m_eventCode, bSilent, null);
+                super.displayToastMessages(context, TAG, "Scout names file not found for " + m_eventCode, bSilent, null);
             }
         }
         catch (JSONException | IOException e)
         {
-            super.handleToastError(context, TAG, "Failed to parse scout names for: " + m_eventCode, bSilent, e);
+            super.displayToastMessages(context, TAG, "Failed to parse scout names for: " + m_eventCode, bSilent, e);
+        }
+    }
+
+    private void parseScoutNamesJSON(JSONArray jsonArray)
+            throws JSONException
+    {
+        m_scoutNames.clear();
+        for (int i = 0; i < jsonArray.length(); i++)
+        {
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            String name = jsonObject.optString(SCOUT_NAME_JSON_KEY);
+            if (!name.trim().isEmpty())
+            {
+                m_scoutNames.add(name);
+            }
         }
     }
 
@@ -209,7 +210,7 @@ public class ScoutNames extends BaseJSONSerializer
         }
         catch (IOException e)
         {
-            super.handleToastError(m_appContext, TAG, "Failed to write scout names file for: " + eventCode, bSilent, e);
+            super.displayToastMessages(m_appContext, TAG, "Failed to write scout names file for: " + eventCode, bSilent, e);
             return false;
         }
     }
@@ -243,6 +244,7 @@ public class ScoutNames extends BaseJSONSerializer
      */
     public int deleteScoutNamesFile(String eventCode)
     {
+        Log.d(TAG, "Deleting scout names file for event: " + eventCode);
         if (eventCode == null || eventCode.trim().isEmpty())
         {
             Log.i(TAG, "Invalid event code: " + eventCode);

@@ -81,14 +81,14 @@ public class LoadTBAMatchesDialog extends DialogFragment
                 .setPositiveButton(android.R.string.ok, null)
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
                 .setNeutralButton(R.string.clear_tba_matches, (d, w) -> {
-                    Log.d(TAG, "Clear TBA Matches called");
+                    Log.i(TAG, "Clear TBA Matches called");
                     String eventCode = Objects.requireNonNull(m_binding.loadEventCodeInput.getText()).toString().trim();
                     if (!eventCode.isEmpty())
                     {
                         TBAMatches tbaMatches = TBAMatches.getInstance(requireContext(), eventCode, false);
                         if (tbaMatches.deleteTBAMatchesFile(eventCode) > 0)
                         {
-                            Toast.makeText(requireContext(), "Cleared TBA Matches for " + eventCode, Toast.LENGTH_SHORT).show();
+                            displayToastMessages(requireContext(), TAG, "Cleared TBA Matches for " + eventCode, false, null);
                         }
                     }
                     m_binding.loadEventCodeInput.setText("");
@@ -192,18 +192,17 @@ public class LoadTBAMatchesDialog extends DialogFragment
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlStr, null,
                 response -> {
-                    Log.d(TAG, "Successfully received TBA matches for: " + eventCode);
+                    Log.i(TAG, "Successfully received TBA match file for: " + eventCode);
                     if (response.length() == 0)
                     {
-                        Log.w(TAG, "Received empty TBA matches list for: " + eventCode);
-                        Toast.makeText(context, "No TBA matches found for " + eventCode, Toast.LENGTH_LONG).show();
+                        displayToastMessages(requireContext(), TAG, "No TBA matches in file for " + eventCode, false, null);
                         resetUiState(okButton);
                         return;
                     }
 
                     if (saveTBAMatches(context, eventCode, response))
                     {
-                        Toast.makeText(context, "Successfully downloaded " + response.length() + " TBA matches for " + eventCode, Toast.LENGTH_LONG).show();
+                        displayToastMessages(requireContext(), TAG, "Successfully downloaded " + response.length() + " TBA matches for " + eventCode, false, null);
                         if (isAdded())
                         {
                             dismiss();
@@ -231,7 +230,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
                     {
                         msg.append("Check your internet connection.");
                     }
-                    Toast.makeText(context, msg.toString(), Toast.LENGTH_LONG).show();
+                    displayToastMessages(requireContext(), TAG, msg.toString(), false, null);
                     resetUiState(okButton);
                 })
         {
@@ -285,6 +284,35 @@ public class LoadTBAMatchesDialog extends DialogFragment
             return true;
         }
         return false;
+    }
+
+    /**
+     * Log and optionally display an error message for an exception.
+     *
+     * @param context the context to show the Toast in
+     * @param tag     the log tag
+     * @param msg     the error message
+     * @param bSilent if true, the Toast is suppressed
+     * @param e       the exception that occurred
+     */
+    protected void displayToastMessages(Context context, String tag, String msg, boolean bSilent, Exception e)
+    {
+        int length;
+        if (e == null)
+        {
+            length = Toast.LENGTH_SHORT;
+            Log.i(tag, msg);
+        }
+        else
+        {
+            length = Toast.LENGTH_LONG;
+            Log.e(tag, msg, e);
+        }
+
+        if (!bSilent && context != null)
+        {
+            Toast.makeText(context, msg, length).show();
+        }
     }
 
     @Override
