@@ -1,8 +1,6 @@
 package com.frc2135.android.frc_scout;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -59,30 +59,10 @@ public class AutonFragment extends Fragment
     {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
-        ScoutingActivity activity = (ScoutingActivity) requireActivity();
-        m_matchData = activity.getCurrentMatch();
+        m_matchData = ((ScoutingActivity) requireActivity()).getCurrentMatch();
         if (m_matchData != null)
         {
             Log.d(TAG, "New match ID = " + m_matchData.getMatchID());
-            ActionBar actionBar = activity.getSupportActionBar();
-            if (actionBar != null)
-            {
-                actionBar.setTitle(R.string.autonomous_title);
-
-                Settings settings = Settings.getInstance(requireContext());
-                if (settings != null)
-                {
-                    String color = settings.getTeamIndexColor();
-                    if (color.equals("red"))
-                    {
-                        actionBar.setBackgroundDrawable(new ColorDrawable(Color.RED));
-                    }
-                    else if (color.equals("blue"))
-                    {
-                        actionBar.setBackgroundDrawable(new ColorDrawable(Color.BLUE));
-                    }
-                }
-            }
         }
     }
 
@@ -91,29 +71,60 @@ public class AutonFragment extends Fragment
     {
         Log.d(TAG, "onCreateView");
         m_binding = AutonFragmentBinding.inflate(inflater, parent, false);
+        return m_binding.getRoot();
+    }
 
-        if (m_matchData != null)
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
+    {
+        super.onViewCreated(view, savedInstanceState);
+        Log.d(TAG, "onViewCreated");
+        setupActionBar();
+        loadMatchData();
+        setupListeners();
+    }
+
+    private void setupActionBar()
+    {
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        if (actionBar != null)
         {
-            m_binding.autonHopperTotalText.setText(String.valueOf(m_matchData.getAutonHopper()));
+            actionBar.setTitle(R.string.autonomous_title);
 
-            m_binding.autonHopperIncrButton.setOnClickListener(v -> updateTotalsInt(m_binding.autonHopperTotalText, true));
-            m_binding.autonHopperDecrButton.setOnClickListener(v -> updateTotalsInt(m_binding.autonHopperTotalText, false));
+            Settings settings = Settings.getInstance(requireContext());
+            if (settings != null)
+            {
+                actionBar.setBackgroundDrawable(settings.getTeamIndexColor());
+            }
+        }
+    }
 
-            m_binding.autonPreloadCheckbox.setChecked(m_matchData.isAutonPreload());
-            m_binding.autonAzCheckbox.setChecked(m_matchData.isAutonAz());
-            m_binding.autonDepotCheckbox.setChecked(m_matchData.isAutonDepot());
-            m_binding.autonOutpostCheckbox.setChecked(m_matchData.isAutonOutpost());
-            m_binding.autonNzCheckbox.setChecked(m_matchData.isAutonNz());
-
-            initPreloadAccuracy(m_matchData.getPreloadAccuracyLevel());
-            initAutonAccuracy(m_matchData.getAutonAccuracyRate());
-            initAutonClimb(m_matchData.getAutonClimb());
-
-            // Check Hopper levels for MAX
-            updateScoreColor(m_binding.autonHopperTotalText);
+    private void loadMatchData()
+    {
+        if (m_matchData == null)
+        {
+            return;
         }
 
-        return m_binding.getRoot();
+        m_binding.autonPreloadCheckbox.setChecked(m_matchData.isAutonPreload());
+        initPreloadAccuracy(m_matchData.getPreloadAccuracyLevel());
+
+        m_binding.autonHopperTotalText.setText(String.valueOf(m_matchData.getAutonHopper()));
+        updateScoreColor(m_binding.autonHopperTotalText); // Check Hopper levels for MAX
+        initAutonAccuracy(m_matchData.getAutonAccuracyRate());
+
+        m_binding.autonAzCheckbox.setChecked(m_matchData.isAutonAz());
+        m_binding.autonDepotCheckbox.setChecked(m_matchData.isAutonDepot());
+        m_binding.autonOutpostCheckbox.setChecked(m_matchData.isAutonOutpost());
+        m_binding.autonNzCheckbox.setChecked(m_matchData.isAutonNz());
+
+        initAutonClimb(m_matchData.getAutonClimb());
+    }
+
+    private void setupListeners()
+    {
+        m_binding.autonHopperDecrButton.setOnClickListener(v -> updateTotalsInt(m_binding.autonHopperTotalText, false));
+        m_binding.autonHopperIncrButton.setOnClickListener(v -> updateTotalsInt(m_binding.autonHopperTotalText, true));
     }
 
     private void initPreloadAccuracy(int value)

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -65,6 +66,10 @@ public class EndgameFragment extends Fragment
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
         m_matchData = ((ScoutingActivity) requireActivity()).getCurrentMatch();
+        if (m_matchData != null)
+        {
+            Log.d(TAG, "Match ID = " + m_matchData.getMatchID());
+        }
     }
 
     @Override
@@ -88,10 +93,16 @@ public class EndgameFragment extends Fragment
 
     private void setupActionBar()
     {
-        ActionBar actionBar = ((ScoutingActivity) requireActivity()).getSupportActionBar();
-        if (actionBar != null && m_matchData != null)
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        if (actionBar != null)
         {
             actionBar.setTitle(R.string.endgame_title);
+
+            Settings settings = Settings.getInstance(requireContext());
+            if (settings != null)
+            {
+                actionBar.setBackgroundDrawable(settings.getTeamIndexColor());
+            }
         }
     }
 
@@ -103,8 +114,10 @@ public class EndgameFragment extends Fragment
         }
 
         initStartClimbing(m_matchData.getStartClimb());
+
         initClimbLevel(m_matchData.getEndgameClimbLevel());
         initClimbPos(m_matchData.getEndgameClimbPos());
+
         initDiedValue(m_matchData.getDiedValue());
 
         m_binding.endgameCommentsInput.setText(m_matchData.getComment());

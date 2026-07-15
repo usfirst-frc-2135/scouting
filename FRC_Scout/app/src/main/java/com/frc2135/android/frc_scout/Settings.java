@@ -1,6 +1,8 @@
 package com.frc2135.android.frc_scout;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -373,19 +375,19 @@ public final class Settings extends BaseJSONSerializer
      *
      * @return the team color string ("red", "blue", or "unknown")
      */
-    public String getTeamIndexColor()
+    public ColorDrawable getTeamIndexColor()
     {
         int index = getTeamIndex();
         if (index >= 1 && index <= 3)
         {
-            return "red";
+            return new ColorDrawable(Color.RED);
         }
         if (index >= 4 && index <= 6)
         {
-            return "blue";
+            return new ColorDrawable(Color.BLUE);
         }
 
-        return "unknown";
+        return new ColorDrawable(Color.GRAY);
     }
 
     /**

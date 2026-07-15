@@ -82,6 +82,10 @@ public class TeleopFragment extends Fragment
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
         m_matchData = ((ScoutingActivity) requireActivity()).getCurrentMatch();
+        if (m_matchData != null)
+        {
+            Log.d(TAG, "Match ID = " + m_matchData.getMatchID());
+        }
     }
 
     @Override
@@ -105,9 +109,15 @@ public class TeleopFragment extends Fragment
     private void setupActionBar()
     {
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
-        if (actionBar != null && m_matchData != null)
+        if (actionBar != null)
         {
             actionBar.setTitle(R.string.teleoperated_title);
+
+            Settings settings = Settings.getInstance(requireContext());
+            if (settings != null)
+            {
+                actionBar.setBackgroundDrawable(settings.getTeamIndexColor());
+            }
         }
     }
 
@@ -120,15 +130,17 @@ public class TeleopFragment extends Fragment
 
         m_binding.teleopHopperTotalText.setText(String.valueOf(m_matchData.getHoppersUsed()));
         updateScoreColor(m_binding.teleopHopperTotalText);
+        initAccuracyRate(m_matchData.getAccuracyRate());
 
         m_binding.teleopIntakeShootCheckbox.setChecked(m_matchData.getIntakeAndShoot());
         m_binding.teleopHerdedFuelCheckbox.setChecked(m_matchData.getShovelFuel());
 
-        initAccuracyRate(m_matchData.getAccuracyRate());
-        initPassingRate(m_matchData.getPassingEffectivenessRate());
-        initDefenseRate(m_matchData.getDefenseRate());
         initPassNz(m_matchData.getPassNeutralZone());
         initPassAz(m_matchData.getPassAllianceZone());
+        initPassingRate(m_matchData.getPassingEffectivenessRate());
+
+        initDefenseRate(m_matchData.getDefenseRate());
+
         initDriverAbility(m_matchData.getDriverAbility());
 
         setupPhoto();
