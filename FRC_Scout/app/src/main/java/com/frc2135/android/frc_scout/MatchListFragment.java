@@ -1,6 +1,7 @@
 package com.frc2135.android.frc_scout;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -188,7 +189,7 @@ public class MatchListFragment extends Fragment
             @Override
             public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
             {
-                inflater.inflate(R.menu.dark_mode_context_menu, menu);
+                inflater.inflate(R.menu.action_bar_context_menu, menu);
 
                 MenuItem darkModeItem = menu.findItem(R.id.dark_mode_switch);
                 if (darkModeItem != null)
@@ -225,22 +226,62 @@ public class MatchListFragment extends Fragment
                 {
                     LoadTBAMatchesDialog.newInstance().show(fm, "load_event_dialog");
                 }
-                else if (itemID == R.id.load_team_aliases_dialog)
-                {
-                    LoadTeamAliasesDialog.newInstance().show(fm, "load_aliases");
-                }
                 else if (itemID == R.id.load_scout_names_dialog)
                 {
                     LoadScoutNamesDialog.newInstance().show(fm, "load_scouts");
                 }
+                else if (itemID == R.id.load_team_aliases_dialog)
+                {
+                    LoadTeamAliasesDialog.newInstance().show(fm, "load_aliases");
+                }
+                else if (itemID == R.id.clear_all_data_dialog)
+                {
+                    clearAllData();
+                }
                 else if (itemID == R.id.about_screen_dialog)
                 {
                     startActivity(new Intent(requireContext(), SplashScreenActivity.class));
-                requireActivity().finish();
+                    requireActivity().finish();
                 }
                 return true;
             }
         });
+    }
+
+    private void clearAllData()
+    {
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Clear All Application Data?")
+                .setMessage("This will permanently delete all TBA matches, team aliases, scout names, and application settings. Scouted match data will not be affected. Continue?")
+                .setPositiveButton("Clear All", (dialog, which) -> {
+                    Log.d(TAG, "Executing Clear All Data");
+                    Context context = requireContext();
+
+                    // 1. Clear TBA Matches
+                    TBAMatches.getInstance(context).deleteTBAMatchesFile(null);
+                    TBAMatches.clearTBAMatches();
+
+                    // 2. Clear Team Aliases
+                    // TeamAliases doesn't have a bulk delete, but we can clear instance
+                    // and let the user delete specific ones if needed, or we implement bulk.
+                    // For now, clear settings-linked one.
+                    String event = Settings.getInstance(context).getEventCode();
+                    TeamAliases.getInstance(context).deleteTeamAliasesFile(event);
+                    TeamAliases.clearTeamAliases();
+
+                    // 3. Clear Scout Names
+                    ScoutNames.getInstance(context).deleteEventScoutNames(context, event);
+                    ScoutNames.clearScoutNames();
+
+                    // 4. Reset Settings
+                    Settings.getInstance(context).resetSettings();
+
+                    refreshMatchList();
+                    Log.i(TAG, "All configuration data cleared");
+                    Toast.makeText(context, "All configuration data cleared", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
     }
 
     private class MatchHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
@@ -357,7 +398,8 @@ public class MatchListFragment extends Fragment
                         ScoutedMatches.getInstance(requireContext()).deleteMatch(m);
                         refreshMatchList();
                         m_selectedMatch = null;
-                        Toast.makeText(requireContext(), "Match deleted", Toast.LENGTH_SHORT).show();
+                        Log.i(TAG, "Match deleted " + m.getMatchNumber());
+                        Toast.makeText(requireContext(), "Match deleted " + m.getMatchNumber(), Toast.LENGTH_SHORT).show();
                     })
                     .setNegativeButton("Cancel", (dialog, which) -> m_selectedMatch = null)
                     .show();

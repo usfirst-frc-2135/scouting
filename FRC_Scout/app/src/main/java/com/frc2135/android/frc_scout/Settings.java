@@ -116,6 +116,26 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
+     * Clears all settings to their default values and removes the settings file.
+     */
+    public void resetSettings()
+    {
+        Log.d(TAG, "resetSettings()");
+        m_eventCode = DEFAULT_EVENT_CODE;
+        m_teamIndexStr = m_teamIndexOptions[0];
+        m_mostRecentMatchNumber = "";
+        m_pastScouts.clear();
+        m_mostRecentScoutName = "";
+        m_scoringTableSide = false;
+
+        File file = new File(m_dataDir, Constants.SETTINGS_FILENAME);
+        if (file.exists())
+        {
+            file.delete();
+        }
+    }
+
+    /**
      * Loads the application settings from internal storage.
      *
      * @throws IOException   if reading the file fails

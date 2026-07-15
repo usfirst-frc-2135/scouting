@@ -18,6 +18,7 @@
     <string name="load_tba_matches">Load TBA Matches</string>
     <string name="load_team_aliases">Load Team Aliases</string>
     <string name="load_scout_names">Load Scout Names</string>
+    <string name="clear_all_data">Clear All Data</string>
     <string name="about">About</string>
     <string name="load_scout_names_title">Load Scout Names</string>
 
@@ -113,37 +114,39 @@
 
     <!--    autonomous mode strings -->
     <string name="preload_title">PRELOAD</string>
-    <string name="preload_accuracy_rate">PRELOAD ACCURACY RATE:</string>
-    <string name="none">None</string>
-    <string name="few">Few</string>
-    <string name="some">Some</string>
-    <string name="half">Half</string>
-    <string name="most">Most</string>
-    <string name="all">All</string>
     <string name="shot_preloaded_fuel">Shot preloaded fuel</string>
+    <string name="preload_accuracy_rate">PRELOAD ACCURACY RATE:</string>
+    <string name="all">All</string>
+    <string name="most">Most</string>
+    <string name="half">Half</string>
+    <string name="none">None</string>
+    <string name="some">Some</string>
 
-    <!--    teleop mode strings -->
-    <string name="got_fuel_from">GOT FUEL FROM</string>
     <string name="hoppers_shot">HOPPERS SHOT</string>
-    <string name="one_qtr">¼</string>
-    <string name="one_half">½</string>
-    <string name="three_qtr">¾</string>
+    <string name="hopper_count_total">0</string>
     <string name="increase">+</string>
     <string name="decrease">-</string>
 
     <string name="accuracy_rate">ACCURACY RATE:</string>
+    <string name="three_qtr">¾</string>
+    <string name="one_half">½</string>
+    <string name="one_qtr">¼</string>
+    <string name="few">Few</string>
 
+    <string name="got_fuel_from">GOT FUEL FROM</string>
+
+    <!--    teleop mode strings -->
+    <string name="intake_while_shooting">Intake and shoot at the same time</string>
+
+    <string name="passing_from_zone">PASSING FROM ZONE</string>
     <string name="passing_rate">PASSING RATE</string>
+    <string name="low">Low</string>
     <string name="medium">Medium</string>
     <string name="large">Large</string>
     <string name="tons">Tons</string>
-
-    <string name="passing_from_zone">PASSING FROM ZONE</string>
     <string name="herded_lots_of_fuel">Herded a lot of fuel</string>
-    <string name="intake_while_shooting">Intake and shoot at the same time</string>
 
     <string name="defense">DEFENSE</string>
-    <string name="low">Low</string>
     <string name="med_low">M low</string>
     <string name="med_high">M high</string>
     <string name="high">High</string>
@@ -156,22 +159,22 @@
     <string name="elite">Elite</string>
 
     <!--    endgame mode strings -->
-    <string name="climb_position">CLIMB POSITION:</string>
-    <string name="front">F</string>
-    <string name="back">B</string>
-    <string name="left">L</string>
-    <string name="right">R</string>
+    <string name="start_climbing">START CLIMBING</string>
+    <string name="before">Before</string>
+    <string name="bell">Bell</string>
+    <string name="at_10s_left">10s left</string>
+    <string name="less_than_10s">less than 10s</string>
 
     <string name="climb_level">CLIMB LEVEL:</string>
     <string name="level_one">L1</string>
     <string name="level_two">L2</string>
     <string name="level_three">L3</string>
 
-    <string name="start_climbing">START CLIMBING</string>
-    <string name="before">Before</string>
-    <string name="bell">Bell</string>
-    <string name="at_10s_left">10s left</string>
-    <string name="less_than_10s">less than 10s</string>
+    <string name="climb_position">CLIMB POSITION:</string>
+    <string name="left">L</string>
+    <string name="right">R</string>
+    <string name="front">F</string>
+    <string name="back">B</string>
 
     <string name="died">DIED</string>
     <string name="more_than_1min">1min+</string>
@@ -189,7 +192,6 @@
 
     <string name="no">No</string>
     <string name="yes">Yes</string>
-    <string name="hopper_count_total">0</string>
 
     <!-- Accessibility Strings -->
 

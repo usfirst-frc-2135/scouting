@@ -259,6 +259,7 @@ public class LoadTeamAliasesDialog extends DialogFragment
      * @param bSilent if true, the Toast is suppressed
      * @param e       the exception that occurred
      */
+    @SuppressWarnings("SameParameterValue")
     protected void displayToastMessages(Context context, String tag, String msg, boolean bSilent, Exception e)
     {
         int length;
