@@ -15,7 +15,7 @@ import java.util.Map;
 
 /**
  * Singleton class for managing team aliases data.
- * Loads and parses team number to alias mapping from a JSON file.
+ * Loads and parses team number to alias mapping (e.g., mapping a "99" placeholder to a real team number) from local JSON files.
  * Handles its own persistence by extending {@link BaseJSONSerializer}.
  */
 public class TeamAliases extends BaseJSONSerializer
@@ -31,6 +31,12 @@ public class TeamAliases extends BaseJSONSerializer
 
     private static volatile TeamAliases sTeamAliases;
 
+    /**
+     * Initializes the team alias repository for a specific event.
+     *
+     * @param context   the context used for file operations
+     * @param eventCode the FRC event code
+     */
     private TeamAliases(Context context, String eventCode)
     {
         super(context);
@@ -42,7 +48,7 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Returns the singleton instance of TeamAliases using the event code from Settings.
+     * Returns the singleton instance of TeamAliases using the default event code from application settings.
      *
      * @param context the context used for file operations
      * @return the singleton TeamAliases instance
@@ -54,11 +60,12 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Returns the singleton instance of TeamAliases.
+     * Returns the thread-safe singleton instance of TeamAliases.
+     * If the requested event code differs from the currently loaded one, it re-initializes for the new event.
      *
-     * @param context      the context used for file operations
+     * @param context      the context used for file operations and display messages
      * @param eventCode    the FRC event code
-     * @param bForceReload whether to force a reload of the JSON data
+     * @param bForceReload if true, forces a reload of the aliases JSON from storage
      * @return the singleton TeamAliases instance
      */
     public static TeamAliases getInstance(Context context, String eventCode, boolean bForceReload)
@@ -97,7 +104,7 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Returns the event code associated with this alias mapping.
+     * Returns the FRC event code currently associated with this alias mapping.
      *
      * @return the event code string
      */
@@ -107,7 +114,7 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Sets the event code and resets the loaded data state.
+     * Updates the event code and resets the internal state of loaded alias mappings.
      *
      * @param eventCode the new FRC event code
      */
@@ -120,10 +127,10 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Reads the aliases JSON file from internal storage.
+     * Reads the aliases JSON file from internal storage for the current event.
      *
-     * @param context the context used to open the file
-     * @param bSilent if true, error Toast messages are suppressed
+     * @param context the context used to open the file and show messages
+     * @param bSilent if true, error notifications are suppressed
      */
     public void readTeamAliasesJSON(Context context, boolean bSilent)
     {
@@ -154,6 +161,12 @@ public class TeamAliases extends BaseJSONSerializer
         }
     }
 
+    /**
+     * Parses a JSONArray of alias records into internal bidirectional maps.
+     *
+     * @param jsonArray the source JSONArray
+     * @throws JSONException if the array format is invalid
+     */
     private void parseTeamAliasesJSON(JSONArray jsonArray)
             throws JSONException
     {
@@ -173,10 +186,10 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Gets the filename for a given event code.
+     * Generates a filename for the team aliases record associated with an event.
      *
      * @param eventCode the FRC event code
-     * @return the filename
+     * @return the generated filename
      */
     private String getFilename(String eventCode)
     {
@@ -184,12 +197,12 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Saves the provided JSONArray of aliases data to a JSON file on the device.
+     * Saves a {@link JSONArray} of alias mappings to a JSON file in local storage.
      *
      * @param eventCode   the FRC event code
-     * @param teamAliases the JSONArray containing team-to-alias mapping data
-     * @param bSilent     if true, error Toast messages are suppressed
-     * @return true if successful, false otherwise
+     * @param teamAliases the JSONArray containing mapping data to persist
+     * @param bSilent     if true, error notifications are suppressed
+     * @return true if the file was written successfully
      */
     public boolean writeTeamAliasesFile(String eventCode, JSONArray teamAliases, boolean bSilent)
     {
@@ -200,6 +213,7 @@ public class TeamAliases extends BaseJSONSerializer
         }
 
         String aliasFilename = getFilename(eventCode);
+        Log.d(TAG, "Writing team aliases to file for event: " + eventCode);
         Log.i(TAG, "Saving team aliases info for " + eventCode + " to: " + aliasFilename);
 
         try
@@ -216,12 +230,12 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Loads the team aliases from the specified file.
+     * Loads the team aliases JSON file for a specific event from local storage.
      *
      * @param eventCode the FRC event code
-     * @return the loaded JSONArray, or null if the file doesn't exist
-     * @throws IOException   if an error occurs during file reading
-     * @throws JSONException if the file content is not a valid JSON array
+     * @return the loaded JSONArray, or null if the file is missing
+     * @throws IOException   if reading the file fails
+     * @throws JSONException if the file content is not a valid JSONArray
      */
     public JSONArray readTeamAliasesFile(String eventCode)
             throws IOException, JSONException
@@ -238,10 +252,10 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Deletes the aliases file from internal storage.
+     * Deletes the local team aliases record associated with a specific event.
      *
      * @param eventCode the FRC event code
-     * @return 1 if successful, 0 otherwise
+     * @return 1 if a file was deleted, 0 otherwise
      */
     public int deleteTeamAliasesFile(String eventCode)
     {
@@ -266,7 +280,7 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Checks whether team aliases have been successfully loaded from local storage.
+     * Checks whether team alias mappings for the current event are currently held in memory.
      *
      * @return true if data is loaded
      */
@@ -277,10 +291,10 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Returns the alias ("99" number) for the given team number.
+     * Retrieves the mapped alias for a given real FRC team number.
      *
      * @param teamNumStr the team number (e.g., "2135")
-     * @return the alias string, or empty string if not found
+     * @return the alias string (e.g. "9901"), or an empty string if no alias is defined
      */
     public String getAliasForTeamNum(String teamNumStr)
     {
@@ -294,10 +308,10 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Returns the actual team number for the given alias ("99" number).
+     * Retrieves the real FRC team number associated with a given alias.
      *
      * @param myAlias the alias string (e.g., "9901")
-     * @return the team number string, or empty string if not found
+     * @return the real team number (e.g., "2135"), or an empty string if the alias is unrecognized
      */
     public String getTeamNumForAlias(String myAlias)
     {
@@ -310,10 +324,10 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Resolves a team number to its alias if one exists.
+     * Resolves an FRC team identifier to its alias if a mapping exists and aliases are loaded.
      *
      * @param teamNum the raw team number string
-     * @return the team alias if it exists, otherwise the original team number
+     * @return the team alias if it exists, otherwise the original team identifier
      */
     public String resolveAlias(String teamNum)
     {
@@ -326,7 +340,7 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Resolves a possible alias (starts with "99") to the actual team number.
+     * Resolves a possible alias (starting with "99") to its actual FRC team number.
      *
      * @param entry the entered team number or alias string
      * @return the actual team number if the entry is a recognized alias, otherwise the original entry

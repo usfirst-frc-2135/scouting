@@ -13,8 +13,8 @@ import java.util.Arrays;
 import java.util.Locale;
 
 /**
- * Singleton class for managing event matches.
- * Loads and parses match information from a JSON file specific to an event code.
+ * Singleton class for managing event match data retrieved from The Blue Alliance (TBA).
+ * Loads, parses, and persists match information (team keys, match numbers, competition levels) for a specific FRC event.
  * Handles its own persistence by extending {@link BaseJSONSerializer}.
  */
 public class TBAMatches extends BaseJSONSerializer
@@ -36,6 +36,12 @@ public class TBAMatches extends BaseJSONSerializer
 
     private static volatile TBAMatches sTBAMatches;
 
+    /**
+     * Initializes a new TBAMatches repository for a specific event.
+     *
+     * @param context   the context used for file operations
+     * @param eventCode the FRC event code
+     */
     private TBAMatches(Context context, String eventCode)
     {
         super(context);
@@ -46,7 +52,7 @@ public class TBAMatches extends BaseJSONSerializer
     }
 
     /**
-     * Returns the singleton instance of TBAMatches using the event code from Settings.
+     * Returns the singleton instance of TBAMatches using the default event code from application settings.
      *
      * @param context the context used for file operations
      * @return the singleton TBAMatches instance
@@ -59,12 +65,12 @@ public class TBAMatches extends BaseJSONSerializer
     }
 
     /**
-     * Returns the singleton instance of TBAMatches.
-     * If the event code changes or a reload is forced, the data is reloaded.
+     * Returns the thread-safe singleton instance of TBAMatches.
+     * If the requested event code differs from the currently loaded one, or if a reload is forced, it re-initializes the data.
      *
-     * @param context      the context used for file operations and Toast messages
+     * @param context      the context used for file operations and display messages
      * @param eventCode    the FRC event code
-     * @param bForceReload whether to force a reload of the JSON data
+     * @param bForceReload if true, forces a reload of the matches JSON from storage
      * @return the singleton TBAMatches instance
      */
     public static TBAMatches getInstance(Context context, String eventCode, boolean bForceReload)
@@ -110,7 +116,7 @@ public class TBAMatches extends BaseJSONSerializer
     }
 
     /**
-     * Returns the event code associated with this match data.
+     * Returns the FRC event code currently associated with this match repository.
      *
      * @return the event code string
      */
@@ -120,9 +126,9 @@ public class TBAMatches extends BaseJSONSerializer
     }
 
     /**
-     * Updates the event code and resets the loaded data state.
+     * Updates the event code and resets the internal state of loaded match data.
      *
-     * @param eventCode the new event code
+     * @param eventCode the new FRC event code
      */
     private void setEventCode(String eventCode)
     {
@@ -132,10 +138,10 @@ public class TBAMatches extends BaseJSONSerializer
     }
 
     /**
-     * Reads the event matches JSON file from the device's internal storage.
+     * Reads the event matches JSON file from internal storage for the current event.
      *
-     * @param context the context used to open the file and show Toasts
-     * @param bSilent if true, error Toast messages are suppressed
+     * @param context the context used to open the file and show messages
+     * @param bSilent if true, error notifications are suppressed
      */
     public void readTBAMatchesJSON(Context context, boolean bSilent)
     {
@@ -166,10 +172,10 @@ public class TBAMatches extends BaseJSONSerializer
     }
 
     /**
-     * Gets the filename for a given event code.
+     * Generates a filename for the TBA matches record associated with an event.
      *
      * @param eventCode the FRC event code
-     * @return the filename
+     * @return the generated filename
      */
     private String getFilename(String eventCode)
     {
@@ -177,12 +183,12 @@ public class TBAMatches extends BaseJSONSerializer
     }
 
     /**
-     * Writes event data for a specific event to a JSON file.
+     * Saves a {@link JSONArray} of match data to a JSON file in local storage.
      *
-     * @param eventCode  the TBA event code
-     * @param tbaMatches the JSONArray containing match information
-     * @param bSilent    if true, error Toast messages are suppressed
-     * @return true if successful, false otherwise
+     * @param eventCode  the FRC event code
+     * @param tbaMatches the JSONArray containing match information to persist
+     * @param bSilent    if true, error notifications are suppressed
+     * @return true if the file was written successfully
      */
     public boolean writeTBAMatchesFile(String eventCode, JSONArray tbaMatches, boolean bSilent)
     {
@@ -214,12 +220,12 @@ public class TBAMatches extends BaseJSONSerializer
     }
 
     /**
-     * Loads the event matches data for a specific event.
+     * Loads the match information JSON file for a specific event from local storage.
      *
-     * @param eventCode the TBA event code
-     * @return the loaded JSONArray, or null if the file doesn't exist
+     * @param eventCode the FRC event code
+     * @return the loaded JSONArray, or null if the file is missing
      * @throws IOException   if reading the file fails
-     * @throws JSONException if parsing the JSON data fails
+     * @throws JSONException if the file content is not a valid JSONArray
      */
     public JSONArray readTBAMatchesFile(String eventCode)
             throws IOException, JSONException
@@ -236,10 +242,10 @@ public class TBAMatches extends BaseJSONSerializer
     }
 
     /**
-     * Deletes the event match data for a specific event from local storage.
-     * If eventCode is null or empty, deletes all event match files.
+     * Deletes match data records from local storage.
+     * If an event code is provided, only that file is deleted. If null, all match files are removed.
      *
-     * @param eventCode the TBA event code to clear (e.g., "2026casac"), or null to clear all
+     * @param eventCode the FRC event code (e.g., "2026casac"), or null to clear all
      * @return the number of files deleted
      */
     public int deleteTBAMatchesFile(String eventCode)
@@ -288,7 +294,7 @@ public class TBAMatches extends BaseJSONSerializer
     }
 
     /**
-     * Checks whether match data from The Blue Alliance has been successfully loaded.
+     * Checks whether match data from The Blue Alliance is currently held in memory.
      *
      * @return true if data is loaded
      */
@@ -298,10 +304,10 @@ public class TBAMatches extends BaseJSONSerializer
     }
 
     /**
-     * Retrieves the team keys for a specific match.
+     * Retrieves the official list of team identifiers for a specific match.
      *
      * @param matchNum the match identifier (e.g., "qm1")
-     * @return an array of 7 strings: index 0 is a placeholder, 1-3 are Red teams, 4-6 are Blue teams
+     * @return an array of 7 strings: index 0 is a placeholder, 1-3 are Red alliance teams, 4-6 are Blue alliance teams
      */
     public String[] getMatchTeams(String matchNum)
     {

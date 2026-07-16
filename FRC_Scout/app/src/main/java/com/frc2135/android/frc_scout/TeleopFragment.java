@@ -21,6 +21,7 @@ import java.util.Random;
 
 /**
  * Fragment for recording teleoperated period scouting data.
+ * Manages UI components for hopper usage, accuracy, passing, defense, and driver ability.
  */
 public class TeleopFragment extends Fragment
 {
@@ -76,6 +77,11 @@ public class TeleopFragment extends Fragment
     private TeleopFragmentBinding m_binding;
     private int m_photoNum;
 
+    /**
+     * Initializes the fragment and retrieves the current match data from the parent activity.
+     *
+     * @param savedInstanceState if the fragment is being re-created from a previous saved state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -84,6 +90,14 @@ public class TeleopFragment extends Fragment
         m_matchData = ((ScoutingActivity) requireActivity()).getCurrentMatch();
     }
 
+    /**
+     * Inflates the layout for this fragment using view binding.
+     *
+     * @param inflater           the LayoutInflater object that can be used to inflate views
+     * @param parent             if non-null, this is the parent view that the fragment's UI should be attached to
+     * @param savedInstanceState if non-null, this fragment is being re-constructed from a previous saved state
+     * @return the root View of the inflated layout
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
@@ -92,6 +106,13 @@ public class TeleopFragment extends Fragment
         return m_binding.getRoot();
     }
 
+    /**
+     * Called immediately after {@link #onCreateView} has returned.
+     * Sets up the action bar, loads match data into the UI, and initializes click listeners.
+     *
+     * @param view               the View returned by {@link #onCreateView}
+     * @param savedInstanceState if non-null, this fragment is being re-constructed from a previous saved state
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
@@ -102,6 +123,9 @@ public class TeleopFragment extends Fragment
         setupListeners();
     }
 
+    /**
+     * Configures the action bar title and background color based on the team alliance.
+     */
     private void setupActionBar()
     {
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
@@ -117,6 +141,9 @@ public class TeleopFragment extends Fragment
         }
     }
 
+    /**
+     * Populates the UI components with data from the current {@link MatchData} instance.
+     */
     private void loadMatchData()
     {
         if (m_matchData == null)
@@ -142,12 +169,20 @@ public class TeleopFragment extends Fragment
         setupPhoto();
     }
 
+    /**
+     * Sets up click listeners for the UI components.
+     */
     private void setupListeners()
     {
         m_binding.teleopHopperDecrButton.setOnClickListener(v -> updateTotalsInt(m_binding.teleopHopperTotalText, false));
         m_binding.teleopHopperIncrButton.setOnClickListener(v -> updateTotalsInt(m_binding.teleopHopperTotalText, true));
     }
 
+    /**
+     * Initializes the accuracy rate radio group selection.
+     *
+     * @param value the index of the selected accuracy level
+     */
     private void initAccuracyRate(int value)
     {
         if (value >= 0 && value < ACCURACY_IDS.length)
@@ -156,6 +191,11 @@ public class TeleopFragment extends Fragment
         }
     }
 
+    /**
+     * Initializes the passing rate radio group selection.
+     *
+     * @param value the index of the selected passing rate
+     */
     private void initPassingRate(int value)
     {
         if (value >= 0 && value < PASSING_RATE_IDS.length)
@@ -164,6 +204,11 @@ public class TeleopFragment extends Fragment
         }
     }
 
+    /**
+     * Initializes the defense rate radio group selection.
+     *
+     * @param value the index of the selected defense rate
+     */
     private void initDefenseRate(int value)
     {
         if (value >= 0 && value < DEFENSE_RATE_IDS.length)
@@ -172,6 +217,11 @@ public class TeleopFragment extends Fragment
         }
     }
 
+    /**
+     * Initializes the neutral zone passing radio group selection.
+     *
+     * @param value the index of the selected option
+     */
     private void initPassNz(int value)
     {
         if (value >= 0 && value < PASS_NZ_IDS.length)
@@ -180,6 +230,11 @@ public class TeleopFragment extends Fragment
         }
     }
 
+    /**
+     * Initializes the alliance zone passing radio group selection.
+     *
+     * @param value the index of the selected option
+     */
     private void initPassAz(int value)
     {
         if (value >= 0 && value < PASS_AZ_IDS.length)
@@ -188,6 +243,11 @@ public class TeleopFragment extends Fragment
         }
     }
 
+    /**
+     * Initializes the driver ability radio group selection.
+     *
+     * @param value the index of the selected ability level
+     */
     private void initDriverAbility(int value)
     {
         if (value >= 0 && value < DRIVING_ABILITY_IDS.length)
@@ -196,6 +256,10 @@ public class TeleopFragment extends Fragment
         }
     }
 
+    /**
+     * Configures the placeholder photo displayed in the teleop screen.
+     * If no photo is assigned, selects a random one from resources.
+     */
     private void setupPhoto()
     {
         m_photoNum = m_matchData.getTeleopPhoto();
@@ -299,6 +363,12 @@ public class TeleopFragment extends Fragment
         }
     }
 
+    /**
+     * Checks if the value in the given TextView exceeds the maximum allowed teleop hoppers.
+     *
+     * @param field the TextView containing the numeric value
+     * @return true if the value is greater than {@link MatchData#MAX_TELEOP_HOPPERS}
+     */
     private boolean isGreaterThanMax(TextView field)
     {
         try
@@ -312,6 +382,11 @@ public class TeleopFragment extends Fragment
         }
     }
 
+    /**
+     * Updates the text color of a TextView based on whether its value exceeds the maximum limit.
+     *
+     * @param tView the TextView to update
+     */
     private void updateScoreColor(TextView tView)
     {
         if (isGreaterThanMax(tView))
@@ -328,6 +403,12 @@ public class TeleopFragment extends Fragment
         }
     }
 
+    /**
+     * Updates a numeric total displayed in a TextView.
+     *
+     * @param tView the TextView to update
+     * @param bIncr true to increment, false to decrement (clamped at 0)
+     */
     public void updateTotalsInt(TextView tView, boolean bIncr)
     {
         try
@@ -343,6 +424,11 @@ public class TeleopFragment extends Fragment
         }
     }
 
+    /**
+     * Retrieves the selected accuracy rate index.
+     *
+     * @return the index of the selected radio button in the accuracy group
+     */
     public int getCurrentAccuracyLevel()
     {
         int id = m_binding.teleopAccuracyRadioGroup.getCheckedRadioButtonId();
@@ -356,6 +442,11 @@ public class TeleopFragment extends Fragment
         return 0;
     }
 
+    /**
+     * Retrieves the selected passing effectiveness rate index.
+     *
+     * @return the index of the selected radio button in the passing rate group
+     */
     public int getPassingEffectivenessRate()
     {
         int id = m_binding.teleopPassingRateRadioGroup.getCheckedRadioButtonId();
@@ -369,6 +460,11 @@ public class TeleopFragment extends Fragment
         return 5;
     }
 
+    /**
+     * Retrieves the selected defense rate index.
+     *
+     * @return the index of the selected radio button in the defense group
+     */
     public int getCurrentDefenseLevel()
     {
         int id = m_binding.teleopDefenseRadioGroup.getCheckedRadioButtonId();
@@ -382,6 +478,11 @@ public class TeleopFragment extends Fragment
         return 0;
     }
 
+    /**
+     * Retrieves the selection for neutral zone passing.
+     *
+     * @return the index of the selected radio button in the neutral zone passing group
+     */
     public int getPassNeutralZone()
     {
         int id = m_binding.teleopPassNzRadioGroup.getCheckedRadioButtonId();
@@ -395,6 +496,11 @@ public class TeleopFragment extends Fragment
         return 3;
     }
 
+    /**
+     * Retrieves the selection for alliance zone passing.
+     *
+     * @return the index of the selected radio button in the alliance zone passing group
+     */
     public int getPassAllianceZone()
     {
         int id = m_binding.teleopPassAzRadioGroup.getCheckedRadioButtonId();
@@ -408,6 +514,11 @@ public class TeleopFragment extends Fragment
         return 3;
     }
 
+    /**
+     * Retrieves the selected driver ability index.
+     *
+     * @return the index of the selected radio button in the driving ability group
+     */
     public int getDriverAbility()
     {
         int id = m_binding.teleopDrivingAbilityRadioGroup.getCheckedRadioButtonId();
@@ -422,7 +533,7 @@ public class TeleopFragment extends Fragment
     }
 
     /**
-     * Updates the MatchData object with the latest inputs from this fragment.
+     * Updates the {@link MatchData} object with the current values from the UI components.
      */
     public void updateTeleopData()
     {
@@ -450,6 +561,9 @@ public class TeleopFragment extends Fragment
         m_matchData.setDriveAbility(getDriverAbility());
     }
 
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     */
     @Override
     public void onResume()
     {
@@ -457,6 +571,9 @@ public class TeleopFragment extends Fragment
         Log.v(TAG, "onResume");
     }
 
+    /**
+     * Cleans up the view binding reference when the fragment view is being destroyed.
+     */
     @Override
     public void onDestroyView()
     {

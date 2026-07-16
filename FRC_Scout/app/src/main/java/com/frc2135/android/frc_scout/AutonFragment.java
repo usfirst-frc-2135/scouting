@@ -19,6 +19,7 @@ import com.frc2135.android.frc_scout.databinding.AutonFragmentBinding;
 
 /**
  * Fragment for recording autonomous period scouting data.
+ * Manages UI components for preload fuel, hopper usage, fuel sources, and climb position.
  */
 public class AutonFragment extends Fragment
 {
@@ -54,6 +55,11 @@ public class AutonFragment extends Fragment
     private MatchData m_matchData;
     private AutonFragmentBinding m_binding;
 
+    /**
+     * Initializes the fragment and retrieves the current match data from the parent activity.
+     *
+     * @param savedInstanceState if the fragment is being re-created from a previous saved state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -62,6 +68,14 @@ public class AutonFragment extends Fragment
         m_matchData = ((ScoutingActivity) requireActivity()).getCurrentMatch();
     }
 
+    /**
+     * Inflates the layout for this fragment using view binding.
+     *
+     * @param inflater           the LayoutInflater object that can be used to inflate views
+     * @param parent             if non-null, this is the parent view that the fragment's UI should be attached to
+     * @param savedInstanceState if non-null, this fragment is being re-constructed from a previous saved state
+     * @return the root View of the inflated layout
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
@@ -70,6 +84,13 @@ public class AutonFragment extends Fragment
         return m_binding.getRoot();
     }
 
+    /**
+     * Called immediately after {@link #onCreateView} has returned.
+     * Sets up the action bar, loads match data into the UI, and initializes click listeners.
+     *
+     * @param view               the View returned by {@link #onCreateView}
+     * @param savedInstanceState if non-null, this fragment is being re-constructed from a previous saved state
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
@@ -80,6 +101,9 @@ public class AutonFragment extends Fragment
         setupListeners();
     }
 
+    /**
+     * Configures the action bar title and background color based on the team alliance.
+     */
     private void setupActionBar()
     {
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
@@ -95,6 +119,9 @@ public class AutonFragment extends Fragment
         }
     }
 
+    /**
+     * Populates the UI components with data from the current {@link MatchData} instance.
+     */
     private void loadMatchData()
     {
         if (m_matchData == null)
@@ -117,12 +144,20 @@ public class AutonFragment extends Fragment
         initAutonClimb(m_matchData.getAutonClimb());
     }
 
+    /**
+     * Sets up click listeners for the UI components.
+     */
     private void setupListeners()
     {
         m_binding.autonHopperDecrButton.setOnClickListener(v -> updateTotalsInt(m_binding.autonHopperTotalText, false));
         m_binding.autonHopperIncrButton.setOnClickListener(v -> updateTotalsInt(m_binding.autonHopperTotalText, true));
     }
 
+    /**
+     * Initializes the preload accuracy radio group selection.
+     *
+     * @param value the index of the selected accuracy level
+     */
     private void initPreloadAccuracy(int value)
     {
         if (value >= 0 && value < PRELOAD_ACCURACY_IDS.length)
@@ -131,6 +166,11 @@ public class AutonFragment extends Fragment
         }
     }
 
+    /**
+     * Initializes the autonomous accuracy radio group selection.
+     *
+     * @param value the index of the selected accuracy level
+     */
     private void initAutonAccuracy(int value)
     {
         if (value >= 0 && value < AUTON_ACCURACY_IDS.length)
@@ -139,6 +179,11 @@ public class AutonFragment extends Fragment
         }
     }
 
+    /**
+     * Initializes the autonomous climb position radio group selection.
+     *
+     * @param value the index of the selected climb position
+     */
     private void initAutonClimb(int value)
     {
         if (value >= 0 && value < AUTON_CLIMB_IDS.length)
@@ -147,7 +192,12 @@ public class AutonFragment extends Fragment
         }
     }
 
-    // Check if given field is greater than expected max number.
+    /**
+     * Checks if the value in the given TextView exceeds the maximum allowed autonomous hoppers.
+     *
+     * @param field the TextView containing the numeric value
+     * @return true if the value is greater than {@link MatchData#MAX_AUTON_HOPPERS}
+     */
     private boolean isGreaterThanMax(TextView field)
     {
         try
@@ -161,6 +211,11 @@ public class AutonFragment extends Fragment
         }
     }
 
+    /**
+     * Updates the text color of a TextView based on whether its value exceeds the maximum limit.
+     *
+     * @param tView the TextView to update
+     */
     private void updateScoreColor(TextView tView)
     {
         if (isGreaterThanMax(tView))
@@ -177,9 +232,12 @@ public class AutonFragment extends Fragment
         }
     }
 
-    // Sets the new result integer value for the given TextView, either decrementing or
-    // incrementing the shown value. If the decrement case falls below zero, returns 0.
-    // Sets textView color to RED if out of expected range.
+    /**
+     * Updates a numeric total displayed in a TextView.
+     *
+     * @param tView the TextView to update
+     * @param bIncr true to increment, false to decrement (clamped at 0)
+     */
     public void updateTotalsInt(TextView tView, boolean bIncr)
     {
         try
@@ -203,6 +261,11 @@ public class AutonFragment extends Fragment
         }
     }
 
+    /**
+     * Retrieves the selected autonomous accuracy rate index.
+     *
+     * @return the index of the selected radio button in the accuracy group
+     */
     public int getAutonAccuracyRate()
     {
         int id = m_binding.autonAccuracyRadioGroup.getCheckedRadioButtonId();
@@ -216,6 +279,11 @@ public class AutonFragment extends Fragment
         return 0;
     }
 
+    /**
+     * Retrieves the selected preload accuracy level index.
+     *
+     * @return the index of the selected radio button in the preload accuracy group
+     */
     public int getPreloadAccuracyLevel()
     {
         int id = m_binding.autonPreloadAccuracyRadioGroup.getCheckedRadioButtonId();
@@ -229,6 +297,11 @@ public class AutonFragment extends Fragment
         return 0;
     }
 
+    /**
+     * Retrieves the selected autonomous climb position index.
+     *
+     * @return the index of the selected radio button in the climb position group
+     */
     public int getAutonClimb()
     {
         int id = m_binding.autonClimbRadioGroup.getCheckedRadioButtonId();
@@ -243,7 +316,7 @@ public class AutonFragment extends Fragment
     }
 
     /**
-     * Updates the MatchData object with the latest inputs from this fragment.
+     * Updates the {@link MatchData} object with the current values from the UI components.
      */
     public void updateAutonData()
     {
@@ -270,6 +343,9 @@ public class AutonFragment extends Fragment
         m_matchData.setAutonClimb(getAutonClimb());
     }
 
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     */
     @Override
     public void onResume()
     {
@@ -277,6 +353,9 @@ public class AutonFragment extends Fragment
         Log.v(TAG, "onResume");
     }
 
+    /**
+     * Cleans up the view binding reference when the fragment view is being destroyed.
+     */
     @Override
     public void onDestroyView()
     {

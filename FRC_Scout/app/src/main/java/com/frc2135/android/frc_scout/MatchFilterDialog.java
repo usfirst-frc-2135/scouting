@@ -120,11 +120,11 @@ public class MatchFilterDialog extends DialogFragment
     }
 
     /**
-     * Initializes the filter UI components and their adapters.
+     * Initializes the filter UI components and their adapters with data from {@link ScoutedMatches}.
      */
     private void setupFilters()
     {
-        Log.d(TAG, "setupFilters()");
+        Log.d(TAG, "setupFilters");
         ScoutedMatches data = ScoutedMatches.getInstance(requireContext());
 
         // Event Code Filter
@@ -169,7 +169,7 @@ public class MatchFilterDialog extends DialogFragment
      */
     private void applyFilters()
     {
-        Log.d(TAG, "applyFilters() called");
+        Log.d(TAG, "applyFilters called");
         Bundle result = new Bundle();
 
         String event = m_binding.matchFilterEventInput.getText().toString().trim();
@@ -200,6 +200,9 @@ public class MatchFilterDialog extends DialogFragment
         dismiss();
     }
 
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     */
     @Override
     public void onResume()
     {
@@ -207,6 +210,9 @@ public class MatchFilterDialog extends DialogFragment
         Log.v(TAG, "onResume");
     }
 
+    /**
+     * Cleans up the View Binding reference when the fragment view is being destroyed.
+     */
     @Override
     public void onDestroyView()
     {

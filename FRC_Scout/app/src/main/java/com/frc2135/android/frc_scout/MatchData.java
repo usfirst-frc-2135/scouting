@@ -13,7 +13,8 @@ import java.util.UUID;
 
 /**
  * Data model for a single scouted match.
- * Handles representation of match data and TSV encoding for QR codes.
+ * Encapsulates all information gathered during autonomous, teleoperated, and endgame stages.
+ * Handles representation of match data, JSON serialization for local storage, and TSV encoding for QR codes.
  */
 public class MatchData
 {
@@ -61,9 +62,19 @@ public class MatchData
     private static final String KEY_OTHER3 = "other3";
     private static final String KEY_OTHER4 = "other4";
 
+    /**
+     * The version identifier for the JSON format of match data.
+     */
     public static final double M_JSON_FORMAT_VERSION = 26.1;
 
+    /**
+     * Maximum allowed hopper count in the autonomous stage.
+     */
     public static final int MAX_AUTON_HOPPERS = 1;
+
+    /**
+     * Maximum allowed hopper count in the teleoperated stage.
+     */
     public static final int MAX_TELEOP_HOPPERS = 7;
 
     // --- Metadata Section ---
@@ -145,6 +156,7 @@ public class MatchData
 
     /**
      * Default constructor for creating a new match data record.
+     * Generates a unique UUID and sets defaults for all scouting parameters.
      */
     public MatchData()
     {
@@ -192,6 +204,7 @@ public class MatchData
 
     /**
      * Constructs a MatchData object from a {@link JSONObject}.
+     * Handles both ISO and legacy date formats for backward compatibility.
      *
      * @param json the source JSONObject
      */
@@ -490,284 +503,556 @@ public class MatchData
         }
     }
 
+    /**
+     * Returns the name of the scout who recorded this match.
+     *
+     * @return the scout's name
+     */
     public String getScoutName()
     {
         return m_scoutName;
     }
 
-    // Auton accessors
+    /**
+     * Sets the number of hoppers used in the autonomous stage.
+     *
+     * @param val the hopper count
+     */
     public void setAutonHopper(int val)
     {
         m_autonHopper = val;
     }
 
+    /**
+     * Returns the number of hoppers used in the autonomous stage.
+     *
+     * @return the hopper count
+     */
     public int getAutonHopper()
     {
         return m_autonHopper;
     }
 
+    /**
+     * Returns whether fuel was preloaded in the autonomous stage.
+     *
+     * @return true if fuel was preloaded
+     */
     public boolean isAutonPreload()
     {
         return m_autonPreload;
     }
 
+    /**
+     * Sets whether fuel was preloaded in the autonomous stage.
+     *
+     * @param val true if fuel was preloaded
+     */
     public void setAutonPreload(boolean val)
     {
         m_autonPreload = val;
     }
 
+    /**
+     * Returns whether the alliance zone was used in the autonomous stage.
+     *
+     * @return true if the alliance zone was used
+     */
     public boolean isAutonAz()
     {
         return m_autonAz;
     }
 
+    /**
+     * Sets whether the alliance zone was used in the autonomous stage.
+     *
+     * @param val true if the alliance zone was used
+     */
     public void setAutonAz(boolean val)
     {
         m_autonAz = val;
     }
 
+    /**
+     * Returns whether the depot was used in the autonomous stage.
+     *
+     * @return true if the depot was used
+     */
     public boolean isAutonDepot()
     {
         return m_autonDepot;
     }
 
+    /**
+     * Sets whether the depot was used in the autonomous stage.
+     *
+     * @param val true if the depot was used
+     */
     public void setAutonDepot(boolean val)
     {
         m_autonDepot = val;
     }
 
+    /**
+     * Returns whether the outpost was used in the autonomous stage.
+     *
+     * @return true if the outpost was used
+     */
     public boolean isAutonOutpost()
     {
         return m_autonOutpost;
     }
 
+    /**
+     * Sets whether the outpost was used in the autonomous stage.
+     *
+     * @param val true if the outpost was used
+     */
     public void setAutonOutpost(boolean val)
     {
         m_autonOutpost = val;
     }
 
+    /**
+     * Returns whether the neutral zone was used in the autonomous stage.
+     *
+     * @return true if the neutral zone was used
+     */
     public boolean isAutonNz()
     {
         return m_autonNz;
     }
 
+    /**
+     * Sets whether the neutral zone was used in the autonomous stage.
+     *
+     * @param val true if the neutral zone was used
+     */
     public void setAutonNz(boolean val)
     {
         m_autonNz = val;
     }
 
+    /**
+     * Sets the autonomous accuracy rate index.
+     *
+     * @param val the accuracy rate index
+     */
     public void setAutonAccuracyRate(int val)
     {
         m_autonAccuracyRate = val;
     }
 
+    /**
+     * Returns the autonomous accuracy rate index.
+     *
+     * @return the accuracy rate index
+     */
     public int getAutonAccuracyRate()
     {
         return m_autonAccuracyRate;
     }
 
+    /**
+     * Sets the autonomous preload accuracy level index.
+     *
+     * @param val the accuracy level index
+     */
     public void setPreloadAccuracyLevel(int val)
     {
         m_autonPreloadAccRate = val;
     }
 
+    /**
+     * Returns the autonomous preload accuracy level index.
+     *
+     * @return the accuracy level index
+     */
     public int getPreloadAccuracyLevel()
     {
         return m_autonPreloadAccRate;
     }
 
+    /**
+     * Sets the autonomous climb position index.
+     *
+     * @param val the climb position index
+     */
     public void setAutonClimb(int val)
     {
         m_autonClimb = val;
     }
 
+    /**
+     * Returns the autonomous climb position index.
+     *
+     * @return the climb position index
+     */
     public int getAutonClimb()
     {
         return m_autonClimb;
     }
 
-    // Teleop accessors
+    /**
+     * Sets the number of hoppers used in the teleoperated stage.
+     *
+     * @param val the hopper count
+     */
     public void setHoppersUsed(int val)
     {
         m_hoppersUsed = val;
     }
 
+    /**
+     * Returns the number of hoppers used in the teleoperated stage.
+     *
+     * @return the hopper count
+     */
     public int getHoppersUsed()
     {
         return m_hoppersUsed;
     }
 
+    /**
+     * Sets the teleoperated accuracy rate index.
+     *
+     * @param val the accuracy rate index
+     */
     public void setAccuracyRate(int val)
     {
         m_accuracyRate = val;
     }
 
+    /**
+     * Returns the teleoperated accuracy rate index.
+     *
+     * @return the accuracy rate index
+     */
     public int getAccuracyRate()
     {
         return m_accuracyRate;
     }
 
+    /**
+     * Sets whether intake and shooting were performed simultaneously in the teleoperated stage.
+     *
+     * @param val true if both were performed simultaneously
+     */
     public void setIntakeAndShoot(boolean val)
     {
         m_intakeAndShoot = val;
     }
 
+    /**
+     * Returns whether intake and shooting were performed simultaneously in the teleoperated stage.
+     *
+     * @return true if both were performed simultaneously
+     */
     public boolean getIntakeAndShoot()
     {
         return m_intakeAndShoot;
     }
 
+    /**
+     * Sets whether herding fuel was performed in the teleoperated stage.
+     *
+     * @param val true if herding fuel was performed
+     */
     public void setShovelFuel(boolean val)
     {
         m_shovelFuel = val;
     }
 
+    /**
+     * Returns whether herding fuel was performed in the teleoperated stage.
+     *
+     * @return true if herding fuel was performed
+     */
     public boolean getShovelFuel()
     {
         return m_shovelFuel;
     }
 
+    /**
+     * Sets the passing effectiveness rate index.
+     *
+     * @param val the passing rate index
+     */
     public void setPassingRate(int val)
     {
         m_passingRate = val;
     }
 
+    /**
+     * Returns the passing effectiveness rate index.
+     *
+     * @return the passing rate index
+     */
     public int getPassingEffectivenessRate()
     {
         return m_passingRate;
     }
 
+    /**
+     * Sets the teleoperated defense rate index.
+     *
+     * @param val the defense rate index
+     */
     public void setDefenseRate(int val)
     {
         m_defenseRate = val;
     }
 
+    /**
+     * Returns the teleoperated defense rate index.
+     *
+     * @return the defense rate index
+     */
     public int getDefenseRate()
     {
         return m_defenseRate;
     }
 
+    /**
+     * Sets the driving ability index.
+     *
+     * @param val the driving ability index
+     */
     public void setDriveAbility(int val)
     {
         m_drivingAbility = val;
     }
 
+    /**
+     * Returns the driving ability index.
+     *
+     * @return the driving ability index
+     */
     public int getDriverAbility()
     {
         return m_drivingAbility;
     }
 
+    /**
+     * Sets the selection index for neutral zone passing.
+     *
+     * @param val the selection index
+     */
     public void setPassNeutralZone(int val)
     {
         m_passedNz = val;
     }
 
+    /**
+     * Returns the selection index for neutral zone passing.
+     *
+     * @return the selection index
+     */
     public int getPassNeutralZone()
     {
         return m_passedNz;
     }
 
+    /**
+     * Sets the selection index for alliance zone passing.
+     *
+     * @param val the selection index
+     */
     public void setPassAllianceZone(int val)
     {
         m_passedAz = val;
     }
 
+    /**
+     * Returns the selection index for alliance zone passing.
+     *
+     * @return the selection index
+     */
     public int getPassAllianceZone()
     {
         return m_passedAz;
     }
 
+    /**
+     * Sets the identifier for the teleoperated stage placeholder photo.
+     *
+     * @param val the photo identifier
+     */
     public void setTeleopPhoto(int val)
     {
         m_teleopPhoto = val;
     }
 
+    /**
+     * Returns the identifier for the teleoperated stage placeholder photo.
+     *
+     * @return the photo identifier
+     */
     public int getTeleopPhoto()
     {
         return m_teleopPhoto;
     }
 
-    // Endgame accessors
+    /**
+     * Sets the died value index, indicating when the robot became disabled.
+     *
+     * @param val the died value index
+     */
     public void setDiedValue(int val)
     {
         m_diedValue = val;
     }
 
+    /**
+     * Returns the died value index.
+     *
+     * @return the died value index
+     */
     public int getDiedValue()
     {
         return m_diedValue;
     }
 
+    /**
+     * Sets the start climb time index.
+     *
+     * @param val the start climb index
+     */
     public void setStartClimb(int val)
     {
         m_startClimb = val;
     }
 
+    /**
+     * Returns the start climb time index.
+     *
+     * @return the start climb index
+     */
     public int getStartClimb()
     {
         return m_startClimb;
     }
 
+    /**
+     * Sets the endgame climb level index.
+     *
+     * @param val the climb level index
+     */
     public void setEndgameClimbLevel(int val)
     {
         m_endgameClimbLevel = val;
     }
 
+    /**
+     * Returns the endgame climb level index.
+     *
+     * @return the climb level index
+     */
     public int getEndgameClimbLevel()
     {
         return m_endgameClimbLevel;
     }
 
+    /**
+     * Sets the endgame climb position index.
+     *
+     * @param val the climb position index
+     */
     public void setEndgameClimbPos(int val)
     {
         m_endgameClimbPos = val;
     }
 
+    /**
+     * Returns the endgame climb position index.
+     *
+     * @return the climb position index
+     */
     public int getEndgameClimbPos()
     {
         return m_endgameClimbPos;
     }
 
+    /**
+     * Sets the additional comments for the match.
+     *
+     * @param comment the comment string
+     */
     public void setComment(String comment)
     {
         m_comment = comment;
     }
 
+    /**
+     * Returns the additional comments for the match.
+     *
+     * @return the comment string
+     */
     public String getComment()
     {
         return m_comment != null ? m_comment : "";
     }
 
+    /**
+     * Returns the secondary "other" field value.
+     *
+     * @return the other2 string
+     */
     @SuppressWarnings("unused")
     public String getOther2()
     {
         return m_other2;
     }
 
+    /**
+     * Sets the secondary "other" field value.
+     *
+     * @param value the other2 string
+     */
     @SuppressWarnings("unused")
     public void setOther2(String value)
     {
         m_other2 = value;
     }
 
+    /**
+     * Returns the tertiary "other" field value.
+     *
+     * @return the other3 string
+     */
     @SuppressWarnings("unused")
     public String getOther3()
     {
         return m_other3;
     }
 
+    /**
+     * Sets the tertiary "other" field value.
+     *
+     * @param value the other3 string
+     */
     @SuppressWarnings("unused")
     public void setOther3(String value)
     {
         m_other3 = value;
     }
 
+    /**
+     * Returns the quaternary "other" field value.
+     *
+     * @return the other4 string
+     */
     @SuppressWarnings("unused")
     public String getOther4()
     {
         return m_other4;
     }
 
+    /**
+     * Sets the quaternary "other" field value.
+     *
+     * @param value the other4 string
+     */
     @SuppressWarnings("unused")
     public void setOther4(String value)
     {
@@ -775,9 +1060,9 @@ public class MatchData
     }
 
     /**
-     * Validates the match data entries.
+     * Validates the match data entries for consistency and completeness.
      *
-     * @return a validation message string, or empty if valid
+     * @return a validation message string detailing any errors, or an empty string if all entries are valid
      */
     public String validateEntries()
     {
@@ -786,6 +1071,11 @@ public class MatchData
                 validateEndgame();
     }
 
+    /**
+     * Validates the autonomous stage entries.
+     *
+     * @return a validation message string, or empty if valid
+     */
     private String validateAuton()
     {
         if (m_autonHopper > MAX_AUTON_HOPPERS)
@@ -795,6 +1085,11 @@ public class MatchData
         return "";
     }
 
+    /**
+     * Validates the teleoperated stage entries.
+     *
+     * @return a validation message string, or empty if valid
+     */
     private String validateTeleop()
     {
         StringBuilder msg = new StringBuilder();
@@ -846,6 +1141,11 @@ public class MatchData
         return msg.toString();
     }
 
+    /**
+     * Validates the endgame stage entries.
+     *
+     * @return a validation message string, or empty if valid
+     */
     private String validateEndgame()
     {
         // Climb selections validation

@@ -11,13 +11,18 @@ import com.frc2135.android.frc_scout.databinding.MatchListActivityBinding;
 
 /**
  * Main activity for displaying and managing the list of scouted matches.
- * This activity hosts the {@link MatchListFragment}.
+ * This activity hosts the {@link MatchListFragment} and provides a top-level toolbar with the current team index.
  */
 public class MatchListActivity extends AppCompatActivity
 {
     private static final String TAG = "MatchListActivity";
     private MatchListActivityBinding m_binding;
 
+    /**
+     * Initializes the activity, sets up the action bar, and loads the {@link MatchListFragment}.
+     *
+     * @param savedInstanceState if the activity is being re-initialized after previously being shut down
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -56,7 +61,7 @@ public class MatchListActivity extends AppCompatActivity
     }
 
     /**
-     * Updates the toolbar text with the current team index from settings.
+     * Updates the toolbar text with the current team index from application settings.
      */
     public void updateToolbarTeamIndex()
     {
@@ -65,6 +70,10 @@ public class MatchListActivity extends AppCompatActivity
         m_binding.matchListActivityToolbarTeamIndex.setText(String.format(getString(R.string.team_index_label), indexStr));
     }
 
+    /**
+     * Called when the activity is becoming visible to the user.
+     * Ensures the toolbar team index is up to date.
+     */
     @Override
     protected void onResume()
     {
@@ -73,6 +82,9 @@ public class MatchListActivity extends AppCompatActivity
         updateToolbarTeamIndex();
     }
 
+    /**
+     * Perform any final cleanup before an activity is destroyed.
+     */
     @Override
     protected void onDestroy()
     {

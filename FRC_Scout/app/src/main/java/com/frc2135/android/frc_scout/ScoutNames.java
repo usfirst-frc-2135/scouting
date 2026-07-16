@@ -14,8 +14,9 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Singleton class for managing scout names data.
- * Loads and parses scout names from a JSON file.
+ * Singleton class for managing the repository of scout names.
+ * Loads and parses event-specific scout names from local JSON files and combines them with user-entered historical names from settings.
+ * Handles its own persistence by extending {@link BaseJSONSerializer}.
  */
 public class ScoutNames extends BaseJSONSerializer
 {
@@ -28,6 +29,12 @@ public class ScoutNames extends BaseJSONSerializer
 
     private static volatile ScoutNames sScoutNames;
 
+    /**
+     * Initializes a new ScoutNames repository for a specific event.
+     *
+     * @param context   the context used for file operations
+     * @param eventCode the FRC event code
+     */
     private ScoutNames(Context context, String eventCode)
     {
         super(context);
@@ -38,7 +45,7 @@ public class ScoutNames extends BaseJSONSerializer
     }
 
     /**
-     * Returns the singleton instance of ScoutNames using the event code from Settings.
+     * Returns the singleton instance of ScoutNames using the default event code from application settings.
      *
      * @param context the context used for file operations
      * @return the singleton ScoutNames instance
@@ -50,11 +57,12 @@ public class ScoutNames extends BaseJSONSerializer
     }
 
     /**
-     * Returns the singleton instance of ScoutNames.
+     * Returns the thread-safe singleton instance of ScoutNames.
+     * If the requested event code differs from the currently loaded one, it re-initializes for the new event.
      *
      * @param context      the context used for file operations
      * @param eventCode    the FRC event code
-     * @param bForceReload whether to force a reload of the JSON data
+     * @param bForceReload if true, forces a reload of the scout names JSON from storage
      * @return the singleton ScoutNames instance
      */
     public static ScoutNames getInstance(Context context, String eventCode, boolean bForceReload)
@@ -82,6 +90,9 @@ public class ScoutNames extends BaseJSONSerializer
         }
     }
 
+    /**
+     * Clears the singleton instance of ScoutNames.
+     */
     @SuppressWarnings("unused")
     public static void clearScoutNames()
     {
@@ -90,7 +101,7 @@ public class ScoutNames extends BaseJSONSerializer
     }
 
     /**
-     * Returns the event code associated with this scout list.
+     * Returns the event code currently associated with this scout list.
      *
      * @return the event code string
      */
@@ -100,9 +111,9 @@ public class ScoutNames extends BaseJSONSerializer
     }
 
     /**
-     * Returns the raw list of scout names for the current event.
+     * Returns the raw list of event-specific scout names.
      *
-     * @return a list of scout names
+     * @return a list of scout names string
      */
     @SuppressWarnings("unused")
     public List<String> getScoutNames()
@@ -111,7 +122,7 @@ public class ScoutNames extends BaseJSONSerializer
     }
 
     /**
-     * Sets the event code and resets the loaded scout names state.
+     * Updates the event code and resets the internal state of loaded scout names.
      *
      * @param eventCode the new FRC event code
      */
@@ -123,10 +134,10 @@ public class ScoutNames extends BaseJSONSerializer
     }
 
     /**
-     * Reads the scout names JSON file from internal storage.
+     * Reads the scout names JSON file from internal storage for the current event.
      *
-     * @param context the context used to open the file
-     * @param bSilent if true, error Toast messages are suppressed
+     * @param context the context used to open the file and show messages
+     * @param bSilent if true, error notifications are suppressed
      */
     public void readScoutNamesJSON(Context context, boolean bSilent)
     {
@@ -157,6 +168,12 @@ public class ScoutNames extends BaseJSONSerializer
         }
     }
 
+    /**
+     * Parses a JSONArray of scout names into the internal list.
+     *
+     * @param jsonArray the source JSONArray
+     * @throws JSONException if the array format is invalid
+     */
     private void parseScoutNamesJSON(JSONArray jsonArray)
             throws JSONException
     {
@@ -173,10 +190,10 @@ public class ScoutNames extends BaseJSONSerializer
     }
 
     /**
-     * Gets the filename for a given event code.
+     * Generates a filename for the scout names record associated with an event.
      *
      * @param eventCode the FRC event code
-     * @return the filename
+     * @return the generated filename
      */
     private String getFilename(String eventCode)
     {
@@ -184,12 +201,12 @@ public class ScoutNames extends BaseJSONSerializer
     }
 
     /**
-     * Saves the provided JSONArray of scout names data to a JSON file on the device.
+     * Saves a {@link JSONArray} of scout names to a JSON file in local storage.
      *
      * @param eventCode the FRC event code
-     * @param scoutData the JSONArray containing scout names
-     * @param bSilent   if true, error Toast messages are suppressed
-     * @return true if successful, false otherwise
+     * @param scoutData the JSONArray containing scout names to persist
+     * @param bSilent   if true, error notifications are suppressed
+     * @return true if the file was written successfully
      */
     public boolean writeScoutNamesFile(String eventCode, JSONArray scoutData, boolean bSilent)
     {
@@ -216,17 +233,16 @@ public class ScoutNames extends BaseJSONSerializer
     }
 
     /**
-     * Loads the scout names from the specified file.
+     * Loads the scout names JSON file for a specific event from local storage.
      *
      * @param eventCode the FRC event code
-     * @return the loaded JSONArray, or null if the file doesn't exist
-     * @throws IOException   if an error occurs during file reading
-     * @throws JSONException if the file content is not a valid JSON array
+     * @return the loaded JSONArray, or null if the file is missing
+     * @throws IOException   if reading the file fails
+     * @throws JSONException if the file content is not a valid JSONArray
      */
     public JSONArray readScoutNamesFile(String eventCode)
             throws IOException, JSONException
     {
-        Log.d(TAG, "Reading scout names from file for event: " + eventCode);
         if (eventCode == null)
         {
             return null;
@@ -238,14 +254,13 @@ public class ScoutNames extends BaseJSONSerializer
     }
 
     /**
-     * Deletes the scout names file from internal storage.
+     * Deletes the local scout names record associated with a specific event.
      *
      * @param eventCode the FRC event code
-     * @return the number of files deleted (1 if successful, 0 otherwise)
+     * @return 1 if a file was deleted, 0 otherwise
      */
     public int deleteScoutNamesFile(String eventCode)
     {
-        Log.d(TAG, "Deleting scout names file for event: " + eventCode);
         if (eventCode == null || eventCode.trim().isEmpty())
         {
             Log.e(TAG, "Invalid event code: " + eventCode);
@@ -266,11 +281,11 @@ public class ScoutNames extends BaseJSONSerializer
     }
 
     /**
-     * Loads event-specific scout names from local storage.
+     * Ensures event-specific scout names are loaded into the internal repository.
      *
-     * @param context     the context for file operations
+     * @param context     the context used for file operations
      * @param eventCode   the FRC event code
-     * @param forceReload if true, forces a reload even if already loaded for this event
+     * @param forceReload if true, reloads from storage even if names are already in memory
      */
     public void loadEventScoutNames(Context context, String eventCode, boolean forceReload)
     {
@@ -289,12 +304,12 @@ public class ScoutNames extends BaseJSONSerializer
     }
 
     /**
-     * Saves event-specific scout names to local storage.
+     * Persists event-specific scout names to storage and updates the internal list.
      *
-     * @param context   the context for file operations
+     * @param context   the context used for file operations
      * @param eventCode the FRC event code
-     * @param scoutData the JSONArray of scout names
-     * @return true if successful, false otherwise
+     * @param scoutData the JSONArray of scout names to save
+     * @return true if the save operation was successful
      */
     public boolean saveEventScoutNames(Context context, String eventCode, JSONArray scoutData)
     {
@@ -308,11 +323,11 @@ public class ScoutNames extends BaseJSONSerializer
     }
 
     /**
-     * Clears event-specific scout names from local storage.
+     * Clears all scout names from memory and deletes the local record for the specified event.
      *
-     * @param context   the context for file operations
+     * @param context   the context used for file operations
      * @param eventCode the FRC event code
-     * @return number of files if successful, zero otherwise
+     * @return the number of files deleted (1 if successful)
      */
     public int deleteEventScoutNames(@SuppressWarnings("unused") Context context, String eventCode)
     {
@@ -322,7 +337,7 @@ public class ScoutNames extends BaseJSONSerializer
     }
 
     /**
-     * Checks whether scout names have been successfully loaded from local storage.
+     * Checks whether scout names for the current event are currently held in memory.
      *
      * @return true if data is loaded
      */
@@ -333,10 +348,11 @@ public class ScoutNames extends BaseJSONSerializer
     }
 
     /**
-     * Returns a combined list of event-specific scout names and past scouts from Settings.
+     * Aggregates official event-specific scout names with historical names saved in application settings.
+     * Ensures the final list contains unique entries.
      *
-     * @param context the context to access Settings
-     * @return a list of unique scout names
+     * @param context the context used to retrieve settings
+     * @return a combined list of unique scout names
      */
     public List<String> getAllScoutNames(Context context)
     {

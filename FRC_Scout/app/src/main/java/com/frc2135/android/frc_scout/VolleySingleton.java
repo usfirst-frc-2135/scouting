@@ -7,6 +7,10 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
+/**
+ * Singleton class for managing the application's network request queue using the Volley library.
+ * This pattern ensures that the network queue persists for the lifetime of the app, rather than being re-created on each activity change.
+ */
 public class VolleySingleton
 {
     private static final String TAG = "VolleySingleton";
@@ -14,6 +18,11 @@ public class VolleySingleton
     private RequestQueue mRequestQueue;
     private final Context mContext;
 
+    /**
+     * Initializes the Volley request queue using the application context.
+     *
+     * @param context the context used to create the request queue
+     */
     private VolleySingleton(Context context)
     {
         Log.v(TAG, "VolleySingleton constructor");
@@ -22,14 +31,14 @@ public class VolleySingleton
     }
 
     /**
-     * Returns the singleton instance of VolleySingleton.
+     * Returns the thread-safe singleton instance of VolleySingleton.
      *
-     * @param context the context used to initialize the instance
+     * @param context the context used to initialize the instance if necessary
      * @return the singleton VolleySingleton instance
      */
     public static VolleySingleton getInstance(Context context)
     {
-        Log.v(TAG, "getInstance()");
+        Log.v(TAG, "getInstance");
         if (sInstance == null)
         {
             synchronized (VolleySingleton.class)
@@ -44,9 +53,10 @@ public class VolleySingleton
     }
 
     /**
-     * Returns the request queue for Volley.
+     * Returns the Volley request queue, creating it if it does not already exist.
+     * Uses the application context to prevent memory leaks.
      *
-     * @return the {@link RequestQueue}
+     * @return the {@link RequestQueue} for managing network operations
      */
     public RequestQueue getRequestQueue()
     {
@@ -60,10 +70,10 @@ public class VolleySingleton
     }
 
     /**
-     * Adds a request to the Volley request queue.
+     * Enqueues a network request to the Volley request queue.
      *
-     * @param req the request to add
-     * @param <T> the type of the request
+     * @param req the request to add to the queue
+     * @param <T> the data type of the response expected
      */
     public <T> void addToRequestQueue(Request<T> req)
     {

@@ -19,7 +19,7 @@ import java.util.Locale;
 
 /**
  * Singleton class for managing application settings, including past scouts, team index, and match numbers.
- * Settings are persisted via a JSON file.
+ * Settings are persisted via a JSON file in local storage.
  * Handles its own persistence by extending {@link BaseJSONSerializer}.
  */
 public final class Settings extends BaseJSONSerializer
@@ -71,6 +71,11 @@ public final class Settings extends BaseJSONSerializer
         return sSettings;
     }
 
+    /**
+     * Initializes the settings repository and attempts to load existing settings from storage.
+     *
+     * @param context the context used for resource access and file operations
+     */
     private Settings(Context context)
     {
         super(context);
@@ -116,7 +121,7 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Clears all settings to their default values and removes the settings file.
+     * Clears all settings to their default values and removes the settings file from disk.
      */
     public void resetSettings()
     {
@@ -137,9 +142,10 @@ public final class Settings extends BaseJSONSerializer
 
     /**
      * Loads the application settings from internal storage.
+     * Handles both modern JSONObject format and legacy JSONArray formats for backward compatibility.
      *
      * @throws IOException   if reading the file fails
-     * @throws JSONException if parsing the JSON fails
+     * @throws JSONException if parsing the JSON content fails
      */
     public void loadSettings()
             throws IOException, JSONException
@@ -180,7 +186,7 @@ public final class Settings extends BaseJSONSerializer
      * Populates this Settings object from a {@link JSONObject}.
      *
      * @param json the source JSONObject
-     * @throws JSONException if parsing fails
+     * @throws JSONException if parsing fails or expected keys are missing
      */
     public void fromJSON(JSONObject json)
             throws JSONException
@@ -215,7 +221,7 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Serializes settings to a {@link JSONObject}.
+     * Serializes all current application settings to a {@link JSONObject}.
      *
      * @return the serialized JSONObject
      * @throws JSONException if JSON creation fails
@@ -245,7 +251,7 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Saves the settings to disk, swallowing and logging any exceptions.
+     * Saves the settings to disk, swallowing and logging any exceptions that occur during I/O.
      *
      * @return true if successful, false otherwise
      */
@@ -264,7 +270,7 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Sets the current FRC event code.
+     * Sets the current FRC event code and persists it to storage.
      *
      * @param eventCode the event code string
      */
@@ -285,11 +291,10 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Returns true if given eventCode is valid.
-     * A valid event code must be at least 7 characters and follow the format: 4-digit year followed by an event identifier (e.g., 2026casac).
+     * Validates an event code string format (4-digit year followed by identifier, e.g., 2026casac).
      *
      * @param eventCode the event code string to validate
-     * @return true if valid
+     * @return true if the format is valid
      */
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isValidEventCode(String eventCode)
@@ -310,7 +315,7 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Sets the team index string (e.g. "1 - Red 1").
+     * Sets the team index selection (e.g. "1 - Red 1") and persists it to storage.
      *
      * @param indexStr the team index string from m_teamIndexOptions
      */
@@ -321,7 +326,7 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Returns the current team index string (e.g. "1 - Red 1").
+     * Returns the current team index string selection.
      *
      * @return the team index string
      */
@@ -331,9 +336,9 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Returns the current team index as an integer (0-6).
+     * Returns the current team index as an integer (0-6), extracted from the display string.
      *
-     * @return the team index
+     * @return the team index numeric value
      */
     public int getTeamIndex()
     {
@@ -355,7 +360,7 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Clears the current team index string.
+     * Resets the current team index selection to the default ("None").
      */
     public void clearTeamIndexStr()
     {
@@ -364,9 +369,9 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Returns the team index options.
+     * Returns the array of available team index display options.
      *
-     * @return team index string options
+     * @return team index option strings
      */
     public String[] getTeamIndexOptions()
     {
@@ -374,10 +379,10 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Returns true if given indexStr is valid
+     * Validates whether a given index string is part of the recognized options list.
      *
      * @param indexStr the index string to validate
-     * @return true if valid
+     * @return true if the string is a valid option
      */
     public boolean isValidTeamIndexStr(String indexStr)
     {
@@ -391,9 +396,9 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Returns "red", "blue", or "unknown" based on the current team index.
+     * Returns a {@link ColorDrawable} representing the alliance color associated with the current team index.
      *
-     * @return the team color string ("red", "blue", or "unknown")
+     * @return RED for indices 1-3, BLUE for indices 4-6, and GRAY for others
      */
     public ColorDrawable getTeamIndexColor()
     {
@@ -411,9 +416,9 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Sets the most recent match number used in the application.
+     * Updates the most recent match number record and persists it to storage.
      *
-     * @param value the match number string
+     * @param value the match number identifier (e.g., "qm1")
      */
     public void setMostRecentMatchNumber(String value)
     {
@@ -422,9 +427,9 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Returns the most recent match number used.
+     * Returns the most recent match identifier used in the app.
      *
-     * @return the match number string
+     * @return the match identifier string
      */
     public String getMostRecentMatchNumber()
     {
@@ -432,9 +437,9 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Calculates the next expected match number by incrementing the numeric portion.
+     * Predicts the next expected match number by incrementing the numeric portion of the most recent identifier.
      *
-     * @return the next match number string, or the original if it contains no digits
+     * @return the incremented match identifier string (e.g., "qm1" -> "qm2")
      */
     public String getNextExpectedMatchNumber()
     {
@@ -478,9 +483,10 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Adds a scout name to the list of past scouts if it doesn't already exist.
+     * Adds a scout name to the historical list of scouts if it is not already present.
+     * Triggers a save of the settings repository.
      *
-     * @param name the scout name to add
+     * @param name the scout name string
      */
     public void addPastScoutNames(String name)
     {
@@ -502,9 +508,9 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Returns the array of unique scout names entered by the user.
+     * Returns the unique list of scout names gathered over time.
      *
-     * @return an array of scout names
+     * @return an array of scout name strings
      */
     public String[] getPastScouts()
     {
@@ -512,7 +518,7 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Clears the list of past scout names.
+     * Clears the historical list of past scout names from memory.
      */
     @SuppressWarnings("unused")
     public void clearPastScouts()
@@ -521,9 +527,9 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Sets the most recent scout name used in the application.
+     * Updates the record for the most recently active scout and persists it to storage.
      *
-     * @param name the scout name
+     * @param name the scout name string
      */
     public void setMostRecentScoutName(String name)
     {
@@ -532,9 +538,9 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Returns the most recent scout name used.
+     * Returns the name of the scout who most recently performed a scouting session.
      *
-     * @return the scout name
+     * @return the scout name string
      */
     public String getMostRecentScoutName()
     {
@@ -542,7 +548,7 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Sets which side of the field the scoring table is on.
+     * Sets which side of the field the scoring table is currently located on.
      *
      * @param val true for one side, false for the other
      */
@@ -554,9 +560,9 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Returns which side of the field the scoring table is on.
+     * Returns the currently configured side of the field for the scoring table.
      *
-     * @return the side value
+     * @return true/false representing field side
      */
     @SuppressWarnings("unused")
     public boolean getScoringTableSide()

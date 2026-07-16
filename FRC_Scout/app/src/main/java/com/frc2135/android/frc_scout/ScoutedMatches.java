@@ -15,8 +15,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * Singleton class for managing the collection of {@link MatchData}.
- * Handles loading, saving, sorting, and filtering of match records.
+ * Singleton class for managing the collection of scouted matches.
+ * Handles loading all match records from local storage, adding new matches, and providing sorting and filtering capabilities for the match history list.
  * Handles its own persistence by extending {@link BaseJSONSerializer}.
  */
 public class ScoutedMatches extends BaseJSONSerializer
@@ -28,6 +28,11 @@ public class ScoutedMatches extends BaseJSONSerializer
 
     private static volatile ScoutedMatches sScoutedMatches;
 
+    /**
+     * Initializes the scouted matches collection by scanning and loading all match data files from local storage.
+     *
+     * @param appContext the application context used for file operations
+     */
     private ScoutedMatches(Context appContext)
     {
         super(appContext);
@@ -36,6 +41,11 @@ public class ScoutedMatches extends BaseJSONSerializer
         m_scoutedMatches = loadInitialData();
     }
 
+    /**
+     * Triggers the initial load of match records from the filesystem.
+     *
+     * @return the list of loaded {@link MatchData} objects
+     */
     private List<MatchData> loadInitialData()
     {
         Log.v(TAG, "loadInitialData");
@@ -46,7 +56,7 @@ public class ScoutedMatches extends BaseJSONSerializer
      * Returns the thread-safe singleton instance of ScoutedMatches.
      *
      * @param context the context used to initialize the instance
-     * @return the singleton instance
+     * @return the singleton ScoutedMatches instance
      */
     public static ScoutedMatches getInstance(Context context)
     {
@@ -66,7 +76,9 @@ public class ScoutedMatches extends BaseJSONSerializer
     }
 
     /**
-     * @return the full list of scouted matches
+     * Returns the complete list of all scouted match records currently in memory.
+     *
+     * @return the list of {@link MatchData} objects
      */
     public List<MatchData> getMatchList()
     {
@@ -74,9 +86,9 @@ public class ScoutedMatches extends BaseJSONSerializer
     }
 
     /**
-     * Finds a match by its unique ID.
+     * Searches for a specific match record by its unique identifier.
      *
-     * @param matchId the unique identifier for the match
+     * @param matchId the unique UUID string of the match
      * @return the matching MatchData object, or null if not found
      */
     public MatchData getMatch(String matchId)
@@ -92,9 +104,9 @@ public class ScoutedMatches extends BaseJSONSerializer
     }
 
     /**
-     * Deletes a match from the list and its corresponding file on disk.
+     * Deletes a match record from both the in-memory list and the local filesystem.
      *
-     * @param match the MatchData object to delete
+     * @param match the MatchData object to remove
      */
     public void deleteMatch(MatchData match)
     {
@@ -108,9 +120,9 @@ public class ScoutedMatches extends BaseJSONSerializer
     }
 
     /**
-     * Adds a new match to the collection.
+     * Adds a newly created match record to the in-memory collection.
      *
-     * @param matchData the match data to add
+     * @param matchData the match record to add
      */
     public void addMatch(MatchData matchData)
     {
@@ -121,10 +133,10 @@ public class ScoutedMatches extends BaseJSONSerializer
     }
 
     /**
-     * Gets the filename for a given match's data.
+     * Generates the standard filename used to persist a match record based on its unique identifier.
      *
-     * @param match the match data
-     * @return the filename string
+     * @param match the match data record
+     * @return the generated filename string (e.g., "md_UUID.json")
      */
     public static String getMatchFileName(MatchData match)
     {
@@ -136,10 +148,10 @@ public class ScoutedMatches extends BaseJSONSerializer
     }
 
     /**
-     * Saves a specific match's data to its JSON file.
+     * Persists a specific match record to its own JSON file in local storage.
      *
-     * @param matchData the match to save
-     * @return true if successful, false otherwise
+     * @param matchData the match record to save
+     * @return true if the save operation was successful, false otherwise
      */
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean saveMatchDataFile(MatchData matchData)
@@ -168,9 +180,9 @@ public class ScoutedMatches extends BaseJSONSerializer
     }
 
     /**
-     * Scans the data directory and loads all individual match files.
+     * Scans the application's internal data directory and loads all individual match data files into memory.
      *
-     * @return a list of loaded MatchData objects
+     * @return an ArrayList of all successfully loaded {@link MatchData} records
      */
     private ArrayList<MatchData> loadScoutedMatchesList()
     {
@@ -186,7 +198,7 @@ public class ScoutedMatches extends BaseJSONSerializer
         for (File file : files)
         {
             String filename = file.getName();
-            // Match files are identified by their UUID-based filename length (36 chars + extension)
+            // Match files are identified by their UUID-based filename length (36 chars + prefix/suffix)
             if (filename.length() > 30 &&
                     filename.startsWith(Constants.MATCH_DATA_FILE_PREFIX) &&
                     filename.endsWith(Constants.MATCH_DATA_FILE_SUFFIX)
@@ -206,6 +218,14 @@ public class ScoutedMatches extends BaseJSONSerializer
         return matchHistory;
     }
 
+    /**
+     * Loads and parses a single match record from its JSON file.
+     *
+     * @param file the source file to load from
+     * @return the parsed MatchData record
+     * @throws IOException   if reading the file fails
+     * @throws JSONException if the file content is not a valid JSON array containing match data
+     */
     private MatchData loadSingleMatchFile(File file)
             throws IOException, JSONException
     {
@@ -218,12 +238,12 @@ public class ScoutedMatches extends BaseJSONSerializer
     }
 
     /**
-     * Sorts a list of matches by the specified criteria and order.
+     * Sorts a given list of match records based on specific criteria and order.
      *
-     * @param list      the list to sort
-     * @param criteria  "Date", "Team", or "Match"
-     * @param ascending true for ascending, false for descending
-     * @return a new sorted ArrayList
+     * @param list      the list of matches to sort
+     * @param criteria  the sorting criteria; one of "Date", "Team", or "Match"
+     * @param ascending true to sort in ascending order, false for descending
+     * @return a new sorted ArrayList of match records
      */
     public ArrayList<MatchData> sortMatchList(List<MatchData> list, String criteria, boolean ascending)
     {
@@ -248,14 +268,14 @@ public class ScoutedMatches extends BaseJSONSerializer
     }
 
     /**
-     * Filters a list of matches by multiple criteria simultaneously.
+     * Filters a list of match records based on multiple optional criteria.
      *
-     * @param list     the list to filter
-     * @param team     team number filter (exact match), or null
-     * @param event    event code filter (exact match), or null
-     * @param scout    scout name filter (exact match), or null
-     * @param matchNum match number filter (exact match), or null
-     * @return a new filtered list
+     * @param list     the source list of match records to filter
+     * @param event    the event code to filter by, or null for no event filter
+     * @param matchNum the match identifier to filter by, or null for no match filter
+     * @param team     the team identifier to filter by, or null for no team filter
+     * @param scout    the scout name to filter by, or null for no scout filter
+     * @return a new list containing only the match records that meet all non-null criteria
      */
     public List<MatchData> filterMatchList(List<MatchData> list, String event, String matchNum, String team, String scout)
     {
@@ -287,7 +307,9 @@ public class ScoutedMatches extends BaseJSONSerializer
     }
 
     /**
-     * @return a list of unique team numbers present in the history
+     * Aggregates and returns a unique, sorted list of all team identifiers present in the match history.
+     *
+     * @return a sorted list of unique team identifier strings
      */
     public List<String> listTeams()
     {
@@ -299,7 +321,9 @@ public class ScoutedMatches extends BaseJSONSerializer
     }
 
     /**
-     * @return a list of unique event codes present in the history
+     * Aggregates and returns a unique, sorted list of all FRC event codes present in the match history.
+     *
+     * @return a sorted list of unique event code strings
      */
     public List<String> listEventCodes()
     {
@@ -311,7 +335,9 @@ public class ScoutedMatches extends BaseJSONSerializer
     }
 
     /**
-     * @return a list of unique scout names present in the history
+     * Aggregates and returns a unique, sorted list of all scout names present in the match history.
+     *
+     * @return a sorted list of unique scout name strings
      */
     public List<String> listScouts()
     {

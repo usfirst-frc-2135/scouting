@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Singleton class to manage application preferences, specifically dark mode.
+ * Singleton class to manage application-wide user preferences, specifically dark mode.
+ * Persists preferences using {@link android.content.SharedPreferences} and notifies listeners of changes.
  */
 public class Preferences
 {
@@ -23,16 +24,24 @@ public class Preferences
 
     private static volatile Preferences sPreferences;
 
+    /**
+     * Interface definition for a callback to be invoked when a preference is changed.
+     */
     public interface OnPreferenceChangeListener
     {
         /**
          * Called when the dark mode setting is changed.
          *
-         * @param isEnabled true if dark mode is enabled, false otherwise
+         * @param isEnabled true if dark mode is now enabled, false otherwise
          */
         void onDarkModeChanged(boolean isEnabled);
     }
 
+    /**
+     * Initializes the preferences from storage.
+     *
+     * @param context the context used to retrieve shared preferences
+     */
     private Preferences(Context context)
     {
         Log.v(TAG, "Preferences constructor");
@@ -43,14 +52,14 @@ public class Preferences
     }
 
     /**
-     * Returns the singleton instance of Preferences.
+     * Returns the thread-safe singleton instance of Preferences.
      *
      * @param context the context used to initialize the instance
      * @return the singleton Preferences instance
      */
     public static Preferences getInstance(Context context)
     {
-        Log.v(TAG, "getInstance()");
+        Log.v(TAG, "getInstance");
         if (sPreferences == null)
         {
             synchronized (Preferences.class)
@@ -65,7 +74,7 @@ public class Preferences
     }
 
     /**
-     * Checks whether dark mode is currently enabled.
+     * Checks whether dark mode is currently enabled in the application settings.
      *
      * @return true if dark mode is enabled
      */
@@ -75,13 +84,13 @@ public class Preferences
     }
 
     /**
-     * Sets the dark mode preference and applies the theme.
+     * Sets the dark mode preference, persists it to storage, applies the theme, and notifies all registered listeners.
      *
      * @param isEnabled true to enable dark mode, false for light mode
      */
     public void setDarkMode(boolean isEnabled)
     {
-        Log.i(TAG, "setDarkMode(): " + isEnabled);
+        Log.i(TAG, "setDarkMode: " + isEnabled);
         m_darkMode = isEnabled;
         m_sharedPreferences.edit().putBoolean(KEY_DARK_MODE, isEnabled).apply();
         applyTheme();
@@ -89,11 +98,11 @@ public class Preferences
     }
 
     /**
-     * Applies the dark mode setting to the entire application.
+     * Applies the current dark mode setting to the entire application using {@link AppCompatDelegate}.
      */
     public void applyTheme()
     {
-        Log.v(TAG, "applyTheme()");
+        Log.v(TAG, "applyTheme");
         if (m_darkMode)
         {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -104,6 +113,11 @@ public class Preferences
         }
     }
 
+    /**
+     * Registers a listener to be notified when preferences change.
+     *
+     * @param listener the listener to add
+     */
     @SuppressWarnings("unused")
     public void addListener(OnPreferenceChangeListener listener)
     {
@@ -116,6 +130,11 @@ public class Preferences
         }
     }
 
+    /**
+     * Unregisters a previously registered listener.
+     *
+     * @param listener the listener to remove
+     */
     @SuppressWarnings("unused")
     public void removeListener(OnPreferenceChangeListener listener)
     {
@@ -128,6 +147,9 @@ public class Preferences
         }
     }
 
+    /**
+     * Notifies all registered listeners that a preference has changed.
+     */
     private void notifyListeners()
     {
         List<OnPreferenceChangeListener> listenersCopy;

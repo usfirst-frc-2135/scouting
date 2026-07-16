@@ -18,7 +18,7 @@ import java.util.Objects;
 
 /**
  * Activity for entering pre-match information such as scout name, match number, and team number.
- * It autopopulates team numbers if event data is loaded and handles aliases.
+ * Provides features for autopopulating team numbers from official event data and resolving team aliases.
  */
 public class PreMatchActivity extends AppCompatActivity
 {
@@ -32,6 +32,11 @@ public class PreMatchActivity extends AppCompatActivity
     private Settings m_settings;
     private boolean m_isEditMode;
 
+    /**
+     * Initializes the activity, sets up view binding, and configures UI components.
+     *
+     * @param savedInstanceState if the activity is being re-initialized after previously being shut down
+     */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -51,7 +56,7 @@ public class PreMatchActivity extends AppCompatActivity
     }
 
     /**
-     * Loads initial data from Intents and singletons.
+     * Loads initial data from Intents, application settings, and singleton instances.
      */
     private void loadInitialData()
     {
@@ -72,7 +77,7 @@ public class PreMatchActivity extends AppCompatActivity
     }
 
     /**
-     * Configures the action bar title with the current team index.
+     * Configures the action bar title and subtitle with the current team index.
      */
     private void setupActionBar()
     {
@@ -85,7 +90,7 @@ public class PreMatchActivity extends AppCompatActivity
     }
 
     /**
-     * Sets default values and hints for the UI components.
+     * Sets default values and initial hints for the input fields.
      */
     private void setupViewDefaults()
     {
@@ -113,7 +118,7 @@ public class PreMatchActivity extends AppCompatActivity
     }
 
     /**
-     * Attaches listeners to the UI components.
+     * Attaches text watchers and click listeners to the input components.
      */
     private void setupListeners()
     {
@@ -230,7 +235,7 @@ public class PreMatchActivity extends AppCompatActivity
     }
 
     /**
-     * Shows a drop-down list of possible team numbers for the current match.
+     * Shows a drop-down list of possible team numbers for the current match based on event data.
      */
     private void showTeamNumberDropDown()
     {
@@ -265,7 +270,7 @@ public class PreMatchActivity extends AppCompatActivity
     }
 
     /**
-     * Autopopulates the team number field based on the match number and configured team index.
+     * Autopopulates the team number field based on the match number and current team index.
      */
     private void setTeamNumFromMatchNum()
     {
@@ -299,7 +304,7 @@ public class PreMatchActivity extends AppCompatActivity
     }
 
     /**
-     * Persists the entered pre-match data to the MatchData object and updates settings.
+     * Persists the entered pre-match data to the current {@link MatchData} object and updates settings.
      */
     public void updatePreMatchData()
     {
@@ -335,7 +340,7 @@ public class PreMatchActivity extends AppCompatActivity
     }
 
     /**
-     * Validates that all required fields have been filled.
+     * Validates that all required fields (event code, match number, team number, scout name) have been filled.
      *
      * @return true if data is valid, false otherwise
      */
@@ -358,6 +363,9 @@ public class PreMatchActivity extends AppCompatActivity
         return isValid;
     }
 
+    /**
+     * Called when the activity is becoming visible to the user.
+     */
     @Override
     protected void onResume()
     {
@@ -365,6 +373,9 @@ public class PreMatchActivity extends AppCompatActivity
         Log.v(TAG, "onResume");
     }
 
+    /**
+     * Perform any final cleanup before an activity is destroyed.
+     */
     @Override
     protected void onDestroy()
     {

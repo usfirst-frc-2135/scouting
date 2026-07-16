@@ -19,6 +19,7 @@ import com.frc2135.android.frc_scout.databinding.EndgameFragmentBinding;
 
 /**
  * Fragment for recording endgame scouting data (climbing, comments, etc.).
+ * Manages UI components for start climb time, climb level, climb position, and whether the robot died during the match.
  */
 public class EndgameFragment extends Fragment
 {
@@ -60,6 +61,11 @@ public class EndgameFragment extends Fragment
     private MatchData m_matchData;
     private EndgameFragmentBinding m_binding;
 
+    /**
+     * Initializes the fragment and retrieves the current match data from the parent activity.
+     *
+     * @param savedInstanceState if the fragment is being re-created from a previous saved state
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
@@ -68,6 +74,14 @@ public class EndgameFragment extends Fragment
         m_matchData = ((ScoutingActivity) requireActivity()).getCurrentMatch();
     }
 
+    /**
+     * Inflates the layout for this fragment using view binding.
+     *
+     * @param inflater           the LayoutInflater object that can be used to inflate views
+     * @param parent             if non-null, this is the parent view that the fragment's UI should be attached to
+     * @param savedInstanceState if non-null, this fragment is being re-constructed from a previous saved state
+     * @return the root View of the inflated layout
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
@@ -76,6 +90,13 @@ public class EndgameFragment extends Fragment
         return m_binding.getRoot();
     }
 
+    /**
+     * Called immediately after {@link #onCreateView} has returned.
+     * Sets up the action bar, loads match data into the UI, and initializes click listeners.
+     *
+     * @param view               the View returned by {@link #onCreateView}
+     * @param savedInstanceState if non-null, this fragment is being re-constructed from a previous saved state
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
@@ -87,6 +108,9 @@ public class EndgameFragment extends Fragment
         setupDoneButton(false);
     }
 
+    /**
+     * Configures the action bar title and background color based on the team alliance.
+     */
     private void setupActionBar()
     {
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
@@ -102,6 +126,9 @@ public class EndgameFragment extends Fragment
         }
     }
 
+    /**
+     * Populates the UI components with data from the current {@link MatchData} instance.
+     */
     private void loadMatchData()
     {
         if (m_matchData == null)
@@ -119,6 +146,9 @@ public class EndgameFragment extends Fragment
         m_binding.endgameCommentsInput.setText(m_matchData.getComment());
     }
 
+    /**
+     * Sets up click listeners for the UI components, including QR code generation and match completion.
+     */
     private void setupListeners()
     {
         m_binding.endgameGenerateQrButton.setEnabled(true);
@@ -163,6 +193,11 @@ public class EndgameFragment extends Fragment
         });
     }
 
+    /**
+     * Initializes the start climbing time radio group selection.
+     *
+     * @param value the index of the selected start climb time
+     */
     private void initStartClimbing(int value)
     {
         if (value >= 0 && value < START_CLIMB_IDS.length)
@@ -171,6 +206,11 @@ public class EndgameFragment extends Fragment
         }
     }
 
+    /**
+     * Initializes the climb level radio group selection.
+     *
+     * @param value the index of the selected climb level
+     */
     private void initClimbLevel(int value)
     {
         if (value >= 0 && value < CLIMB_LEVEL_IDS.length)
@@ -179,6 +219,11 @@ public class EndgameFragment extends Fragment
         }
     }
 
+    /**
+     * Initializes the climb position radio group selection.
+     *
+     * @param value the index of the selected climb position
+     */
     private void initClimbPos(int value)
     {
         if (value >= 0 && value < CLIMB_POS_IDS.length)
@@ -187,6 +232,11 @@ public class EndgameFragment extends Fragment
         }
     }
 
+    /**
+     * Initializes the "died" value radio group selection.
+     *
+     * @param value the index of the selected died value
+     */
     private void initDiedValue(int value)
     {
         if (value >= 0 && value < DIED_VALUE_IDS.length)
@@ -195,6 +245,11 @@ public class EndgameFragment extends Fragment
         }
     }
 
+    /**
+     * Retrieves the selected "died" value index.
+     *
+     * @return the index of the selected radio button in the died group
+     */
     private int getDiedValue()
     {
         int id = m_binding.endgameDiedRadioGroup.getCheckedRadioButtonId();
@@ -208,6 +263,11 @@ public class EndgameFragment extends Fragment
         return 0;
     }
 
+    /**
+     * Retrieves the selected start climb time index.
+     *
+     * @return the index of the selected radio button in the start climb group
+     */
     private int getStartClimb()
     {
         int id = m_binding.endgameStartClimbRadioGroup.getCheckedRadioButtonId();
@@ -221,6 +281,11 @@ public class EndgameFragment extends Fragment
         return 0;
     }
 
+    /**
+     * Retrieves the selected climb position index.
+     *
+     * @return the index of the selected radio button in the climb position group
+     */
     private int getClimbPos()
     {
         int id = m_binding.endgameClimbPosRadioGroup.getCheckedRadioButtonId();
@@ -234,6 +299,11 @@ public class EndgameFragment extends Fragment
         return 0;
     }
 
+    /**
+     * Retrieves the selected climb level index.
+     *
+     * @return the index of the selected radio button in the climb level group
+     */
     private int getClimbLevel()
     {
         int id = m_binding.endgameClimbLevelRadioGroup.getCheckedRadioButtonId();
@@ -248,7 +318,7 @@ public class EndgameFragment extends Fragment
     }
 
     /**
-     * Updates the MatchData object with the latest inputs from this fragment.
+     * Updates the {@link MatchData} object with the current values from the UI components.
      */
     public void updateEndgameData()
     {
@@ -264,6 +334,11 @@ public class EndgameFragment extends Fragment
         m_matchData.setEndgameClimbLevel(getClimbLevel());
     }
 
+    /**
+     * Sets the enabled state and visibility of the "Done" button.
+     *
+     * @param bEnable true to enable the button, false to disable and show the placeholder
+     */
     private void setupDoneButton(boolean bEnable)
     {
         m_binding.endgameDoneButton.setEnabled(bEnable);
@@ -281,6 +356,9 @@ public class EndgameFragment extends Fragment
         }
     }
 
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     */
     @Override
     public void onResume()
     {
@@ -288,6 +366,9 @@ public class EndgameFragment extends Fragment
         Log.v(TAG, "onResume");
     }
 
+    /**
+     * Cleans up the view binding reference when the fragment view is being destroyed.
+     */
     @Override
     public void onDestroyView()
     {

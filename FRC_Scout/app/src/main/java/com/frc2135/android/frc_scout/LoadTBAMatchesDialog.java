@@ -31,6 +31,7 @@ import java.util.Objects;
 /**
  * Dialog for loading match data for a specific event from The Blue Alliance (TBA) API.
  * This dialog handles event code validation, data download via Volley, and local persistence.
+ * Also provides an option to clear all cached TBA matches for an event.
  */
 public class LoadTBAMatchesDialog extends DialogFragment
 {
@@ -39,7 +40,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
     private LoadEventDialogBinding m_binding;
 
     /**
-     * Creates a new instance of LoadTBAMatchesDialog.
+     * Creates a new instance of {@link LoadTBAMatchesDialog}.
      *
      * @return a new LoadTBAMatchesDialog instance
      */
@@ -49,11 +50,11 @@ public class LoadTBAMatchesDialog extends DialogFragment
     }
 
     /**
-     * Constructs the {@link AlertDialog} instance, initializes View Binding, and sets up
+     * Constructs the {@link androidx.appcompat.app.AlertDialog} instance, initializes View Binding, and sets up
      * the event code input field with validation listeners.
      *
      * @param savedInstanceState if the dialog is being re-initialized from a previous saved state
-     * @return the constructed {@link Dialog}
+     * @return the constructed {@link Dialog} instance
      */
     @NonNull
     @Override
@@ -287,13 +288,13 @@ public class LoadTBAMatchesDialog extends DialogFragment
     }
 
     /**
-     * Log and optionally display an error message for an exception.
+     * Logs and optionally displays an informative or error message via Toast.
      *
-     * @param context the context to show the Toast in
+     * @param context the context in which to display the message
      * @param tag     the log tag
-     * @param msg     the error message
+     * @param msg     the message text
      * @param bSilent if true, the Toast is suppressed
-     * @param e       the exception that occurred
+     * @param e       the exception associated with the error, if any
      */
     @SuppressWarnings("SameParameterValue")
     protected void displayToastMessages(Context context, String tag, String msg, boolean bSilent, Exception e)
@@ -316,6 +317,9 @@ public class LoadTBAMatchesDialog extends DialogFragment
         }
     }
 
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     */
     @Override
     public void onResume()
     {
@@ -324,7 +328,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
     }
 
     /**
-     * Cleans up the view binding when the dialog view is destroyed.
+     * Cleans up the view binding reference when the fragment view is being destroyed.
      */
     @Override
     public void onDestroyView()

@@ -23,7 +23,7 @@ import zxing.QRCodeEncoder;
 
 /**
  * Dialog fragment that generates and displays a QR code for a scouted match.
- * The QR code encodes the match data in a Tab-Separated Values (TSV) format for easy data transfer.
+ * The QR code encodes the match data in a Tab-Separated Values (TSV) format for easy data transfer to a master computer.
  */
 public class QRCodeDialog extends DialogFragment
 {
@@ -35,6 +35,7 @@ public class QRCodeDialog extends DialogFragment
 
     /**
      * Creates a new instance of {@link QRCodeDialog} for the given match data.
+     * Encodes the match statistics and a human-readable label into the fragment's arguments.
      *
      * @param matchData the match data to encode into the QR code
      * @return a new QRCodeDialog instance
@@ -57,11 +58,11 @@ public class QRCodeDialog extends DialogFragment
     }
 
     /**
-     * Constructs the {@link androidx.appcompat.app.AlertDialog} instance, initializes View Binding,
-     * and triggers the QR code generation process based on the match data in arguments.
+     * Constructs the {@link androidx.appcompat.app.AlertDialog} instance, initializes view binding,
+     * and triggers the QR code generation process based on the match data provided in the arguments.
      *
      * @param savedInstanceState if the dialog is being re-initialized from a previous saved state
-     * @return the constructed {@link Dialog}
+     * @return the constructed {@link Dialog} instance
      */
     @NonNull
     @Override
@@ -85,6 +86,11 @@ public class QRCodeDialog extends DialogFragment
                 .create();
     }
 
+    /**
+     * Generates a QR code bitmap from the provided text and displays it in the dialog's ImageView.
+     *
+     * @param text the raw data string to encode into the QR code
+     */
     private void generateQRCode(String text)
     {
         if (text == null || text.isEmpty())
@@ -114,10 +120,10 @@ public class QRCodeDialog extends DialogFragment
     }
 
     /**
-     * Formats a date into a standardized string for labeling (yyyy-MM-dd'T'HH:mm:ss).
+     * Formats a {@link Date} object into a standardized string for labeling (yyyy-MM-dd'T'HH:mm:ss).
      *
      * @param date the date to format
-     * @return the formatted date string
+     * @return the formatted date string, or "unknown_date" if null
      */
     public static String formattedDate(Date date)
     {
@@ -130,6 +136,9 @@ public class QRCodeDialog extends DialogFragment
         return sdf.format(date);
     }
 
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     */
     @Override
     public void onResume()
     {
@@ -137,6 +146,9 @@ public class QRCodeDialog extends DialogFragment
         Log.v(TAG, "onResume");
     }
 
+    /**
+     * Cleans up the view binding reference when the fragment view is being destroyed.
+     */
     @Override
     public void onDestroyView()
     {

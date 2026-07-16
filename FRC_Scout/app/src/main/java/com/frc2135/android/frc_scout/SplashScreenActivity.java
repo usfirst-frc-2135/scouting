@@ -15,20 +15,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.frc2135.android.frc_scout.databinding.SplashScreenActivityBinding;
 
 /**
- * Entry point of the application. Displays a splash screen for a short duration
- * while initializing the app's theme and then transitions to {@link MatchListActivity}.
+ * Entry point of the application. Displays a splash screen for a short duration while performing initialization tasks.
+ * Initializes the application's theme, displays current configuration metadata, and transitions to {@link MatchListActivity}.
  */
 @SuppressWarnings("ALL")
 @SuppressLint("CustomSplashScreen")
 public class SplashScreenActivity extends AppCompatActivity
 {
     private static final String TAG = "SplashScreenActivity";
-    private static final int SPLASH_DISPLAY_LENGTH = 1500; // Duration of pause in milliseconds
+
+    /**
+     * The duration for which the splash screen metadata remains visible before transitioning.
+     */
+    private static final int SPLASH_DISPLAY_LENGTH = 1500;
+
     private SplashScreenActivityBinding m_binding;
 
     /**
      * Called when the activity is first created.
-     * Initializes the theme and schedules the transition to the main activity.
+     * Applies the user's theme preference, inflates the splash layout, and starts the transition sequence.
+     *
+     * @param icicle if the activity is being re-initialized after previously being shut down
      */
     @Override
     public void onCreate(Bundle icicle)
@@ -55,7 +62,7 @@ public class SplashScreenActivity extends AppCompatActivity
     }
 
     /**
-     * Populates the settings summary text view with the current event code, team index, and most recent scout name.
+     * Populates the settings summary text view with the current FRC event code, team index selection, and most recent scout name.
      */
     private void populateSettingsSummary()
     {
@@ -80,6 +87,9 @@ public class SplashScreenActivity extends AppCompatActivity
         m_binding.splashSettingsSummaryText.setText(summary);
     }
 
+    /**
+     * Called when the activity is becoming visible to the user.
+     */
     @Override
     protected void onResume()
     {
@@ -87,6 +97,9 @@ public class SplashScreenActivity extends AppCompatActivity
         Log.v(TAG, "onResume");
     }
 
+    /**
+     * Perform any final cleanup before the activity is destroyed.
+     */
     @Override
     protected void onDestroy()
     {
@@ -96,12 +109,12 @@ public class SplashScreenActivity extends AppCompatActivity
     }
 
     /**
-     * Schedules transition to MatchListActivity after the pause duration.
+     * Schedules the transition to the {@link MatchListActivity} after a pre-defined delay.
      */
     @SuppressWarnings("deprecation")
     private void startMainTransition()
     {
-        Log.d(TAG, "startMainTransition()");
+        Log.d(TAG, "startMainTransition");
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             Intent mainIntent = new Intent(SplashScreenActivity.this, MatchListActivity.class);
             startActivity(mainIntent);
@@ -121,7 +134,7 @@ public class SplashScreenActivity extends AppCompatActivity
     }
 
     /**
-     * Retrieves and logs display resolution for debugging on different device screens.
+     * Retrieves and logs the current device's display resolution and density for diagnostic purposes.
      * Uses modern WindowMetrics for API 30+ and legacy DisplayMetrics for older versions.
      */
     @SuppressWarnings("deprecation")

@@ -37,10 +37,15 @@ import java.util.Objects;
 /**
  * Fragment that displays a list of all scouted matches.
  * Provides functionality for filtering, sorting, deleting, and starting new scouting sessions.
+ * Manages the application's main configuration options through an action bar menu.
  */
 public class MatchListFragment extends Fragment
 {
     private static final String TAG = "MatchListFragment";
+
+    /**
+     * Tag used for the QR code dialog fragment.
+     */
     public static final String QRTAG = "qr";
 
     private List<MatchData> m_displayedMatches = new java.util.ArrayList<>();
@@ -56,6 +61,11 @@ public class MatchListFragment extends Fragment
 
     private boolean m_sortAscending = false;
 
+    /**
+     * Initializes the fragment and sets up result listeners for match filtering.
+     *
+     * @param savedInstanceState if the fragment is being re-created from a previous saved state
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
@@ -73,6 +83,14 @@ public class MatchListFragment extends Fragment
         });
     }
 
+    /**
+     * Inflates the layout for this fragment and initializes UI components.
+     *
+     * @param inflater           the LayoutInflater object that can be used to inflate views
+     * @param parent             if non-null, this is the parent view that the fragment's UI should be attached to
+     * @param savedInstanceState if non-null, this fragment is being re-constructed from a previous saved state
+     * @return the root View of the inflated layout
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
@@ -102,6 +120,10 @@ public class MatchListFragment extends Fragment
         Log.i(TAG, "Refreshed list. Displaying " + m_displayedMatches.size() + " scouted matches.");
     }
 
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     * Re-populates the sort adapter to ensure consistency.
+     */
     @Override
     public void onResume()
     {
@@ -113,6 +135,9 @@ public class MatchListFragment extends Fragment
         m_binding.matchListSortInput.setAdapter(sortAdapter);
     }
 
+    /**
+     * Configures the RecyclerView and its adapter for displaying matches.
+     */
     private void setupRecyclerView()
     {
         m_binding.matchListRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -120,6 +145,9 @@ public class MatchListFragment extends Fragment
         m_binding.matchListRecyclerView.setAdapter(m_adapter);
     }
 
+    /**
+     * Sets up the FloatingActionButton for starting a new scouting session.
+     */
     private void setupNewMatchButton()
     {
         m_binding.matchListStartMatchFab.setOnClickListener(view -> {
@@ -134,6 +162,9 @@ public class MatchListFragment extends Fragment
         });
     }
 
+    /**
+     * Configures the sort criteria dropdown menu and order toggle button.
+     */
     private void setupSortSpinner()
     {
         ArrayAdapter<CharSequence> sortAdapter = new ArrayAdapter<>(requireContext(),
@@ -151,6 +182,9 @@ public class MatchListFragment extends Fragment
         updateSortButtonIcon();
     }
 
+    /**
+     * Updates the sort order button icon based on the current direction (ascending/descending).
+     */
     private void updateSortButtonIcon()
     {
         if (m_sortAscending)
@@ -165,6 +199,9 @@ public class MatchListFragment extends Fragment
         }
     }
 
+    /**
+     * Re-sorts the match list based on the current UI selections and updates the adapter.
+     */
     private void updateSorting()
     {
         String criteria = m_binding.matchListSortInput.getText().toString();
@@ -177,11 +214,18 @@ public class MatchListFragment extends Fragment
         }
     }
 
+    /**
+     * Configures the filter button to show the {@link MatchFilterDialog}.
+     */
     private void setupFilterButton()
     {
         m_binding.matchListFilterButton.setOnClickListener(v -> MatchFilterDialog.newInstance(m_eventFilter, m_matchFilter, m_teamFilter, m_scoutFilter).show(requireActivity().getSupportFragmentManager(), "filter_dialog"));
     }
 
+    /**
+     * Registers the {@link MenuProvider} for the host activity's action bar.
+     * Manages global app options like dark mode, data loading, and clearing application state.
+     */
     private void setupMenuProvider()
     {
         requireActivity().addMenuProvider(new MenuProvider()
@@ -248,6 +292,9 @@ public class MatchListFragment extends Fragment
         });
     }
 
+    /**
+     * Presents a confirmation dialog to clear all non-scouting application data (TBA matches, scout names, aliases, settings).
+     */
     private void clearAllData()
     {
         new MaterialAlertDialogBuilder(requireContext())
@@ -262,9 +309,6 @@ public class MatchListFragment extends Fragment
                     TBAMatches.clearTBAMatches();
 
                     // 2. Clear Team Aliases
-                    // TeamAliases doesn't have a bulk delete, but we can clear instance
-                    // and let the user delete specific ones if needed, or we implement bulk.
-                    // For now, clear settings-linked one.
                     String event = Settings.getInstance(context).getEventCode();
                     TeamAliases.getInstance(context).deleteTeamAliasesFile(event);
                     TeamAliases.clearTeamAliases();
@@ -284,11 +328,19 @@ public class MatchListFragment extends Fragment
                 .show();
     }
 
+    /**
+     * ViewHolder class for individual match items in the RecyclerView.
+     */
     private class MatchHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
     {
         private final MatchListCardBinding m_itemBinding;
         private MatchData m_match;
 
+        /**
+         * Initializes the ViewHolder and attaches click and context menu listeners.
+         *
+         * @param itemBinding the view binding for the match card item
+         */
         public MatchHolder(MatchListCardBinding itemBinding)
         {
             super(itemBinding.getRoot());
@@ -300,6 +352,11 @@ public class MatchListFragment extends Fragment
             });
         }
 
+        /**
+         * Binds match data to the UI components of the card.
+         *
+         * @param match the MatchData object to display
+         */
         public void bind(MatchData match)
         {
             m_match = match;
@@ -310,29 +367,50 @@ public class MatchListFragment extends Fragment
             m_itemBinding.matchCardDateText.setText(getFormattedDate(match.getTimestamp()));
         }
 
+        /**
+         * Responds to a single click on the match card by showing its QR code.
+         *
+         * @param v the clicked View
+         */
         @Override
         public void onClick(View v)
         {
             QRCodeDialog.newInstance(m_match).show(requireActivity().getSupportFragmentManager(), QRTAG);
         }
 
+        /**
+         * Optional hook for handling long click events.
+         *
+         * @param v the clicked View
+         * @return false (event handled via context menu listener)
+         */
         @Override
         public boolean onLongClick(View v)
         {
-            // Simple context menu or delete option could go here
             return false;
         }
     }
 
+    /**
+     * RecyclerView adapter for the list of scouted matches.
+     */
     private class MatchAdapter extends RecyclerView.Adapter<MatchHolder>
     {
         private List<MatchData> m_matches;
 
+        /**
+         * Initializes the adapter with a list of matches.
+         *
+         * @param matches the initial list of matches to display
+         */
         public MatchAdapter(List<MatchData> matches)
         {
             m_matches = matches;
         }
 
+        /**
+         * Creates a new ViewHolder instance for a match item.
+         */
         @NonNull
         @Override
         public MatchHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
@@ -341,18 +419,29 @@ public class MatchListFragment extends Fragment
             return new MatchHolder(itemBinding);
         }
 
+        /**
+         * Binds data to the ViewHolder at the specified position.
+         */
         @Override
         public void onBindViewHolder(@NonNull MatchHolder holder, int position)
         {
             holder.bind(m_matches.get(position));
         }
 
+        /**
+         * Returns the number of items in the list.
+         */
         @Override
         public int getItemCount()
         {
             return m_matches.size();
         }
 
+        /**
+         * Updates the adapter's data set and notifies the RecyclerView to refresh.
+         *
+         * @param matches the new list of matches to display
+         */
         @SuppressLint("NotifyDataSetChanged")
         public void updateData(List<MatchData> matches)
         {
@@ -361,6 +450,12 @@ public class MatchListFragment extends Fragment
         }
     }
 
+    /**
+     * Formats a {@link Date} object into a human-readable string (MMM dd, yyyy HH:mm).
+     *
+     * @param date the date to format
+     * @return the formatted string, or "unknown" if null
+     */
     private static String getFormattedDate(Date date)
     {
         if (date == null)
@@ -370,6 +465,9 @@ public class MatchListFragment extends Fragment
         return new SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.US).format(date);
     }
 
+    /**
+     * Cleans up the view binding reference when the fragment view is being destroyed.
+     */
     @Override
     public void onDestroyView()
     {
@@ -378,6 +476,12 @@ public class MatchListFragment extends Fragment
         m_binding = null;
     }
 
+    /**
+     * Handles selection of context menu items (Edit/Delete) for individual match items.
+     *
+     * @param item the menu item that was selected
+     * @return true if the event was handled
+     */
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item)
     {
@@ -411,6 +515,7 @@ public class MatchListFragment extends Fragment
             Intent preMatchIntent = new Intent(requireContext(), PreMatchActivity.class);
             preMatchIntent.putExtra("match_ID", Objects.requireNonNull(m).getMatchID());
             preMatchIntent.putExtra("in_edit", "yes");
+            Log.i(TAG, "Match selected for edit " + m.getMatchNumber() + " ID: " + m.getMatchID());
             m_binding.matchListRecyclerView.clearFocus();
 
             startActivity(preMatchIntent);

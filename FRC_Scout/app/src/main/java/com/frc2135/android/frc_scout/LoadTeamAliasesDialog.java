@@ -45,11 +45,11 @@ public class LoadTeamAliasesDialog extends DialogFragment
     }
 
     /**
-     * Constructs the {@link AlertDialog} instance, initializes View Binding, and sets up
+     * Constructs the {@link androidx.appcompat.app.AlertDialog} instance, initializes View Binding, and sets up
      * the event code input field and listeners for loading or clearing team aliases.
      *
      * @param savedInstanceState if the dialog is being re-initialized from a previous saved state
-     * @return the constructed {@link Dialog}
+     * @return the constructed {@link Dialog} instance
      */
     @NonNull
     @Override
@@ -251,13 +251,13 @@ public class LoadTeamAliasesDialog extends DialogFragment
     }
 
     /**
-     * Log and optionally display an error message for an exception.
+     * Logs and optionally displays an informative or error message via Toast.
      *
-     * @param context the context to show the Toast in
+     * @param context the context in which to display the message
      * @param tag     the log tag
-     * @param msg     the error message
+     * @param msg     the message text
      * @param bSilent if true, the Toast is suppressed
-     * @param e       the exception that occurred
+     * @param e       the exception associated with the error, if any
      */
     @SuppressWarnings("SameParameterValue")
     protected void displayToastMessages(Context context, String tag, String msg, boolean bSilent, Exception e)

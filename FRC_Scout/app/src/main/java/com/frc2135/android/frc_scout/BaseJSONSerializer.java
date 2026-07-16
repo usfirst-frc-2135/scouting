@@ -21,17 +21,27 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * Base class for JSON serialization and persistence.
- * Provides common utility methods for reading and writing JSON data to internal storage.
+ * Provides common utility methods for reading and writing JSON strings, arrays, and objects to the application's internal file storage.
+ * Subclasses can use these methods to implement data persistence for various models.
  */
 public abstract class BaseJSONSerializer
 {
     @SuppressWarnings("unused")
     private static final String TAG = "BaseJSONSerializer";
+
+    /**
+     * The internal files directory for the application.
+     */
     protected final File m_dataDir;
+
+    /**
+     * The application context used for file operations and displaying messages.
+     */
     protected final Context m_appContext;
 
     /**
      * Default constructor for internal use when file operations are not required.
+     * Initializes directory and context references to null.
      */
     @SuppressWarnings("unused")
     protected BaseJSONSerializer()
@@ -42,6 +52,7 @@ public abstract class BaseJSONSerializer
 
     /**
      * Constructs a BaseJSONSerializer.
+     * Initializes the data directory using the provided context's internal files location.
      *
      * @param context the context used to retrieve the internal files directory
      */
@@ -56,7 +67,7 @@ public abstract class BaseJSONSerializer
      *
      * @param file    the file to write to
      * @param content the string content to write
-     * @throws IOException if writing the file fails
+     * @throws IOException if writing the file fails or if the output stream cannot be opened
      */
     protected void writeStringToFile(File file, String content)
             throws IOException
@@ -73,7 +84,7 @@ public abstract class BaseJSONSerializer
      *
      * @param file the file to read from
      * @return the string content of the file
-     * @throws IOException if reading the file fails
+     * @throws IOException if reading the file fails or if the input stream cannot be opened
      */
     protected String readStringFromFile(File file)
             throws IOException
@@ -91,11 +102,11 @@ public abstract class BaseJSONSerializer
     }
 
     /**
-     * Saves a {@link JSONArray} to a file.
+     * Saves a {@link JSONArray} to a specified file.
      *
      * @param file  the target file
-     * @param array the JSONArray to save
-     * @throws IOException if saving fails
+     * @param array the JSONArray to serialize and save
+     * @throws IOException if saving the file fails
      */
     protected void saveJSONArray(File file, JSONArray array)
             throws IOException
@@ -108,12 +119,12 @@ public abstract class BaseJSONSerializer
     }
 
     /**
-     * Loads a {@link JSONArray} from a file.
+     * Loads a {@link JSONArray} from a specified file.
      *
-     * @param file the source file
-     * @return the loaded JSONArray, or null if the file is empty or missing
-     * @throws IOException   if reading fails
-     * @throws JSONException if parsing fails
+     * @param file the source file to load from
+     * @return the loaded JSONArray, or null if the file is empty, missing, or not a valid JSON array
+     * @throws IOException   if reading from the filesystem fails
+     * @throws JSONException if the file content cannot be parsed as a JSONArray
      */
     protected JSONArray loadJSONArray(File file)
             throws IOException, JSONException
@@ -131,11 +142,11 @@ public abstract class BaseJSONSerializer
     }
 
     /**
-     * Saves a {@link JSONObject} to a file.
+     * Saves a {@link JSONObject} to a specified file.
      *
      * @param file   the target file
-     * @param object the JSONObject to save
-     * @throws IOException if saving fails
+     * @param object the JSONObject to serialize and save
+     * @throws IOException if saving the file fails
      */
     @SuppressWarnings("unused")
     protected void saveJSONObject(File file, JSONObject object)
@@ -149,12 +160,12 @@ public abstract class BaseJSONSerializer
     }
 
     /**
-     * Loads a {@link JSONObject} from a file.
+     * Loads a {@link JSONObject} from a specified file.
      *
-     * @param file the source file
-     * @return the loaded JSONObject, or null if the file is empty or missing
-     * @throws IOException   if reading fails
-     * @throws JSONException if parsing fails
+     * @param file the source file to load from
+     * @return the loaded JSONObject, or null if the file is empty, missing, or not a valid JSON object
+     * @throws IOException   if reading from the filesystem fails
+     * @throws JSONException if the file content cannot be parsed as a JSONObject
      */
     @SuppressWarnings("unused")
     protected JSONObject loadJSONObject(File file)
@@ -173,13 +184,14 @@ public abstract class BaseJSONSerializer
     }
 
     /**
-     * Log and optionally display an error message for an exception.
+     * Logs and optionally displays an informative or error message via Toast.
+     * Standardizes message display across the application for data persistence operations.
      *
-     * @param context the context to show the Toast in
-     * @param tag     the log tag
-     * @param msg     the error message
-     * @param bSilent if true, the Toast is suppressed
-     * @param e       the exception that occurred
+     * @param context the context in which to display the Toast notification
+     * @param tag     the log tag for identification in Logcat
+     * @param msg     the message text to log and/or display
+     * @param bSilent if true, the Toast notification is suppressed, but the message is still logged
+     * @param e       the exception associated with the error; if null, the message is logged at INFO level; otherwise, at ERROR level
      */
     protected void displayToastMessages(Context context, String tag, String msg, boolean bSilent, Exception e)
     {

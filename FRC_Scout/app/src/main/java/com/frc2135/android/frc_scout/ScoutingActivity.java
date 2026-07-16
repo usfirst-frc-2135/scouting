@@ -17,6 +17,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 /**
  * Activity for the main scouting process. It hosts three fragments: Autonomous, Teleoperated, and Endgame.
  * Uses a {@link com.google.android.material.bottomnavigation.BottomNavigationView} for navigation between these stages.
+ * Handles match data loading, fragment state preservation, and back button confirmation.
  */
 public class ScoutingActivity extends AppCompatActivity
 {
@@ -26,6 +27,12 @@ public class ScoutingActivity extends AppCompatActivity
 
     private ScoutingActivityBinding m_binding;
 
+    /**
+     * Initializes the activity, sets up the toolbar, and loads the initial scouting fragment.
+     * Registers a back button callback to prevent accidental navigation.
+     *
+     * @param savedInstanceState if the activity is being re-initialized after previously being shut down
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -98,6 +105,12 @@ public class ScoutingActivity extends AppCompatActivity
         });
     }
 
+    /**
+     * Initializes the contents of the Activity's standard option menu.
+     *
+     * @param menu the options menu in which you place your items
+     * @return true for the menu to be displayed
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -106,6 +119,12 @@ public class ScoutingActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * This hook is called whenever an item in your options menu is selected.
+     *
+     * @param item the menu item that was selected
+     * @return true if the event was handled here
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
@@ -160,7 +179,7 @@ public class ScoutingActivity extends AppCompatActivity
      */
     private void updateCurrentFragmentData()
     {
-        Log.d(TAG, "updateCurrentFragmentData()");
+        Log.d(TAG, "updateCurrentFragmentData");
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.scouting_activity_fragment_container);
         if (f instanceof AutonFragment)
         {
@@ -196,6 +215,9 @@ public class ScoutingActivity extends AppCompatActivity
         return m_matchData;
     }
 
+    /**
+     * Called when the activity is becoming visible to the user.
+     */
     @Override
     protected void onResume()
     {
@@ -203,6 +225,10 @@ public class ScoutingActivity extends AppCompatActivity
         Log.v(TAG, "onResume");
     }
 
+    /**
+     * Called when the activity is no longer interacting with the user.
+     * Triggers a final update of fragment data.
+     */
     @Override
     protected void onPause()
     {
@@ -211,6 +237,9 @@ public class ScoutingActivity extends AppCompatActivity
         updateCurrentFragmentData();
     }
 
+    /**
+     * Perform any final cleanup before an activity is destroyed.
+     */
     @Override
     protected void onDestroy()
     {

@@ -19,8 +19,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.util.Objects;
 
 /**
- * Dialog for setting the team index (scouting position), which is used to autopopulate
- * team numbers during pre-match scouting based on official event schedules.
+ * Dialog for setting the current team index (scouting position).
+ * The selected index is used to autopopulate team numbers during pre-match scouting based on official event schedules from The Blue Alliance.
  */
 public class SetTeamIndexDialog extends DialogFragment
 {
@@ -42,11 +42,10 @@ public class SetTeamIndexDialog extends DialogFragment
     }
 
     /**
-     * Constructs the {@link androidx.appcompat.app.AlertDialog} instance, initializes View Binding,
-     * and sets up the team index dropdown menu and listeners.
+     * Constructs the {@link androidx.appcompat.app.AlertDialog} instance, initializes View Binding, and sets up the team index dropdown menu and listeners.
      *
      * @param savedInstanceState if the dialog is being re-initialized from a previous saved state
-     * @return the constructed {@link Dialog}
+     * @return the constructed {@link Dialog} instance
      */
     @NonNull
     @Override
@@ -100,11 +99,11 @@ public class SetTeamIndexDialog extends DialogFragment
     }
 
     /**
-     * Initializes the dropdown menu with the team index options.
+     * Initializes the AutoCompleteTextView dropdown with the team index options (e.g., Red 1, Blue 2).
      */
     private void setupTeamIndexDropdown()
     {
-        Log.d(TAG, "setupTeamIndexDropdown()");
+        Log.d(TAG, "setupTeamIndexDropdown");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(),
                 R.layout.set_team_index_dropdown_item, m_indexOptions);
         m_binding.setTeamIndexInput.setAdapter(adapter);
@@ -114,11 +113,11 @@ public class SetTeamIndexDialog extends DialogFragment
     }
 
     /**
-     * Persists the selected team index to settings and the local filesystem.
+     * Persists the selected team index to application settings and notifies the host fragment.
      */
     private void saveTeamIndex()
     {
-        Log.d(TAG, "saveTeamIndex()");
+        Log.d(TAG, "saveTeamIndex");
         String selectedIndex = Objects.requireNonNull(m_binding.setTeamIndexInput.getText()).toString();
 
         if (m_settings != null)
@@ -129,15 +128,21 @@ public class SetTeamIndexDialog extends DialogFragment
         }
     }
 
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     * Re-initializes the dropdown menu to ensure it displays correctly.
+     */
     @Override
     public void onResume()
     {
         super.onResume();
         Log.v(TAG, "onResume");
-        // Re-set adapter to ensure it displays correctly
         setupTeamIndexDropdown();
     }
 
+    /**
+     * Cleans up the View Binding reference when the fragment view is being destroyed.
+     */
     @Override
     public void onDestroyView()
     {
