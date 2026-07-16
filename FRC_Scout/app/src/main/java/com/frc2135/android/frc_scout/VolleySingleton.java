@@ -16,7 +16,7 @@ public class VolleySingleton
 
     private VolleySingleton(Context context)
     {
-        Log.d(TAG, "VolleySingleton constructor");
+        Log.v(TAG, "VolleySingleton constructor");
         mContext = context.getApplicationContext();
         mRequestQueue = getRequestQueue();
     }
@@ -29,7 +29,7 @@ public class VolleySingleton
      */
     public static VolleySingleton getInstance(Context context)
     {
-        Log.d(TAG, "getInstance()");
+        Log.v(TAG, "getInstance()");
         if (sInstance == null)
         {
             synchronized (VolleySingleton.class)

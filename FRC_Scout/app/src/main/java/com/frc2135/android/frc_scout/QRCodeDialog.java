@@ -67,7 +67,7 @@ public class QRCodeDialog extends DialogFragment
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
     {
-        Log.d(TAG, "onCreateDialog called");
+        Log.v(TAG, "onCreateDialog called");
 
         m_binding = QrCodeDialogBinding.inflate(getLayoutInflater());
 
@@ -89,12 +89,12 @@ public class QRCodeDialog extends DialogFragment
     {
         if (text == null || text.isEmpty())
         {
-            Log.w(TAG, "Empty text provided for QR code generation");
+            Log.e(TAG, "Empty text provided for QR code generation");
             return;
         }
 
         int qrCodeDimension = 750;
-        Log.d(TAG, "Generating QR code for text length: " + text.length());
+        Log.i(TAG, "Generating QR code for text length: " + text.length());
 
         QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(text, null, Contents.Type.TEXT,
                 BarcodeFormat.QR_CODE.toString(), qrCodeDimension);
@@ -134,14 +134,14 @@ public class QRCodeDialog extends DialogFragment
     public void onResume()
     {
         super.onResume();
-        Log.d(TAG, "onResume");
+        Log.v(TAG, "onResume");
     }
 
     @Override
     public void onDestroyView()
     {
         super.onDestroyView();
-        Log.d(TAG, "onDestroyView");
+        Log.v(TAG, "onDestroyView");
         m_binding = null;
     }
 }

@@ -58,18 +58,14 @@ public class AutonFragment extends Fragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate");
+        Log.v(TAG, "onCreate");
         m_matchData = ((ScoutingActivity) requireActivity()).getCurrentMatch();
-        if (m_matchData != null)
-        {
-            Log.d(TAG, "New match ID = " + m_matchData.getMatchID());
-        }
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
-        Log.d(TAG, "onCreateView");
+        Log.v(TAG, "onCreateView");
         m_binding = AutonFragmentBinding.inflate(inflater, parent, false);
         return m_binding.getRoot();
     }
@@ -78,7 +74,7 @@ public class AutonFragment extends Fragment
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        Log.d(TAG, "onViewCreated");
+        Log.v(TAG, "onViewCreated");
         setupActionBar();
         loadMatchData();
         setupListeners();
@@ -203,7 +199,7 @@ public class AutonFragment extends Fragment
         }
         catch (NumberFormatException e)
         {
-            Log.e(TAG, "Invalid number format in updateTotalsInt", e);
+            Log.e(TAG, "updateTotalsInt: Invalid number format", e);
         }
     }
 
@@ -251,7 +247,7 @@ public class AutonFragment extends Fragment
      */
     public void updateAutonData()
     {
-        Log.d(TAG, "updateAutonData()");
+        Log.d(TAG, "updateAutonData");
         if (m_matchData == null)
         {
             return;
@@ -262,7 +258,7 @@ public class AutonFragment extends Fragment
         }
         catch (NumberFormatException e)
         {
-            Log.e(TAG, "Invalid hopper score value", e);
+            Log.e(TAG, "updateAutonData: Invalid hopper score value", e);
         }
         m_matchData.setAutonPreload(m_binding.autonPreloadCheckbox.isChecked());
         m_matchData.setAutonNz(m_binding.autonNzCheckbox.isChecked());
@@ -278,14 +274,14 @@ public class AutonFragment extends Fragment
     public void onResume()
     {
         super.onResume();
-        Log.d(TAG, "onResume");
+        Log.v(TAG, "onResume");
     }
 
     @Override
     public void onDestroyView()
     {
         super.onDestroyView();
-        Log.d(TAG, "onDestroyView");
+        Log.v(TAG, "onDestroyView");
         m_binding = null;
     }
 }

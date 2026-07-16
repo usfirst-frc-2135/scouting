@@ -55,7 +55,7 @@ public class LoadTeamAliasesDialog extends DialogFragment
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
     {
-        Log.d(TAG, "onCreateDialog called");
+        Log.v(TAG, "onCreateDialog called");
 
         LayoutInflater inflater = getLayoutInflater();
         m_binding = LoadEventDialogBinding.inflate(inflater);
@@ -287,7 +287,7 @@ public class LoadTeamAliasesDialog extends DialogFragment
     public void onResume()
     {
         super.onResume();
-        Log.d(TAG, "onResume");
+        Log.v(TAG, "onResume");
     }
 
     /**
@@ -297,7 +297,7 @@ public class LoadTeamAliasesDialog extends DialogFragment
     public void onDestroyView()
     {
         super.onDestroyView();
-        Log.d(TAG, "onDestroyView");
+        Log.v(TAG, "onDestroyView");
         m_binding = null;
     }
 }

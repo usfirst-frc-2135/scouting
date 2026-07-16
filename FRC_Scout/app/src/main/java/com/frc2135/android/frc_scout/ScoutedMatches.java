@@ -31,14 +31,14 @@ public class ScoutedMatches extends BaseJSONSerializer
     private ScoutedMatches(Context appContext)
     {
         super(appContext);
-        Log.d(TAG, "ScoutedMatches constructor");
+        Log.v(TAG, "ScoutedMatches constructor");
         m_appContext = appContext.getApplicationContext();
         m_scoutedMatches = loadInitialData();
     }
 
     private List<MatchData> loadInitialData()
     {
-        Log.d(TAG, "loadInitialData()");
+        Log.v(TAG, "loadInitialData");
         return loadScoutedMatchesList();
     }
 
@@ -50,13 +50,14 @@ public class ScoutedMatches extends BaseJSONSerializer
      */
     public static ScoutedMatches getInstance(Context context)
     {
-        Log.d(TAG, "getInstance()");
+        Log.v(TAG, "getInstance");
         if (sScoutedMatches == null)
         {
             synchronized (ScoutedMatches.class)
             {
                 if (sScoutedMatches == null)
                 {
+                    Log.i(TAG, "Creating new sScoutedMatches");
                     sScoutedMatches = new ScoutedMatches(context);
                 }
             }
@@ -100,8 +101,9 @@ public class ScoutedMatches extends BaseJSONSerializer
         if (match != null)
         {
             m_scoutedMatches.remove(match);
-            m_appContext.deleteFile(getMatchFileName(match));
-            Log.d(TAG, "Deleted match file: " + getMatchFileName(match));
+            String filename = getMatchFileName(match);
+            m_appContext.deleteFile(filename);
+            Log.i(TAG, "Deleted match file: " + filename);
         }
     }
 
@@ -149,7 +151,7 @@ public class ScoutedMatches extends BaseJSONSerializer
 
         try
         {
-            Log.d(TAG, "saveMatchData()");
+            Log.d(TAG, "saveMatchDataFile");
             JSONArray newMatch = new JSONArray();
             newMatch.put(matchData.toJSON());
 
@@ -173,7 +175,7 @@ public class ScoutedMatches extends BaseJSONSerializer
     private ArrayList<MatchData> loadScoutedMatchesList()
     {
         ArrayList<MatchData> matchHistory = new ArrayList<>();
-        Log.d(TAG, "Scanning for match data files");
+        Log.d(TAG, "Scanning for scouted match data files");
 
         File[] files = m_dataDir.listFiles();
         if (files == null)
@@ -193,11 +195,11 @@ public class ScoutedMatches extends BaseJSONSerializer
                 try
                 {
                     matchHistory.add(loadSingleMatchFile(file));
-                    Log.d(TAG, "Successfully loaded match file: " + filename);
+                    Log.d(TAG, "Successfully loaded match data file: " + filename);
                 }
                 catch (IOException | JSONException e)
                 {
-                    Log.e(TAG, "Error loading match file " + filename + ": " + e.getMessage());
+                    Log.e(TAG, "Error loading match data file " + filename + ": " + e.getMessage());
                 }
             }
         }

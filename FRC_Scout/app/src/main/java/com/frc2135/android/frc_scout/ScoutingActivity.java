@@ -31,7 +31,7 @@ public class ScoutingActivity extends AppCompatActivity
     {
         Preferences.getInstance(this).applyTheme();
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate");
+        Log.v(TAG, "onCreate");
 
         m_binding = ScoutingActivityBinding.inflate(getLayoutInflater());
         setContentView(m_binding.getRoot());
@@ -39,7 +39,7 @@ public class ScoutingActivity extends AppCompatActivity
         setSupportActionBar(m_binding.scoutingActivityToolbar);
 
         String matchId = getIntent().getStringExtra("match_ID");
-        Log.d(TAG, "Loading match with ID: " + matchId);
+        Log.i(TAG, "Loading match ID: " + matchId);
         m_matchData = ScoutedMatches.getInstance(getApplicationContext()).getMatch(matchId);
 
         updateActionBarTitle();
@@ -101,7 +101,7 @@ public class ScoutingActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        Log.d(TAG, "onCreateOptionsMenu");
+        Log.v(TAG, "onCreateOptionsMenu");
         // Future: getMenuInflater().inflate(R.menu.scouting_menu, menu);
         return true;
     }
@@ -109,7 +109,7 @@ public class ScoutingActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
-        Log.d(TAG, "onOptionsItemsSelected");
+        Log.v(TAG, "onOptionsItemSelected");
         return super.onOptionsItemSelected(item);
     }
 
@@ -200,14 +200,14 @@ public class ScoutingActivity extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
-        Log.d(TAG, "onResume");
+        Log.v(TAG, "onResume");
     }
 
     @Override
     protected void onPause()
     {
         super.onPause();
-        Log.d(TAG, "onPause() - updating data");
+        Log.v(TAG, "onPause");
         updateCurrentFragmentData();
     }
 
@@ -215,7 +215,7 @@ public class ScoutingActivity extends AppCompatActivity
     protected void onDestroy()
     {
         super.onDestroy();
-        Log.d(TAG, "onDestroy");
+        Log.v(TAG, "onDestroy");
         m_binding = null;
     }
 }

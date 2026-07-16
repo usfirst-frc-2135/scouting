@@ -60,11 +60,11 @@ public class MatchListFragment extends Fragment
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate");
+        Log.v(TAG, "onCreate");
         setupMenuProvider();
 
         getParentFragmentManager().setFragmentResultListener("match_filter_applied", this, (requestKey, result) -> {
-            Log.d(TAG, "Match filter applied, refreshing list");
+            Log.i(TAG, "Match filter applied, refreshing list");
             m_eventFilter = result.getString("event code");
             m_matchFilter = result.getString("match");
             m_teamFilter = result.getString("team");
@@ -76,7 +76,7 @@ public class MatchListFragment extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
-        Log.d(TAG, "onCreateView");
+        Log.v(TAG, "onCreateView");
         m_binding = MatchListFragmentBinding.inflate(inflater, parent, false);
 
         setupRecyclerView();
@@ -94,19 +94,19 @@ public class MatchListFragment extends Fragment
      */
     private void refreshMatchList()
     {
-        Log.d(TAG, "refreshList()");
+        Log.d(TAG, "refreshMatchList");
         ScoutedMatches scoutedMatches = ScoutedMatches.getInstance(requireContext());
         List<MatchData> allMatches = scoutedMatches.getMatchList();
         m_displayedMatches = scoutedMatches.filterMatchList(allMatches, m_eventFilter, m_matchFilter, m_teamFilter, m_scoutFilter);
         updateSorting(); // This will apply current sort criteria and update the adapter
-        Log.d(TAG, "Refreshed list. Displaying " + m_displayedMatches.size() + " matches.");
+        Log.i(TAG, "Refreshed list. Displaying " + m_displayedMatches.size() + " scouted matches.");
     }
 
     @Override
     public void onResume()
     {
         super.onResume();
-        Log.d(TAG, "onResume");
+        Log.v(TAG, "onResume");
         // Ensure dropdown options are populated and correct
         ArrayAdapter<CharSequence> sortAdapter = new ArrayAdapter<>(requireContext(),
                 android.R.layout.simple_dropdown_item_1line, getResources().getTextArray(R.array.sort_criteria_array));
@@ -374,7 +374,7 @@ public class MatchListFragment extends Fragment
     public void onDestroyView()
     {
         super.onDestroyView();
-        Log.d(TAG, "onDestroyView");
+        Log.v(TAG, "onDestroyView");
         m_binding = null;
     }
 

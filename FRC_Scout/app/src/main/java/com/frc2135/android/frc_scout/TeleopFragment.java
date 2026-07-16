@@ -80,18 +80,14 @@ public class TeleopFragment extends Fragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate");
+        Log.v(TAG, "onCreate");
         m_matchData = ((ScoutingActivity) requireActivity()).getCurrentMatch();
-        if (m_matchData != null)
-        {
-            Log.d(TAG, "Match ID = " + m_matchData.getMatchID());
-        }
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
-        Log.d(TAG, "onCreateView");
+        Log.v(TAG, "onCreateView");
         m_binding = TeleopFragmentBinding.inflate(inflater, parent, false);
         return m_binding.getRoot();
     }
@@ -100,7 +96,7 @@ public class TeleopFragment extends Fragment
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        Log.d(TAG, "onViewCreated");
+        Log.v(TAG, "onViewCreated");
         setupActionBar();
         loadMatchData();
         setupListeners();
@@ -203,7 +199,7 @@ public class TeleopFragment extends Fragment
     private void setupPhoto()
     {
         m_photoNum = m_matchData.getTeleopPhoto();
-        Log.i(TAG, "setupPhoto: image= " + m_photoNum);
+        Log.d(TAG, "setupPhoto: image number = " + m_photoNum);
 
         ViewGroup.LayoutParams params = m_binding.teleopPhotoContainer.getLayoutParams();
         if (m_photoNum == 0)
@@ -343,7 +339,7 @@ public class TeleopFragment extends Fragment
         }
         catch (NumberFormatException e)
         {
-            Log.e(TAG, "Invalid number format in updateTotalsInt", e);
+            Log.e(TAG, "updateTotalsInt: Invalid number format", e);
         }
     }
 
@@ -430,7 +426,7 @@ public class TeleopFragment extends Fragment
      */
     public void updateTeleopData()
     {
-        Log.d(TAG, "updateTeleopData()");
+        Log.d(TAG, "updateTeleopData");
         if (m_matchData == null)
         {
             return;
@@ -441,7 +437,7 @@ public class TeleopFragment extends Fragment
         }
         catch (NumberFormatException e)
         {
-            Log.e(TAG, "Invalid hopper score value", e);
+            Log.e(TAG, "updateTeleopData: Invalid hopper score value", e);
         }
         m_matchData.setAccuracyRate(getCurrentAccuracyLevel());
         m_matchData.setPassingRate(getPassingEffectivenessRate());
@@ -458,14 +454,14 @@ public class TeleopFragment extends Fragment
     public void onResume()
     {
         super.onResume();
-        Log.d(TAG, "onResume");
+        Log.v(TAG, "onResume");
     }
 
     @Override
     public void onDestroyView()
     {
         super.onDestroyView();
-        Log.d(TAG, "onDestroyView");
+        Log.v(TAG, "onDestroyView");
         m_binding = null;
     }
 }

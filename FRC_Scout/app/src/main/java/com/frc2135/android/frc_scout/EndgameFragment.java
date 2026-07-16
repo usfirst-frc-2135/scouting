@@ -64,18 +64,14 @@ public class EndgameFragment extends Fragment
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate");
+        Log.v(TAG, "onCreate");
         m_matchData = ((ScoutingActivity) requireActivity()).getCurrentMatch();
-        if (m_matchData != null)
-        {
-            Log.d(TAG, "Match ID = " + m_matchData.getMatchID());
-        }
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
-        Log.d(TAG, "onCreateView");
+        Log.v(TAG, "onCreateView");
         m_binding = EndgameFragmentBinding.inflate(inflater, parent, false);
         return m_binding.getRoot();
     }
@@ -84,7 +80,7 @@ public class EndgameFragment extends Fragment
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        Log.d(TAG, "onViewCreated");
+        Log.v(TAG, "onViewCreated");
         setupActionBar();
         loadMatchData();
         setupListeners();
@@ -148,7 +144,7 @@ public class EndgameFragment extends Fragment
 
         m_binding.endgameDoneButton.setOnClickListener(view -> {
             updateEndgameData();
-            Log.d(TAG, "Saving latest match and scout names");
+            Log.i(TAG, "Saving latest match and scout names");
             if (!Settings.getInstance(requireContext()).saveSettingsSilent())
             {
                 Log.e(TAG, "Failed to save settings!");
@@ -256,7 +252,7 @@ public class EndgameFragment extends Fragment
      */
     public void updateEndgameData()
     {
-        Log.d(TAG, "updateEndgameData()");
+        Log.d(TAG, "updateEndgameData");
         if (m_matchData == null || m_binding == null)
         {
             return;
@@ -273,13 +269,13 @@ public class EndgameFragment extends Fragment
         m_binding.endgameDoneButton.setEnabled(bEnable);
         if (bEnable)
         {
-            Log.d(TAG, "Enable Done Button");
+            Log.d(TAG, "setupDoneButton: Enable Done Button");
             m_binding.endgameDoneButton.setVisibility(View.VISIBLE);
             m_binding.endgameDoneButtonDisabled.setVisibility(View.INVISIBLE);
         }
         else
         {
-            Log.d(TAG, "Disable Done Button");
+            Log.d(TAG, "setupDoneButton: Disable Done Button");
             m_binding.endgameDoneButton.setVisibility(View.INVISIBLE);
             m_binding.endgameDoneButtonDisabled.setVisibility(View.VISIBLE);
         }
@@ -289,14 +285,14 @@ public class EndgameFragment extends Fragment
     public void onResume()
     {
         super.onResume();
-        Log.d(TAG, "onResume");
+        Log.v(TAG, "onResume");
     }
 
     @Override
     public void onDestroyView()
     {
         super.onDestroyView();
-        Log.d(TAG, "onDestroyView");
+        Log.v(TAG, "onDestroyView");
         m_binding = null;
     }
 }

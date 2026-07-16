@@ -57,7 +57,7 @@ public final class Settings extends BaseJSONSerializer
      */
     public static Settings getInstance(Context context)
     {
-        Log.d(TAG, "getInstance()");
+        Log.v(TAG, "getInstance");
         if (sSettings == null)
         {
             synchronized (Settings.class)
@@ -74,7 +74,7 @@ public final class Settings extends BaseJSONSerializer
     private Settings(Context context)
     {
         super(context);
-        Log.d(TAG, "Settings constructor");
+        Log.v(TAG, "Settings constructor");
         m_eventCode = DEFAULT_EVENT_CODE;
         m_teamIndexOptions = new String[]{
                 context.getString(R.string.team_index_none),
@@ -110,7 +110,7 @@ public final class Settings extends BaseJSONSerializer
     public void saveSettings()
             throws JSONException, IOException
     {
-        Log.d(TAG, "saveSettings()");
+        Log.d(TAG, "saveSettings");
         File file = new File(m_dataDir, Constants.SETTINGS_FILENAME);
         saveJSONObject(file, toJSON());
     }
@@ -120,7 +120,7 @@ public final class Settings extends BaseJSONSerializer
      */
     public void resetSettings()
     {
-        Log.d(TAG, "resetSettings()");
+        Log.d(TAG, "resetSettings");
         m_eventCode = DEFAULT_EVENT_CODE;
         m_teamIndexStr = m_teamIndexOptions[0];
         m_mostRecentMatchNumber = "";
@@ -144,7 +144,7 @@ public final class Settings extends BaseJSONSerializer
     public void loadSettings()
             throws IOException, JSONException
     {
-        Log.d(TAG, "loadSettings()");
+        Log.d(TAG, "loadSettings");
         File file = new File(m_dataDir, Constants.SETTINGS_FILENAME);
         if (!file.exists())
         {
@@ -296,13 +296,13 @@ public final class Settings extends BaseJSONSerializer
     {
         if (eventCode == null || eventCode.isEmpty() || eventCode.length() < 7)
         {
-            Log.e(TAG, "Invalid event code (too short): " + eventCode);
+            Log.w(TAG, "isValidEventCode: Invalid event code (too short): " + eventCode);
             return false;
         }
 
         if (!eventCode.matches("\\d{4}[a-z0-9]+"))
         {
-            Log.e(TAG, "Invalid event code format: " + eventCode);
+            Log.w(TAG, "isValidEventCode: Invalid event code format: " + eventCode);
             return false;
         }
 

@@ -21,7 +21,7 @@ public class MatchListActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        Log.d(TAG, "onCreate");
+        Log.v(TAG, "onCreate");
         // Apply theme preference before super.onCreate to ensure the correct theme is applied early
         Preferences.getInstance(this).applyTheme();
         super.onCreate(savedInstanceState);
@@ -50,7 +50,7 @@ public class MatchListActivity extends AppCompatActivity
         }
 
         getSupportFragmentManager().setFragmentResultListener("team_index_changed", this, (requestKey, result) -> {
-            Log.d(TAG, "Team index changed, updating toolbar");
+            Log.i(TAG, "Team index changed, updating toolbar");
             updateToolbarTeamIndex();
         });
     }
@@ -60,7 +60,7 @@ public class MatchListActivity extends AppCompatActivity
      */
     public void updateToolbarTeamIndex()
     {
-        Log.d(TAG, "updateToolbarTeamIndex()");
+        Log.d(TAG, "updateToolbarTeamIndex");
         String indexStr = Settings.getInstance(this).getTeamIndexStr();
         m_binding.matchListActivityToolbarTeamIndex.setText(String.format(getString(R.string.team_index_label), indexStr));
     }
@@ -69,7 +69,7 @@ public class MatchListActivity extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
-        Log.d(TAG, "onResume");
+        Log.v(TAG, "onResume");
         updateToolbarTeamIndex();
     }
 
@@ -77,7 +77,7 @@ public class MatchListActivity extends AppCompatActivity
     protected void onDestroy()
     {
         super.onDestroy();
-        Log.d(TAG, "onDestroy");
+        Log.v(TAG, "onDestroy");
         m_binding = null;
     }
 

@@ -35,7 +35,7 @@ public class Preferences
 
     private Preferences(Context context)
     {
-        Log.d(TAG, "Preferences constructor");
+        Log.v(TAG, "Preferences constructor");
         // Use application context to avoid memory leaks
         m_sharedPreferences = context.getApplicationContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         m_darkMode = m_sharedPreferences.getBoolean(KEY_DARK_MODE, true);
@@ -50,7 +50,7 @@ public class Preferences
      */
     public static Preferences getInstance(Context context)
     {
-        Log.d(TAG, "getInstance()");
+        Log.v(TAG, "getInstance()");
         if (sPreferences == null)
         {
             synchronized (Preferences.class)
@@ -81,7 +81,7 @@ public class Preferences
      */
     public void setDarkMode(boolean isEnabled)
     {
-        Log.d(TAG, "setDarkMode(): " + isEnabled);
+        Log.i(TAG, "setDarkMode(): " + isEnabled);
         m_darkMode = isEnabled;
         m_sharedPreferences.edit().putBoolean(KEY_DARK_MODE, isEnabled).apply();
         applyTheme();
@@ -93,7 +93,7 @@ public class Preferences
      */
     public void applyTheme()
     {
-        Log.d(TAG, "applyTheme()");
+        Log.v(TAG, "applyTheme()");
         if (m_darkMode)
         {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);

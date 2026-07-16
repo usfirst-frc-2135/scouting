@@ -31,7 +31,7 @@ public class ScoutNames extends BaseJSONSerializer
     private ScoutNames(Context context, String eventCode)
     {
         super(context);
-        Log.d(TAG, "ScoutNames constructor");
+        Log.v(TAG, "ScoutNames constructor");
         m_eventCode = eventCode;
         m_bScoutNamesLoaded = false;
         m_scoutNames = new ArrayList<>();
@@ -59,12 +59,12 @@ public class ScoutNames extends BaseJSONSerializer
      */
     public static ScoutNames getInstance(Context context, String eventCode, boolean bForceReload)
     {
-        Log.d(TAG, "getInstance()");
+        Log.v(TAG, "getInstance");
         synchronized (ScoutNames.class)
         {
             if (sScoutNames == null)
             {
-                Log.d(TAG, "Creating a new sScoutNames for eventCode " + eventCode);
+                Log.i(TAG, "Creating a new sScoutNames for eventCode " + eventCode);
                 sScoutNames = new ScoutNames(context, eventCode);
                 sScoutNames.readScoutNamesJSON(context, true);
             }
@@ -73,7 +73,7 @@ public class ScoutNames extends BaseJSONSerializer
                 String oldEventCode = sScoutNames.getEventCode();
                 if (bForceReload || !oldEventCode.equalsIgnoreCase(eventCode))
                 {
-                    Log.d(TAG, "Resetting ScoutNames: " + oldEventCode + " -> " + eventCode);
+                    Log.i(TAG, "Resetting ScoutNames: " + oldEventCode + " -> " + eventCode);
                     sScoutNames.setEventCode(eventCode);
                     sScoutNames.readScoutNamesJSON(context, true);
                 }
@@ -85,7 +85,7 @@ public class ScoutNames extends BaseJSONSerializer
     @SuppressWarnings("unused")
     public static void clearScoutNames()
     {
-        Log.d(TAG, "clear()");
+        Log.v(TAG, "clearScoutNames");
         sScoutNames = null;
     }
 
@@ -135,7 +135,7 @@ public class ScoutNames extends BaseJSONSerializer
             return;
         }
 
-        Log.d(TAG, "Looking for scout names for: " + m_eventCode);
+        Log.i(TAG, "Reading scout names file for: " + m_eventCode);
 
         try
         {
@@ -195,17 +195,17 @@ public class ScoutNames extends BaseJSONSerializer
     {
         if (eventCode == null || scoutData == null)
         {
-            Log.w(TAG, "Attempted to save scout names with null eventCode or data");
+            Log.e(TAG, "Attempted to save scout names with null eventCode or data");
             return false;
         }
 
         String filename = getFilename(eventCode);
-        Log.d(TAG, "Saving scout names info to: " + filename);
-
+        Log.i(TAG, "Saving scout names info for: " + eventCode + " to: " + filename);
         try
         {
             File file = new File(m_dataDir, filename);
             saveJSONArray(file, scoutData);
+            Log.i(TAG, "Successfully saved " + scoutData.length() + " scout names for event: " + eventCode);
             return true;
         }
         catch (IOException e)
@@ -226,6 +226,7 @@ public class ScoutNames extends BaseJSONSerializer
     public JSONArray readScoutNamesFile(String eventCode)
             throws IOException, JSONException
     {
+        Log.d(TAG, "Reading scout names from file for event: " + eventCode);
         if (eventCode == null)
         {
             return null;
@@ -247,7 +248,7 @@ public class ScoutNames extends BaseJSONSerializer
         Log.d(TAG, "Deleting scout names file for event: " + eventCode);
         if (eventCode == null || eventCode.trim().isEmpty())
         {
-            Log.i(TAG, "Invalid event code: " + eventCode);
+            Log.e(TAG, "Invalid event code: " + eventCode);
             return 0;
         }
 
@@ -283,7 +284,7 @@ public class ScoutNames extends BaseJSONSerializer
             return;
         }
 
-        Log.d(TAG, "Loading scout names for event: " + eventCode);
+        Log.i(TAG, "Loading scout names for event: " + eventCode);
         readScoutNamesJSON(context, true);
     }
 

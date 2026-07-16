@@ -39,7 +39,7 @@ public class TBAMatches extends BaseJSONSerializer
     private TBAMatches(Context context, String eventCode)
     {
         super(context);
-        Log.d(TAG, "TBAMatches constructor");
+        Log.v(TAG, "TBAMatches constructor");
         m_eventCode = eventCode;
         m_bTBAMatchesLoaded = false;
         m_tbaMatchesJSON = null;
@@ -69,14 +69,14 @@ public class TBAMatches extends BaseJSONSerializer
      */
     public static TBAMatches getInstance(Context context, String eventCode, boolean bForceReload)
     {
-        Log.d(TAG, "getInstance()");
+        Log.v(TAG, "getInstance");
         if (sTBAMatches == null)
         {
             synchronized (TBAMatches.class)
             {
                 if (sTBAMatches == null)
                 {
-                    Log.d(TAG, "Creating new sTBAMatches for eventCode: " + eventCode);
+                    Log.i(TAG, "Creating new sTBAMatches for eventCode: " + eventCode);
                     sTBAMatches = new TBAMatches(context, eventCode);
                     sTBAMatches.readTBAMatchesJSON(context, true);
                 }
@@ -89,7 +89,7 @@ public class TBAMatches extends BaseJSONSerializer
             String currentCode = sTBAMatches.getEventCode();
             if (bForceReload || !currentCode.equalsIgnoreCase(eventCode))
             {
-                Log.d(TAG, "Updating TBA matches: " + currentCode + " -> " + eventCode);
+                Log.i(TAG, "Updating TBA matches: " + currentCode + " -> " + eventCode);
                 sTBAMatches.setEventCode(eventCode);
                 sTBAMatches.readTBAMatchesJSON(context, true);
             }
@@ -104,7 +104,7 @@ public class TBAMatches extends BaseJSONSerializer
     {
         synchronized (TBAMatches.class)
         {
-            Log.d(TAG, "Clearing TBAMatches instance");
+            Log.v(TAG, "clearTBAMatches");
             sTBAMatches = null;
         }
     }
@@ -144,7 +144,7 @@ public class TBAMatches extends BaseJSONSerializer
             return;
         }
 
-        Log.d(TAG, "Reading TBA matches JSON for: " + m_eventCode);
+        Log.d(TAG, "readTBAMatchesJSON: eventCode=" + m_eventCode);
 
         try
         {
@@ -186,22 +186,22 @@ public class TBAMatches extends BaseJSONSerializer
      */
     public boolean writeTBAMatchesFile(String eventCode, JSONArray tbaMatches, boolean bSilent)
     {
-        Log.d(TAG, "Writing TBA matches to file for event: " + eventCode);
         if (eventCode == null || tbaMatches == null)
         {
             Log.w(TAG, "Attempted to save TBA matches with null eventCode or data");
             return false;
         }
 
+        Log.d(TAG, "Writing TBA matches to file for event: " + eventCode);
+
         // Cleanup existing matches file if it exists
         deleteTBAMatchesFile(eventCode);
 
         String eventFileName = getFilename(eventCode);
-        File file = new File(m_dataDir, eventFileName);
-
-        Log.d(TAG, "Saving TBA matches for " + eventCode + " to: " + file.getAbsolutePath());
+        Log.i(TAG, "Saving TBA matches for " + eventCode + " to: " + eventFileName);
         try
         {
+            File file = new File(m_dataDir, eventFileName);
             writeStringToFile(file, tbaMatches.toString());
             Log.i(TAG, "Successfully saved " + tbaMatches.length() + " TBA matches for event: " + eventCode);
             return true;
@@ -224,7 +224,7 @@ public class TBAMatches extends BaseJSONSerializer
     public JSONArray readTBAMatchesFile(String eventCode)
             throws IOException, JSONException
     {
-        Log.d(TAG, "Reading TBA matches to file for event: " + eventCode);
+        Log.d(TAG, "Reading TBA matches from file for event: " + eventCode);
         if (eventCode == null || eventCode.trim().isEmpty())
         {
             return null;
@@ -269,7 +269,7 @@ public class TBAMatches extends BaseJSONSerializer
                     if (file.exists() && file.delete())
                     {
                         deletedCount++;
-                        Log.d(TAG, "Deleted event file: " + file.getName());
+                        Log.i(TAG, "Deleted event file: " + file.getName());
                     }
                 }
             }
@@ -279,6 +279,11 @@ public class TBAMatches extends BaseJSONSerializer
         {
             TBAMatches.clearTBAMatches();
         }
+        else
+        {
+            Log.w(TAG, "Failed to delete TBA Matches files");
+        }
+
         return deletedCount;
     }
 
@@ -352,7 +357,7 @@ public class TBAMatches extends BaseJSONSerializer
                     }
                 }
             }
-            Log.d(TAG, "getTeams(): Match '" + matchNum + "' not found in loaded data.");
+            Log.w(TAG, "getTeams(): Match '" + matchNum + "' not found in loaded data.");
         }
         return teams;
     }

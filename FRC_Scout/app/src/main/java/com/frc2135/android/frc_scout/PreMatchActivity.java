@@ -35,7 +35,7 @@ public class PreMatchActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-        Log.d(TAG, "onCreate");
+        Log.v(TAG, "onCreate");
         // Apply theme preference before super.onCreate to ensure the correct theme is applied early
         Preferences.getInstance(this).applyTheme();
         super.onCreate(savedInstanceState);
@@ -259,7 +259,7 @@ public class PreMatchActivity extends AppCompatActivity
             }
             catch (NullPointerException exception)
             {
-                Log.e(TAG, "Error fetching teams for dropdown", exception);
+                Log.e(TAG, "Error fetching teams for team number dropdown", exception);
             }
         }
     }
@@ -277,7 +277,7 @@ public class PreMatchActivity extends AppCompatActivity
         String matchNumStr = m_binding.preMatchNumberInput.getText().toString().trim();
         if (!matchNumStr.isEmpty() && !m_teamIndexStr.isEmpty() && m_settings.isValidTeamIndexStr(m_teamIndexStr))
         {
-            Log.d(TAG, "Auto-loading team number for match " + matchNumStr + " index " + m_teamIndexStr);
+            Log.d(TAG, "setTeamNumFromMatchNum: Auto-loading team number for match " + matchNumStr + " index " + m_teamIndexStr);
             try
             {
                 String[] teams = m_tbaMatches.getMatchTeams(matchNumStr);
@@ -287,13 +287,13 @@ public class PreMatchActivity extends AppCompatActivity
                 {
                     String tbaTeamNum = teams[teamIndex];
                     String teamNumStr = MatchData.extractTeamNumber(tbaTeamNum);
-                    Log.d(TAG, "Auto-loading team number for tbaTeamNum " + tbaTeamNum + " teamNumStr " + teamNumStr);
+                    Log.d(TAG, "setTeamNumFromMatchNum: Auto-loading team number for tbaTeamNum " + tbaTeamNum + " teamNumStr " + teamNumStr);
                     m_binding.preMatchTeamNumberInput.setText((m_teamAliases != null) ? m_teamAliases.resolveAlias(teamNumStr) : teamNumStr);
                 }
             }
             catch (NumberFormatException e)
             {
-                Log.e(TAG, "Error in auto-loading team number", e);
+                Log.e(TAG, "setTeamNumFromMatchNum: Error in auto-loading team number", e);
             }
         }
     }
@@ -303,7 +303,7 @@ public class PreMatchActivity extends AppCompatActivity
      */
     public void updatePreMatchData()
     {
-        Log.d(TAG, "updatePreMatchData()");
+        Log.d(TAG, "updatePreMatchData");
         if (m_matchData == null)
         {
             return;
@@ -362,14 +362,14 @@ public class PreMatchActivity extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
-        Log.d(TAG, "onResume");
+        Log.v(TAG, "onResume");
     }
 
     @Override
     protected void onDestroy()
     {
         super.onDestroy();
-        Log.d(TAG, "onDestroy");
+        Log.v(TAG, "onDestroy");
         m_binding = null;
     }
 }

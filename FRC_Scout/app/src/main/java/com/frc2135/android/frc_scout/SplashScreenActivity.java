@@ -33,7 +33,7 @@ public class SplashScreenActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle icicle)
     {
-        Log.d(TAG, "onCreate");
+        Log.v(TAG, "onCreate");
         // Apply theme preference before super.onCreate to ensure the correct theme is applied early
         Preferences.getInstance(this).applyTheme();
         super.onCreate(icicle);
@@ -84,14 +84,14 @@ public class SplashScreenActivity extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
-        Log.d(TAG, "onResume");
+        Log.v(TAG, "onResume");
     }
 
     @Override
     protected void onDestroy()
     {
         super.onDestroy();
-        Log.d(TAG, "onDestroy");
+        Log.v(TAG, "onDestroy");
         m_binding = null;
     }
 
@@ -134,7 +134,7 @@ public class SplashScreenActivity extends AppCompatActivity
         // Android for Kindle is built on Android 9 (API 28)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
         {
-            Log.d(TAG, "Using newer API > " + Build.VERSION_CODES.R);
+            Log.i(TAG, "Using newer API > " + Build.VERSION_CODES.R);
             WindowMetrics windowMetrics = getWindowManager().getCurrentWindowMetrics();
             width = windowMetrics.getBounds().width();
             height = windowMetrics.getBounds().height();
@@ -142,7 +142,7 @@ public class SplashScreenActivity extends AppCompatActivity
         }
         else
         {
-            Log.d(TAG, "Using older API < " + Build.VERSION_CODES.R);
+            Log.i(TAG, "Using older API < " + Build.VERSION_CODES.R);
             DisplayMetrics displayMetrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             width = displayMetrics.widthPixels;

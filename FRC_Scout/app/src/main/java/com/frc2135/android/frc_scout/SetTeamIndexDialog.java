@@ -52,7 +52,7 @@ public class SetTeamIndexDialog extends DialogFragment
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
     {
-        Log.d(TAG, "onCreateDialog called");
+        Log.v(TAG, "onCreateDialog called");
 
         LayoutInflater inflater = getLayoutInflater();
         m_binding = SetTeamIndexDialogBinding.inflate(inflater);
@@ -104,7 +104,7 @@ public class SetTeamIndexDialog extends DialogFragment
      */
     private void setupTeamIndexDropdown()
     {
-        Log.d(TAG, "setupDropdown()");
+        Log.d(TAG, "setupTeamIndexDropdown()");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(),
                 R.layout.set_team_index_dropdown_item, m_indexOptions);
         m_binding.setTeamIndexInput.setAdapter(adapter);
@@ -123,7 +123,7 @@ public class SetTeamIndexDialog extends DialogFragment
 
         if (m_settings != null)
         {
-            Log.d(TAG, "Saving team index: " + selectedIndex);
+            Log.i(TAG, "Saving team index to settings: " + selectedIndex);
             m_settings.setTeamIndexStr(selectedIndex);
             getParentFragmentManager().setFragmentResult("team_index_changed", new Bundle());
         }
@@ -133,7 +133,7 @@ public class SetTeamIndexDialog extends DialogFragment
     public void onResume()
     {
         super.onResume();
-        Log.d(TAG, "onResume");
+        Log.v(TAG, "onResume");
         // Re-set adapter to ensure it displays correctly
         setupTeamIndexDropdown();
     }
@@ -142,7 +142,7 @@ public class SetTeamIndexDialog extends DialogFragment
     public void onDestroyView()
     {
         super.onDestroyView();
-        Log.d(TAG, "onDestroyView");
+        Log.v(TAG, "onDestroyView");
         m_binding = null;
     }
 }

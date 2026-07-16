@@ -34,7 +34,7 @@ public class TeamAliases extends BaseJSONSerializer
     private TeamAliases(Context context, String eventCode)
     {
         super(context);
-        Log.d(TAG, "TeamAliases constructor");
+        Log.v(TAG, "TeamAliases constructor");
         m_eventCode = eventCode;
         m_bTeamAliasesLoaded = false;
         m_teamToAliasMap = new HashMap<>();
@@ -63,12 +63,12 @@ public class TeamAliases extends BaseJSONSerializer
      */
     public static TeamAliases getInstance(Context context, String eventCode, boolean bForceReload)
     {
-        Log.d(TAG, "getInstance()");
+        Log.v(TAG, "getInstance");
         synchronized (TeamAliases.class)
         {
             if (sTeamAliases == null)
             {
-                Log.d(TAG, "Creating a new sTeamAliases for eventCode " + eventCode);
+                Log.i(TAG, "Creating a new sTeamAliases for eventCode " + eventCode);
                 sTeamAliases = new TeamAliases(context, eventCode);
                 sTeamAliases.readTeamAliasesJSON(context, true);
             }
@@ -77,7 +77,7 @@ public class TeamAliases extends BaseJSONSerializer
                 String oldEventCode = sTeamAliases.getEventCode();
                 if (bForceReload || !oldEventCode.equalsIgnoreCase(eventCode))
                 {
-                    Log.d(TAG, "Resetting TeamAliases: " + oldEventCode + " -> " + eventCode);
+                    Log.i(TAG, "Resetting TeamAliases: " + oldEventCode + " -> " + eventCode);
                     sTeamAliases.setEventCode(eventCode);
                     sTeamAliases.readTeamAliasesJSON(context, true);
                 }
@@ -92,7 +92,7 @@ public class TeamAliases extends BaseJSONSerializer
     @SuppressWarnings("unused")
     public static void clearTeamAliases()
     {
-        Log.d(TAG, "Clearing Team Aliases instance");
+        Log.v(TAG, "clearTeamAliases");
         sTeamAliases = null;
     }
 
@@ -132,7 +132,7 @@ public class TeamAliases extends BaseJSONSerializer
             return;
         }
 
-        Log.d(TAG, "Looking for team aliases for: " + m_eventCode);
+        Log.i(TAG, "Reading team aliases file for: " + m_eventCode);
 
         try
         {
@@ -193,7 +193,6 @@ public class TeamAliases extends BaseJSONSerializer
      */
     public boolean writeTeamAliasesFile(String eventCode, JSONArray teamAliases, boolean bSilent)
     {
-        Log.d(TAG, "Writing team aliases to file for event: " + eventCode);
         if (eventCode == null || teamAliases == null)
         {
             Log.w(TAG, "Attempted to save team aliases with null eventCode or data");
@@ -201,7 +200,7 @@ public class TeamAliases extends BaseJSONSerializer
         }
 
         String aliasFilename = getFilename(eventCode);
-        Log.d(TAG, "Saving team aliases for " + eventCode + " to: " + aliasFilename);
+        Log.i(TAG, "Saving team aliases info for " + eventCode + " to: " + aliasFilename);
 
         try
         {
@@ -227,6 +226,7 @@ public class TeamAliases extends BaseJSONSerializer
     public JSONArray readTeamAliasesFile(String eventCode)
             throws IOException, JSONException
     {
+        Log.d(TAG, "Reading team aliases from file for event: " + eventCode);
         if (eventCode == null || eventCode.trim().isEmpty())
         {
             return null;
@@ -248,7 +248,7 @@ public class TeamAliases extends BaseJSONSerializer
         Log.d(TAG, "Deleting team aliases file for event: " + eventCode);
         if (eventCode == null || eventCode.trim().isEmpty())
         {
-            Log.i(TAG, "Invalid event code: " + eventCode);
+            Log.e(TAG, "Invalid event code: " + eventCode);
             return 0;
         }
 

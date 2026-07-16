@@ -148,7 +148,7 @@ public class MatchData
      */
     public MatchData()
     {
-        Log.d(TAG, "MatchData constructor");
+        Log.v(TAG, "MatchData constructor");
         m_matchID = UUID.randomUUID().toString();
         m_timestamp = Calendar.getInstance().getTime();
         m_version = M_JSON_FORMAT_VERSION;
