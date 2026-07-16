@@ -101,19 +101,29 @@ public class PreMatchActivity extends AppCompatActivity
             m_binding.preMatchEventCodeInput.setText(m_matchData.getEventCode());
         }
 
-        String matchNum = (m_matchData != null && !m_matchData.getMatchNumber().isEmpty()) ? m_matchData.getMatchNumber() :
-                (m_settings != null && !m_settings.getMostRecentMatchNumber().isEmpty()) ? m_settings.getNextExpectedMatchNumber() : "qm1";
+        String matchNum =
+                (m_matchData != null && !m_matchData.getMatchNumber().isEmpty())
+                        ? m_matchData.getMatchNumber()
+                        : (m_settings != null && !m_settings.getMostRecentMatchNumber().isEmpty())
+                          ? m_settings.getNextExpectedMatchNumber()
+                          : "qm1";
         m_binding.preMatchNumberInput.setText(matchNum);
 
-        if (m_matchData != null)
+        if (m_matchData != null && !m_matchData.getTeamNumber().isEmpty())
         {
             m_binding.preMatchTeamNumberInput.setText(m_matchData.getTeamNumber());
         }
+        else
+        {
+            setTeamNumFromMatchNum();
+        }
 
-        setTeamNumFromMatchNum();
-
-        String scoutName = (m_matchData != null && !m_matchData.getScoutName().isEmpty()) ? m_matchData.getScoutName() :
-                (m_settings != null) ? m_settings.getMostRecentScoutName() : "";
+        String scoutName =
+                (m_matchData != null && !m_matchData.getScoutName().isEmpty())
+                        ? m_matchData.getScoutName()
+                        : (m_settings != null && !m_settings.getMostRecentScoutName().isEmpty())
+                          ? m_settings.getMostRecentScoutName()
+                          : "";
         m_binding.preMatchScoutNameInput.setText(scoutName);
     }
 
@@ -250,7 +260,7 @@ public class PreMatchActivity extends AppCompatActivity
                 if (teams.length > 0 && !teams[0].isEmpty())
                 {
                     // Process team numbers (strip prefix and apply aliases)
-                    for (int i = 0; i < teams.length; i++)
+                    for (int i = 1; i < teams.length; i++)
                     {
                         String tNum = MatchData.extractTeamNumber(teams[i]);
                         teams[i] = (m_teamAliases != null) ? m_teamAliases.resolveAlias(tNum) : tNum;
@@ -285,12 +295,11 @@ public class PreMatchActivity extends AppCompatActivity
             Log.d(TAG, "setTeamNumFromMatchNum: Auto-loading team number for match " + matchNumStr + " index " + m_teamIndexStr);
             try
             {
-                String[] teams = m_tbaMatches.getMatchTeams(matchNumStr);
+                String[] matchTeams = m_tbaMatches.getMatchTeams(matchNumStr);
                 int teamIndex = m_settings.getTeamIndex();
-
-                if (teamIndex < teams.length)
+                if (teamIndex < matchTeams.length)
                 {
-                    String tbaTeamNum = teams[teamIndex];
+                    String tbaTeamNum = matchTeams[teamIndex];
                     String teamNumStr = MatchData.extractTeamNumber(tbaTeamNum);
                     Log.d(TAG, "setTeamNumFromMatchNum: Auto-loading team number for tbaTeamNum " + tbaTeamNum + " teamNumStr " + teamNumStr);
                     m_binding.preMatchTeamNumberInput.setText((m_teamAliases != null) ? m_teamAliases.resolveAlias(teamNumStr) : teamNumStr);
