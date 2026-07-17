@@ -374,13 +374,6 @@ public class PreMatchActivity extends AppCompatActivity
         String teamNumEntry = m_binding.preMatchTeamNumberInput.getText().toString().trim();
         String scoutName = m_binding.preMatchScoutNameInput.getText().toString().trim();
 
-        if (m_settings != null)
-        {
-            m_settings.setMostRecentMatchNumber(matchNum);
-            m_settings.addPastScoutNames(scoutName);
-            m_settings.setMostRecentScoutName(scoutName);
-        }
-
         m_matchData.setEventCode(eventCode);
         m_matchData.setMatchNumber(matchNum);
 

@@ -175,6 +175,11 @@ public class EndgameFragment extends Fragment
 
         m_binding.endgameDoneButton.setOnClickListener(view -> {
             updateEndgameData();
+
+            m_settings.setMostRecentMatchNumber(m_matchData.getMatchNumber());
+            m_settings.addPastScoutNames(m_matchData.getScoutName());
+            m_settings.setMostRecentScoutName(m_matchData.getScoutName());
+
             Log.i(TAG, "Saving latest match and scout names");
             if (!m_settings.saveSettingsSilent())
             {
