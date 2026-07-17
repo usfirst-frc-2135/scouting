@@ -54,6 +54,7 @@ public class AutonFragment extends Fragment
 
     private MatchData m_matchData;
     private AutonFragmentBinding m_binding;
+    private Settings m_settings;
 
     /**
      * Initializes the fragment and retrieves the current match data from the parent activity.
@@ -66,6 +67,7 @@ public class AutonFragment extends Fragment
         super.onCreate(savedInstanceState);
         Log.v(TAG, "onCreate");
         m_matchData = ((ScoutingActivity) requireActivity()).getCurrentMatch();
+        m_settings = Settings.getInstance(requireContext());
     }
 
     /**
@@ -111,10 +113,9 @@ public class AutonFragment extends Fragment
         {
             actionBar.setTitle(R.string.autonomous_title);
 
-            Settings settings = Settings.getInstance(requireContext());
-            if (settings != null)
+            if (m_settings != null)
             {
-                actionBar.setBackgroundDrawable(settings.getTeamIndexColor());
+                actionBar.setBackgroundDrawable(m_settings.getTeamIndexColor());
             }
         }
     }

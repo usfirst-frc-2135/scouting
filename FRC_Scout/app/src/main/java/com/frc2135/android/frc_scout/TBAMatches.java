@@ -150,7 +150,7 @@ public class TBAMatches extends BaseJSONSerializer
             return;
         }
 
-        Log.d(TAG, "readTBAMatchesJSON: eventCode=" + m_eventCode);
+        Log.d(TAG, "readTBAMatchesJSON: eventCode = " + m_eventCode);
 
         try
         {

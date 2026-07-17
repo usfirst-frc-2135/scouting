@@ -51,6 +51,8 @@ public class MatchListFragment extends Fragment
     private List<MatchData> m_displayedMatches = new java.util.ArrayList<>();
     private MatchAdapter m_adapter;
     private MatchListFragmentBinding m_binding;
+    private ScoutedMatches m_scoutedMatches;
+    private Settings m_settings;
 
     private String m_eventFilter;
     private String m_matchFilter;
@@ -71,6 +73,8 @@ public class MatchListFragment extends Fragment
     {
         super.onCreate(savedInstanceState);
         Log.v(TAG, "onCreate");
+        m_scoutedMatches = ScoutedMatches.getInstance(requireContext());
+        m_settings = Settings.getInstance(requireContext());
         setupMenuProvider();
 
         getParentFragmentManager().setFragmentResultListener("match_filter_applied", this, (requestKey, result) -> {
@@ -101,7 +105,6 @@ public class MatchListFragment extends Fragment
         setupNewMatchButton();
         setupSortSpinner();
         setupFilterButton();
-
         refreshMatchList();
 
         return m_binding.getRoot();
@@ -113,9 +116,8 @@ public class MatchListFragment extends Fragment
     private void refreshMatchList()
     {
         Log.d(TAG, "refreshMatchList");
-        ScoutedMatches scoutedMatches = ScoutedMatches.getInstance(requireContext());
-        List<MatchData> allMatches = scoutedMatches.getMatchList();
-        m_displayedMatches = scoutedMatches.filterMatchList(allMatches, m_eventFilter, m_matchFilter, m_teamFilter, m_scoutFilter);
+        List<MatchData> allMatches = m_scoutedMatches.getMatchList();
+        m_displayedMatches = m_scoutedMatches.filterMatchList(allMatches, m_eventFilter, m_matchFilter, m_teamFilter, m_scoutFilter);
         updateSorting(); // This will apply current sort criteria and update the adapter
         Log.i(TAG, "Refreshed list. Displaying " + m_displayedMatches.size() + " scouted matches.");
     }
@@ -152,8 +154,8 @@ public class MatchListFragment extends Fragment
     {
         m_binding.matchListStartMatchFab.setOnClickListener(view -> {
             MatchData newMatch = new MatchData();
-            newMatch.setEventCode(Settings.getInstance(requireContext()).getEventCode());
-            ScoutedMatches.getInstance(requireContext()).addMatch(newMatch);
+            newMatch.setEventCode(m_settings.getEventCode());
+            m_scoutedMatches.addMatch(newMatch);
 
             Intent intent = new Intent(requireContext(), PreMatchActivity.class);
             intent.putExtra("match_ID", newMatch.getMatchID());
@@ -205,9 +207,7 @@ public class MatchListFragment extends Fragment
     private void updateSorting()
     {
         String criteria = m_binding.matchListSortInput.getText().toString();
-        ScoutedMatches scoutedMatches = ScoutedMatches.getInstance(requireContext());
-
-        m_displayedMatches = scoutedMatches.sortMatchList(m_displayedMatches, criteria, m_sortAscending);
+        m_displayedMatches = m_scoutedMatches.sortMatchList(m_displayedMatches, criteria, m_sortAscending);
         if (m_adapter != null)
         {
             m_adapter.updateData(m_displayedMatches);
@@ -309,7 +309,7 @@ public class MatchListFragment extends Fragment
                     TBAMatches.clearTBAMatches();
 
                     // 2. Clear Team Aliases
-                    String event = Settings.getInstance(context).getEventCode();
+                    String event = m_settings.getEventCode();
                     TeamAliases.getInstance(context).deleteTeamAliasesFile(event);
                     TeamAliases.clearTeamAliases();
 
@@ -318,7 +318,7 @@ public class MatchListFragment extends Fragment
                     ScoutNames.clearScoutNames();
 
                     // 4. Reset Settings
-                    Settings.getInstance(context).resetSettings();
+                    m_settings.resetSettings();
 
                     refreshMatchList();
                     Log.i(TAG, "All configuration data cleared");
@@ -499,7 +499,7 @@ public class MatchListFragment extends Fragment
                     .setTitle(R.string.delete_match)
                     .setMessage("Are you sure you want to delete this match? This action cannot be undone.")
                     .setPositiveButton("Delete", (dialog, which) -> {
-                        ScoutedMatches.getInstance(requireContext()).deleteMatch(m);
+                        m_scoutedMatches.deleteMatch(m);
                         refreshMatchList();
                         m_selectedMatch = null;
                         Log.i(TAG, "Match deleted " + m.getMatchNumber());

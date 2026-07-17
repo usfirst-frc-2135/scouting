@@ -30,6 +30,7 @@ public class SplashScreenActivity extends AppCompatActivity
     private static final int SPLASH_DISPLAY_LENGTH = 1500;
 
     private SplashScreenActivityBinding m_binding;
+    private Settings m_settings;
 
     /**
      * Called when the activity is first created.
@@ -45,6 +46,7 @@ public class SplashScreenActivity extends AppCompatActivity
         Preferences.getInstance(this).applyTheme();
         super.onCreate(icicle);
 
+        m_settings = Settings.getInstance(this);
         m_binding = SplashScreenActivityBinding.inflate(getLayoutInflater());
         setContentView(m_binding.getRoot());
 
@@ -66,10 +68,9 @@ public class SplashScreenActivity extends AppCompatActivity
      */
     private void populateSettingsSummary()
     {
-        Settings settings = Settings.getInstance(this);
-        String eventCode = settings.getEventCode();
-        String teamIndex = settings.getTeamIndexStr();
-        String scoutName = settings.getMostRecentScoutName();
+        String eventCode = m_settings.getEventCode();
+        String teamIndex = m_settings.getTeamIndexStr();
+        String scoutName = m_settings.getMostRecentScoutName();
 
         if (eventCode.isEmpty())
         {

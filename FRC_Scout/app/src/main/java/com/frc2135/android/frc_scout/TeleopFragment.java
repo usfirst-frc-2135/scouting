@@ -76,6 +76,7 @@ public class TeleopFragment extends Fragment
     private MatchData m_matchData;
     private TeleopFragmentBinding m_binding;
     private int m_photoNum;
+    private Settings m_settings;
 
     /**
      * Initializes the fragment and retrieves the current match data from the parent activity.
@@ -88,6 +89,7 @@ public class TeleopFragment extends Fragment
         super.onCreate(savedInstanceState);
         Log.v(TAG, "onCreate");
         m_matchData = ((ScoutingActivity) requireActivity()).getCurrentMatch();
+        m_settings = Settings.getInstance(requireContext());
     }
 
     /**
@@ -133,10 +135,9 @@ public class TeleopFragment extends Fragment
         {
             actionBar.setTitle(R.string.teleoperated_title);
 
-            Settings settings = Settings.getInstance(requireContext());
-            if (settings != null)
+            if (m_settings != null)
             {
-                actionBar.setBackgroundDrawable(settings.getTeamIndexColor());
+                actionBar.setBackgroundDrawable(m_settings.getTeamIndexColor());
             }
         }
     }

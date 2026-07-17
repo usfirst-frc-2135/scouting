@@ -17,6 +17,7 @@ public class MatchListActivity extends AppCompatActivity
 {
     private static final String TAG = "MatchListActivity";
     private MatchListActivityBinding m_binding;
+    private Settings m_settings;
 
     /**
      * Initializes the activity, sets up the action bar, and loads the {@link MatchListFragment}.
@@ -30,6 +31,8 @@ public class MatchListActivity extends AppCompatActivity
         // Apply theme preference before super.onCreate to ensure the correct theme is applied early
         Preferences.getInstance(this).applyTheme();
         super.onCreate(savedInstanceState);
+
+        m_settings = Settings.getInstance(this);
 
         // Use View Binding for layout inflation
         m_binding = MatchListActivityBinding.inflate(getLayoutInflater());
@@ -66,7 +69,7 @@ public class MatchListActivity extends AppCompatActivity
     public void updateToolbarTeamIndex()
     {
         Log.d(TAG, "updateToolbarTeamIndex");
-        String indexStr = Settings.getInstance(this).getTeamIndexStr();
+        String indexStr = (m_settings != null) ? m_settings.getTeamIndexStr() : "unknown";
         m_binding.matchListActivityToolbarTeamIndex.setText(String.format(getString(R.string.team_index_label), indexStr));
     }
 

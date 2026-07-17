@@ -48,7 +48,7 @@ public class ScoutedMatches extends BaseJSONSerializer
      */
     private List<MatchData> loadInitialData()
     {
-        Log.v(TAG, "loadInitialData");
+        Log.d(TAG, "loadInitialData");
         return loadScoutedMatchesList();
     }
 

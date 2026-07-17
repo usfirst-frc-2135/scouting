@@ -345,7 +345,7 @@ public class PreMatchActivity extends AppCompatActivity
         m_matchData.setTeamAlias(teamAlias);
 
         m_matchData.setScoutName(scoutName);
-        Log.i(TAG, "Updated MatchData: Team=" + teamNum + ", Alias=" + teamAlias);
+        Log.i(TAG, "Updated MatchData: Team = " + teamNum + ", Alias = " + teamAlias);
     }
 
     /**

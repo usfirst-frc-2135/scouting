@@ -25,6 +25,7 @@ public class MatchFilterDialog extends DialogFragment
 {
     private static final String TAG = "MatchFilterDialog";
     private MatchFilterDialogBinding m_binding;
+    private ScoutedMatches m_scoutedMatches;
 
     /**
      * Creates a new instance of {@link MatchFilterDialog} with current filter values.
@@ -62,6 +63,7 @@ public class MatchFilterDialog extends DialogFragment
 
         LayoutInflater inflater = getLayoutInflater();
         m_binding = MatchFilterDialogBinding.inflate(inflater);
+        m_scoutedMatches = ScoutedMatches.getInstance(requireContext());
 
         setupFilters();
         restorePreviousFilters();
@@ -125,10 +127,9 @@ public class MatchFilterDialog extends DialogFragment
     private void setupFilters()
     {
         Log.d(TAG, "setupFilters");
-        ScoutedMatches data = ScoutedMatches.getInstance(requireContext());
 
         // Event Code Filter
-        List<String> eventCodes = new ArrayList<>(data.listEventCodes());
+        List<String> eventCodes = new ArrayList<>(m_scoutedMatches.listEventCodes());
         eventCodes.add(0, "Select event code");
         ArrayAdapter<String> eventAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line, eventCodes);
         m_binding.matchFilterEventInput.setAdapter(eventAdapter);
@@ -140,7 +141,7 @@ public class MatchFilterDialog extends DialogFragment
         });
 
         // Team Filter
-        List<String> teams = new ArrayList<>(data.listTeams());
+        List<String> teams = new ArrayList<>(m_scoutedMatches.listTeams());
         teams.add(0, "Select team");
         ArrayAdapter<String> teamAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line, teams);
         m_binding.matchFilterTeamInput.setAdapter(teamAdapter);
@@ -152,7 +153,7 @@ public class MatchFilterDialog extends DialogFragment
         });
 
         // Scout Filter
-        List<String> scouts = new ArrayList<>(data.listScouts());
+        List<String> scouts = new ArrayList<>(m_scoutedMatches.listScouts());
         scouts.add(0, "Select scout");
         ArrayAdapter<String> scoutAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line, scouts);
         m_binding.matchFilterScoutInput.setAdapter(scoutAdapter);

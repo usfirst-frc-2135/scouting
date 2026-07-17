@@ -60,6 +60,7 @@ public class EndgameFragment extends Fragment
 
     private MatchData m_matchData;
     private EndgameFragmentBinding m_binding;
+    private Settings m_settings;
 
     /**
      * Initializes the fragment and retrieves the current match data from the parent activity.
@@ -72,6 +73,7 @@ public class EndgameFragment extends Fragment
         super.onCreate(savedInstanceState);
         Log.v(TAG, "onCreate");
         m_matchData = ((ScoutingActivity) requireActivity()).getCurrentMatch();
+        m_settings = Settings.getInstance(requireContext());
     }
 
     /**
@@ -118,10 +120,9 @@ public class EndgameFragment extends Fragment
         {
             actionBar.setTitle(R.string.endgame_title);
 
-            Settings settings = Settings.getInstance(requireContext());
-            if (settings != null)
+            if (m_settings != null)
             {
-                actionBar.setBackgroundDrawable(settings.getTeamIndexColor());
+                actionBar.setBackgroundDrawable(m_settings.getTeamIndexColor());
             }
         }
     }
@@ -175,7 +176,7 @@ public class EndgameFragment extends Fragment
         m_binding.endgameDoneButton.setOnClickListener(view -> {
             updateEndgameData();
             Log.i(TAG, "Saving latest match and scout names");
-            if (!Settings.getInstance(requireContext()).saveSettingsSilent())
+            if (!m_settings.saveSettingsSilent())
             {
                 Log.e(TAG, "Failed to save settings!");
             }
