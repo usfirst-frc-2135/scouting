@@ -421,10 +421,18 @@ public class PreMatchActivity extends AppCompatActivity
                 .setTitle("Abandon Scouting Data?")
                 .setMessage("Are you sure you want to go back? All data entered for this match will be lost.")
                 .setPositiveButton("Yes", (dialog, which) -> {
-                    if (!m_isEditMode && m_matchData != null)
+                    if (m_matchData != null)
                     {
-                        Log.i(TAG, "Deleting match data for ID: " + m_matchData.getMatchID());
-                        ScoutedMatches.getInstance(getApplicationContext()).deleteMatch(m_matchData);
+                        if (m_isEditMode)
+                        {
+                            Log.i(TAG, "Reloading match data from file for ID: " + m_matchData.getMatchID());
+                            ScoutedMatches.getInstance(getApplicationContext()).reloadMatchDataFromFile(m_matchData);
+                        }
+                        else
+                        {
+                            Log.i(TAG, "Deleting match data for ID: " + m_matchData.getMatchID());
+                            ScoutedMatches.getInstance(getApplicationContext()).deleteMatch(m_matchData);
+                        }
                     }
                     startActivity(new Intent(this, MatchListActivity.class));
                     finish();

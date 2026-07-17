@@ -180,6 +180,42 @@ public class ScoutedMatches extends BaseJSONSerializer
     }
 
     /**
+     * Reloads a specific match record from its JSON file on disk, replacing the in-memory version.
+     * This is useful for discarding unsaved changes.
+     *
+     * @param matchData the match record to reload
+     * @return the reloaded MatchData object, or the original if reload fails
+     */
+    public MatchData reloadMatchDataFromFile(MatchData matchData)
+    {
+        if (matchData == null)
+        {
+            return null;
+        }
+        Log.d(TAG, "reloadMatchDataFromFile for ID: " + matchData.getMatchID());
+        String filename = getMatchFileName(matchData);
+        File file = new File(m_dataDir, filename);
+        if (file.exists())
+        {
+            try
+            {
+                MatchData reloadedMatch = loadSingleMatchFile(file);
+                int index = m_scoutedMatches.indexOf(matchData);
+                if (index != -1)
+                {
+                    m_scoutedMatches.set(index, reloadedMatch);
+                }
+                return reloadedMatch;
+            }
+            catch (IOException | JSONException e)
+            {
+                Log.e(TAG, "Error reloading match data file " + filename + ": " + e.getMessage());
+            }
+        }
+        return matchData;
+    }
+
+    /**
      * Scans the application's internal data directory and loads all individual match data files into memory.
      *
      * @return an ArrayList of all successfully loaded {@link MatchData} records

@@ -135,6 +135,7 @@ public class MatchListFragment extends Fragment
         ArrayAdapter<CharSequence> sortAdapter = new ArrayAdapter<>(requireContext(),
                 android.R.layout.simple_dropdown_item_1line, getResources().getTextArray(R.array.sort_criteria_array));
         m_binding.matchListSortInput.setAdapter(sortAdapter);
+        refreshMatchList();
     }
 
     /**
