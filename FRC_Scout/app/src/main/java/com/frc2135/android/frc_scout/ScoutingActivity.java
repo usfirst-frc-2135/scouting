@@ -45,7 +45,7 @@ public class ScoutingActivity extends AppCompatActivity
 
         setSupportActionBar(m_binding.scoutingActivityToolbar);
 
-        String matchId = getIntent().getStringExtra("match_ID");
+        String matchId = getIntent().getStringExtra(Constants.MATCH_ID);
         Log.i(TAG, "Loading match ID: " + matchId);
         m_matchData = ScoutedMatches.getInstance(getApplicationContext()).getMatch(matchId);
 

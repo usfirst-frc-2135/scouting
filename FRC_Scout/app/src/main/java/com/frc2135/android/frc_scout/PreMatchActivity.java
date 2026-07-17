@@ -60,7 +60,7 @@ public class PreMatchActivity extends AppCompatActivity
      */
     private void loadInitialData()
     {
-        String matchId = getIntent().getStringExtra("match_ID");
+        String matchId = getIntent().getStringExtra(Constants.MATCH_ID);
         m_matchData = ScoutedMatches.getInstance(getApplicationContext()).getMatch(matchId);
 
         String eventCode = (m_matchData != null) ? m_matchData.getEventCode().trim() : "";
@@ -72,7 +72,7 @@ public class PreMatchActivity extends AppCompatActivity
 
         m_scoutNames = ScoutNames.getInstance(getApplicationContext());
 
-        String inEdit = getIntent().getStringExtra("in_edit");
+        String inEdit = getIntent().getStringExtra(Constants.IN_EDIT_MODE);
         m_isEditMode = "yes".equalsIgnoreCase(inEdit);
     }
 
@@ -229,7 +229,7 @@ public class PreMatchActivity extends AppCompatActivity
             {
                 updatePreMatchData();
                 Intent intent = new Intent(this, ScoutingActivity.class);
-                intent.putExtra("match_ID", m_matchData.getMatchID());
+                intent.putExtra(Constants.MATCH_ID, m_matchData.getMatchID());
                 startActivity(intent);
             }
         });

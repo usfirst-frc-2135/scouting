@@ -62,4 +62,14 @@ public final class Constants
      * The unique authentication key required to authorize requests to The Blue Alliance API.
      */
     public static final String TBA_AUTH_KEY = "MetfyxQxRpk0do2GygII8alQnV0qaQ8kF9KUIYDrFTMmQr2pPC8Cl4FGdoKlUaAu";
+
+    /**
+     * Intent extra key for passing a match unique identifier.
+     */
+    public static final String MATCH_ID = "match_id";
+
+    /**
+     * Intent extra key for indicating if an activity was launched in edit mode.
+     */
+    public static final String IN_EDIT_MODE = "in_edit";
 }

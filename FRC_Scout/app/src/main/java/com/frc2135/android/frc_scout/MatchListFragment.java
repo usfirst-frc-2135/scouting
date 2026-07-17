@@ -158,8 +158,8 @@ public class MatchListFragment extends Fragment
             m_scoutedMatches.addMatch(newMatch);
 
             Intent intent = new Intent(requireContext(), PreMatchActivity.class);
-            intent.putExtra("match_ID", newMatch.getMatchID());
-            intent.putExtra("in_edit", "no");
+            intent.putExtra(Constants.MATCH_ID, newMatch.getMatchID());
+            intent.putExtra(Constants.IN_EDIT_MODE, "no");
             startActivity(intent);
         });
     }
@@ -492,7 +492,20 @@ public class MatchListFragment extends Fragment
         }
 
         int itemID = item.getItemId();
-        if (itemID == R.id.menu_item_delete_match)
+        if (itemID == R.id.menu_item_edit_match)
+        {
+            Log.d(TAG, "Edit match button clicked");
+
+            Intent preMatchIntent = new Intent(requireContext(), PreMatchActivity.class);
+            preMatchIntent.putExtra(Constants.MATCH_ID, Objects.requireNonNull(m).getMatchID());
+            preMatchIntent.putExtra(Constants.IN_EDIT_MODE, "yes");
+            Log.i(TAG, "Match selected for edit " + m.getMatchNumber() + " ID: " + m.getMatchID());
+            m_binding.matchListRecyclerView.clearFocus();
+
+            startActivity(preMatchIntent);
+            m_selectedMatch = null;
+        }
+        else if (itemID == R.id.menu_item_delete_match)
         {
             Log.d(TAG, "Delete match button clicked");
             new MaterialAlertDialogBuilder(requireContext())
@@ -507,19 +520,6 @@ public class MatchListFragment extends Fragment
                     })
                     .setNegativeButton("Cancel", (dialog, which) -> m_selectedMatch = null)
                     .show();
-        }
-        else if (itemID == R.id.menu_item_edit_match)
-        {
-            Log.d(TAG, "Edit match button clicked");
-
-            Intent preMatchIntent = new Intent(requireContext(), PreMatchActivity.class);
-            preMatchIntent.putExtra("match_ID", Objects.requireNonNull(m).getMatchID());
-            preMatchIntent.putExtra("in_edit", "yes");
-            Log.i(TAG, "Match selected for edit " + m.getMatchNumber() + " ID: " + m.getMatchID());
-            m_binding.matchListRecyclerView.clearFocus();
-
-            startActivity(preMatchIntent);
-            m_selectedMatch = null;
         }
         else
         {
