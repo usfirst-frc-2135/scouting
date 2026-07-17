@@ -8,10 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.frc2135.android.frc_scout.databinding.PreMatchActivityBinding;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.List;
 import java.util.Objects;
@@ -53,6 +55,16 @@ public class PreMatchActivity extends AppCompatActivity
         setupActionBar();
         setupViewDefaults();
         setupListeners();
+
+        // Add back button confirmation logic
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true)
+        {
+            @Override
+            public void handleOnBackPressed()
+            {
+                showExitConfirmationDialog();
+            }
+        });
     }
 
     /**
@@ -234,14 +246,7 @@ public class PreMatchActivity extends AppCompatActivity
             }
         });
 
-        m_binding.preMatchCancelButton.setOnClickListener(view -> {
-            if (!m_isEditMode && m_matchData != null)
-            {
-                ScoutedMatches.getInstance(getApplicationContext()).deleteMatch(m_matchData);
-            }
-            startActivity(new Intent(this, MatchListActivity.class));
-            finish();
-        });
+        m_binding.preMatchCancelButton.setOnClickListener(view -> showExitConfirmationDialog());
     }
 
     /**
@@ -370,6 +375,28 @@ public class PreMatchActivity extends AppCompatActivity
 
         m_binding.preMatchErrorMessage.setVisibility(isValid ? View.GONE : View.VISIBLE);
         return isValid;
+    }
+
+    /**
+     * Shows a confirmation dialog when the user tries to exit the pre-match entry process.
+     * If not in edit mode, the current match data will be deleted upon confirmation.
+     */
+    private void showExitConfirmationDialog()
+    {
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Abandon Scouting Data?")
+                .setMessage("Are you sure you want to go back? All data entered for this match will be lost.")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    if (!m_isEditMode && m_matchData != null)
+                    {
+                        Log.i(TAG, "Deleting match data for ID: " + m_matchData.getMatchID());
+                        ScoutedMatches.getInstance(getApplicationContext()).deleteMatch(m_matchData);
+                    }
+                    startActivity(new Intent(this, MatchListActivity.class));
+                    finish();
+                })
+                .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+                .show();
     }
 
     /**

@@ -5,19 +5,17 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.frc2135.android.frc_scout.databinding.ScoutingActivityBinding;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 /**
  * Activity for the main scouting process. It hosts three fragments: Autonomous, Teleoperated, and Endgame.
  * Uses a {@link com.google.android.material.bottomnavigation.BottomNavigationView} for navigation between these stages.
- * Handles match data loading, fragment state preservation, and back button confirmation.
+ * Handles match data loading and fragment state preservation.
  */
 public class ScoutingActivity extends AppCompatActivity
 {
@@ -29,7 +27,6 @@ public class ScoutingActivity extends AppCompatActivity
 
     /**
      * Initializes the activity, sets up the toolbar, and loads the initial scouting fragment.
-     * Registers a back button callback to prevent accidental navigation.
      *
      * @param savedInstanceState if the activity is being re-initialized after previously being shut down
      */
@@ -61,16 +58,6 @@ public class ScoutingActivity extends AppCompatActivity
                     .add(R.id.scouting_activity_fragment_container, createScoutingActivityFragment())
                     .commit();
         }
-
-        // Add back button confirmation logic
-        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true)
-        {
-            @Override
-            public void handleOnBackPressed()
-            {
-                showExitConfirmationDialog();
-            }
-        });
 
         // Handle navigation between scouting stages
         m_binding.scoutingActivityNavView.setOnItemSelectedListener(item -> {
@@ -130,19 +117,6 @@ public class ScoutingActivity extends AppCompatActivity
     {
         Log.v(TAG, "onOptionsItemSelected");
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Shows a confirmation dialog when the user tries to exit the scouting process.
-     */
-    private void showExitConfirmationDialog()
-    {
-        new MaterialAlertDialogBuilder(this)
-                .setTitle("Abandon Scouting Data?")
-                .setMessage("Are you sure you want to go back? All data entered for this match will be lost.")
-                .setPositiveButton("Yes", (dialog, which) -> finish())
-                .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
-                .show();
     }
 
     /**
