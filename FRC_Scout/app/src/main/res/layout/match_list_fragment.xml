@@ -85,7 +85,7 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="24dp"
             android:contentDescription="@string/start_match"
-            android:src="@drawable/add_icon_blue"
+            android:src="@drawable/plus_icon_blue"
             app:backgroundTint="@color/startButton"
             app:tint="@color/startMatchText" />
 

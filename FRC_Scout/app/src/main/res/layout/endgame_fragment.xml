@@ -118,7 +118,7 @@
                     android:id="@+id/endgame_climb_level_container"
                     android:layout_width="600dp"
                     android:layout_height="230dp"
-                    android:background="@drawable/tower_angle_upper">
+                    android:background="@drawable/rebuilt_tower_angle_upper">
 
                     <!-- start CLIMB LEVEL TEXT layout -->
                     <LinearLayout
@@ -213,7 +213,7 @@
                     android:id="@+id/endgame_climb_pos_container"
                     android:layout_width="600dp"
                     android:layout_height="100dp"
-                    android:background="@drawable/tower_angle_lower">
+                    android:background="@drawable/rebuilt_tower_angle_lower">
 
                     <!-- start CLIMB POSITION TEXT layout -->
                     <LinearLayout

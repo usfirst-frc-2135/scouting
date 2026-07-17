@@ -464,7 +464,7 @@
                     android:layout_width="430dp"
                     android:layout_height="330dp"
                     android:layout_marginStart="5dp"
-                    android:background="@drawable/tower_angle_full"
+                    android:background="@drawable/rebuilt_tower_angle_full"
                     android:buttonTint="#717982"
                     android:orientation="horizontal">
 
