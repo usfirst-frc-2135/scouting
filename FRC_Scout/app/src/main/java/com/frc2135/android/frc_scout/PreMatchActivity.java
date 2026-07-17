@@ -111,32 +111,73 @@ public class PreMatchActivity extends AppCompatActivity
         if (m_matchData != null)
         {
             m_binding.preMatchEventCodeInput.setText(m_matchData.getEventCode());
-        }
 
-        String matchNum =
-                (m_matchData != null && !m_matchData.getMatchNumber().isEmpty())
-                        ? m_matchData.getMatchNumber()
-                        : (m_settings != null && !m_settings.getMostRecentMatchNumber().isEmpty())
-                          ? m_settings.getNextExpectedMatchNumber()
-                          : "qm1";
-        m_binding.preMatchNumberInput.setText(matchNum);
-
-        if (m_matchData != null && !m_matchData.getTeamNumber().isEmpty())
-        {
-            m_binding.preMatchTeamNumberInput.setText(m_matchData.getTeamNumber());
+            if (m_isEditMode)
+            {
+                Log.d(TAG, "Activity in Edit Mode: loading and disabling match and team number fields");
+                m_binding.preMatchNumberInput.setText(m_matchData.getMatchNumber());
+                m_binding.preMatchNumberInput.setEnabled(false);
+                m_binding.preMatchTeamNumberInput.setText(m_matchData.getTeamNumber());
+                m_binding.preMatchTeamNumberInput.setEnabled(false);
+                m_binding.preMatchScoutNameInput.setText(m_matchData.getScoutName());
+            }
+            else
+            {
+                Log.d(TAG, "Activity in New Match Mode: loading and enabling match and team number fields");
+                m_binding.preMatchNumberInput.setText(getNewMatchNumber());
+                m_binding.preMatchNumberInput.setEnabled(true);
+                if (!m_matchData.getTeamNumber().isEmpty())
+                {
+                    m_binding.preMatchTeamNumberInput.setText(m_matchData.getTeamNumber());
+                }
+                else
+                {
+                    setTeamNumFromMatchNum();
+                }
+                m_binding.preMatchTeamNumberInput.setEnabled(true);
+                m_binding.preMatchScoutNameInput.setText(getNewScoutName());
+            }
         }
         else
         {
-            setTeamNumFromMatchNum();
+            Log.e(TAG, "Match data is null, setting default values");
+            m_binding.preMatchEventCodeInput.setText(R.string.missing);
+            m_binding.preMatchEventCodeInput.setEnabled(true);
+            m_binding.preMatchTeamNumberInput.setText(R.string.missing);
+            m_binding.preMatchTeamNumberInput.setEnabled(true);
+            m_binding.preMatchNumberInput.setText(R.string.missing);
+            m_binding.preMatchNumberInput.setEnabled(true);
+            m_binding.preMatchScoutNameInput.setText(R.string.missing);
+            m_binding.preMatchScoutNameInput.setEnabled(true);
         }
+    }
 
-        String scoutName =
-                (m_matchData != null && !m_matchData.getScoutName().isEmpty())
-                        ? m_matchData.getScoutName()
-                        : (m_settings != null && !m_settings.getMostRecentScoutName().isEmpty())
-                          ? m_settings.getMostRecentScoutName()
-                          : "";
-        m_binding.preMatchScoutNameInput.setText(scoutName);
+    /**
+     * Determines the initial match number to display based on existing data or settings.
+     *
+     * @return the match number string (e.g., "qm1")
+     */
+    private String getNewMatchNumber()
+    {
+        return (!m_matchData.getMatchNumber().isEmpty())
+                ? m_matchData.getMatchNumber()
+                : (m_settings != null && !m_settings.getMostRecentMatchNumber().isEmpty())
+                  ? m_settings.getNextExpectedMatchNumber()
+                  : "qm1";
+    }
+
+    /**
+     * Determines the initial scout name to display based on existing data or settings.
+     *
+     * @return the scout name string
+     */
+    private String getNewScoutName()
+    {
+        return (!m_matchData.getScoutName().isEmpty())
+                ? m_matchData.getScoutName()
+                : (m_settings != null && !m_settings.getMostRecentScoutName().isEmpty())
+                  ? m_settings.getMostRecentScoutName()
+                  : "";
     }
 
     /**
@@ -297,7 +338,7 @@ public class PreMatchActivity extends AppCompatActivity
         String matchNumStr = m_binding.preMatchNumberInput.getText().toString().trim();
         if (!matchNumStr.isEmpty() && !m_teamIndexStr.isEmpty() && m_settings.isValidTeamIndexStr(m_teamIndexStr))
         {
-            Log.d(TAG, "setTeamNumFromMatchNum: Auto-loading team number for match " + matchNumStr + " index " + m_teamIndexStr);
+            Log.d(TAG, "setTeamNumFromMatchNum: Auto-loading all team numbers for match " + matchNumStr + " index " + m_teamIndexStr);
             try
             {
                 String[] matchTeams = m_tbaMatches.getMatchTeams(matchNumStr);

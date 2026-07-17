@@ -319,6 +319,7 @@ public class MatchListFragment extends Fragment
 
                     // 4. Reset Settings
                     m_settings.resetSettings();
+                    m_settings.saveSettingsSilent();
 
                     refreshMatchList();
                     Log.i(TAG, "All configuration data cleared");

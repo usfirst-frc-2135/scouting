@@ -80,7 +80,6 @@ public final class Settings extends BaseJSONSerializer
     {
         super(context);
         Log.v(TAG, "Settings constructor");
-        m_eventCode = DEFAULT_EVENT_CODE;
         m_teamIndexOptions = new String[]{
                 context.getString(R.string.team_index_none),
                 context.getString(R.string.team_index_1),  // red teams
@@ -90,12 +89,9 @@ public final class Settings extends BaseJSONSerializer
                 context.getString(R.string.team_index_5),
                 context.getString(R.string.team_index_6)
         };
-        m_teamIndexStr = m_teamIndexOptions[0];
-        m_mostRecentMatchNumber = "";
         m_pastScouts = new ArrayList<>();
-        m_mostRecentScoutName = "";
-        m_scoringTableSide = false;
 
+        resetSettings();
         try
         {
             loadSettings();
@@ -129,15 +125,9 @@ public final class Settings extends BaseJSONSerializer
         m_eventCode = DEFAULT_EVENT_CODE;
         m_teamIndexStr = m_teamIndexOptions[0];
         m_mostRecentMatchNumber = "";
-        m_pastScouts.clear();
         m_mostRecentScoutName = "";
+        m_pastScouts.clear();
         m_scoringTableSide = false;
-
-        File file = new File(m_dataDir, Constants.SETTINGS_FILENAME);
-        if (file.exists())
-        {
-            file.delete();
-        }
     }
 
     /**
