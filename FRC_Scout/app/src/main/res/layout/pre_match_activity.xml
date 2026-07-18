@@ -20,19 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:titleTextColor="@android:color/white">
-
-            <TextView
-                android:id="@+id/pre_match_activity_toolbar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/font_small"
-                android:textStyle="bold"
-                tools:text="Pre-Match - Team Index: 1" />
-
-        </com.google.android.material.appbar.MaterialToolbar>
+            app:titleTextColor="@android:color/white"
+            app:subtitleTextColor="@android:color/white" />
 
     </com.google.android.material.appbar.AppBarLayout>
     <!-- end AppBar layout -->
@@ -71,10 +60,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 app:endIconMode="clear_text"
-                app:boxCornerRadiusBottomEnd="12dp"
-                app:boxCornerRadiusBottomStart="12dp"
-                app:boxCornerRadiusTopEnd="12dp"
-                app:boxCornerRadiusTopStart="12dp"
                 app:helperText="@string/event_code_helper"
                 app:helperTextEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -106,10 +91,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 app:endIconMode="clear_text"
-                app:boxCornerRadiusBottomEnd="12dp"
-                app:boxCornerRadiusBottomStart="12dp"
-                app:boxCornerRadiusTopEnd="12dp"
-                app:boxCornerRadiusTopStart="12dp"
                 app:helperText="@string/match_number_helper"
                 app:helperTextEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -118,7 +99,7 @@
                 app:startIconContentDescription="@string/match_icon_desc"
                 app:startIconDrawable="@android:drawable/ic_menu_edit">
 
-                <AutoCompleteTextView
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/pre_match_number_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -138,10 +119,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 app:endIconMode="clear_text"
-                app:boxCornerRadiusBottomEnd="12dp"
-                app:boxCornerRadiusBottomStart="12dp"
-                app:boxCornerRadiusTopEnd="12dp"
-                app:boxCornerRadiusTopStart="12dp"
                 app:helperText="@string/team_number_helper"
                 app:helperTextEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -150,7 +127,7 @@
                 app:startIconContentDescription="@string/team_icon_desc"
                 app:startIconDrawable="@android:drawable/ic_menu_info_details">
 
-                <AutoCompleteTextView
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/pre_match_team_number_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -170,10 +147,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 app:endIconMode="clear_text"
-                app:boxCornerRadiusBottomEnd="12dp"
-                app:boxCornerRadiusBottomStart="12dp"
-                app:boxCornerRadiusTopEnd="12dp"
-                app:boxCornerRadiusTopStart="12dp"
                 app:helperText="@string/scout_name_helper"
                 app:helperTextEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -182,7 +155,7 @@
                 app:startIconContentDescription="@string/scout_icon_desc"
                 app:startIconDrawable="@android:drawable/ic_menu_myplaces">
 
-                <AutoCompleteTextView
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/pre_match_scout_name_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -220,7 +193,6 @@
                 android:textColor="@color/startMatchText"
                 android:textSize="@dimen/font_small"
                 app:backgroundTint="@color/startButton"
-                app:cornerRadius="12dp"
                 app:elevation="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -236,7 +208,6 @@
                 android:text="@string/cancel"
                 android:contentDescription="@string/cancel"
                 android:textColor="@color/textSecondary"
-                app:cornerRadius="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/pre_match_start_button" />

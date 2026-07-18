@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.frc2135.android.frc_scout.databinding.SetTeamIndexDialogBinding;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.Objects;
@@ -76,7 +76,7 @@ public class SetTeamIndexDialog extends DialogFragment
         m_binding.setTeamIndexInput.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_UNSPECIFIED)
             {
-                Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                MaterialButton okButton = (MaterialButton) dialog.getButton(AlertDialog.BUTTON_POSITIVE);
                 if (okButton != null)
                 {
                     okButton.setFocusableInTouchMode(true);
@@ -88,7 +88,7 @@ public class SetTeamIndexDialog extends DialogFragment
         });
 
         m_binding.setTeamIndexInput.setOnItemClickListener((parent, view, position, id) -> {
-            Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            MaterialButton okButton = (MaterialButton) dialog.getButton(AlertDialog.BUTTON_POSITIVE);
             if (okButton != null)
             {
                 okButton.requestFocus();
@@ -105,7 +105,7 @@ public class SetTeamIndexDialog extends DialogFragment
     {
         Log.d(TAG, "setupTeamIndexDropdown");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(),
-                R.layout.set_team_index_dropdown_item, m_indexOptions);
+                R.layout.dropdown_item, m_indexOptions);
         m_binding.setTeamIndexInput.setAdapter(adapter);
 
         String currentIndex = (m_settings != null) ? m_settings.getTeamIndexStr() : "unknown";

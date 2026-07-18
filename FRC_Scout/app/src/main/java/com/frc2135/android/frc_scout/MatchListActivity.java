@@ -70,7 +70,7 @@ public class MatchListActivity extends AppCompatActivity
     {
         Log.d(TAG, "updateToolbarTeamIndex");
         String indexStr = (m_settings != null) ? m_settings.getTeamIndexStr() : "unknown";
-        m_binding.matchListActivityToolbarTeamIndex.setText(String.format(getString(R.string.team_index_label), indexStr));
+        m_binding.matchListActivityToolbar.setSubtitle(String.format(getString(R.string.team_index_label), indexStr));
     }
 
     /**

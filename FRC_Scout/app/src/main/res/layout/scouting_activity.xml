@@ -20,19 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:titleTextColor="@android:color/white">
-
-            <TextView
-                android:id="@+id/scouting_activity_toolbar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/font_small"
-                android:textStyle="bold"
-                tools:text="Team 2135 - Match qm1" />
-
-        </com.google.android.material.appbar.MaterialToolbar>
+            app:titleTextColor="@android:color/white"
+            app:subtitleTextColor="@android:color/white" />
 
     </com.google.android.material.appbar.AppBarLayout>
     <!-- end AppBar layout -->

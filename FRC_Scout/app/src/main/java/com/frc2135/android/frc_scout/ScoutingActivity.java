@@ -145,7 +145,7 @@ public class ScoutingActivity extends AppCompatActivity
         }
 
         getSupportActionBar().setTitle(stage);
-        m_binding.scoutingActivityToolbarTitle.setText(String.format("Team %s - %s", m_matchData.getTeamNumber(), m_matchData.getMatchNumber()));
+        getSupportActionBar().setSubtitle(String.format("Team %s - %s", m_matchData.getTeamNumber(), m_matchData.getMatchNumber()));
     }
 
     /**

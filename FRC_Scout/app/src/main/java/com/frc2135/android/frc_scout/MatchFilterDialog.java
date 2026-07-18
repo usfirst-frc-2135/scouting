@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.frc2135.android.frc_scout.databinding.MatchFilterDialogBinding;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,13 +77,19 @@ public class MatchFilterDialog extends DialogFragment
                 .setNeutralButton(R.string.clear_all, null);
 
         androidx.appcompat.app.AlertDialog dialog = builder.create();
-        dialog.setOnShowListener(d -> dialog.getButton(Dialog.BUTTON_NEUTRAL).setOnClickListener(v -> {
-            Log.d(TAG, "Clear All clicked");
-            m_binding.matchFilterEventInput.setText("", false);
-            m_binding.matchFilterMatchInput.setText("");
-            m_binding.matchFilterTeamInput.setText("", false);
-            m_binding.matchFilterScoutInput.setText("", false);
-        }));
+        dialog.setOnShowListener(d -> {
+            MaterialButton clearButton = (MaterialButton) dialog.getButton(Dialog.BUTTON_NEUTRAL);
+            if (clearButton != null)
+            {
+                clearButton.setOnClickListener(v -> {
+                    Log.d(TAG, "Clear All clicked");
+                    m_binding.matchFilterEventInput.setText("", false);
+                    m_binding.matchFilterMatchInput.setText("");
+                    m_binding.matchFilterTeamInput.setText("", false);
+                    m_binding.matchFilterScoutInput.setText("", false);
+                });
+            }
+        });
 
         return dialog;
     }
@@ -131,7 +138,7 @@ public class MatchFilterDialog extends DialogFragment
         // Event Code Filter
         List<String> eventCodes = new ArrayList<>(m_scoutedMatches.listEventCodes());
         eventCodes.add(0, "Select event code");
-        ArrayAdapter<String> eventAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line, eventCodes);
+        ArrayAdapter<String> eventAdapter = new ArrayAdapter<>(requireContext(), R.layout.dropdown_item, eventCodes);
         m_binding.matchFilterEventInput.setAdapter(eventAdapter);
         m_binding.matchFilterEventInput.setOnFocusChangeListener((v, focus) -> {
             if (focus)
@@ -143,7 +150,7 @@ public class MatchFilterDialog extends DialogFragment
         // Team Filter
         List<String> teams = new ArrayList<>(m_scoutedMatches.listTeams());
         teams.add(0, "Select team");
-        ArrayAdapter<String> teamAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line, teams);
+        ArrayAdapter<String> teamAdapter = new ArrayAdapter<>(requireContext(), R.layout.dropdown_item, teams);
         m_binding.matchFilterTeamInput.setAdapter(teamAdapter);
         m_binding.matchFilterTeamInput.setOnFocusChangeListener((v, focus) -> {
             if (focus)
@@ -155,7 +162,7 @@ public class MatchFilterDialog extends DialogFragment
         // Scout Filter
         List<String> scouts = new ArrayList<>(m_scoutedMatches.listScouts());
         scouts.add(0, "Select scout");
-        ArrayAdapter<String> scoutAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line, scouts);
+        ArrayAdapter<String> scoutAdapter = new ArrayAdapter<>(requireContext(), R.layout.dropdown_item, scouts);
         m_binding.matchFilterScoutInput.setAdapter(scoutAdapter);
         m_binding.matchFilterScoutInput.setOnFocusChangeListener((v, focus) -> {
             if (focus)

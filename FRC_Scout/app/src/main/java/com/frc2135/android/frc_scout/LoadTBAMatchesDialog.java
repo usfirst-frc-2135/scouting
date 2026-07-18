@@ -8,7 +8,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,6 +18,7 @@ import androidx.fragment.app.DialogFragment;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.frc2135.android.frc_scout.databinding.LoadEventDialogBinding;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.json.JSONArray;
@@ -111,7 +111,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
                 String eventCode = s.toString().trim().toLowerCase(Locale.US);
                 if (Settings.getInstance(requireContext()).isValidEventCode(eventCode))
                 {
-                    Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    MaterialButton okButton = (MaterialButton) dialog.getButton(AlertDialog.BUTTON_POSITIVE);
                     if (okButton != null)
                     {
                         okButton.requestFocus();
@@ -126,14 +126,14 @@ public class LoadTBAMatchesDialog extends DialogFragment
         });
 
         dialog.setOnShowListener(d -> {
-            Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            MaterialButton okButton = (MaterialButton) dialog.getButton(AlertDialog.BUTTON_POSITIVE);
             okButton.setOnClickListener(v -> handleOkClick(dialog));
         });
 
         m_binding.loadEventCodeInput.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_UNSPECIFIED)
             {
-                Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                MaterialButton okButton = (MaterialButton) dialog.getButton(AlertDialog.BUTTON_POSITIVE);
                 if (okButton != null)
                 {
                     okButton.setFocusableInTouchMode(true);
@@ -181,7 +181,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
     {
         Log.d(TAG, "Starting TBA matches download for: " + eventCode);
 
-        Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        MaterialButton okButton = (MaterialButton) dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         okButton.setEnabled(false);
         okButton.setText(R.string.loading);
         m_binding.loadEventCodeInput.setEnabled(false);
@@ -252,7 +252,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
      *
      * @param okButton the dialog's OK button
      */
-    private void resetUiState(Button okButton)
+    private void resetUiState(MaterialButton okButton)
     {
         if (okButton != null)
         {

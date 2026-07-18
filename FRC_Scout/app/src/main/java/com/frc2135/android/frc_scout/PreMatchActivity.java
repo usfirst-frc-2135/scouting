@@ -97,7 +97,7 @@ public class PreMatchActivity extends AppCompatActivity
         if (actionBar != null)
         {
             actionBar.setTitle(R.string.pre_match);
-            m_binding.preMatchActivityToolbarTitle.setText(getString(R.string.team_index_label, m_teamIndexStr));
+            actionBar.setSubtitle(getString(R.string.team_index_label, m_teamIndexStr));
         }
     }
 
@@ -266,7 +266,7 @@ public class PreMatchActivity extends AppCompatActivity
 
         if (!scoutNames.isEmpty())
         {
-            ArrayAdapter<String> scoutAdapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, scoutNames);
+            ArrayAdapter<String> scoutAdapter = new ArrayAdapter<>(this, R.layout.dropdown_item, scoutNames);
             m_binding.preMatchScoutNameInput.setAdapter(scoutAdapter);
             m_binding.preMatchScoutNameInput.setThreshold(0);
             m_binding.preMatchScoutNameInput.setOnFocusChangeListener((v, hasFocus) -> {
@@ -312,7 +312,7 @@ public class PreMatchActivity extends AppCompatActivity
                         teams[i] = (m_teamAliases != null) ? m_teamAliases.resolveAlias(tNum) : tNum;
                     }
 
-                    ArrayAdapter<String> teamAdapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, teams);
+                    ArrayAdapter<String> teamAdapter = new ArrayAdapter<>(this, R.layout.dropdown_item, teams);
                     m_binding.preMatchTeamNumberInput.setAdapter(teamAdapter);
                     m_binding.preMatchTeamNumberInput.setDropDownHeight(620);
                     m_binding.preMatchTeamNumberInput.showDropDown();

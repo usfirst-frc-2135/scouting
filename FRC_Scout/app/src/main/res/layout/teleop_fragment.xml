@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,372 +18,465 @@
 
             <!-- Section: GAME PIECE MANIPULATION -->
             <!-- start GAME PIECE MANIPULATION card layout -->
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:background="@drawable/rounded_rect"
-                android:backgroundTint="#CACFF9"
-                android:orientation="vertical">
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="8dp"
+                app:cardBackgroundColor="#CACFF9"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
 
-                <!-- start HOPPER +/- BUTTONS layout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/teleop_hopper_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
-                        android:layout_marginTop="7dp"
-                        android:text="@string/hoppers_shot"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="@dimen/font_medium"
-                        android:textStyle="bold" />
-
-                    <Button
-                        android:id="@+id/teleop_hopper_decr_button"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="70dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:padding="0dp"
-                        android:background="@drawable/rounded_rect"
-                        android:backgroundTint="#017371"
-                        android:text="@string/decrease"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/font_medium"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/teleop_hopper_total_text"
-                        android:layout_width="70dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:textAlignment="center"
-                        android:text="@string/hopper_count_total"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="@dimen/font_large" />
-
-                    <Button
-                        android:id="@+id/teleop_hopper_incr_button"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginEnd="30dp"
-                        android:padding="0dp"
-                        android:background="@drawable/rounded_rect"
-                        android:backgroundTint="#017371"
-                        android:text="@string/increase"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/font_medium"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-                <!-- end HOPPER +/- BUTTONS layout -->
-
-                <!-- start HOPPER ACCURACY RATING layout -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_rect_bottom"
-                    android:backgroundTint="#DFE2FB"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/teleop_accuracy_label"
+                    <!-- start HOPPER +/- BUTTONS layout -->
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
-                        android:layout_marginTop="7dp"
-                        android:text="@string/accuracy_rate"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="@dimen/font_medium"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal"
+                        android:padding="8dp">
 
-                    <RadioGroup
-                        android:id="@+id/teleop_accuracy_radio_group"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_rect_bottom"
-                        android:backgroundTint="#DFE2FB"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/teleop_accuracy_na"
+                        <TextView
+                            android:id="@+id/teleop_hopper_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="7dp"
-                            android:layout_weight="1"
-                            android:buttonTint="#8957A1"
-                            android:text="@string/n_a"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
-
-                        <RadioButton
-                            android:id="@+id/teleop_accuracy_most"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:buttonTint="#8957A1"
-                            android:text="@string/most"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
-
-                        <RadioButton
-                            android:id="@+id/teleop_accuracy_three_fourths"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:buttonTint="#8957A1"
-                            android:text="@string/three_qtr"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_large" />
-
-                        <RadioButton
-                            android:id="@+id/teleop_accuracy_half"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:buttonTint="#8957A1"
-                            android:text="@string/one_half"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_large" />
-
-                        <RadioButton
-                            android:id="@+id/teleop_accuracy_quarter"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="-537dp"
-                            android:layout_marginTop="30dp"
-                            android:layout_weight="1"
-                            android:buttonTint="#8957A1"
-                            android:text="@string/one_qtr"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_large" />
-
-                        <RadioButton
-                            android:id="@+id/teleop_accuracy_few"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="21.5dp"
-                            android:layout_marginTop="30dp"
-                            android:layout_weight="1"
-                            android:buttonTint="#8957A1"
-                            android:text="@string/few"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
-
-                        <RadioButton
-                            android:id="@+id/teleop_accuracy_none"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginTop="30dp"
-                            android:layout_weight="1"
-                            android:buttonTint="#8957A1"
-                            android:text="@string/none"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
-
-                        <RadioButton
-                            android:id="@+id/teleop_accuracy_cannot_tell"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:layout_marginTop="30dp"
-                            android:layout_marginBottom="5dp"
-                            android:layout_weight="1"
-                            android:buttonTint="#c45120"
-                            android:text="@string/idk"
+                            android:text="@string/hoppers_shot"
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_medium"
-                            android:visibility="invisible" />
+                            android:textStyle="bold" />
 
-                    </RadioGroup>
-                </LinearLayout>
-                <!-- end HOPPER ACCURACY RATING layout -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/teleop_hopper_decr_button"
+                            android:layout_width="80dp"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="70dp"
+                            android:padding="0dp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            app:backgroundTint="#017371"
+                            android:text="@string/decrease"
+                            android:textAlignment="center"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/font_medium"
+                            android:textStyle="bold" />
 
-                <!-- start INTAKE AND SHOOT CHECKBOX layout -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_rect_bottom"
-                    android:backgroundTint="#EAECFD"
-                    android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/teleop_hopper_total_text"
+                            android:layout_width="70dp"
+                            android:layout_height="match_parent"
+                            android:textAlignment="center"
+                            android:text="@string/hopper_count_total"
+                            android:textColor="@color/customTextPrimary"
+                            android:textSize="@dimen/font_large" />
 
-                    <CheckBox
-                        android:id="@+id/teleop_intake_shoot_checkbox"
-                        android:layout_width="wrap_content"
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/teleop_hopper_incr_button"
+                            android:layout_width="80dp"
+                            android:layout_height="40dp"
+                            android:padding="0dp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            app:backgroundTint="#017371"
+                            android:text="@string/increase"
+                            android:textAlignment="center"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/font_medium"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+                    <!-- end HOPPER +/- BUTTONS layout -->
+
+                    <!-- start HOPPER ACCURACY RATING layout -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:backgroundTint="#EAECFD"
-                        android:buttonTint="#8957A1"
-                        android:text="@string/intake_while_shooting"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="@dimen/font_medium" />
+                        android:background="#DFE2FB"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/teleop_accuracy_label"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="7dp"
+                            android:text="@string/accuracy_rate"
+                            android:textColor="@color/customTextPrimary"
+                            android:textSize="@dimen/font_medium"
+                            android:textStyle="bold" />
+
+                        <RadioGroup
+                            android:id="@+id/teleop_accuracy_radio_group"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.radiobutton.MaterialRadioButton
+                                android:id="@+id/teleop_accuracy_na"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="7dp"
+                                android:layout_weight="1"
+                                android:buttonTint="#8957A1"
+                                android:text="@string/n_a"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="@dimen/font_medium" />
+
+                            <com.google.android.material.radiobutton.MaterialRadioButton
+                                android:id="@+id/teleop_accuracy_most"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:buttonTint="#8957A1"
+                                android:text="@string/most"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="@dimen/font_medium" />
+
+                            <com.google.android.material.radiobutton.MaterialRadioButton
+                                android:id="@+id/teleop_accuracy_three_fourths"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:buttonTint="#8957A1"
+                                android:text="@string/three_qtr"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="@dimen/font_large" />
+
+                            <com.google.android.material.radiobutton.MaterialRadioButton
+                                android:id="@+id/teleop_accuracy_half"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:buttonTint="#8957A1"
+                                android:text="@string/one_half"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="@dimen/font_large" />
+
+                            <com.google.android.material.radiobutton.MaterialRadioButton
+                                android:id="@+id/teleop_accuracy_quarter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:buttonTint="#8957A1"
+                                android:text="@string/one_qtr"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="@dimen/font_large" />
+
+                            <com.google.android.material.radiobutton.MaterialRadioButton
+                                android:id="@+id/teleop_accuracy_few"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:buttonTint="#8957A1"
+                                android:text="@string/few"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="@dimen/font_medium" />
+
+                            <com.google.android.material.radiobutton.MaterialRadioButton
+                                android:id="@+id/teleop_accuracy_none"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:buttonTint="#8957A1"
+                                android:text="@string/none"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="@dimen/font_medium" />
+                        </RadioGroup>
+                    </LinearLayout>
+                    <!-- end HOPPER ACCURACY RATING layout -->
+
+                    <!-- start INTAKE AND SHOOT CHECKBOX layout -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#EAECFD"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:id="@+id/teleop_intake_shoot_checkbox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:buttonTint="#8957A1"
+                            android:text="@string/intake_while_shooting"
+                            android:textColor="@color/customTextPrimary"
+                            android:textSize="@dimen/font_medium" />
+
+                    </LinearLayout>
+                    <!--end INTAKE AND SHOOT CHECKBOX layout -->
 
                 </LinearLayout>
-                <!--end INTAKE AND SHOOT CHECKBOX layout -->
-
-            </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
             <!-- end GAME PIECE MANIPULATION card layout -->
 
             <!-- Section: PASSING SECTION -->
             <!-- start PASSING SECTION card layout -->
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:background="@drawable/rounded_rect"
-                android:backgroundTint="#87CEEB"
-                android:orientation="vertical">
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="8dp"
+                app:cardBackgroundColor="#87CEEB"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
 
-                <!-- start PASSING FROM layout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_rect_top"
-                    android:backgroundTint="#87CEEB"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/teleop_passing_zone_label"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
-                        android:layout_marginTop="7dp"
-                        android:text="@string/passing_from_zone"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="@dimen/font_medium"
-                        android:textStyle="bold" />
-
-                    <!-- start PASSING FROM RADIO BUTTONS layout -->
+                    <!-- start PASSING FROM layout -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical"
+                        android:padding="8dp">
 
                         <TextView
-                            android:id="@+id/teleop_neutral_label"
-                            android:layout_width="90dp"
+                            android:id="@+id/teleop_passing_zone_label"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="7dp"
-                            android:text="@string/neutral"
+                            android:layout_marginStart="7dp"
+                            android:text="@string/passing_from_zone"
                             android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
+                            android:textSize="@dimen/font_medium"
+                            android:textStyle="bold" />
 
-                        <!-- start NEUTRAL ZONE CHECKBOX layout -->
-                        <RadioGroup
-                            android:id="@+id/teleop_pass_nz_radio_group"
+                        <!-- start PASSING FROM RADIO BUTTONS layout -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/teleop_neutral_label"
+                                android:layout_width="90dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="@string/neutral"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="@dimen/font_medium" />
+
+                            <!-- start NEUTRAL ZONE CHECKBOX layout -->
+                            <RadioGroup
+                                android:id="@+id/teleop_pass_nz_radio_group"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="7dp"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.radiobutton.MaterialRadioButton
+                                    android:id="@+id/teleop_pass_nz_no"
+                                    android:layout_width="29dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:buttonTint="#051650"
+                                    android:text="@string/no"
+                                    android:textColor="@color/customTextPrimary"
+                                    android:textSize="@dimen/font_medium" />
+
+                                <com.google.android.material.radiobutton.MaterialRadioButton
+                                    android:id="@+id/teleop_pass_nz_yes"
+                                    android:layout_width="30dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:buttonTint="#051650"
+                                    android:text="@string/yes"
+                                    android:textColor="@color/customTextPrimary"
+                                    android:textSize="@dimen/font_medium" />
+                            </RadioGroup>
+                            <!-- end NEUTRAL ZONE CHECKBOX layout -->
+
+                            <!-- start OPPOSING ALLIANCE ZONE CHECKBOX layout -->
+                            <TextView
+                                android:id="@+id/teleop_alliance_label"
+                                android:layout_width="135dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/alliance"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="@dimen/font_medium" />
+
+                            <RadioGroup
+                                android:id="@+id/teleop_pass_az_radio_group"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.radiobutton.MaterialRadioButton
+                                    android:id="@+id/teleop_pass_az_no"
+                                    android:layout_width="30dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:buttonTint="#051650"
+                                    android:text="@string/no"
+                                    android:textColor="@color/customTextPrimary"
+                                    android:textSize="@dimen/font_medium" />
+
+                                <com.google.android.material.radiobutton.MaterialRadioButton
+                                    android:id="@+id/teleop_pass_az_yes"
+                                    android:layout_width="40dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:buttonTint="#051650"
+                                    android:text="@string/yes"
+                                    android:textColor="@color/customTextPrimary"
+                                    android:textSize="@dimen/font_medium" />
+                            </RadioGroup>
+                            <!-- end OPPOSING ALLIANCE ZONE CHECKBOX layout -->
+
+                        </LinearLayout>
+                        <!-- end PASSING FROM RADIO BUTTONS layout -->
+
+                    </LinearLayout>
+                    <!-- end PASSING FROM layout -->
+
+                    <!-- start PASSING EFFECTIVENESS RATING layout -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#ADD8EF"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/teleop_passing_rate_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="7dp"
-                            android:layout_weight="1"
-                            android:orientation="horizontal">
-
-                            <RadioButton
-                                android:id="@+id/teleop_pass_nz_no"
-                                android:layout_width="10dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:buttonTint="#051650"
-                                android:text="@string/no"
-                                android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_medium" />
-
-                            <RadioButton
-                                android:id="@+id/teleop_pass_nz_yes"
-                                android:layout_width="60dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:buttonTint="#051650"
-                                android:text="@string/yes"
-                                android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_medium" />
-                        </RadioGroup>
-                        <!-- end NEUTRAL ZONE CHECKBOX layout -->
-
-                        <!-- start OPPOSING ALLIANCE ZONE CHECKBOX layout -->
-                        <TextView
-                            android:id="@+id/teleop_alliance_label"
-                            android:layout_width="135dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="7dp"
-                            android:text="@string/alliance"
+                            android:text="@string/passing_rate"
                             android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
+                            android:textSize="@dimen/font_medium"
+                            android:textStyle="bold" />
 
                         <RadioGroup
-                            android:id="@+id/teleop_pass_az_radio_group"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/teleop_passing_rate_radio_group"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_marginStart="7dp"
                             android:orientation="horizontal">
 
-                            <RadioButton
-                                android:id="@+id/teleop_pass_az_no"
-                                android:layout_width="10dp"
+                            <com.google.android.material.radiobutton.MaterialRadioButton
+                                android:id="@+id/teleop_passing_rate_na"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:buttonTint="#051650"
-                                android:text="@string/no"
+                                android:text="@string/n_a"
                                 android:textColor="@color/customTextPrimary"
                                 android:textSize="@dimen/font_medium" />
 
-                            <RadioButton
-                                android:id="@+id/teleop_pass_az_yes"
-                                android:layout_width="60dp"
+                            <com.google.android.material.radiobutton.MaterialRadioButton
+                                android:id="@+id/teleop_passing_rate_low"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:buttonTint="#051650"
-                                android:text="@string/yes"
+                                android:text="@string/low"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="@dimen/font_medium" />
+
+                            <com.google.android.material.radiobutton.MaterialRadioButton
+                                android:id="@+id/teleop_passing_rate_medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:buttonTint="#051650"
+                                android:text="@string/medium"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="@dimen/font_medium" />
+
+                            <com.google.android.material.radiobutton.MaterialRadioButton
+                                android:id="@+id/teleop_passing_rate_large"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:buttonTint="#051650"
+                                android:text="@string/large"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="@dimen/font_medium" />
+
+                            <com.google.android.material.radiobutton.MaterialRadioButton
+                                android:id="@+id/teleop_passing_rate_tons"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:buttonTint="#051650"
+                                android:text="@string/tons"
                                 android:textColor="@color/customTextPrimary"
                                 android:textSize="@dimen/font_medium" />
                         </RadioGroup>
-                        <!-- end OPPOSING ALLIANCE ZONE CHECKBOX layout -->
 
                     </LinearLayout>
-                    <!-- end PASSING FROM RADIO BUTTONS layout -->
+                    <!-- end PASSING EFFECTIVENESS RATING layout -->
+
+                    <!-- start HERDING FUEL CHECKBOX layout -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#F0FFFF"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:id="@+id/teleop_herded_fuel_checkbox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:buttonTint="#051650"
+                            android:text="@string/herded_lots_of_fuel"
+                            android:textColor="@color/customTextPrimary"
+                            android:textSize="@dimen/font_medium" />
+                    </LinearLayout>
+                    <!--end HERDING FUEL CHECKBOX layout -->
 
                 </LinearLayout>
-                <!-- end PASSING FROM layout -->
+            </com.google.android.material.card.MaterialCardView>
+            <!-- end PASSING SECTION card layout -->
 
-                <!-- start PASSING EFFECTIVENESS RATING layout -->
+            <!-- Section: DEFENSE SECTION -->
+            <!-- start DEFENSE SECTION card layout -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="8dp"
+                app:cardBackgroundColor="#adc7ee"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#ADD8EF"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
                     <TextView
-                        android:id="@+id/teleop_passing_rate_label"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/teleop_defense_label"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
-                        android:text="@string/passing_rate"
+                        android:text="@string/defense"
                         android:textColor="@color/customTextPrimary"
                         android:textSize="@dimen/font_medium"
                         android:textStyle="bold" />
 
+                    <!-- start DEFENSE RADIO BUTTONS layout -->
                     <RadioGroup
-                        android:id="@+id/teleop_passing_rate_radio_group"
+                        android:id="@+id/teleop_defense_radio_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
-                        android:backgroundTint="#ADD8EF"
+                        android:paddingStart="7dp"
+                        android:paddingEnd="7dp"
                         android:orientation="horizontal">
 
-                        <RadioButton
-                            android:id="@+id/teleop_passing_rate_na"
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/teleop_defense_na"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -391,8 +485,8 @@
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_medium" />
 
-                        <RadioButton
-                            android:id="@+id/teleop_passing_rate_low"
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/teleop_defense_low"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -401,8 +495,18 @@
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_medium" />
 
-                        <RadioButton
-                            android:id="@+id/teleop_passing_rate_medium"
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/teleop_defense_med_low"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:buttonTint="#051650"
+                            android:text="@string/med_low"
+                            android:textColor="@color/customTextPrimary"
+                            android:textSize="@dimen/font_medium" />
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/teleop_defense_medium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -411,246 +515,132 @@
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_medium" />
 
-                        <RadioButton
-                            android:id="@+id/teleop_passing_rate_large"
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/teleop_defense_med_high"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:buttonTint="#051650"
-                            android:text="@string/large"
+                            android:text="@string/med_high"
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_medium" />
 
-                        <RadioButton
-                            android:id="@+id/teleop_passing_rate_tons"
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/teleop_defense_high"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:buttonTint="#051650"
-                            android:text="@string/tons"
+                            android:text="@string/high"
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_medium" />
                     </RadioGroup>
+                    <!-- end DEFENSE RADIO BUTTONS layout -->
 
                 </LinearLayout>
-                <!-- end PASSING EFFECTIVENESS RATING layout -->
-
-                <!-- start HERDING FUEL CHECKBOX layout -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_rect_bottom"
-                    android:backgroundTint="#F0FFFF"
-                    android:orientation="horizontal">
-
-                    <CheckBox
-                        android:id="@+id/teleop_herded_fuel_checkbox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:backgroundTint="#051650"
-                        android:buttonTint="#051650"
-                        android:text="@string/herded_lots_of_fuel"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="@dimen/font_medium" />
-                </LinearLayout>
-                <!--end HERDING FUEL CHECKBOX layout -->
-
-            </LinearLayout>
-            <!-- end PASSING SECTION card layout -->
-
-            <!-- Section: DEFENSE SECTION -->
-            <!-- start DEFENSE SECTION card layout -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:background="@drawable/rounded_rect"
-                android:backgroundTint="#adc7ee"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/teleop_defense_label"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="7dp"
-                    android:layout_marginTop="7dp"
-                    android:text="@string/defense"
-                    android:textColor="@color/customTextPrimary"
-                    android:textSize="@dimen/font_medium"
-                    android:textStyle="bold" />
-
-                <!-- start DEFENSE RADIO BUTTONS layout -->
-                <RadioGroup
-                    android:id="@+id/teleop_defense_radio_group"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="7dp"
-                    android:paddingEnd="7dp"
-                    android:background="@drawable/rounded_rect_bottom"
-                    android:backgroundTint="#c2d5f2"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/teleop_defense_na"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:buttonTint="#051650"
-                        android:text="@string/n_a"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="@dimen/font_medium" />
-
-                    <RadioButton
-                        android:id="@+id/teleop_defense_low"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:buttonTint="#051650"
-                        android:text="@string/low"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="@dimen/font_medium" />
-
-                    <RadioButton
-                        android:id="@+id/teleop_defense_med_low"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:buttonTint="#051650"
-                        android:text="@string/med_low"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="@dimen/font_medium" />
-
-                    <RadioButton
-                        android:id="@+id/teleop_defense_medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:buttonTint="#051650"
-                        android:text="@string/medium"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="@dimen/font_medium" />
-
-                    <RadioButton
-                        android:id="@+id/teleop_defense_med_high"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:buttonTint="#051650"
-                        android:text="@string/med_high"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="@dimen/font_medium" />
-
-                    <RadioButton
-                        android:id="@+id/teleop_defense_high"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:buttonTint="#051650"
-                        android:text="@string/high"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="@dimen/font_medium" />
-                </RadioGroup>
-                <!-- end DEFENSE RADIO BUTTONS layout -->
-
-            </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
             <!-- end DEFENSE SECTION card layout -->
 
             <!-- Section: DRIVER ABILITY -->
             <!-- start DRIVER ABILITY card layout -->
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:background="@drawable/rounded_rect"
-                android:backgroundTint="#9aa3f2"
-                android:orientation="vertical">
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="8dp"
+                app:cardBackgroundColor="#9aa3f2"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
 
-                <TextView
-                    android:id="@+id/teleop_driving_ability_label"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="7dp"
-                    android:layout_marginTop="7dp"
-                    android:text="@string/driving_ability"
-                    android:textColor="@color/customTextPrimary"
-                    android:textSize="@dimen/font_medium"
-                    android:textStyle="bold" />
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
-                <!-- start DRIVING ABILITY RADIO BUTTONS layout -->
-                <RadioGroup
-                    android:id="@+id/teleop_driving_ability_radio_group"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="7dp"
-                    android:paddingEnd="7dp"
-                    android:background="@drawable/rounded_rect_bottom"
-                    android:backgroundTint="#b1b8f5"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/teleop_driving_ability_na"
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/teleop_driving_ability_label"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:buttonTint="#051650"
-                        android:text="@string/n_a"
+                        android:layout_marginStart="7dp"
+                        android:text="@string/driving_ability"
                         android:textColor="@color/customTextPrimary"
-                        android:textSize="@dimen/font_medium" />
+                        android:textSize="@dimen/font_medium"
+                        android:textStyle="bold" />
 
-                    <RadioButton
-                        android:id="@+id/teleop_driving_ability_slow"
-                        android:layout_width="wrap_content"
+                    <!-- start DRIVING ABILITY RADIO BUTTONS layout -->
+                    <RadioGroup
+                        android:id="@+id/teleop_driving_ability_radio_group"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:buttonTint="#051650"
-                        android:text="@string/slow"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="@dimen/font_medium" />
+                        android:paddingStart="7dp"
+                        android:paddingEnd="7dp"
+                        android:orientation="horizontal">
 
-                    <RadioButton
-                        android:id="@+id/teleop_driving_ability_jerky"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:buttonTint="#051650"
-                        android:text="@string/jerky"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="@dimen/font_medium" />
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/teleop_driving_ability_na"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:buttonTint="#051650"
+                            android:text="@string/n_a"
+                            android:textColor="@color/customTextPrimary"
+                            android:textSize="@dimen/font_medium" />
 
-                    <RadioButton
-                        android:id="@+id/teleop_driving_ability_avg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:buttonTint="#051650"
-                        android:text="@string/avg"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="@dimen/font_medium" />
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/teleop_driving_ability_slow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:buttonTint="#051650"
+                            android:text="@string/slow"
+                            android:textColor="@color/customTextPrimary"
+                            android:textSize="@dimen/font_medium" />
 
-                    <RadioButton
-                        android:id="@+id/teleop_driving_ability_fast"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:buttonTint="#051650"
-                        android:text="@string/fast"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="@dimen/font_medium" />
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/teleop_driving_ability_jerky"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:buttonTint="#051650"
+                            android:text="@string/jerky"
+                            android:textColor="@color/customTextPrimary"
+                            android:textSize="@dimen/font_medium" />
 
-                    <RadioButton
-                        android:id="@+id/teleop_driving_ability_elite"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:buttonTint="#051650"
-                        android:text="@string/elite"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="@dimen/font_medium" />
-                </RadioGroup>
-                <!-- end DRIVING ABILITY RADIO BUTTONS layout -->
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/teleop_driving_ability_avg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:buttonTint="#051650"
+                            android:text="@string/avg"
+                            android:textColor="@color/customTextPrimary"
+                            android:textSize="@dimen/font_medium" />
 
-            </LinearLayout>
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/teleop_driving_ability_fast"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:buttonTint="#051650"
+                            android:text="@string/fast"
+                            android:textColor="@color/customTextPrimary"
+                            android:textSize="@dimen/font_medium" />
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/teleop_driving_ability_elite"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:buttonTint="#051650"
+                            android:text="@string/elite"
+                            android:textColor="@color/customTextPrimary"
+                            android:textSize="@dimen/font_medium" />
+                    </RadioGroup>
+                    <!-- end DRIVING ABILITY RADIO BUTTONS layout -->
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
             <!-- end DRIVER ABILITY card layout -->
 
             <!-- start PHOTO layout -->
@@ -660,7 +650,7 @@
                 android:layout_width="589dp"
                 android:layout_height="186dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/rebuilt_logo"
                 android:orientation="horizontal">
 

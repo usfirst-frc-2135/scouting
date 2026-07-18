@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <AutoCompleteTextView
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/set_team_index_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

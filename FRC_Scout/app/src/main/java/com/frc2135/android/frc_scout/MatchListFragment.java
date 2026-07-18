@@ -27,6 +27,7 @@ import com.frc2135.android.frc_scout.databinding.ActionBarSwitchBinding;
 import com.frc2135.android.frc_scout.databinding.MatchListCardBinding;
 import com.frc2135.android.frc_scout.databinding.MatchListFragmentBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -118,6 +119,11 @@ public class MatchListFragment extends Fragment
         Log.d(TAG, "refreshMatchList");
         List<MatchData> allMatches = m_scoutedMatches.getMatchList();
         m_displayedMatches = m_scoutedMatches.filterMatchList(allMatches, m_eventFilter, m_matchFilter, m_teamFilter, m_scoutFilter);
+
+        boolean isEmpty = m_displayedMatches.isEmpty();
+        m_binding.matchListRecyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+        m_binding.matchListEmptyStateContainer.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
+
         updateSorting(); // This will apply current sort criteria and update the adapter
         Log.i(TAG, "Refreshed list. Displaying " + m_displayedMatches.size() + " scouted matches.");
     }
@@ -133,7 +139,7 @@ public class MatchListFragment extends Fragment
         Log.v(TAG, "onResume");
         // Ensure dropdown options are populated and correct
         ArrayAdapter<CharSequence> sortAdapter = new ArrayAdapter<>(requireContext(),
-                android.R.layout.simple_dropdown_item_1line, getResources().getTextArray(R.array.sort_criteria_array));
+                R.layout.dropdown_item, getResources().getTextArray(R.array.sort_criteria_array));
         m_binding.matchListSortInput.setAdapter(sortAdapter);
         refreshMatchList();
     }
@@ -171,7 +177,7 @@ public class MatchListFragment extends Fragment
     private void setupSortSpinner()
     {
         ArrayAdapter<CharSequence> sortAdapter = new ArrayAdapter<>(requireContext(),
-                android.R.layout.simple_dropdown_item_1line, getResources().getTextArray(R.array.sort_criteria_array));
+                R.layout.dropdown_item, getResources().getTextArray(R.array.sort_criteria_array));
         m_binding.matchListSortInput.setAdapter(sortAdapter);
         m_binding.matchListSortInput.setText(sortAdapter.getItem(0), false);
 
@@ -512,13 +518,20 @@ public class MatchListFragment extends Fragment
             Log.d(TAG, "Delete match button clicked");
             new MaterialAlertDialogBuilder(requireContext())
                     .setTitle(R.string.delete_match)
-                    .setMessage("Are you sure you want to delete this match? This action cannot be undone.")
+                    .setMessage("Are you sure you want to delete this match?")
                     .setPositiveButton("Delete", (dialog, which) -> {
                         m_scoutedMatches.deleteMatch(m);
                         refreshMatchList();
                         m_selectedMatch = null;
-                        Log.i(TAG, "Match deleted " + m.getMatchNumber());
-                        Toast.makeText(requireContext(), "Match deleted " + m.getMatchNumber(), Toast.LENGTH_SHORT).show();
+                        Log.i(TAG, "Match deleted: " + m.getMatchNumber());
+
+                        Snackbar.make(m_binding.getRoot(), "Match deleted", Snackbar.LENGTH_LONG)
+                                .setAction("Undo", v -> {
+                                    m_scoutedMatches.addMatch(m);
+                                    m_scoutedMatches.saveMatchDataFile(m);
+                                    refreshMatchList();
+                                    Log.i(TAG, "Delete undone for match: " + m.getMatchNumber());
+                                }).show();
                     })
                     .setNegativeButton("Cancel", (dialog, which) -> m_selectedMatch = null)
                     .show();
