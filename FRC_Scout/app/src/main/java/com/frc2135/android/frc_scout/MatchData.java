@@ -481,7 +481,6 @@ public class MatchData
 
     /**
      * Sets the name of the scout who recorded this match.
-     * Standardizes casing (e.g. "John" or "J").
      *
      * @param name the scout's name
      */
@@ -492,15 +491,7 @@ public class MatchData
             m_scoutName = "";
             return;
         }
-        String trimmed = name.trim();
-        if (trimmed.length() == 1)
-        {
-            m_scoutName = trimmed.toUpperCase();
-        }
-        else
-        {
-            m_scoutName = trimmed.substring(0, 1).toUpperCase() + trimmed.substring(1).toLowerCase();
-        }
+        m_scoutName = name.trim();
     }
 
     /**
