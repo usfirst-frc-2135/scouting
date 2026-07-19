@@ -56,6 +56,10 @@
     <style name="CustomChipStyle" parent="Widget.MaterialComponents.Chip.Filter">
         <item name="chipBackgroundColor">@color/chip_background_color</item>
         <item name="android:textColor">@android:color/white</item>
+        <item name="chipStartPadding">6dp</item>
+        <item name="chipEndPadding">6dp</item>
+        <item name="textStartPadding">6dp</item>
+        <item name="textEndPadding">6dp</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

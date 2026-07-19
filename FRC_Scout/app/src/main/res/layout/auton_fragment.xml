@@ -38,7 +38,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="4dp">
+                        android:padding="6dp">
 
                         <TextView
                             android:id="@+id/auton_preload_title"
@@ -66,7 +66,7 @@
                         android:layout_height="wrap_content"
                         android:background="#8DB0BA"
                         android:orientation="vertical"
-                        android:padding="4dp">
+                        android:padding="6dp">
 
                         <TextView
                             android:id="@+id/auton_preload_accuracy_label"
@@ -176,7 +176,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="4dp">
+                        android:padding="6dp">
 
                         <TextView
                             android:id="@+id/auton_hopper_label"
@@ -235,7 +235,7 @@
                         android:layout_height="wrap_content"
                         android:background="#F0A271"
                         android:orientation="vertical"
-                        android:padding="4dp">
+                        android:padding="6dp">
 
                         <TextView
                             android:id="@+id/auton_accuracy_label"
@@ -346,14 +346,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="6dp">
 
                     <TextView
                         android:id="@+id/auton_fuel_source_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        android:layout_marginTop="7dp"
                         android:text="@string/got_fuel_from"
                         android:textColor="@color/customTextPrimary"
                         android:textSize="@dimen/font_medium"
@@ -364,9 +365,9 @@
                         android:id="@+id/auton_fuel_chip_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="12dp"
                         android:background="#e6a28b"
-                        android:padding="4dp"
+                        android:padding="6dp"
                         app:chipSpacingHorizontal="8dp">
 
                         <com.google.android.material.chip.Chip
@@ -417,7 +418,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="360dp"
+                    android:layout_height="330dp"
                     android:orientation="horizontal">
 
                     <!-- start CLIMB POSITION title layout -->

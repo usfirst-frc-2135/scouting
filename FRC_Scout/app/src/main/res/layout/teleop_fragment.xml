@@ -38,7 +38,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="4dp">
+                        android:padding="6dp">
 
                         <TextView
                             android:id="@+id/teleop_hopper_label"
@@ -97,7 +97,7 @@
                         android:layout_height="wrap_content"
                         android:background="#DFE2FB"
                         android:orientation="vertical"
-                        android:padding="4dp">
+                        android:padding="6dp">
 
                         <TextView
                             android:id="@+id/teleop_accuracy_label"
@@ -195,7 +195,7 @@
                         android:layout_height="wrap_content"
                         android:background="#EAECFD"
                         android:orientation="horizontal"
-                        android:padding="4dp">
+                        android:padding="6dp">
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/teleop_intake_shoot_chip"
@@ -232,12 +232,13 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="4dp">
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:padding="6dp">
 
                         <TextView
                             android:id="@+id/teleop_passing_zone_label"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:text="@string/passing_from_zone"
@@ -250,7 +251,7 @@
                             android:id="@+id/teleop_pass_zone_chip_group"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
+                            android:layout_marginStart="12dp"
                             app:chipSpacingHorizontal="12dp">
 
                             <com.google.android.material.chip.Chip
@@ -279,7 +280,7 @@
                         android:layout_height="wrap_content"
                         android:background="#ADD8EF"
                         android:orientation="vertical"
-                        android:padding="4dp">
+                        android:padding="6dp">
 
                         <TextView
                             android:id="@+id/teleop_passing_rate_label"
@@ -358,14 +359,14 @@
                         android:layout_height="wrap_content"
                         android:background="#F0FFFF"
                         android:orientation="horizontal"
-                        android:padding="4dp">
+                        android:padding="6dp">
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/teleop_herded_fuel_chip"
                             style="@style/CustomChipStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
+                            android:layout_marginStart="6dp"
                             android:text="@string/herded_lots_of_fuel" />
                     </LinearLayout>
                     <!--end HERDING FUEL CHIP layout -->
@@ -389,7 +390,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="4dp">
+                    android:padding="6dp">
 
                     <TextView
                         android:id="@+id/teleop_defense_label"
@@ -491,7 +492,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="4dp">
+                    android:padding="6dp">
 
                     <TextView
                         android:id="@+id/teleop_driving_ability_label"
