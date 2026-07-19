@@ -82,7 +82,7 @@ public class TBAMatches extends BaseJSONSerializer
             {
                 Log.i(TAG, "Creating new sTBAMatches for eventCode: " + eventCode);
                 sTBAMatches = new TBAMatches(context, eventCode);
-                sTBAMatches.readTBAMatchesJSON(context, true);
+                sTBAMatches.readTBAMatchesJSON(true);
             }
             else
             {
@@ -91,7 +91,7 @@ public class TBAMatches extends BaseJSONSerializer
                 {
                     Log.i(TAG, "Updating TBA matches: " + oldEventCode + " -> " + eventCode);
                     sTBAMatches.setEventCode(eventCode);
-                    sTBAMatches.readTBAMatchesJSON(context, true);
+                    sTBAMatches.readTBAMatchesJSON(true);
                 }
             }
             return sTBAMatches;
@@ -135,12 +135,11 @@ public class TBAMatches extends BaseJSONSerializer
     /**
      * Reads the event matches JSON file from internal storage for the current event.
      *
-     * @param context the context used to open the file and show messages
      * @param bSilent if true, error notifications are suppressed
      */
-    public void readTBAMatchesJSON(Context context, boolean bSilent)
+    public void readTBAMatchesJSON(boolean bSilent)
     {
-        if (!Settings.getInstance(context).isValidEventCode(m_eventCode))
+        if (!Settings.getInstance(m_appContext).isValidEventCode(m_eventCode))
         {
             return;
         }
@@ -153,16 +152,16 @@ public class TBAMatches extends BaseJSONSerializer
             if (m_tbaMatchesJSON != null)
             {
                 m_bTBAMatchesLoaded = true;
-                super.displayToastMessages(context, TAG, "Successfully loaded TBA matches for " + m_eventCode, false, null);
+                super.displayToastMessages(m_appContext, TAG, "Successfully loaded TBA matches for " + m_eventCode, bSilent, null);
             }
             else
             {
-                super.displayToastMessages(context, TAG, "TBA matches file not found for " + m_eventCode, bSilent, null);
+                super.displayToastMessages(m_appContext, TAG, "TBA matches file not found for " + m_eventCode, bSilent, null);
             }
         }
         catch (JSONException | IOException e)
         {
-            super.displayToastMessages(context, TAG, "Failed to parse TBA matches for: " + m_eventCode, bSilent, e);
+            super.displayToastMessages(m_appContext, TAG, "Failed to parse TBA matches for: " + m_eventCode, bSilent, e);
         }
     }
 
@@ -203,8 +202,9 @@ public class TBAMatches extends BaseJSONSerializer
         try
         {
             File file = new File(m_dataDir, eventFileName);
-            writeStringToFile(file, tbaMatches.toString());
+            saveJSONArray(file, tbaMatches);
             Log.i(TAG, "Successfully saved " + tbaMatches.length() + " TBA matches for event: " + eventCode);
+            readTBAMatchesJSON(bSilent);
             return true;
         }
         catch (IOException e)

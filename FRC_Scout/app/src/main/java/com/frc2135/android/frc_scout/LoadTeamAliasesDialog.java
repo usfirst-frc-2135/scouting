@@ -32,7 +32,6 @@ import java.util.Objects;
 public class LoadTeamAliasesDialog extends DialogFragment
 {
     private static final String TAG = "LoadTeamAliasesDialog";
-
     private LoadEventDialogBinding m_binding;
 
     /**
@@ -151,6 +150,7 @@ public class LoadTeamAliasesDialog extends DialogFragment
      */
     private void handleOkClick(AlertDialog dialog)
     {
+        Log.d(TAG, "handleOkClick called");
         String eventCode = Objects.requireNonNull(m_binding.loadEventCodeInput.getText()).toString().trim().toLowerCase(Locale.US);
 
         Settings settings = Settings.getInstance(requireContext());
@@ -247,8 +247,7 @@ public class LoadTeamAliasesDialog extends DialogFragment
     private boolean saveTeamAliases(Context context, String eventCode, org.json.JSONArray response)
     {
         TeamAliases teamAliases = TeamAliases.getInstance(context, eventCode, true);
-        teamAliases.deleteTeamAliasesFile(eventCode);
-        return teamAliases.writeTeamAliasesFile(eventCode, response, false);
+        return teamAliases.writeTeamAliasesFile(eventCode, response, true);
     }
 
     /**

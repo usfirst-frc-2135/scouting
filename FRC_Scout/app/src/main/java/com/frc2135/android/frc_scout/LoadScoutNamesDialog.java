@@ -82,7 +82,7 @@ public class LoadScoutNamesDialog extends DialogFragment
                     if (!eventCode.isEmpty())
                     {
                         ScoutNames scoutNames = ScoutNames.getInstance(requireContext(), eventCode, false);
-                        if (scoutNames.deleteEventScoutNames(requireContext(), eventCode) > 0)
+                        if (scoutNames.deleteScoutNamesFile(eventCode) > 0)
                         {
                             displayToastMessages(requireContext(), TAG, "Cleared Scout Names for " + eventCode, false, null);
                         }
@@ -154,6 +154,7 @@ public class LoadScoutNamesDialog extends DialogFragment
      */
     private void handleOkClick(AlertDialog dialog)
     {
+        Log.d(TAG, "handleOkClick called");
         String eventCode = Objects.requireNonNull(m_binding.loadEventCodeInput.getText()).toString().trim().toLowerCase(Locale.US);
 
         Settings settings = Settings.getInstance(requireContext());
@@ -249,7 +250,7 @@ public class LoadScoutNamesDialog extends DialogFragment
     private boolean saveScoutNames(Context context, String eventCode, org.json.JSONArray response)
     {
         ScoutNames scoutNames = ScoutNames.getInstance(context, eventCode, true);
-        return scoutNames.saveEventScoutNames(context, eventCode, response);
+        return scoutNames.writeScoutNamesFile(eventCode, response, true);
     }
 
     /**

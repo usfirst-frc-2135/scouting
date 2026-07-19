@@ -37,7 +37,6 @@ import java.util.Objects;
 public class LoadTBAMatchesDialog extends DialogFragment
 {
     private static final String TAG = "LoadEventDialog";
-
     private LoadEventDialogBinding m_binding;
 
     /**
@@ -182,6 +181,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
     {
         Log.d(TAG, "Starting TBA matches download for: " + eventCode);
 
+        // Disable button to prevent multiple requests
         MaterialButton okButton = (MaterialButton) dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         okButton.setEnabled(false);
         m_binding.loadEventCodeInput.setEnabled(false);
@@ -277,12 +277,10 @@ public class LoadTBAMatchesDialog extends DialogFragment
     private boolean saveTBAMatches(Context context, String eventCode, JSONArray response)
     {
         TBAMatches tbaMatches = TBAMatches.getInstance(context, eventCode, true);
-        tbaMatches.deleteTBAMatchesFile(eventCode);
-        if (tbaMatches.writeTBAMatchesFile(eventCode, response, false))
+        if (tbaMatches.writeTBAMatchesFile(eventCode, response, true))
         {
             // Update current event code settings!
-            Settings settings = Settings.getInstance(context);
-            settings.setEventCode(eventCode);
+            Settings.getInstance(context).setEventCode(eventCode);
             return true;
         }
         return false;

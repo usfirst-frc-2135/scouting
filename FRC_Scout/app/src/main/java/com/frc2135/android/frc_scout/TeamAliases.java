@@ -77,7 +77,7 @@ public class TeamAliases extends BaseJSONSerializer
             {
                 Log.i(TAG, "Creating a new sTeamAliases for eventCode " + eventCode);
                 sTeamAliases = new TeamAliases(context, eventCode);
-                sTeamAliases.readTeamAliasesJSON(context, true);
+                sTeamAliases.readTeamAliasesJSON(true);
             }
             else
             {
@@ -86,7 +86,7 @@ public class TeamAliases extends BaseJSONSerializer
                 {
                     Log.i(TAG, "Resetting TeamAliases: " + oldEventCode + " -> " + eventCode);
                     sTeamAliases.setEventCode(eventCode);
-                    sTeamAliases.readTeamAliasesJSON(context, true);
+                    sTeamAliases.readTeamAliasesJSON(true);
                 }
             }
             return sTeamAliases;
@@ -129,12 +129,11 @@ public class TeamAliases extends BaseJSONSerializer
     /**
      * Reads the aliases JSON file from internal storage for the current event.
      *
-     * @param context the context used to open the file and show messages
      * @param bSilent if true, error notifications are suppressed
      */
-    public void readTeamAliasesJSON(Context context, boolean bSilent)
+    public void readTeamAliasesJSON(boolean bSilent)
     {
-        if (m_eventCode == null || m_eventCode.trim().isEmpty())
+        if (!Settings.getInstance(m_appContext).isValidEventCode(m_eventCode))
         {
             return;
         }
@@ -148,16 +147,16 @@ public class TeamAliases extends BaseJSONSerializer
             {
                 parseTeamAliasesJSON(jsonArray);
                 m_bTeamAliasesLoaded = true;
-                super.displayToastMessages(context, TAG, "Successfully loaded team aliases for " + m_eventCode, false, null);
+                super.displayToastMessages(m_appContext, TAG, "Successfully loaded team aliases for " + m_eventCode, bSilent, null);
             }
             else
             {
-                super.displayToastMessages(context, TAG, "Team aliases file not found for " + m_eventCode, bSilent, null);
+                super.displayToastMessages(m_appContext, TAG, "Team aliases file not found for " + m_eventCode, bSilent, null);
             }
         }
         catch (JSONException | IOException e)
         {
-            super.displayToastMessages(context, TAG, "Failed to parse team aliases for: " + m_eventCode, bSilent, e);
+            super.displayToastMessages(m_appContext, TAG, "Failed to parse team aliases for: " + m_eventCode, bSilent, e);
         }
     }
 
@@ -212,14 +211,20 @@ public class TeamAliases extends BaseJSONSerializer
             return false;
         }
 
-        String aliasFilename = getFilename(eventCode);
         Log.d(TAG, "Writing team aliases to file for event: " + eventCode);
+
+        // Cleanup existing aliases file if it exists
+        deleteTeamAliasesFile(eventCode);
+
+        String aliasFilename = getFilename(eventCode);
         Log.i(TAG, "Saving team aliases info for " + eventCode + " to: " + aliasFilename);
 
         try
         {
             File file = new File(m_dataDir, aliasFilename);
             saveJSONArray(file, teamAliases);
+            Log.i(TAG, "Successfully saved " + teamAliases.length() + " team aliases for event: " + eventCode);
+            readTeamAliasesJSON(bSilent);
             return true;
         }
         catch (IOException e)
@@ -334,17 +339,17 @@ public class TeamAliases extends BaseJSONSerializer
     /**
      * Retrieves the real FRC team number associated with a given alias.
      *
-     * @param myAlias the alias string (e.g., "9901")
+     * @param aliasNumStr the alias string (e.g., "9901")
      * @return the real team number (e.g., "2135"), or an empty string if the alias is unrecognized
      */
-    public String getTeamNumForAlias(String myAlias)
+    public String getTeamNumForAlias(String aliasNumStr)
     {
-        if (myAlias == null)
+        if (aliasNumStr == null)
         {
             return "";
         }
 
-        return m_aliasToTeamMap.getOrDefault(myAlias, "");
+        return m_aliasToTeamMap.getOrDefault(aliasNumStr, "");
     }
 
     /**
