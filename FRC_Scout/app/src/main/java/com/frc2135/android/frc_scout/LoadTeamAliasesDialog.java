@@ -27,7 +27,7 @@ import java.util.Objects;
 
 /**
  * Dialog for loading team aliases data for a specific event from the team's scouting website.
- * This dialog handles fetching, clearing, and saving team-specific alias mapping data.
+ * This dialog handles fetching, saving, and clearing team-specific alias mapping data.
  */
 public class LoadTeamAliasesDialog extends DialogFragment
 {
@@ -78,15 +78,7 @@ public class LoadTeamAliasesDialog extends DialogFragment
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
                 .setNeutralButton(R.string.clear_team_aliases, (d, w) -> {
                     Log.i(TAG, "Clear Team Aliases called");
-                    String eventCode = Objects.requireNonNull(m_binding.loadEventCodeInput.getText()).toString().trim();
-                    if (!eventCode.isEmpty())
-                    {
-                        TeamAliases teamAliases = TeamAliases.getInstance(requireContext(), eventCode, false);
-                        if (teamAliases.deleteTeamAliasesFile(eventCode) > 0)
-                        {
-                            displayToastMessages(requireContext(), TAG, "Cleared Team Aliases for " + eventCode, false, null);
-                        }
-                    }
+                    clearTeamAliases();
                     m_binding.loadEventCodeInput.setText("");
                     m_binding.loadEventCodeLayout.setError(null);
                 })
@@ -169,12 +161,12 @@ public class LoadTeamAliasesDialog extends DialogFragment
      * Updates the UI state to show loading during the request.
      * On success, saves the data locally and dismisses the dialog.
      *
-     * @param dialog    the dialog instance to update or dismiss upon completion
+     * @param dialog    the active {@link AlertDialog} instance to update or dismiss
      * @param eventCode the FRC event code (e.g., "2026casac")
      */
     private void downloadTeamAliases(AlertDialog dialog, String eventCode)
     {
-        Log.i(TAG, "Starting aliases download for: " + eventCode);
+        Log.i(TAG, "Starting team aliases download for: " + eventCode);
 
         // Disable button to prevent multiple requests
         MaterialButton okButton = (MaterialButton) dialog.getButton(AlertDialog.BUTTON_POSITIVE);
@@ -248,6 +240,22 @@ public class LoadTeamAliasesDialog extends DialogFragment
     {
         TeamAliases teamAliases = TeamAliases.getInstance(context, eventCode, true);
         return teamAliases.writeTeamAliasesFile(eventCode, response, true);
+    }
+
+    /**
+     * Clears official team aliases for the event code currently entered in the input field.
+     */
+    private void clearTeamAliases()
+    {
+        String eventCode = Objects.requireNonNull(m_binding.loadEventCodeInput.getText()).toString().trim();
+        if (!eventCode.isEmpty())
+        {
+            TeamAliases teamAliases = TeamAliases.getInstance(requireContext(), eventCode, false);
+            if (teamAliases.deleteTeamAliasesFile(eventCode) > 0)
+            {
+                displayToastMessages(requireContext(), TAG, "Cleared Team Aliases for " + eventCode, false, null);
+            }
+        }
     }
 
     /**

@@ -26,8 +26,8 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
- * Dialog for loading scout names for a specific event from the team's scouting website.
- * This dialog handles fetching and saving a list of recognized scout names for autopopulation.
+ * Dialog for loading recognized scout names for a specific event from the team's scouting website.
+ * This dialog handles fetching, saving, and clearing a list of scout names used for autopopulation.
  */
 public class LoadScoutNamesDialog extends DialogFragment
 {
@@ -78,19 +78,7 @@ public class LoadScoutNamesDialog extends DialogFragment
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
                 .setNeutralButton("Clear Scout Names", (d, w) -> {
                     Log.i(TAG, "Clear Scout Names called");
-                    String eventCode = Objects.requireNonNull(m_binding.loadEventCodeInput.getText()).toString().trim();
-                    if (!eventCode.isEmpty())
-                    {
-                        ScoutNames scoutNames = ScoutNames.getInstance(requireContext(), eventCode, false);
-                        if (scoutNames.deleteScoutNamesFile(eventCode) > 0)
-                        {
-                            displayToastMessages(requireContext(), TAG, "Cleared Scout Names for " + eventCode, false, null);
-                        }
-                        if (settings != null)
-                        {
-                            settings.clearPastScouts();
-                        }
-                    }
+                    clearScoutNames();
                     m_binding.loadEventCodeInput.setText("");
                     m_binding.loadEventCodeLayout.setError(null);
                 })
@@ -165,7 +153,7 @@ public class LoadScoutNamesDialog extends DialogFragment
         }
 
         m_binding.loadEventCodeLayout.setError(null);
-        downloadScoutNames(eventCode, dialog);
+        downloadScoutNames(dialog, eventCode);
     }
 
     /**
@@ -173,12 +161,12 @@ public class LoadScoutNamesDialog extends DialogFragment
      * Updates the UI state to show loading during the request.
      * On success, saves the data locally and dismisses the dialog.
      *
+     * @param dialog    the active {@link AlertDialog} instance to update or dismiss
      * @param eventCode the FRC event code (e.g., "2026casac")
-     * @param dialog    the dialog instance to update or dismiss upon completion
      */
-    private void downloadScoutNames(String eventCode, AlertDialog dialog)
+    private void downloadScoutNames(AlertDialog dialog, String eventCode)
     {
-        Log.i(TAG, "Starting scouts download for: " + eventCode);
+        Log.i(TAG, "Starting scout names download for: " + eventCode);
 
         MaterialButton okButton = (MaterialButton) dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         okButton.setEnabled(false);
@@ -186,13 +174,13 @@ public class LoadScoutNamesDialog extends DialogFragment
         m_binding.loadEventProgressIndicator.setVisibility(View.VISIBLE);
 
         String urlStr = Constants.TEAM_WEBSITE_JSON_URL + eventCode + Constants.SCOUT_NAMES_FILENAME_SUFFIX;
-        Log.i(TAG, "URL: " + urlStr);
+        Log.i(TAG, "Scout names URL: " + urlStr);
 
         Context context = requireContext().getApplicationContext();
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlStr, null,
                 response -> {
-                    Log.i(TAG, "Successfully received scout names file for " + eventCode);
+                    Log.i(TAG, "Successfully received scout names file for: " + eventCode);
                     if (response.length() == 0)
                     {
                         displayToastMessages(requireContext(), TAG, "No scout names in file for " + eventCode, false, null);
@@ -214,7 +202,8 @@ public class LoadScoutNamesDialog extends DialogFragment
                     }
                 },
                 error -> {
-                    displayToastMessages(context, TAG, "Failed to download scout names for '" + eventCode + "'. Check connection or event code.", false, null);
+                    Log.e(TAG, "Download scout names failed: " + error.toString());
+                    displayToastMessages(requireContext(), TAG, "Failed to download scout names for '" + eventCode + "'. Check connection or event code.", false, null);
                     resetUiState(okButton);
                 });
 
@@ -251,6 +240,22 @@ public class LoadScoutNamesDialog extends DialogFragment
     {
         ScoutNames scoutNames = ScoutNames.getInstance(context, eventCode, true);
         return scoutNames.writeScoutNamesFile(eventCode, response, true);
+    }
+
+    /**
+     * Clears official scout names for the event code currently entered in the input field.
+     */
+    private void clearScoutNames()
+    {
+        String eventCode = Objects.requireNonNull(m_binding.loadEventCodeInput.getText()).toString().trim();
+        if (!eventCode.isEmpty())
+        {
+            ScoutNames scoutNames = ScoutNames.getInstance(requireContext(), eventCode, false);
+            if (scoutNames.deleteScoutNamesFile(eventCode) > 0)
+            {
+                displayToastMessages(requireContext(), TAG, "Cleared Scout Names for " + eventCode, false, null);
+            }
+        }
     }
 
     /**

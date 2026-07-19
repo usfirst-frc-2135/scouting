@@ -31,12 +31,11 @@ import java.util.Objects;
 
 /**
  * Dialog for loading match data for a specific event from The Blue Alliance (TBA) API.
- * This dialog handles event code validation, data download via Volley, and local persistence.
- * Also provides an option to clear all cached TBA matches for an event.
+ * This dialog handles fetching, saving, and clearing event-specific match information.
  */
 public class LoadTBAMatchesDialog extends DialogFragment
 {
-    private static final String TAG = "LoadEventDialog";
+    private static final String TAG = "LoadTBAMatchesDialog";
     private LoadEventDialogBinding m_binding;
 
     /**
@@ -83,15 +82,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
                 .setNeutralButton(R.string.clear_tba_matches, (d, w) -> {
                     Log.i(TAG, "Clear TBA Matches called");
-                    String eventCode = Objects.requireNonNull(m_binding.loadEventCodeInput.getText()).toString().trim();
-                    if (!eventCode.isEmpty())
-                    {
-                        TBAMatches tbaMatches = TBAMatches.getInstance(requireContext(), eventCode, false);
-                        if (tbaMatches.deleteTBAMatchesFile(eventCode) > 0)
-                        {
-                            displayToastMessages(requireContext(), TAG, "Cleared TBA Matches for " + eventCode, false, null);
-                        }
-                    }
+                    clearTBAMatches();
                     m_binding.loadEventCodeInput.setText("");
                     m_binding.loadEventCodeLayout.setError(null);
                 })
@@ -174,7 +165,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
      * Updates the UI state to show loading during the request.
      * On success, saves the data locally and dismisses the dialog.
      *
-     * @param dialog    the dialog instance to update or dismiss upon completion
+     * @param dialog    the active {@link AlertDialog} instance to update or dismiss
      * @param eventCode the TBA event code (e.g., "2026casac")
      */
     private void downloadTBAMatches(AlertDialog dialog, String eventCode)
@@ -284,6 +275,22 @@ public class LoadTBAMatchesDialog extends DialogFragment
             return true;
         }
         return false;
+    }
+
+    /**
+     * Clears official match data for the event code currently entered in the input field.
+     */
+    private void clearTBAMatches()
+    {
+        String eventCode = Objects.requireNonNull(m_binding.loadEventCodeInput.getText()).toString().trim();
+        if (!eventCode.isEmpty())
+        {
+            TBAMatches tbaMatches = TBAMatches.getInstance(requireContext(), eventCode, false);
+            if (tbaMatches.deleteTBAMatchesFile(eventCode) > 0)
+            {
+                displayToastMessages(requireContext(), TAG, "Cleared TBA Matches for " + eventCode, false, null);
+            }
+        }
     }
 
     /**

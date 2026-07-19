@@ -17,6 +17,8 @@ import androidx.fragment.app.FragmentManager;
 
 import com.frc2135.android.frc_scout.databinding.EndgameFragmentBinding;
 
+import java.util.Objects;
+
 /**
  * Fragment for recording endgame scouting data (climbing, comments, etc.).
  * Manages UI components for start climb time, climb level, climb position, and whether the robot died during the match.
@@ -335,7 +337,7 @@ public class EndgameFragment extends Fragment
         }
         m_matchData.setStartClimb(getStartClimb());
         m_matchData.setDiedValue(getDiedValue());
-        m_matchData.setComment(m_binding.endgameCommentsInput.getText().toString());
+        m_matchData.setComment(Objects.requireNonNull(m_binding.endgameCommentsInput.getText()).toString());
         m_matchData.setEndgameClimbPos(getClimbPos());
         m_matchData.setEndgameClimbLevel(getClimbLevel());
     }
