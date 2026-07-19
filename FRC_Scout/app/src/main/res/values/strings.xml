@@ -135,7 +135,7 @@
     <string name="one_qtr">¼</string>
     <string name="few">Few</string>
 
-    <string name="got_fuel_from">GOT FUEL FROM</string>
+    <string name="fuel_source">FUEL SOURCE</string>
 
     <!--    teleop mode strings -->
     <string name="intake_while_shooting">Intake and shoot at the same time</string>

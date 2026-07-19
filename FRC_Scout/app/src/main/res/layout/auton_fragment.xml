@@ -355,50 +355,44 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        android:text="@string/got_fuel_from"
+                        android:text="@string/fuel_source"
                         android:textColor="@color/customTextPrimary"
                         android:textSize="@dimen/font_medium"
                         android:textStyle="bold" />
 
                     <!-- start FUEL CHIPS layout -->
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/auton_fuel_chip_group"
-                        android:layout_width="match_parent"
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/auton_az_chip"
+                        style="@style/CustomChipStyle"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:background="#e6a28b"
-                        android:padding="6dp"
-                        app:chipSpacingHorizontal="8dp">
+                        android:layout_marginStart="10dp"
+                        android:text="@string/alliance_zone" />
 
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/auton_az_chip"
-                            style="@style/CustomChipStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/alliance_zone" />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/auton_depot_chip"
+                        style="@style/CustomChipStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:text="@string/depot" />
 
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/auton_depot_chip"
-                            style="@style/CustomChipStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/depot" />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/auton_outpost_chip"
+                        style="@style/CustomChipStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:text="@string/outpost" />
 
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/auton_outpost_chip"
-                            style="@style/CustomChipStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/outpost" />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/auton_nz_chip"
+                        style="@style/CustomChipStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:text="@string/neutral_zone" />
 
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/auton_nz_chip"
-                            style="@style/CustomChipStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/neutral_zone" />
-
-                    </com.google.android.material.chip.ChipGroup>
                     <!-- end FUEL CHIPS layout -->
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
