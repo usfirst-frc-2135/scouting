@@ -76,31 +76,26 @@ public class TBAMatches extends BaseJSONSerializer
     public static TBAMatches getInstance(Context context, String eventCode, boolean bForceReload)
     {
         Log.v(TAG, "getInstance");
-        if (sTBAMatches == null)
+        synchronized (TBAMatches.class)
         {
-            synchronized (TBAMatches.class)
+            if (sTBAMatches == null)
             {
-                if (sTBAMatches == null)
+                Log.i(TAG, "Creating new sTBAMatches for eventCode: " + eventCode);
+                sTBAMatches = new TBAMatches(context, eventCode);
+                sTBAMatches.readTBAMatchesJSON(context, true);
+            }
+            else
+            {
+                String oldEventCode = sTBAMatches.getEventCode();
+                if (bForceReload || !oldEventCode.equalsIgnoreCase(eventCode))
                 {
-                    Log.i(TAG, "Creating new sTBAMatches for eventCode: " + eventCode);
-                    sTBAMatches = new TBAMatches(context, eventCode);
+                    Log.i(TAG, "Updating TBA matches: " + oldEventCode + " -> " + eventCode);
+                    sTBAMatches.setEventCode(eventCode);
                     sTBAMatches.readTBAMatchesJSON(context, true);
                 }
             }
+            return sTBAMatches;
         }
-
-        // Handle event code change or forced reload
-        synchronized (TBAMatches.class)
-        {
-            String currentCode = sTBAMatches.getEventCode();
-            if (bForceReload || !currentCode.equalsIgnoreCase(eventCode))
-            {
-                Log.i(TAG, "Updating TBA matches: " + currentCode + " -> " + eventCode);
-                sTBAMatches.setEventCode(eventCode);
-                sTBAMatches.readTBAMatchesJSON(context, true);
-            }
-        }
-        return sTBAMatches;
     }
 
     /**

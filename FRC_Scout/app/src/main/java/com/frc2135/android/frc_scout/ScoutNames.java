@@ -254,30 +254,55 @@ public class ScoutNames extends BaseJSONSerializer
     }
 
     /**
-     * Deletes the local scout names record associated with a specific event.
+     * Deletes scout names records from local storage.
+     * If an event code is provided, only that file is deleted. If null, all scout name files are removed.
      *
-     * @param eventCode the FRC event code
-     * @return 1 if a file was deleted, 0 otherwise
+     * @param eventCode the FRC event code, or null to clear all
+     * @return the number of files deleted
      */
     public int deleteScoutNamesFile(String eventCode)
     {
+        Log.d(TAG, "Deleting scout names file for event: " + eventCode);
+        File[] fileList;
+        int deletedCount = 0;
+
+        // Delete all files or selected file
         if (eventCode == null || eventCode.trim().isEmpty())
         {
-            Log.e(TAG, "Invalid event code: " + eventCode);
-            return 0;
+            fileList = m_dataDir.listFiles();
         }
-
-        String filename = getFilename(eventCode);
-        File file = new File(m_dataDir, filename);
-
-        if (file.exists() && file.delete())
+        else
         {
-            Log.i(TAG, "Successfully deleted scout names file: " + filename);
-            return 1;
+            String filename = getFilename(eventCode);
+            fileList = new File[]{new File(m_dataDir, filename)};
         }
 
-        Log.w(TAG, "Failed to delete scout names file: " + filename);
-        return 0;
+        // Walk through list deleting files
+        if (fileList != null)
+        {
+            for (File file : fileList)
+            {
+                if (file.getName().endsWith(Constants.SCOUT_NAMES_FILENAME_SUFFIX))
+                {
+                    if (file.exists() && file.delete())
+                    {
+                        deletedCount++;
+                        Log.i(TAG, "Deleted event file: " + file.getName());
+                    }
+                }
+            }
+        }
+
+        if (deletedCount > 0)
+        {
+            ScoutNames.clearScoutNames();
+        }
+        else
+        {
+            Log.w(TAG, "Failed to delete scout names files");
+        }
+
+        return deletedCount;
     }
 
     /**
@@ -320,20 +345,6 @@ public class ScoutNames extends BaseJSONSerializer
             return true;
         }
         return false;
-    }
-
-    /**
-     * Clears all scout names from memory and deletes the local record for the specified event.
-     *
-     * @param context   the context used for file operations
-     * @param eventCode the FRC event code
-     * @return the number of files deleted (1 if successful)
-     */
-    public int deleteEventScoutNames(@SuppressWarnings("unused") Context context, String eventCode)
-    {
-        m_bScoutNamesLoaded = false;
-        m_scoutNames = new ArrayList<>();
-        return deleteScoutNamesFile(eventCode);
     }
 
     /**

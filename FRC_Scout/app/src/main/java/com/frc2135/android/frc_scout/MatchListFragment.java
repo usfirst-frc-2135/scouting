@@ -316,12 +316,11 @@ public class MatchListFragment extends Fragment
                     TBAMatches.clearTBAMatches();
 
                     // 2. Clear Team Aliases
-                    String event = m_settings.getEventCode();
-                    TeamAliases.getInstance(context).deleteTeamAliasesFile(event);
+                    TeamAliases.getInstance(context).deleteTeamAliasesFile(null);
                     TeamAliases.clearTeamAliases();
 
                     // 3. Clear Scout Names
-                    ScoutNames.getInstance(context).deleteEventScoutNames(context, event);
+                    ScoutNames.getInstance(context).deleteScoutNamesFile(null);
                     ScoutNames.clearScoutNames();
 
                     // 4. Reset Settings

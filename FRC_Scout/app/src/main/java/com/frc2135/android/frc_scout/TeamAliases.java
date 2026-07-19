@@ -252,31 +252,55 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Deletes the local team aliases record associated with a specific event.
+     * Deletes team alias records from local storage.
+     * If an event code is provided, only that file is deleted. If null, all alias files are removed.
      *
-     * @param eventCode the FRC event code
-     * @return 1 if a file was deleted, 0 otherwise
+     * @param eventCode the FRC event code, or null to clear all
+     * @return the number of files deleted
      */
     public int deleteTeamAliasesFile(String eventCode)
     {
         Log.d(TAG, "Deleting team aliases file for event: " + eventCode);
+        File[] fileList;
+        int deletedCount = 0;
+
+        // Delete all files or selected file
         if (eventCode == null || eventCode.trim().isEmpty())
         {
-            Log.e(TAG, "Invalid event code: " + eventCode);
-            return 0;
+            fileList = m_dataDir.listFiles();
         }
-
-        String filename = getFilename(eventCode);
-        File file = new File(m_dataDir, filename);
-
-        if (file.exists() && file.delete())
+        else
         {
-            Log.i(TAG, "Successfully deleted aliases file: " + filename);
-            return 1;
+            String filename = getFilename(eventCode);
+            fileList = new File[]{new File(m_dataDir, filename)};
         }
 
-        Log.w(TAG, "Failed to delete team aliases file: " + filename);
-        return 0;
+        // Walk through list deleting files
+        if (fileList != null)
+        {
+            for (File file : fileList)
+            {
+                if (file.getName().endsWith(Constants.TEAM_ALIASES_FILENAME_SUFFIX))
+                {
+                    if (file.exists() && file.delete())
+                    {
+                        deletedCount++;
+                        Log.i(TAG, "Deleted event file: " + file.getName());
+                    }
+                }
+            }
+        }
+
+        if (deletedCount > 0)
+        {
+            TeamAliases.clearTeamAliases();
+        }
+        else
+        {
+            Log.w(TAG, "Failed to delete team aliases files");
+        }
+
+        return deletedCount;
     }
 
     /**
