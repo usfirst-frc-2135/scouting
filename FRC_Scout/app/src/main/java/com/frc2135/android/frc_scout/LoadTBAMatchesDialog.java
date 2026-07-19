@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
@@ -183,8 +184,8 @@ public class LoadTBAMatchesDialog extends DialogFragment
 
         MaterialButton okButton = (MaterialButton) dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         okButton.setEnabled(false);
-        okButton.setText(R.string.loading);
         m_binding.loadEventCodeInput.setEnabled(false);
+        m_binding.loadEventProgressIndicator.setVisibility(View.VISIBLE);
 
         String urlStr = Constants.TBA_EVENT_MATCHES_URL + eventCode + "/matches";
         Log.i(TAG, "TBA Matches URL: " + urlStr);
@@ -257,11 +258,11 @@ public class LoadTBAMatchesDialog extends DialogFragment
         if (okButton != null)
         {
             okButton.setEnabled(true);
-            okButton.setText(android.R.string.ok);
         }
         if (m_binding != null)
         {
             m_binding.loadEventCodeInput.setEnabled(true);
+            m_binding.loadEventProgressIndicator.setVisibility(View.GONE);
         }
     }
 

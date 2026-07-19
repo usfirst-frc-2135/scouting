@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
@@ -178,8 +179,8 @@ public class LoadTeamAliasesDialog extends DialogFragment
         // Disable button to prevent multiple requests
         MaterialButton okButton = (MaterialButton) dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         okButton.setEnabled(false);
-        okButton.setText(R.string.loading);
         m_binding.loadEventCodeInput.setEnabled(false);
+        m_binding.loadEventProgressIndicator.setVisibility(View.VISIBLE);
 
         String urlStr = Constants.TEAM_WEBSITE_JSON_URL + eventCode + Constants.TEAM_ALIASES_FILENAME_SUFFIX;
         Log.i(TAG, "URL: " + urlStr);
@@ -227,11 +228,11 @@ public class LoadTeamAliasesDialog extends DialogFragment
         if (okButton != null)
         {
             okButton.setEnabled(true);
-            okButton.setText(android.R.string.ok);
         }
         if (m_binding != null)
         {
             m_binding.loadEventCodeInput.setEnabled(true);
+            m_binding.loadEventProgressIndicator.setVisibility(View.GONE);
         }
     }
 
