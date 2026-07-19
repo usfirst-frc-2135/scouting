@@ -7,14 +7,15 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:clipToPadding="false"
+        android:paddingBottom="80dp">
 
         <!-- start Teleop fragment main layout -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="16dp">
+            android:orientation="vertical">
 
             <!-- Section: GAME PIECE MANIPULATION -->
             <!-- start GAME PIECE MANIPULATION card layout -->
