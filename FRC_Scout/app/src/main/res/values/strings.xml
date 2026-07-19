@@ -61,6 +61,10 @@
     <string name="team_number">Team Number</string>
     <string name="scout_name">Scout Name</string>
 
+    <!--    Empty State content -->
+    <string name="no_matches_scouted">No matches scouted yet.</string>
+    <string name="tap_to_start">Tap the button below to start scouting!</string>
+
     <!--    Match List card dropdown -->
     <string name="edit_match">Edit match</string>
     <string name="delete_match">Delete Match</string>
@@ -102,12 +106,10 @@
     <string name="auton">Auton</string>
     <string name="teleop">Teleop</string>
     <string name="endgame">Endgame</string>
-    <string name="alliance">Alliance</string>
 
     <!--    Year-specific strings -->
     <string name="alliance_zone">Alliance Zone</string>
     <string name="neutral_zone">Neutral Zone</string>
-    <string name="neutral">Neutral</string>
     <string name="depot">Depot</string>
     <string name="outpost">Outpost</string>
     <!--    <string name="fuel">Fuel</string>-->
@@ -183,20 +185,11 @@
     <string name="no_show">No show</string>
 
     <string name="comments">Comments</string>
-    <string name="enter_comments_here">Enter comments here</string>
 
     <!--   miscellaneous strings -->
-    <string name="idk">IDK</string>
     <string name="n_a">N/A</string>
-    <string name="loading">Loading…</string>
 
-    <string name="no">No</string>
-    <string name="yes">Yes</string>
     <string name="missing">missing</string>
-
-    <!--    Empty State content -->
-    <string name="no_matches_scouted">No matches scouted yet.</string>
-    <string name="tap_to_start">Tap the button below to start scouting!</string>
 
     <!-- Accessibility Strings -->
 

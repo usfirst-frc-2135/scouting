@@ -18,7 +18,6 @@
 
     <color name="textPrimary">#212121</color>
     <color name="textSecondary">#757575</color>
-    <color name="hintColor">#9E9E9E</color>
 
     <!--    The bottom navigation bar -->
     <color name="bottomColor">#FFFFFF</color>
