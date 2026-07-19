@@ -89,6 +89,7 @@ public final class Settings extends BaseJSONSerializer
                 context.getString(R.string.team_index_5),
                 context.getString(R.string.team_index_6)
         };
+
         m_pastScouts = new ArrayList<>();
 
         resetSettings();
@@ -100,20 +101,6 @@ public final class Settings extends BaseJSONSerializer
         {
             Log.e(TAG, "Error loading settings file: ", e);
         }
-    }
-
-    /**
-     * Saves the current settings configuration to internal storage.
-     *
-     * @throws JSONException if configuration data serialization fails
-     * @throws IOException   if writing the settings file fails
-     */
-    public void saveSettings()
-            throws JSONException, IOException
-    {
-        Log.d(TAG, "saveSettings");
-        File file = new File(m_dataDir, Constants.SETTINGS_FILENAME);
-        saveJSONObject(file, toJSON());
     }
 
     /**
@@ -144,32 +131,34 @@ public final class Settings extends BaseJSONSerializer
         File file = new File(m_dataDir, Constants.SETTINGS_FILENAME);
         if (!file.exists())
         {
-            return;
+            Log.i(TAG, "Write defaults to file in JSONObject format");
+            saveSettings();
         }
 
         String content = readStringFromFile(file);
         if (content == null || content.trim().isEmpty())
         {
+            Log.e(TAG, "Failed to load settings from file");
             return;
         }
 
-        String trimmed = content.trim();
-        if (trimmed.startsWith("{"))
-        {
-            JSONObject json = new JSONObject(trimmed);
-            fromJSON(json);
-            Log.i(TAG, "Successfully loaded settings from JSONObject format");
-        }
-        else if (trimmed.startsWith("["))
-        {
-            JSONArray array = new JSONArray(trimmed);
-            if (array.length() > 0)
-            {
-                fromJSON(array.getJSONObject(0));
-                Log.i(TAG, "Successfully loaded settings from legacy JSONArray format");
-                saveSettingsSilent(); // Migrate to new format immediately
-            }
-        }
+        JSONObject json = new JSONObject(content.trim());
+        fromJSON(json);
+        Log.i(TAG, "Successfully loaded settings from JSONObject format");
+    }
+
+    /**
+     * Saves the current settings configuration to internal storage.
+     *
+     * @throws JSONException if configuration data serialization fails
+     * @throws IOException   if writing the settings file fails
+     */
+    public void saveSettings()
+            throws JSONException, IOException
+    {
+        Log.d(TAG, "saveSettings");
+        File file = new File(m_dataDir, Constants.SETTINGS_FILENAME);
+        saveJSONObject(file, toJSON());
     }
 
     /**
