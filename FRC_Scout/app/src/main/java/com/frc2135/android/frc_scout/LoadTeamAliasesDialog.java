@@ -157,6 +157,24 @@ public class LoadTeamAliasesDialog extends DialogFragment
     }
 
     /**
+     * Resets the UI components to their interactive state after a download attempt.
+     *
+     * @param okButton the dialog's OK button
+     */
+    private void resetUiState(MaterialButton okButton)
+    {
+        if (okButton != null)
+        {
+            okButton.setEnabled(true);
+        }
+        if (m_binding != null)
+        {
+            m_binding.loadEventCodeInput.setEnabled(true);
+            m_binding.loadEventProgressIndicator.setVisibility(View.GONE);
+        }
+    }
+
+    /**
      * Downloads team alias mapping data from the team website for the specified event code.
      * Updates the UI state to show loading during the request.
      * On success, saves the data locally and dismisses the dialog.
@@ -208,24 +226,6 @@ public class LoadTeamAliasesDialog extends DialogFragment
                 });
 
         VolleySingleton.getInstance(requireContext()).addToRequestQueue(request);
-    }
-
-    /**
-     * Resets the UI components to their interactive state after a download attempt.
-     *
-     * @param okButton the dialog's OK button
-     */
-    private void resetUiState(MaterialButton okButton)
-    {
-        if (okButton != null)
-        {
-            okButton.setEnabled(true);
-        }
-        if (m_binding != null)
-        {
-            m_binding.loadEventCodeInput.setEnabled(true);
-            m_binding.loadEventProgressIndicator.setVisibility(View.GONE);
-        }
     }
 
     /**
