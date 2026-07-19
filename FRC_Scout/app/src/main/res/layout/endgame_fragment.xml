@@ -22,8 +22,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginHorizontal="4dp"
                 app:cardBackgroundColor="#adbba2"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
@@ -32,13 +32,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="4dp">
 
                     <TextView
                         android:id="@+id/endgame_start_climb_label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
+                        android:layout_marginStart="4dp"
                         android:text="@string/start_climbing"
                         android:textColor="@color/customTextPrimary"
                         android:textSize="@dimen/font_medium"
@@ -49,15 +49,15 @@
                         android:id="@+id/endgame_start_climb_radio_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="7dp"
-                        android:paddingEnd="7dp"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
                         android:orientation="horizontal">
 
                         <com.google.android.material.radiobutton.MaterialRadioButton
                             android:id="@+id/endgame_start_climb_na"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="7dp"
+                            android:layout_marginStart="4dp"
                             android:layout_weight="1"
                             android:buttonTint="@color/customTextPrimary"
                             android:text="@string/n_a"
@@ -115,8 +115,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginHorizontal="4dp"
                 app:cardBackgroundColor="#93A685"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
@@ -137,7 +137,7 @@
                         <LinearLayout
                             android:layout_width="120dp"
                             android:layout_height="65dp"
-                            android:layout_marginStart="7dp"
+                            android:layout_marginStart="4dp"
                             android:layout_marginTop="7dp"
                             android:background="@drawable/rounded_rect"
                             android:backgroundTint="#f3d8ea">
@@ -232,7 +232,7 @@
                         <LinearLayout
                             android:layout_width="120dp"
                             android:layout_height="65dp"
-                            android:layout_marginStart="7dp"
+                            android:layout_marginStart="4dp"
                             android:layout_marginTop="7dp"
                             android:background="@drawable/rounded_rect"
                             android:backgroundTint="#C7CDD6">
@@ -339,8 +339,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginHorizontal="4dp"
                 app:cardBackgroundColor="#b2538e"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
@@ -349,13 +349,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="4dp">
 
                     <TextView
                         android:id="@+id/endgame_died_label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
+                        android:layout_marginStart="4dp"
                         android:text="@string/died"
                         android:textColor="@color/customTextPrimary"
                         android:textSize="@dimen/font_medium"
@@ -366,8 +366,8 @@
                         android:id="@+id/endgame_died_radio_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="7dp"
-                        android:paddingEnd="7dp"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
                         android:orientation="horizontal">
 
                         <com.google.android.material.radiobutton.MaterialRadioButton
@@ -443,8 +443,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginHorizontal="4dp"
                 app:counterEnabled="true"
                 app:counterMaxLength="400">
 

@@ -22,8 +22,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginHorizontal="4dp"
                 app:cardBackgroundColor="#719da9"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
@@ -38,13 +38,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="8dp">
+                        android:padding="4dp">
 
                         <TextView
                             android:id="@+id/auton_preload_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="7dp"
+                            android:layout_marginStart="4dp"
                             android:text="@string/preload_title"
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_medium"
@@ -66,13 +66,13 @@
                         android:layout_height="wrap_content"
                         android:background="#8DB0BA"
                         android:orientation="vertical"
-                        android:padding="8dp">
+                        android:padding="4dp">
 
                         <TextView
                             android:id="@+id/auton_preload_accuracy_label"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="7dp"
+                            android:layout_marginStart="4dp"
                             android:text="@string/preload_accuracy_rate"
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_medium"
@@ -83,7 +83,7 @@
                             android:id="@+id/auton_preload_accuracy_radio_group"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="7dp"
+                            android:layout_marginStart="4dp"
                             android:orientation="horizontal">
 
                             <com.google.android.material.radiobutton.MaterialRadioButton
@@ -160,8 +160,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginHorizontal="4dp"
                 app:cardBackgroundColor="#EE965F"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
@@ -176,13 +176,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="8dp">
+                        android:padding="4dp">
 
                         <TextView
                             android:id="@+id/auton_hopper_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="7dp"
+                            android:layout_marginStart="4dp"
                             android:text="@string/hoppers_shot"
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_medium"
@@ -235,13 +235,13 @@
                         android:layout_height="wrap_content"
                         android:background="#F0A271"
                         android:orientation="vertical"
-                        android:padding="8dp">
+                        android:padding="4dp">
 
                         <TextView
                             android:id="@+id/auton_accuracy_label"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="7dp"
+                            android:layout_marginStart="4dp"
                             android:text="@string/accuracy_rate"
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_medium"
@@ -258,7 +258,7 @@
                                 android:id="@+id/auton_accuracy_na"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="7dp"
+                                android:layout_marginStart="4dp"
                                 android:layout_weight="1"
                                 android:buttonTint="#c64e34"
                                 android:text="@string/n_a"
@@ -337,8 +337,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginHorizontal="4dp"
                 app:cardBackgroundColor="#D48C74"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
@@ -352,7 +352,7 @@
                         android:id="@+id/auton_fuel_source_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
+                        android:layout_marginStart="4dp"
                         android:layout_marginTop="7dp"
                         android:text="@string/got_fuel_from"
                         android:textColor="@color/customTextPrimary"
@@ -364,9 +364,9 @@
                         android:id="@+id/auton_fuel_chip_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
+                        android:layout_marginTop="4dp"
                         android:background="#e6a28b"
-                        android:padding="8dp"
+                        android:padding="4dp"
                         app:chipSpacingHorizontal="8dp">
 
                         <com.google.android.material.chip.Chip
@@ -409,8 +409,8 @@
                 android:id="@+id/auton_climb_position"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginHorizontal="4dp"
                 app:cardBackgroundColor="#93A685"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
@@ -424,7 +424,7 @@
                     <LinearLayout
                         android:layout_width="120dp"
                         android:layout_height="65dp"
-                        android:layout_marginStart="7dp"
+                        android:layout_marginStart="4dp"
                         android:layout_marginTop="7dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#C7CDD6">

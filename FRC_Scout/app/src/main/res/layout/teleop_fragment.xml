@@ -22,8 +22,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginHorizontal="4dp"
                 app:cardBackgroundColor="#CACFF9"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
@@ -38,13 +38,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="8dp">
+                        android:padding="4dp">
 
                         <TextView
                             android:id="@+id/teleop_hopper_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="7dp"
+                            android:layout_marginStart="4dp"
                             android:text="@string/hoppers_shot"
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_medium"
@@ -97,13 +97,13 @@
                         android:layout_height="wrap_content"
                         android:background="#DFE2FB"
                         android:orientation="vertical"
-                        android:padding="8dp">
+                        android:padding="4dp">
 
                         <TextView
                             android:id="@+id/teleop_accuracy_label"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="7dp"
+                            android:layout_marginStart="4dp"
                             android:text="@string/accuracy_rate"
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_medium"
@@ -119,7 +119,7 @@
                                 android:id="@+id/teleop_accuracy_na"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="7dp"
+                                android:layout_marginStart="4dp"
                                 android:layout_weight="1"
                                 android:buttonTint="#8957A1"
                                 android:text="@string/n_a"
@@ -195,7 +195,7 @@
                         android:layout_height="wrap_content"
                         android:background="#EAECFD"
                         android:orientation="horizontal"
-                        android:padding="8dp">
+                        android:padding="4dp">
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/teleop_intake_shoot_chip"
@@ -217,8 +217,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginHorizontal="4dp"
                 app:cardBackgroundColor="#87CEEB"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
@@ -233,13 +233,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="8dp">
+                        android:padding="4dp">
 
                         <TextView
                             android:id="@+id/teleop_passing_zone_label"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="7dp"
+                            android:layout_marginStart="4dp"
                             android:text="@string/passing_from_zone"
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_medium"
@@ -279,13 +279,13 @@
                         android:layout_height="wrap_content"
                         android:background="#ADD8EF"
                         android:orientation="vertical"
-                        android:padding="8dp">
+                        android:padding="4dp">
 
                         <TextView
                             android:id="@+id/teleop_passing_rate_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="7dp"
+                            android:layout_marginStart="4dp"
                             android:text="@string/passing_rate"
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_medium"
@@ -295,7 +295,7 @@
                             android:id="@+id/teleop_passing_rate_radio_group"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="7dp"
+                            android:layout_marginStart="4dp"
                             android:orientation="horizontal">
 
                             <com.google.android.material.radiobutton.MaterialRadioButton
@@ -358,14 +358,14 @@
                         android:layout_height="wrap_content"
                         android:background="#F0FFFF"
                         android:orientation="horizontal"
-                        android:padding="8dp">
+                        android:padding="4dp">
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/teleop_herded_fuel_chip"
                             style="@style/CustomChipStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
+                            android:layout_marginStart="4dp"
                             android:text="@string/herded_lots_of_fuel" />
                     </LinearLayout>
                     <!--end HERDING FUEL CHIP layout -->
@@ -379,8 +379,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginHorizontal="4dp"
                 app:cardBackgroundColor="#adc7ee"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
@@ -389,13 +389,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="4dp">
 
                     <TextView
                         android:id="@+id/teleop_defense_label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
+                        android:layout_marginStart="4dp"
                         android:text="@string/defense"
                         android:textColor="@color/customTextPrimary"
                         android:textSize="@dimen/font_medium"
@@ -406,8 +406,8 @@
                         android:id="@+id/teleop_defense_radio_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="7dp"
-                        android:paddingEnd="7dp"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
                         android:orientation="horizontal">
 
                         <com.google.android.material.radiobutton.MaterialRadioButton
@@ -481,8 +481,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginHorizontal="4dp"
                 app:cardBackgroundColor="#9aa3f2"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
@@ -491,13 +491,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="4dp">
 
                     <TextView
                         android:id="@+id/teleop_driving_ability_label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
+                        android:layout_marginStart="4dp"
                         android:text="@string/driving_ability"
                         android:textColor="@color/customTextPrimary"
                         android:textSize="@dimen/font_medium"
@@ -508,8 +508,8 @@
                         android:id="@+id/teleop_driving_ability_radio_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="7dp"
-                        android:paddingEnd="7dp"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
                         android:orientation="horizontal">
 
                         <com.google.android.material.radiobutton.MaterialRadioButton
@@ -585,7 +585,7 @@
                 android:layout_width="589dp"
                 android:layout_height="186dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:background="@drawable/rebuilt_logo"
                 android:orientation="horizontal">
 
