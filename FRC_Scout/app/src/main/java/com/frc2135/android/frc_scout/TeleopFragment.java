@@ -54,16 +54,6 @@ public class TeleopFragment extends Fragment
             R.id.teleop_defense_high
     };
 
-    private static final int[] PASS_NZ_IDS = {
-            R.id.teleop_pass_nz_no,
-            R.id.teleop_pass_nz_yes
-    };
-
-    private static final int[] PASS_AZ_IDS = {
-            R.id.teleop_pass_az_no,
-            R.id.teleop_pass_az_yes
-    };
-
     private static final int[] DRIVING_ABILITY_IDS = {
             R.id.teleop_driving_ability_na,
             R.id.teleop_driving_ability_slow,
@@ -156,11 +146,11 @@ public class TeleopFragment extends Fragment
         updateScoreColor(m_binding.teleopHopperTotalText);
         initAccuracyRate(m_matchData.getAccuracyRate());
 
-        m_binding.teleopIntakeShootCheckbox.setChecked(m_matchData.getIntakeAndShoot());
-        m_binding.teleopHerdedFuelCheckbox.setChecked(m_matchData.getShovelFuel());
+        m_binding.teleopIntakeShootChip.setChecked(m_matchData.getIntakeAndShoot());
+        m_binding.teleopHerdedFuelChip.setChecked(m_matchData.getShovelFuel());
 
-        initPassNz(m_matchData.getPassNeutralZone());
-        initPassAz(m_matchData.getPassAllianceZone());
+        m_binding.teleopPassNzChip.setChecked(m_matchData.getPassNeutralZone() == 1);
+        m_binding.teleopPassAzChip.setChecked(m_matchData.getPassAllianceZone() == 1);
         initPassingRate(m_matchData.getPassingEffectivenessRate());
 
         initDefenseRate(m_matchData.getDefenseRate());
@@ -219,29 +209,23 @@ public class TeleopFragment extends Fragment
     }
 
     /**
-     * Initializes the neutral zone passing radio group selection.
+     * Retrieves the selection for neutral zone passing.
      *
-     * @param value the index of the selected option
+     * @return 1 if selected, 0 otherwise
      */
-    private void initPassNz(int value)
+    public int getPassNeutralZone()
     {
-        if (value >= 0 && value < PASS_NZ_IDS.length)
-        {
-            m_binding.teleopPassNzRadioGroup.check(PASS_NZ_IDS[value]);
-        }
+        return m_binding.teleopPassNzChip.isChecked() ? 1 : 0;
     }
 
     /**
-     * Initializes the alliance zone passing radio group selection.
+     * Retrieves the selection for alliance zone passing.
      *
-     * @param value the index of the selected option
+     * @return 1 if selected, 0 otherwise
      */
-    private void initPassAz(int value)
+    public int getPassAllianceZone()
     {
-        if (value >= 0 && value < PASS_AZ_IDS.length)
-        {
-            m_binding.teleopPassAzRadioGroup.check(PASS_AZ_IDS[value]);
-        }
+        return m_binding.teleopPassAzChip.isChecked() ? 1 : 0;
     }
 
     /**
@@ -480,42 +464,6 @@ public class TeleopFragment extends Fragment
     }
 
     /**
-     * Retrieves the selection for neutral zone passing.
-     *
-     * @return the index of the selected radio button in the neutral zone passing group
-     */
-    public int getPassNeutralZone()
-    {
-        int id = m_binding.teleopPassNzRadioGroup.getCheckedRadioButtonId();
-        for (int i = 0; i < PASS_NZ_IDS.length; i++)
-        {
-            if (id == PASS_NZ_IDS[i])
-            {
-                return i;
-            }
-        }
-        return 3;
-    }
-
-    /**
-     * Retrieves the selection for alliance zone passing.
-     *
-     * @return the index of the selected radio button in the alliance zone passing group
-     */
-    public int getPassAllianceZone()
-    {
-        int id = m_binding.teleopPassAzRadioGroup.getCheckedRadioButtonId();
-        for (int i = 0; i < PASS_AZ_IDS.length; i++)
-        {
-            if (id == PASS_AZ_IDS[i])
-            {
-                return i;
-            }
-        }
-        return 3;
-    }
-
-    /**
      * Retrieves the selected driver ability index.
      *
      * @return the index of the selected radio button in the driving ability group
@@ -555,10 +503,10 @@ public class TeleopFragment extends Fragment
         m_matchData.setPassingRate(getPassingEffectivenessRate());
         m_matchData.setTeleopPhoto(m_photoNum);
         m_matchData.setDefenseRate(getCurrentDefenseLevel());
-        m_matchData.setIntakeAndShoot(m_binding.teleopIntakeShootCheckbox.isChecked());
+        m_matchData.setIntakeAndShoot(m_binding.teleopIntakeShootChip.isChecked());
         m_matchData.setPassNeutralZone(getPassNeutralZone());
         m_matchData.setPassAllianceZone(getPassAllianceZone());
-        m_matchData.setShovelFuel(m_binding.teleopHerdedFuelCheckbox.isChecked());
+        m_matchData.setShovelFuel(m_binding.teleopHerdedFuelChip.isChecked());
         m_matchData.setDriveAbility(getDriverAbility());
     }
 

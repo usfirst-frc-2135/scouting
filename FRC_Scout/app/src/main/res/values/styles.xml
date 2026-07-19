@@ -33,6 +33,9 @@
         <!-- Component Shapes -->
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
+
+        <!-- Chip style -->
+        <item name="chipStyle">@style/CustomChipStyle</item>
     </style>
 
     <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
@@ -48,6 +51,11 @@
     <style name="AppSubtitle2"
         parent="TextAppearance.MaterialComponents.Subtitle2">
         <item name="android:textColor">@color/textSecondary</item>
+    </style>
+
+    <style name="CustomChipStyle" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="chipBackgroundColor">@color/chip_background_color</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

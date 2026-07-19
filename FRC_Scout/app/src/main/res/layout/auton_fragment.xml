@@ -49,15 +49,13 @@
                             android:textSize="@dimen/font_medium"
                             android:textStyle="bold" />
 
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:id="@+id/auton_preload_checkbox"
-                            android:layout_width="match_parent"
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/auton_preload_chip"
+                            style="@style/CustomChipStyle"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="15dp"
-                            android:buttonTint="#354c54"
-                            android:text="@string/shot_preloaded_fuel"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
+                            android:text="@string/shot_preloaded_fuel" />
                     </LinearLayout>
                     <!-- end PRELOAD CHECKBOX layout -->
 
@@ -360,57 +358,46 @@
                         android:textSize="@dimen/font_medium"
                         android:textStyle="bold" />
 
-                    <!-- start FUEL CHECKBOXES layout -->
-                    <LinearLayout
+                    <!-- start FUEL CHIPS layout -->
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/auton_fuel_chip_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
                         android:background="#e6a28b"
-                        android:orientation="horizontal"
-                        android:padding="8dp">
+                        android:padding="8dp"
+                        app:chipSpacingHorizontal="8dp">
 
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:id="@+id/auton_az_checkbox"
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/auton_az_chip"
+                            style="@style/CustomChipStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:buttonTint="#8e5845"
-                            android:text="@string/alliance_zone"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
+                            android:text="@string/alliance_zone" />
 
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:id="@+id/auton_depot_checkbox"
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/auton_depot_chip"
+                            style="@style/CustomChipStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:buttonTint="#8e5845"
-                            android:text="@string/depot"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
+                            android:text="@string/depot" />
 
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:id="@+id/auton_outpost_checkbox"
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/auton_outpost_chip"
+                            style="@style/CustomChipStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:buttonTint="#8e5845"
-                            android:text="@string/outpost"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
+                            android:text="@string/outpost" />
 
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:id="@+id/auton_nz_checkbox"
-                            android:layout_width="match_parent"
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/auton_nz_chip"
+                            style="@style/CustomChipStyle"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:buttonTint="#8e5845"
-                            android:text="@string/neutral_zone"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
+                            android:text="@string/neutral_zone" />
 
-                    </LinearLayout>
-                    <!-- end FUEL CHECKBOXES layout -->
+                    </com.google.android.material.chip.ChipGroup>
+                    <!-- end FUEL CHIPS layout -->
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
             <!-- end FUEL card layout -->

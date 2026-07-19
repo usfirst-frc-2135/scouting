@@ -130,17 +130,17 @@ public class AutonFragment extends Fragment
             return;
         }
 
-        m_binding.autonPreloadCheckbox.setChecked(m_matchData.isAutonPreload());
+        m_binding.autonPreloadChip.setChecked(m_matchData.isAutonPreload());
         initPreloadAccuracy(m_matchData.getPreloadAccuracyLevel());
 
         m_binding.autonHopperTotalText.setText(String.valueOf(m_matchData.getAutonHopper()));
         updateScoreColor(m_binding.autonHopperTotalText); // Check Hopper levels for MAX
         initAutonAccuracy(m_matchData.getAutonAccuracyRate());
 
-        m_binding.autonAzCheckbox.setChecked(m_matchData.isAutonAz());
-        m_binding.autonDepotCheckbox.setChecked(m_matchData.isAutonDepot());
-        m_binding.autonOutpostCheckbox.setChecked(m_matchData.isAutonOutpost());
-        m_binding.autonNzCheckbox.setChecked(m_matchData.isAutonNz());
+        m_binding.autonAzChip.setChecked(m_matchData.isAutonAz());
+        m_binding.autonDepotChip.setChecked(m_matchData.isAutonDepot());
+        m_binding.autonOutpostChip.setChecked(m_matchData.isAutonOutpost());
+        m_binding.autonNzChip.setChecked(m_matchData.isAutonNz());
 
         initAutonClimb(m_matchData.getAutonClimb());
     }
@@ -334,11 +334,11 @@ public class AutonFragment extends Fragment
         {
             Log.e(TAG, "updateAutonData: Invalid hopper score value", e);
         }
-        m_matchData.setAutonPreload(m_binding.autonPreloadCheckbox.isChecked());
-        m_matchData.setAutonNz(m_binding.autonNzCheckbox.isChecked());
-        m_matchData.setAutonAz(m_binding.autonAzCheckbox.isChecked());
-        m_matchData.setAutonDepot(m_binding.autonDepotCheckbox.isChecked());
-        m_matchData.setAutonOutpost(m_binding.autonOutpostCheckbox.isChecked());
+        m_matchData.setAutonPreload(m_binding.autonPreloadChip.isChecked());
+        m_matchData.setAutonNz(m_binding.autonNzChip.isChecked());
+        m_matchData.setAutonAz(m_binding.autonAzChip.isChecked());
+        m_matchData.setAutonDepot(m_binding.autonDepotChip.isChecked());
+        m_matchData.setAutonOutpost(m_binding.autonOutpostChip.isChecked());
         m_matchData.setAutonAccuracyRate(getAutonAccuracyRate());
         m_matchData.setPreloadAccuracyLevel(getPreloadAccuracyLevel());
         m_matchData.setAutonClimb(getAutonClimb());

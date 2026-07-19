@@ -29,4 +29,8 @@
 
     <!--    Used by auton, teleop, and endgame fragments for text-->
     <color name="customTextPrimary">#212121</color>
+
+    <!-- Chip colors -->
+    <color name="chip_red">#F44336</color>
+    <color name="chip_green">#4CAF50</color>
 </resources>

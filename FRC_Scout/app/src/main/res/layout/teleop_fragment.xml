@@ -188,7 +188,7 @@
                     </LinearLayout>
                     <!-- end HOPPER ACCURACY RATING layout -->
 
-                    <!-- start INTAKE AND SHOOT CHECKBOX layout -->
+                    <!-- start INTAKE AND SHOOT CHIP layout -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -196,18 +196,16 @@
                         android:orientation="horizontal"
                         android:padding="8dp">
 
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:id="@+id/teleop_intake_shoot_checkbox"
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/teleop_intake_shoot_chip"
+                            style="@style/CustomChipStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:buttonTint="#8957A1"
-                            android:text="@string/intake_while_shooting"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
+                            android:text="@string/intake_while_shooting" />
 
                     </LinearLayout>
-                    <!--end INTAKE AND SHOOT CHECKBOX layout -->
+                    <!--end INTAKE AND SHOOT CHIP layout -->
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -246,92 +244,30 @@
                             android:textSize="@dimen/font_medium"
                             android:textStyle="bold" />
 
-                        <!-- start PASSING FROM RADIO BUTTONS layout -->
-                        <LinearLayout
+                        <!-- start PASSING ZONE CHIPS layout -->
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/teleop_pass_zone_chip_group"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:layout_marginTop="4dp"
+                            app:chipSpacingHorizontal="12dp">
 
-                            <TextView
-                                android:id="@+id/teleop_neutral_label"
-                                android:layout_width="90dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:text="@string/neutral"
-                                android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_medium" />
-
-                            <!-- start NEUTRAL ZONE CHECKBOX layout -->
-                            <RadioGroup
-                                android:id="@+id/teleop_pass_nz_radio_group"
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/teleop_pass_nz_chip"
+                                style="@style/CustomChipStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="7dp"
-                                android:layout_weight="1"
-                                android:orientation="horizontal">
+                                android:text="@string/neutral_zone" />
 
-                                <com.google.android.material.radiobutton.MaterialRadioButton
-                                    android:id="@+id/teleop_pass_nz_no"
-                                    android:layout_width="29dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:buttonTint="#051650"
-                                    android:text="@string/no"
-                                    android:textColor="@color/customTextPrimary"
-                                    android:textSize="@dimen/font_medium" />
-
-                                <com.google.android.material.radiobutton.MaterialRadioButton
-                                    android:id="@+id/teleop_pass_nz_yes"
-                                    android:layout_width="30dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:buttonTint="#051650"
-                                    android:text="@string/yes"
-                                    android:textColor="@color/customTextPrimary"
-                                    android:textSize="@dimen/font_medium" />
-                            </RadioGroup>
-                            <!-- end NEUTRAL ZONE CHECKBOX layout -->
-
-                            <!-- start OPPOSING ALLIANCE ZONE CHECKBOX layout -->
-                            <TextView
-                                android:id="@+id/teleop_alliance_label"
-                                android:layout_width="135dp"
-                                android:layout_height="wrap_content"
-                                android:text="@string/alliance"
-                                android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_medium" />
-
-                            <RadioGroup
-                                android:id="@+id/teleop_pass_az_radio_group"
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/teleop_pass_az_chip"
+                                style="@style/CustomChipStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="horizontal">
+                                android:text="@string/alliance_zone" />
 
-                                <com.google.android.material.radiobutton.MaterialRadioButton
-                                    android:id="@+id/teleop_pass_az_no"
-                                    android:layout_width="30dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:buttonTint="#051650"
-                                    android:text="@string/no"
-                                    android:textColor="@color/customTextPrimary"
-                                    android:textSize="@dimen/font_medium" />
-
-                                <com.google.android.material.radiobutton.MaterialRadioButton
-                                    android:id="@+id/teleop_pass_az_yes"
-                                    android:layout_width="40dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:buttonTint="#051650"
-                                    android:text="@string/yes"
-                                    android:textColor="@color/customTextPrimary"
-                                    android:textSize="@dimen/font_medium" />
-                            </RadioGroup>
-                            <!-- end OPPOSING ALLIANCE ZONE CHECKBOX layout -->
-
-                        </LinearLayout>
-                        <!-- end PASSING FROM RADIO BUTTONS layout -->
+                        </com.google.android.material.chip.ChipGroup>
+                        <!-- end PASSING ZONE CHIPS layout -->
 
                     </LinearLayout>
                     <!-- end PASSING FROM layout -->
@@ -415,7 +351,7 @@
                     </LinearLayout>
                     <!-- end PASSING EFFECTIVENESS RATING layout -->
 
-                    <!-- start HERDING FUEL CHECKBOX layout -->
+                    <!-- start HERDING FUEL CHIP layout -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -423,17 +359,15 @@
                         android:orientation="horizontal"
                         android:padding="8dp">
 
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:id="@+id/teleop_herded_fuel_checkbox"
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/teleop_herded_fuel_chip"
+                            style="@style/CustomChipStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:buttonTint="#051650"
-                            android:text="@string/herded_lots_of_fuel"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
+                            android:layout_marginStart="8dp"
+                            android:text="@string/herded_lots_of_fuel" />
                     </LinearLayout>
-                    <!--end HERDING FUEL CHECKBOX layout -->
+                    <!--end HERDING FUEL CHIP layout -->
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
