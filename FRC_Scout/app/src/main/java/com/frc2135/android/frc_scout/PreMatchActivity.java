@@ -19,8 +19,16 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Activity for entering pre-match information such as scout name, match number, and team number.
- * Provides features for autopopulating team numbers from official event data and resolving team aliases.
+ * Activity for configuring match-specific metadata before starting a scouting session.
+ * <p>
+ * This activity handles the entry of the event code, match number, team number, and scout name.
+ * It features Material Design components, including validated text inputs and an autocomplete
+ * field for scout names. It also integrates with The Blue Alliance (TBA) match data to
+ * provide intelligent autopopulation and dropdown selection for team numbers based on the
+ * current match and assigned team index.
+ * <p>
+ * It supports both "New Match" and "Edit Match" modes, with appropriate field locking and
+ * data reload capabilities to ensure data integrity.
  */
 public class PreMatchActivity extends AppCompatActivity
 {
@@ -305,11 +313,10 @@ public class PreMatchActivity extends AppCompatActivity
                 String[] teams = m_tbaMatches.getMatchTeams(matchNumStr);
                 if (teams.length > 0 && !teams[0].isEmpty())
                 {
-                    // Process team numbers (strip prefix and apply aliases)
+                    // Process team numbers for aliases
                     for (int i = 1; i < teams.length; i++)
                     {
-                        String tNum = MatchData.extractTeamNumber(teams[i]);
-                        teams[i] = (m_teamAliases != null) ? m_teamAliases.resolveAlias(tNum) : tNum;
+                        teams[i] = m_teamAliases.getAliasForTeamNum(teams[i]);
                     }
 
                     ArrayAdapter<String> teamAdapter = new ArrayAdapter<>(this, R.layout.dropdown_item, teams);
@@ -346,9 +353,8 @@ public class PreMatchActivity extends AppCompatActivity
                 if (teamIndex < matchTeams.length)
                 {
                     String tbaTeamNum = matchTeams[teamIndex];
-                    String teamNumStr = MatchData.extractTeamNumber(tbaTeamNum);
-                    Log.d(TAG, "setTeamNumFromMatchNum: Auto-loading team number for tbaTeamNum " + tbaTeamNum + " teamNumStr " + teamNumStr);
-                    m_binding.preMatchTeamNumberInput.setText((m_teamAliases != null) ? m_teamAliases.resolveAlias(teamNumStr) : teamNumStr);
+                    Log.d(TAG, "setTeamNumFromMatchNum: Auto-loading team number for tbaTeamNum " + tbaTeamNum);
+                    m_binding.preMatchTeamNumberInput.setText(m_teamAliases.getAliasForTeamNum(tbaTeamNum));
                 }
             }
             catch (NumberFormatException e)
@@ -377,7 +383,7 @@ public class PreMatchActivity extends AppCompatActivity
         m_matchData.setEventCode(eventCode);
         m_matchData.setMatchNumber(matchNum);
 
-        String teamNum = (m_teamAliases != null) ? m_teamAliases.resolveTeamNumber(teamNumEntry) : teamNumEntry;
+        String teamNum = m_teamAliases.getTeamNumForAlias(teamNumEntry);
         String teamAlias = (!teamNum.equals(teamNumEntry)) ? teamNumEntry : "";
 
         m_matchData.setTeamNumber(teamNum);
@@ -419,14 +425,17 @@ public class PreMatchActivity extends AppCompatActivity
     {
         new MaterialAlertDialogBuilder(this)
                 .setTitle("Abandon Scouting Data?")
-                .setMessage("Are you sure you want to go back? All data entered for this match will be lost.")
+                .setMessage("Are you sure you want to go back? All entered match data will be lost.")
                 .setPositiveButton("Yes", (dialog, which) -> {
                     if (m_matchData != null)
                     {
                         if (m_isEditMode)
                         {
                             Log.i(TAG, "Reloading match data from file for ID: " + m_matchData.getMatchID());
-                            ScoutedMatches.getInstance(getApplicationContext()).reloadMatchDataFromFile(m_matchData);
+                            if (!ScoutedMatches.getInstance(getApplicationContext()).reloadMatchDataFromFile(m_matchData))
+                            {
+                                Log.e(TAG, "Failed to reload match data for ID: " + m_matchData.getMatchID());
+                            }
                         }
                         else
                         {

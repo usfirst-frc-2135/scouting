@@ -15,17 +15,21 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * Singleton class for managing the collection of scouted matches.
- * Handles loading all match records from local storage, adding new matches, and providing sorting and filtering capabilities for the match history list.
- * Handles its own persistence by extending {@link BaseJSONSerializer}.
+ * Singleton class for managing the collection of scouted match records.
+ * <p>
+ * This class serves as the primary repository for all match data gathered by the user.
+ * It handles the batch loading of individual match files (one JSON file per match)
+ * from local storage into an in-memory list. It provides high-level APIs for:
+ * - Adding, deleting, and searching for specific matches.
+ * - Sorting and filtering the match history based on various criteria.
+ * - Dynamic data reloads to revert unsaved changes.
+ * - Aggregating unique metadata (teams, events, scouts) for UI dropdowns.
  */
 public class ScoutedMatches extends BaseJSONSerializer
 {
     private static final String TAG = "ScoutedMatches";
 
     private final List<MatchData> m_scoutedMatches;
-    private final Context m_appContext;
-
     private static volatile ScoutedMatches sScoutedMatches;
 
     /**
@@ -37,7 +41,6 @@ public class ScoutedMatches extends BaseJSONSerializer
     {
         super(appContext);
         Log.v(TAG, "ScoutedMatches constructor");
-        m_appContext = appContext.getApplicationContext();
         m_scoutedMatches = loadInitialData();
     }
 
@@ -61,18 +64,15 @@ public class ScoutedMatches extends BaseJSONSerializer
     public static ScoutedMatches getInstance(Context context)
     {
         Log.v(TAG, "getInstance");
-        if (sScoutedMatches == null)
+        synchronized (ScoutedMatches.class)
         {
-            synchronized (ScoutedMatches.class)
+            if (sScoutedMatches == null)
             {
-                if (sScoutedMatches == null)
-                {
-                    Log.i(TAG, "Creating new sScoutedMatches");
-                    sScoutedMatches = new ScoutedMatches(context);
-                }
+                Log.i(TAG, "Creating new sScoutedMatches");
+                sScoutedMatches = new ScoutedMatches(context);
             }
+            return sScoutedMatches;
         }
-        return sScoutedMatches;
     }
 
     /**
@@ -114,8 +114,15 @@ public class ScoutedMatches extends BaseJSONSerializer
         {
             m_scoutedMatches.remove(match);
             String filename = getMatchFileName(match);
-            m_appContext.deleteFile(filename);
-            Log.i(TAG, "Deleted match file: " + filename);
+            File file = new File(m_dataDir, filename);
+            if (file.exists() && file.delete())
+            {
+                Log.i(TAG, "Successfully deleted match file: " + filename);
+            }
+            else
+            {
+                Log.w(TAG, "Failed to delete match file: " + filename);
+            }
         }
     }
 
@@ -186,11 +193,11 @@ public class ScoutedMatches extends BaseJSONSerializer
      * @param matchData the match record to reload
      * @return the reloaded MatchData object, or the original if reload fails
      */
-    public MatchData reloadMatchDataFromFile(MatchData matchData)
+    public boolean reloadMatchDataFromFile(MatchData matchData)
     {
         if (matchData == null)
         {
-            return null;
+            return false;
         }
         Log.d(TAG, "reloadMatchDataFromFile for ID: " + matchData.getMatchID());
         String filename = getMatchFileName(matchData);
@@ -205,14 +212,14 @@ public class ScoutedMatches extends BaseJSONSerializer
                 {
                     m_scoutedMatches.set(index, reloadedMatch);
                 }
-                return reloadedMatch;
+                return true;
             }
             catch (IOException | JSONException e)
             {
                 Log.e(TAG, "Error reloading match data file " + filename + ": " + e.getMessage());
             }
         }
-        return matchData;
+        return false;
     }
 
     /**
@@ -287,7 +294,7 @@ public class ScoutedMatches extends BaseJSONSerializer
         Comparator<MatchData> baseComparator = switch (criteria)
         {
             case "Team" -> Comparator.comparing(m -> {
-                String digits = MatchData.extractTeamNumber(m.getTeamNumber());
+                String digits = m.getTeamNumber();
                 return digits.isEmpty() ? Integer.MAX_VALUE : Integer.parseInt(digits);
             });
             case "Match" -> Comparator.comparing(m -> {

@@ -46,6 +46,7 @@ public abstract class BaseJSONSerializer
     @SuppressWarnings("unused")
     protected BaseJSONSerializer()
     {
+        Log.v(TAG, "BaseJSONSerializer constructor (default)");
         m_dataDir = null;
         m_appContext = null;
     }
@@ -58,6 +59,7 @@ public abstract class BaseJSONSerializer
      */
     protected BaseJSONSerializer(Context context)
     {
+        Log.v(TAG, "BaseJSONSerializer constructor");
         m_appContext = context.getApplicationContext();
         m_dataDir = m_appContext.getFilesDir();
     }
@@ -148,7 +150,6 @@ public abstract class BaseJSONSerializer
      * @param object the JSONObject to serialize and save
      * @throws IOException if saving the file fails
      */
-    @SuppressWarnings("unused")
     protected void saveJSONObject(File file, JSONObject object)
             throws IOException
     {

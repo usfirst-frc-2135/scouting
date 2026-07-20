@@ -18,7 +18,7 @@
     <string name="load_tba_matches">Load TBA Matches</string>
     <string name="load_team_aliases">Load Team Aliases</string>
     <string name="load_scout_names">Load Scout Names</string>
-    <string name="clear_all_data">Clear All Data</string>
+    <string name="clear_all_settings">Clear All Settings</string>
     <string name="about">About</string>
     <string name="load_scout_names_title">Load Scout Names</string>
 

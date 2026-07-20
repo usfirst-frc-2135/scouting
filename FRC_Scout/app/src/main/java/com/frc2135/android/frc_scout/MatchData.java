@@ -12,9 +12,17 @@ import java.util.Locale;
 import java.util.UUID;
 
 /**
- * Data model for a single scouted match.
- * Encapsulates all information gathered during autonomous, teleoperated, and endgame stages.
- * Handles representation of match data, JSON serialization for local storage, and TSV encoding for QR codes.
+ * Core data model for a single scouted FRC match.
+ * <p>
+ * This class encapsulates all parameters gathered during the autonomous, teleoperated,
+ * and endgame stages of a match. It provides robust functionality for:
+ * - JSON serialization for persistent local storage.
+ * - Bidirectional data binding with UI fragments.
+ * - Input validation against game-specific rules (e.g., maximum hopper counts).
+ * - TSV encoding for high-density QR code generation.
+ * <p>
+ * Each record is uniquely identified by a UUID to prevent file collisions across different
+ * scout tablets and seasons.
  */
 public class MatchData
 {
@@ -123,21 +131,6 @@ public class MatchData
     private String m_other2;
     private String m_other3;
     private String m_other4;
-
-    /**
-     * Extracts the numeric portion from a team identifier (e.g., "frc2135" -> "2135").
-     *
-     * @param teamIdentifier the team identifier string
-     * @return the numeric portion of the team identifier, or an empty string if null
-     */
-    public static String extractTeamNumber(String teamIdentifier)
-    {
-        if (teamIdentifier == null || teamIdentifier.isEmpty())
-        {
-            return "";
-        }
-        return teamIdentifier.replaceAll("^\\D+", "");
-    }
 
     /**
      * Extracts the numeric portion from a match identifier (e.g., "qm1" -> "1").
@@ -1164,7 +1157,7 @@ public class MatchData
                 m_version,
                 m_eventCode,
                 m_matchNumber,
-                extractTeamNumber(m_teamNumber),
+                m_teamNumber,
                 teamAliasClean,
                 m_scoutName,
                 m_diedValue,

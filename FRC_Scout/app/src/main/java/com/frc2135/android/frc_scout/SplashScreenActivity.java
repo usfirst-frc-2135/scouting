@@ -16,6 +16,7 @@ import com.frc2135.android.frc_scout.databinding.SplashScreenActivityBinding;
 
 /**
  * Entry point of the application. Displays a splash screen for a short duration while performing initialization tasks.
+ * <p>
  * Initializes the application's theme, displays current configuration metadata, and transitions to {@link MatchListActivity}.
  */
 @SuppressWarnings("ALL")
@@ -152,12 +153,13 @@ public class SplashScreenActivity extends AppCompatActivity
             WindowMetrics windowMetrics = getWindowManager().getCurrentWindowMetrics();
             width = windowMetrics.getBounds().width();
             height = windowMetrics.getBounds().height();
-            dpi = (int) windowMetrics.getDensity();
+            dpi = getResources().getConfiguration().densityDpi;
         }
         else
         {
             Log.i(TAG, "Using older API < " + Build.VERSION_CODES.R);
             DisplayMetrics displayMetrics = new DisplayMetrics();
+            //noinspection deprecation
             getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             width = displayMetrics.widthPixels;
             height = displayMetrics.heightPixels;

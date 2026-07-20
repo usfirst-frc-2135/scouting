@@ -14,8 +14,13 @@ import java.util.Locale;
 
 /**
  * Singleton class for managing event match data retrieved from The Blue Alliance (TBA).
- * Loads, parses, and persists match information (team keys, match numbers, competition levels) for a specific FRC event.
- * Handles its own persistence by extending {@link BaseJSONSerializer}.
+ * <p>
+ * This class handles the loading, parsing, and local persistence of match information
+ * (team keys, match numbers, competition levels) for a specific FRC event.
+ * <p>
+ * It implements a "Write-through Cache" pattern, ensuring that any successful disk write
+ * (e.g., after downloading from the TBA API) immediately updates the in-memory cache.
+ * Data is persisted as a single JSONArray file per event.
  */
 public class TBAMatches extends BaseJSONSerializer
 {
@@ -299,10 +304,26 @@ public class TBAMatches extends BaseJSONSerializer
     }
 
     /**
+     * Extracts the numeric portion from a team identifier (e.g., "frc2135" -> "2135").
+     *
+     * @param teamIdentifier the team identifier string
+     * @return the numeric portion of the team identifier, or an empty string if null
+     */
+    private static String removeTeamNumPrefix(String teamIdentifier)
+    {
+        if (teamIdentifier == null || teamIdentifier.isEmpty())
+        {
+            return "";
+        }
+        return teamIdentifier.replaceAll("^\\D+", "");
+    }
+
+    /**
      * Retrieves the official list of team identifiers for a specific match.
      *
      * @param matchNum the match identifier (e.g., "qm1")
      * @return an array of 7 strings: index 0 is a placeholder, 1-3 are Red alliance teams, 4-6 are Blue alliance teams
+     * format always removes the "frc" prefix from the team identifiers so the prefix never leaves this method
      */
     public String[] getMatchTeams(String matchNum)
     {
@@ -344,14 +365,14 @@ public class TBAMatches extends BaseJSONSerializer
                         {
                             for (int j = 0; j < Math.min(3, redTeams.length()); j++)
                             {
-                                teams[j + 1] = redTeams.optString(j, "");
+                                teams[j + 1] = removeTeamNumPrefix(redTeams.optString(j, ""));
                             }
                         }
                         if (blueTeams != null)
                         {
                             for (int j = 0; j < Math.min(3, blueTeams.length()); j++)
                             {
-                                teams[j + 4] = blueTeams.optString(j, "");
+                                teams[j + 4] = removeTeamNumPrefix(blueTeams.optString(j, ""));
                             }
                         }
                         return teams;

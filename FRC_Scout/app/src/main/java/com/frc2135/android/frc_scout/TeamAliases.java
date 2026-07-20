@@ -14,9 +14,14 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Singleton class for managing team aliases data.
- * Loads and parses team number to alias mapping (e.g., mapping a "99" placeholder to a real team number) from local JSON files.
- * Handles its own persistence by extending {@link BaseJSONSerializer}.
+ * Singleton class for managing team alias mappings.
+ * <p>
+ * Team aliases are used to map temporary or regional team identifiers (often starting with "99")
+ * to actual FRC team numbers. This class handles loading these mappings from event-specific
+ * JSON files, providing bidirectional resolution, and maintaining an in-memory cache.
+ * <p>
+ * It follows a "Write-through Cache" pattern where successful file writes automatically
+ * trigger a refresh of the internal memory state.
  */
 public class TeamAliases extends BaseJSONSerializer
 {
@@ -34,8 +39,8 @@ public class TeamAliases extends BaseJSONSerializer
     /**
      * Initializes the team alias repository for a specific event.
      *
-     * @param context   the context used for file operations
-     * @param eventCode the FRC event code
+     * @param context   the context used for file operations and internal storage access
+     * @param eventCode the FRC event code (e.g., "2026casac")
      */
     private TeamAliases(Context context, String eventCode)
     {
@@ -48,7 +53,7 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Returns the singleton instance of TeamAliases using the default event code from application settings.
+     * Returns the singleton instance of TeamAliases using the current event code from settings.
      *
      * @param context the context used for file operations
      * @return the singleton TeamAliases instance
@@ -61,11 +66,13 @@ public class TeamAliases extends BaseJSONSerializer
 
     /**
      * Returns the thread-safe singleton instance of TeamAliases.
-     * If the requested event code differs from the currently loaded one, it re-initializes for the new event.
+     * <p>
+     * If the requested event code differs from the currently loaded one, or if a reload is forced,
+     * the repository will re-initialize and attempt to load data from storage.
      *
-     * @param context      the context used for file operations and display messages
+     * @param context      the context used for file and display operations
      * @param eventCode    the FRC event code
-     * @param bForceReload if true, forces a reload of the aliases JSON from storage
+     * @param bForceReload if true, forces a reload of the aliases from disk even if already loaded
      * @return the singleton TeamAliases instance
      */
     public static TeamAliases getInstance(Context context, String eventCode, boolean bForceReload)
@@ -75,7 +82,7 @@ public class TeamAliases extends BaseJSONSerializer
         {
             if (sTeamAliases == null)
             {
-                Log.i(TAG, "Creating a new sTeamAliases for eventCode " + eventCode);
+                Log.i(TAG, "Creating new sTeamAliases for eventCode: " + eventCode);
                 sTeamAliases = new TeamAliases(context, eventCode);
                 sTeamAliases.readTeamAliasesJSON(true);
             }
@@ -94,7 +101,7 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Clears the singleton instance of TeamAliases.
+     * Clears the singleton instance and its internal cache.
      */
     @SuppressWarnings("unused")
     public static void clearTeamAliases()
@@ -104,7 +111,7 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Returns the FRC event code currently associated with this alias mapping.
+     * Returns the FRC event code currently associated with this repository.
      *
      * @return the event code string
      */
@@ -114,7 +121,7 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Updates the event code and resets the internal state of loaded alias mappings.
+     * Updates the event code and purges the internal mapping cache.
      *
      * @param eventCode the new FRC event code
      */
@@ -127,9 +134,9 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Reads the aliases JSON file from internal storage for the current event.
+     * Reads the event-specific aliases JSON file from internal storage into memory.
      *
-     * @param bSilent if true, error notifications are suppressed
+     * @param bSilent if true, success Toast notifications are suppressed
      */
     public void readTeamAliasesJSON(boolean bSilent)
     {
@@ -161,10 +168,10 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Parses a JSONArray of alias records into internal bidirectional maps.
+     * Parses a JSONArray of alias objects into internal bidirectional maps.
      *
-     * @param jsonArray the source JSONArray
-     * @throws JSONException if the array format is invalid
+     * @param jsonArray the JSONArray to parse
+     * @throws JSONException if the JSON structure is invalid
      */
     private void parseTeamAliasesJSON(JSONArray jsonArray)
             throws JSONException
@@ -185,10 +192,10 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Generates a filename for the team aliases record associated with an event.
+     * Generates a standard filename for an event's alias mapping record.
      *
      * @param eventCode the FRC event code
-     * @return the generated filename
+     * @return the generated filename (e.g., "2026casac_aliases.json")
      */
     private String getFilename(String eventCode)
     {
@@ -196,12 +203,15 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Saves a {@link JSONArray} of alias mappings to a JSON file in local storage.
+     * Persists a {@link JSONArray} of alias mappings to internal storage.
+     * <p>
+     * Following the "Write-through Cache" pattern, this method automatically reloads
+     * the in-memory state upon a successful disk write.
      *
      * @param eventCode   the FRC event code
-     * @param teamAliases the JSONArray containing mapping data to persist
-     * @param bSilent     if true, error notifications are suppressed
-     * @return true if the file was written successfully
+     * @param teamAliases the JSONArray of mapping data to save
+     * @param bSilent     if true, error/success notifications are suppressed
+     * @return true if the file was written and the cache reloaded successfully
      */
     public boolean writeTeamAliasesFile(String eventCode, JSONArray teamAliases, boolean bSilent)
     {
@@ -235,11 +245,11 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Loads the team aliases JSON file for a specific event from local storage.
+     * Loads the raw team aliases JSONArray for a specific event from storage.
      *
      * @param eventCode the FRC event code
-     * @return the loaded JSONArray, or null if the file is missing
-     * @throws IOException   if reading the file fails
+     * @return the loaded JSONArray, or null if the file does not exist
+     * @throws IOException   if file reading fails
      * @throws JSONException if the file content is not a valid JSONArray
      */
     public JSONArray readTeamAliasesFile(String eventCode)
@@ -258,10 +268,12 @@ public class TeamAliases extends BaseJSONSerializer
 
     /**
      * Deletes team alias records from local storage.
+     * <p>
      * If an event code is provided, only that file is deleted. If null, all alias files are removed.
+     * This method automatically clears the in-memory singleton if any files were deleted.
      *
-     * @param eventCode the FRC event code, or null to clear all
-     * @return the number of files deleted
+     * @param eventCode the FRC event code, or null to clear all records
+     * @return the number of files successfully deleted
      */
     public int deleteTeamAliasesFile(String eventCode)
     {
@@ -309,9 +321,9 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Checks whether team alias mappings for the current event are currently held in memory.
+     * Checks whether team alias mappings for the current event are successfully loaded in memory.
      *
-     * @return true if data is loaded
+     * @return true if the memory cache is populated
      */
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isTeamAliasesLoaded()
@@ -320,67 +332,34 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
-     * Retrieves the mapped alias for a given real FRC team number.
-     *
-     * @param teamNumStr the team number (e.g., "2135")
-     * @return the alias string (e.g. "9901"), or an empty string if no alias is defined
-     */
-    public String getAliasForTeamNum(String teamNumStr)
-    {
-        if (teamNumStr == null)
-        {
-            return "";
-        }
-
-        String targetTeamNum = MatchData.extractTeamNumber(teamNumStr);
-        return m_teamToAliasMap.getOrDefault(targetTeamNum, "");
-    }
-
-    /**
-     * Retrieves the real FRC team number associated with a given alias.
-     *
-     * @param aliasNumStr the alias string (e.g., "9901")
-     * @return the real team number (e.g., "2135"), or an empty string if the alias is unrecognized
-     */
-    public String getTeamNumForAlias(String aliasNumStr)
-    {
-        if (aliasNumStr == null)
-        {
-            return "";
-        }
-
-        return m_aliasToTeamMap.getOrDefault(aliasNumStr, "");
-    }
-
-    /**
      * Resolves an FRC team identifier to its alias if a mapping exists and aliases are loaded.
      *
-     * @param teamNum the raw team number string
-     * @return the team alias if it exists, otherwise the original team identifier
+     * @param teamNum the raw team number string (e.g., "frc2135" or "2135")
+     * @return the team alias if it exists (e.g. "9901"), otherwise the original team identifier
      */
-    public String resolveAlias(String teamNum)
+    public String getAliasForTeamNum(String teamNum)
     {
         if (teamNum == null || !isTeamAliasesLoaded())
         {
             return teamNum;
         }
-        String alias = getAliasForTeamNum(teamNum);
-        return alias.isEmpty() ? teamNum : alias;
+        String alias = m_teamToAliasMap.getOrDefault(teamNum, "");
+        return (alias == null || alias.isEmpty()) ? teamNum : alias;
     }
 
     /**
      * Resolves a possible alias (starting with "99") to its actual FRC team number.
      *
-     * @param entry the entered team number or alias string
-     * @return the actual team number if the entry is a recognized alias, otherwise the original entry
+     * @param alias the entered team number or alias string (e.g., "9901")
+     * @return the actual team number if the entry is a recognized alias (e.g., "2135"), otherwise the original entry
      */
-    public String resolveTeamNumber(String entry)
+    public String getTeamNumForAlias(String alias)
     {
-        if (entry == null || !isTeamAliasesLoaded() || !entry.startsWith("99"))
+        if (alias == null || !isTeamAliasesLoaded() || !alias.startsWith("99"))
         {
-            return entry;
+            return alias;
         }
-        String teamNum = getTeamNumForAlias(entry);
-        return teamNum.isEmpty() ? entry : teamNum;
+        String teamNum = m_aliasToTeamMap.getOrDefault(alias, "");
+        return (teamNum == null || teamNum.isEmpty()) ? alias : teamNum;
     }
 }

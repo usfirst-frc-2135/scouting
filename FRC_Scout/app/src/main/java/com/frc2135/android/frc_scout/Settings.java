@@ -38,6 +38,7 @@ public final class Settings extends BaseJSONSerializer
     private static final String KEY_SCORING_TABLE_SIDE = "scoringTableSide";
 
     private static final String DEFAULT_EVENT_CODE = "EVTX";
+    public static final int EVENT_CODE_MIN_LENGTH = 7;
 
     private String m_eventCode;
     private String m_teamIndexStr;
@@ -278,7 +279,7 @@ public final class Settings extends BaseJSONSerializer
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isValidEventCode(String eventCode)
     {
-        if (eventCode == null || eventCode.isEmpty() || eventCode.length() < 7)
+        if (eventCode == null || eventCode.isEmpty() || eventCode.length() < EVENT_CODE_MIN_LENGTH)
         {
             Log.w(TAG, "isValidEventCode: Invalid event code (too short): " + eventCode);
             return false;

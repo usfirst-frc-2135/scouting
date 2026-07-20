@@ -308,7 +308,7 @@ public class MatchListFragment extends Fragment
                 .setTitle("Clear All Application Data?")
                 .setMessage("This will permanently delete all TBA matches, team aliases, scout names, and application settings. Scouted match data will not be affected. Continue?")
                 .setPositiveButton("Clear All", (dialog, which) -> {
-                    Log.d(TAG, "Executing Clear All Data");
+                    Log.d(TAG, "Executing Clear All Settings");
                     Context context = requireContext();
 
                     // 1. Clear TBA Matches
