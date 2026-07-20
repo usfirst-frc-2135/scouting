@@ -324,7 +324,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
     }
 
     /**
-     * Called when the fragment is visible to the user and actively running.
+     * Called when the dialog is visible to the user and actively running.
      */
     @Override
     public void onResume()

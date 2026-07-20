@@ -106,9 +106,90 @@ public class MatchListFragment extends Fragment
         setupNewMatchButton();
         setupSortSpinner();
         setupFilterButton();
-        refreshMatchList();
 
         return m_binding.getRoot();
+    }
+
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     * Re-populates the sort adapter to ensure consistency.
+     */
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        Log.v(TAG, "onResume");
+        refreshMatchList();
+    }
+
+    /**
+     * Registers the {@link MenuProvider} for the host activity's action bar.
+     * Manages global app options like dark mode, data loading, and clearing application state.
+     */
+    private void setupMenuProvider()
+    {
+        requireActivity().addMenuProvider(new MenuProvider()
+        {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
+            {
+                inflater.inflate(R.menu.action_bar_context_menu, menu);
+
+                MenuItem darkModeItem = menu.findItem(R.id.dark_mode_switch);
+                if (darkModeItem != null)
+                {
+                    View actionView = darkModeItem.getActionView();
+                    if (actionView != null)
+                    {
+                        ActionBarSwitchBinding switchBinding = ActionBarSwitchBinding.bind(actionView);
+                        CompoundButton darkSwitch = switchBinding.actionBarDarkModeSwitch;
+                        Preferences prefs = Preferences.getInstance(requireContext());
+                        darkSwitch.setChecked(prefs.isDarkMode());
+                        darkSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                            Log.d(TAG, "Theme toggle: " + isChecked);
+                            if (isChecked != prefs.isDarkMode())
+                            {
+                                prefs.setDarkMode(isChecked);
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem item)
+            {
+                FragmentManager fm = requireActivity().getSupportFragmentManager();
+                int itemID = item.getItemId();
+
+                if (itemID == R.id.set_team_index_dialog)
+                {
+                    SetTeamIndexDialog.newInstance().show(getParentFragmentManager(), "set_team_index_dialog");
+                }
+                else if (itemID == R.id.load_tba_matches_dialog)
+                {
+                    LoadTBAMatchesDialog.newInstance().show(fm, "load_tba_matches_dialog");
+                }
+                else if (itemID == R.id.load_scout_names_dialog)
+                {
+                    LoadScoutNamesDialog.newInstance().show(fm, "load_scout_names_dialog");
+                }
+                else if (itemID == R.id.load_team_aliases_dialog)
+                {
+                    LoadTeamAliasesDialog.newInstance().show(fm, "load_team_aliases_dialog");
+                }
+                else if (itemID == R.id.clear_all_data_dialog)
+                {
+                    clearAllData();
+                }
+                else if (itemID == R.id.about_screen_dialog)
+                {
+                    startActivity(new Intent(requireContext(), SplashScreenActivity.class));
+                    requireActivity().finish();
+                }
+                return true;
+            }
+        });
     }
 
     /**
@@ -126,22 +207,6 @@ public class MatchListFragment extends Fragment
 
         updateSorting(); // This will apply current sort criteria and update the adapter
         Log.i(TAG, "Refreshed list. Displaying " + m_displayedMatches.size() + " scouted matches.");
-    }
-
-    /**
-     * Called when the fragment is visible to the user and actively running.
-     * Re-populates the sort adapter to ensure consistency.
-     */
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        Log.v(TAG, "onResume");
-        // Ensure dropdown options are populated and correct
-        ArrayAdapter<CharSequence> sortAdapter = new ArrayAdapter<>(requireContext(),
-                R.layout.dropdown_item, getResources().getTextArray(R.array.sort_criteria_array));
-        m_binding.matchListSortInput.setAdapter(sortAdapter);
-        refreshMatchList();
     }
 
     /**
@@ -230,76 +295,6 @@ public class MatchListFragment extends Fragment
     }
 
     /**
-     * Registers the {@link MenuProvider} for the host activity's action bar.
-     * Manages global app options like dark mode, data loading, and clearing application state.
-     */
-    private void setupMenuProvider()
-    {
-        requireActivity().addMenuProvider(new MenuProvider()
-        {
-            @Override
-            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
-            {
-                inflater.inflate(R.menu.action_bar_context_menu, menu);
-
-                MenuItem darkModeItem = menu.findItem(R.id.dark_mode_switch);
-                if (darkModeItem != null)
-                {
-                    View actionView = darkModeItem.getActionView();
-                    if (actionView != null)
-                    {
-                        ActionBarSwitchBinding switchBinding = ActionBarSwitchBinding.bind(actionView);
-                        CompoundButton darkSwitch = switchBinding.actionBarDarkModeSwitch;
-                        Preferences prefs = Preferences.getInstance(requireContext());
-                        darkSwitch.setChecked(prefs.isDarkMode());
-                        darkSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                            Log.d(TAG, "Theme toggle: " + isChecked);
-                            if (isChecked != prefs.isDarkMode())
-                            {
-                                prefs.setDarkMode(isChecked);
-                            }
-                        });
-                    }
-                }
-            }
-
-            @Override
-            public boolean onMenuItemSelected(@NonNull MenuItem item)
-            {
-                FragmentManager fm = requireActivity().getSupportFragmentManager();
-                int itemID = item.getItemId();
-
-                if (itemID == R.id.set_team_index_dialog)
-                {
-                    SetTeamIndexDialog.newInstance().show(getParentFragmentManager(), "set_team_index_dialog");
-                }
-                else if (itemID == R.id.load_tba_matches_dialog)
-                {
-                    LoadTBAMatchesDialog.newInstance().show(fm, "load_tba_matches_dialog");
-                }
-                else if (itemID == R.id.load_scout_names_dialog)
-                {
-                    LoadScoutNamesDialog.newInstance().show(fm, "load_scout_names_dialog");
-                }
-                else if (itemID == R.id.load_team_aliases_dialog)
-                {
-                    LoadTeamAliasesDialog.newInstance().show(fm, "load_team_aliases_dialog");
-                }
-                else if (itemID == R.id.clear_all_data_dialog)
-                {
-                    clearAllData();
-                }
-                else if (itemID == R.id.about_screen_dialog)
-                {
-                    startActivity(new Intent(requireContext(), SplashScreenActivity.class));
-                    requireActivity().finish();
-                }
-                return true;
-            }
-        });
-    }
-
-    /**
      * Presents a confirmation dialog to clear all non-scouting application data (TBA matches, scout names, aliases, settings).
      */
     private void clearAllData()
@@ -324,7 +319,7 @@ public class MatchListFragment extends Fragment
                     ScoutNames.clearScoutNames();
 
                     // 4. Reset Settings
-                    m_settings.resetSettings();
+                    m_settings.defaultSettings();
                     m_settings.saveSettingsSilent();
 
                     refreshMatchList();

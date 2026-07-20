@@ -93,7 +93,7 @@ public final class Settings extends BaseJSONSerializer
 
         m_pastScouts = new ArrayList<>();
 
-        resetSettings();
+        defaultSettings();
         try
         {
             loadSettings();
@@ -105,11 +105,11 @@ public final class Settings extends BaseJSONSerializer
     }
 
     /**
-     * Clears all settings to their default values and removes the settings file from disk.
+     * Defaults all settings to their default values.
      */
-    public void resetSettings()
+    public void defaultSettings()
     {
-        Log.d(TAG, "resetSettings");
+        Log.d(TAG, "defaultSettings");
         m_eventCode = DEFAULT_EVENT_CODE;
         m_teamIndexStr = m_teamIndexOptions[0];
         m_mostRecentMatchNumber = "";

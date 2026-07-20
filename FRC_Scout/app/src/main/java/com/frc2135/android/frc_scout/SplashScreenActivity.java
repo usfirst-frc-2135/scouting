@@ -90,27 +90,6 @@ public class SplashScreenActivity extends AppCompatActivity
     }
 
     /**
-     * Called when the activity is becoming visible to the user.
-     */
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-        Log.v(TAG, "onResume");
-    }
-
-    /**
-     * Perform any final cleanup before the activity is destroyed.
-     */
-    @Override
-    protected void onDestroy()
-    {
-        super.onDestroy();
-        Log.v(TAG, "onDestroy");
-        m_binding = null;
-    }
-
-    /**
      * Schedules the transition to the {@link MatchListActivity} after a pre-defined delay.
      */
     @SuppressWarnings("deprecation")
@@ -167,4 +146,26 @@ public class SplashScreenActivity extends AppCompatActivity
         }
         Log.i(TAG, "Display resolution: " + width + " x " + height + " @ " + dpi + "dpi");
     }
+
+    /**
+     * Called when the activity is becoming visible to the user.
+     */
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        Log.v(TAG, "onResume");
+    }
+
+    /**
+     * Perform any final cleanup before the activity is destroyed.
+     */
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        Log.v(TAG, "onDestroy");
+        m_binding = null;
+    }
+
 }

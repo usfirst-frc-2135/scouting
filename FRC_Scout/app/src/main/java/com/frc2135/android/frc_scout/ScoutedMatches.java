@@ -258,6 +258,9 @@ public class ScoutedMatches extends BaseJSONSerializer
                 }
             }
         }
+
+        Log.i(TAG, "Loaded " + matchHistory.size() + " scouted match files!");
+
         return matchHistory;
     }
 

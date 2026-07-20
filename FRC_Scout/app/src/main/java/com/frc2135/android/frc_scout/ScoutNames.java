@@ -200,7 +200,7 @@ public class ScoutNames extends BaseJSONSerializer
     {
         if (eventCode == null || scoutData == null)
         {
-            Log.e(TAG, "Attempted to save scout names with null eventCode or data");
+            Log.e(TAG, "Attempted to write scout names with null eventCode or data");
             return false;
         }
 
@@ -210,12 +210,12 @@ public class ScoutNames extends BaseJSONSerializer
         deleteScoutNamesFile(eventCode);
 
         String filename = getFilename(eventCode);
-        Log.i(TAG, "Saving scout names info for: " + eventCode + " to: " + filename);
+        Log.i(TAG, "Writing scout names info for: " + eventCode + " to: " + filename);
         try
         {
             File file = new File(m_dataDir, filename);
             saveJSONArray(file, scoutData);
-            Log.i(TAG, "Successfully saved " + scoutData.length() + " scout names for event: " + eventCode);
+            Log.i(TAG, "Successfully wrote " + scoutData.length() + " scout names for event: " + eventCode);
             readScoutNamesJSON(bSilent);
             return true;
         }

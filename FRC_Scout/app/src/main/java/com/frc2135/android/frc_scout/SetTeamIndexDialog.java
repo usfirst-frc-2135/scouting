@@ -129,15 +129,13 @@ public class SetTeamIndexDialog extends DialogFragment
     }
 
     /**
-     * Called when the fragment is visible to the user and actively running.
-     * Re-initializes the dropdown menu to ensure it displays correctly.
+     * Called when the dialog is visible to the user and actively running.
      */
     @Override
     public void onResume()
     {
         super.onResume();
         Log.v(TAG, "onResume");
-        setupTeamIndexDropdown();
     }
 
     /**
