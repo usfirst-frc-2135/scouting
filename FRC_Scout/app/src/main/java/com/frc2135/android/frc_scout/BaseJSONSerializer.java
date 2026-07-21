@@ -26,7 +26,6 @@ import java.nio.charset.StandardCharsets;
  */
 public abstract class BaseJSONSerializer
 {
-    @SuppressWarnings("unused")
     private static final String TAG = "BaseJSONSerializer";
 
     /**
@@ -168,7 +167,6 @@ public abstract class BaseJSONSerializer
      * @throws IOException   if reading from the filesystem fails
      * @throws JSONException if the file content cannot be parsed as a JSONObject
      */
-    @SuppressWarnings("unused")
     protected JSONObject loadJSONObject(File file)
             throws IOException, JSONException
     {

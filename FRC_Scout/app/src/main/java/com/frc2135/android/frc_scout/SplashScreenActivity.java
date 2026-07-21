@@ -73,18 +73,12 @@ public class SplashScreenActivity extends AppCompatActivity
         String teamIndex = m_settings.getTeamIndexStr();
         String scoutName = m_settings.getMostRecentScoutName();
 
-        if (eventCode.isEmpty())
-        {
-            eventCode = "None";
-        }
-        if (scoutName.isEmpty())
-        {
-            scoutName = "None";
-        }
+        String eventCodeDisplay = eventCode.isEmpty() ? "None" : eventCode;
+        String scoutNameDisplay = scoutName.isEmpty() ? "None" : scoutName;
 
-        String summary = "Event: " + eventCode + "\n" +
+        String summary = "Event: " + eventCodeDisplay + "\n" +
                 "Index: " + teamIndex + "\n" +
-                "Scout: " + scoutName;
+                "Scout: " + scoutNameDisplay;
 
         m_binding.splashSettingsSummaryText.setText(summary);
     }
@@ -138,7 +132,6 @@ public class SplashScreenActivity extends AppCompatActivity
         {
             Log.i(TAG, "Using older API < " + Build.VERSION_CODES.R);
             DisplayMetrics displayMetrics = new DisplayMetrics();
-            //noinspection deprecation
             getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             width = displayMetrics.widthPixels;
             height = displayMetrics.heightPixels;

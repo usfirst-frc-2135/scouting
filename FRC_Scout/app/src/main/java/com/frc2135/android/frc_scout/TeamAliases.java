@@ -29,7 +29,7 @@ public class TeamAliases extends BaseJSONSerializer
     private static final String TEAM_NUM_JSON_KEY = "teamNum";
     private static final String ALIAS_NUM_JSON_KEY = "aliasNum";
 
-    private String m_eventCode;
+    private static String m_eventCode;
     private final Map<String, String> m_teamToAliasMap;
     private final Map<String, String> m_aliasToTeamMap;
     private boolean m_bTeamAliasesLoaded;
@@ -37,16 +37,14 @@ public class TeamAliases extends BaseJSONSerializer
     private static volatile TeamAliases sTeamAliases;
 
     /**
-     * Initializes the team alias repository for a specific event.
+     * Initializes a new TeamAliases repository.
      *
-     * @param context   the context used for file operations and internal storage access
-     * @param eventCode the FRC event code (e.g., "2026casac")
+     * @param context the context used for file operations and internal storage access
      */
-    private TeamAliases(Context context, String eventCode)
+    private TeamAliases(Context context)
     {
         super(context);
         Log.v(TAG, "TeamAliases constructor");
-        m_eventCode = eventCode;
         m_bTeamAliasesLoaded = false;
         m_teamToAliasMap = new HashMap<>();
         m_aliasToTeamMap = new HashMap<>();
@@ -83,18 +81,18 @@ public class TeamAliases extends BaseJSONSerializer
             if (sTeamAliases == null)
             {
                 Log.i(TAG, "Creating new sTeamAliases for eventCode: " + eventCode);
-                sTeamAliases = new TeamAliases(context, eventCode);
+                m_eventCode = eventCode;
+                sTeamAliases = new TeamAliases(context);
                 sTeamAliases.readTeamAliasesJSON(true);
             }
-            else
+            else if (bForceReload || !eventCode.equalsIgnoreCase(m_eventCode))
             {
-                String oldEventCode = sTeamAliases.getEventCode();
-                if (bForceReload || !oldEventCode.equalsIgnoreCase(eventCode))
-                {
-                    Log.i(TAG, "Resetting TeamAliases: " + oldEventCode + " -> " + eventCode);
-                    sTeamAliases.setEventCode(eventCode);
-                    sTeamAliases.readTeamAliasesJSON(true);
-                }
+                Log.i(TAG, "Resetting TeamAliases: " + m_eventCode + " -> " + eventCode);
+                m_eventCode = eventCode;
+                sTeamAliases.m_bTeamAliasesLoaded = false;
+                sTeamAliases.m_teamToAliasMap.clear();
+                sTeamAliases.m_aliasToTeamMap.clear();
+                sTeamAliases.readTeamAliasesJSON(true);
             }
             return sTeamAliases;
         }
@@ -106,31 +104,11 @@ public class TeamAliases extends BaseJSONSerializer
     @SuppressWarnings("unused")
     public static void clearTeamAliases()
     {
-        Log.v(TAG, "clearTeamAliases");
-        sTeamAliases = null;
-    }
-
-    /**
-     * Returns the FRC event code currently associated with this repository.
-     *
-     * @return the event code string
-     */
-    public String getEventCode()
-    {
-        return m_eventCode;
-    }
-
-    /**
-     * Updates the event code and purges the internal mapping cache.
-     *
-     * @param eventCode the new FRC event code
-     */
-    public void setEventCode(String eventCode)
-    {
-        m_eventCode = eventCode;
-        m_bTeamAliasesLoaded = false;
-        m_teamToAliasMap.clear();
-        m_aliasToTeamMap.clear();
+        synchronized (TeamAliases.class)
+        {
+            Log.v(TAG, "clearTeamAliases");
+            sTeamAliases = null;
+        }
     }
 
     /**
@@ -154,7 +132,7 @@ public class TeamAliases extends BaseJSONSerializer
             {
                 parseTeamAliasesJSON(jsonArray);
                 m_bTeamAliasesLoaded = true;
-                super.displayToastMessages(m_appContext, TAG, "Successfully loaded team aliases for " + m_eventCode, bSilent, null);
+                super.displayToastMessages(m_appContext, TAG, "Successfully read team aliases file for " + m_eventCode, bSilent, null);
             }
             else
             {
@@ -163,7 +141,7 @@ public class TeamAliases extends BaseJSONSerializer
         }
         catch (JSONException | IOException e)
         {
-            super.displayToastMessages(m_appContext, TAG, "Failed to parse team aliases for: " + m_eventCode, bSilent, e);
+            super.displayToastMessages(m_appContext, TAG, "Failed to parse team aliases file for: " + m_eventCode, bSilent, e);
         }
     }
 

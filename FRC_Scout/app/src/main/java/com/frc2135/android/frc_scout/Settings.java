@@ -136,16 +136,16 @@ public final class Settings extends BaseJSONSerializer
             saveSettings();
         }
 
-        String content = readStringFromFile(file);
-        if (content == null || content.trim().isEmpty())
+        JSONObject json = loadJSONObject(file);
+        if (json != null)
+        {
+            fromJSON(json);
+            Log.i(TAG, "Successfully loaded settings from JSONObject format");
+        }
+        else
         {
             Log.e(TAG, "Failed to load settings from file");
-            return;
         }
-
-        JSONObject json = new JSONObject(content.trim());
-        fromJSON(json);
-        Log.i(TAG, "Successfully loaded settings from JSONObject format");
     }
 
     /**

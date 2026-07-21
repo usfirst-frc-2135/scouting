@@ -35,23 +35,21 @@ public class TBAMatches extends BaseJSONSerializer
     private static final String TBA_KEY_MATCH_NUMBER = "match_number";
 
     // Data members
-    private String m_eventCode;
+    private static String m_eventCode;
     private JSONArray m_tbaMatchesJSON;
     private boolean m_bTBAMatchesLoaded;
 
     private static volatile TBAMatches sTBAMatches;
 
     /**
-     * Initializes a new TBAMatches repository for a specific event.
+     * Initializes a new TBAMatches repository.
      *
-     * @param context   the context used for file operations
-     * @param eventCode the FRC event code
+     * @param context the context used for file operations
      */
-    private TBAMatches(Context context, String eventCode)
+    private TBAMatches(Context context)
     {
         super(context);
         Log.v(TAG, "TBAMatches constructor");
-        m_eventCode = eventCode;
         m_bTBAMatchesLoaded = false;
         m_tbaMatchesJSON = null;
     }
@@ -71,6 +69,7 @@ public class TBAMatches extends BaseJSONSerializer
 
     /**
      * Returns the thread-safe singleton instance of TBAMatches.
+     * <p>
      * If the requested event code differs from the currently loaded one, or if a reload is forced, it re-initializes the data.
      *
      * @param context      the context used for file operations and display messages
@@ -86,18 +85,17 @@ public class TBAMatches extends BaseJSONSerializer
             if (sTBAMatches == null)
             {
                 Log.i(TAG, "Creating new sTBAMatches for eventCode: " + eventCode);
-                sTBAMatches = new TBAMatches(context, eventCode);
+                m_eventCode = eventCode;
+                sTBAMatches = new TBAMatches(context);
                 sTBAMatches.readTBAMatchesJSON(true);
             }
-            else
+            else if (bForceReload || !eventCode.equalsIgnoreCase(m_eventCode))
             {
-                String oldEventCode = sTBAMatches.getEventCode();
-                if (bForceReload || !oldEventCode.equalsIgnoreCase(eventCode))
-                {
-                    Log.i(TAG, "Updating TBA matches: " + oldEventCode + " -> " + eventCode);
-                    sTBAMatches.setEventCode(eventCode);
-                    sTBAMatches.readTBAMatchesJSON(true);
-                }
+                Log.i(TAG, "Updating TBA matches: " + m_eventCode + " -> " + eventCode);
+                m_eventCode = eventCode;
+                sTBAMatches.m_bTBAMatchesLoaded = false;
+                sTBAMatches.m_tbaMatchesJSON = null;
+                sTBAMatches.readTBAMatchesJSON(true);
             }
             return sTBAMatches;
         }
@@ -113,28 +111,6 @@ public class TBAMatches extends BaseJSONSerializer
             Log.v(TAG, "clearTBAMatches");
             sTBAMatches = null;
         }
-    }
-
-    /**
-     * Returns the FRC event code currently associated with this match repository.
-     *
-     * @return the event code string
-     */
-    public String getEventCode()
-    {
-        return m_eventCode;
-    }
-
-    /**
-     * Updates the event code and resets the internal state of loaded match data.
-     *
-     * @param eventCode the new FRC event code
-     */
-    private void setEventCode(String eventCode)
-    {
-        m_eventCode = eventCode;
-        m_bTBAMatchesLoaded = false;
-        m_tbaMatchesJSON = null;
     }
 
     /**
@@ -157,7 +133,7 @@ public class TBAMatches extends BaseJSONSerializer
             if (m_tbaMatchesJSON != null)
             {
                 m_bTBAMatchesLoaded = true;
-                super.displayToastMessages(m_appContext, TAG, "Successfully loaded TBA matches for " + m_eventCode, bSilent, null);
+                super.displayToastMessages(m_appContext, TAG, "Successfully read TBA matches file for " + m_eventCode, bSilent, null);
             }
             else
             {
@@ -166,7 +142,7 @@ public class TBAMatches extends BaseJSONSerializer
         }
         catch (JSONException | IOException e)
         {
-            super.displayToastMessages(m_appContext, TAG, "Failed to parse TBA matches for: " + m_eventCode, bSilent, e);
+            super.displayToastMessages(m_appContext, TAG, "Failed to parse TBA matches file for: " + m_eventCode, bSilent, e);
         }
     }
 
@@ -243,6 +219,7 @@ public class TBAMatches extends BaseJSONSerializer
 
     /**
      * Deletes match data records from local storage.
+     * <p>
      * If an event code is provided, only that file is deleted. If null, all match files are removed.
      *
      * @param eventCode the FRC event code (e.g., "2026casac"), or null to clear all
@@ -320,10 +297,11 @@ public class TBAMatches extends BaseJSONSerializer
 
     /**
      * Retrieves the official list of team identifiers for a specific match.
+     * <p>
+     * format always removes the "frc" prefix from the team identifiers so the prefix never leaves this method
      *
      * @param matchNum the match identifier (e.g., "qm1")
      * @return an array of 7 strings: index 0 is a placeholder, 1-3 are Red alliance teams, 4-6 are Blue alliance teams
-     * format always removes the "frc" prefix from the team identifiers so the prefix never leaves this method
      */
     public String[] getMatchTeams(String matchNum)
     {

@@ -15,6 +15,7 @@ import java.util.Locale;
 
 /**
  * Singleton class for managing the repository of scout names.
+ * <p>
  * Loads and parses event-specific scout names from local JSON files and combines them with user-entered historical names from settings.
  * Handles its own persistence by extending {@link BaseJSONSerializer}.
  */
@@ -23,23 +24,21 @@ public class ScoutNames extends BaseJSONSerializer
     private static final String TAG = "ScoutNames";
     private static final String SCOUT_NAME_JSON_KEY = "scoutName";
 
-    private String m_eventCode;
-    private List<String> m_scoutNames;
+    private static String m_eventCode;
+    private final List<String> m_scoutNames;
     private boolean m_bScoutNamesLoaded;
 
     private static volatile ScoutNames sScoutNames;
 
     /**
-     * Initializes a new ScoutNames repository for a specific event.
+     * Initializes a new ScoutNames repository.
      *
-     * @param context   the context used for file operations
-     * @param eventCode the FRC event code
+     * @param context the context used for file operations
      */
-    private ScoutNames(Context context, String eventCode)
+    private ScoutNames(Context context)
     {
         super(context);
         Log.v(TAG, "ScoutNames constructor");
-        m_eventCode = eventCode;
         m_bScoutNamesLoaded = false;
         m_scoutNames = new ArrayList<>();
     }
@@ -58,6 +57,7 @@ public class ScoutNames extends BaseJSONSerializer
 
     /**
      * Returns the thread-safe singleton instance of ScoutNames.
+     * <p>
      * If the requested event code differs from the currently loaded one, it re-initializes for the new event.
      *
      * @param context      the context used for file operations
@@ -72,19 +72,18 @@ public class ScoutNames extends BaseJSONSerializer
         {
             if (sScoutNames == null)
             {
-                Log.i(TAG, "Creating a new sScoutNames for eventCode " + eventCode);
-                sScoutNames = new ScoutNames(context, eventCode);
+                Log.i(TAG, "Creating new sScoutNames for eventCode: " + eventCode);
+                m_eventCode = eventCode;
+                sScoutNames = new ScoutNames(context);
                 sScoutNames.readScoutNamesJSON(true);
             }
-            else
+            else if (bForceReload || !eventCode.equalsIgnoreCase(m_eventCode))
             {
-                String oldEventCode = sScoutNames.getEventCode();
-                if (bForceReload || !oldEventCode.equalsIgnoreCase(eventCode))
-                {
-                    Log.i(TAG, "Resetting ScoutNames: " + oldEventCode + " -> " + eventCode);
-                    sScoutNames.setEventCode(eventCode);
-                    sScoutNames.readScoutNamesJSON(true);
-                }
+                Log.i(TAG, "Resetting ScoutNames: " + m_eventCode + " -> " + eventCode);
+                m_eventCode = eventCode;
+                sScoutNames.m_bScoutNamesLoaded = false;
+                sScoutNames.m_scoutNames.clear();
+                sScoutNames.readScoutNamesJSON(true);
             }
             return sScoutNames;
         }
@@ -96,30 +95,11 @@ public class ScoutNames extends BaseJSONSerializer
     @SuppressWarnings("unused")
     public static void clearScoutNames()
     {
-        Log.v(TAG, "clearScoutNames");
-        sScoutNames = null;
-    }
-
-    /**
-     * Returns the event code currently associated with this scout list.
-     *
-     * @return the event code string
-     */
-    public String getEventCode()
-    {
-        return m_eventCode;
-    }
-
-    /**
-     * Updates the event code and resets the internal state of loaded scout names.
-     *
-     * @param eventCode the new FRC event code
-     */
-    public void setEventCode(String eventCode)
-    {
-        m_eventCode = eventCode;
-        m_bScoutNamesLoaded = false;
-        m_scoutNames = new ArrayList<>();
+        synchronized (ScoutNames.class)
+        {
+            Log.v(TAG, "clearScoutNames");
+            sScoutNames = null;
+        }
     }
 
     /**
@@ -143,7 +123,7 @@ public class ScoutNames extends BaseJSONSerializer
             {
                 parseScoutNamesJSON(jsonArray);
                 m_bScoutNamesLoaded = true;
-                super.displayToastMessages(m_appContext, TAG, "Successfully loaded scout names for " + m_eventCode, bSilent, null);
+                super.displayToastMessages(m_appContext, TAG, "Successfully read scout names file for " + m_eventCode, bSilent, null);
             }
             else
             {
@@ -152,7 +132,7 @@ public class ScoutNames extends BaseJSONSerializer
         }
         catch (JSONException | IOException e)
         {
-            super.displayToastMessages(m_appContext, TAG, "Failed to parse scout names for: " + m_eventCode, bSilent, e);
+            super.displayToastMessages(m_appContext, TAG, "Failed to parse scout names file for: " + m_eventCode, bSilent, e);
         }
     }
 
@@ -200,7 +180,7 @@ public class ScoutNames extends BaseJSONSerializer
     {
         if (eventCode == null || scoutData == null)
         {
-            Log.e(TAG, "Attempted to write scout names with null eventCode or data");
+            Log.w(TAG, "Attempted to save scout names with null eventCode or data");
             return false;
         }
 
@@ -210,12 +190,12 @@ public class ScoutNames extends BaseJSONSerializer
         deleteScoutNamesFile(eventCode);
 
         String filename = getFilename(eventCode);
-        Log.i(TAG, "Writing scout names info for: " + eventCode + " to: " + filename);
+        Log.i(TAG, "Saving scout names for " + eventCode + " to: " + filename);
         try
         {
             File file = new File(m_dataDir, filename);
             saveJSONArray(file, scoutData);
-            Log.i(TAG, "Successfully wrote " + scoutData.length() + " scout names for event: " + eventCode);
+            Log.i(TAG, "Successfully saved " + scoutData.length() + " scout names for event: " + eventCode);
             readScoutNamesJSON(bSilent);
             return true;
         }
@@ -238,7 +218,7 @@ public class ScoutNames extends BaseJSONSerializer
             throws IOException, JSONException
     {
         Log.d(TAG, "Reading scout names from file for event: " + eventCode);
-        if (eventCode == null)
+        if (eventCode == null || eventCode.trim().isEmpty())
         {
             return null;
         }
@@ -250,6 +230,7 @@ public class ScoutNames extends BaseJSONSerializer
 
     /**
      * Deletes scout names records from local storage.
+     * <p>
      * If an event code is provided, only that file is deleted. If null, all scout name files are removed.
      *
      * @param eventCode the FRC event code, or null to clear all
@@ -313,6 +294,7 @@ public class ScoutNames extends BaseJSONSerializer
 
     /**
      * Aggregates official event-specific scout names with historical names saved in application settings.
+     * <p>
      * Ensures the final list contains unique entries.
      *
      * @param context the context used to retrieve settings
