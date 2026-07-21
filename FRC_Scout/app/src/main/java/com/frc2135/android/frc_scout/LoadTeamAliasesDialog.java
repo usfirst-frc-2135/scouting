@@ -78,7 +78,7 @@ public class LoadTeamAliasesDialog extends DialogFragment
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
                 .setNeutralButton(R.string.clear_team_aliases, (d, w) -> {
                     Log.i(TAG, "Clear Team Aliases called");
-                    clearTeamAliases();
+                    HandleTeamAliasesClear();
                     m_binding.loadEventCodeInput.setText("");
                     m_binding.loadEventCodeLayout.setError(null);
                 })
@@ -245,7 +245,7 @@ public class LoadTeamAliasesDialog extends DialogFragment
     /**
      * Clears official team aliases for the event code currently entered in the input field.
      */
-    private void clearTeamAliases()
+    private void HandleTeamAliasesClear()
     {
         String eventCode = Objects.requireNonNull(m_binding.loadEventCodeInput.getText()).toString().trim();
         if (!eventCode.isEmpty())

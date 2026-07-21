@@ -321,7 +321,7 @@ public class PreMatchActivity extends AppCompatActivity
 
                     ArrayAdapter<String> teamAdapter = new ArrayAdapter<>(this, R.layout.dropdown_item, teams);
                     m_binding.preMatchTeamNumberInput.setAdapter(teamAdapter);
-                    m_binding.preMatchTeamNumberInput.setDropDownHeight(620);
+                    m_binding.preMatchTeamNumberInput.setDropDownHeight(500);
                     m_binding.preMatchTeamNumberInput.showDropDown();
                 }
             }

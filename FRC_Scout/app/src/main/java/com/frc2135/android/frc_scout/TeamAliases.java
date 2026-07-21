@@ -29,6 +29,7 @@ public class TeamAliases extends BaseJSONSerializer
     private static final String TEAM_NUM_JSON_KEY = "teamNum";
     private static final String ALIAS_NUM_JSON_KEY = "aliasNum";
 
+    // FRC event code for the currently loaded alias mappings. Static to ensure global consistency.
     private static String m_eventCode;
     private final Map<String, String> m_teamToAliasMap;
     private final Map<String, String> m_aliasToTeamMap;
@@ -83,7 +84,7 @@ public class TeamAliases extends BaseJSONSerializer
                 Log.i(TAG, "Creating new sTeamAliases for eventCode: " + eventCode);
                 m_eventCode = eventCode;
                 sTeamAliases = new TeamAliases(context);
-                sTeamAliases.readTeamAliasesJSON(true);
+                sTeamAliases.loadTeamAliasesJSON(true);
             }
             else if (bForceReload || !eventCode.equalsIgnoreCase(m_eventCode))
             {
@@ -92,7 +93,7 @@ public class TeamAliases extends BaseJSONSerializer
                 sTeamAliases.m_bTeamAliasesLoaded = false;
                 sTeamAliases.m_teamToAliasMap.clear();
                 sTeamAliases.m_aliasToTeamMap.clear();
-                sTeamAliases.readTeamAliasesJSON(true);
+                sTeamAliases.loadTeamAliasesJSON(true);
             }
             return sTeamAliases;
         }
@@ -101,8 +102,7 @@ public class TeamAliases extends BaseJSONSerializer
     /**
      * Clears the singleton instance and its internal cache.
      */
-    @SuppressWarnings("unused")
-    public static void clearTeamAliases()
+    private static void clearTeamAliases()
     {
         synchronized (TeamAliases.class)
         {
@@ -116,7 +116,7 @@ public class TeamAliases extends BaseJSONSerializer
      *
      * @param bSilent if true, success Toast notifications are suppressed
      */
-    public void readTeamAliasesJSON(boolean bSilent)
+    private void loadTeamAliasesJSON(boolean bSilent)
     {
         if (!Settings.getInstance(m_appContext).isValidEventCode(m_eventCode))
         {
@@ -181,6 +181,28 @@ public class TeamAliases extends BaseJSONSerializer
     }
 
     /**
+     * Loads the raw team aliases JSONArray for a specific event from storage.
+     *
+     * @param eventCode the FRC event code
+     * @return the loaded JSONArray, or null if the file does not exist
+     * @throws IOException   if file reading fails
+     * @throws JSONException if the file content is not a valid JSONArray
+     */
+    private JSONArray readTeamAliasesFile(String eventCode)
+            throws IOException, JSONException
+    {
+        Log.d(TAG, "Reading team aliases from file for event: " + eventCode);
+        if (eventCode == null || eventCode.trim().isEmpty())
+        {
+            return null;
+        }
+
+        String filename = getFilename(eventCode);
+        File file = new File(m_dataDir, filename);
+        return loadJSONArray(file);
+    }
+
+    /**
      * Persists a {@link JSONArray} of alias mappings to internal storage.
      * <p>
      * Following the "Write-through Cache" pattern, this method automatically reloads
@@ -212,7 +234,7 @@ public class TeamAliases extends BaseJSONSerializer
             File file = new File(m_dataDir, aliasFilename);
             saveJSONArray(file, teamAliases);
             Log.i(TAG, "Successfully saved " + teamAliases.length() + " team aliases for event: " + eventCode);
-            readTeamAliasesJSON(bSilent);
+            loadTeamAliasesJSON(bSilent);
             return true;
         }
         catch (IOException e)
@@ -220,28 +242,6 @@ public class TeamAliases extends BaseJSONSerializer
             super.displayToastMessages(m_appContext, TAG, "Failed to write team aliases file for: " + eventCode, bSilent, e);
             return false;
         }
-    }
-
-    /**
-     * Loads the raw team aliases JSONArray for a specific event from storage.
-     *
-     * @param eventCode the FRC event code
-     * @return the loaded JSONArray, or null if the file does not exist
-     * @throws IOException   if file reading fails
-     * @throws JSONException if the file content is not a valid JSONArray
-     */
-    public JSONArray readTeamAliasesFile(String eventCode)
-            throws IOException, JSONException
-    {
-        Log.d(TAG, "Reading team aliases from file for event: " + eventCode);
-        if (eventCode == null || eventCode.trim().isEmpty())
-        {
-            return null;
-        }
-
-        String filename = getFilename(eventCode);
-        File file = new File(m_dataDir, filename);
-        return loadJSONArray(file);
     }
 
     /**

@@ -92,7 +92,7 @@
         android:id="@+id/splash_author_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="30dp"
         android:text="@string/app_original_author"
         android:textColor="@color/textSecondary"
         android:textSize="@dimen/font_xx_small"

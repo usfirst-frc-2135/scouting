@@ -82,7 +82,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
                 .setNeutralButton(R.string.clear_tba_matches, (d, w) -> {
                     Log.i(TAG, "Clear TBA Matches called");
-                    clearTBAMatches();
+                    HandleTBAMatchesClear();
                     m_binding.loadEventCodeInput.setText("");
                     m_binding.loadEventCodeLayout.setError(null);
                 })
@@ -280,7 +280,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
     /**
      * Clears official match data for the event code currently entered in the input field.
      */
-    private void clearTBAMatches()
+    private void HandleTBAMatchesClear()
     {
         String eventCode = Objects.requireNonNull(m_binding.loadEventCodeInput.getText()).toString().trim();
         if (!eventCode.isEmpty())

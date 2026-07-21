@@ -308,15 +308,12 @@ public class MatchListFragment extends Fragment
 
                     // 1. Clear TBA Matches
                     TBAMatches.getInstance(context).deleteTBAMatchesFile(null);
-                    TBAMatches.clearTBAMatches();
 
                     // 2. Clear Team Aliases
                     TeamAliases.getInstance(context).deleteTeamAliasesFile(null);
-                    TeamAliases.clearTeamAliases();
 
                     // 3. Clear Scout Names
                     ScoutNames.getInstance(context).deleteScoutNamesFile(null);
-                    ScoutNames.clearScoutNames();
 
                     // 4. Reset Settings
                     m_settings.defaultSettings();

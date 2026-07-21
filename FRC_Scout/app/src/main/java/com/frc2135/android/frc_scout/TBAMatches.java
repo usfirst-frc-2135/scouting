@@ -18,9 +18,8 @@ import java.util.Locale;
  * This class handles the loading, parsing, and local persistence of match information
  * (team keys, match numbers, competition levels) for a specific FRC event.
  * <p>
- * It implements a "Write-through Cache" pattern, ensuring that any successful disk write
- * (e.g., after downloading from the TBA API) immediately updates the in-memory cache.
- * Data is persisted as a single JSONArray file per event.
+ * It follows a "Write-through Cache" pattern where successful file writes automatically
+ * trigger a refresh of the internal memory state.
  */
 public class TBAMatches extends BaseJSONSerializer
 {
@@ -34,7 +33,7 @@ public class TBAMatches extends BaseJSONSerializer
     private static final String TBA_KEY_COMP_LEVEL = "comp_level";
     private static final String TBA_KEY_MATCH_NUMBER = "match_number";
 
-    // Data members
+    // FRC event code for the currently loaded match records. Static to ensure global consistency.
     private static String m_eventCode;
     private JSONArray m_tbaMatchesJSON;
     private boolean m_bTBAMatchesLoaded;
@@ -70,11 +69,12 @@ public class TBAMatches extends BaseJSONSerializer
     /**
      * Returns the thread-safe singleton instance of TBAMatches.
      * <p>
-     * If the requested event code differs from the currently loaded one, or if a reload is forced, it re-initializes the data.
+     * If the requested event code differs from the currently loaded one, or if a reload is forced,
+     * the repository will re-initialize and attempt to load data from storage.
      *
-     * @param context      the context used for file operations and display messages
+     * @param context      the context used for file and display operations
      * @param eventCode    the FRC event code
-     * @param bForceReload if true, forces a reload of the matches JSON from storage
+     * @param bForceReload if true, forces a reload of the matches from disk even if already loaded
      * @return the singleton TBAMatches instance
      */
     public static TBAMatches getInstance(Context context, String eventCode, boolean bForceReload)
@@ -87,7 +87,7 @@ public class TBAMatches extends BaseJSONSerializer
                 Log.i(TAG, "Creating new sTBAMatches for eventCode: " + eventCode);
                 m_eventCode = eventCode;
                 sTBAMatches = new TBAMatches(context);
-                sTBAMatches.readTBAMatchesJSON(true);
+                sTBAMatches.loadTBAMatchesJSON(true);
             }
             else if (bForceReload || !eventCode.equalsIgnoreCase(m_eventCode))
             {
@@ -95,7 +95,7 @@ public class TBAMatches extends BaseJSONSerializer
                 m_eventCode = eventCode;
                 sTBAMatches.m_bTBAMatchesLoaded = false;
                 sTBAMatches.m_tbaMatchesJSON = null;
-                sTBAMatches.readTBAMatchesJSON(true);
+                sTBAMatches.loadTBAMatchesJSON(true);
             }
             return sTBAMatches;
         }
@@ -104,7 +104,7 @@ public class TBAMatches extends BaseJSONSerializer
     /**
      * Clears the singleton instance of TBAMatches.
      */
-    public static void clearTBAMatches()
+    private static void clearTBAMatches()
     {
         synchronized (TBAMatches.class)
         {
@@ -118,14 +118,14 @@ public class TBAMatches extends BaseJSONSerializer
      *
      * @param bSilent if true, error notifications are suppressed
      */
-    public void readTBAMatchesJSON(boolean bSilent)
+    private void loadTBAMatchesJSON(boolean bSilent)
     {
         if (!Settings.getInstance(m_appContext).isValidEventCode(m_eventCode))
         {
             return;
         }
 
-        Log.d(TAG, "readTBAMatchesJSON: eventCode = " + m_eventCode);
+        Log.d(TAG, "loadTBAMatchesJSON: eventCode = " + m_eventCode);
 
         try
         {
@@ -158,6 +158,28 @@ public class TBAMatches extends BaseJSONSerializer
     }
 
     /**
+     * Loads the match information JSON file for a specific event from local storage.
+     *
+     * @param eventCode the FRC event code
+     * @return the loaded JSONArray, or null if the file is missing
+     * @throws IOException   if reading the file fails
+     * @throws JSONException if the file content is not a valid JSONArray
+     */
+    private JSONArray readTBAMatchesFile(String eventCode)
+            throws IOException, JSONException
+    {
+        Log.d(TAG, "Reading TBA matches from file for event: " + eventCode);
+        if (eventCode == null || eventCode.trim().isEmpty())
+        {
+            return null;
+        }
+
+        String eventFilename = getFilename(eventCode);
+        File file = new File(m_dataDir, eventFilename);
+        return loadJSONArray(file);
+    }
+
+    /**
      * Saves a {@link JSONArray} of match data to a JSON file in local storage.
      *
      * @param eventCode  the FRC event code
@@ -185,7 +207,7 @@ public class TBAMatches extends BaseJSONSerializer
             File file = new File(m_dataDir, eventFileName);
             saveJSONArray(file, tbaMatches);
             Log.i(TAG, "Successfully saved " + tbaMatches.length() + " TBA matches for event: " + eventCode);
-            readTBAMatchesJSON(bSilent);
+            loadTBAMatchesJSON(bSilent);
             return true;
         }
         catch (IOException e)
@@ -193,28 +215,6 @@ public class TBAMatches extends BaseJSONSerializer
             super.displayToastMessages(m_appContext, TAG, "Failed to write TBA matches file for: " + eventCode, bSilent, e);
             return false;
         }
-    }
-
-    /**
-     * Loads the match information JSON file for a specific event from local storage.
-     *
-     * @param eventCode the FRC event code
-     * @return the loaded JSONArray, or null if the file is missing
-     * @throws IOException   if reading the file fails
-     * @throws JSONException if the file content is not a valid JSONArray
-     */
-    public JSONArray readTBAMatchesFile(String eventCode)
-            throws IOException, JSONException
-    {
-        Log.d(TAG, "Reading TBA matches from file for event: " + eventCode);
-        if (eventCode == null || eventCode.trim().isEmpty())
-        {
-            return null;
-        }
-
-        String eventFilename = getFilename(eventCode);
-        File file = new File(m_dataDir, eventFilename);
-        return loadJSONArray(file);
     }
 
     /**

@@ -16,14 +16,19 @@ import java.util.Locale;
 /**
  * Singleton class for managing the repository of scout names.
  * <p>
- * Loads and parses event-specific scout names from local JSON files and combines them with user-entered historical names from settings.
- * Handles its own persistence by extending {@link BaseJSONSerializer}.
+ * This class handles loading and parsing event-specific scout names from local JSON files
+ * and combining them with historical names entered by the user. It maintains an in-memory
+ * list of unique scout names to facilitate UI autopopulation.
+ * <p>
+ * It follows a "Write-through Cache" pattern where successful file writes automatically
+ * trigger a refresh of the internal memory state.
  */
 public class ScoutNames extends BaseJSONSerializer
 {
     private static final String TAG = "ScoutNames";
     private static final String SCOUT_NAME_JSON_KEY = "scoutName";
 
+    // FRC event code for the currently loaded names record. Static to ensure global consistency.
     private static String m_eventCode;
     private final List<String> m_scoutNames;
     private boolean m_bScoutNamesLoaded;
@@ -58,11 +63,12 @@ public class ScoutNames extends BaseJSONSerializer
     /**
      * Returns the thread-safe singleton instance of ScoutNames.
      * <p>
-     * If the requested event code differs from the currently loaded one, it re-initializes for the new event.
+     * If the requested event code differs from the currently loaded one, or if a reload is forced,
+     * the repository will re-initialize and attempt to load data from storage.
      *
-     * @param context      the context used for file operations
+     * @param context      the context used for file and display operations
      * @param eventCode    the FRC event code
-     * @param bForceReload if true, forces a reload of the scout names JSON from storage
+     * @param bForceReload if true, forces a reload of the names from disk even if already loaded
      * @return the singleton ScoutNames instance
      */
     public static ScoutNames getInstance(Context context, String eventCode, boolean bForceReload)
@@ -75,7 +81,7 @@ public class ScoutNames extends BaseJSONSerializer
                 Log.i(TAG, "Creating new sScoutNames for eventCode: " + eventCode);
                 m_eventCode = eventCode;
                 sScoutNames = new ScoutNames(context);
-                sScoutNames.readScoutNamesJSON(true);
+                sScoutNames.loadScoutNamesJSON(true);
             }
             else if (bForceReload || !eventCode.equalsIgnoreCase(m_eventCode))
             {
@@ -83,7 +89,7 @@ public class ScoutNames extends BaseJSONSerializer
                 m_eventCode = eventCode;
                 sScoutNames.m_bScoutNamesLoaded = false;
                 sScoutNames.m_scoutNames.clear();
-                sScoutNames.readScoutNamesJSON(true);
+                sScoutNames.loadScoutNamesJSON(true);
             }
             return sScoutNames;
         }
@@ -92,8 +98,7 @@ public class ScoutNames extends BaseJSONSerializer
     /**
      * Clears the singleton instance of ScoutNames.
      */
-    @SuppressWarnings("unused")
-    public static void clearScoutNames()
+    private static void clearScoutNames()
     {
         synchronized (ScoutNames.class)
         {
@@ -107,7 +112,7 @@ public class ScoutNames extends BaseJSONSerializer
      *
      * @param bSilent if true, error notifications are suppressed
      */
-    public void readScoutNamesJSON(boolean bSilent)
+    private void loadScoutNamesJSON(boolean bSilent)
     {
         if (!Settings.getInstance(m_appContext).isValidEventCode(m_eventCode))
         {
@@ -169,6 +174,28 @@ public class ScoutNames extends BaseJSONSerializer
     }
 
     /**
+     * Loads the scout names JSON file for a specific event from local storage.
+     *
+     * @param eventCode the FRC event code
+     * @return the loaded JSONArray, or null if the file is missing
+     * @throws IOException   if reading the file fails
+     * @throws JSONException if the file content is not a valid JSONArray
+     */
+    private JSONArray readScoutNamesFile(String eventCode)
+            throws IOException, JSONException
+    {
+        Log.d(TAG, "Reading scout names from file for event: " + eventCode);
+        if (eventCode == null || eventCode.trim().isEmpty())
+        {
+            return null;
+        }
+
+        String filename = getFilename(eventCode);
+        File file = new File(m_dataDir, filename);
+        return loadJSONArray(file);
+    }
+
+    /**
      * Saves a {@link JSONArray} of scout names to a JSON file in local storage.
      *
      * @param eventCode the FRC event code
@@ -196,7 +223,7 @@ public class ScoutNames extends BaseJSONSerializer
             File file = new File(m_dataDir, filename);
             saveJSONArray(file, scoutData);
             Log.i(TAG, "Successfully saved " + scoutData.length() + " scout names for event: " + eventCode);
-            readScoutNamesJSON(bSilent);
+            loadScoutNamesJSON(bSilent);
             return true;
         }
         catch (IOException e)
@@ -204,28 +231,6 @@ public class ScoutNames extends BaseJSONSerializer
             super.displayToastMessages(m_appContext, TAG, "Failed to write scout names file for: " + eventCode, bSilent, e);
             return false;
         }
-    }
-
-    /**
-     * Loads the scout names JSON file for a specific event from local storage.
-     *
-     * @param eventCode the FRC event code
-     * @return the loaded JSONArray, or null if the file is missing
-     * @throws IOException   if reading the file fails
-     * @throws JSONException if the file content is not a valid JSONArray
-     */
-    public JSONArray readScoutNamesFile(String eventCode)
-            throws IOException, JSONException
-    {
-        Log.d(TAG, "Reading scout names from file for event: " + eventCode);
-        if (eventCode == null || eventCode.trim().isEmpty())
-        {
-            return null;
-        }
-
-        String filename = getFilename(eventCode);
-        File file = new File(m_dataDir, filename);
-        return loadJSONArray(file);
     }
 
     /**
