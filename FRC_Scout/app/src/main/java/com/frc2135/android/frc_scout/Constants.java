@@ -72,4 +72,9 @@ public final class Constants
      * Intent extra key for indicating if an activity was launched in edit mode.
      */
     public static final String IN_EDIT_MODE = "in_edit";
+
+    /**
+     * Dimension of the QR code image in pixels.
+     */
+    public static final int QR_CODE_DIMENSION = 639;
 }

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- start QR code dialog layout -->
+<?xml version="1.0" encoding="utf-8"?><!-- start QR code dialog layout -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -17,8 +16,8 @@
 
         <ImageView
             android:id="@+id/qr_dialog_image"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:adjustViewBounds="true"
             android:contentDescription="@string/qr_code_image"
             android:scaleType="fitCenter" />
@@ -35,5 +34,4 @@
         android:textSize="@dimen/font_tiny"
         android:fontFamily="monospace" />
 
-</LinearLayout>
-<!-- end QR code dialog layout -->
+</LinearLayout><!-- end QR code dialog layout -->

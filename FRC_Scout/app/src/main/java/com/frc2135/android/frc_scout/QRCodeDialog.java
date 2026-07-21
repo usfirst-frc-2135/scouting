@@ -42,7 +42,7 @@ public class QRCodeDialog extends DialogFragment
      */
     public static QRCodeDialog newInstance(MatchData matchData)
     {
-        QRCodeDialog fragment = new QRCodeDialog();
+        QRCodeDialog dialog = new QRCodeDialog();
         Bundle bundle = new Bundle();
 
         String label = String.format("%s-%s-%s-%s",
@@ -53,8 +53,8 @@ public class QRCodeDialog extends DialogFragment
 
         bundle.putString(ARG_LABEL, label);
         bundle.putString(ARG_STATS, matchData.encodeToTSV());
-        fragment.setArguments(bundle);
-        return fragment;
+        dialog.setArguments(bundle);
+        return dialog;
     }
 
     /**
@@ -99,11 +99,10 @@ public class QRCodeDialog extends DialogFragment
             return;
         }
 
-        int qrCodeDimension = 750;
         Log.i(TAG, "Generating QR code for text length: " + text.length());
 
         QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(text, null, Contents.Type.TEXT,
-                BarcodeFormat.QR_CODE.toString(), qrCodeDimension);
+                BarcodeFormat.QR_CODE.toString(), Constants.QR_CODE_DIMENSION);
 
         try
         {
