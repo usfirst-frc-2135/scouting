@@ -23,7 +23,7 @@ import java.util.Objects;
  * <p>
  * This activity handles the entry of the event code, match number, team number, and scout name.
  * It features Material Design components, including validated text inputs and an autocomplete
- * field for scout names. It also integrates with The Blue Alliance (TBA) match data to
+ * field for scout names. It also integrates with The Blue Alliance (TBA) schedule data to
  * provide intelligent autopopulation and dropdown selection for team numbers based on the
  * current match and assigned team index.
  * <p>
@@ -34,7 +34,7 @@ public class PreMatchActivity extends AppCompatActivity
 {
     private static final String TAG = "PreMatchActivity";
     private PreMatchActivityBinding m_binding;
-    private TBAMatches m_tbaMatches;
+    private TBASchedule m_tbaSchedule;
     private MatchData m_matchData;
     private TeamAliases m_teamAliases;
     private ScoutNames m_scoutNames;
@@ -84,7 +84,7 @@ public class PreMatchActivity extends AppCompatActivity
         m_matchData = ScoutedMatches.getInstance(getApplicationContext()).getMatch(matchId);
 
         String eventCode = (m_matchData != null) ? m_matchData.getEventCode().trim() : "";
-        m_tbaMatches = TBAMatches.getInstance(getApplicationContext(), eventCode, false);
+        m_tbaSchedule = TBASchedule.getInstance(getApplicationContext(), eventCode, false);
         m_teamAliases = TeamAliases.getInstance(getApplicationContext());
 
         m_settings = Settings.getInstance(getApplicationContext());
@@ -306,11 +306,11 @@ public class PreMatchActivity extends AppCompatActivity
         Log.d(TAG, "Showing team number drop down");
         String matchNumStr = m_binding.preMatchNumberInput.getText().toString().trim().toLowerCase();
 
-        if (!matchNumStr.isEmpty() && m_tbaMatches != null && m_tbaMatches.isTBAMatchesLoaded())
+        if (!matchNumStr.isEmpty() && m_tbaSchedule != null && m_tbaSchedule.isTBAScheduleLoaded())
         {
             try
             {
-                String[] teams = m_tbaMatches.getMatchTeams(matchNumStr);
+                String[] teams = m_tbaSchedule.getMatchTeams(matchNumStr);
                 if (teams.length > 0 && !teams[0].isEmpty())
                 {
                     // Process team numbers for aliases
@@ -337,7 +337,7 @@ public class PreMatchActivity extends AppCompatActivity
      */
     private void setTeamNumFromMatchNum()
     {
-        if (m_settings == null || m_tbaMatches == null || !m_tbaMatches.isTBAMatchesLoaded())
+        if (m_settings == null || m_tbaSchedule == null || !m_tbaSchedule.isTBAScheduleLoaded())
         {
             return;
         }
@@ -348,7 +348,7 @@ public class PreMatchActivity extends AppCompatActivity
             Log.d(TAG, "setTeamNumFromMatchNum: Auto-loading all team numbers for match " + matchNumStr + " index " + m_teamIndexStr);
             try
             {
-                String[] matchTeams = m_tbaMatches.getMatchTeams(matchNumStr);
+                String[] matchTeams = m_tbaSchedule.getMatchTeams(matchNumStr);
                 int teamIndex = m_settings.getTeamIndex();
                 if (teamIndex < matchTeams.length)
                 {

@@ -33,19 +33,19 @@ import java.util.Objects;
  * Dialog for loading match data for a specific event from The Blue Alliance (TBA) API.
  * This dialog handles fetching, saving, and clearing event-specific match information.
  */
-public class LoadTBAMatchesDialog extends DialogFragment
+public class LoadTBAScheduleDialog extends DialogFragment
 {
-    private static final String TAG = "LoadTBAMatchesDialog";
+    private static final String TAG = "LoadTBAScheduleDialog";
     private LoadEventDialogBinding m_binding;
 
     /**
-     * Creates a new instance of {@link LoadTBAMatchesDialog}.
+     * Creates a new instance of {@link LoadTBAScheduleDialog}.
      *
-     * @return a new LoadTBAMatchesDialog instance
+     * @return a new LoadTBAScheduleDialog instance
      */
-    public static LoadTBAMatchesDialog newInstance()
+    public static LoadTBAScheduleDialog newInstance()
     {
-        return new LoadTBAMatchesDialog();
+        return new LoadTBAScheduleDialog();
     }
 
     /**
@@ -76,13 +76,13 @@ public class LoadTBAMatchesDialog extends DialogFragment
         }
 
         AlertDialog dialog = new MaterialAlertDialogBuilder(requireContext())
-                .setTitle(R.string.load_tba_matches_title)
+                .setTitle(R.string.load_tba_schedule_title)
                 .setView(m_binding.getRoot())
                 .setPositiveButton(android.R.string.ok, null)
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
-                .setNeutralButton(R.string.clear_tba_matches, (d, w) -> {
-                    Log.i(TAG, "Clear TBA Matches called");
-                    HandleTBAMatchesClear();
+                .setNeutralButton(R.string.delete_tba_schedule, (d, w) -> {
+                    Log.i(TAG, "Clear TBA Schedule called");
+                    handleDeleteTBASchedule();
                     m_binding.loadEventCodeInput.setText("");
                     m_binding.loadEventCodeLayout.setError(null);
                 })
@@ -157,7 +157,7 @@ public class LoadTBAMatchesDialog extends DialogFragment
         }
 
         m_binding.loadEventCodeLayout.setError(null);
-        downloadTBAMatches(dialog, eventCode);
+        downloadTBASchedule(dialog, eventCode);
     }
 
     /**
@@ -186,9 +186,9 @@ public class LoadTBAMatchesDialog extends DialogFragment
      * @param dialog    the active {@link AlertDialog} instance to update or dismiss
      * @param eventCode the TBA event code (e.g., "2026casac")
      */
-    private void downloadTBAMatches(AlertDialog dialog, String eventCode)
+    private void downloadTBASchedule(AlertDialog dialog, String eventCode)
     {
-        Log.d(TAG, "Starting TBA matches download for: " + eventCode);
+        Log.d(TAG, "Starting TBA schedule download for: " + eventCode);
 
         // Disable button to prevent multiple requests
         MaterialButton okButton = (MaterialButton) dialog.getButton(AlertDialog.BUTTON_POSITIVE);
@@ -197,23 +197,23 @@ public class LoadTBAMatchesDialog extends DialogFragment
         m_binding.loadEventProgressIndicator.setVisibility(View.VISIBLE);
 
         String urlStr = Constants.TBA_EVENT_MATCHES_URL + eventCode + "/matches";
-        Log.i(TAG, "TBA Matches URL: " + urlStr);
+        Log.i(TAG, "TBA Schedule URL: " + urlStr);
 
         Context context = requireContext().getApplicationContext();
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlStr, null,
                 response -> {
-                    Log.i(TAG, "Successfully received TBA match file for: " + eventCode);
+                    Log.i(TAG, "Successfully received TBA schedule file for: " + eventCode);
                     if (response.length() == 0)
                     {
-                        displayToastMessages(requireContext(), TAG, "No TBA matches in file for " + eventCode, false, null);
+                        displayToastMessages(requireContext(), TAG, "No TBA schedule in file for " + eventCode, false, null);
                         resetUiState(okButton);
                         return;
                     }
 
-                    if (saveTBAMatches(context, eventCode, response))
+                    if (saveTBASchedule(context, eventCode, response))
                     {
-                        displayToastMessages(requireContext(), TAG, "Successfully downloaded " + response.length() + " TBA matches for " + eventCode, false, null);
+                        displayToastMessages(requireContext(), TAG, "Successfully downloaded " + response.length() + " TBA schedule for " + eventCode, false, null);
                         if (isAdded())
                         {
                             dismiss();
@@ -225,8 +225,8 @@ public class LoadTBAMatchesDialog extends DialogFragment
                     }
                 },
                 error -> {
-                    Log.e(TAG, "Download TBA matches failed: " + error.toString());
-                    StringBuilder msg = new StringBuilder("Failed to download TBA matches. ");
+                    Log.e(TAG, "Download TBA schedule failed: " + error.toString());
+                    StringBuilder msg = new StringBuilder("Failed to download TBA schedule. ");
                     if (error.networkResponse != null)
                     {
                         int statusCode = error.networkResponse.statusCode;
@@ -265,10 +265,10 @@ public class LoadTBAMatchesDialog extends DialogFragment
      * @param response  the JSON array of matches received from the API
      * @return true if successful, false otherwise
      */
-    private boolean saveTBAMatches(Context context, String eventCode, JSONArray response)
+    private boolean saveTBASchedule(Context context, String eventCode, JSONArray response)
     {
-        TBAMatches tbaMatches = TBAMatches.getInstance(context, eventCode, true);
-        if (tbaMatches.writeTBAMatchesFile(eventCode, response, true))
+        TBASchedule tbaSchedule = TBASchedule.getInstance(context, eventCode, true);
+        if (tbaSchedule.writeTBAScheduleFile(eventCode, response, true))
         {
             // Update current event code settings!
             Settings.getInstance(context).setEventCode(eventCode);
@@ -280,15 +280,15 @@ public class LoadTBAMatchesDialog extends DialogFragment
     /**
      * Clears official match data for the event code currently entered in the input field.
      */
-    private void HandleTBAMatchesClear()
+    private void handleDeleteTBASchedule()
     {
         String eventCode = Objects.requireNonNull(m_binding.loadEventCodeInput.getText()).toString().trim();
         if (!eventCode.isEmpty())
         {
-            TBAMatches tbaMatches = TBAMatches.getInstance(requireContext(), eventCode, false);
-            if (tbaMatches.deleteTBAMatchesFile(eventCode) > 0)
+            TBASchedule tbaSchedule = TBASchedule.getInstance(requireContext(), eventCode, false);
+            if (tbaSchedule.deleteTBAScheduleFile(eventCode) > 0)
             {
-                displayToastMessages(requireContext(), TAG, "Cleared TBA Matches for " + eventCode, false, null);
+                displayToastMessages(requireContext(), TAG, "Cleared TBA Schedule for " + eventCode, false, null);
             }
         }
     }

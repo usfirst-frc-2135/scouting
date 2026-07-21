@@ -15,12 +15,11 @@
 
     <!--    Action bar menu items -->
     <string name="set_team_index">Set Team Index</string>
-    <string name="load_tba_matches">Load TBA Matches</string>
+    <string name="load_tba_schedule">Load TBA Schedule</string>
     <string name="load_team_aliases">Load Team Aliases</string>
     <string name="load_scout_names">Load Scout Names</string>
     <string name="clear_all_settings">Clear All Settings</string>
     <string name="about">About</string>
-    <string name="load_scout_names_title">Load Scout Names</string>
 
     <string name="set_team_index_title">Set Team Index</string>
     <string name="set_the_team_index_to_use">Team index to use (1–6, or None):</string>
@@ -33,11 +32,14 @@
     <string name="team_index_6">6 - Blue 3</string>
     <string name="clear_team_index">Clear Team Index</string>
 
-    <string name="load_tba_matches_title">Load TBA Matches</string>
-    <string name="clear_tba_matches">Clear TBA Matches</string>
+    <string name="load_tba_schedule_title">Load TBA Schedule</string>
+    <string name="delete_tba_schedule">Delete TBA Schedule</string>
+
+    <string name="load_scout_names_title">Load Scout Names</string>
+    <string name="delete_scout_names">Delete Scout Names</string>
 
     <string name="load_team_aliases_title">Load Team Aliases</string>
-    <string name="clear_team_aliases">Clear Team Aliases</string>
+    <string name="delete_team_aliases">Delete Team Aliases</string>
 
     <!--    Match List screen -->
     <string name="sort_by">Sort By</string>
@@ -188,7 +190,6 @@
 
     <!--   miscellaneous strings -->
     <string name="n_a">N/A</string>
-
     <string name="missing">missing</string>
 
     <!-- Accessibility Strings -->

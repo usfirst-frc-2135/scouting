@@ -19,7 +19,7 @@ public final class Constants
     /**
      * Suffix used for local files containing match data downloaded from The Blue Alliance.
      */
-    public static final String TBA_MATCHES_FILE_SUFFIX = "_tbaMatches.json";
+    public static final String TBA_SCHEDULE_FILE_SUFFIX = "_tbaSchedule.json";
 
     /**
      * Prefix for filenames storing individual scouted match records.

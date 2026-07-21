@@ -166,9 +166,9 @@ public class MatchListFragment extends Fragment
                 {
                     SetTeamIndexDialog.newInstance().show(getParentFragmentManager(), "set_team_index_dialog");
                 }
-                else if (itemID == R.id.load_tba_matches_dialog)
+                else if (itemID == R.id.load_tba_schedule_dialog)
                 {
-                    LoadTBAMatchesDialog.newInstance().show(fm, "load_tba_matches_dialog");
+                    LoadTBAScheduleDialog.newInstance().show(fm, "load_tba_schedule_dialog");
                 }
                 else if (itemID == R.id.load_scout_names_dialog)
                 {
@@ -295,19 +295,19 @@ public class MatchListFragment extends Fragment
     }
 
     /**
-     * Presents a confirmation dialog to clear all non-scouting application data (TBA matches, scout names, aliases, settings).
+     * Presents a confirmation dialog to clear all non-scouting application data (TBA schedule, scout names, aliases, settings).
      */
     private void clearAllData()
     {
         new MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Clear All Application Data?")
-                .setMessage("This will permanently delete all TBA matches, team aliases, scout names, and application settings. Scouted match data will not be affected. Continue?")
+                .setMessage("This will permanently delete all TBA schedule, team aliases, scout names, and application settings. Scouted match data will not be affected. Continue?")
                 .setPositiveButton("Clear All", (dialog, which) -> {
                     Log.d(TAG, "Executing Clear All Settings");
                     Context context = requireContext();
 
-                    // 1. Clear TBA Matches
-                    TBAMatches.getInstance(context).deleteTBAMatchesFile(null);
+                    // 1. Clear TBA Schedule
+                    TBASchedule.getInstance(context).deleteTBAScheduleFile(null);
 
                     // 2. Clear Team Aliases
                     TeamAliases.getInstance(context).deleteTeamAliasesFile(null);

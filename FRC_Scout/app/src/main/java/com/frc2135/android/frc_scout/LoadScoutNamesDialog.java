@@ -76,9 +76,9 @@ public class LoadScoutNamesDialog extends DialogFragment
                 .setView(m_binding.getRoot())
                 .setPositiveButton(android.R.string.ok, null)
                 .setNegativeButton(android.R.string.cancel, (d, w) -> dismiss())
-                .setNeutralButton("Clear Scout Names", (d, w) -> {
+                .setNeutralButton(R.string.delete_scout_names, (d, w) -> {
                     Log.i(TAG, "Clear Scout Names called");
-                    clearScoutNames();
+                    handleDeleteScoutNames();
                     m_binding.loadEventCodeInput.setText("");
                     m_binding.loadEventCodeLayout.setError(null);
                 })
@@ -245,7 +245,7 @@ public class LoadScoutNamesDialog extends DialogFragment
     /**
      * Clears official scout names for the event code currently entered in the input field.
      */
-    private void clearScoutNames()
+    private void handleDeleteScoutNames()
     {
         String eventCode = Objects.requireNonNull(m_binding.loadEventCodeInput.getText()).toString().trim();
         if (!eventCode.isEmpty())
