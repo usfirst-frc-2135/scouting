@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Default screen margins, per the Android Design guidelines. -->
+    <!-- Typography -->
     <dimen name="font_tiny">12sp</dimen>
     <dimen name="font_xx_small">14sp</dimen>
     <dimen name="font_x_small">16sp</dimen>
@@ -11,6 +11,8 @@
     </dimen>
     <dimen name="font_huge">36sp</dimen>
 
+    <!-- Layout Spacing -->
     <dimen name="card_margin">4dp</dimen>
     <dimen name="section_padding">8dp</dimen>
+    <dimen name="scouting_scroll_bottom_nav__margin">80dp</dimen>
 </resources>

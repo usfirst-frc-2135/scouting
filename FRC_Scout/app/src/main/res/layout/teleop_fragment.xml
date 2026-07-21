@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:clipToPadding="false"
-        android:paddingBottom="80dp">
+        android:paddingBottom="@dimen/scouting_scroll_bottom_nav__margin">
 
         <!-- start Teleop fragment main layout -->
         <LinearLayout
