@@ -155,7 +155,6 @@ public class EndgameFragment extends Fragment
     private void setupListeners()
     {
         m_binding.endgameGenerateQrButton.setEnabled(true);
-        m_binding.endgameGenerateQrButtonDisabled.setVisibility(View.INVISIBLE);
 
         m_binding.endgameGenerateQrButton.setOnClickListener(view -> {
             updateEndgameData();
