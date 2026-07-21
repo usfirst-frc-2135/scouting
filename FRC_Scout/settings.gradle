@@ -1,2 +1,26 @@
-rootProject.name='FRC_Scout'
-include ':app'
+pluginManagement {
+    repositories {
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url = "https://plugins.gradle.org/m2/" }
+        maven { url = "https://repo.spring.io/plugins-release/" }
+        maven { url = "https://jitpack.io" }
+    }
+}
+
+rootProject.name = "FRC_Scout"
+include ":app"
