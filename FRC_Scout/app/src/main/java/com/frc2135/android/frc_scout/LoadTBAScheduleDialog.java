@@ -30,8 +30,8 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Dialog for loading match data for a specific event from The Blue Alliance (TBA) API.
- * This dialog handles fetching, saving, and clearing event-specific match information.
+ * Dialog for loading the official match schedule for a specific event from The Blue Alliance (TBA) API.
+ * This dialog handles fetching, saving, and clearing event-specific schedule information.
  */
 public class LoadTBAScheduleDialog extends DialogFragment
 {
@@ -140,7 +140,7 @@ public class LoadTBAScheduleDialog extends DialogFragment
 
     /**
      * Handles the logic when the OK button is clicked. Validates the event code
-     * and initiates the match data download if the code is valid.
+     * and initiates the schedule data download if the code is valid.
      *
      * @param dialog the active {@link AlertDialog} instance
      */
@@ -179,7 +179,7 @@ public class LoadTBAScheduleDialog extends DialogFragment
     }
 
     /**
-     * Downloads event match data from The Blue Alliance API for the specified event code.
+     * Downloads the official event schedule from The Blue Alliance API for the specified event code.
      * Updates the UI state to show loading during the request.
      * On success, saves the data locally and dismisses the dialog.
      *
@@ -258,7 +258,7 @@ public class LoadTBAScheduleDialog extends DialogFragment
     }
 
     /**
-     * Saves the downloaded event match data to internal storage and updates application state.
+     * Saves the downloaded event schedule data to internal storage and updates application state.
      *
      * @param context   the application context
      * @param eventCode the TBA event code
@@ -278,7 +278,7 @@ public class LoadTBAScheduleDialog extends DialogFragment
     }
 
     /**
-     * Clears official match data for the event code currently entered in the input field.
+     * Clears official schedule data for the event code currently entered in the input field.
      */
     private void handleDeleteTBASchedule()
     {

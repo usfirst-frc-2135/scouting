@@ -13,9 +13,9 @@ import java.util.Arrays;
 import java.util.Locale;
 
 /**
- * Singleton class for managing event match data retrieved from The Blue Alliance (TBA).
+ * Singleton class for managing event match schedule data retrieved from The Blue Alliance (TBA).
  * <p>
- * This class handles the loading, parsing, and local persistence of match information
+ * This class handles the loading, parsing, and local persistence of schedule information
  * (team keys, match numbers, competition levels) for a specific FRC event.
  * <p>
  * It follows a "Write-through Cache" pattern where successful file writes automatically
@@ -180,7 +180,7 @@ public class TBASchedule extends BaseJSONSerializer
     }
 
     /**
-     * Saves a {@link JSONArray} of match data to a JSON file in local storage.
+     * Saves a {@link JSONArray} of match schedule data to a JSON file in local storage.
      *
      * @param eventCode   the FRC event code
      * @param tbaSchedule the JSONArray containing match information to persist
@@ -218,7 +218,7 @@ public class TBASchedule extends BaseJSONSerializer
     }
 
     /**
-     * Deletes match data records from local storage.
+     * Deletes match schedule data records from local storage.
      * <p>
      * If an event code is provided, only that file is deleted. If null, all match files are removed.
      *
@@ -271,7 +271,7 @@ public class TBASchedule extends BaseJSONSerializer
     }
 
     /**
-     * Checks whether match data from The Blue Alliance is currently held in memory.
+     * Checks whether match schedule data from The Blue Alliance is currently held in memory.
      *
      * @return true if data is loaded
      */
