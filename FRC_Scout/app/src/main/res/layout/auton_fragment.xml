@@ -22,8 +22,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginHorizontal="4dp"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_marginHorizontal="@dimen/card_margin"
                 app:cardBackgroundColor="#719da9"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
@@ -38,7 +38,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="6dp">
+                        android:padding="@dimen/section_padding">
 
                         <TextView
                             android:id="@+id/auton_preload_title"
@@ -66,7 +66,7 @@
                         android:layout_height="wrap_content"
                         android:background="#8DB0BA"
                         android:orientation="vertical"
-                        android:padding="6dp">
+                        android:padding="@dimen/section_padding">
 
                         <TextView
                             android:id="@+id/auton_preload_accuracy_label"
@@ -160,8 +160,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginHorizontal="4dp"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_marginHorizontal="@dimen/card_margin"
                 app:cardBackgroundColor="#EE965F"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
@@ -176,7 +176,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="6dp">
+                        android:padding="@dimen/section_padding">
 
                         <TextView
                             android:id="@+id/auton_hopper_label"
@@ -235,7 +235,7 @@
                         android:layout_height="wrap_content"
                         android:background="#F0A271"
                         android:orientation="vertical"
-                        android:padding="6dp">
+                        android:padding="@dimen/section_padding">
 
                         <TextView
                             android:id="@+id/auton_accuracy_label"
@@ -337,8 +337,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginHorizontal="4dp"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_marginHorizontal="@dimen/card_margin"
                 app:cardBackgroundColor="#D48C74"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
@@ -348,7 +348,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:padding="6dp">
+                    android:padding="@dimen/section_padding">
 
                     <TextView
                         android:id="@+id/auton_fuel_source_label"
@@ -404,8 +404,8 @@
                 android:id="@+id/auton_climb_position"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginHorizontal="4dp"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_marginHorizontal="@dimen/card_margin"
                 app:cardBackgroundColor="#93A685"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">

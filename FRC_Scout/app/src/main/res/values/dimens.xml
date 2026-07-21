@@ -10,4 +10,7 @@
         tools:ignore="UnusedResources">30sp
     </dimen>
     <dimen name="font_huge">36sp</dimen>
+
+    <dimen name="card_margin">4dp</dimen>
+    <dimen name="section_padding">8dp</dimen>
 </resources>

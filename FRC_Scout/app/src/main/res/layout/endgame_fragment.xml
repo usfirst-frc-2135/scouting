@@ -22,8 +22,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginHorizontal="4dp"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_marginHorizontal="@dimen/card_margin"
                 app:cardBackgroundColor="#adbba2"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
@@ -32,7 +32,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="6dp">
+                    android:padding="@dimen/section_padding">
 
                     <TextView
                         android:id="@+id/endgame_start_climb_label"
@@ -115,8 +115,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginHorizontal="4dp"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_marginHorizontal="@dimen/card_margin"
                 app:cardBackgroundColor="#93A685"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
@@ -339,8 +339,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginHorizontal="4dp"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_marginHorizontal="@dimen/card_margin"
                 app:cardBackgroundColor="#b2538e"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
@@ -349,7 +349,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="6dp">
+                    android:padding="@dimen/section_padding">
 
                     <TextView
                         android:id="@+id/endgame_died_label"
@@ -443,8 +443,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginHorizontal="4dp"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_marginHorizontal="@dimen/card_margin"
                 app:counterEnabled="true"
                 app:counterMaxLength="400">
 
