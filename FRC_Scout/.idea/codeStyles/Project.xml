@@ -71,6 +71,7 @@
       <option name="FOR_BRACE_FORCE" value="3" />
     </codeStyleSettings>
     <codeStyleSettings language="XML">
+      <option name="RIGHT_MARGIN" value="132" />
       <indentOptions>
         <option name="CONTINUATION_INDENT_SIZE" value="4" />
       </indentOptions>

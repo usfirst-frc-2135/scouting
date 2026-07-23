@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright (c) 2025 FRC 2135 Presentation Invasion
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2020-26 FRC 2135 Presentation Invasion
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
   ~ associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -26,6 +25,7 @@
     <string name="our_team_logo">2135 Logo</string>
     <string name="app_original_author">Created by Nandita Jayanthi, 2020</string>
     <string name="app_version">Version 2026.2.0</string>
+    <string name="app_copyright">Copyright 2020–26 Team 2135</string>
 
     <!--    Action bar content -->
     <string name="title_match_list">Scouted Matches</string>
