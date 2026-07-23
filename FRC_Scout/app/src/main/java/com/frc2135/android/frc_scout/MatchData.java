@@ -1218,4 +1218,30 @@ public class MatchData
         }
         return sb.toString();
     }
+
+    /**
+     * Encodes the match data into a JSON string for QR code generation.
+     *
+     * @return the JSON encoded string
+     */
+    @SuppressWarnings("unused")
+    public String encodeToJSON()
+    {
+        String jsonString = "";
+
+        m_teamAlias = (m_teamAlias == null || m_teamAlias.isEmpty()) ? "-" : m_teamAlias;
+        m_comment = (m_comment == null || m_comment.trim().isEmpty()) ? "-" : m_comment.trim();
+
+        try
+        {
+            jsonString = toJSON().toString();
+            Log.d(TAG, "JSON Output: " + jsonString);
+        }
+        catch (JSONException e)
+        {
+            Log.e(TAG, "Error serializing MatchData to JSON", e);
+        }
+
+        return jsonString;
+    }
 }

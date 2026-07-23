@@ -72,6 +72,7 @@ public class QRCodeDialog extends DialogFragment
 
         bundle.putString(ARG_LABEL, label);
         bundle.putString(ARG_STATS, matchData.encodeToTSV());
+        //        bundle.putString(ARG_STATS, matchData.encodeToJSON());
         dialog.setArguments(bundle);
         return dialog;
     }
