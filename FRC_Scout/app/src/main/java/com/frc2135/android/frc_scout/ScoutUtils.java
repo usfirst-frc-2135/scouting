@@ -26,7 +26,7 @@ import android.util.Log;
 public class ScoutUtils
 {
     private static final int EVENT_CODE_MIN_LENGTH = 7; // 2026cur
-    private static final int EVENT_CODE_MAX_LENGTH = 9; // 2026cacac
+    private static final int EVENT_CODE_MAX_LENGTH = 10; // 2026cacac
     private static final int EVENT_CODE_MIN_YEAR = 2025; // 2026cur
     private static final int EVENT_CODE_MAX_YEAR = 2027; // 2026cacac
 
