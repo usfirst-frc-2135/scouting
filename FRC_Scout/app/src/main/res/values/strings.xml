@@ -96,6 +96,7 @@
 
     <string name="please_fill_in">Please fill in the missing fields!</string>
     <string name="required">Required</string>
+    <string name="invalid_format">Invalid format</string>
 
     <!--    post-match submit strings -->
     <string name="qr_code_image">QR code image</string>

@@ -4,7 +4,7 @@ import static java.lang.Integer.parseInt;
 
 import android.util.Log;
 
-public class ScoutingUtils
+public class ScoutUtils
 {
     private static final int EVENT_CODE_MIN_LENGTH = 7; // 2026cur
     private static final int EVENT_CODE_MAX_LENGTH = 9; // 2026cacac
@@ -20,6 +20,7 @@ public class ScoutingUtils
     /**
      * Validates an event code string format (4-digit year followed by identifier, e.g., 2026casac).
      *
+     * @param tag       the logging tag
      * @param eventCode the event code string to validate
      * @return true if the format is valid
      */
@@ -57,7 +58,13 @@ public class ScoutingUtils
 
     /**
      * Validates a match number string format (one or two character comp_level, multiple digits match number, e.g., qm114).
+     * <p>
+     * Supported competition levels:
+     * - qm: Qualifications (1-150)
+     * - sf: Semifinals (1-13)
+     * - f: Finals (1-3)
      *
+     * @param tag      the logging tag
      * @param matchNum the match number string to validate
      * @return true if the format is valid
      */
@@ -102,7 +109,7 @@ public class ScoutingUtils
             return false;
         }
 
-        if (compLevel.equals("qm") && (numInt >= 1 && numInt <= 130))
+        if (compLevel.equals("qm") && (numInt >= 1 && numInt <= 150)) // 2026 CMP had 124 matches per division
         {
             return true;
         }
@@ -124,6 +131,7 @@ public class ScoutingUtils
     /**
      * Validates a team number string format (one to five digits with optional following letter, e.g., 2135A).
      *
+     * @param tag     the logging tag
      * @param teamNum the team number string to validate
      * @return true if the format is valid
      */
@@ -152,4 +160,52 @@ public class ScoutingUtils
         return true;
     }
 
+    /**
+     * Normalizes a scout name by trimming leading/trailing whitespace and collapsing
+     * multiple internal spaces into a single space.
+     *
+     * @param scoutName the scout name to normalize
+     * @return the normalized scout name, or an empty string if null/empty
+     */
+    public static String normalizeScoutName(String scoutName)
+    {
+        if (scoutName == null)
+        {
+            return "";
+        }
+        return scoutName.trim().replaceAll("\\s+", " ");
+    }
+
+    /**
+     * Validates that the scout name meets the required format.
+     * <p>
+     * Requirements:
+     * - First name starting with a capital letter, followed by optional letters.
+     * - A single space separator.
+     * - A single capital letter for the last initial.
+     *
+     * @param tag       the logging tag
+     * @param scoutName the scout name to validate
+     * @return true if the name is valid, false otherwise
+     */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    public static boolean isValidScoutName(String tag, String scoutName)
+    {
+        if (scoutName == null || scoutName.trim().isEmpty())
+        {
+            Log.w(tag, "isValidScoutName: Invalid scout name (empty): " + scoutName);
+            return false;
+        }
+
+        // Normalize before final pattern check
+        String normalizedName = normalizeScoutName(scoutName);
+
+        if (!normalizedName.matches("^[A-Z][a-zA-Z]*\\s[A-Z]$"))
+        {
+            Log.w(tag, "isValidScoutName: Invalid scout name format (first name, last initial): " + normalizedName);
+            return false;
+        }
+
+        return true;
+    }
 }

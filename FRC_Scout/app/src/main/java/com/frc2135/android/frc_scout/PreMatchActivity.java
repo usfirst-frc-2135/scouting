@@ -378,7 +378,7 @@ public class PreMatchActivity extends AppCompatActivity
         String eventCode = Objects.requireNonNull(m_binding.preMatchEventCodeInput.getText()).toString().trim();
         String matchNum = m_binding.preMatchNumberInput.getText().toString().trim().toLowerCase();
         String teamNumEntry = m_binding.preMatchTeamNumberInput.getText().toString().trim();
-        String scoutName = m_binding.preMatchScoutNameInput.getText().toString().trim();
+        String scoutName = ScoutUtils.normalizeScoutName(Objects.requireNonNull(m_binding.preMatchScoutNameInput.getText()).toString());
 
         m_matchData.setEventCode(eventCode);
         m_matchData.setMatchNumber(matchNum);
@@ -406,12 +406,23 @@ public class PreMatchActivity extends AppCompatActivity
         String scoutName = m_binding.preMatchScoutNameInput.getText().toString().trim();
 
         String requiredError = getString(R.string.required);
-        m_binding.preMatchEventCodeLayout.setError(eventCode.isEmpty() ? requiredError : null);
-        m_binding.preMatchNumberLayout.setError(matchNum.isEmpty() ? requiredError : null);
-        m_binding.preMatchTeamNumberLayout.setError(teamNum.isEmpty() ? requiredError : null);
-        m_binding.preMatchScoutNameLayout.setError(scoutName.isEmpty() ? requiredError : null);
+        String formatError = getString(R.string.invalid_format);
 
-        boolean isValid = !eventCode.isEmpty() && !matchNum.isEmpty() && !teamNum.isEmpty() && !scoutName.isEmpty();
+        boolean isEventCodeValid = ScoutUtils.isValidEventCode(TAG, eventCode);
+        m_binding.preMatchEventCodeLayout.setError(eventCode.isEmpty() ? requiredError : (!isEventCodeValid ? formatError : null));
+
+        boolean isMatchNumValid = ScoutUtils.isValidMatchNumber(TAG, matchNum);
+        m_binding.preMatchNumberLayout.setError(matchNum.isEmpty() ? requiredError : (!isMatchNumValid ? formatError : null));
+
+        // Note: teamNum might be an alias, so we check the underlying team number.
+        String underlyingTeamNum = m_teamAliases.getTeamNumForAlias(teamNum);
+        boolean isTeamNumValid = ScoutUtils.isValidTeamNumber(TAG, underlyingTeamNum);
+        m_binding.preMatchTeamNumberLayout.setError(teamNum.isEmpty() ? requiredError : (!isTeamNumValid ? formatError : null));
+
+        boolean isScoutNameValid = ScoutUtils.isValidScoutName(TAG, scoutName);
+        m_binding.preMatchScoutNameLayout.setError(scoutName.isEmpty() ? requiredError : (!isScoutNameValid ? formatError : null));
+
+        boolean isValid = isEventCodeValid && isMatchNumValid && isTeamNumValid && isScoutNameValid;
 
         m_binding.preMatchErrorMessage.setVisibility(isValid ? View.GONE : View.VISIBLE);
         return isValid;

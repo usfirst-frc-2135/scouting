@@ -100,7 +100,7 @@ public class LoadTBAScheduleDialog extends DialogFragment
             {
                 m_binding.loadEventCodeLayout.setError(null);
                 String eventCode = s.toString().trim().toLowerCase(Locale.US);
-                if (ScoutingUtils.isValidEventCode(TAG, eventCode))
+                if (ScoutUtils.isValidEventCode(TAG, eventCode))
                 {
                     MaterialButton okButton = (MaterialButton) dialog.getButton(AlertDialog.BUTTON_POSITIVE);
                     if (okButton != null)
@@ -149,7 +149,7 @@ public class LoadTBAScheduleDialog extends DialogFragment
         Log.d(TAG, "handleOkClick called");
         String eventCode = Objects.requireNonNull(m_binding.loadEventCodeInput.getText()).toString().trim().toLowerCase(Locale.US);
 
-        if (!ScoutingUtils.isValidEventCode(TAG, eventCode))
+        if (!ScoutUtils.isValidEventCode(TAG, eventCode))
         {
             m_binding.loadEventCodeLayout.setError("Invalid event code (e.g., 2026casac)");
             return;

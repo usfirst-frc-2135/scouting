@@ -120,7 +120,7 @@ public class TBASchedule extends BaseJSONSerializer
      */
     private void loadTBAScheduleJSON(boolean bSilent)
     {
-        if (!ScoutingUtils.isValidEventCode(TAG, m_eventCode))
+        if (!ScoutUtils.isValidEventCode(TAG, m_eventCode))
         {
             return;
         }
