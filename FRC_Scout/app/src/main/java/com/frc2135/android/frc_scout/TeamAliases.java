@@ -118,7 +118,7 @@ public class TeamAliases extends BaseJSONSerializer
      */
     private void loadTeamAliasesJSON(boolean bSilent)
     {
-        if (!Settings.getInstance(m_appContext).isValidEventCode(m_eventCode))
+        if (!ScoutingUtils.isValidEventCode(TAG, m_eventCode))
         {
             return;
         }

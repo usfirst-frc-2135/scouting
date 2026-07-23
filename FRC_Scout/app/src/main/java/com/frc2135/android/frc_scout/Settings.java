@@ -38,7 +38,6 @@ public final class Settings extends BaseJSONSerializer
     private static final String KEY_SCORING_TABLE_SIDE = "scoringTableSide";
 
     private static final String DEFAULT_EVENT_CODE = "EVTX";
-    public static final int EVENT_CODE_MIN_LENGTH = 7;
 
     private String m_eventCode;
     private String m_teamIndexStr;
@@ -268,30 +267,6 @@ public final class Settings extends BaseJSONSerializer
     public String getEventCode()
     {
         return m_eventCode;
-    }
-
-    /**
-     * Validates an event code string format (4-digit year followed by identifier, e.g., 2026casac).
-     *
-     * @param eventCode the event code string to validate
-     * @return true if the format is valid
-     */
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    public boolean isValidEventCode(String eventCode)
-    {
-        if (eventCode == null || eventCode.isEmpty() || eventCode.length() < EVENT_CODE_MIN_LENGTH)
-        {
-            Log.w(TAG, "isValidEventCode: Invalid event code (too short): " + eventCode);
-            return false;
-        }
-
-        if (!eventCode.matches("\\d{4}[a-z0-9]+"))
-        {
-            Log.w(TAG, "isValidEventCode: Invalid event code format: " + eventCode);
-            return false;
-        }
-
-        return true;
     }
 
     /**

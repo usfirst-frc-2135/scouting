@@ -114,7 +114,7 @@ public class ScoutNames extends BaseJSONSerializer
      */
     private void loadScoutNamesJSON(boolean bSilent)
     {
-        if (!Settings.getInstance(m_appContext).isValidEventCode(m_eventCode))
+        if (!ScoutingUtils.isValidEventCode(TAG, m_eventCode))
         {
             return;
         }

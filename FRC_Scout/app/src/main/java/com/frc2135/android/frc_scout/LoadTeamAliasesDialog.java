@@ -96,7 +96,7 @@ public class LoadTeamAliasesDialog extends DialogFragment
             {
                 m_binding.loadEventCodeLayout.setError(null);
                 String eventCode = s.toString().trim().toLowerCase(Locale.US);
-                if (Settings.getInstance(requireContext()).isValidEventCode(eventCode))
+                if (ScoutingUtils.isValidEventCode(TAG, eventCode))
                 {
                     MaterialButton okButton = (MaterialButton) dialog.getButton(AlertDialog.BUTTON_POSITIVE);
                     if (okButton != null)
@@ -145,8 +145,7 @@ public class LoadTeamAliasesDialog extends DialogFragment
         Log.d(TAG, "handleOkClick called");
         String eventCode = Objects.requireNonNull(m_binding.loadEventCodeInput.getText()).toString().trim().toLowerCase(Locale.US);
 
-        Settings settings = Settings.getInstance(requireContext());
-        if (!settings.isValidEventCode(eventCode))
+        if (!ScoutingUtils.isValidEventCode(TAG, eventCode))
         {
             m_binding.loadEventCodeLayout.setError("Invalid event code (e.g., 2026casac)");
             return;
