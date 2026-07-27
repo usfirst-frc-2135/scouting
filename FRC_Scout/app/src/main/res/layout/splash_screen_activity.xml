@@ -101,18 +101,6 @@
         android:text="@string/app_version"
         android:textColor="@color/textSecondary"
         android:textSize="@dimen/font_xx_small"
-        app:layout_constraintBottom_toTopOf="@+id/splash_copyright_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/splash_copyright_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:text="@string/app_copyright"
-        android:textColor="@color/textSecondary"
-        android:textSize="@dimen/font_xx_small"
         app:layout_constraintBottom_toTopOf="@+id/splash_author_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -121,8 +109,20 @@
         android:id="@+id/splash_author_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="35dp"
+        android:layout_marginBottom="2dp"
         android:text="@string/app_original_author"
+        android:textColor="@color/textSecondary"
+        android:textSize="@dimen/font_xx_small"
+        app:layout_constraintBottom_toTopOf="@+id/splash_copyright_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/splash_copyright_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="35dp"
+        android:text="@string/app_copyright"
         android:textColor="@color/textSecondary"
         android:textSize="@dimen/font_xx_small"
         app:layout_constraintBottom_toBottomOf="parent"

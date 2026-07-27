@@ -209,6 +209,16 @@ public class ScoutingActivity extends AppCompatActivity
     }
 
     /**
+     * Provides access to the activity's bottom navigation view for Snackbar anchoring.
+     *
+     * @return the BottomNavigationView instance
+     */
+    public com.google.android.material.bottomnavigation.BottomNavigationView getNavView()
+    {
+        return m_binding.scoutingActivityNavView;
+    }
+
+    /**
      * Called when the activity is becoming visible to the user.
      */
     @Override

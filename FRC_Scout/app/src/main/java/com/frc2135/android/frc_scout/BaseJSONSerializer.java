@@ -21,7 +21,6 @@ package com.frc2135.android.frc_scout;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -201,33 +200,4 @@ public abstract class BaseJSONSerializer
         return (JSONObject) new JSONTokener(jsonString).nextValue();
     }
 
-    /**
-     * Logs and optionally displays an informative or error message via Toast.
-     * Standardizes message display across the application for data persistence operations.
-     *
-     * @param context the context in which to display the Toast notification
-     * @param tag     the log tag for identification in Logcat
-     * @param msg     the message text to log and/or display
-     * @param bSilent if true, the Toast notification is suppressed, but the message is still logged
-     * @param e       the exception associated with the error; if null, the message is logged at INFO level; otherwise, at ERROR level
-     */
-    protected void displayToastMessages(Context context, String tag, String msg, boolean bSilent, Exception e)
-    {
-        int length;
-        if (e == null)
-        {
-            length = Toast.LENGTH_SHORT;
-            Log.i(tag, msg);
-        }
-        else
-        {
-            length = Toast.LENGTH_LONG;
-            Log.e(tag, msg, e);
-        }
-
-        if (context != null && !bSilent)
-        {
-            Toast.makeText(context, msg, length).show();
-        }
-    }
 }

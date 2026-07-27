@@ -103,7 +103,7 @@ public class TeamAliases extends BaseJSONSerializer
                 Log.i(TAG, "Creating new sTeamAliases for eventCode: " + eventCode);
                 m_eventCode = eventCode;
                 sTeamAliases = new TeamAliases(context);
-                sTeamAliases.loadTeamAliasesJSON(true);
+                sTeamAliases.loadTeamAliasesJSON();
             }
             else if (bForceReload || !eventCode.equalsIgnoreCase(m_eventCode))
             {
@@ -112,7 +112,7 @@ public class TeamAliases extends BaseJSONSerializer
                 sTeamAliases.m_bTeamAliasesLoaded = false;
                 sTeamAliases.m_teamToAliasMap.clear();
                 sTeamAliases.m_aliasToTeamMap.clear();
-                sTeamAliases.loadTeamAliasesJSON(true);
+                sTeamAliases.loadTeamAliasesJSON();
             }
             return sTeamAliases;
         }
@@ -133,9 +133,8 @@ public class TeamAliases extends BaseJSONSerializer
     /**
      * Reads the event-specific aliases JSON file from internal storage into memory.
      *
-     * @param bSilent if true, success Toast notifications are suppressed
      */
-    private void loadTeamAliasesJSON(boolean bSilent)
+    private void loadTeamAliasesJSON()
     {
         if (!ScoutUtils.isValidEventCode(TAG, m_eventCode))
         {
@@ -151,16 +150,16 @@ public class TeamAliases extends BaseJSONSerializer
             {
                 parseTeamAliasesJSON(jsonArray);
                 m_bTeamAliasesLoaded = true;
-                super.displayToastMessages(m_appContext, TAG, "Successfully read team aliases file for " + m_eventCode, bSilent, null);
+                Log.i(TAG, "Successfully read team aliases file for " + m_eventCode);
             }
             else
             {
-                super.displayToastMessages(m_appContext, TAG, "Team aliases file not found for " + m_eventCode, bSilent, null);
+                Log.i(TAG, "Team aliases file not found for " + m_eventCode);
             }
         }
         catch (JSONException | IOException e)
         {
-            super.displayToastMessages(m_appContext, TAG, "Failed to parse team aliases file for: " + m_eventCode, bSilent, e);
+            Log.e(TAG, "Failed to parse team aliases file for: " + m_eventCode, e);
         }
     }
 
@@ -229,10 +228,9 @@ public class TeamAliases extends BaseJSONSerializer
      *
      * @param eventCode   the FRC event code
      * @param teamAliases the JSONArray of mapping data to save
-     * @param bSilent     if true, error/success notifications are suppressed
      * @return true if the file was written and the cache reloaded successfully
      */
-    public boolean writeTeamAliasesFile(String eventCode, JSONArray teamAliases, boolean bSilent)
+    public boolean writeTeamAliasesFile(String eventCode, JSONArray teamAliases)
     {
         if (eventCode == null || teamAliases == null)
         {
@@ -253,12 +251,12 @@ public class TeamAliases extends BaseJSONSerializer
             File file = new File(m_dataDir, aliasFilename);
             saveJSONArray(file, teamAliases);
             Log.i(TAG, "Successfully saved " + teamAliases.length() + " team aliases for event: " + eventCode);
-            loadTeamAliasesJSON(bSilent);
+            loadTeamAliasesJSON();
             return true;
         }
         catch (IOException e)
         {
-            super.displayToastMessages(m_appContext, TAG, "Failed to write team aliases file for: " + eventCode, bSilent, e);
+            Log.e(TAG, "Failed to write team aliases file for: " + eventCode, e);
             return false;
         }
     }

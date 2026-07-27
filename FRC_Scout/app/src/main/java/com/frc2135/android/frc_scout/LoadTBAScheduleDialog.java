@@ -28,7 +28,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,6 +39,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.frc2135.android.frc_scout.databinding.LoadEventDialogBinding;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 
@@ -224,14 +224,18 @@ public class LoadTBAScheduleDialog extends DialogFragment
                     Log.i(TAG, "Successfully received TBA schedule file for: " + eventCode);
                     if (response.length() == 0)
                     {
-                        displayToastMessages(requireContext(), TAG, "No TBA schedule in file for " + eventCode, false, null);
+                        String msg = "No TBA schedule in file for " + eventCode;
+                        Log.w(TAG, msg);
+                        Snackbar.make(requireActivity().findViewById(android.R.id.content), msg, Snackbar.LENGTH_SHORT).show();
                         resetUiState(okButton);
                         return;
                     }
 
                     if (saveTBASchedule(context, eventCode, response))
                     {
-                        displayToastMessages(requireContext(), TAG, "Successfully downloaded " + response.length() + " TBA schedule for " + eventCode, false, null);
+                        String msg = "Successfully downloaded " + response.length() + " TBA schedule for " + eventCode;
+                        Log.i(TAG, msg);
+                        Snackbar.make(requireActivity().findViewById(android.R.id.content), msg, Snackbar.LENGTH_SHORT).show();
                         if (isAdded())
                         {
                             dismiss();
@@ -243,7 +247,6 @@ public class LoadTBAScheduleDialog extends DialogFragment
                     }
                 },
                 error -> {
-                    Log.e(TAG, "Download TBA schedule failed: " + error.toString());
                     StringBuilder msg = new StringBuilder("Failed to download TBA schedule. ");
                     if (error.networkResponse != null)
                     {
@@ -259,7 +262,8 @@ public class LoadTBAScheduleDialog extends DialogFragment
                     {
                         msg.append("Check your internet connection.");
                     }
-                    displayToastMessages(requireContext(), TAG, msg.toString(), false, null);
+                    Log.e(TAG, msg + " Error: " + error);
+                    Snackbar.make(requireActivity().findViewById(android.R.id.content), msg.toString(), Snackbar.LENGTH_LONG).show();
                     resetUiState(okButton);
                 })
         {
@@ -286,7 +290,7 @@ public class LoadTBAScheduleDialog extends DialogFragment
     private boolean saveTBASchedule(Context context, String eventCode, JSONArray response)
     {
         TBASchedule tbaSchedule = TBASchedule.getInstance(context, eventCode, true);
-        if (tbaSchedule.writeTBAScheduleFile(eventCode, response, true))
+        if (tbaSchedule.writeTBAScheduleFile(eventCode, response))
         {
             // Update current event code settings!
             Settings.getInstance(context).setEventCode(eventCode);
@@ -306,40 +310,13 @@ public class LoadTBAScheduleDialog extends DialogFragment
             TBASchedule tbaSchedule = TBASchedule.getInstance(requireContext(), eventCode, false);
             if (tbaSchedule.deleteTBAScheduleFile(eventCode) > 0)
             {
-                displayToastMessages(requireContext(), TAG, "Cleared TBA Schedule for " + eventCode, false, null);
+                String msg = "Cleared TBA Schedule for " + eventCode;
+                Log.i(TAG, msg);
+                Snackbar.make(requireActivity().findViewById(android.R.id.content), msg, Snackbar.LENGTH_SHORT).show();
             }
         }
     }
 
-    /**
-     * Logs and optionally displays an informative or error message via Toast.
-     *
-     * @param context the context in which to display the message
-     * @param tag     the log tag
-     * @param msg     the message text
-     * @param bSilent if true, the Toast is suppressed
-     * @param e       the exception associated with the error, if any
-     */
-    @SuppressWarnings("SameParameterValue")
-    protected void displayToastMessages(Context context, String tag, String msg, boolean bSilent, Exception e)
-    {
-        int length;
-        if (e == null)
-        {
-            length = Toast.LENGTH_SHORT;
-            Log.i(tag, msg);
-        }
-        else
-        {
-            length = Toast.LENGTH_LONG;
-            Log.e(tag, msg, e);
-        }
-
-        if (!bSilent && context != null)
-        {
-            Toast.makeText(context, msg, length).show();
-        }
-    }
 
     /**
      * Called when the dialog is visible to the user and actively running.

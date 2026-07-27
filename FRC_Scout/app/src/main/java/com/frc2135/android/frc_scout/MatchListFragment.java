@@ -32,7 +32,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -340,7 +339,7 @@ public class MatchListFragment extends Fragment
 
                     refreshMatchList();
                     Log.i(TAG, "All configuration data cleared");
-                    Toast.makeText(context, "All configuration data cleared", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(m_binding.getRoot(), "All configuration data cleared", Snackbar.LENGTH_SHORT).show();
                 })
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();

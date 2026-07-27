@@ -28,7 +28,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,6 +39,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.frc2135.android.frc_scout.databinding.LoadEventDialogBinding;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -219,14 +219,18 @@ public class LoadScoutNamesDialog extends DialogFragment
                     Log.i(TAG, "Successfully received scout names file for: " + eventCode);
                     if (response.length() == 0)
                     {
-                        displayToastMessages(requireContext(), TAG, "No scout names in file for " + eventCode, false, null);
+                        String msg = "No scout names in file for " + eventCode;
+                        Log.w(TAG, msg);
+                        Snackbar.make(requireActivity().findViewById(android.R.id.content), msg, Snackbar.LENGTH_SHORT).show();
                         resetUiState(okButton);
                         return;
                     }
 
                     if (saveScoutNames(context, eventCode, response))
                     {
-                        displayToastMessages(context, TAG, "Successfully downloaded " + response.length() + " scout names for " + eventCode, false, null);
+                        String msg = "Successfully downloaded " + response.length() + " scout names for " + eventCode;
+                        Log.i(TAG, msg);
+                        Snackbar.make(requireActivity().findViewById(android.R.id.content), msg, Snackbar.LENGTH_SHORT).show();
                         if (isAdded())
                         {
                             dismiss();
@@ -238,8 +242,9 @@ public class LoadScoutNamesDialog extends DialogFragment
                     }
                 },
                 error -> {
-                    Log.e(TAG, "Download scout names failed: " + error.toString());
-                    displayToastMessages(requireContext(), TAG, "Failed to download scout names for '" + eventCode + "'. Check connection or event code.", false, null);
+                    String msg = "Failed to download scout names for '" + eventCode + "'. Check connection or event code.";
+                    Log.e(TAG, msg + " Error: " + error.toString());
+                    Snackbar.make(requireActivity().findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG).show();
                     resetUiState(okButton);
                 });
 
@@ -257,7 +262,7 @@ public class LoadScoutNamesDialog extends DialogFragment
     private boolean saveScoutNames(Context context, String eventCode, org.json.JSONArray response)
     {
         ScoutNames scoutNames = ScoutNames.getInstance(context, eventCode, true);
-        return scoutNames.writeScoutNamesFile(eventCode, response, true);
+        return scoutNames.writeScoutNamesFile(eventCode, response);
     }
 
     /**
@@ -271,40 +276,13 @@ public class LoadScoutNamesDialog extends DialogFragment
             ScoutNames scoutNames = ScoutNames.getInstance(requireContext(), eventCode, false);
             if (scoutNames.deleteScoutNamesFile(eventCode) > 0)
             {
-                displayToastMessages(requireContext(), TAG, "Cleared Scout Names for " + eventCode, false, null);
+                String msg = "Cleared Scout Names for " + eventCode;
+                Log.i(TAG, msg);
+                Snackbar.make(requireActivity().findViewById(android.R.id.content), msg, Snackbar.LENGTH_SHORT).show();
             }
         }
     }
 
-    /**
-     * Log and optionally display an error message for an exception.
-     *
-     * @param context the context to show the Toast in
-     * @param tag     the log tag
-     * @param msg     the error message
-     * @param bSilent if true, the Toast is suppressed
-     * @param e       the exception that occurred
-     */
-    @SuppressWarnings("SameParameterValue")
-    protected void displayToastMessages(Context context, String tag, String msg, boolean bSilent, Exception e)
-    {
-        int length;
-        if (e == null)
-        {
-            length = Toast.LENGTH_SHORT;
-            Log.i(tag, msg);
-        }
-        else
-        {
-            length = Toast.LENGTH_LONG;
-            Log.e(tag, msg, e);
-        }
-
-        if (!bSilent && context != null)
-        {
-            Toast.makeText(context, msg, length).show();
-        }
-    }
 
     /**
      * Called when the dialog is visible to the user and actively running.

@@ -106,7 +106,7 @@ public class TBASchedule extends BaseJSONSerializer
                 Log.i(TAG, "Creating new sTBASchedule for eventCode: " + eventCode);
                 m_eventCode = eventCode;
                 sTBASchedule = new TBASchedule(context);
-                sTBASchedule.loadTBAScheduleJSON(true);
+                sTBASchedule.loadTBAScheduleJSON();
             }
             else if (bForceReload || !eventCode.equalsIgnoreCase(m_eventCode))
             {
@@ -114,7 +114,7 @@ public class TBASchedule extends BaseJSONSerializer
                 m_eventCode = eventCode;
                 sTBASchedule.m_bTBAScheduleLoaded = false;
                 sTBASchedule.m_tbaScheduleJSON = null;
-                sTBASchedule.loadTBAScheduleJSON(true);
+                sTBASchedule.loadTBAScheduleJSON();
             }
             return sTBASchedule;
         }
@@ -135,9 +135,8 @@ public class TBASchedule extends BaseJSONSerializer
     /**
      * Reads the event matches JSON file from internal storage for the current event.
      *
-     * @param bSilent if true, error notifications are suppressed
      */
-    private void loadTBAScheduleJSON(boolean bSilent)
+    private void loadTBAScheduleJSON()
     {
         if (!ScoutUtils.isValidEventCode(TAG, m_eventCode))
         {
@@ -152,16 +151,16 @@ public class TBASchedule extends BaseJSONSerializer
             if (m_tbaScheduleJSON != null)
             {
                 m_bTBAScheduleLoaded = true;
-                super.displayToastMessages(m_appContext, TAG, "Successfully read TBA schedule file for " + m_eventCode, bSilent, null);
+                Log.i(TAG, "Successfully read TBA schedule file for " + m_eventCode);
             }
             else
             {
-                super.displayToastMessages(m_appContext, TAG, "TBA schedule file not found for " + m_eventCode, bSilent, null);
+                Log.i(TAG, "TBA schedule file not found for " + m_eventCode);
             }
         }
         catch (JSONException | IOException e)
         {
-            super.displayToastMessages(m_appContext, TAG, "Failed to parse TBA schedule file for: " + m_eventCode, bSilent, e);
+            Log.e(TAG, "Failed to parse TBA schedule file for: " + m_eventCode, e);
         }
     }
 
@@ -203,10 +202,9 @@ public class TBASchedule extends BaseJSONSerializer
      *
      * @param eventCode   the FRC event code
      * @param tbaSchedule the JSONArray containing match information to persist
-     * @param bSilent     if true, error notifications are suppressed
      * @return true if the file was written successfully
      */
-    public boolean writeTBAScheduleFile(String eventCode, JSONArray tbaSchedule, boolean bSilent)
+    public boolean writeTBAScheduleFile(String eventCode, JSONArray tbaSchedule)
     {
         if (eventCode == null || tbaSchedule == null)
         {
@@ -226,12 +224,12 @@ public class TBASchedule extends BaseJSONSerializer
             File file = new File(m_dataDir, eventFileName);
             saveJSONArray(file, tbaSchedule);
             Log.i(TAG, "Successfully saved " + tbaSchedule.length() + " TBA schedule for event: " + eventCode);
-            loadTBAScheduleJSON(bSilent);
+            loadTBAScheduleJSON();
             return true;
         }
         catch (IOException e)
         {
-            super.displayToastMessages(m_appContext, TAG, "Failed to write TBA schedule file for: " + eventCode, bSilent, e);
+            Log.e(TAG, "Failed to write TBA schedule file for: " + eventCode, e);
             return false;
         }
     }

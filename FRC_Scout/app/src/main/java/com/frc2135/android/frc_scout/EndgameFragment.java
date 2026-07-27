@@ -25,7 +25,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +35,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.frc2135.android.frc_scout.databinding.EndgameFragmentBinding;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
 
@@ -181,7 +182,18 @@ public class EndgameFragment extends Fragment
             if (!validationMsg.isEmpty())
             {
                 Log.w(TAG, "Match data validation failed: " + validationMsg);
-                Toast.makeText(getContext(), validationMsg, Toast.LENGTH_LONG).show();
+                Snackbar snackbar = Snackbar.make(m_binding.getRoot(), validationMsg, Snackbar.LENGTH_LONG);
+
+                // Increase max lines to ensure all validation errors are visible
+                View snackbarView = snackbar.getView();
+                TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+                if (textView != null)
+                {
+                    textView.setMaxLines(10);
+                }
+
+                snackbar.setAnchorView(((ScoutingActivity) requireActivity()).getNavView());
+                snackbar.show();
             }
             else
             {
@@ -209,7 +221,9 @@ public class EndgameFragment extends Fragment
             if (!scoutedMatches.saveMatchDataFile(m_matchData))
             {
                 Log.e(TAG, "Failed to save Match Data!");
-                Toast.makeText(requireContext(), "Error: Failed to save match data!", Toast.LENGTH_SHORT).show();
+                Snackbar snackbar = Snackbar.make(m_binding.getRoot(), "Error: Failed to save match data!", Snackbar.LENGTH_SHORT);
+                snackbar.setAnchorView(((ScoutingActivity) requireActivity()).getNavView());
+                snackbar.show();
             }
 
             Intent i = new Intent(requireContext(), MatchListActivity.class);
