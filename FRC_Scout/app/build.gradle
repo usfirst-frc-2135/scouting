@@ -9,17 +9,48 @@ android {
     defaultConfig {
         applicationId = "com.frc2135.android.frc_scout"
         minSdkVersion 28
-        targetSdkVersion 37
+        targetSdk 37
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        debug {
+            v1SigningEnabled true
+            v2SigningEnabled true
+            enableV3Signing = false
+            enableV4Signing = false
+        }
+    }
+
     buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+    bundle {
+        language {
+            enableSplit = false
+        }
+        density {
+            enableSplit = false
+        }
+        abi {
+            enableSplit = false
         }
     }
     compileOptions {
@@ -47,10 +78,10 @@ dependencies {
     implementation libs.androidx.lifecycle.livedata.ktx
     implementation libs.androidx.lifecycle.viewmodel.ktx
     implementation libs.google.material
-    
+
     implementation libs.volley
     implementation libs.zxing.core
-    
+
     implementation libs.androidx.work.runtime
     implementation libs.androidx.work.runtime.ktx
     implementation libs.androidx.work.rxjava2

@@ -171,6 +171,10 @@ public class QRCodeDialog extends DialogFragment
     @Override
     public void onDestroyView()
     {
+        if (m_binding != null)
+        {
+            m_binding.qrDialogImage.setImageBitmap(null);
+        }
         super.onDestroyView();
         Log.v(TAG, "onDestroyView");
         m_binding = null;

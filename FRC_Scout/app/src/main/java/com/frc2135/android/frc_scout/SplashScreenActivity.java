@@ -175,6 +175,10 @@ public class SplashScreenActivity extends AppCompatActivity
     @Override
     protected void onDestroy()
     {
+        if (m_binding != null)
+        {
+            m_binding.splashActivityContainer.clearAnimation();
+        }
         super.onDestroy();
         Log.v(TAG, "onDestroy");
         m_binding = null;

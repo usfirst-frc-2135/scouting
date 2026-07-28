@@ -74,6 +74,7 @@ public class ScoutingActivity extends AppCompatActivity
         if (fm.findFragmentById(R.id.scouting_activity_fragment_container) == null)
         {
             fm.beginTransaction()
+                    .setReorderingAllowed(true)
                     .add(R.id.scouting_activity_fragment_container, createScoutingActivityFragment())
                     .commit();
         }
@@ -102,6 +103,7 @@ public class ScoutingActivity extends AppCompatActivity
             if (fragment != null)
             {
                 fm.beginTransaction()
+                        .setReorderingAllowed(true)
                         .replace(R.id.scouting_activity_fragment_container, fragment)
                         .commit();
                 updateActionBarTitle();
