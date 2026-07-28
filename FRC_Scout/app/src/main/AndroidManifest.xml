@@ -16,6 +16,7 @@
             android:name="com.frc2135.android.frc_scout.MatchListActivity"
             android:exported="true"
             android:label="List Matches"
+            android:launchMode="singleTop"
             />
 
         <activity

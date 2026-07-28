@@ -62,6 +62,21 @@ public class SplashScreenActivity extends AppCompatActivity
     public void onCreate(Bundle icicle)
     {
         Log.v(TAG, "onCreate");
+
+        // If this activity is not the root of the task, then it was likely launched by the system
+        // when the app was already running in the background. In this case, we should finish
+        // immediately to return to the previously active activity.
+        if (!isTaskRoot())
+        {
+            Intent intent = getIntent();
+            if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && Intent.ACTION_MAIN.equals(intent.getAction()))
+            {
+                Log.i(TAG, "Finishing redundant SplashScreenActivity instance");
+                finish();
+                return;
+            }
+        }
+
         // Apply theme preference before super.onCreate to ensure the correct theme is applied early
         Preferences.getInstance(this).applyTheme();
         super.onCreate(icicle);
@@ -111,6 +126,7 @@ public class SplashScreenActivity extends AppCompatActivity
         Log.d(TAG, "startMainTransition");
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             Intent mainIntent = new Intent(SplashScreenActivity.this, MatchListActivity.class);
+            mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(mainIntent);
 
             // overridePendingTransition is deprecated in API 34.
