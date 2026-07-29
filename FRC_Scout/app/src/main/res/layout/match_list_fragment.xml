@@ -148,8 +148,8 @@
             android:layout_margin="24dp"
             android:contentDescription="@string/start_match"
             android:src="@drawable/new_match_icon"
-            app:backgroundTint="@color/startButton"
-            app:tint="@color/startMatchText" />
+            app:backgroundTint="@color/colorStartButton"
+            app:tint="@color/colorOnStartButton" />
 
     </FrameLayout>
     <!-- end recycler view layout -->

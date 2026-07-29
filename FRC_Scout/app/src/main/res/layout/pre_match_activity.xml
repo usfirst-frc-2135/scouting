@@ -37,8 +37,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:titleTextColor="@android:color/white"
-            app:subtitleTextColor="@android:color/white" />
+            app:titleTextColor="@color/colorOnPrimary"
+            app:subtitleTextColor="@color/colorOnPrimary" />
 
     </com.google.android.material.appbar.AppBarLayout>
     <!-- end AppBar layout -->
@@ -207,9 +207,9 @@
                 android:insetBottom="0dp"
                 android:text="@string/start_match"
                 android:contentDescription="@string/start_match"
-                android:textColor="@color/startMatchText"
+                android:textColor="@color/colorOnStartButton"
                 android:textSize="@dimen/font_small"
-                app:backgroundTint="@color/startButton"
+                app:backgroundTint="@color/colorStartButton"
                 app:elevation="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

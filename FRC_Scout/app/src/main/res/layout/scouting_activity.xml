@@ -38,19 +38,19 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:titleTextColor="@android:color/white"
-            app:subtitleTextColor="@android:color/white" />
+            app:titleTextColor="@color/colorOnPrimary"
+            app:subtitleTextColor="@color/colorOnPrimary" />
 
     </com.google.android.material.appbar.AppBarLayout>
     <!-- end AppBar layout -->
 
-    <!-- start Fragment container layout -->
-    <FrameLayout
-        android:id="@+id/scouting_activity_fragment_container"
+    <!-- start ViewPager2 layout -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/scouting_activity_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-    <!-- end Fragment container layout -->
+    <!-- end ViewPager2 layout -->
 
     <!-- start Bottom navigation layout -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -58,7 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="72dp"
         android:layout_gravity="bottom"
-        android:background="@color/bottomColor"
+        android:background="@color/surfaceColor"
         app:menu="@menu/bottom_nav_menu" />
     <!-- end Bottom navigation layout -->
 

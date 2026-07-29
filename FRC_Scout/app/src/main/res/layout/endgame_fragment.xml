@@ -489,7 +489,7 @@
                     android:layout_height="150dp"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    app:backgroundTint="#3F98B5"
+                    app:backgroundTint="@color/colorPrimary"
                     app:icon="@drawable/qr_code_icon"
                     app:iconSize="120dp"
                     app:iconGravity="textStart"

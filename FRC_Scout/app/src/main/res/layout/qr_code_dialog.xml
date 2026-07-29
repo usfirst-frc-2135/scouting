@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
-            android:backgroundTint="#FFC107"
+            android:backgroundTint="@color/colorSecondary"
             android:text="@string/done_button"
             android:textColor="@color/textPrimary" />
 

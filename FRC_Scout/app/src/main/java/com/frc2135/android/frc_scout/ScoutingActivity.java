@@ -27,7 +27,8 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.frc2135.android.frc_scout.databinding.ScoutingActivityBinding;
 
@@ -65,52 +66,82 @@ public class ScoutingActivity extends AppCompatActivity
         Log.i(TAG, "Loading match ID: " + matchId);
         m_matchData = ScoutedMatches.getInstance(getApplicationContext()).getMatch(matchId);
 
-        updateActionBarTitle();
-
-        // Initializes FragmentManager to host the scouting fragments
-        FragmentManager fm = getSupportFragmentManager();
-
-        // Load the initial fragment (Autonomous) if none exists
-        if (fm.findFragmentById(R.id.scouting_activity_fragment_container) == null)
-        {
-            fm.beginTransaction()
-                    .setReorderingAllowed(true)
-                    .add(R.id.scouting_activity_fragment_container, createScoutingActivityFragment())
-                    .commit();
-        }
+        setupViewPager();
+        updateActionBarTitle(0);
 
         // Handle navigation between scouting stages
         m_binding.scoutingActivityNavView.setOnItemSelectedListener(item -> {
-            // Save data from the current fragment before switching
-            updateCurrentFragmentData();
-
             int itemId = item.getItemId();
-            Fragment fragment = null;
-
             if (itemId == R.id.navigation_auton)
             {
-                fragment = new AutonFragment();
+                m_binding.scoutingActivityViewPager.setCurrentItem(0);
             }
             else if (itemId == R.id.navigation_teleop)
             {
-                fragment = new TeleopFragment();
+                m_binding.scoutingActivityViewPager.setCurrentItem(1);
             }
             else if (itemId == R.id.navigation_endgame)
             {
-                fragment = new EndgameFragment();
+                m_binding.scoutingActivityViewPager.setCurrentItem(2);
             }
-
-            if (fragment != null)
-            {
-                fm.beginTransaction()
-                        .setReorderingAllowed(true)
-                        .replace(R.id.scouting_activity_fragment_container, fragment)
-                        .commit();
-                updateActionBarTitle();
-                return true;
-            }
-            return false;
+            return true;
         });
+    }
+
+    private void setupViewPager()
+    {
+        m_binding.scoutingActivityViewPager.setAdapter(new ScoutingPagerAdapter(this));
+        m_binding.scoutingActivityViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback()
+        {
+            @Override
+            public void onPageSelected(int position)
+            {
+                super.onPageSelected(position);
+                updateCurrentFragmentData();
+
+                int navItemId = R.id.navigation_auton;
+                if (position == 1)
+                {
+                    navItemId = R.id.navigation_teleop;
+                }
+                else if (position == 2)
+                {
+                    navItemId = R.id.navigation_endgame;
+                }
+                m_binding.scoutingActivityNavView.setSelectedItemId(navItemId);
+                updateActionBarTitle(position);
+            }
+        });
+    }
+
+    private static class ScoutingPagerAdapter extends FragmentStateAdapter
+    {
+        public ScoutingPagerAdapter(AppCompatActivity activity)
+        {
+            super(activity);
+        }
+
+        @NonNull
+        @Override
+        public Fragment createFragment(int position)
+        {
+            switch (position)
+            {
+                case 1:
+                    return new TeleopFragment();
+                case 2:
+                    return new EndgameFragment();
+                case 0:
+                default:
+                    return new AutonFragment();
+            }
+        }
+
+        @Override
+        public int getItemCount()
+        {
+            return 3;
+        }
     }
 
     /**
@@ -143,7 +174,7 @@ public class ScoutingActivity extends AppCompatActivity
     /**
      * Updates the action bar title based on current scouting stage and team/match info.
      */
-    private void updateActionBarTitle()
+    private void updateActionBarTitle(int position)
     {
         if (m_matchData == null || getSupportActionBar() == null)
         {
@@ -151,16 +182,15 @@ public class ScoutingActivity extends AppCompatActivity
         }
 
         String stage = "Scouting";
-        int selectedId = m_binding.scoutingActivityNavView.getSelectedItemId();
-        if (selectedId == R.id.navigation_auton)
+        if (position == 0)
         {
             stage = "Autonomous";
         }
-        else if (selectedId == R.id.navigation_teleop)
+        else if (position == 1)
         {
             stage = "Teleoperated";
         }
-        else if (selectedId == R.id.navigation_endgame)
+        else if (position == 2)
         {
             stage = "Endgame";
         }
@@ -175,18 +205,20 @@ public class ScoutingActivity extends AppCompatActivity
     private void updateCurrentFragmentData()
     {
         Log.d(TAG, "updateCurrentFragmentData");
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.scouting_activity_fragment_container);
-        if (f instanceof AutonFragment)
+        for (Fragment f : getSupportFragmentManager().getFragments())
         {
-            ((AutonFragment) f).updateAutonData();
-        }
-        else if (f instanceof TeleopFragment)
-        {
-            ((TeleopFragment) f).updateTeleopData();
-        }
-        else if (f instanceof EndgameFragment)
-        {
-            ((EndgameFragment) f).updateEndgameData();
+            if (f instanceof AutonFragment)
+            {
+                ((AutonFragment) f).updateAutonData();
+            }
+            else if (f instanceof TeleopFragment)
+            {
+                ((TeleopFragment) f).updateTeleopData();
+            }
+            else if (f instanceof EndgameFragment)
+            {
+                ((EndgameFragment) f).updateEndgameData();
+            }
         }
     }
 

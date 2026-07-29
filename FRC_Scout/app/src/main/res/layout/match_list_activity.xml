@@ -38,8 +38,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:titleTextColor="@android:color/white"
-            app:subtitleTextColor="@android:color/white" />
+            app:titleTextColor="@color/colorOnPrimary"
+            app:subtitleTextColor="@color/colorOnPrimary" />
 
     </com.google.android.material.appbar.AppBarLayout>
     <!-- end AppBar layout -->

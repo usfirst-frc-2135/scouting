@@ -19,12 +19,9 @@
     <color name="textPrimary">#212121</color>
     <color name="textSecondary">#757575</color>
 
-    <!--    The bottom navigation bar -->
-    <color name="bottomColor">#FFFFFF</color>
-
-    <!--    The Start Match button-->
-    <color name="startButton">#FFC107</color>
-    <color name="startMatchText">#3F51B5</color>
+    <!-- Semantic mappings for specific UI components -->
+    <color name="colorStartButton">#FFC107</color>
+    <color name="colorOnStartButton">#3F51B5</color>
 
     <!--    Used by auton, teleop, and endgame fragments for text-->
     <color name="customTextPrimary">#212121</color>
