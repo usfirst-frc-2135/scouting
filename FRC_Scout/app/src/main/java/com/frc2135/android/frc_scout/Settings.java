@@ -56,8 +56,6 @@ public final class Settings extends BaseJSONSerializer
     private static final String KEY_MOST_RECENT_SCOUT_NAME = "mostRecentScoutName";
     private static final String KEY_SCORING_TABLE_SIDE = "scoringTableSide";
 
-    private static final String DEFAULT_EVENT_CODE = "EVTX";
-
     private String m_eventCode;
     private String m_teamIndexStr;
     private final String[] m_teamIndexOptions;
@@ -128,7 +126,7 @@ public final class Settings extends BaseJSONSerializer
     public void defaultSettings()
     {
         Log.d(TAG, "defaultSettings");
-        m_eventCode = DEFAULT_EVENT_CODE;
+        m_eventCode = Constants.DEFAULT_EVENT_CODE;
         m_teamIndexStr = m_teamIndexOptions[0];
         m_mostRecentMatchNumber = "";
         m_mostRecentScoutName = "";
@@ -190,7 +188,7 @@ public final class Settings extends BaseJSONSerializer
             throws JSONException
     {
         // Version check could be added here in the future
-        m_eventCode = json.optString(KEY_EVENT_CODE, DEFAULT_EVENT_CODE);
+        m_eventCode = json.optString(KEY_EVENT_CODE, Constants.DEFAULT_EVENT_CODE);
         m_teamIndexStr = json.optString(KEY_TEAM_INDEX, m_teamIndexOptions[0]);
         m_mostRecentMatchNumber = json.optString(KEY_MOST_RECENT_MATCH_NUMBER, "");
         m_mostRecentScoutName = json.optString(KEY_MOST_RECENT_SCOUT_NAME, "");

@@ -84,7 +84,7 @@ public class LoadScoutNamesDialog extends DialogFragment
         if (settings != null)
         {
             String currentEventCode = settings.getEventCode();
-            if (!currentEventCode.isEmpty() && !Objects.equals(currentEventCode, "EVTX"))
+            if (!currentEventCode.isEmpty() && !Objects.equals(currentEventCode, Constants.DEFAULT_EVENT_CODE))
             {
                 m_binding.loadEventCodeInput.setText(currentEventCode);
             }

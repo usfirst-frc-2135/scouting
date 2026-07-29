@@ -21,8 +21,10 @@ package com.frc2135.android.frc_scout;
 
 /**
  * Central repository for shared constants across the application.
- * Defines file naming conventions, data serialization formats, and remote API endpoints.
- * This class cannot be instantiated.
+ * <p>
+ * This class defines file naming conventions, data serialization formats, remote API endpoints,
+ * and key identifiers used for Intents and UI dimensions. It is designed as a utility class
+ * and cannot be instantiated.
  */
 public final class Constants
 {
@@ -31,69 +33,86 @@ public final class Constants
      */
     private Constants()
     {
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
 
     // --- File Suffixes and Prefixes ---
 
     /**
-     * Suffix used for local files containing match data downloaded from The Blue Alliance.
+     * The fallback event code used when no specific event has been selected or configured.
+     */
+    public static final String DEFAULT_EVENT_CODE = "2020event";
+
+    /**
+     * Suffix for JSON files stored in internal storage that contain the official match schedule
+     * for a specific event, typically downloaded from The Blue Alliance API.
      */
     public static final String TBA_SCHEDULE_FILE_SUFFIX = "_tbaSchedule.json";
 
     /**
-     * Prefix for filenames storing individual scouted match records.
+     * Prefix for filenames used to persist individual match scouting records.
+     * Files starting with this prefix are considered part of the local scouting database.
      */
     public static final String MATCH_DATA_FILE_PREFIX = "md_";
 
     /**
-     * Standard extension for match data JSON files.
+     * The standard file extension for all JSON-based data persistence in the app,
+     * including match records and configuration files.
      */
     public static final String MATCH_DATA_FILE_SUFFIX = ".json";
 
     /**
-     * Suffix for files containing team number to alias mappings for an event.
+     * Suffix for event-specific files containing mappings between team numbers and their
+     * descriptive aliases or names.
      */
     public static final String TEAM_ALIASES_FILENAME_SUFFIX = "_teamAliases.json";
 
     /**
-     * Suffix for files containing the official list of scout names for an event.
+     * Suffix for event-specific files containing the list of authorized scout names
+     * used for auto-population in the user interface.
      */
     public static final String SCOUT_NAMES_FILENAME_SUFFIX = "_scoutNames.json";
 
     /**
-     * Filename for the application-wide configuration settings.
+     * The fixed filename for the application's global configuration settings,
+     * persisted in the app's internal files directory.
      */
     public static final String SETTINGS_FILENAME = "settings.json";
 
     // --- URL and API Configurations ---
 
     /**
-     * The base URL for the team's internal JSON data repository (scout names and aliases).
+     * Base endpoint for retrieving team-specific JSON metadata (e.g., scout lists and team aliases)
+     * from the organization's web server.
      */
     public static final String TEAM_WEBSITE_JSON_URL = "https://www.frc2135.org/json/";
 
     /**
-     * The base URL for The Blue Alliance API v3 event matches endpoint.
+     * The root URL for The Blue Alliance (TBA) v3 API matches endpoint.
+     * Expects an event code to be appended to form a complete request URL.
      */
     public static final String TBA_EVENT_MATCHES_URL = "https://www.thebluealliance.com/api/v3/event/";
 
     /**
-     * The unique authentication key required to authorize requests to The Blue Alliance API.
+     * The unique authorization key required for authenticating requests with The Blue Alliance API.
+     * This key should be kept secure and rotated if compromised.
      */
     public static final String TBA_AUTH_KEY = "MetfyxQxRpk0do2GygII8alQnV0qaQ8kF9KUIYDrFTMmQr2pPC8Cl4FGdoKlUaAu";
 
     /**
-     * Intent extra key for passing a match unique identifier.
+     * Intent extra key used to pass the unique identifier of a match between Activities or Fragments.
      */
     public static final String MATCH_ID = "match_id";
 
     /**
-     * Intent extra key for indicating if an activity was launched in edit mode.
+     * Intent extra key used to indicate whether a scouting activity should be opened in read-only
+     * or interactive edit mode.
      */
     public static final String IN_EDIT_MODE = "in_edit";
 
     /**
-     * Dimension of the QR code image in pixels.
+     * The fixed edge dimension (width and height) in pixels for generated QR codes.
+     * Balanced for readability on common mobile camera sensors.
      */
     public static final int QR_CODE_DIMENSION = 639;
 }
