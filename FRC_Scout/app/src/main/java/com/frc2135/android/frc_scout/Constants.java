@@ -75,7 +75,7 @@ public final class Constants
 
     /**
      * The fixed filename for the application's global configuration settings,
-     * persisted in the app's internal files directory.
+     * persisted in the app's internal "files" directory.
      */
     public static final String SETTINGS_FILENAME = "settings.json";
 

@@ -20,9 +20,11 @@
 package com.frc2135.android.frc_scout;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +32,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.frc2135.android.frc_scout.databinding.QrCodeDialogBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 
@@ -49,6 +52,7 @@ public class QRCodeDialog extends DialogFragment
     private static final String TAG = "QRCodeDialog";
     private static final String ARG_LABEL = "match_label";
     private static final String ARG_STATS = "stats";
+    private static final String ARG_CAN_SAVE = "can_save";
 
     private QrCodeDialogBinding m_binding;
 
@@ -57,9 +61,10 @@ public class QRCodeDialog extends DialogFragment
      * Encodes the match statistics and a human-readable label into the fragment's arguments.
      *
      * @param matchData the match data to encode into the QR code
+     * @param canSave   whether the dialog should show the "DONE" button and handle saving logic
      * @return a new QRCodeDialog instance
      */
-    public static QRCodeDialog newInstance(MatchData matchData)
+    public static QRCodeDialog newInstance(MatchData matchData, boolean canSave)
     {
         QRCodeDialog dialog = new QRCodeDialog();
         Bundle bundle = new Bundle();
@@ -72,9 +77,15 @@ public class QRCodeDialog extends DialogFragment
 
         bundle.putString(ARG_LABEL, label);
         bundle.putString(ARG_STATS, matchData.encodeToTSV());
+        bundle.putBoolean(ARG_CAN_SAVE, canSave);
         //        bundle.putString(ARG_STATS, matchData.encodeToJSON());
         dialog.setArguments(bundle);
         return dialog;
+    }
+
+    public static QRCodeDialog newInstance(MatchData matchData)
+    {
+        return newInstance(matchData, false);
     }
 
     /**
@@ -95,14 +106,53 @@ public class QRCodeDialog extends DialogFragment
         Bundle args = requireArguments();
         String label = args.getString(ARG_LABEL, "Match Data QR");
         String stats = args.getString(ARG_STATS, "");
+        boolean canSave = args.getBoolean(ARG_CAN_SAVE, false);
 
         generateQRCode(stats);
         m_binding.qrDialogDataPreview.setText(stats);
 
+        m_binding.qrDialogBackButton.setOnClickListener(v -> dismiss());
+
+        if (canSave)
+        {
+            m_binding.qrDialogDoneButton.setVisibility(View.VISIBLE);
+            m_binding.qrDialogDoneButton.setOnClickListener(v -> {
+                Log.i(TAG, "Done button clicked");
+                MatchData matchData = ((ScoutingActivity) requireActivity()).getCurrentMatch();
+                Settings settings = Settings.getInstance(requireContext());
+
+                settings.setMostRecentMatchNumber(matchData.getMatchNumber());
+                settings.addPastScoutNames(matchData.getScoutName());
+                settings.setMostRecentScoutName(matchData.getScoutName());
+
+                Log.i(TAG, "Saving latest match and scout names");
+                if (!settings.saveSettingsSilent())
+                {
+                    Log.e(TAG, "Failed to save settings!");
+                }
+
+                ScoutedMatches scoutedMatches = ScoutedMatches.getInstance(requireContext());
+                if (!scoutedMatches.saveMatchDataFile(matchData))
+                {
+                    Log.e(TAG, "Failed to save Match Data!");
+                    Snackbar.make(m_binding.getRoot(), "Error: Failed to save match data!", Snackbar.LENGTH_SHORT).show();
+                }
+
+                Intent i = new Intent(requireContext(), MatchListActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                requireActivity().finish();
+            });
+        }
+        else
+        {
+            m_binding.qrDialogDoneButton.setVisibility(View.GONE);
+            m_binding.qrDialogBackButton.setText(android.R.string.ok);
+        }
+
         return new MaterialAlertDialogBuilder(requireContext())
                 .setTitle(label)
                 .setView(m_binding.getRoot())
-                .setPositiveButton(android.R.string.ok, (d, w) -> dismiss())
                 .create();
     }
 

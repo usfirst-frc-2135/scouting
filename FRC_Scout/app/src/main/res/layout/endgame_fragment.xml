@@ -477,12 +477,11 @@
             </com.google.android.material.textfield.TextInputLayout>
             <!-- end COMMENTS layout -->
 
-            <!-- start QR Code and DONE buttons layout -->
+            <!-- start QR Code button layout -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:gravity="center_horizontal">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/endgame_generate_qr_button"
@@ -499,36 +498,8 @@
                     android:focusable="true"
                     android:contentDescription="@string/qr_code_image" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/endgame_done_button"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginStart="80dp"
-                    android:layout_toEndOf="@id/endgame_generate_qr_button"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    app:backgroundTint="#FFC107"
-                    android:focusable="true"
-                    android:text="@string/done"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="@dimen/font_huge" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/endgame_done_button_disabled"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginStart="80dp"
-                    android:layout_toEndOf="@id/endgame_generate_qr_button"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    app:backgroundTint="#b19769"
-                    android:focusable="true"
-                    android:text="@string/done"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="@dimen/font_huge" />
-
             </RelativeLayout>
-            <!-- end QR Code and DONE buttons layout -->
+            <!-- end QR Code button layout -->
 
         </LinearLayout>
         <!-- end endgame fragment layout -->

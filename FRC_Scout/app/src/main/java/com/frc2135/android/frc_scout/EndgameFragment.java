@@ -19,7 +19,6 @@
 
 package com.frc2135.android.frc_scout;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -129,7 +128,6 @@ public class EndgameFragment extends Fragment
         setupActionBar();
         loadMatchData();
         setupListeners();
-        setupDoneButton(false);
     }
 
     /**
@@ -199,37 +197,9 @@ public class EndgameFragment extends Fragment
             {
                 Log.i(TAG, "Match data validation successful: " + validationMsg);
                 FragmentManager fm = requireActivity().getSupportFragmentManager();
-                QRCodeDialog dialog = QRCodeDialog.newInstance(m_matchData);
+                QRCodeDialog dialog = QRCodeDialog.newInstance(m_matchData, true);
                 dialog.show(fm, QRTAG);
-                setupDoneButton(true);
             }
-        });
-
-        m_binding.endgameDoneButton.setOnClickListener(view -> {
-            updateEndgameData();
-
-            m_settings.setMostRecentMatchNumber(m_matchData.getMatchNumber());
-            m_settings.addPastScoutNames(m_matchData.getScoutName());
-            m_settings.setMostRecentScoutName(m_matchData.getScoutName());
-
-            Log.i(TAG, "Saving latest match and scout names");
-            if (!m_settings.saveSettingsSilent())
-            {
-                Log.e(TAG, "Failed to save settings!");
-            }
-            ScoutedMatches scoutedMatches = ScoutedMatches.getInstance(requireContext());
-            if (!scoutedMatches.saveMatchDataFile(m_matchData))
-            {
-                Log.e(TAG, "Failed to save Match Data!");
-                Snackbar snackbar = Snackbar.make(m_binding.getRoot(), "Error: Failed to save match data!", Snackbar.LENGTH_SHORT);
-                snackbar.setAnchorView(((ScoutingActivity) requireActivity()).getNavView());
-                snackbar.show();
-            }
-
-            Intent i = new Intent(requireContext(), MatchListActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i);
-            requireActivity().finish();
         });
     }
 
@@ -372,28 +342,6 @@ public class EndgameFragment extends Fragment
         m_matchData.setComment(Objects.requireNonNull(m_binding.endgameCommentsInput.getText()).toString());
         m_matchData.setEndgameClimbPos(getClimbPos());
         m_matchData.setEndgameClimbLevel(getClimbLevel());
-    }
-
-    /**
-     * Sets the enabled state and visibility of the "Done" button.
-     *
-     * @param bEnable true to enable the button, false to disable and show the placeholder
-     */
-    private void setupDoneButton(boolean bEnable)
-    {
-        m_binding.endgameDoneButton.setEnabled(bEnable);
-        if (bEnable)
-        {
-            Log.d(TAG, "setupDoneButton: Enable Done Button");
-            m_binding.endgameDoneButton.setVisibility(View.VISIBLE);
-            m_binding.endgameDoneButtonDisabled.setVisibility(View.INVISIBLE);
-        }
-        else
-        {
-            Log.d(TAG, "setupDoneButton: Disable Done Button");
-            m_binding.endgameDoneButton.setVisibility(View.INVISIBLE);
-            m_binding.endgameDoneButtonDisabled.setVisibility(View.VISIBLE);
-        }
     }
 
     /**

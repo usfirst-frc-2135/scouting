@@ -119,7 +119,8 @@
 
     <!--    post-match submit strings -->
     <string name="qr_code_image">QR code image</string>
-    <string name="done">Done</string>
+    <string name="done_button">Done</string>
+    <string name="back_button">Back</string>
 
     <!--    Match scouting screens (year non-specific) -->
     <string name="autonomous_title">Autonomous</string>
