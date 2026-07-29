@@ -64,6 +64,11 @@ public class ScoutUtils
             return false;
         }
 
+        if (eventCode.equals(Constants.DEFAULT_EVENT_CODE))
+        {
+            return true;
+        }
+        
         int year = parseInt(eventCode.substring(0, 4));
         if (year < EVENT_CODE_MIN_YEAR || year > EVENT_CODE_MAX_YEAR)
         {

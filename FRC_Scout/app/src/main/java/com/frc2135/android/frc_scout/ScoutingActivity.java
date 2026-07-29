@@ -125,16 +125,12 @@ public class ScoutingActivity extends AppCompatActivity
         @Override
         public Fragment createFragment(int position)
         {
-            switch (position)
+            return switch (position)
             {
-                case 1:
-                    return new TeleopFragment();
-                case 2:
-                    return new EndgameFragment();
-                case 0:
-                default:
-                    return new AutonFragment();
-            }
+                case 1 -> new TeleopFragment();
+                case 2 -> new EndgameFragment();
+                default -> new AutonFragment();
+            };
         }
 
         @Override
@@ -220,16 +216,6 @@ public class ScoutingActivity extends AppCompatActivity
                 ((EndgameFragment) f).updateEndgameData();
             }
         }
-    }
-
-    /**
-     * Creates the initial fragment for this activity.
-     *
-     * @return a new instance of {@link AutonFragment}
-     */
-    protected Fragment createScoutingActivityFragment()
-    {
-        return new AutonFragment();
     }
 
     /**
