@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId = "com.frc2135.android.frc_scout"
-        minSdkVersion 28
+        minSdk 25
         targetSdk 37
         versionCode = 1
         versionName = "1.0"
