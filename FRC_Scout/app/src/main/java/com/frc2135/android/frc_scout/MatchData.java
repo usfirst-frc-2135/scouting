@@ -1168,8 +1168,9 @@ public class MatchData
      */
     public String encodeToTSV()
     {
-        String teamAliasClean = (m_teamAlias == null || m_teamAlias.isEmpty()) ? "-" : m_teamAlias;
-        String commentClean = (m_comment == null || m_comment.trim().isEmpty()) ? "-" : m_comment.trim();
+        String teamAliasClean = (m_teamAlias == null || m_teamAlias.isEmpty()) ? "-" : m_teamAlias.replaceAll("[\\t\\n\\r]", " ");
+        String commentClean = (m_comment == null || m_comment.trim().isEmpty()) ? "-" : m_comment.trim().replaceAll("[\\t\\n\\r]", " ").replace("\"", "\"\"");
+        commentClean = "\"" + commentClean + "\"";
 
         // Using a list to manage values ensures easy addition/removal and avoids format string errors.
         Object[] values = {
