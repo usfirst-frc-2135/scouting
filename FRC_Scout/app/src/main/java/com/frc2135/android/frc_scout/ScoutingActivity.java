@@ -31,6 +31,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.frc2135.android.frc_scout.databinding.ScoutingActivityBinding;
+import com.google.android.material.badge.BadgeDrawable;
 
 /**
  * Activity for the main scouting process. It hosts three fragments: Autonomous, Teleoperated, and Endgame.
@@ -68,6 +69,7 @@ public class ScoutingActivity extends AppCompatActivity
 
         setupViewPager();
         updateActionBarTitle(0);
+        updateTabBadges();
 
         // Handle navigation between scouting stages
         m_binding.scoutingActivityNavView.setOnItemSelectedListener(item -> {
@@ -198,7 +200,7 @@ public class ScoutingActivity extends AppCompatActivity
     /**
      * Updates the MatchData object with the latest inputs from the currently visible fragment.
      */
-    private void updateCurrentFragmentData()
+    public void updateCurrentFragmentData()
     {
         Log.d(TAG, "updateCurrentFragmentData");
         for (Fragment f : getSupportFragmentManager().getFragments())
@@ -216,6 +218,36 @@ public class ScoutingActivity extends AppCompatActivity
                 ((EndgameFragment) f).updateEndgameData();
             }
         }
+        updateTabBadges();
+    }
+
+    /**
+     * Updates the badge notifications on the bottom navigation tabs based on data validity.
+     */
+    public void updateTabBadges()
+    {
+        if (m_matchData == null)
+        {
+            return;
+        }
+
+        updateBadge(R.id.navigation_auton, !m_matchData.validateAuton().isEmpty());
+        updateBadge(R.id.navigation_teleop, !m_matchData.validateTeleop().isEmpty());
+        updateBadge(R.id.navigation_endgame, !m_matchData.validateEndgame().isEmpty());
+    }
+
+    /**
+     * Shows or hides a red dot badge on a specific navigation item.
+     *
+     * @param itemId  the menu item ID
+     * @param visible true to show the badge, false to hide it
+     */
+    private void updateBadge(int itemId, boolean visible)
+    {
+        BadgeDrawable badge = m_binding.scoutingActivityNavView.getOrCreateBadge(itemId);
+        badge.setVisible(visible);
+        // Standard red dot style
+        badge.setBackgroundColor(getColor(R.color.errorColor));
     }
 
     /**

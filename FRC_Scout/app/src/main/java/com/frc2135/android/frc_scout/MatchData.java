@@ -1079,7 +1079,7 @@ public class MatchData
      *
      * @return a validation message string, or empty if valid
      */
-    private String validateAuton()
+    public String validateAuton()
     {
         if (m_autonHopper > MAX_AUTON_HOPPERS)
         {
@@ -1093,7 +1093,7 @@ public class MatchData
      *
      * @return a validation message string, or empty if valid
      */
-    private String validateTeleop()
+    public String validateTeleop()
     {
         StringBuilder msg = new StringBuilder();
         // Teleop Hopper validation
@@ -1149,7 +1149,7 @@ public class MatchData
      *
      * @return a validation message string, or empty if valid
      */
-    private String validateEndgame()
+    public String validateEndgame()
     {
         // Climb selections validation
         if ((m_startClimb == 0 && (m_endgameClimbLevel != 0 || m_endgameClimbPos != 0)) ||

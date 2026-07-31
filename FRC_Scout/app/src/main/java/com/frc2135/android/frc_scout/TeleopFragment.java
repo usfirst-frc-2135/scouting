@@ -184,8 +184,29 @@ public class TeleopFragment extends Fragment
      */
     private void setupListeners()
     {
-        m_binding.teleopHopperDecrButton.setOnClickListener(v -> updateTotalsInt(m_binding.teleopHopperTotalText, false));
-        m_binding.teleopHopperIncrButton.setOnClickListener(v -> updateTotalsInt(m_binding.teleopHopperTotalText, true));
+        m_binding.teleopHopperDecrButton.setOnClickListener(v -> {
+            updateTotalsInt(m_binding.teleopHopperTotalText, false);
+            syncAndRefreshBadges();
+        });
+        m_binding.teleopHopperIncrButton.setOnClickListener(v -> {
+            updateTotalsInt(m_binding.teleopHopperTotalText, true);
+            syncAndRefreshBadges();
+        });
+
+        m_binding.teleopIntakeShootChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
+        m_binding.teleopHerdedFuelChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
+        m_binding.teleopPassNzChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
+        m_binding.teleopPassAzChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
+
+        m_binding.teleopAccuracyRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
+        m_binding.teleopPassingRateRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
+        m_binding.teleopDefenseRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
+        m_binding.teleopDrivingAbilityRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
+    }
+
+    private void syncAndRefreshBadges()
+    {
+        ((ScoutingActivity) requireActivity()).updateCurrentFragmentData();
     }
 
     /**

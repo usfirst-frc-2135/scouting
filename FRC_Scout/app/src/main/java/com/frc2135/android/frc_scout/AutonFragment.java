@@ -169,8 +169,29 @@ public class AutonFragment extends Fragment
      */
     private void setupListeners()
     {
-        m_binding.autonHopperDecrButton.setOnClickListener(v -> updateTotalsInt(m_binding.autonHopperTotalText, false));
-        m_binding.autonHopperIncrButton.setOnClickListener(v -> updateTotalsInt(m_binding.autonHopperTotalText, true));
+        m_binding.autonHopperDecrButton.setOnClickListener(v -> {
+            updateTotalsInt(m_binding.autonHopperTotalText, false);
+            syncAndRefreshBadges();
+        });
+        m_binding.autonHopperIncrButton.setOnClickListener(v -> {
+            updateTotalsInt(m_binding.autonHopperTotalText, true);
+            syncAndRefreshBadges();
+        });
+
+        m_binding.autonPreloadChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
+        m_binding.autonAzChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
+        m_binding.autonDepotChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
+        m_binding.autonOutpostChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
+        m_binding.autonNzChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
+
+        m_binding.autonPreloadAccuracyRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
+        m_binding.autonAccuracyRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
+        m_binding.autonClimbRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
+    }
+
+    private void syncAndRefreshBadges()
+    {
+        ((ScoutingActivity) requireActivity()).updateCurrentFragmentData();
     }
 
     /**

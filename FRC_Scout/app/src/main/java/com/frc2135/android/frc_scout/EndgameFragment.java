@@ -201,6 +201,16 @@ public class EndgameFragment extends Fragment
                 dialog.show(fm, QRTAG);
             }
         });
+
+        m_binding.endgameStartClimbRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
+        m_binding.endgameClimbLevelRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
+        m_binding.endgameClimbPosRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
+        m_binding.endgameDiedRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
+    }
+
+    private void syncAndRefreshBadges()
+    {
+        ((ScoutingActivity) requireActivity()).updateCurrentFragmentData();
     }
 
     /**

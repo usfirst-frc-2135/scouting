@@ -25,6 +25,8 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -213,6 +215,18 @@ public class QRCodeDialog extends DialogFragment
     {
         super.onResume();
         Log.v(TAG, "onResume");
+
+        // Force brightness to 100% for scanning reliability
+        if (getDialog() != null)
+        {
+            Window window = getDialog().getWindow();
+            if (window != null)
+            {
+                WindowManager.LayoutParams layoutParams = window.getAttributes();
+                layoutParams.screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_FULL;
+                window.setAttributes(layoutParams);
+            }
+        }
     }
 
     /**
