@@ -463,7 +463,7 @@
                 android:layout_marginTop="@dimen/card_margin"
                 android:layout_marginHorizontal="@dimen/card_margin"
                 app:counterEnabled="true"
-                app:counterMaxLength="400">
+                app:counterMaxLength="200">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/endgame_comments_input"
