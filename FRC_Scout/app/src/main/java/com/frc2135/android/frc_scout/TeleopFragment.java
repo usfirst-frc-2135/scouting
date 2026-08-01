@@ -180,7 +180,8 @@ public class TeleopFragment extends Fragment
     }
 
     /**
-     * Sets up click listeners for the UI components.
+     * Sets up click and checked change listeners for the UI components.
+     * Triggers real-time tab badge updates in the parent activity upon any data change.
      */
     private void setupListeners()
     {
@@ -204,6 +205,10 @@ public class TeleopFragment extends Fragment
         m_binding.teleopDrivingAbilityRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
     }
 
+    /**
+     * Synchronizes current fragment data with the {@link MatchData} model and
+     * refreshes the tab badges in the parent activity.
+     */
     private void syncAndRefreshBadges()
     {
         ((ScoutingActivity) requireActivity()).updateCurrentFragmentData();

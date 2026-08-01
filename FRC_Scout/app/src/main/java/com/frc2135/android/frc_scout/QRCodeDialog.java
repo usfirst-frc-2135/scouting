@@ -63,7 +63,7 @@ public class QRCodeDialog extends DialogFragment
      * Encodes the match statistics and a human-readable label into the fragment's arguments.
      *
      * @param matchData the match data to encode into the QR code
-     * @param canSave   whether the dialog should show the "DONE" button and handle saving logic
+     * @param canSave   if true, the dialog will show a "DONE" button to save the match and exit
      * @return a new QRCodeDialog instance
      */
     public static QRCodeDialog newInstance(MatchData matchData, boolean canSave)
@@ -85,6 +85,12 @@ public class QRCodeDialog extends DialogFragment
         return dialog;
     }
 
+    /**
+     * Creates a new instance of {@link QRCodeDialog} in read-only mode (no save capability).
+     *
+     * @param matchData the match data to encode into the QR code
+     * @return a new QRCodeDialog instance
+     */
     public static QRCodeDialog newInstance(MatchData matchData)
     {
         return newInstance(matchData, false);
@@ -208,7 +214,8 @@ public class QRCodeDialog extends DialogFragment
     }
 
     /**
-     * Called when the dialog is visible to the user and actively running.
+     * Called when the dialog is visible to the user. Forces the screen brightness to 100%
+     * to ensure optimal contrast for the scanning camera.
      */
     @Override
     public void onResume()

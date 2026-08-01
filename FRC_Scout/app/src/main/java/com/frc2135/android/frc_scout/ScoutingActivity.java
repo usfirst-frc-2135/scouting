@@ -35,8 +35,9 @@ import com.google.android.material.badge.BadgeDrawable;
 
 /**
  * Activity for the main scouting process. It hosts three fragments: Autonomous, Teleoperated, and Endgame.
- * Uses a {@link com.google.android.material.bottomnavigation.BottomNavigationView} for navigation between these stages.
- * Handles match data loading and fragment state preservation.
+ * Uses a {@link androidx.viewpager2.widget.ViewPager2} for swipeable navigation between these stages,
+ * synchronized with a {@link com.google.android.material.bottomnavigation.BottomNavigationView}.
+ * Handles match data loading, fragment state preservation, and real-time tab badging for validation.
  */
 public class ScoutingActivity extends AppCompatActivity
 {
@@ -90,6 +91,10 @@ public class ScoutingActivity extends AppCompatActivity
         });
     }
 
+    /**
+     * Sets up the ViewPager2 with its adapter and a page change callback to synchronize
+     * with the BottomNavigationView and update action bar titles and tab badges.
+     */
     private void setupViewPager()
     {
         m_binding.scoutingActivityViewPager.setAdapter(new ScoutingPagerAdapter(this));
@@ -198,7 +203,8 @@ public class ScoutingActivity extends AppCompatActivity
     }
 
     /**
-     * Updates the MatchData object with the latest inputs from the currently visible fragment.
+     * Updates the MatchData object with the latest inputs from the currently visible fragment
+     * and refreshes the tab badging.
      */
     public void updateCurrentFragmentData()
     {
@@ -222,7 +228,8 @@ public class ScoutingActivity extends AppCompatActivity
     }
 
     /**
-     * Updates the badge notifications on the bottom navigation tabs based on data validity.
+     * Updates the badge notifications on the bottom navigation tabs based on the validity
+     * of each scouting stage's data.
      */
     public void updateTabBadges()
     {
@@ -237,9 +244,9 @@ public class ScoutingActivity extends AppCompatActivity
     }
 
     /**
-     * Shows or hides a red dot badge on a specific navigation item.
+     * Shows or hides a red dot badge on a specific bottom navigation tab.
      *
-     * @param itemId  the menu item ID
+     * @param itemId  the menu item ID (e.g. R.id.navigation_auton)
      * @param visible true to show the badge, false to hide it
      */
     private void updateBadge(int itemId, boolean visible)

@@ -22,6 +22,7 @@ package com.frc2135.android.frc_scout;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +33,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -347,14 +350,15 @@ public class MatchListFragment extends Fragment
 
     /**
      * ViewHolder class for individual match items in the RecyclerView.
+     * Displays summary match info and provides a dropdown menu for management actions.
      */
-    private class MatchHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
+    private class MatchHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         private final MatchListCardBinding m_itemBinding;
         private MatchData m_match;
 
         /**
-         * Initializes the ViewHolder and attaches click and context menu listeners.
+         * Initializes the ViewHolder and attaches click listeners for the card and its action menu.
          *
          * @param itemBinding the view binding for the match card item
          */
@@ -363,9 +367,15 @@ public class MatchListFragment extends Fragment
             super(itemBinding.getRoot());
             m_itemBinding = itemBinding;
             m_itemBinding.matchCardContainer.setOnClickListener(this);
-            m_itemBinding.matchCardContainer.setOnCreateContextMenuListener((menu, v, menuInfo) -> {
-                requireActivity().getMenuInflater().inflate(R.menu.match_item_context_menu, menu);
-                m_selectedMatch = m_match;
+
+            m_itemBinding.matchCardMenuButton.setOnClickListener(v -> {
+                PopupMenu popup = new PopupMenu(v.getContext(), v);
+                popup.getMenuInflater().inflate(R.menu.match_item_context_menu, popup.getMenu());
+                popup.setOnMenuItemClickListener(item -> {
+                    m_selectedMatch = m_match;
+                    return handleMatchAction(item.getItemId());
+                });
+                popup.show();
             });
         }
 
@@ -393,18 +403,6 @@ public class MatchListFragment extends Fragment
         public void onClick(View v)
         {
             QRCodeDialog.newInstance(m_match).show(requireActivity().getSupportFragmentManager(), QRTAG);
-        }
-
-        /**
-         * Optional hook for handling long click events.
-         *
-         * @param v the clicked View
-         * @return false (event handled via context menu listener)
-         */
-        @Override
-        public boolean onLongClick(View v)
-        {
-            return false;
         }
     }
 
@@ -502,13 +500,23 @@ public class MatchListFragment extends Fragment
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item)
     {
+        return handleMatchAction(item.getItemId());
+    }
+
+    /**
+     * Performs an action (Edit/Delete/Debug) on the currently selected match.
+     *
+     * @param itemID the ID of the menu action to perform
+     * @return true if the action was handled
+     */
+    private boolean handleMatchAction(int itemID)
+    {
         MatchData m = m_selectedMatch;
         if (m == null)
         {
-            return super.onContextItemSelected(item);
+            return false;
         }
 
-        int itemID = item.getItemId();
         if (itemID == R.id.menu_item_edit_match)
         {
             Log.d(TAG, "Edit match button clicked");
@@ -520,6 +528,23 @@ public class MatchListFragment extends Fragment
             m_binding.matchListRecyclerView.clearFocus();
 
             startActivity(preMatchIntent);
+            m_selectedMatch = null;
+        }
+        else if (itemID == R.id.menu_item_display_match)
+        {
+            Log.d(TAG, "Display match button clicked");
+            androidx.appcompat.app.AlertDialog dialog = new MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Match Data")
+                    .setMessage(m.getMatchDataString())
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show();
+
+            TextView textView = dialog.findViewById(android.R.id.message);
+            if (textView != null)
+            {
+                textView.setTypeface(Typeface.MONOSPACE);
+                textView.setTextSize(14); // Increased size as requested
+            }
             m_selectedMatch = null;
         }
         else if (itemID == R.id.menu_item_delete_match)
@@ -547,7 +572,7 @@ public class MatchListFragment extends Fragment
         }
         else
         {
-            return super.onContextItemSelected(item);
+            return false;
         }
         return true;
     }

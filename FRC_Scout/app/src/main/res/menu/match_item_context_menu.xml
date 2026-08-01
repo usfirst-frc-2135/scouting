@@ -4,6 +4,9 @@
         android:id="@+id/menu_item_edit_match"
         android:title="@string/edit_match" />
     <item
+        android:id="@+id/menu_item_display_match"
+        android:title="@string/display_match" />
+    <item
         android:id="@+id/menu_item_delete_match"
         android:title="@string/delete_match" />
 </menu>

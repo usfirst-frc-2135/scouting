@@ -1245,4 +1245,51 @@ public class MatchData
 
         return jsonString;
     }
+
+    /**
+     * Generates a readable string of all match data points.
+     * Aligns values vertically for easier reading.
+     *
+     * @return a multi-line string containing all data point names and values
+     */
+    public String getMatchDataString()
+    {
+        String fmt = "%-24s: %s\n";
+        String compactFmt = "%-10s: %s\n";
+        return String.format(compactFmt, "Match ID", m_matchID) +
+                String.format(compactFmt, "Timestamp", m_timestamp) +
+                String.format(fmt, "Version", m_version) +
+                String.format(fmt, "Event Code", m_eventCode) +
+                String.format(fmt, "Match Number", m_matchNumber) +
+                String.format(fmt, "Team Number", m_teamNumber) +
+                String.format(fmt, "Team Alias", m_teamAlias) +
+                String.format(fmt, "Scout Name", m_scoutName) +
+                String.format(fmt, "Auton Preload", m_autonPreload) +
+                String.format(fmt, "Auton Preload Acc Rate", m_autonPreloadAccRate) +
+                String.format(fmt, "Auton Hopper", m_autonHopper) +
+                String.format(fmt, "Auton Accuracy Rate", m_autonAccuracyRate) +
+                String.format(fmt, "Auton AZ", m_autonAz) +
+                String.format(fmt, "Auton Depot", m_autonDepot) +
+                String.format(fmt, "Auton Outpost", m_autonOutpost) +
+                String.format(fmt, "Auton NZ", m_autonNz) +
+                String.format(fmt, "Auton Climb", m_autonClimb) +
+                String.format(fmt, "Teleop Hoppers Used", m_hoppersUsed) +
+                String.format(fmt, "Teleop Accuracy Rate", m_accuracyRate) +
+                String.format(fmt, "Teleop Intake/Shoot", m_intakeAndShoot) +
+                String.format(fmt, "Teleop Shovel Fuel", m_shovelFuel) +
+                String.format(fmt, "Teleop Passing Rate", m_passingRate) +
+                String.format(fmt, "Teleop Defense Rate", m_defenseRate) +
+                String.format(fmt, "Teleop Drive Ability", m_drivingAbility) +
+                String.format(fmt, "Teleop Passed AZ", m_passedAz) +
+                String.format(fmt, "Teleop Passed NZ", m_passedNz) +
+                String.format(fmt, "Teleop Photo", m_teleopPhoto) +
+                String.format(fmt, "Endgame Died", m_diedValue) +
+                String.format(fmt, "Endgame Start Climb", m_startClimb) +
+                String.format(fmt, "Endgame Climb Level", m_endgameClimbLevel) +
+                String.format(fmt, "Endgame Climb Pos", m_endgameClimbPos) +
+                String.format(fmt, "Comments", m_comment) +
+                String.format(fmt, "Other 2", m_other2) +
+                String.format(fmt, "Other 3", m_other3) +
+                String.format(fmt, "Other 4", m_other4);
+    }
 }
