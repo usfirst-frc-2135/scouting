@@ -504,7 +504,7 @@ public class MatchListFragment extends Fragment
     }
 
     /**
-     * Performs an action (Edit/Delete/Debug) on the currently selected match.
+     * Performs an action (Edit/Display/Delete) on the currently selected match.
      *
      * @param itemID the ID of the menu action to perform
      * @return true if the action was handled
