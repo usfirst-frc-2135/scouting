@@ -146,6 +146,24 @@ public class ScoutedMatches extends BaseJSONSerializer
     }
 
     /**
+     * Deletes all match records from both the in-memory list and the local filesystem.
+     */
+    public void deleteAllMatches()
+    {
+        Log.d(TAG, "deleteAllMatches");
+        for (MatchData m : m_scoutedMatches)
+        {
+            String filename = getMatchFileName(m);
+            File file = new File(m_dataDir, filename);
+            if (file.exists() && file.delete())
+            {
+                Log.i(TAG, "Successfully deleted match file: " + filename);
+            }
+        }
+        m_scoutedMatches.clear();
+    }
+
+    /**
      * Adds a newly created match record to the in-memory collection.
      *
      * @param matchData the match record to add

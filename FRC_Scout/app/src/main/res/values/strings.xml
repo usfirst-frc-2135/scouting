@@ -38,6 +38,9 @@
     <string name="load_team_aliases">Load Team Aliases</string>
     <string name="load_scout_names">Load Scout Names</string>
     <string name="clear_all_settings">Clear All Settings</string>
+    <string name="delete_all_matches">Delete All Matches</string>
+    <string name="delete_all_matches_confirm">This will permanently delete ALL scouted matches on this device. This cannot be undone. Continue?</string>
+    <string name="all_match_data_deleted">All match data deleted</string>
     <string name="about">About</string>
 
     <string name="set_team_index_title">Set Team Index</string>

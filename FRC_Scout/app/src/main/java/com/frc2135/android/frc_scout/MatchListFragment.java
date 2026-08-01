@@ -203,6 +203,10 @@ public class MatchListFragment extends Fragment
                 {
                     clearAllData();
                 }
+                else if (itemID == R.id.delete_all_matches_dialog)
+                {
+                    deleteAllMatches();
+                }
                 else if (itemID == R.id.about_screen_dialog)
                 {
                     startActivity(new Intent(requireContext(), SplashScreenActivity.class));
@@ -343,6 +347,25 @@ public class MatchListFragment extends Fragment
                     refreshMatchList();
                     Log.i(TAG, "All configuration data cleared");
                     Snackbar.make(m_binding.getRoot(), "All configuration data cleared", Snackbar.LENGTH_SHORT).show();
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+    }
+
+    /**
+     * Presents a confirmation dialog to delete all scouted matches from the device.
+     */
+    private void deleteAllMatches()
+    {
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.delete_all_matches)
+                .setMessage(R.string.delete_all_matches_confirm)
+                .setPositiveButton(R.string.delete_match, (dialog, which) -> {
+                    Log.d(TAG, "Executing Delete All Matches");
+                    m_scoutedMatches.deleteAllMatches();
+                    refreshMatchList();
+                    Log.i(TAG, "All scouted match data deleted");
+                    Snackbar.make(m_binding.getRoot(), R.string.all_match_data_deleted, Snackbar.LENGTH_SHORT).show();
                 })
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
