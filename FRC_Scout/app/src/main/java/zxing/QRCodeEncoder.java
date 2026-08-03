@@ -40,9 +40,10 @@ import android.telephony.PhoneNumberUtils;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
-import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -269,8 +270,9 @@ public final class QRCodeEncoder
         {
             hints = new HashMap<>();
             hints.put(EncodeHintType.CHARACTER_SET, encoding);
+            hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.Q); // ~25% error correction for outdoor environments
         }
-        MultiFormatWriter writer = new MultiFormatWriter();
+        QRCodeWriter writer = new QRCodeWriter();
         BitMatrix result = writer.encode(contents, format, dimension, dimension, hints);
         int width = result.getWidth();
         int height = result.getHeight();
