@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = 'com.frc2135.android.frc_scout'
+    namespace = 'com.frc2135.frc_scout'
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "com.frc2135.android.frc_scout"
+        applicationId = "com.frc2135.frc_scout"
         minSdk 25
         targetSdk 37
         versionCode = 1

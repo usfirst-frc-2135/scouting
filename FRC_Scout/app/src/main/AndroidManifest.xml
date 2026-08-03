@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    android:installLocation="internalOnly">
+    android:installLocation="internalOnly"
+    >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -13,26 +14,26 @@
         >
 
         <activity
-            android:name="com.frc2135.android.frc_scout.MatchListActivity"
+            android:name="com.frc2135.frc_scout.MatchListActivity"
             android:exported="true"
             android:label="List Matches"
             android:launchMode="singleTop"
             />
 
         <activity
-            android:name="com.frc2135.android.frc_scout.PreMatchActivity"
+            android:name="com.frc2135.frc_scout.PreMatchActivity"
             android:exported="true"
             android:label="Input Match Info"
             />
 
         <activity
-            android:name="com.frc2135.android.frc_scout.ScoutingActivity"
+            android:name="com.frc2135.frc_scout.ScoutingActivity"
             android:exported="true"
             android:label="Input Match Data"
             />
 
         <activity
-            android:name="com.frc2135.android.frc_scout.SplashScreenActivity"
+            android:name="com.frc2135.frc_scout.SplashScreenActivity"
             android:exported="true"
             android:label="FRC Scout 2026"
             android:theme="@style/AppTheme.NoActionBar"
