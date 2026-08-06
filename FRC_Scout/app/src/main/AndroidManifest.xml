@@ -37,6 +37,7 @@
             android:exported="true"
             android:label="FRC Scout 2026"
             android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

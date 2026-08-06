@@ -9,12 +9,20 @@ navigation = "2.9.8"
 lifecycle = "2.11.0"
 material = "1.14.0"
 junit = "4.13.2"
-ext-junit = "1.3.0"
-espresso-core = "3.7.0"
+#noinspection GradleDependency
+ext-junit = "1.1.5"
+#noinspection GradleDependency
+espresso-core = "3.5.1"
+#noinspection GradleDependency
+androidx-test = "1.5.0"
+#noinspection GradleDependency
+androidx-test-monitor = "1.6.0"
 volley = "1.2.1"
 zxing = "3.5.4"
 work = "2.11.2"
 viewpager2 = "1.1.0"
+mockito = "5.23.0"
+json = "20260719"
 
 [libraries]
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
@@ -29,7 +37,13 @@ androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifec
 google-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "ext-junit" }
+androidx-test-core = { group = "androidx.test", name = "core", version.ref = "androidx-test" }
+androidx-test-monitor = { group = "androidx.test", name = "monitor", version.ref = "androidx-test-monitor" }
 androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+#noinspection GradleDependency
+androidx-test-runner = { group = "androidx.test", name = "runner", version = "1.5.2" }
+#noinspection GradleDependency
+androidx-test-rules = { group = "androidx.test", name = "rules", version = "1.5.0" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 zxing-core = { group = "com.google.zxing", name = "core", version.ref = "zxing" }
 androidx-work-runtime = { group = "androidx.work", name = "work-runtime", version.ref = "work" }
@@ -38,6 +52,8 @@ androidx-work-rxjava2 = { group = "androidx.work", name = "work-rxjava2", versio
 androidx-work-gcm = { group = "androidx.work", name = "work-gcm", version.ref = "work" }
 androidx-work-testing = { group = "androidx.work", name = "work-testing", version.ref = "work" }
 androidx-viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version.ref = "viewpager2" }
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+org-json = { group = "org.json", name = "json", version.ref = "json" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

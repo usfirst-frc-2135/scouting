@@ -4,7 +4,7 @@
     <color name="colorPrimaryVariant">#303F9F</color>
     <color name="colorOnPrimary">#FFFFFF</color>
 
-    <color name="colorSecondary">#FFC107</color>
+    <color name="colorSecondary">#FFD700</color>
     <color name="colorOnSecondary">#3F51B5</color>
 
     <color name="backgroundColor">#F5F5F5</color>
@@ -20,7 +20,7 @@
     <color name="textSecondary">#757575</color>
 
     <!-- Semantic mappings for specific UI components -->
-    <color name="colorStartButton">#FFC107</color>
+    <color name="colorStartButton">#FFD700</color>
     <color name="colorOnStartButton">#3F51B5</color>
 
     <!--    Used by auton, teleop, and endgame fragments for text-->

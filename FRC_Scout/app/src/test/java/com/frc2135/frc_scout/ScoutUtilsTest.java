@@ -19,6 +19,7 @@
 
 package com.frc2135.frc_scout;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -149,8 +150,19 @@ public class ScoutUtilsTest
         assertFalse(ScoutUtils.isValidScoutName(TAG, "John S."));
 
         // Invalid: null/empty/only spaces
-        assertFalse(ScoutUtils.isValidScoutName(TAG, null));
         assertFalse(ScoutUtils.isValidScoutName(TAG, ""));
         assertFalse(ScoutUtils.isValidScoutName(TAG, "   "));
+    }
+
+    @Test
+    public void testNormalizeScoutName()
+    {
+        assertEquals("John D", ScoutUtils.normalizeScoutName("John D"));
+        assertEquals("John D", ScoutUtils.normalizeScoutName("  John D  "));
+        assertEquals("John D", ScoutUtils.normalizeScoutName("John   D"));
+        assertEquals("John D", ScoutUtils.normalizeScoutName("  John   D  "));
+        assertEquals("", ScoutUtils.normalizeScoutName(null));
+        assertEquals("", ScoutUtils.normalizeScoutName(""));
+        assertEquals("", ScoutUtils.normalizeScoutName("   "));
     }
 }
