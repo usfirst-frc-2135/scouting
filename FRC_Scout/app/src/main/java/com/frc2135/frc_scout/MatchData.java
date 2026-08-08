@@ -177,10 +177,10 @@ public class MatchData
         m_timestamp = Calendar.getInstance().getTime();
         m_version = M_JSON_FORMAT_VERSION;
         m_eventCode = "";
-        m_matchNumber = "";
-        m_teamNumber = "";
+        m_matchNumber = "qm1";
+        m_teamNumber = "21350";
         m_teamAlias = "";
-        m_scoutName = "";
+        m_scoutName = "Jane D";
 
         m_autonPreload = false;
         m_autonPreloadAccRate = 0;

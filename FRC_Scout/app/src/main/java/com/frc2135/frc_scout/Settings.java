@@ -129,7 +129,7 @@ public final class Settings extends BaseJSONSerializer
         m_eventCode = Constants.DEFAULT_EVENT_CODE;
         m_teamIndexStr = m_teamIndexOptions[0];
         m_mostRecentMatchNumber = "";
-        m_mostRecentScoutName = "";
+        m_mostRecentScoutName = "Jane D";
         m_pastScouts.clear();
         m_scoringTableSide = false;
     }
