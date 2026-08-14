@@ -20,6 +20,7 @@
 package com.frc2135.frc_scout;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -86,6 +87,16 @@ public class SplashScreenActivity extends AppCompatActivity
         setContentView(m_binding.getRoot());
 
         populateSettingsSummary();
+
+        // Initialize data objects in background while animation runs to reduce main thread lag
+        new Thread(() -> {
+            Log.d(TAG, "Pre-loading data objects in background...");
+            Context context = getApplicationContext();
+            ScoutedMatches.getInstance(context);
+            TBASchedule.getInstance(context);
+            TeamAliases.getInstance(context);
+            ScoutNames.getInstance(context);
+        }).start();
 
         // Simple fade-in animation
         m_binding.splashActivityContainer.setAlpha(0f);
