@@ -33,6 +33,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import com.google.android.material.slider.Slider;
+
 
 import com.frc2135.frc_scout.databinding.TeleopFragmentBinding;
 
@@ -47,13 +49,13 @@ public class TeleopFragment extends Fragment
     private static final String TAG = "TeleopFragment";
 
     private static final int[] ACCURACY_IDS = {
-            R.id.teleop_accuracy_na,
-            R.id.teleop_accuracy_most,
-            R.id.teleop_accuracy_three_fourths,
-            R.id.teleop_accuracy_half,
-            R.id.teleop_accuracy_quarter,
-            R.id.teleop_accuracy_few,
-            R.id.teleop_accuracy_none
+            //R.id.teleop_accuracy_na,
+            //R.id.teleop_accuracy_most,
+            //R.id.teleop_accuracy_three_fourths,
+            //R.id.teleop_accuracy_half,
+            //R.id.teleop_accuracy_quarter,
+            //R.id.teleop_accuracy_few,
+            //R.id.teleop_accuracy_none
     };
 
     private static final int[] PASSING_RATE_IDS = {
@@ -161,9 +163,14 @@ public class TeleopFragment extends Fragment
             return;
         }
 
+
+        Log.v(TAG,">>> from matchData: teleopHopperAccuracy value = "+m_matchData.getAccuracyRate());
+        m_binding.teleopHopperAccuracySlider.setValue(m_matchData.getAccuracyRate());  //NEW
+
+
         m_binding.teleopHopperTotalText.setText(String.valueOf(m_matchData.getHoppersUsed()));
         updateScoreColor(m_binding.teleopHopperTotalText);
-        initAccuracyRate(m_matchData.getAccuracyRate());
+        //initAccuracyRate(m_matchData.getAccuracyRate());
 
         m_binding.teleopIntakeShootChip.setChecked(m_matchData.getIntakeAndShoot());
         m_binding.teleopHerdedFuelChip.setChecked(m_matchData.getShovelFuel());
@@ -185,6 +192,11 @@ public class TeleopFragment extends Fragment
      */
     private void setupListeners()
     {
+
+        Log.v(TAG,"----> setupListeners(): doing teleopHopperAccuracySlider");
+        m_binding.teleopHopperAccuracySlider.setOnClickListener((l) ->syncAndRefreshBadges());
+
+
         m_binding.teleopHopperDecrButton.setOnClickListener(v -> {
             updateTotalsInt(m_binding.teleopHopperTotalText, false);
             syncAndRefreshBadges();
@@ -199,7 +211,7 @@ public class TeleopFragment extends Fragment
         m_binding.teleopPassNzChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
         m_binding.teleopPassAzChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
 
-        m_binding.teleopAccuracyRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
+      //  m_binding.teleopAccuracyRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
         m_binding.teleopPassingRateRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
         m_binding.teleopDefenseRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
         m_binding.teleopDrivingAbilityRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
@@ -219,13 +231,15 @@ public class TeleopFragment extends Fragment
      *
      * @param value the index of the selected accuracy level
      */
-    private void initAccuracyRate(int value)
+    /*private void initAccuracyRate(int value)
     {
         if (value >= 0 && value < ACCURACY_IDS.length)
         {
             m_binding.teleopAccuracyRadioGroup.check(ACCURACY_IDS[value]);
         }
     }
+    */
+
 
     /**
      * Initializes the passing rate radio group selection.
@@ -459,18 +473,15 @@ public class TeleopFragment extends Fragment
      *
      * @return the index of the selected radio button in the accuracy group
      */
-    public int getCurrentAccuracyLevel()
+    public int getAccuracyRate()
     {
-        int id = m_binding.teleopAccuracyRadioGroup.getCheckedRadioButtonId();
-        for (int i = 0; i < ACCURACY_IDS.length; i++)
-        {
-            if (id == ACCURACY_IDS[i])
-            {
-                return i;
-            }
-        }
-        return 0;
+        float hopperAccuracyValue = m_binding.teleopHopperAccuracySlider.getValue();
+        int hopperAccuracyValueInt = (int) hopperAccuracyValue;
+        Log.v(TAG,"===> getAccuracyRate: returning value: "+hopperAccuracyValueInt);
+        return hopperAccuracyValueInt;
     }
+
+
 
     /**
      * Retrieves the selected passing effectiveness rate index.
@@ -544,7 +555,7 @@ public class TeleopFragment extends Fragment
         {
             Log.e(TAG, "updateTeleopData: Invalid hopper score value", e);
         }
-        m_matchData.setAccuracyRate(getCurrentAccuracyLevel());
+       // m_matchData.setAccuracyRate(getCurrentAccuracyLevel());
         m_matchData.setPassingRate(getPassingEffectivenessRate());
         m_matchData.setTeleopPhoto(m_photoNum);
         m_matchData.setDefenseRate(getCurrentDefenseLevel());
