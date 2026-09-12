@@ -126,7 +126,7 @@ public class MatchData
     private boolean m_autonDepot;
     private boolean m_autonOutpost;
     private boolean m_autonNz;
-    private int m_autonClimb;
+    private boolean m_autonClimb;
 
     // --- Teleoperated Section ---
     private int m_hoppersUsed;
@@ -190,7 +190,7 @@ public class MatchData
         m_autonDepot = false;
         m_autonOutpost = false;
         m_autonNz = false;
-        m_autonClimb = 0;
+        m_autonClimb = false;
 
         m_hoppersUsed = 0;
         m_accuracyRate = 0;
@@ -264,7 +264,7 @@ public class MatchData
         m_autonDepot = json.optBoolean(KEY_AUTON_DEPOT, false);
         m_autonOutpost = json.optBoolean(KEY_AUTON_OUTPOST, false);
         m_autonNz = json.optBoolean(KEY_AUTON_NZ, false);
-        m_autonClimb = json.optInt(KEY_AUTON_CLIMB, 0);
+        m_autonClimb = json.optBoolean(KEY_AUTON_CLIMB, false);
 
         m_hoppersUsed = json.optInt(KEY_TELEOP_HOPPERS_USED, 0);
         m_accuracyRate = json.optInt(KEY_TELEOP_ACC_RATE, 0);
@@ -677,21 +677,21 @@ public class MatchData
     }
 
     /**
-     * Sets the autonomous climb position index.
+     * Sets the autonomous climb chip index.
      *
-     * @param val the climb position index
+     * @param val the climb chip index
      */
-    public void setAutonClimb(int val)
+    public void setAutonClimb(boolean val)
     {
         m_autonClimb = val;
     }
 
     /**
-     * Returns the autonomous climb position index.
+     * Returns the autonomous climb chip index.
      *
-     * @return the climb position index
+     * @return the climb chip index
      */
-    public int getAutonClimb()
+    public boolean getAutonClimb()
     {
         return m_autonClimb;
     }

@@ -144,6 +144,8 @@
 
     <!--    autonomous mode strings -->
     <string name="preload_title">PRELOAD</string>
+    <string name="auton_climb_title">CLIMB</string>
+    <string name="auton_climb_chip">Climbed</string>
     <string name="shot_preloaded_fuel">Shot preloaded fuel</string>
     <string name="preload_accuracy_rate">PRELOAD ACCURACY RATE:</string>
     <string name="all">All</string>

@@ -63,13 +63,7 @@ public class AutonFragment extends Fragment
             R.id.auton_accuracy_none
     };
 
-    private static final int[] AUTON_CLIMB_IDS = {
-            R.id.auton_climb_na,
-            R.id.auton_climb_back,
-            R.id.auton_climb_left,
-            R.id.auton_climb_front,
-            R.id.auton_climb_right
-    };
+
 
     private MatchData m_matchData;
     private AutonFragmentBinding m_binding;
@@ -161,7 +155,7 @@ public class AutonFragment extends Fragment
         m_binding.autonOutpostChip.setChecked(m_matchData.isAutonOutpost());
         m_binding.autonNzChip.setChecked(m_matchData.isAutonNz());
 
-        initAutonClimb(m_matchData.getAutonClimb());
+        m_binding.autonClimbChip.setChecked(m_matchData.getAutonClimb());
     }
 
     /**
@@ -187,7 +181,8 @@ public class AutonFragment extends Fragment
 
         m_binding.autonPreloadAccuracyRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
         m_binding.autonAccuracyRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
-        m_binding.autonClimbRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
+
+        m_binding.autonClimbChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
     }
 
     /**
@@ -226,16 +221,18 @@ public class AutonFragment extends Fragment
     }
 
     /**
-     * Initializes the autonomous climb position radio group selection.
+     * Initializes the autonomous climb chip selection.
      *
-     * @param value the index of the selected climb position
+     * @param value the index of the selected climb chip
      */
     private void initAutonClimb(int value)
     {
-        if (value >= 0 && value < AUTON_CLIMB_IDS.length)
+        /* TODO if (value >= 0 && value < AUTON_CLIMB_IDS.length)
         {
             m_binding.autonClimbRadioGroup.check(AUTON_CLIMB_IDS[value]);
+
         }
+        TODO */
     }
 
     /**
@@ -343,23 +340,7 @@ public class AutonFragment extends Fragment
         return 0;
     }
 
-    /**
-     * Retrieves the selected autonomous climb position index.
-     *
-     * @return the index of the selected radio button in the climb position group
-     */
-    public int getAutonClimb()
-    {
-        int id = m_binding.autonClimbRadioGroup.getCheckedRadioButtonId();
-        for (int i = 0; i < AUTON_CLIMB_IDS.length; i++)
-        {
-            if (id == AUTON_CLIMB_IDS[i])
-            {
-                return i;
-            }
-        }
-        return 0;
-    }
+
 
     /**
      * Updates the {@link MatchData} object with the current values from the UI components.
@@ -386,7 +367,7 @@ public class AutonFragment extends Fragment
         m_matchData.setAutonOutpost(m_binding.autonOutpostChip.isChecked());
         m_matchData.setAutonAccuracyRate(getAutonAccuracyRate());
         m_matchData.setPreloadAccuracyLevel(getPreloadAccuracyLevel());
-        m_matchData.setAutonClimb(getAutonClimb());
+        m_matchData.setAutonClimb(m_binding.autonClimbChip.isChecked());
     }
 
     /**
