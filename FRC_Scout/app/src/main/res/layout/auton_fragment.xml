@@ -429,108 +429,36 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="330dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <!-- start CLIMB POSITION title layout -->
+                    <!-- start AUTON CLIMB CHIP layout -->
                     <LinearLayout
-                        android:layout_width="120dp"
-                        android:layout_height="65dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="7dp"
-                        android:background="@drawable/rounded_rect"
-                        android:backgroundTint="#C7CDD6">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/section_padding">
 
                         <TextView
-                            android:id="@+id/auton_climb_label"
-                            android:layout_width="110dp"
+                            android:id="@+id/auton_climb_title"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginTop="7dp"
-                            android:text="@string/climb_position"
+                            android:layout_marginStart="4dp"
+                            android:text="@string/auton_climb_title"
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_medium"
                             android:textStyle="bold" />
-                    </LinearLayout>
-                    <!-- end CLIMB POSITION title layout -->
 
-                    <!-- start CLIMB POSITION RADIO BUTTONS layout -->
-                    <RadioGroup
-                        android:id="@+id/auton_climb_radio_group"
-                        android:layout_width="430dp"
-                        android:layout_height="330dp"
-                        android:layout_marginStart="5dp"
-                        android:background="@drawable/rebuilt_tower_angle_full"
-                        android:buttonTint="#717982"
-                        android:orientation="horizontal">
-
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/auton_climb_na"
-                            android:layout_width="80dp"
-                            android:layout_height="30dp"
-                            android:layout_marginStart="0dp"
-                            android:layout_marginTop="23dp"
-                            android:background="@drawable/rounded_rect"
-                            android:backgroundTint="#C7CDD6"
-                            android:buttonTint="#717982"
-                            android:text="@string/n_a"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
-
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/auton_climb_back"
-                            android:layout_width="55dp"
-                            android:layout_height="30dp"
-                            android:layout_marginStart="115dp"
-                            android:layout_marginTop="265dp"
-                            android:background="@drawable/rounded_rect"
-                            android:backgroundTint="#C7CDD6"
-                            android:buttonTint="#717982"
-                            android:text="@string/back"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
-
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/auton_climb_left"
-                            android:layout_width="55dp"
-                            android:layout_height="30dp"
-                            android:layout_marginStart="0dp"
-                            android:layout_marginTop="195dp"
-                            android:background="@drawable/rounded_rect"
-                            android:backgroundTint="#C7CDD6"
-                            android:buttonTint="#717982"
-                            android:text="@string/left"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
-
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/auton_climb_front"
-                            android:layout_width="55dp"
-                            android:layout_height="30dp"
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/auton_climb_chip"
+                            style="@style/CustomChipStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="15dp"
-                            android:layout_marginTop="265dp"
-                            android:background="@drawable/rounded_rect"
-                            android:backgroundTint="#C7CDD6"
-                            android:buttonTint="#717982"
-                            android:text="@string/front"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
+                            android:text="@string/auton_climb_chip" />
+                    </LinearLayout>
 
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/auton_climb_right"
-                            android:layout_width="55dp"
-                            android:layout_height="30dp"
-                            android:layout_marginStart="-35dp"
-                            android:layout_marginTop="140dp"
-                            android:background="@drawable/rounded_rect"
-                            android:backgroundTint="#C7CDD6"
-                            android:buttonTint="#717982"
-                            android:text="@string/right"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
-
-                    </RadioGroup>
-                    <!-- end CLIMB POSITION RADIO BUTTONS layout -->
+                    <!-- end AUTON CLIMB CHIP layout -->
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
             <!-- end CLIMB card layout -->
