@@ -220,20 +220,6 @@ public class AutonFragment extends Fragment
         }
     }
 
-    /**
-     * Initializes the autonomous climb chip selection.
-     *
-     * @param value the index of the selected climb chip
-     */
-    private void initAutonClimb(int value)
-    {
-        /* TODO if (value >= 0 && value < AUTON_CLIMB_IDS.length)
-        {
-            m_binding.autonClimbRadioGroup.check(AUTON_CLIMB_IDS[value]);
-
-        }
-        TODO */
-    }
 
     /**
      * Checks if the value in the given TextView exceeds the maximum allowed autonomous hoppers.
