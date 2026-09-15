@@ -268,7 +268,11 @@ public class MatchData
         m_autonDepot = json.optBoolean(KEY_AUTON_DEPOT, false);
         m_autonOutpost = json.optBoolean(KEY_AUTON_OUTPOST, false);
         m_autonNz = json.optBoolean(KEY_AUTON_NZ, false);
-        m_autonClimb = json.optBoolean(KEY_AUTON_CLIMB, false);
+
+        int tempClimb = json.optInt(KEY_AUTON_CLIMB, 0);
+        if (tempClimb > 0)
+            m_autonClimb = true;
+        else m_autonClimb = false;
 
 
         m_hoppersUsed = json.optInt(KEY_TELEOP_HOPPERS_USED, 0);
@@ -327,7 +331,7 @@ public class MatchData
         json.put(KEY_AUTON_DEPOT, m_autonDepot);
         json.put(KEY_AUTON_OUTPOST, m_autonOutpost);
         json.put(KEY_AUTON_NZ, m_autonNz);
-        json.put(KEY_AUTON_CLIMB, m_autonClimb);
+        json.put(KEY_AUTON_CLIMB, (m_autonClimb ? 1 : 0));
 
 
         json.put(KEY_TELEOP_HOPPERS_USED, m_hoppersUsed);
@@ -1213,7 +1217,7 @@ public class MatchData
                 m_autonDepot ? 1 : 0,
                 m_autonOutpost ? 1 : 0,
                 m_autonNz ? 1 : 0,
-                m_autonClimb,
+                m_autonClimb ? 1 : 0,
                 m_hoppersUsed,
                 m_accuracyRate,
                 m_intakeAndShoot ? 1 : 0,
@@ -1296,7 +1300,7 @@ public class MatchData
                 String.format(fmt, "Auton Depot", m_autonDepot) +
                 String.format(fmt, "Auton Outpost", m_autonOutpost) +
                 String.format(fmt, "Auton NZ", m_autonNz) +
-                String.format(fmt, "Auton Climb", m_autonClimb) +
+                String.format(fmt, "Auton Climb", (m_autonClimb ? 1 : 0)) +
                 String.format(fmt, "Teleop Hoppers Used", m_hoppersUsed) +
                 String.format(fmt, "Teleop Accuracy Rate", m_accuracyRate) +
                 String.format(fmt, "Teleop Intake/Shoot", m_intakeAndShoot) +
