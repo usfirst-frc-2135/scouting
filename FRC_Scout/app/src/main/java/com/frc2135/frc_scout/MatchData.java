@@ -66,6 +66,7 @@ public class MatchData
     private static final String KEY_AUTON_OUTPOST = "autonOutpost";
     private static final String KEY_AUTON_NZ = "autonNz";
     private static final String KEY_AUTON_CLIMB = "autonClimb";
+    private static final String KEY_NO_SHOW = "noShow";
 
     private static final String KEY_TELEOP_HOPPERS_USED = "hoppersUsed";
     private static final String KEY_TELEOP_ACC_RATE = "accuracyRate";
@@ -145,9 +146,11 @@ public class MatchData
     private int m_endgameClimbPos;
     private int m_startClimb;
     private int m_endgameClimbLevel;
+    private boolean m_noShow; //This is using the other2 spot in QR code and JSON file
+
 
     private String m_comment;
-    private String m_other2;
+    private String m_other2;   //using this for m_noShow data
     private String m_other3;
     private String m_other4;
 
@@ -191,6 +194,7 @@ public class MatchData
         m_autonOutpost = false;
         m_autonNz = false;
         m_autonClimb = false;
+        m_noShow= false;
 
         m_hoppersUsed = 0;
         m_accuracyRate = 0;
@@ -266,6 +270,7 @@ public class MatchData
         m_autonNz = json.optBoolean(KEY_AUTON_NZ, false);
         m_autonClimb = json.optBoolean(KEY_AUTON_CLIMB, false);
 
+
         m_hoppersUsed = json.optInt(KEY_TELEOP_HOPPERS_USED, 0);
         m_accuracyRate = json.optInt(KEY_TELEOP_ACC_RATE, 0);
         m_intakeAndShoot = json.optBoolean(KEY_TELEOP_INTAKE_SHOOT, false);
@@ -285,6 +290,9 @@ public class MatchData
 
         m_shovelFuel = json.optBoolean(KEY_OTHER1, false);
         m_other2 = json.optString(KEY_OTHER2, "0");
+        if(m_other2 == "1") m_noShow = true; //TODO with new game, clean up
+            else m_noShow = false;
+
         m_other3 = json.optString(KEY_OTHER3, "0");
         m_other4 = json.optString(KEY_OTHER4, "0");
     }
@@ -321,6 +329,7 @@ public class MatchData
         json.put(KEY_AUTON_NZ, m_autonNz);
         json.put(KEY_AUTON_CLIMB, m_autonClimb);
 
+
         json.put(KEY_TELEOP_HOPPERS_USED, m_hoppersUsed);
         json.put(KEY_TELEOP_ACC_RATE, m_accuracyRate);
         json.put(KEY_TELEOP_INTAKE_SHOOT, m_intakeAndShoot);
@@ -339,7 +348,7 @@ public class MatchData
         json.put(KEY_COMMENTS, m_comment);
 
         json.put(KEY_OTHER1, m_shovelFuel);
-        json.put(KEY_OTHER2, m_other2);
+        json.put(KEY_OTHER2,m_noShow ? "1" : "0");
         json.put(KEY_OTHER3, m_other3);
         json.put(KEY_OTHER4, m_other4);
 
@@ -921,15 +930,30 @@ public class MatchData
      *
      * @param val the start climb index
      */
+
     public void setStartClimb(int val)
     {
         m_startClimb = val;
     }
 
     /**
-     * Returns the start climb time index.
+     * Returns the No Show chip index.
      *
-     * @return the start climb index
+     * @return the no Show chip index
+     */
+    public boolean getNoShow()
+    {
+        return m_noShow;
+    }
+    public void setNoShow(boolean val)
+    {
+        m_noShow = val;
+    }
+
+    /**
+     * Returns the start No Show time index.
+     *
+     * @return the start No Show index
      */
     public int getStartClimb()
     {
@@ -1203,7 +1227,7 @@ public class MatchData
                 m_endgameClimbPos,
                 commentClean,
                 m_shovelFuel ? 1 : 0,
-                m_other2,
+                m_other2 = m_noShow ? "1" : "0",    //This holds No Show data
                 m_other3,
                 m_other4
         };
@@ -1288,7 +1312,7 @@ public class MatchData
                 String.format(fmt, "Endgame Climb Level", m_endgameClimbLevel) +
                 String.format(fmt, "Endgame Climb Pos", m_endgameClimbPos) +
                 String.format(fmt, "Comments", m_comment) +
-                String.format(fmt, "Other 2", m_other2) +
+                String.format(fmt, "Other 2", m_noShow ? "1" : "0") +
                 String.format(fmt, "Other 3", m_other3) +
                 String.format(fmt, "Other 4", m_other4);
     }

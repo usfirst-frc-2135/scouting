@@ -75,8 +75,7 @@ public class EndgameFragment extends Fragment
             R.id.endgame_died_most,
             R.id.endgame_died_min,
             R.id.endgame_died_thirty,
-            R.id.endgame_died_tt,
-            R.id.endgame_died_no_show
+            R.id.endgame_died_tt
     };
 
     private MatchData m_matchData;
@@ -165,6 +164,7 @@ public class EndgameFragment extends Fragment
         initDiedValue(m_matchData.getDiedValue());
 
         m_binding.endgameCommentsInput.setText(m_matchData.getComment());
+        m_binding.noShowChip.setChecked(m_matchData.getNoShow());
     }
 
     /**
@@ -207,6 +207,7 @@ public class EndgameFragment extends Fragment
         m_binding.endgameClimbLevelRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
         m_binding.endgameClimbPosRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
         m_binding.endgameDiedRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
+        m_binding.noShowChip.setOnCheckedChangeListener((v,b) -> syncAndRefreshBadges());
     }
 
     /**
@@ -352,11 +353,12 @@ public class EndgameFragment extends Fragment
         {
             return;
         }
-        m_matchData.setStartClimb(getStartClimb());
+        m_matchData.setStartClimb(getStartClimb()); //TODO remove this when we remove the climb
         m_matchData.setDiedValue(getDiedValue());
         m_matchData.setComment(Objects.requireNonNull(m_binding.endgameCommentsInput.getText()).toString());
         m_matchData.setEndgameClimbPos(getClimbPos());
         m_matchData.setEndgameClimbLevel(getClimbLevel());
+        m_matchData.setNoShow(m_binding.noShowChip.isChecked());
     }
 
     /**

@@ -437,21 +437,58 @@
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_medium" />
 
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/endgame_died_no_show"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:layout_weight="1"
-                            android:buttonTint="@color/customTextPrimary"
-                            android:text="@string/no_show"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
                     </RadioGroup>
                     <!-- end DIED RADIO BUTTONS layout -->
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
             <!-- end DIED card layout -->
+            <!-- start NO SHOW card layout -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/no_show"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_marginHorizontal="@dimen/card_margin"
+                app:cardBackgroundColor="#93A685"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!-- start NO SHOW CHIP layout -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/section_padding">
+
+                        <TextView
+                            android:id="@+id/no_show_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:text="NO SHOW"
+                            android:textColor="@color/customTextPrimary"
+                            android:textSize="@dimen/font_medium"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/no_show_chip"
+                            style="@style/CustomChipStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:text="No Show" />
+                    </LinearLayout>
+
+                    <!-- end NO SHOW layout -->
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <!-- end NO SHOW card layout -->
 
             <!-- Section: COMMENTS -->
             <!-- start COMMENTS layout -->
