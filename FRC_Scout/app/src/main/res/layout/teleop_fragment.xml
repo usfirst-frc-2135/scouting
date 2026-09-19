@@ -56,6 +56,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+                        android:background="#A2AAF2"
                         android:padding="@dimen/section_padding">
 
                         <TextView
@@ -68,6 +69,8 @@
                             android:textSize="@dimen/font_medium"
                             android:textStyle="bold" />
 
+
+                        <!-- start HOPPER - BUTTON layout -->
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/teleop_hopper_decr_button"
                             android:layout_width="80dp"
@@ -76,12 +79,14 @@
                             android:padding="0dp"
                             android:insetTop="0dp"
                             android:insetBottom="0dp"
-                            app:backgroundTint="#017371"
+                            app:backgroundTint="#338F8D"
                             android:text="@string/decrease"
                             android:textAlignment="center"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/font_medium"
                             android:textStyle="bold" />
+
+                        <!-- end HOPPER - BUTTON layout -->
 
                         <TextView
                             android:id="@+id/teleop_hopper_total_text"
@@ -92,6 +97,7 @@
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_large" />
 
+                        <!-- start HOPPER + BUTTON layout -->
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/teleop_hopper_incr_button"
                             android:layout_width="80dp"
@@ -99,55 +105,69 @@
                             android:padding="0dp"
                             android:insetTop="0dp"
                             android:insetBottom="0dp"
-                            app:backgroundTint="#017371"
+                            app:backgroundTint="#338F8D"
                             android:text="@string/increase"
                             android:textAlignment="center"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/font_medium"
                             android:textStyle="bold" />
 
+                        <!-- end HOPPER + BUTTONS layout -->
+
                     </LinearLayout>
                     <!-- end HOPPER +/- BUTTONS layout -->
 
 
 
-                    <!-- start HOPPER ACCURACY SLIDER layout -->
-                    <!-- Add new slider -->
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:layout_marginStart="4dp"
                         android:text="ACCURACY RATE:"
+                        android:backgroundTint="#B8BEF5"
+                        android:background="@drawable/rounded_rect"
                         android:textColor="@color/customTextPrimary"
                         android:textSize="@dimen/font_medium"
                         android:padding="@dimen/section_padding"
                         android:textStyle="bold" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="575dp"
+                        android:layout_marginTop="7dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#FFFFFF"
+                        android:layout_marginStart="9dp"
                         >
+
+                    <!-- start text for HOPPER ACCURACY SLIDER layout -->
+                    <LinearLayout
+                        android:layout_width="580dp"
+                        android:layout_height="30dp"
+                        android:paddingStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
 
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="N/A"
-                            android:layout_marginStart="8dp"
+                            android:paddingStart="-1dp"
                             android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium"
+                            android:textSize="19sp"
                             />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="None"
-                        android:layout_marginStart="37dp"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="@dimen/font_medium"
-                        />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="None"
+                            android:layout_marginStart="37dp"
+                            android:textColor="@color/customTextPrimary"
+                            android:textSize="19sp"
+                            />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -155,33 +175,33 @@
                             android:text="Few"
                             android:layout_marginStart="52dp"
                             android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium"
+                            android:textSize="19sp"
                             />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/one_qtr"
-                            android:layout_marginStart="64dp"
+                            android:layout_marginStart="61dp"
                             android:textColor="@color/customTextPrimary"
-                            android:textSize="27sp"
+                            android:textSize="26sp"
                             />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="75dp"
+                            android:layout_marginStart="69dp"
                             android:text="@string/one_half"
                             android:textColor="@color/customTextPrimary"
-                            android:textSize="27sp"
+                            android:textSize="26sp"
                             />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/three_qtr"
-                            android:layout_marginStart="74dp"
+                            android:layout_marginStart="69dp"
                             android:textColor="@color/customTextPrimary"
-                            android:textSize="27sp"
+                            android:textSize="26sp"
                             />
 
                         <TextView
@@ -190,142 +210,47 @@
                             android:text="Most"
                             android:layout_marginStart="44dp"
                             android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium"
+                            android:textSize="19sp"
                             />
 
                     </LinearLayout>
 
+            <!-- end text for HOPPER ACCURACY SLIDER layout -->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.slider.Slider
-                        android:id="@+id/teleop_hopper_accuracy_slider"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:stepSize="1.0"
-                        android:value="0.0"
-                        android:valueFrom="0.0"
-                        android:valueTo="6.0"
-                        app:trackColorActive="@color/customTextPrimary"
-                        app:trackColorInactive="@color/customTextPrimary"
-                        app:thumbColor="#c64e34"
-                        app:tickColorActive="#c64e34"
-                        app:labelBehavior="gone" />
-
-                </LinearLayout>
-
-
-
-
-
-                    <!-- end HOPPER ACCURACY SLIDER layout -->
-
-                    <!-- start HOPPER ACCURACY RATING layout
+                    <!-- start HOPPER ACCURACY SLIDER layout -->
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="580dp"
                         android:layout_height="wrap_content"
-                        android:background="#DFE2FB"
-                        android:orientation="vertical"
-                        android:padding="@dimen/section_padding">
+                        >
 
-                        <TextView
-                            android:id="@+id/teleop_accuracy_label"
+                        <com.google.android.material.slider.Slider
+                            android:id="@+id/teleop_hopper_accuracy_slider"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:text="@string/accuracy_rate"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium"
-                            android:textStyle="bold" />
+                            android:paddingStart="20dp"
+                            android:stepSize="1.0"
+                            android:value="0.0"
+                            android:valueFrom="0.0"
+                            android:valueTo="6.0"
+                            app:trackColorActive="@color/customTextPrimary"
+                            app:trackColorInactive="@color/customTextPrimary"
+                            app:thumbColor="#6E79D5"
+                            app:tickColorActive="#c64e34"
+                            app:labelBehavior="gone" />
 
-                        <RadioGroup
-                            android:id="@+id/teleop_accuracy_radio_group"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/teleop_accuracy_na"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="4dp"
-                                android:layout_weight="1"
-                                android:buttonTint="#8957A1"
-                                android:text="@string/n_a"
-                                android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_medium" />
-
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/teleop_accuracy_most"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:buttonTint="#8957A1"
-                                android:text="@string/most"
-                                android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_medium" />
-
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/teleop_accuracy_three_fourths"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:buttonTint="#8957A1"
-                                android:text="@string/three_qtr"
-                                android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_large" />
-
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/teleop_accuracy_half"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:buttonTint="#8957A1"
-                                android:text="@string/one_half"
-                                android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_large" />
-
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/teleop_accuracy_quarter"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:buttonTint="#8957A1"
-                                android:text="@string/one_qtr"
-                                android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_large" />
-
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/teleop_accuracy_few"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:buttonTint="#8957A1"
-                                android:text="@string/few"
-                                android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_medium" />
-
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/teleop_accuracy_none"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:buttonTint="#8957A1"
-                                android:text="@string/none"
-                                android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_medium" />
-                        </RadioGroup>
                     </LinearLayout>
-                    end HOPPER ACCURACY RATING layout -->
+                    <!-- end HOPPER ACCURACY SLIDER layout -->
+                    </LinearLayout>
+
+
 
                     <!-- start INTAKE AND SHOOT CHIP layout -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#EAECFD"
+                        android:background="#CACFF9"
                         android:orientation="horizontal"
+                        android:layout_marginBottom="-5dp"
                         android:padding="@dimen/section_padding">
 
                         <com.google.android.material.chip.Chip
@@ -430,6 +355,8 @@
                             android:layout_marginStart="4dp"
                             android:orientation="horizontal">
 
+                            <!-- start PASSING RATE RADIO BUTTONS layout -->
+
                             <com.google.android.material.radiobutton.MaterialRadioButton
                                 android:id="@+id/teleop_passing_rate_na"
                                 android:layout_width="wrap_content"
@@ -480,6 +407,8 @@
                                 android:textColor="@color/customTextPrimary"
                                 android:textSize="@dimen/font_medium" />
                         </RadioGroup>
+
+                        <!-- end PASSING RATE RADIO BUTTONS layout -->
 
                     </LinearLayout>
                     <!-- end PASSING EFFECTIVENESS RATING layout -->
