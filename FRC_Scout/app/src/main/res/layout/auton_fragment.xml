@@ -80,94 +80,139 @@
                     <!-- start PRELOAD ACCURACY layout -->
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:background="#8DB0BA"
+                        android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+
+                        android:text="PRELOAD ACCURACY RATE:"
+
+                        android:textColor="@color/customTextPrimary"
+                        android:textSize="@dimen/font_medium"
+                        android:padding="@dimen/section_padding"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="7dp"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="@dimen/section_padding">
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#FFFFFF"
 
-                        <TextView
-                            android:id="@+id/auton_preload_accuracy_label"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:text="@string/preload_accuracy_rate"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium"
-                            android:textStyle="bold" />
+                        >
 
-                        <!-- start PRELOAD RADIO BUTTONS layout -->
-                        <RadioGroup
-                            android:id="@+id/auton_preload_accuracy_radio_group"
+                        <!-- start text for PRELOAD ACCURACY SLIDER layout -->
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
+                            android:layout_height="30dp"
+                            android:paddingStart="15dp"
+                            android:layout_marginTop="5dp"
                             android:orientation="horizontal">
 
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/auton_preload_accuracy_no"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:buttonTint="#354c54"
-                                android:text="@string/n_a"
-                                android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_medium" />
 
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/auton_preload_accuracy_all"
-                                android:layout_width="wrap_content"
+                            <TextView
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:buttonTint="#354c54"
-                                android:text="@string/all"
+                                android:text="N/A"
+                                android:paddingStart="-1dp"
                                 android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_medium" />
+                                android:textSize="19sp"
+                                />
 
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/auton_preload_accuracy_most"
-                                android:layout_width="wrap_content"
+                            <TextView
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:buttonTint="#354c54"
-                                android:text="@string/most"
+                                android:text="None"
+                                android:layout_marginStart="45dp"
                                 android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_medium" />
+                                android:textSize="19sp"
+                                />
 
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/auton_preload_accuracy_half"
-                                android:layout_width="wrap_content"
+                            <TextView
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:buttonTint="#354c54"
-                                android:text="@string/half"
+                                android:text="Few"
+                                android:layout_marginStart="64dp"
                                 android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_medium" />
+                                android:textSize="19sp"
+                                />
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="25%"
+                                android:layout_marginStart="75dp"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="19sp"
+                                />
 
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/auton_preload_accuracy_few"
-                                android:layout_width="wrap_content"
+                            <TextView
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:buttonTint="#354c54"
-                                android:text="@string/some"
+                                android:layout_marginStart="69dp"
+                                android:text="50%"
                                 android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_medium" />
+                                android:textSize="19sp"
+                                />
 
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/auton_preload_accuracy_none"
-                                android:layout_width="wrap_content"
+                            <TextView
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:buttonTint="#354c54"
-                                android:text="@string/none"
+                                android:text="75%"
+                                android:layout_marginStart="60dp"
                                 android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_medium" />
-                        </RadioGroup>
-                        <!-- end PRELOAD RADIO BUTTONS layout -->
+                                android:textSize="19sp"
+                                />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Most"
+                                android:layout_marginStart="30dp"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="19sp" />
+
+                        </LinearLayout>
+
+                        <!-- end text for PRELOAD ACCURACY SLIDER layout -->
+
+                        <!-- start PRELOAD ACCURACY SLIDER layout -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            >
+
+                            <com.google.android.material.slider.Slider
+                                android:id="@+id/auton_preload_accuracy_slider"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="20dp"
+                                android:stepSize="1.0"
+                                android:value="0.0"
+                                android:valueFrom="0.0"
+                                android:valueTo="6.0"
+                                app:labelBehavior="gone"
+                                app:thumbColor="#6E79D5"
+                                app:tickColorActive="#c64e34"
+                                app:trackColorActive="@color/customTextPrimary"
+                                app:trackColorInactive="@color/customTextPrimary" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
                     <!-- end PRELOAD ACCURACY layout -->
-
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
             <!-- end PRELOAD card layout -->

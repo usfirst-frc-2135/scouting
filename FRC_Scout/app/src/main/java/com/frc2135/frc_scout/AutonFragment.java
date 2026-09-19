@@ -34,6 +34,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+
 import com.frc2135.frc_scout.databinding.AutonFragmentBinding;
 
 /**
@@ -43,16 +44,6 @@ import com.frc2135.frc_scout.databinding.AutonFragmentBinding;
 public class AutonFragment extends Fragment
 {
     private static final String TAG = "AutonFragment";
-
-    private static final int[] PRELOAD_ACCURACY_IDS = {
-            R.id.auton_preload_accuracy_no,
-            R.id.auton_preload_accuracy_all,
-            R.id.auton_preload_accuracy_most,
-            R.id.auton_preload_accuracy_half,
-            R.id.auton_preload_accuracy_few,
-            R.id.auton_preload_accuracy_none
-    };
-
     private static final int[] AUTON_ACCURACY_IDS = {
             R.id.auton_accuracy_na,
             R.id.auton_accuracy_most,
@@ -144,7 +135,7 @@ public class AutonFragment extends Fragment
         }
 
         m_binding.autonPreloadChip.setChecked(m_matchData.isAutonPreload());
-        initPreloadAccuracy(m_matchData.getPreloadAccuracyLevel());
+        m_binding.autonPreloadAccuracySlider.setValue(m_matchData.getPreloadAccuracyLevel());  //NEW
 
         m_binding.autonHopperTotalText.setText(String.valueOf(m_matchData.getAutonHopper()));
         updateScoreColor(m_binding.autonHopperTotalText); // Check Hopper levels for MAX
@@ -164,6 +155,7 @@ public class AutonFragment extends Fragment
      */
     private void setupListeners()
     {
+        m_binding.autonPreloadAccuracySlider.setOnClickListener((l) -> syncAndRefreshBadges());
         m_binding.autonHopperDecrButton.setOnClickListener(v -> {
             updateTotalsInt(m_binding.autonHopperTotalText, false);
             syncAndRefreshBadges();
@@ -179,7 +171,7 @@ public class AutonFragment extends Fragment
         m_binding.autonOutpostChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
         m_binding.autonNzChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
 
-        m_binding.autonPreloadAccuracyRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
+        m_binding.autonPreloadAccuracySlider.setOnClickListener((l) -> syncAndRefreshBadges());
         m_binding.autonAccuracyRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
 
         m_binding.autonClimbChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
@@ -193,25 +185,6 @@ public class AutonFragment extends Fragment
     {
         ((ScoutingActivity) requireActivity()).updateCurrentFragmentData();
     }
-
-    /**
-     * Initializes the preload accuracy radio group selection.
-     *
-     * @param value the index of the selected accuracy level
-     */
-    private void initPreloadAccuracy(int value)
-    {
-        if (value >= 0 && value < PRELOAD_ACCURACY_IDS.length)
-        {
-            m_binding.autonPreloadAccuracyRadioGroup.check(PRELOAD_ACCURACY_IDS[value]);
-        }
-    }
-
-    /**
-     * Initializes the autonomous accuracy radio group selection.
-     *
-     * @param value the index of the selected accuracy level
-     */
     private void initAutonAccuracy(int value)
     {
         if (value >= 0 && value < AUTON_ACCURACY_IDS.length)
@@ -293,7 +266,7 @@ public class AutonFragment extends Fragment
     /**
      * Retrieves the selected autonomous accuracy rate index.
      *
-     * @return the index of the selected radio button in the accuracy group
+     * @return the index of the selected radio group in the accuracy group
      */
     public int getAutonAccuracyRate()
     {
@@ -311,20 +284,15 @@ public class AutonFragment extends Fragment
     /**
      * Retrieves the selected preload accuracy level index.
      *
-     * @return the index of the selected radio button in the preload accuracy group
+     * @return the index of the selected slider in the preload accuracy group
      */
     public int getPreloadAccuracyLevel()
     {
-        int id = m_binding.autonPreloadAccuracyRadioGroup.getCheckedRadioButtonId();
-        for (int i = 0; i < PRELOAD_ACCURACY_IDS.length; i++)
-        {
-            if (id == PRELOAD_ACCURACY_IDS[i])
-            {
-                return i;
-            }
-        }
-        return 0;
+        float climbValue = m_binding.autonPreloadAccuracySlider.getValue();
+        int climbValueInt = (int) climbValue;
+        return climbValueInt;
     }
+
 
 
 
