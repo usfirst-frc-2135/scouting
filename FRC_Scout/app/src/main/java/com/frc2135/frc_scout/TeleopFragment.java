@@ -33,14 +33,13 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import com.google.android.material.slider.Slider;
 
 
 import com.frc2135.frc_scout.databinding.TeleopFragmentBinding;
 
 import java.util.Random;
 
-/**
+/*
  * Fragment for recording teleoperated period scouting data.
  * Manages UI components for hopper usage, accuracy, passing, defense, and driver ability.
  */
@@ -167,10 +166,9 @@ public class TeleopFragment extends Fragment
         Log.v(TAG,">>> from matchData: teleopHopperAccuracy value = "+m_matchData.getAccuracyRate());
         m_binding.teleopHopperAccuracySlider.setValue(m_matchData.getAccuracyRate());  //NEW
 
-
         m_binding.teleopHopperTotalText.setText(String.valueOf(m_matchData.getHoppersUsed()));
         updateScoreColor(m_binding.teleopHopperTotalText);
-        //initAccuracyRate(m_matchData.getAccuracyRate());
+        //initAccuracyRate(m_matchData.CurrentAccuracyRate());
 
         m_binding.teleopIntakeShootChip.setChecked(m_matchData.getIntakeAndShoot());
         m_binding.teleopHerdedFuelChip.setChecked(m_matchData.getShovelFuel());
@@ -193,8 +191,13 @@ public class TeleopFragment extends Fragment
     private void setupListeners()
     {
 
-        Log.v(TAG,"----> setupListeners(): doing teleopHopperAccuracySlider");
-        m_binding.teleopHopperAccuracySlider.setOnClickListener((l) ->syncAndRefreshBadges());
+        Log.v(TAG, "----> setupListeners(): doing teleopHopperAccuracySlider");
+        m_binding.teleopHopperAccuracySlider.setOnClickListener((l) -> syncAndRefreshBadges());
+
+        //testing ai code
+        //m_binding.teleopHopperAccuracySlider.addOnChangeListener((slider,value,fromUser) -> {
+           //syncAndRefreshBadges();
+        //});
 
 
         m_binding.teleopHopperDecrButton.setOnClickListener(v -> {
@@ -226,7 +229,7 @@ public class TeleopFragment extends Fragment
         ((ScoutingActivity) requireActivity()).updateCurrentFragmentData();
     }
 
-    /**
+    /*
      * Initializes the accuracy rate radio group selection.
      *
      * @param value the index of the selected accuracy level
@@ -473,11 +476,11 @@ public class TeleopFragment extends Fragment
      *
      * @return the index of the selected radio button in the accuracy group
      */
-    public int getAccuracyRate()
+    public int getCurrentAccuracyRate()
     {
         float hopperAccuracyValue = m_binding.teleopHopperAccuracySlider.getValue();
         int hopperAccuracyValueInt = (int) hopperAccuracyValue;
-        Log.v(TAG,"===> getAccuracyRate: returning value: "+hopperAccuracyValueInt);
+        Log.v(TAG,"===> getCurrentAccuracyRate: returning value: "+hopperAccuracyValueInt);
         return hopperAccuracyValueInt;
     }
 
@@ -555,7 +558,7 @@ public class TeleopFragment extends Fragment
         {
             Log.e(TAG, "updateTeleopData: Invalid hopper score value", e);
         }
-       // m_matchData.setAccuracyRate(getCurrentAccuracyLevel());
+        m_matchData.setAccuracyRate(getCurrentAccuracyRate());
         m_matchData.setPassingRate(getPassingEffectivenessRate());
         m_matchData.setTeleopPhoto(m_photoNum);
         m_matchData.setDefenseRate(getCurrentDefenseLevel());
