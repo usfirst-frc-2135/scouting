@@ -47,36 +47,6 @@ public class EndgameFragment extends Fragment
     private static final String TAG = "EndgameFragment";
     public static final String QRTAG = "qr";
 
-    private static final int[] START_CLIMB_IDS = {
-            R.id.endgame_start_climb_na,
-            R.id.endgame_start_climb_before,
-            R.id.endgame_start_climb_bell,
-            R.id.endgame_start_climb_ten,
-            R.id.endgame_start_climb_less
-    };
-
-    private static final int[] CLIMB_LEVEL_IDS = {
-            R.id.endgame_climb_level_na,
-            R.id.endgame_climb_level_one,
-            R.id.endgame_climb_level_two,
-            R.id.endgame_climb_level_three
-    };
-
-    private static final int[] CLIMB_POS_IDS = {
-            R.id.endgame_climb_pos_na,
-            R.id.endgame_climb_pos_back,
-            R.id.endgame_climb_pos_left,
-            R.id.endgame_climb_pos_front,
-            R.id.endgame_climb_pos_right
-    };
-
-    private static final int[] DIED_VALUE_IDS = {
-            R.id.endgame_died_na,
-            R.id.endgame_died_most,
-            R.id.endgame_died_min,
-            R.id.endgame_died_thirty,
-            R.id.endgame_died_tt
-    };
 
     private MatchData m_matchData;
     private EndgameFragmentBinding m_binding;
@@ -156,12 +126,7 @@ public class EndgameFragment extends Fragment
             return;
         }
 
-        initStartClimbing(m_matchData.getStartClimb());
 
-        initClimbLevel(m_matchData.getEndgameClimbLevel());
-        initClimbPos(m_matchData.getEndgameClimbPos());
-
-        initDiedValue(m_matchData.getDiedValue());
 
         m_binding.endgameCommentsInput.setText(m_matchData.getComment());
         m_binding.noShowChip.setChecked(m_matchData.getNoShow());
@@ -203,10 +168,7 @@ public class EndgameFragment extends Fragment
             }
         });
 
-        m_binding.endgameStartClimbRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
-        m_binding.endgameClimbLevelRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
-        m_binding.endgameClimbPosRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
-        m_binding.endgameDiedRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
+
         m_binding.noShowChip.setOnCheckedChangeListener((v,b) -> syncAndRefreshBadges());
     }
 
@@ -219,129 +181,9 @@ public class EndgameFragment extends Fragment
         ((ScoutingActivity) requireActivity()).updateCurrentFragmentData();
     }
 
-    /**
-     * Initializes the start climbing time radio group selection.
-     *
-     * @param value the index of the selected start climb time
-     */
-    private void initStartClimbing(int value)
-    {
-        if (value >= 0 && value < START_CLIMB_IDS.length)
-        {
-            m_binding.endgameStartClimbRadioGroup.check(START_CLIMB_IDS[value]);
-        }
-    }
 
-    /**
-     * Initializes the climb level radio group selection.
-     *
-     * @param value the index of the selected climb level
-     */
-    private void initClimbLevel(int value)
-    {
-        if (value >= 0 && value < CLIMB_LEVEL_IDS.length)
-        {
-            m_binding.endgameClimbLevelRadioGroup.check(CLIMB_LEVEL_IDS[value]);
-        }
-    }
 
-    /**
-     * Initializes the climb position radio group selection.
-     *
-     * @param value the index of the selected climb position
-     */
-    private void initClimbPos(int value)
-    {
-        if (value >= 0 && value < CLIMB_POS_IDS.length)
-        {
-            m_binding.endgameClimbPosRadioGroup.check(CLIMB_POS_IDS[value]);
-        }
-    }
 
-    /**
-     * Initializes the "died" value radio group selection.
-     *
-     * @param value the index of the selected died value
-     */
-    private void initDiedValue(int value)
-    {
-        if (value >= 0 && value < DIED_VALUE_IDS.length)
-        {
-            m_binding.endgameDiedRadioGroup.check(DIED_VALUE_IDS[value]);
-        }
-    }
-
-    /**
-     * Retrieves the selected "died" value index.
-     *
-     * @return the index of the selected radio button in the died group
-     */
-    private int getDiedValue()
-    {
-        int id = m_binding.endgameDiedRadioGroup.getCheckedRadioButtonId();
-        for (int i = 0; i < DIED_VALUE_IDS.length; i++)
-        {
-            if (id == DIED_VALUE_IDS[i])
-            {
-                return i;
-            }
-        }
-        return 0;
-    }
-
-    /**
-     * Retrieves the selected start climb time index.
-     *
-     * @return the index of the selected radio button in the start climb group
-     */
-    private int getStartClimb()
-    {
-        int id = m_binding.endgameStartClimbRadioGroup.getCheckedRadioButtonId();
-        for (int i = 0; i < START_CLIMB_IDS.length; i++)
-        {
-            if (id == START_CLIMB_IDS[i])
-            {
-                return i;
-            }
-        }
-        return 0;
-    }
-
-    /**
-     * Retrieves the selected climb position index.
-     *
-     * @return the index of the selected radio button in the climb position group
-     */
-    private int getClimbPos()
-    {
-        int id = m_binding.endgameClimbPosRadioGroup.getCheckedRadioButtonId();
-        for (int i = 0; i < CLIMB_POS_IDS.length; i++)
-        {
-            if (id == CLIMB_POS_IDS[i])
-            {
-                return i;
-            }
-        }
-        return 0;
-    }
-
-    /**
-     * Retrieves the selected climb level index.
-     *
-     * @return the index of the selected radio button in the climb level group
-     */
-    private int getClimbLevel()
-    {
-        int id = m_binding.endgameClimbLevelRadioGroup.getCheckedRadioButtonId();
-        for (int i = 0; i < CLIMB_LEVEL_IDS.length; i++)
-        {
-            if (id == CLIMB_LEVEL_IDS[i])
-            {
-                return i;
-            }
-        }
-        return 0;
-    }
 
     /**
      * Updates the {@link MatchData} object with the current values from the UI components.
@@ -353,11 +195,9 @@ public class EndgameFragment extends Fragment
         {
             return;
         }
-        m_matchData.setStartClimb(getStartClimb()); //TODO remove this when we remove the climb
-        m_matchData.setDiedValue(getDiedValue());
+
+
         m_matchData.setComment(Objects.requireNonNull(m_binding.endgameCommentsInput.getText()).toString());
-        m_matchData.setEndgameClimbPos(getClimbPos());
-        m_matchData.setEndgameClimbLevel(getClimbLevel());
         m_matchData.setNoShow(m_binding.noShowChip.isChecked());
     }
 

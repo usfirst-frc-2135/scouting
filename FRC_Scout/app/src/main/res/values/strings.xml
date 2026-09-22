@@ -209,11 +209,12 @@
     <string name="back">B</string>
 
     <string name="died">DIED</string>
-    <string name="more_than_1min">1min+</string>
-    <string name="more_than_30s">30s+</string>
+    <!--<string name="more_than_1min">1min+</string>
+    <string name="between_30s_60s">30-60s</string>
+    <string name="between_60s_90s">60-90s</string>
     <string name="between_15s_30s">15–30s</string>
     <string name="no_show">No show</string>
-
+-->
     <string name="comments">Comments</string>
 
     <!--   miscellaneous strings -->
