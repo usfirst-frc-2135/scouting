@@ -218,13 +218,14 @@
             <!-- end PRELOAD card layout -->
 
             <!-- Section: HOPPER -->
+
             <!-- start HOPPER card layout -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="210dp"
                 android:layout_marginTop="@dimen/card_margin"
                 android:layout_marginHorizontal="@dimen/card_margin"
-                app:cardBackgroundColor="#EE965F"
+                app:cardBackgroundColor="#f0a576"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
 
@@ -238,6 +239,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+                        android:background="#ee965f"
                         android:padding="@dimen/section_padding">
 
                         <TextView
@@ -292,104 +294,131 @@
                     <!-- end HOPPER +/- BUTTONS layout -->
 
                     <!-- start HOPPER ACCURACY layout -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="#F0A271"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="4dp"
+                        android:text="ACCURACY RATE:"
+                        android:backgroundTint="#ee8a5f"
+                        android:background="@drawable/rounded_rect"
+                        android:textColor="@color/customTextPrimary"
+                        android:textSize="@dimen/font_medium"
+                        android:padding="@dimen/section_padding"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="575dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="@dimen/section_padding">
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#FFFFFF"
+                        android:layout_marginStart="9dp"
+                        >
 
-                        <TextView
-                            android:id="@+id/auton_accuracy_label"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:text="@string/accuracy_rate"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium"
-                            android:textStyle="bold" />
-
-                        <!-- start HOPPER ACCURACY RADIO BUTTONS layout -->
-                        <RadioGroup
-                            android:id="@+id/auton_accuracy_radio_group"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                        <!-- start text for HOPPER ACCURACY SLIDER layout -->
+                        <LinearLayout
+                            android:layout_width="580dp"
+                            android:layout_height="30dp"
+                            android:paddingStart="15dp"
+                            android:layout_marginTop="5dp"
                             android:orientation="horizontal">
 
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/auton_accuracy_na"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="4dp"
-                                android:layout_weight="1"
-                                android:buttonTint="#c64e34"
-                                android:text="@string/n_a"
-                                android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_medium" />
 
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/auton_accuracy_most"
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:buttonTint="#c64e34"
-                                android:text="@string/most"
+                                android:text="N/A"
+                                android:paddingStart="-1dp"
                                 android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_medium" />
+                                android:textSize="19sp"
+                                />
 
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/auton_accuracy_three_fourths"
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:buttonTint="#c64e34"
-                                android:text="@string/three_qtr"
+                                android:text="None"
+                                android:layout_marginStart="36dp"
                                 android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_large" />
+                                android:textSize="19sp"
+                                />
 
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/auton_accuracy_half"
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:buttonTint="#c45120"
-                                android:text="@string/one_half"
+                                android:text="Few"
+                                android:layout_marginStart="51dp"
                                 android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_large" />
+                                android:textSize="19sp"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="25%"
+                                android:layout_marginStart="58dp"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="19sp"
+                                />
 
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/auton_accuracy_quarter"
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:buttonTint="#c45120"
-                                android:text="@string/one_qtr"
+                                android:layout_marginStart="57dp"
+                                android:text="50%"
                                 android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_large" />
+                                android:textSize="19sp"
+                                />
 
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/auton_accuracy_few"
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:buttonTint="#c45120"
-                                android:text="@string/few"
+                                android:text="75%"
+                                android:layout_marginStart="55dp"
                                 android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_medium" />
+                                android:textSize="19sp"
+                                />
 
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/auton_accuracy_none"
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:buttonTint="#c45120"
-                                android:text="@string/none"
+                                android:text="Most"
+                                android:layout_marginStart="36dp"
                                 android:textColor="@color/customTextPrimary"
-                                android:textSize="@dimen/font_medium" />
-                        </RadioGroup>
-                        <!-- end HOPPER ACCURACY RADIO BUTTONS layout -->
+                                android:textSize="19sp"
+                                />
+
+                        </LinearLayout>
+
+                        <!-- end text for HOPPER ACCURACY SLIDER layout -->
+
+                        <!-- start HOPPER ACCURACY SLIDER layout -->
+                        <LinearLayout
+                            android:layout_width="580dp"
+                            android:layout_height="wrap_content"
+                            >
+
+                            <com.google.android.material.slider.Slider
+                                android:id="@+id/auton_hopper_accuracy_slider"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="20dp"
+                                android:stepSize="1.0"
+                                android:value="0.0"
+                                android:valueFrom="0.0"
+                                android:valueTo="6.0"
+                                app:trackColorActive="@color/customTextPrimary"
+                                app:trackColorInactive="@color/customTextPrimary"
+                                app:thumbColor="#c64e34"
+                                app:tickColorActive="#c64e34"
+                                app:labelBehavior="gone" />
+
+                        </LinearLayout>
+                        <!-- end HOPPER ACCURACY SLIDER layout -->
                     </LinearLayout>
-                    <!-- end HOPPER ACCURACY layout -->
+
+
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
             <!-- end HOPPER card layout -->

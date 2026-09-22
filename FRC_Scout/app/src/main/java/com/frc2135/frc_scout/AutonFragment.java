@@ -33,6 +33,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import com.google.android.material.slider.Slider;
+
 
 
 import com.frc2135.frc_scout.databinding.AutonFragmentBinding;
@@ -45,13 +47,13 @@ public class AutonFragment extends Fragment
 {
     private static final String TAG = "AutonFragment";
     private static final int[] AUTON_ACCURACY_IDS = {
-            R.id.auton_accuracy_na,
-            R.id.auton_accuracy_most,
-            R.id.auton_accuracy_three_fourths,
-            R.id.auton_accuracy_half,
-            R.id.auton_accuracy_quarter,
-            R.id.auton_accuracy_few,
-            R.id.auton_accuracy_none
+            //R.id.auton_accuracy_na,
+            //R.id.auton_accuracy_most,
+            //R.id.auton_accuracy_three_fourths,
+            //R.id.auton_accuracy_half,
+            //R.id.auton_accuracy_quarter,
+            //R.id.auton_accuracy_few,
+            //R.id.auton_accuracy_none
     };
 
 
@@ -139,7 +141,9 @@ public class AutonFragment extends Fragment
 
         m_binding.autonHopperTotalText.setText(String.valueOf(m_matchData.getAutonHopper()));
         updateScoreColor(m_binding.autonHopperTotalText); // Check Hopper levels for MAX
-        initAutonAccuracy(m_matchData.getAutonAccuracyRate());
+        Log.v(TAG,">>> from matchData: autonHopperAccuracy value = "+m_matchData.getAutonAccuracyRate());
+        m_binding.autonHopperAccuracySlider.setValue(m_matchData.getAutonAccuracyRate());
+
 
         m_binding.autonAzChip.setChecked(m_matchData.isAutonAz());
         m_binding.autonDepotChip.setChecked(m_matchData.isAutonDepot());
@@ -172,7 +176,8 @@ public class AutonFragment extends Fragment
         m_binding.autonNzChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
 
         m_binding.autonPreloadAccuracySlider.setOnClickListener((l) -> syncAndRefreshBadges());
-        m_binding.autonAccuracyRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
+        Log.v(TAG,"----> setupListeners(): doing auton Hopper Accuracy Slider");
+        m_binding.autonHopperAccuracySlider.setOnClickListener((l) ->syncAndRefreshBadges());
 
         m_binding.autonClimbChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
     }
@@ -185,21 +190,25 @@ public class AutonFragment extends Fragment
     {
         ((ScoutingActivity) requireActivity()).updateCurrentFragmentData();
     }
+    /*
     private void initAutonAccuracy(int value)
+
     {
-        if (value >= 0 && value < AUTON_ACCURACY_IDS.length)
-        {
-            m_binding.autonAccuracyRadioGroup.check(AUTON_ACCURACY_IDS[value]);
-        }
+        float autonHopperAccuracyValue = m_binding.autonHopperAccuracySlider.getValue();
+        int autonHopperAccuracyValueInt = (int) autonHopperAccuracyValue;
+        Log.v(TAG, "===> getAutonClimb(): returning value: " + autonHopperAccuracyValueInt);
+        return autonHopperAccuracyValueInt;
+
     }
-
-
-    /**
-     * Checks if the value in the given TextView exceeds the maximum allowed autonomous hoppers.
-     *
-     * @param field the TextView containing the numeric value
-     * @return true if the value is greater than {@link MatchData#MAX_AUTON_HOPPERS}
      */
+
+
+        /**
+         * Checks if the value in the given TextView exceeds the maximum allowed autonomous hoppers.
+         *
+         * @param field the TextView containing the numeric value
+         * @return true if the value is greater than {@link MatchData#MAX_AUTON_HOPPERS}
+         */
     private boolean isGreaterThanMax(TextView field)
     {
         try
@@ -268,17 +277,12 @@ public class AutonFragment extends Fragment
      *
      * @return the index of the selected radio group in the accuracy group
      */
-    public int getAutonAccuracyRate()
+    public int getCurrentAutonAccuracyRate()
     {
-        int id = m_binding.autonAccuracyRadioGroup.getCheckedRadioButtonId();
-        for (int i = 0; i < AUTON_ACCURACY_IDS.length; i++)
-        {
-            if (id == AUTON_ACCURACY_IDS[i])
-            {
-                return i;
-            }
-        }
-        return 0;
+        float autonHopperAccuracyValue = m_binding.autonHopperAccuracySlider.getValue();
+        int autonHopperAccuracyValueInt = (int) autonHopperAccuracyValue;
+        return autonHopperAccuracyValueInt;
+
     }
 
     /**
@@ -319,7 +323,7 @@ public class AutonFragment extends Fragment
         m_matchData.setAutonAz(m_binding.autonAzChip.isChecked());
         m_matchData.setAutonDepot(m_binding.autonDepotChip.isChecked());
         m_matchData.setAutonOutpost(m_binding.autonOutpostChip.isChecked());
-        m_matchData.setAutonAccuracyRate(getAutonAccuracyRate());
+        m_matchData.setAutonAccuracyRate(getCurrentAutonAccuracyRate());
         m_matchData.setPreloadAccuracyLevel(getPreloadAccuracyLevel());
         m_matchData.setAutonClimb(m_binding.autonClimbChip.isChecked());
     }
