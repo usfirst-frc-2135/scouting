@@ -42,6 +42,8 @@ import java.util.Objects;
  * Fragment for recording endgame scouting data (climbing, comments, etc.).
  * Manages UI components for start climb time, climb level, climb position, and whether the robot died during the match.
  */
+
+
 public class EndgameFragment extends Fragment
 {
     private static final String TAG = "EndgameFragment";
@@ -51,6 +53,7 @@ public class EndgameFragment extends Fragment
     private MatchData m_matchData;
     private EndgameFragmentBinding m_binding;
     private Settings m_settings;
+
 
     /**
      * Initializes the fragment and retrieves the current match data from the parent activity.
@@ -93,10 +96,13 @@ public class EndgameFragment extends Fragment
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        Log.v(TAG, "onViewCreated");
+        Log.i(TAG, "onViewCreated");
         setupActionBar();
+        Log.i(TAG,"--->> onViewCreated() calling loadMatchData()");
         loadMatchData();
+        Log.i(TAG,"    --->> onViewCreated() calling setupListeners()");
         setupListeners();
+        Log.i(TAG, "       ----> done with onViewCreated()");
     }
 
     /**
@@ -126,10 +132,10 @@ public class EndgameFragment extends Fragment
             return;
         }
 
-
-
         m_binding.endgameCommentsInput.setText(m_matchData.getComment());
         m_binding.noShowChip.setChecked(m_matchData.getNoShow());
+        m_binding.endgameDrivingAbilitySlider.setValue(m_matchData.getDriverAbility());
+        //TODO add died slider here
     }
 
     /**
@@ -170,6 +176,16 @@ public class EndgameFragment extends Fragment
 
 
         m_binding.noShowChip.setOnCheckedChangeListener((v,b) -> syncAndRefreshBadges());
+        // TODO add drivr slider listener here
+
+    }
+
+    public int getCurrentDriverAbility()
+    {
+        float drivingAbilitySliderValue = m_binding.endgameDrivingAbilitySlider.getValue();
+        int drivingAbilitySliderValueInt = (int) drivingAbilitySliderValue;
+        Log.v(TAG,"===> getCurrentAccuracyRate: returning value: "+ drivingAbilitySliderValueInt);
+        return drivingAbilitySliderValueInt;
     }
 
     /**
@@ -180,8 +196,6 @@ public class EndgameFragment extends Fragment
     {
         ((ScoutingActivity) requireActivity()).updateCurrentFragmentData();
     }
-
-
 
 
 
@@ -199,6 +213,7 @@ public class EndgameFragment extends Fragment
 
         m_matchData.setComment(Objects.requireNonNull(m_binding.endgameCommentsInput.getText()).toString());
         m_matchData.setNoShow(m_binding.noShowChip.isChecked());
+        m_matchData.setDriveAbility(getCurrentDriverAbility());
     }
 
     /**
