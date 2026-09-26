@@ -74,14 +74,6 @@ public class TeleopFragment extends Fragment
             R.id.teleop_defense_high
     };
 
-    private static final int[] DRIVING_ABILITY_IDS = {
-            R.id.teleop_driving_ability_na,
-            R.id.teleop_driving_ability_slow,
-            R.id.teleop_driving_ability_jerky,
-            R.id.teleop_driving_ability_avg,
-            R.id.teleop_driving_ability_fast,
-            R.id.teleop_driving_ability_elite
-    };
 
     private MatchData m_matchData;
     private TeleopFragmentBinding m_binding;
@@ -179,7 +171,7 @@ public class TeleopFragment extends Fragment
 
         initDefenseRate(m_matchData.getDefenseRate());
 
-        initDriverAbility(m_matchData.getDriverAbility());
+
 
         setupPhoto();
     }
@@ -217,7 +209,7 @@ public class TeleopFragment extends Fragment
       //  m_binding.teleopAccuracyRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
         m_binding.teleopPassingRateRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
         m_binding.teleopDefenseRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
-        m_binding.teleopDrivingAbilityRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
+
     }
 
     /**
@@ -295,13 +287,7 @@ public class TeleopFragment extends Fragment
      *
      * @param value the index of the selected ability level
      */
-    private void initDriverAbility(int value)
-    {
-        if (value >= 0 && value < DRIVING_ABILITY_IDS.length)
-        {
-            m_binding.teleopDrivingAbilityRadioGroup.check(DRIVING_ABILITY_IDS[value]);
-        }
-    }
+
 
     /**
      * Configures the placeholder photo displayed in the teleop screen.
@@ -527,6 +513,7 @@ public class TeleopFragment extends Fragment
      *
      * @return the index of the selected radio button in the driving ability group
      */
+
     public int getDriverAbility()
     {
         int id = m_binding.teleopDrivingAbilityRadioGroup.getCheckedRadioButtonId();
@@ -539,6 +526,10 @@ public class TeleopFragment extends Fragment
         }
         return 6;
     }
+
+
+
+
 
     /**
      * Updates the {@link MatchData} object with the current values from the UI components.
@@ -566,7 +557,6 @@ public class TeleopFragment extends Fragment
         m_matchData.setPassNeutralZone(getPassNeutralZone());
         m_matchData.setPassAllianceZone(getPassAllianceZone());
         m_matchData.setShovelFuel(m_binding.teleopHerdedFuelChip.isChecked());
-        m_matchData.setDriveAbility(getDriverAbility());
     }
 
     /**
