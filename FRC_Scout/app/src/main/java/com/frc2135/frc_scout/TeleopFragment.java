@@ -58,11 +58,11 @@ public class TeleopFragment extends Fragment
     };
 
     private static final int[] PASSING_RATE_IDS = {
-            R.id.teleop_passing_rate_na,
-            R.id.teleop_passing_rate_low,
-            R.id.teleop_passing_rate_medium,
-            R.id.teleop_passing_rate_large,
-            R.id.teleop_passing_rate_tons
+            //R.id.teleop_passing_rate_na,
+            //R.id.teleop_passing_rate_low,
+            //R.id.teleop_passing_rate_medium,
+            //R.id.teleop_passing_rate_large,
+            //R.id.teleop_passing_rate_tons
     };
 
     private static final int[] DEFENSE_RATE_IDS = {
@@ -167,7 +167,10 @@ public class TeleopFragment extends Fragment
 
         m_binding.teleopPassNzChip.setChecked(m_matchData.getPassNeutralZone() == 1);
         m_binding.teleopPassAzChip.setChecked(m_matchData.getPassAllianceZone() == 1);
-        initPassingRate(m_matchData.getPassingEffectivenessRate());
+
+        Log.v(TAG,">>> from matchData: teleopPassingEffectiveness value = "+m_matchData.getPassingEffectivenessRate());
+        m_binding.teleopPassingEffectivenessSlider.setValue(m_matchData.getPassingEffectivenessRate());  //NEW
+        //initPassingRate(m_matchData.getPassingEffectivenessRate());
 
         initDefenseRate(m_matchData.getDefenseRate());
 
@@ -185,6 +188,9 @@ public class TeleopFragment extends Fragment
 
         Log.v(TAG, "----> setupListeners(): doing teleopHopperAccuracySlider");
         m_binding.teleopHopperAccuracySlider.setOnClickListener((l) -> syncAndRefreshBadges());
+
+        Log.v(TAG, "----> setupListeners(): doing teleopPassingEffectivenessSlider");
+        m_binding.teleopPassingEffectivenessSlider.setOnClickListener((l) -> syncAndRefreshBadges());
 
         //testing ai code
         //m_binding.teleopHopperAccuracySlider.addOnChangeListener((slider,value,fromUser) -> {
@@ -207,7 +213,7 @@ public class TeleopFragment extends Fragment
         m_binding.teleopPassAzChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
 
       //  m_binding.teleopAccuracyRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
-        m_binding.teleopPassingRateRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
+        //m_binding.teleopPassingRateRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
         m_binding.teleopDefenseRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
 
     }
@@ -241,13 +247,7 @@ public class TeleopFragment extends Fragment
      *
      * @param value the index of the selected passing rate
      */
-    private void initPassingRate(int value)
-    {
-        if (value >= 0 && value < PASSING_RATE_IDS.length)
-        {
-            m_binding.teleopPassingRateRadioGroup.check(PASSING_RATE_IDS[value]);
-        }
-    }
+
 
     /**
      * Initializes the defense rate radio group selection.
@@ -477,17 +477,12 @@ public class TeleopFragment extends Fragment
      *
      * @return the index of the selected radio button in the passing rate group
      */
-    public int getPassingEffectivenessRate()
+    public int getCurrentPassingEffectivenessRate()
     {
-        int id = m_binding.teleopPassingRateRadioGroup.getCheckedRadioButtonId();
-        for (int i = 0; i < PASSING_RATE_IDS.length; i++)
-        {
-            if (id == PASSING_RATE_IDS[i])
-            {
-                return i;
-            }
-        }
-        return 5;
+        float PassingEffectValue = m_binding.teleopPassingEffectivenessSlider.getValue();
+        int PassingEffectValueInt = (int) PassingEffectValue;
+        Log.v(TAG,"===> getCurrentPassingEffectivenessRate: returning value: "+PassingEffectValueInt);
+        return PassingEffectValueInt;
     }
 
     /**
@@ -513,7 +508,7 @@ public class TeleopFragment extends Fragment
      *
      * @return the index of the selected radio button in the driving ability group
      */
-
+/*
     public int getDriverAbility()
     {
         int id = m_binding.teleopDrivingAbilityRadioGroup.getCheckedRadioButtonId();
@@ -526,6 +521,8 @@ public class TeleopFragment extends Fragment
         }
         return 6;
     }
+
+ */
 
 
 
@@ -550,7 +547,7 @@ public class TeleopFragment extends Fragment
             Log.e(TAG, "updateTeleopData: Invalid hopper score value", e);
         }
         m_matchData.setAccuracyRate(getCurrentAccuracyRate());
-        m_matchData.setPassingRate(getPassingEffectivenessRate());
+        m_matchData.setPassingRate(getCurrentPassingEffectivenessRate());
         m_matchData.setTeleopPhoto(m_photoNum);
         m_matchData.setDefenseRate(getCurrentDefenseLevel());
         m_matchData.setIntakeAndShoot(m_binding.teleopIntakeShootChip.isChecked());
