@@ -38,7 +38,7 @@
             <!-- start DIED card layout -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="132dp"
                 android:layout_marginTop="@dimen/card_margin"
                 android:layout_marginHorizontal="@dimen/card_margin"
                 app:cardBackgroundColor="#b2538e"
@@ -47,7 +47,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:padding="@dimen/section_padding">
 
@@ -61,110 +61,238 @@
                         android:textSize="@dimen/font_medium"
                         android:textStyle="bold" />
 
-                <LinearLayout
-                    android:layout_width="570dp"
-                    android:layout_marginTop="7dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/rounded_rect"
-                    android:backgroundTint="#FFFFFF"
-                    android:layout_marginStart="3dp"
-                    >
-
-                    <!-- start DIED RADIO BUTTONS layout -->
                     <LinearLayout
-                        android:id="@+id/endgame_died_radio_group"
-                        android:layout_width="match_parent"
+                        android:layout_width="570dp"
                         android:layout_height="wrap_content"
-                        android:paddingStart="4dp"
-                        android:paddingEnd="4dp"
-                        android:orientation="horizontal">
+                        android:layout_marginStart="3dp"
+                        android:layout_marginTop="7dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#FFFFFF"
+                        android:orientation="vertical">
 
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="N/A"
-                            android:layout_marginStart="5dp"
-                            android:paddingLeft="3dp"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="20sp"
-
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="15-30s"
-                            android:layout_marginStart="70dp"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="21sp"
-
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="30-60s"
-                            android:layout_marginStart="70dp"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="21sp"
-
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="60-90s"
-                            android:layout_marginStart="70dp"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="21sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Most"
-                            android:layout_marginStart="57dp"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="21sp" />
-
-
-                    </LinearLayout>
-
-
-                    <!-- end TEXT FOR DIED TIME SLIDER layout -->
-
-                    <!-- start HOPPER ACCURACY SLIDER layout -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        >
-
-                        <com.google.android.material.slider.Slider
-                            android:id="@+id/teleop_hopper_accuracy_slider"
+                        <!-- start DIED layout -->
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingStart="1dp"
-                            android:stepSize="1"
-                            android:value="0.0"
-                            android:valueFrom="0.0"
-                            android:valueTo="4.0"
-                            app:trackColorActive="@color/customTextPrimary"
-                            app:trackColorInactive="@color/customTextPrimary"
-                            app:thumbColor="#6E79D5"
-                            app:tickColorActive="#c64e34"
-                            app:labelBehavior="gone" />
+                            android:orientation="horizontal"
+                            android:paddingStart="4dp"
+                            android:paddingEnd="4dp">
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:paddingLeft="3dp"
+                                android:text="N/A"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="20sp"
+
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="70dp"
+                                android:text="15-30s"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="21sp"
+
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="70dp"
+                                android:text="30-60s"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="21sp"
+
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="70dp"
+                                android:text="60-90s"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="21sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="57dp"
+                                android:text="Most"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="21sp" />
+
+                        </LinearLayout>
+
+                        <!-- end TEXT FOR DIED TIME SLIDER layout -->
+
+                        <!-- start DIED TIME SLIDER layout -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.google.android.material.slider.Slider
+                                android:id="@+id/teleop_hopper_accuracy_slider"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="1dp"
+                                android:stepSize="1"
+                                android:value="0.0"
+                                android:valueFrom="0.0"
+                                android:valueTo="4.0"
+                                app:labelBehavior="gone"
+                                app:thumbColor="#6E79D5"
+                                app:tickColorActive="#c64e34"
+                                app:trackColorActive="@color/customTextPrimary"
+                                app:trackColorInactive="@color/customTextPrimary" />
+
+                        </LinearLayout>
                     </LinearLayout>
-                    </LinearLayout>
-                        android:layout_width=""
-                        android:layout_height=""
+
                     <!-- end HOPPER ACCURACY SLIDER layout -->
 
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
             <!-- end DIED card layout -->
+
+
+            <!-- Section: DRIVER ABILITY -->
+            <!-- start DRIVER ABILITY card layout -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="123dp"
+                android:layout_marginHorizontal="@dimen/card_margin"
+                android:layout_marginTop="@dimen/card_margin"
+                app:cardBackgroundColor="#9aa3f2"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/section_padding" />
+
+                <TextView
+                    android:id="@+id/teleop_driving_ability_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/driving_ability"
+                    android:textColor="@color/customTextPrimary"
+                    android:textSize="@dimen/font_medium"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="567dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/rounded_rect"
+                    android:backgroundTint="#FFFFFF"
+                    android:orientation="vertical">
+
+                    <!-- start DRIVING ABILITY RADIO BUTTONS layout -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:orientation="horizontal"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:paddingLeft="3dp"
+                            android:text="N/A"
+                            android:textColor="@color/customTextPrimary"
+                            android:textSize="19sp"
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="57.4dp"
+                            android:text="Slow"
+                            android:textColor="@color/customTextPrimary"
+                            android:textSize="19sp"
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="60.7dp"
+                            android:text="Jerky"
+                            android:textColor="@color/customTextPrimary"
+                            android:textSize="19sp"
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="71.8dp"
+                            android:text="Avg"
+                            android:textColor="@color/customTextPrimary"
+                            android:textSize="19sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="72dp"
+                            android:text="Fast"
+                            android:textColor="@color/customTextPrimary"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="57dp"
+                            android:text="Elite"
+                            android:textColor="@color/customTextPrimary"
+                            android:textSize="19sp" />
+
+                    </LinearLayout>
+                    <!-- end DRIVING ABILITY RADIO BUTTONS layout -->
+                    <!-- start DRIVING ABILITY SLIDER layout -->
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/endgame_driving_ability_slider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="1dp"
+                        android:stepSize="1"
+                        android:value="0.0"
+                        android:valueFrom="0.0"
+                        android:valueTo="5.0"
+                        app:labelBehavior="gone"
+                        app:thumbColor="#6E79D5"
+                        app:tickColorActive="#c64e34"
+                        app:trackColorActive="@color/customTextPrimary"
+                        app:trackColorInactive="@color/customTextPrimary" />
+
+                    android:layout_width=""
+                    android:layout_height=""
+                    <!-- end DRIVING ABILITY SLIDER layout -->
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <!-- end DRIVER ABILITY card layout -->
+
+
+
+
+
+
+
+
             <!-- start NO SHOW card layout -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/no_show"
@@ -206,6 +334,7 @@
                             android:layout_marginStart="15dp"
                             android:text="No Show" />
                     </LinearLayout>
+
 
                     <!-- end NO SHOW layout -->
                 </LinearLayout>
