@@ -30,19 +30,19 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
 
-/**
- * Core data model for a single scouted FRC match.
- * <p>
- * This class encapsulates all parameters gathered during the autonomous, teleoperated,
- * and endgame stages of a match. It provides robust functionality for:
- * - JSON serialization for persistent local storage.
- * - Bidirectional data binding with UI fragments.
- * - Input validation against game-specific rules (e.g., maximum hopper counts).
- * - TSV encoding for high-density QR code generation.
- * <p>
- * Each record is uniquely identified by a UUID to prevent file collisions across different
- * scout tablets and seasons.
- */
+////////////////////
+// Core data model for a single scouted FRC match.
+// <p>
+// This class encapsulates all parameters gathered during the autonomous, teleoperated,
+// and endgame stages of a match. It provides robust functionality for:
+// - JSON serialization for persistent local storage.
+// - Bidirectional data binding with UI fragments.
+// - Input validation against game-specific rules (e.g., maximum hopper counts).
+// - TSV encoding for high-density QR code generation.
+// <p>
+// Each record is uniquely identified by a UUID to prevent file collisions across different
+// scout tablets and seasons.
+///
 public class MatchData
 {
     private static final String TAG = "MatchData";
@@ -90,26 +90,28 @@ public class MatchData
     private static final String KEY_OTHER3 = "other3";
     private static final String KEY_OTHER4 = "other4";
 
-    /**
-     * The version identifier for the JSON format of match data.
-     */
+    ///////////////////////
+    // The version identifier for the JSON format of match data.
+    ///
     public static final double M_JSON_FORMAT_VERSION = 26.1;
 
-    /**
-     * Maximum allowed hopper count in the autonomous stage.
-     */
+    ////////////////////////
+    // Maximum allowed hopper count in the autonomous stage.
+    ///
     public static final int MAX_AUTON_HOPPERS = 1;
 
-    /**
-     * Maximum allowed hopper count in the teleoperated stage.
-     */
+    ////////////////////////
+    // Maximum allowed hopper count in the teleoperated stage.
+    ///
     public static final int MAX_TELEOP_HOPPERS = 7;
 
     // --- Metadata Section ---
     // Unique identifier for this match (used in file names and QR codes)
     private String m_matchID;
+
     // Date created for this match
     private Date m_timestamp;
+
     // Version of the match data format
     private double m_version;
     private String m_eventCode;
@@ -154,12 +156,12 @@ public class MatchData
     private String m_other3;
     private String m_other4;
 
-    /**
-     * Extracts the numeric portion from a match identifier (e.g., "qm1" -> "1").
-     *
-     * @param matchIdentifier the match identifier string
-     * @return the numeric portion of the match identifier, or an empty string if null
-     */
+    ////////////////////
+    // Extracts the numeric portion from a match identifier (e.g., "qm1" -> "1").
+    //
+    // @param matchIdentifier the match identifier string
+    // @return the numeric portion of the match identifier, or an empty string if null
+    ///
     public static String extractMatchNumber(String matchIdentifier)
     {
         if (matchIdentifier == null || matchIdentifier.isEmpty())
@@ -169,10 +171,10 @@ public class MatchData
         return matchIdentifier.replaceAll("^\\D+", "");
     }
 
-    /**
-     * Default constructor for creating a new match data record.
-     * Generates a unique UUID and sets defaults for all scouting parameters.
-     */
+    ////////////////////
+    // Default constructor for creating a new match data record.
+    // Generates a unique UUID and sets defaults for all scouting parameters.
+    ///
     public MatchData()
     {
         Log.v(TAG, "MatchData constructor");
@@ -199,9 +201,9 @@ public class MatchData
         m_hoppersUsed = 0;
         m_accuracyRate = 0;
         m_intakeAndShoot = false;
-        m_passingRate = 5;
+        m_passingRate = 0;
         m_defenseRate = 0;
-        m_drivingAbility = 6;
+        m_drivingAbility = 0;
         m_passedNz = 3;
         m_passedAz = 3;
         m_shovelFuel = false;
@@ -218,12 +220,12 @@ public class MatchData
         m_other4 = "0";
     }
 
-    /**
-     * Constructs a MatchData object from a {@link JSONObject}.
-     * Handles both ISO and legacy date formats for backward compatibility.
-     *
-     * @param json the source JSONObject
-     */
+    //////////////////
+    // Constructs a MatchData object from a {@link JSONObject}.
+    // Handles both ISO and legacy date formats for backward compatibility.
+    //
+    // @param json the source JSONObject
+    ///
     public MatchData(JSONObject json)
     {
         m_matchID = json.optString(KEY_MATCH_ID, UUID.randomUUID().toString());
@@ -278,9 +280,9 @@ public class MatchData
         m_hoppersUsed = json.optInt(KEY_TELEOP_HOPPERS_USED, 0);
         m_accuracyRate = json.optInt(KEY_TELEOP_ACC_RATE, 0);
         m_intakeAndShoot = json.optBoolean(KEY_TELEOP_INTAKE_SHOOT, false);
-        m_passingRate = json.optInt(KEY_TELEOP_PASSING_RATE, 5);
+        m_passingRate = json.optInt(KEY_TELEOP_PASSING_RATE, 0);
         m_defenseRate = json.optInt(KEY_TELEOP_DEFENSE_RATE, 0);
-        m_drivingAbility = json.optInt(KEY_TELEOP_DRIVE_ABILITY, 6);
+        m_drivingAbility = json.optInt(KEY_TELEOP_DRIVE_ABILITY, 0);
         m_passedAz = json.optInt(KEY_TELEOP_PASS_AZ, 3);
         m_passedNz = json.optInt(KEY_TELEOP_PASS_NZ, 3);
         m_teleopPhoto = json.optInt(KEY_TELEOP_PHOTO, 0);
@@ -301,12 +303,12 @@ public class MatchData
         m_other4 = json.optString(KEY_OTHER4, "0");
     }
 
-    /**
-     * Serializes this MatchData record to a {@link JSONObject}.
-     *
-     * @return the serialized JSONObject
-     * @throws JSONException if JSON creation fails
-     */
+    ///////////////////////
+    // Serializes this MatchData record to a {@link JSONObject}.
+    //
+    // @return the serialized JSONObject
+    // @throws JSONException if JSON creation fails
+    ///
     public JSONObject toJSON()
             throws JSONException
     {
@@ -359,156 +361,156 @@ public class MatchData
         return json;
     }
 
-    /**
-     * Sets the timestamp for when this match was scouted.
-     *
-     * @param d the date and time
-     */
+    ////////////////////////
+    // Sets the timestamp for when this match was scouted.
+    //
+    // @param d the date and time
+    ///
     @SuppressWarnings("unused")
     public void setTimestamp(Date d)
     {
         m_timestamp = d;
     }
 
-    /**
-     * Returns the timestamp for when this match was scouted.
-     *
-     * @return the date and time
-     */
+    ////////////////////////
+    // Returns the timestamp for when this match was scouted.
+    //
+    // @return the date and time
+    ///
     public Date getTimestamp()
     {
         return m_timestamp;
     }
 
-    /**
-     * Returns the unique identifier for this match record.
-     *
-     * @return the match UUID string
-     */
+    ////////////////////////
+    // Returns the unique identifier for this match record.
+    //
+    // @return the match UUID string
+    ///
     public String getMatchID()
     {
         return m_matchID;
     }
 
-    /**
-     * Sets the unique identifier for this match record.
-     *
-     * @param id the match UUID string
-     */
+    ////////////////////////
+    // Sets the unique identifier for this match record.
+    //
+    // @param id the match UUID string
+    ///
     @SuppressWarnings("unused")
     public void setMatchID(String id)
     {
         m_matchID = id;
     }
 
-    /**
-     * Returns the version of the match data format.
-     *
-     * @return the version number
-     */
+    ////////////////////////
+    // Returns the version of the match data format.
+    //
+    // @return the version number
+    ///
     @SuppressWarnings("unused")
     public double getVersion()
     {
         return m_version;
     }
 
-    /**
-     * Sets the version of the match data format.
-     *
-     * @param version the version number
-     */
+    ////////////////////////
+    // Sets the version of the match data format.
+    //
+    // @param version the version number
+    ///
     @SuppressWarnings("unused")
     public void setVersion(double version)
     {
         m_version = version;
     }
 
-    /**
-     * Sets the FRC event code for this match.
-     *
-     * @param code the event code
-     */
+    ///////////////////////
+    // Sets the FRC event code for this match.
+    //
+    // @param code the event code
+    ///
     public void setEventCode(String code)
     {
         m_eventCode = code;
     }
 
-    /**
-     * Returns the FRC event code for this match.
-     *
-     * @return the event code
-     */
+    ///////////////////////
+    // Returns the FRC event code for this match.
+    //
+    // @return the event code
+    ///
     public String getEventCode()
     {
         return m_eventCode;
     }
 
-    /**
-     * Sets the match identifier (e.g., "qm1").
-     *
-     * @param num the match number string
-     */
+    ///////////////////////
+    // Sets the match identifier (e.g., "qm1").
+    //
+    // @param num the match number string
+    ///
     public void setMatchNumber(String num)
     {
         m_matchNumber = num;
     }
 
-    /**
-     * Returns the match identifier.
-     *
-     * @return the match number string
-     */
+    ///////////////////////
+    // Returns the match identifier.
+    //
+    // @return the match number string
+    ///
     public String getMatchNumber()
     {
         return m_matchNumber;
     }
 
-    /**
-     * Sets the FRC team number for this match.
-     *
-     * @param num the team number string
-     */
+    ///////////////////////
+    // Sets the FRC team number for this match.
+    //
+    // @param num the team number string
+    ///
     public void setTeamNumber(String num)
     {
         m_teamNumber = num;
     }
 
-    /**
-     * Returns the FRC team number.
-     *
-     * @return the team number string
-     */
+    ///////////////////////
+    // Returns the FRC team number.
+    //
+    // @return the team number string
+    ///
     public String getTeamNumber()
     {
         return m_teamNumber;
     }
 
-    /**
-     * Sets the team alias if applicable (e.g. for regional variants).
-     *
-     * @param alias the team alias string
-     */
+    ///////////////////////
+    // Sets the team alias if applicable (e.g. for regional variants).
+    //
+    // @param alias the team alias string
+    ///
     public void setTeamAlias(String alias)
     {
         m_teamAlias = alias;
     }
 
-    /**
-     * Returns the team alias.
-     *
-     * @return the team alias string, or empty if none
-     */
+    ///////////////////////
+    // Returns the team alias.
+    //
+    // @return the team alias string, or empty if none
+    ///
     @SuppressWarnings("unused")
     public String getTeamAlias()
     {
         return m_teamAlias != null ? m_teamAlias : "";
     }
 
-    /**
-     * Sets the name of the scout who recorded this match.
-     *
-     * @param name the scout's name
-     */
+    ///////////////////////
+    // Sets the name of the scout who recorded this match.
+    //
+    // @param name the scout's name
+    ///
     public void setScoutName(String name)
     {
         if (name == null || name.trim().isEmpty())
@@ -519,594 +521,592 @@ public class MatchData
         m_scoutName = name.trim();
     }
 
-    /**
-     * Returns the name of the scout who recorded this match.
-     *
-     * @return the scout's name
-     */
+    ///////////////////////
+    // Returns the name of the scout who recorded this match.
+    //
+    // @return the scout's name
+    ///
     public String getScoutName()
     {
         return m_scoutName;
     }
 
-    /**
-     * Sets the number of hoppers used in the autonomous stage.
-     *
-     * @param val the hopper count
-     */
+    ////////////////////////
+    // Sets the number of hoppers used in the autonomous stage.
+    //
+    // @param val the hopper count
+    ///
     public void setAutonHopper(int val)
     {
         m_autonHopper = val;
     }
 
-    /**
-     * Returns the number of hoppers used in the autonomous stage.
-     *
-     * @return the hopper count
-     */
+    ////////////////////////
+    // Returns the number of hoppers used in the autonomous stage.
+    //
+    // @return the hopper count
+    ///
     public int getAutonHopper()
     {
         return m_autonHopper;
     }
 
-    /**
-     * Returns whether fuel was preloaded in the autonomous stage.
-     *
-     * @return true if fuel was preloaded
-     */
+    ////////////////////////
+    // Returns whether fuel was preloaded in the autonomous stage.
+    //
+    // @return true if fuel was preloaded
+    ///
     public boolean isAutonPreload()
     {
         return m_autonPreload;
     }
 
-    /**
-     * Sets whether fuel was preloaded in the autonomous stage.
-     *
-     * @param val true if fuel was preloaded
-     */
+    ////////////////////////
+    // Sets whether fuel was preloaded in the autonomous stage.
+    //
+    // @param val true if fuel was preloaded
+    ///
     public void setAutonPreload(boolean val)
     {
         m_autonPreload = val;
     }
 
-    /**
-     * Returns whether the alliance zone was used in the autonomous stage.
-     *
-     * @return true if the alliance zone was used
-     */
+    ////////////////////////
+    // Returns whether the alliance zone was used in the autonomous stage.
+    //
+    // @return true if the alliance zone was used
+    ///
     public boolean isAutonAz()
     {
         return m_autonAz;
     }
 
-    /**
-     * Sets whether the alliance zone was used in the autonomous stage.
-     *
-     * @param val true if the alliance zone was used
-     */
+    //////////////////////
+    // Sets whether the alliance zone was used in the autonomous stage.
+    //
+    // @param val true if the alliance zone was used
+    ///
     public void setAutonAz(boolean val)
     {
         m_autonAz = val;
     }
 
-    /**
-     * Returns whether the depot was used in the autonomous stage.
-     *
-     * @return true if the depot was used
-     */
+    //////////////////////
+    // Returns whether the depot was used in the autonomous stage.
+    //
+    // @return true if the depot was used
+    ///
     public boolean isAutonDepot()
     {
         return m_autonDepot;
     }
 
-    /**
-     * Sets whether the depot was used in the autonomous stage.
-     *
-     * @param val true if the depot was used
-     */
+    //////////////////////
+    // Sets whether the depot was used in the autonomous stage.
+    //
+    // @param val true if the depot was used
+    ///
     public void setAutonDepot(boolean val)
     {
         m_autonDepot = val;
     }
 
-    /**
-     * Returns whether the outpost was used in the autonomous stage.
-     *
-     * @return true if the outpost was used
-     */
+    //////////////////////
+    // Returns whether the outpost was used in the autonomous stage.
+    //
+    // @return true if the outpost was used
+    ///
     public boolean isAutonOutpost()
     {
         return m_autonOutpost;
     }
 
-    /**
-     * Sets whether the outpost was used in the autonomous stage.
-     *
-     * @param val true if the outpost was used
-     */
+    //////////////////////
+    // Sets whether the outpost was used in the autonomous stage.
+    //
+    // @param val true if the outpost was used
+    ///
     public void setAutonOutpost(boolean val)
     {
         m_autonOutpost = val;
     }
 
-    /**
-     * Returns whether the neutral zone was used in the autonomous stage.
-     *
-     * @return true if the neutral zone was used
-     */
+    //////////////////////
+    // Returns whether the neutral zone was used in the autonomous stage.
+    //
+    // @return true if the neutral zone was used
+    ///
     public boolean isAutonNz()
     {
         return m_autonNz;
     }
 
-    /**
-     * Sets whether the neutral zone was used in the autonomous stage.
-     *
-     * @param val true if the neutral zone was used
-     */
+    //////////////////
+    // Sets whether the neutral zone was used in the autonomous stage.
+    //
+    // @param val true if the neutral zone was used
+    ///
     public void setAutonNz(boolean val)
     {
         m_autonNz = val;
     }
 
-    /**
-     * Sets the autonomous accuracy rate index.
-     *
-     * @param val the accuracy rate index
-     */
+    //////////////////
+    // Sets the autonomous accuracy rate index.
+    //
+    // @param val the accuracy rate index
+    ///
     public void setAutonAccuracyRate(int val)
     {
         m_autonAccuracyRate = val;
     }
 
-    /**
-     * Returns the autonomous accuracy rate index.
-     *
-     * @return the accuracy rate index
-     */
+    //////////////////
+    // Returns the autonomous accuracy rate index.
+    //
+    // @return the accuracy rate index
+    ///
     public int getAutonAccuracyRate()
     {
         return m_autonAccuracyRate;
     }
 
-    /**
-     * Sets the autonomous preload accuracy level index.
-     *
-     * @param val the accuracy level index
-     */
+    //////////////////
+    // Sets the autonomous preload accuracy level index.
+    //
+    // @param val the accuracy level index
+    ///
     public void setPreloadAccuracyLevel(int val)
     {
         m_autonPreloadAccRate = val;
     }
 
-    /**
-     * Returns the autonomous preload accuracy level index.
-     *
-     * @return the accuracy level index
-     */
+    //////////////////
+    // Returns the autonomous preload accuracy level index.
+    //
+    // @return the accuracy level index
+    ///
     public int getPreloadAccuracyLevel()
     {
         return m_autonPreloadAccRate;
     }
 
-    /**
-     * Sets the autonomous climb chip index.
-     *
-     * @param val the climb chip index
-     */
+    //////////////////
+    // Sets the autonomous climb chip index.
+    //
+    // @param val the climb chip index
+    ///
     public void setAutonClimb(boolean val)
     {
         m_autonClimb = val;
     }
 
-    /**
-     * Returns the autonomous climb chip index.
-     *
-     * @return the climb chip index
-     */
+    //////////////////
+    // Returns the autonomous climb chip index.
+    //
+    // @return the climb chip index
+    ///
     public boolean getAutonClimb()
     {
         return m_autonClimb;
     }
 
-    /**
-     * Sets the number of hoppers used in the teleoperated stage.
-     *
-     * @param val the hopper count
-     */
+    //////////////////
+    // Sets the number of hoppers used in the teleoperated stage.
+    //
+    // @param val the hopper count
+    ///
     public void setHoppersUsed(int val)
     {
         m_hoppersUsed = val;
     }
 
-    /**
-     * Returns the number of hoppers used in the teleoperated stage.
-     *
-     * @return the hopper count
-     */
+    //////////////////
+    // Returns the number of hoppers used in the teleoperated stage.
+    //
+    // @return the hopper count
+    ///
     public int getHoppersUsed()
     {
         return m_hoppersUsed;
     }
 
-    /**
-     * Sets the teleoperated accuracy rate index.
-     *
-     * @param val the accuracy rate index
-     */
+    //////////////////
+    // Sets the teleoperated accuracy rate index.
+    //
+    // @param val the accuracy rate index
+    ///
     public void setAccuracyRate(int val)
     {
         m_accuracyRate = val;
     }
 
-    /**
-     * Returns the teleoperated accuracy rate index.
-     *
-     * @return the accuracy rate index
-     */
+    ////////////////////
+    // Returns the teleoperated accuracy rate index.
+    //
+    // @return the accuracy rate index
+    ///
     public int getAccuracyRate()
     {
         return m_accuracyRate;
     }
 
-    /**
-     * Sets whether intake and shooting were performed simultaneously in the teleoperated stage.
-     *
-     * @param val true if both were performed simultaneously
-     */
+    ////////////////////
+    // Sets whether intake and shooting were performed simultaneously in the teleoperated stage.
+    //
+    // @param val true if both were performed simultaneously
+    ///
     public void setIntakeAndShoot(boolean val)
     {
         m_intakeAndShoot = val;
     }
 
-    /**
-     * Returns whether intake and shooting were performed simultaneously in the teleoperated stage.
-     *
-     * @return true if both were performed simultaneously
-     */
+    ////////////////////
+    // Returns whether intake and shooting were performed simultaneously in the teleoperated stage.
+    //
+    // @return true if both were performed simultaneously
+    ///
     public boolean getIntakeAndShoot()
     {
         return m_intakeAndShoot;
     }
 
-    /**
-     * Sets whether herding fuel was performed in the teleoperated stage.
-     *
-     * @param val true if herding fuel was performed
-     */
+    ////////////////////
+    // Sets whether herding fuel was performed in the teleoperated stage.
+    //
+    // @param val true if herding fuel was performed
+    ///
     public void setShovelFuel(boolean val)
     {
         m_shovelFuel = val;
     }
 
-    /**
-     * Returns whether herding fuel was performed in the teleoperated stage.
-     *
-     * @return true if herding fuel was performed
-     */
+    ////////////////////
+    // Returns whether herding fuel was performed in the teleoperated stage.
+    //
+    // @return true if herding fuel was performed
+    ///
     public boolean getShovelFuel()
     {
         return m_shovelFuel;
     }
 
-    /**
-     * Sets the passing effectiveness rate index.
-     *
-     * @param val the passing rate index
-     */
+    ////////////////////
+    // Sets the passing effectiveness rate index.
+    //
+    // @param val the passing rate index
+    ///
     public void setPassingRate(int val)
     {
         m_passingRate = val;
     }
 
-    /**
-     * Returns the passing effectiveness rate index.
-     *
-     * @return the passing rate index
-     */
+    ////////////////////
+    // Returns the passing effectiveness rate index.
+    //
+    // @return the passing rate index
+    ///
     public int getPassingEffectivenessRate()
     {
         return m_passingRate;
     }
 
-    /**
-     * Sets the teleoperated defense rate index.
-     *
-     * @param val the defense rate index
-     */
+    ////////////////////
+    // Sets the teleoperated defense rate index.
+    //
+    // @param val the defense rate index
+    ///
     public void setDefenseRate(int val)
     {
         m_defenseRate = val;
     }
 
-    /**
-     * Returns the teleoperated defense rate index.
-     *
-     * @return the defense rate index
-     */
+    ////////////////////
+    // Returns the teleoperated defense rate index.
+    //
+    // @return the defense rate index
+    ///
     public int getDefenseRate()
     {
         return m_defenseRate;
     }
 
-    /**
-     * Sets the driving ability index.
-     *
-     * @param val the driving ability index
-     */
+    ////////////////////
+    // Sets the driving ability index.
+    //
+    // @param val the driving ability index
+    ///
     public void setDriveAbility(int val)
     {
         m_drivingAbility = val;
     }
 
-    /**
-     * Returns the driving ability index.
-     *
-     * @return the driving ability index
-     */
+    ////////////////////
+    // Returns the driving ability index.
+    //
+    // @return the driving ability index
+    ///
     public int getDriverAbility()
     {
         return m_drivingAbility;
     }
 
-    /**
-     * Sets the selection index for neutral zone passing.
-     *
-     * @param val the selection index
-     */
+    ////////////////////
+    // Sets the selection index for neutral zone passing.
+    //
+    // @param val the selection index
+    ///
     public void setPassNeutralZone(int val)
     {
         m_passedNz = val;
     }
 
-    /**
-     * Returns the selection index for neutral zone passing.
-     *
-     * @return the selection index
-     */
+    ////////////////////
+    // Returns the selection index for neutral zone passing.
+    //
+    // @return the selection index
+    ///
     public int getPassNeutralZone()
     {
         return m_passedNz;
     }
 
-    /**
-     * Sets the selection index for alliance zone passing.
-     *
-     * @param val the selection index
-     */
+    ////////////////////
+    // Sets the selection index for alliance zone passing.
+    //
+    // @param val the selection index
+    ///
     public void setPassAllianceZone(int val)
     {
         m_passedAz = val;
     }
 
-    /**
-     * Returns the selection index for alliance zone passing.
-     *
-     * @return the selection index
-     */
+    ////////////////////
+    // Returns the selection index for alliance zone passing.
+    //
+    // @return the selection index
+    ///
     public int getPassAllianceZone()
     {
         return m_passedAz;
     }
 
-    /**
-     * Sets the identifier for the teleoperated stage placeholder photo.
-     *
-     * @param val the photo identifier
-     */
+    ////////////////////
+    // Sets the identifier for the teleoperated stage placeholder photo.
+    //
+    // @param val the photo identifier
+    ///
     public void setTeleopPhoto(int val)
     {
         m_teleopPhoto = val;
     }
 
-    /**
-     * Returns the identifier for the teleoperated stage placeholder photo.
-     *
-     * @return the photo identifier
-     */
+    ////////////////////
+    // Returns the identifier for the teleoperated stage placeholder photo.
+    //
+    // @return the photo identifier
+    ///
     public int getTeleopPhoto()
     {
         return m_teleopPhoto;
     }
 
-    /**
-     * Sets the died value index, indicating when the robot became disabled.
-     *
-     * @param val the died value index
-     */
+    ////////////////////
+    // Sets the died value index, indicating when the robot became disabled.
+    //
+    // @param val the died value index
+    ///
     public void setDiedValue(int val)
     {
         m_diedValue = val;
     }
 
-    /**
-     * Returns the died value index.
-     *
-     * @return the died value index
-     */
+    ////////////////////
+    // Returns the died value index.
+    //
+    // @return the died value index
+    ///
     public int getDiedValue()
     {
         return m_diedValue;
     }
 
-    /**
-     * Sets the start climb time index.
-     *
-     * @param val the start climb index
-     */
-
+    ////////////////////
+    // Sets the start climb time index.
+    //
+    // @param val the start climb index
+    ///
     public void setStartClimb(int val)
     {
         m_startClimb = val;
     }
 
-    /**
-     * Returns the No Show chip index.
-     *
-     * @return the no Show chip index
-     */
+    ////////////////////
+    // Returns the No Show chip index.
+    //
+    // @return the no Show chip index
+    ///
     public boolean getNoShow()
     {
         return m_noShow;
     }
+
     public void setNoShow(boolean val)
     {
         m_noShow = val;
     }
 
-    /**
-     * Returns the start No Show time index.
-     *
-     * @return the start No Show index
-     */
+    ////////////////////
+    // Returns the start No Show time index.
+    //
+    // @return the start No Show index
+    ///
     public int getStartClimb()
     {
         return m_startClimb;
     }
 
-    /**
-     * Sets the endgame climb level index.
-     *
-     * @param val the climb level index
-     */
+    ////////////////////
+    // Sets the endgame climb level index.
+    //
+    // @param val the climb level index
+    ///
     public void setEndgameClimbLevel(int val)
     {
         m_endgameClimbLevel = val;
     }
 
-    /**
-     * Returns the endgame climb level index.
-     *
-     * @return the climb level index
-     */
+    ////////////////////
+    // Returns the endgame climb level index.
+    //
+    // @return the climb level index
+    ///
     public int getEndgameClimbLevel()
     {
         return m_endgameClimbLevel;
     }
 
-    /**
-     * Sets the endgame climb position index.
-     *
-     * @param val the climb position index
-     */
+    ////////////////////
+    // Sets the endgame climb position index.
+    //
+    // @param val the climb position index
+    ///
     public void setEndgameClimbPos(int val)
     {
         m_endgameClimbPos = val;
     }
 
-    /**
-     * Returns the endgame climb position index.
-     *
-     * @return the climb position index
-     */
+    ////////////////////
+    // Returns the endgame climb position index.
+    //
+    // @return the climb position index
+    ///
     public int getEndgameClimbPos()
     {
         return m_endgameClimbPos;
     }
 
-    /**
-     * Sets the additional comments for the match.
-     *
-     * @param comment the comment string
-     */
+    ////////////////////
+    // Sets the additional comments for the match.
+    //
+    // @param comment the comment string
+    ///
     public void setComment(String comment)
     {
         m_comment = comment;
     }
 
-    /**
-     * Returns the additional comments for the match.
-     *
-     * @return the comment string
-     */
+    /////////////////////
+    // Returns the additional comments for the match.
+    //
+    // @return the comment string
+    ///
     public String getComment()
     {
         return m_comment != null ? m_comment : "";
     }
 
-    /**
-     * Returns the secondary "other" field value.
-     *
-     * @return the other2 string
-     */
+    /////////////////////
+    // Returns the secondary "other" field value.
+    //
+    // @return the other2 string
+    ///
     @SuppressWarnings("unused")
     public String getOther2()
     {
         return m_other2;
     }
 
-    /**
-     * Sets the secondary "other" field value.
-     *
-     * @param value the other2 string
-     */
+    /////////////////////
+    // Sets the secondary "other" field value.
+    //
+    // @param value the other2 string
+    ///
     @SuppressWarnings("unused")
     public void setOther2(String value)
     {
         m_other2 = value;
     }
 
-    /**
-     * Returns the tertiary "other" field value.
-     *
-     * @return the other3 string
-     */
+    /////////////////////
+    // Returns the tertiary "other" field value.
+    //
+    // @return the other3 string
+    ///
     @SuppressWarnings("unused")
     public String getOther3()
     {
         return m_other3;
     }
 
-    /**
-     * Sets the tertiary "other" field value.
-     *
-     * @param value the other3 string
-     */
+    /////////////////////
+    // Sets the tertiary "other" field value.
+    //
+    // @param value the other3 string
+    ///
     @SuppressWarnings("unused")
     public void setOther3(String value)
     {
         m_other3 = value;
     }
 
-    /**
-     * Returns the quaternary "other" field value.
-     *
-     * @return the other4 string
-     */
+    /////////////////////
+    // Returns the quaternary "other" field value.
+    //
+    // @return the other4 string
+    ///
     @SuppressWarnings("unused")
     public String getOther4()
     {
         return m_other4;
     }
 
-    /**
-     * Sets the quaternary "other" field value.
-     *
-     * @param value the other4 string
-     */
+    /////////////////////
+    // Sets the quaternary "other" field value.
+    //
+    // @param value the other4 string
+    ///
     @SuppressWarnings("unused")
     public void setOther4(String value)
     {
         m_other4 = value;
     }
 
-    /**
-     * Validates the match data entries for consistency and completeness.
-     *
-     * @return a validation message string detailing any errors, or an empty string if all entries are valid
-     */
+    /////////////////////
+    // Validates the match data entries for consistency and completeness.
+    //
+    // @return a validation message string detailing any errors, or an empty string if all entries are valid
+    ///
     public String validateEntries()
     {
-        return validateAuton() +
-                validateTeleop() +
-                validateEndgame();
+        return validateAuton() + validateTeleop() + validateEndgame();
     }
 
-    /**
-     * Validates the autonomous stage entries.
-     *
-     * @return a validation message string, or empty if valid
-     */
+    /////////////////////
+    // Validates the autonomous stage entries.
+    //
+    // @return a validation message string, or empty if valid
+    ///
     public String validateAuton()
     {
         if (m_autonHopper > MAX_AUTON_HOPPERS)
@@ -1116,11 +1116,11 @@ public class MatchData
         return "";
     }
 
-    /**
-     * Validates the teleoperated stage entries.
-     *
-     * @return a validation message string, or empty if valid
-     */
+    /////////////////////
+    // Validates the teleoperated stage entries.    TODO - these need to be updated!
+    //
+    // @return a validation message string, or empty if valid
+    ///
     public String validateTeleop()
     {
         StringBuilder msg = new StringBuilder();
@@ -1165,18 +1165,18 @@ public class MatchData
         }
 
         // Driver ability validation
-        if (m_drivingAbility == 6)
+        if (m_drivingAbility == 6)           // THIS SHOULD PROB BE REMOVED
         {
             msg.append("\nTeleop: Driver ability not set!\n");
         }
         return msg.toString();
     }
 
-    /**
-     * Validates the endgame stage entries.
-     *
-     * @return a validation message string, or empty if valid
-     */
+    /////////////////////
+    // Validates the endgame stage entries.
+    //
+    // @return a validation message string, or empty if valid
+    ///
     public String validateEndgame()
     {
         // Climb selections validation
@@ -1189,11 +1189,11 @@ public class MatchData
         return "";
     }
 
-    /**
-     * Encodes the match data into a Tab-Separated Values (TSV) string for QR code generation.
-     *
-     * @return the TSV encoded string
-     */
+    /////////////////////
+    // Encodes the match data into a Tab-Separated Values (TSV) string for QR code generation.
+    //
+    // @return the TSV encoded string
+    ///
     public String encodeToTSV()
     {
         String teamAliasClean = (m_teamAlias == null || m_teamAlias.isEmpty()) ? "-" : m_teamAlias.replaceAll("[\\t\\n\\r]", " ");
@@ -1248,11 +1248,11 @@ public class MatchData
         return sb.toString();
     }
 
-    /**
-     * Encodes the match data into a JSON string for QR code generation.
-     *
-     * @return the JSON encoded string
-     */
+    /////////////////////
+    // Encodes the match data into a JSON string for QR code generation.
+    //
+    // @return the JSON encoded string
+    ///
     @SuppressWarnings("unused")
     public String encodeToJSON()
     {
@@ -1274,12 +1274,12 @@ public class MatchData
         return jsonString;
     }
 
-    /**
-     * Generates a readable string of all match data points.
-     * Aligns values vertically for easier reading.
-     *
-     * @return a multi-line string containing all data point names and values
-     */
+    /////////////////////
+    // Generates a readable string of all match data points.
+    // Aligns values vertically for easier reading.
+    //
+    // @return a multi-line string containing all data point names and values
+    ///
     public String getMatchDataString()
     {
         String fmt = "%-24s: %s\n";

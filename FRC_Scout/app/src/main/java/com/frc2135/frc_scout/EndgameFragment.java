@@ -38,10 +38,10 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
 
-/**
- * Fragment for recording endgame scouting data (climbing, comments, etc.).
- * Manages UI components for start climb time, climb level, climb position, and whether the robot died during the match.
- */
+///////////////////////
+// Fragment for recording endgame scouting data (climbing, comments, etc.).
+// Manages UI components for start climb time, climb level, climb position, and whether the robot died during the match.
+///
 
 
 public class EndgameFragment extends Fragment
@@ -49,17 +49,15 @@ public class EndgameFragment extends Fragment
     private static final String TAG = "EndgameFragment";
     public static final String QRTAG = "qr";
 
-
     private MatchData m_matchData;
     private EndgameFragmentBinding m_binding;
     private Settings m_settings;
 
-
-    /**
-     * Initializes the fragment and retrieves the current match data from the parent activity.
-     *
-     * @param savedInstanceState if the fragment is being re-created from a previous saved state
-     */
+    //////////////////////
+    // Initializes the fragment and retrieves the current match data from the parent activity.
+    //
+    // @param savedInstanceState if the fragment is being re-created from a previous saved state
+    ///
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
@@ -69,14 +67,14 @@ public class EndgameFragment extends Fragment
         m_settings = Settings.getInstance(requireContext());
     }
 
-    /**
-     * Inflates the layout for this fragment using view binding.
-     *
-     * @param inflater           the LayoutInflater object that can be used to inflate views
-     * @param parent             if non-null, this is the parent view that the fragment's UI should be attached to
-     * @param savedInstanceState if non-null, this fragment is being re-constructed from a previous saved state
-     * @return the root View of the inflated layout
-     */
+    //////////////////////
+    // Inflates the layout for this fragment using view binding.
+    //
+    // @param inflater           the LayoutInflater object that can be used to inflate views
+    // @param parent             if non-null, this is the parent view that the fragment's UI should be attached to
+    // @param savedInstanceState if non-null, this fragment is being re-constructed from a previous saved state
+    // @return the root View of the inflated layout
+    ///
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
@@ -85,13 +83,13 @@ public class EndgameFragment extends Fragment
         return m_binding.getRoot();
     }
 
-    /**
-     * Called immediately after {@link #onCreateView} has returned.
-     * Sets up the action bar, loads match data into the UI, and initializes click listeners.
-     *
-     * @param view               the View returned by {@link #onCreateView}
-     * @param savedInstanceState if non-null, this fragment is being re-constructed from a previous saved state
-     */
+    //////////////////////
+    // Called immediately after {@link #onCreateView} has returned.
+    // Sets up the action bar, loads match data into the UI, and initializes click listeners.
+    //
+    // @param view               the View returned by {@link #onCreateView}
+    // @param savedInstanceState if non-null, this fragment is being re-constructed from a previous saved state
+    ///
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
@@ -105,9 +103,9 @@ public class EndgameFragment extends Fragment
         Log.i(TAG, "       ----> done with onViewCreated()");
     }
 
-    /**
-     * Configures the action bar title and background color based on the team alliance.
-     */
+    //////////////////////
+    // Configures the action bar title and background color based on the team alliance.
+    ///
     private void setupActionBar()
     {
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
@@ -122,9 +120,9 @@ public class EndgameFragment extends Fragment
         }
     }
 
-    /**
-     * Populates the UI components with data from the current {@link MatchData} instance.
-     */
+    //////////////////////
+    // Populates the UI components with data from the current {@link MatchData} instance.
+    ///
     private void loadMatchData()
     {
         if (m_matchData == null)
@@ -138,10 +136,10 @@ public class EndgameFragment extends Fragment
         //TODO add died slider here
     }
 
-    /**
-     * Sets up click and checked change listeners for the UI components, including QR code generation
-     * and real-time tab badge updates in the parent activity.
-     */
+    //////////////////////
+    // Sets up click and checked change listeners for the UI components, including QR code generation
+    // and real-time tab badge updates in the parent activity.
+    ///
     private void setupListeners()
     {
         m_binding.endgameGenerateQrButton.setEnabled(true);
@@ -188,10 +186,10 @@ public class EndgameFragment extends Fragment
         return drivingAbilitySliderValueInt;
     }
 
-    /**
-     * Synchronizes current fragment data with the {@link MatchData} model and
-     * refreshes the tab badges in the parent activity.
-     */
+    //////////////////////
+    // Synchronizes current fragment data with the {@link MatchData} model and
+    // refreshes the tab badges in the parent activity.
+    ///
     private void syncAndRefreshBadges()
     {
         ((ScoutingActivity) requireActivity()).updateCurrentFragmentData();
@@ -199,9 +197,9 @@ public class EndgameFragment extends Fragment
 
 
 
-    /**
-     * Updates the {@link MatchData} object with the current values from the UI components.
-     */
+    //////////////////////
+    // Updates the {@link MatchData} object with the current values from the UI components.
+    ///
     public void updateEndgameData()
     {
         Log.d(TAG, "updateEndgameData");
@@ -216,9 +214,9 @@ public class EndgameFragment extends Fragment
         m_matchData.setDriveAbility(getCurrentDriverAbility());
     }
 
-    /**
-     * Called when the fragment is visible to the user and actively running.
-     */
+    //////////////////////
+    // Called when the fragment is visible to the user and actively running.
+    ///
     @Override
     public void onResume()
     {
@@ -226,9 +224,9 @@ public class EndgameFragment extends Fragment
         Log.v(TAG, "onResume");
     }
 
-    /**
-     * Cleans up the view binding reference when the fragment view is being destroyed.
-     */
+    //////////////////////
+    // Cleans up the view binding reference when the fragment view is being destroyed.
+    ///
     @Override
     public void onDestroyView()
     {

@@ -39,14 +39,15 @@ import com.frc2135.frc_scout.databinding.TeleopFragmentBinding;
 
 import java.util.Random;
 
-/*
- * Fragment for recording teleoperated period scouting data.
- * Manages UI components for hopper usage, accuracy, passing, defense, and driver ability.
- */
+/////////////////////
+// Fragment for recording teleoperated period scouting data.
+// Manages UI components for hopper usage, accuracy, passing, defense, and driver ability.
+///
 public class TeleopFragment extends Fragment
 {
     private static final String TAG = "TeleopFragment";
 
+/*REMOVE->
     private static final int[] ACCURACY_IDS = {
             //R.id.teleop_accuracy_na,
             //R.id.teleop_accuracy_most,
@@ -64,6 +65,7 @@ public class TeleopFragment extends Fragment
             //R.id.teleop_passing_rate_large,
             //R.id.teleop_passing_rate_tons
     };
+<-REMOVE*/
 
     private static final int[] DEFENSE_RATE_IDS = {
             R.id.teleop_defense_na,
@@ -74,17 +76,16 @@ public class TeleopFragment extends Fragment
             R.id.teleop_defense_high
     };
 
-
     private MatchData m_matchData;
     private TeleopFragmentBinding m_binding;
     private int m_photoNum;
     private Settings m_settings;
 
-    /**
-     * Initializes the fragment and retrieves the current match data from the parent activity.
-     *
-     * @param savedInstanceState if the fragment is being re-created from a previous saved state
-     */
+    /////////////////
+    // Initializes the fragment and retrieves the current match data from the parent activity.
+    //
+    // @param savedInstanceState if the fragment is being re-created from a previous saved state
+    ///
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -94,14 +95,14 @@ public class TeleopFragment extends Fragment
         m_settings = Settings.getInstance(requireContext());
     }
 
-    /**
-     * Inflates the layout for this fragment using view binding.
-     *
-     * @param inflater           the LayoutInflater object that can be used to inflate views
-     * @param parent             if non-null, this is the parent view that the fragment's UI should be attached to
-     * @param savedInstanceState if non-null, this fragment is being re-constructed from a previous saved state
-     * @return the root View of the inflated layout
-     */
+    ///////////////////
+    // Inflates the layout for this fragment using view binding.
+    //
+    // @param inflater           the LayoutInflater object that can be used to inflate views
+    // @param parent             if non-null, this is the parent view that the fragment's UI should be attached to
+    // @param savedInstanceState if non-null, this fragment is being re-constructed from a previous saved state
+    // @return the root View of the inflated layout
+    ///
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
@@ -110,13 +111,13 @@ public class TeleopFragment extends Fragment
         return m_binding.getRoot();
     }
 
-    /**
-     * Called immediately after {@link #onCreateView} has returned.
-     * Sets up the action bar, loads match data into the UI, and initializes click listeners.
-     *
-     * @param view               the View returned by {@link #onCreateView}
-     * @param savedInstanceState if non-null, this fragment is being re-constructed from a previous saved state
-     */
+    ////////////////////
+    // Called immediately after {@link #onCreateView} has returned.
+    // Sets up the action bar, loads match data into the UI, and initializes click listeners.
+    //
+    // @param view               the View returned by {@link #onCreateView}
+    // @param savedInstanceState if non-null, this fragment is being re-constructed from a previous saved state
+    ///
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
@@ -127,9 +128,9 @@ public class TeleopFragment extends Fragment
         setupListeners();
     }
 
-    /**
-     * Configures the action bar title and background color based on the team alliance.
-     */
+    ////////////////////
+    // Configures the action bar title and background color based on the team alliance.
+    ///
     private void setupActionBar()
     {
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
@@ -144,9 +145,9 @@ public class TeleopFragment extends Fragment
         }
     }
 
-    /**
-     * Populates the UI components with data from the current {@link MatchData} instance.
-     */
+    ////////////////////
+    // Populates the UI components with data from the current {@link MatchData} instance.
+    ///
     private void loadMatchData()
     {
         if (m_matchData == null)
@@ -160,7 +161,7 @@ public class TeleopFragment extends Fragment
 
         m_binding.teleopHopperTotalText.setText(String.valueOf(m_matchData.getHoppersUsed()));
         updateScoreColor(m_binding.teleopHopperTotalText);
-        //initAccuracyRate(m_matchData.CurrentAccuracyRate());
+        //REMOVEinitAccuracyRate(m_matchData.CurrentAccuracyRate());
 
         m_binding.teleopIntakeShootChip.setChecked(m_matchData.getIntakeAndShoot());
         m_binding.teleopHerdedFuelChip.setChecked(m_matchData.getShovelFuel());
@@ -169,35 +170,31 @@ public class TeleopFragment extends Fragment
         m_binding.teleopPassAzChip.setChecked(m_matchData.getPassAllianceZone() == 1);
 
         Log.v(TAG,">>> from matchData: teleopPassingEffectiveness value = "+m_matchData.getPassingEffectivenessRate());
-        m_binding.teleopPassingEffectivenessSlider.setValue(m_matchData.getPassingEffectivenessRate());  //NEW
-        //initPassingRate(m_matchData.getPassingEffectivenessRate());
+        m_binding.teleopPassingEffectivenessSlider.setValue(m_matchData.getPassingEffectivenessRate());  
+        //REMOVEinitPassingRate(m_matchData.getPassingEffectivenessRate());
 
         initDefenseRate(m_matchData.getDefenseRate());
-
-
-
         setupPhoto();
     }
 
-    /**
-     * Sets up click and checked change listeners for the UI components.
-     * Triggers real-time tab badge updates in the parent activity upon any data change.
-     */
+    ////////////////////
+    // Sets up click and checked change listeners for the UI components.
+    // Triggers real-time tab badge updates in the parent activity upon any data change.
+    ///
     private void setupListeners()
     {
-
         Log.v(TAG, "----> setupListeners(): doing teleopHopperAccuracySlider");
-        m_binding.teleopHopperAccuracySlider.setOnClickListener((l) -> syncAndRefreshBadges());
+        m_binding.teleopHopperAccuracySlider.setOnClickListener((v) -> syncAndRefreshBadges());
 
         Log.v(TAG, "----> setupListeners(): doing teleopPassingEffectivenessSlider");
-        m_binding.teleopPassingEffectivenessSlider.setOnClickListener((l) -> syncAndRefreshBadges());
+        m_binding.teleopPassingEffectivenessSlider.setOnClickListener((v) -> syncAndRefreshBadges());
 
-        //testing ai code
-        //m_binding.teleopHopperAccuracySlider.addOnChangeListener((slider,value,fromUser) -> {
-           //syncAndRefreshBadges();
-        //});
+//REMOVE        //testing ai code
+//REMOVE        //m_binding.teleopHopperAccuracySlider.addOnChangeListener((slider,value,fromUser) -> {
+//REMOVE           //syncAndRefreshBadges();
+  //REMOVE      //});
 
-
+        Log.v(TAG, "----> setupListeners(): doing teleopHopperDecrButton");
         m_binding.teleopHopperDecrButton.setOnClickListener(v -> {
             updateTotalsInt(m_binding.teleopHopperTotalText, false);
             syncAndRefreshBadges();
@@ -206,54 +203,46 @@ public class TeleopFragment extends Fragment
             updateTotalsInt(m_binding.teleopHopperTotalText, true);
             syncAndRefreshBadges();
         });
-
+        Log.v(TAG, "----> setupListeners(): doing Chips");
         m_binding.teleopIntakeShootChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
         m_binding.teleopHerdedFuelChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
         m_binding.teleopPassNzChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
         m_binding.teleopPassAzChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
-
-      //  m_binding.teleopAccuracyRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
-        //m_binding.teleopPassingRateRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
+        Log.v(TAG, "----> setupListeners(): defense radio buttons");
+//REMOVE      //  m_binding.teleopAccuracyRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
+//REMOVE        //m_binding.teleopPassingRateRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
         m_binding.teleopDefenseRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
-
+        Log.v(TAG, "----> setupListeners(): done");
     }
 
-    /**
-     * Synchronizes current fragment data with the {@link MatchData} model and
-     * refreshes the tab badges in the parent activity.
-     */
+    ///////////////////
+    // Synchronizes current fragment data with the {@link MatchData} model and
+    // refreshes the tab badges in the parent activity.
+    ///
     private void syncAndRefreshBadges()
     {
         ((ScoutingActivity) requireActivity()).updateCurrentFragmentData();
     }
 
-    /*
-     * Initializes the accuracy rate radio group selection.
-     *
-     * @param value the index of the selected accuracy level
-     */
-    /*private void initAccuracyRate(int value)
+    /*REMOVE->
+    // Initializes the accuracy rate radio group selection.
+    //
+    // @param value the index of the selected accuracy level
+    ///
+    private void initAccuracyRate(int value)
     {
         if (value >= 0 && value < ACCURACY_IDS.length)
         {
             m_binding.teleopAccuracyRadioGroup.check(ACCURACY_IDS[value]);
         }
     }
-    */
+<-REMOVE*/
 
-
-    /**
-     * Initializes the passing rate radio group selection.
-     *
-     * @param value the index of the selected passing rate
-     */
-
-
-    /**
-     * Initializes the defense rate radio group selection.
-     *
-     * @param value the index of the selected defense rate
-     */
+    /////////////////
+    // Initializes the defense rate radio group selection.
+    //
+    // @param value the index of the selected defense rate
+    ///
     private void initDefenseRate(int value)
     {
         if (value >= 0 && value < DEFENSE_RATE_IDS.length)
@@ -262,37 +251,30 @@ public class TeleopFragment extends Fragment
         }
     }
 
-    /**
-     * Retrieves the selection for neutral zone passing.
-     *
-     * @return 1 if selected, 0 otherwise
-     */
+    /////////////////
+    // Retrieves the selection for neutral zone passing.
+    //
+    // @return 1 if selected, 0 otherwise
+    ///
     public int getPassNeutralZone()
     {
         return m_binding.teleopPassNzChip.isChecked() ? 1 : 0;
     }
 
-    /**
-     * Retrieves the selection for alliance zone passing.
-     *
-     * @return 1 if selected, 0 otherwise
-     */
+    /////////////////
+    // Retrieves the selection for alliance zone passing.
+    //
+    // @return 1 if selected, 0 otherwise
+    ///
     public int getPassAllianceZone()
     {
         return m_binding.teleopPassAzChip.isChecked() ? 1 : 0;
     }
 
-    /**
-     * Initializes the driver ability radio group selection.
-     *
-     * @param value the index of the selected ability level
-     */
-
-
-    /**
-     * Configures the placeholder photo displayed in the teleop screen.
-     * If no photo is assigned, selects a random one from resources.
-     */
+    /////////////////
+    // Configures the placeholder photo displayed in the teleop screen.
+    // If no photo is assigned, selects a random one from resources.
+    ///
     private void setupPhoto()
     {
         m_photoNum = m_matchData.getTeleopPhoto();
@@ -396,12 +378,12 @@ public class TeleopFragment extends Fragment
         }
     }
 
-    /**
-     * Checks if the value in the given TextView exceeds the maximum allowed teleop hoppers.
-     *
-     * @param field the TextView containing the numeric value
-     * @return true if the value is greater than {@link MatchData#MAX_TELEOP_HOPPERS}
-     */
+    ////////////////////
+    // Checks if the value in the given TextView exceeds the maximum allowed teleop hoppers.
+    //
+    // @param field the TextView containing the numeric value
+    // @return true if the value is greater than {@link MatchData#MAX_TELEOP_HOPPERS}
+    ///
     private boolean isGreaterThanMax(TextView field)
     {
         try
@@ -415,11 +397,11 @@ public class TeleopFragment extends Fragment
         }
     }
 
-    /**
-     * Updates the text color of a TextView based on whether its value exceeds the maximum limit.
-     *
-     * @param tView the TextView to update
-     */
+    ////////////////////
+    // Updates the text color of a TextView based on whether its value exceeds the maximum limit.
+    //
+    // @param tView the TextView to update
+    ///
     private void updateScoreColor(TextView tView)
     {
         if (isGreaterThanMax(tView))
@@ -436,12 +418,12 @@ public class TeleopFragment extends Fragment
         }
     }
 
-    /**
-     * Updates a numeric total displayed in a TextView.
-     *
-     * @param tView the TextView to update
-     * @param bIncr true to increment, false to decrement (clamped at 0)
-     */
+    ////////////////////
+    // Updates a numeric total displayed in a TextView.
+    //
+    // @param tView the TextView to update
+    // @param bIncr true to increment, false to decrement (clamped at 0)
+    ///
     public void updateTotalsInt(TextView tView, boolean bIncr)
     {
         try
@@ -457,11 +439,11 @@ public class TeleopFragment extends Fragment
         }
     }
 
-    /**
-     * Retrieves the selected accuracy rate index.
-     *
-     * @return the index of the selected radio button in the accuracy group
-     */
+    ////////////////////
+    // Retrieves the selected accuracy rate index.
+    //
+    // @return the index of the selected radio button in the accuracy group
+    ///
     public int getCurrentAccuracyRate()
     {
         float hopperAccuracyValue = m_binding.teleopHopperAccuracySlider.getValue();
@@ -472,11 +454,11 @@ public class TeleopFragment extends Fragment
 
 
 
-    /**
-     * Retrieves the selected passing effectiveness rate index.
-     *
-     * @return the index of the selected radio button in the passing rate group
-     */
+    ////////////////////
+    // Retrieves the selected passing effectiveness rate index.
+    //
+    // @return the index of the selected radio button in the passing rate group
+    ///
     public int getCurrentPassingEffectivenessRate()
     {
         float PassingEffectValue = m_binding.teleopPassingEffectivenessSlider.getValue();
@@ -485,11 +467,11 @@ public class TeleopFragment extends Fragment
         return PassingEffectValueInt;
     }
 
-    /**
-     * Retrieves the selected defense rate index.
-     *
-     * @return the index of the selected radio button in the defense group
-     */
+    ////////////////////
+    // Retrieves the selected defense rate index.
+    //
+    // @return the index of the selected radio button in the defense group
+    ///
     public int getCurrentDefenseLevel()
     {
         int id = m_binding.teleopDefenseRadioGroup.getCheckedRadioButtonId();
@@ -503,34 +485,15 @@ public class TeleopFragment extends Fragment
         return 0;
     }
 
-    /**
-     * Retrieves the selected driver ability index.
-     *
-     * @return the index of the selected radio button in the driving ability group
-     */
-/*
-    public int getDriverAbility()
-    {
-        int id = m_binding.teleopDrivingAbilityRadioGroup.getCheckedRadioButtonId();
-        for (int i = 0; i < DRIVING_ABILITY_IDS.length; i++)
-        {
-            if (id == DRIVING_ABILITY_IDS[i])
-            {
-                return i;
-            }
-        }
-        return 6;
-    }
+    ////////////////////
+    // Retrieves the selected driver ability index.
+    //
+    // @return the index of the selected radio button in the driving ability group
+    ///
 
- */
-
-
-
-
-
-    /**
-     * Updates the {@link MatchData} object with the current values from the UI components.
-     */
+    //////////////////////
+    // Updates the {@link MatchData} object with the current values from the UI components.
+    ///
     public void updateTeleopData()
     {
         Log.d(TAG, "updateTeleopData");
@@ -556,9 +519,9 @@ public class TeleopFragment extends Fragment
         m_matchData.setShovelFuel(m_binding.teleopHerdedFuelChip.isChecked());
     }
 
-    /**
-     * Called when the fragment is visible to the user and actively running.
-     */
+    //////////////////
+    // Called when the fragment is visible to the user and actively running.
+    ///
     @Override
     public void onResume()
     {
@@ -566,9 +529,9 @@ public class TeleopFragment extends Fragment
         Log.v(TAG, "onResume");
     }
 
-    /**
-     * Cleans up the view binding reference when the fragment view is being destroyed.
-     */
+    ////////////////////
+    // Cleans up the view binding reference when the fragment view is being destroyed.
+    ///
     @Override
     public void onDestroyView()
     {

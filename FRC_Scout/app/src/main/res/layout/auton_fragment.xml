@@ -39,9 +39,9 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/card_margin"
                 android:layout_marginHorizontal="@dimen/card_margin"
-                app:cardBackgroundColor="#719da9"
+                android:layout_marginTop="@dimen/card_margin"
+                app:cardBackgroundColor="#7CABB8"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
 
@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <!-- start PRELOAD CHECKBOX layout -->
+                    <!-- start PRELOAD CHIP layout -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -75,137 +75,124 @@
                             android:layout_marginStart="15dp"
                             android:text="@string/shot_preloaded_fuel" />
                     </LinearLayout>
-                    <!-- end PRELOAD CHECKBOX layout -->
+                    <!-- end PRELOAD CHIP layout -->
 
-                    <!-- start PRELOAD ACCURACY layout -->
+                    <!-- start PRELOAD ACCURACY section layout -->
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="155dp"
-                        android:background="#8DB0BA"
+                        android:layout_height="wrap_content"
+                        android:background="#99BDC8"
+                        android:layout_marginBottom="15dp"
                         android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="9dp"
+                            android:layout_marginStart="9dp"
+                            android:text="PRELOAD ACCURACY RATE"
+                            android:textColor="@color/customTextPrimary"
+                            android:textSize="@dimen/font_medium"
+                            android:textStyle="bold" />
 
-                        android:text="PRELOAD ACCURACY RATE:"
-
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="@dimen/font_medium"
-                        android:padding="@dimen/section_padding"
-                        android:textStyle="bold" />
-
-                    <LinearLayout
-                        android:layout_width="575dp"
-                        android:layout_marginTop="7dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:background="@drawable/rounded_rect"
-                        android:backgroundTint="#D7E3E6"
-                        android:layout_marginStart="9dp"
-                        >
-
-                        <!-- start text for PRELOAD ACCURACY SLIDER layout -->
-                        <LinearLayout
-                            android:layout_width="580dp"
-                            android:layout_height="30dp"
-                            android:paddingStart="15dp"
-                            android:layout_marginTop="5dp"
-                            android:orientation="horizontal">
-
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="N/A"
-                                android:paddingStart="-1dp"
-                                android:textColor="@color/customTextPrimary"
-                                android:textSize="19sp"
-                                />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="None"
-                                android:layout_marginStart="36dp"
-                                android:textColor="@color/customTextPrimary"
-                                android:textSize="19sp"
-                                />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Few"
-                                android:layout_marginStart="51dp"
-                                android:textColor="@color/customTextPrimary"
-                                android:textSize="19sp"
-                                />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="25%"
-                                android:layout_marginStart="58dp"
-                                android:textColor="@color/customTextPrimary"
-                                android:textSize="19sp"
-                                />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="57dp"
-                                android:text="50%"
-                                android:textColor="@color/customTextPrimary"
-                                android:textSize="19sp"
-                                />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="75%"
-                                android:layout_marginStart="55dp"
-                                android:textColor="@color/customTextPrimary"
-                                android:textSize="19sp"
-                                />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Most"
-                                android:layout_marginStart="36dp"
-                                android:textColor="@color/customTextPrimary"
-                                android:textSize="19sp"
-                                />
-
-                        </LinearLayout>
-
-                        <!-- end text for PRELOAD ACCURACY SLIDER layout -->
-
-                        <!-- start PRELOAD ACCURACY SLIDER layout -->
+                        <!-- start text for PRELOAD ACCURACY text labels layout -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            >
+                            android:layout_marginStart="9dp"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginEnd="9dp"
+                            android:background="@drawable/rounded_rect"
+                            android:backgroundTint="#D7E3E6"
+                            android:orientation="vertical">
 
-                            <com.google.android.material.slider.Slider
-                                android:id="@+id/auton_preload_accuracy_slider"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingStart="20dp"
-                                android:stepSize="1.0"
-                                android:value="0.0"
-                                android:valueFrom="0.0"
-                                android:valueTo="6.0"
-                                app:labelBehavior="gone"
-                                app:thumbColor="#547F8C"
-                                app:tickColorActive="#c64e34"
-                                app:trackColorActive="@color/customTextPrimary"
-                                app:trackColorInactive="@color/customTextPrimary" />
+                                android:layout_marginTop="5dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:text="N/A"
+                                    android:textColor="@color/customTextPrimary"
+                                    android:textSize="19sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="36dp"
+                                    android:text="None"
+                                    android:textColor="@color/customTextPrimary"
+                                    android:textSize="19sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="51dp"
+                                    android:text="Few"
+                                    android:textColor="@color/customTextPrimary"
+                                    android:textSize="19sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="58dp"
+                                    android:text="25%"
+                                    android:textColor="@color/customTextPrimary"
+                                    android:textSize="19sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="57dp"
+                                    android:text="50%"
+                                    android:textColor="@color/customTextPrimary"
+                                    android:textSize="19sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="55dp"
+                                    android:text="75%"
+                                    android:textColor="@color/customTextPrimary"
+                                    android:textSize="19sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="36dp"
+                                    android:text="Most"
+                                    android:textColor="@color/customTextPrimary"
+                                    android:textSize="19sp" />
+
+                            </LinearLayout>
+                            <!-- end text for PRELOAD ACCURACY text labels layout -->
+
+                            <!-- start PRELOAD ACCURACY SLIDER layout -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <com.google.android.material.slider.Slider
+                                    android:id="@+id/auton_preload_accuracy_slider"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:stepSize="1.0"
+                                    android:value="0.0"
+                                    android:valueFrom="0.0"
+                                    android:valueTo="6.0"
+                                    app:labelBehavior="gone"
+                                    app:thumbColor="#547F8C"
+                                    app:tickColorActive="#c64e34"
+                                    app:trackColorActive="@color/customTextPrimary"
+                                    app:trackColorInactive="@color/customTextPrimary" />
+                            </LinearLayout>
 
                         </LinearLayout>
-
-                    </LinearLayout>
-                    <!-- end PRELOAD ACCURACY layout -->
+                        <!-- end PRELOAD ACCURACY layout -->
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -216,10 +203,10 @@
             <!-- start HOPPER card layout -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="210dp"
-                android:layout_marginTop="@dimen/card_margin"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/card_margin"
-                app:cardBackgroundColor="#f0a576"
+                android:layout_marginTop="@dimen/card_margin"
+                app:cardBackgroundColor="#F2B38B"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
 
@@ -232,128 +219,126 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:background="#ee965f"
+                        android:orientation="horizontal"
                         android:padding="@dimen/section_padding">
 
                         <TextView
                             android:id="@+id/auton_hopper_label"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="23dp"
                             android:layout_marginStart="4dp"
                             android:text="@string/hoppers_shot"
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_medium"
                             android:textStyle="bold" />
 
+                        <!-- start HOPPER - BUTTON layout -->
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/auton_hopper_decr_button"
                             android:layout_width="80dp"
                             android:layout_height="40dp"
                             android:layout_marginStart="70dp"
-                            android:padding="0dp"
                             android:insetTop="0dp"
                             android:insetBottom="0dp"
-                            app:backgroundTint="#c64e34"
+                            android:padding="0dp"
                             android:text="@string/decrease"
                             android:textAlignment="center"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/font_medium"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            app:backgroundTint="#c64e34" />
+                        <!-- end HOPPER - BUTTON layout -->
 
                         <TextView
                             android:id="@+id/auton_hopper_total_text"
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:textAlignment="center"
                             android:text="@string/hopper_count_total"
+                            android:textAlignment="center"
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_large" />
 
+                        <!-- start HOPPER + BUTTON layout -->
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/auton_hopper_incr_button"
                             android:layout_width="80dp"
                             android:layout_height="40dp"
-                            android:padding="0dp"
                             android:insetTop="0dp"
                             android:insetBottom="0dp"
-                            app:backgroundTint="#c64e34"
+                            android:padding="0dp"
                             android:text="@string/increase"
                             android:textAlignment="center"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/font_medium"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            app:backgroundTint="#c64e34" />
+                        <!-- end HOPPER + BUTTON layout -->
 
                     </LinearLayout>
                     <!-- end HOPPER +/- BUTTONS layout -->
 
-                    <!-- start HOPPER ACCURACY layout -->
+                    <!-- start HOPPER ACCURACY section layout -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="9dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginStart="4dp"
-                        android:text="ACCURACY RATE:"
-                        android:backgroundTint="#ee8a5f"
-                        android:background="@drawable/rounded_rect"
+                        android:text="ACCURACY RATE"
                         android:textColor="@color/customTextPrimary"
                         android:textSize="@dimen/font_medium"
-                        android:padding="@dimen/section_padding"
                         android:textStyle="bold" />
 
                     <LinearLayout
-                        android:layout_width="575dp"
-                        android:layout_marginTop="7dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:layout_marginStart="9dp"
+                        android:layout_marginEnd="9dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginBottom="15dp"
                         android:background="@drawable/rounded_rect"
                         android:backgroundTint="#fdf1e9"
-                        android:layout_marginStart="9dp"
-                        >
+                        android:orientation="vertical">
 
-                        <!-- start text for HOPPER ACCURACY SLIDER layout -->
+                        <!-- start text for HOPPER ACCURACY text labels layout -->
                         <LinearLayout
-                            android:layout_width="580dp"
-                            android:layout_height="30dp"
-                            android:paddingStart="15dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:orientation="horizontal">
-
+                            android:orientation="horizontal"
+                            >
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
                                 android:text="N/A"
-                                android:paddingStart="-1dp"
                                 android:textColor="@color/customTextPrimary"
-                                android:textSize="19sp"
-                                />
+                                android:textSize="19sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="None"
                                 android:layout_marginStart="36dp"
+                                android:text="None"
                                 android:textColor="@color/customTextPrimary"
-                                android:textSize="19sp"
-                                />
+                                android:textSize="19sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Few"
                                 android:layout_marginStart="51dp"
+                                android:text="Few"
                                 android:textColor="@color/customTextPrimary"
-                                android:textSize="19sp"
-                                />
+                                android:textSize="19sp" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="25%"
                                 android:layout_marginStart="58dp"
+                                android:text="25%"
                                 android:textColor="@color/customTextPrimary"
-                                android:textSize="19sp"
-                                />
+                                android:textSize="19sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -361,26 +346,23 @@
                                 android:layout_marginStart="57dp"
                                 android:text="50%"
                                 android:textColor="@color/customTextPrimary"
-                                android:textSize="19sp"
-                                />
+                                android:textSize="19sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="75%"
                                 android:layout_marginStart="55dp"
+                                android:text="75%"
                                 android:textColor="@color/customTextPrimary"
-                                android:textSize="19sp"
-                                />
+                                android:textSize="19sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Most"
                                 android:layout_marginStart="36dp"
+                                android:text="Most"
                                 android:textColor="@color/customTextPrimary"
-                                android:textSize="19sp"
-                                />
+                                android:textSize="19sp" />
 
                         </LinearLayout>
 
@@ -388,9 +370,8 @@
 
                         <!-- start HOPPER ACCURACY SLIDER layout -->
                         <LinearLayout
-                            android:layout_width="580dp"
-                            android:layout_height="wrap_content"
-                            >
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
                             <com.google.android.material.slider.Slider
                                 android:id="@+id/auton_hopper_accuracy_slider"
@@ -401,17 +382,15 @@
                                 android:value="0.0"
                                 android:valueFrom="0.0"
                                 android:valueTo="6.0"
-                                app:trackColorActive="@color/customTextPrimary"
-                                app:trackColorInactive="@color/customTextPrimary"
+                                app:labelBehavior="gone"
                                 app:thumbColor="#c64e34"
                                 app:tickColorActive="#c64e34"
-                                app:labelBehavior="gone" />
+                                app:trackColorActive="@color/customTextPrimary"
+                                app:trackColorInactive="@color/customTextPrimary" />
 
                         </LinearLayout>
                         <!-- end HOPPER ACCURACY SLIDER layout -->
                     </LinearLayout>
-
-
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

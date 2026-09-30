@@ -55,20 +55,20 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:background="#A2AAF2"
+                        android:orientation="horizontal"
                         android:padding="@dimen/section_padding">
 
                         <TextView
                             android:id="@+id/teleop_hopper_label"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="23dp"
                             android:layout_marginStart="4dp"
+                            android:layout_marginTop="4dp"
                             android:text="@string/hoppers_shot"
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_medium"
                             android:textStyle="bold" />
-
 
                         <!-- start HOPPER - BUTTON layout -->
                         <com.google.android.material.button.MaterialButton
@@ -76,24 +76,23 @@
                             android:layout_width="80dp"
                             android:layout_height="40dp"
                             android:layout_marginStart="70dp"
-                            android:padding="0dp"
                             android:insetTop="0dp"
                             android:insetBottom="0dp"
-                            app:backgroundTint="#338F8D"
+                            android:padding="0dp"
                             android:text="@string/decrease"
                             android:textAlignment="center"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/font_medium"
+                            app:backgroundTint="#338F8D"
                             android:textStyle="bold" />
-
                         <!-- end HOPPER - BUTTON layout -->
 
                         <TextView
                             android:id="@+id/teleop_hopper_total_text"
                             android:layout_width="70dp"
-                            android:layout_height="match_parent"
-                            android:textAlignment="center"
+                            android:layout_height="wrap_content"
                             android:text="@string/hopper_count_total"
+                            android:textAlignment="center"
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_large" />
 
@@ -102,157 +101,131 @@
                             android:id="@+id/teleop_hopper_incr_button"
                             android:layout_width="80dp"
                             android:layout_height="40dp"
-                            android:padding="0dp"
                             android:insetTop="0dp"
                             android:insetBottom="0dp"
-                            app:backgroundTint="#338F8D"
+                            android:padding="0dp"
                             android:text="@string/increase"
                             android:textAlignment="center"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/font_medium"
+                            app:backgroundTint="#338F8D"
                             android:textStyle="bold" />
-
                         <!-- end HOPPER + BUTTONS layout -->
 
                     </LinearLayout>
                     <!-- end HOPPER +/- BUTTONS layout -->
 
-
-
+                    <!-- start HOPPER ACCURACY section layout -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginStart="4dp"
-                        android:text="ACCURACY RATE:"
-                        android:backgroundTint="#B8BEF5"
-                        android:background="@drawable/rounded_rect"
+                        android:layout_marginStart="9dp"
+                        android:layout_marginTop="9dp"
+                        android:text="ACCURACY RATE"
                         android:textColor="@color/customTextPrimary"
                         android:textSize="@dimen/font_medium"
-                        android:padding="@dimen/section_padding"
                         android:textStyle="bold" />
 
                     <LinearLayout
-                        android:layout_width="575dp"
-                        android:layout_marginTop="7dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:background="@drawable/rounded_rect"
-                        android:backgroundTint="#FFFFFF"
-                        android:layout_marginStart="9dp"
-                        >
-
-                    <!-- start text for HOPPER ACCURACY SLIDER layout -->
-                    <LinearLayout
-                        android:layout_width="580dp"
-                        android:layout_height="30dp"
-                        android:paddingStart="15dp"
-                        android:layout_marginTop="5dp"
-                        android:orientation="horizontal">
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="N/A"
-                            android:paddingStart="-1dp"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="19sp"
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="None"
-                            android:layout_marginStart="36dp"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="19sp"
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Few"
-                            android:layout_marginStart="51dp"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="19sp"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="25%"
-                            android:layout_marginStart="58dp"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="19sp"
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="57dp"
-                            android:text="50%"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="19sp"
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="75%"
-                            android:layout_marginStart="55dp"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="19sp"
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Most"
-                            android:layout_marginStart="36dp"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="19sp"
-                            />
-
-                    </LinearLayout>
-
-            <!-- end text for HOPPER ACCURACY SLIDER layout -->
-
-                    <!-- start HOPPER ACCURACY SLIDER layout -->
-                    <LinearLayout
-                        android:layout_width="580dp"
-                        android:layout_height="wrap_content"
-                        >
-
-                        <com.google.android.material.slider.Slider
-                            android:id="@+id/teleop_hopper_accuracy_slider"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingStart="20dp"
-                            android:stepSize="1.0"
-                            android:value="0.0"
-                            android:valueFrom="0.0"
-                            android:valueTo="6.0"
-                            app:trackColorActive="@color/customTextPrimary"
-                            app:trackColorInactive="@color/customTextPrimary"
-                            app:thumbColor="#6E79D5"
-                            app:tickColorActive="#c64e34"
-                            app:labelBehavior="gone" />
-
-                    </LinearLayout>
-                    <!-- end HOPPER ACCURACY SLIDER layout -->
-                    </LinearLayout>
-
-
-
-                    <!-- start INTAKE AND SHOOT CHIP layout -->
-                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#CACFF9"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="-5dp"
-                        android:padding="@dimen/section_padding">
+                        android:layout_marginStart="9dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginEnd="9dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/rounded_rect"
+                        android:backgroundTint="#EBECFB"
+                        android:orientation="vertical">
 
+                        <!-- start text for HOPPER ACCURACY text labels layout -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:text="N/A"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="19sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="36dp"
+                                android:text="None"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="19sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="51dp"
+                                android:text="Few"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="19sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="58dp"
+                                android:text="25%"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="19sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="57dp"
+                                android:text="50%"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="19sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="55dp"
+                                android:text="75%"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="19sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="36dp"
+                                android:text="Most"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="19sp" />
+                        </LinearLayout>
+                        <!-- end text for HOPPER ACCURACY SLIDER layout -->
+
+                        <!-- start HOPPER ACCURACY SLIDER layout -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.google.android.material.slider.Slider
+                                android:id="@+id/teleop_hopper_accuracy_slider"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:stepSize="1.0"
+                                android:value="0.0"
+                                android:valueFrom="0.0"
+                                android:valueTo="6.0"
+                                app:labelBehavior="gone"
+                                app:thumbColor="#6E79D5"
+                                app:tickColorActive="#c64e34"
+                                app:trackColorActive="@color/customTextPrimary"
+                                app:trackColorInactive="@color/customTextPrimary" />
+
+                        </LinearLayout>
+                        <!-- end HOPPER ACCURACY SLIDER layout -->
+                    </LinearLayout>
+
+                    <!-- start INTAKE AND SHOOT CHIP layout -->
                         <com.google.android.material.chip.Chip
                             android:id="@+id/teleop_intake_shoot_chip"
                             style="@style/CustomChipStyle"
@@ -260,8 +233,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:text="@string/intake_while_shooting" />
-
-                    </LinearLayout>
                     <!--end INTAKE AND SHOOT CHIP layout -->
 
                 </LinearLayout>
@@ -323,147 +294,126 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/alliance_zone" />
-
                         </com.google.android.material.chip.ChipGroup>
                         <!-- end PASSING ZONE CHIPS layout -->
 
                     </LinearLayout>
                     <!-- end PASSING FROM layout -->
 
-
-                    <!-- start PASSING EFFECTIVENESS RATING layout -->
+                    <!-- start PASSING RATING layout -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#ADD8EF"
-                        android:orientation="vertical"
-                        android:padding="@dimen/section_padding">
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/teleop_passing_rate_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
+                            android:layout_marginStart="9dp"
+                            android:layout_marginTop="9dp"
                             android:text="@string/passing_rate"
                             android:textColor="@color/customTextPrimary"
                             android:textSize="@dimen/font_medium"
                             android:textStyle="bold" />
-                        <LinearLayout
-                            android:layout_width="575dp"
-                            android:layout_marginTop="7dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:background="@drawable/rounded_rect"
-                            android:backgroundTint="#FFFFFF"
-                            android:layout_marginStart="9dp"
-                            >
 
-                            <!-- start text for HOPPER ACCURACY SLIDER layout -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="9dp"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginEnd="9dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@drawable/rounded_rect"
+                            android:backgroundTint="#E5EEF8"
+                            android:orientation="vertical">
+
+                            <!-- start text for PASSING RATE text labels layout -->
                             <LinearLayout
-                                android:layout_width="580dp"
-                                android:layout_height="30dp"
-                                android:paddingStart="15dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
                                 android:orientation="horizontal">
 
-
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
                                     android:text="N/A"
-                                    android:paddingStart="-1dp"
                                     android:textColor="@color/customTextPrimary"
-                                    android:textSize="19sp"
-                                    />
+                                    android:textSize="19sp" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginStart="80dp"
                                     android:text="Low"
-                                    android:layout_marginStart="36dp"
                                     android:textColor="@color/customTextPrimary"
-                                    android:textSize="19sp"
-                                    />
+                                    android:textSize="19sp" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginStart="80dp"
                                     android:text="Medium"
-                                    android:layout_marginStart="51dp"
                                     android:textColor="@color/customTextPrimary"
-                                    android:textSize="19sp"
-                                    />
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Large"
-                                    android:layout_marginStart="58dp"
-                                    android:textColor="@color/customTextPrimary"
-                                    android:textSize="19sp"
-                                    />
+                                    android:textSize="19sp" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="57dp"
+                                    android:layout_marginStart="80dp"
+                                    android:text="Large"
+                                    android:textColor="@color/customTextPrimary"
+                                    android:textSize="19sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="75dp"
                                     android:text="Tons"
                                     android:textColor="@color/customTextPrimary"
-                                    android:textSize="19sp"
-                                    />
+                                    android:textSize="19sp" />
 
                             </LinearLayout>
 
-                            <!-- end text for HOPPER ACCURACY SLIDER layout -->
+                            <!-- end PASSING RATE text labels layout -->
 
-                            <!-- start HOPPER ACCURACY SLIDER layout -->
+                            <!-- start PASSING RATE SLIDER layout -->
                             <LinearLayout
-                                android:layout_width="580dp"
-                                android:layout_height="wrap_content"
-                                >
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
 
                                 <com.google.android.material.slider.Slider
                                     android:id="@+id/teleop_passing_effectiveness_slider"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:paddingStart="20dp"
                                     android:stepSize="1.0"
                                     android:value="0.0"
                                     android:valueFrom="0.0"
                                     android:valueTo="4.0"
-                                    app:trackColorActive="@color/customTextPrimary"
-                                    app:trackColorInactive="@color/customTextPrimary"
+                                    app:labelBehavior="gone"
                                     app:thumbColor="#6E79D5"
                                     app:tickColorActive="#c64e34"
-                                    app:labelBehavior="gone" />
+                                    app:trackColorActive="@color/customTextPrimary"
+                                    app:trackColorInactive="@color/customTextPrimary" />
 
                             </LinearLayout>
-                            <!-- end HOPPER ACCURACY SLIDER layout -->
+                            <!-- end PASSING RATE SLIDER layout -->
                         </LinearLayout>
+                        <!-- end PASSING RATING layout -->
 
-
-
-
-                    </LinearLayout>
-                    <!-- end PASSING EFFECTIVENESS RATING layout -->
-
-                    <!-- start HERDING FUEL CHIP layout -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#F0FFFF"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/section_padding">
-
+                        <!-- start HERDING FUEL CHIP layout -->
                         <com.google.android.material.chip.Chip
                             android:id="@+id/teleop_herded_fuel_chip"
                             style="@style/CustomChipStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
+                            android:layout_marginStart="9dp"
                             android:text="@string/herded_lots_of_fuel" />
+                        <!--end HERDING FUEL CHIP layout -->
                     </LinearLayout>
-                    <!--end HERDING FUEL CHIP layout -->
-
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
             <!-- end PASSING SECTION card layout -->
@@ -487,7 +437,7 @@
 
                     <TextView
                         android:id="@+id/teleop_defense_label"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:text="@string/defense"
