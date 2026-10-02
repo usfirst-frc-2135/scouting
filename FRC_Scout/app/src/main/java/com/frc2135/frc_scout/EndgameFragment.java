@@ -132,7 +132,11 @@ public class EndgameFragment extends Fragment
 
         m_binding.endgameCommentsInput.setText(m_matchData.getComment());
         m_binding.noShowChip.setChecked(m_matchData.getNoShow());
+
         m_binding.endgameDrivingAbilitySlider.setValue(m_matchData.getDriverAbility());
+
+        m_binding.endgameDiedSlider.setValue(m_matchData.getDiedValue());
+
         //TODO add died slider here
     }
 
@@ -142,6 +146,10 @@ public class EndgameFragment extends Fragment
     ///
     private void setupListeners()
     {
+        m_binding.endgameDrivingAbilitySlider.setOnClickListener((l) -> syncAndRefreshBadges());
+
+        m_binding.endgameDiedSlider.setOnClickListener((l) -> syncAndRefreshBadges());
+
         m_binding.endgameGenerateQrButton.setEnabled(true);
 
         m_binding.endgameGenerateQrButton.setOnClickListener(view -> {
@@ -149,7 +157,6 @@ public class EndgameFragment extends Fragment
             String validationMsg = m_matchData.validateEntries();
             if (!validationMsg.isEmpty())
             {
-                Log.w(TAG, "Match data validation failed: " + validationMsg);
                 Snackbar snackbar = Snackbar.make(m_binding.getRoot(), validationMsg, Snackbar.LENGTH_LONG);
 
                 // Increase max lines to ensure all validation errors are visible
@@ -165,7 +172,6 @@ public class EndgameFragment extends Fragment
             }
             else
             {
-                Log.i(TAG, "Match data validation successful: " + validationMsg);
                 FragmentManager fm = requireActivity().getSupportFragmentManager();
                 QRCodeDialog dialog = QRCodeDialog.newInstance(m_matchData, true);
                 dialog.show(fm, QRTAG);
@@ -182,8 +188,14 @@ public class EndgameFragment extends Fragment
     {
         float drivingAbilitySliderValue = m_binding.endgameDrivingAbilitySlider.getValue();
         int drivingAbilitySliderValueInt = (int) drivingAbilitySliderValue;
-        Log.v(TAG,"===> getCurrentAccuracyRate: returning value: "+ drivingAbilitySliderValueInt);
         return drivingAbilitySliderValueInt;
+    }
+
+    public int getCurrentDiedValue()
+    {
+        float diedValue = m_binding.endgameDiedSlider.getValue();
+        int endgameDiedSliderInt = (int) diedValue;
+        return endgameDiedSliderInt;
     }
 
     //////////////////////
@@ -212,6 +224,8 @@ public class EndgameFragment extends Fragment
         m_matchData.setComment(Objects.requireNonNull(m_binding.endgameCommentsInput.getText()).toString());
         m_matchData.setNoShow(m_binding.noShowChip.isChecked());
         m_matchData.setDriveAbility(getCurrentDriverAbility());
+        m_matchData.setDiedValue(getCurrentDiedValue());
+
     }
 
     //////////////////////

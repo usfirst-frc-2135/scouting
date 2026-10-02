@@ -91,7 +91,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="58dp"
+                                android:layout_marginStart="63.5dp"
                                 android:text="Slow"
                                 android:textColor="@color/customTextPrimary"
                                 android:textSize="19sp" />
@@ -99,7 +99,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="61dp"
+                                android:layout_marginStart="68.5dp"
                                 android:text="Jerky"
                                 android:textColor="@color/customTextPrimary"
                                 android:textSize="19sp" />
@@ -107,7 +107,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="72dp"
+                                android:layout_marginStart="69.5dp"
                                 android:text="Avg"
                                 android:textColor="@color/customTextPrimary"
                                 android:textSize="19sp" />
@@ -115,7 +115,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="72dp"
+                                android:layout_marginStart="75dp"
                                 android:text="Fast"
                                 android:textColor="@color/customTextPrimary"
                                 android:textSize="19sp" />
@@ -211,7 +211,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="70dp"
+                                android:layout_marginStart="84dp"
                                 android:text="15-30s"
                                 android:textColor="@color/customTextPrimary"
                                 android:textSize="19sp" />
@@ -219,7 +219,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="70dp"
+                                android:layout_marginStart="81dp"
                                 android:text="30-60s"
                                 android:textColor="@color/customTextPrimary"
                                 android:textSize="19sp" />
@@ -227,7 +227,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="70dp"
+                                android:layout_marginStart="77dp"
                                 android:text="60-90s"
                                 android:textColor="@color/customTextPrimary"
                                 android:textSize="19sp" />
