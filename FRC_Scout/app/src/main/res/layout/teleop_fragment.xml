@@ -49,6 +49,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
                     android:orientation="vertical">
 
                     <!-- start HOPPER +/- BUTTONS layout -->
@@ -115,16 +116,38 @@
                     </LinearLayout>
                     <!-- end HOPPER +/- BUTTONS layout -->
 
-                    <!-- start HOPPER ACCURACY section layout -->
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="9dp"
-                        android:layout_marginTop="9dp"
-                        android:text="ACCURACY RATE"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="@dimen/font_medium"
-                        android:textStyle="bold" />
+                        android:layout_marginTop="-7dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="160dp"
+                            android:layout_marginStart="9dp"
+                            android:layout_marginTop="9dp"
+                            android:text="ACCURACY RATE"
+                            android:textColor="@color/customTextPrimary"
+                            android:textSize="@dimen/font_medium"
+                            android:textStyle="bold" />
+
+                        <!-- start INTAKE AND SHOOT CHIP layout -->
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/teleop_intake_shoot_chip"
+                            style="@style/CustomChipStyle"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="7dp"
+                            android:text="@string/intake_while_shooting" />
+                        <!--end INTAKE AND SHOOT CHIP layout -->
+
+                    </LinearLayout>
+
+                    <!-- start HOPPER ACCURACY section layout -->
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -225,16 +248,6 @@
                         <!-- end HOPPER ACCURACY SLIDER layout -->
                     </LinearLayout>
 
-                    <!-- start INTAKE AND SHOOT CHIP layout -->
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/teleop_intake_shoot_chip"
-                            style="@style/CustomChipStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:text="@string/intake_while_shooting" />
-                    <!--end INTAKE AND SHOOT CHIP layout -->
-
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
             <!-- end GAME PIECE MANIPULATION card layout -->
@@ -305,18 +318,42 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#ADD8EF"
+                        android:paddingBottom="5dp"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/teleop_passing_rate_label"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="9dp"
-                            android:layout_marginTop="9dp"
-                            android:text="@string/passing_rate"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium"
-                            android:textStyle="bold" />
+                            android:orientation="horizontal"
+                            android:layout_marginTop="-7dp"
+                            >
+
+                            <TextView
+                                android:id="@+id/teleop_passing_rate_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="9dp"
+                                android:layout_marginTop="9dp"
+                                android:layout_marginEnd="272dp"
+                                android:text="@string/passing_rate"
+                                android:textColor="@color/customTextPrimary"
+                                android:textSize="@dimen/font_medium"
+                                android:textStyle="bold" />
+
+                            <!-- start HERDING FUEL CHIP layout -->
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/teleop_herded_fuel_chip"
+                                style="@style/CustomChipStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="9dp"
+                                android:layout_marginTop="7dp"
+                                android:text="@string/herded_lots_of_fuel" />
+                            <!--end HERDING FUEL CHIP layout -->
+                        </LinearLayout>
+
+
+
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -403,16 +440,6 @@
                             <!-- end PASSING RATE SLIDER layout -->
                         </LinearLayout>
                         <!-- end PASSING RATING layout -->
-
-                        <!-- start HERDING FUEL CHIP layout -->
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/teleop_herded_fuel_chip"
-                            style="@style/CustomChipStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="9dp"
-                            android:text="@string/herded_lots_of_fuel" />
-                        <!--end HERDING FUEL CHIP layout -->
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
