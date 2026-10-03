@@ -347,7 +347,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="80dp"
+                                    android:layout_marginStart="92dp"
                                     android:text="Low"
                                     android:textColor="@color/customTextPrimary"
                                     android:textSize="19sp" />
@@ -355,7 +355,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="80dp"
+                                    android:layout_marginStart="88dp"
                                     android:text="Medium"
                                     android:textColor="@color/customTextPrimary"
                                     android:textSize="19sp" />
@@ -363,7 +363,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="80dp"
+                                    android:layout_marginStart="75dp"
                                     android:text="Large"
                                     android:textColor="@color/customTextPrimary"
                                     android:textSize="19sp" />

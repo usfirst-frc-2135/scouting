@@ -201,7 +201,7 @@ public class MatchData
         m_hoppersUsed = 0;
         m_accuracyRate = 0;
         m_intakeAndShoot = false;
-        m_passingRate = 0;
+        m_passingRate = 4;
         m_defenseRate = 0;
         m_drivingAbility = 0;
         m_passedNz = 3;
@@ -280,7 +280,7 @@ public class MatchData
         m_hoppersUsed = json.optInt(KEY_TELEOP_HOPPERS_USED, 0);
         m_accuracyRate = json.optInt(KEY_TELEOP_ACC_RATE, 0);
         m_intakeAndShoot = json.optBoolean(KEY_TELEOP_INTAKE_SHOOT, false);
-        m_passingRate = json.optInt(KEY_TELEOP_PASSING_RATE, 0);
+        m_passingRate = json.optInt(KEY_TELEOP_PASSING_RATE, 4);
         m_defenseRate = json.optInt(KEY_TELEOP_DEFENSE_RATE, 0);
         m_drivingAbility = json.optInt(KEY_TELEOP_DRIVE_ABILITY, 0);
         m_passedAz = json.optInt(KEY_TELEOP_PASS_AZ, 3);
@@ -1154,7 +1154,7 @@ public class MatchData
             {
                 msg.append("\nTeleop: Passed from zone set, Passing rate not set!\n");
             }
-            else if (m_passingRate == 5)
+            else if (m_passingRate == 4)
             {
                 msg.append("\nTeleop: Passing rate not set!\n");
             }
