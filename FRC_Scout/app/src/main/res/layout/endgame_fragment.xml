@@ -317,13 +317,27 @@
 
             <!-- Section: COMMENTS -->
             <!-- start COMMENTS layout -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="9dp"
+                android:layout_marginTop="9dp"
+                android:text="Comment"
+                android:textColor="@color/colorOnBackground"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/endgame_comments_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/card_margin"
                 android:layout_marginHorizontal="@dimen/card_margin"
+                android:layout_marginTop="@dimen/card_margin"
+                android:textColorHint="#4B639D"
+                app:boxBackgroundColor="#C9CACC"
+                app:boxStrokeColor="#C9CACC"
+                app:boxStrokeWidth="2dp"
                 app:counterEnabled="true"
                 app:counterMaxLength="200">
 
@@ -331,11 +345,20 @@
                     android:id="@+id/endgame_comments_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/comments"
+                    android:foregroundTint="@color/colorOnPrimary"
                     android:gravity="top|start"
                     android:inputType="textMultiLine"
                     android:minLines="1"
-                    android:textColor="@color/textPrimary" />
+                    android:shadowColor="#15247E"
+                    android:textColor="@color/customTextPrimary"
+                    android:textColorLink="#E9E2E2" />
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </FrameLayout>
             </com.google.android.material.textfield.TextInputLayout>
             <!-- end COMMENTS layout -->
 
@@ -347,18 +370,21 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/endgame_generate_qr_button"
-                    android:layout_width="300dp"
-                    android:layout_height="300dp"
+                    android:layout_width="275dp"
+                    android:layout_height="275dp"
+                    android:contentDescription="@string/qr_code_image"
+                    android:focusable="true"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
+                    android:padding="0dp"
+                    android:shadowColor="@color/colorOnPrimary"
+                    android:textColorHint="#3B59D7"
+                    android:textColorLink="#FFFFFF"
                     app:backgroundTint="@color/colorPrimary"
                     app:icon="@drawable/qr_code_icon"
-                    app:iconSize="120dp"
                     app:iconGravity="textStart"
                     app:iconPadding="0dp"
-                    android:padding="0dp"
-                    android:focusable="true"
-                    android:contentDescription="@string/qr_code_image" />
+                    app:iconSize="120dp" />
 
             </RelativeLayout>
             <!-- end QR Code button layout -->
