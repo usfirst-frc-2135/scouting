@@ -201,7 +201,7 @@ public class MatchData
         m_hoppersUsed = 0;
         m_accuracyRate = 0;
         m_intakeAndShoot = false;
-        m_passingRate = 4;
+        m_passingRate = 0;
         m_defenseRate = 0;
         m_drivingAbility = 0;
         m_passedNz = 3;
@@ -1109,10 +1109,10 @@ public class MatchData
     ///
     public String validateAuton()
     {
-        if (m_autonHopper > MAX_AUTON_HOPPERS)
-        {
-            return "Auton: Hopper score exceeds maximum (" + MAX_AUTON_HOPPERS + ")!\n";
-        }
+//        if (m_autonHopper > MAX_AUTON_HOPPERS)
+//        {
+//            return "Auton: Hopper score exceeds maximum (" + MAX_AUTON_HOPPERS + ")!\n";
+//        }
         return "";
     }
 
@@ -1125,10 +1125,10 @@ public class MatchData
     {
         StringBuilder msg = new StringBuilder();
         // Teleop Hopper validation
-        if (m_hoppersUsed > MAX_TELEOP_HOPPERS)
-        {
-            msg.append("Teleop: Hopper score exceeds maximum (").append(MAX_TELEOP_HOPPERS).append(")!\n");
-        }
+//        if (m_hoppersUsed > MAX_TELEOP_HOPPERS)
+//        {
+//            msg.append("Teleop: Hopper score exceeds maximum (").append(MAX_TELEOP_HOPPERS).append(")!\n");
+//        }
 
         // Teleop Passing validation
         if (m_passedNz == 3 || m_passedAz == 3)
