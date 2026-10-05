@@ -46,6 +46,8 @@
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
 
+                <!-- start Hopper layout -->
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -116,6 +118,7 @@
                     </LinearLayout>
                     <!-- end HOPPER +/- BUTTONS layout -->
 
+                    <!-- start Hopper Accuracy Text layout -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -137,7 +140,6 @@
                         <com.google.android.material.chip.Chip
                             android:id="@+id/teleop_intake_shoot_chip"
                             style="@style/CustomChipStyle"
-
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
@@ -146,6 +148,8 @@
                         <!--end INTAKE AND SHOOT CHIP layout -->
 
                     </LinearLayout>
+
+                    <!-- end Hopper Accuracy text layout -->
 
                     <!-- start HOPPER ACCURACY section layout -->
 
@@ -247,10 +251,14 @@
                         </LinearLayout>
                         <!-- end HOPPER ACCURACY SLIDER layout -->
                     </LinearLayout>
+                    <!-- end Hopper accuracy slide text layout-->
 
                 </LinearLayout>
+                <!-- end Hopper layout-->
             </com.google.android.material.card.MaterialCardView>
             <!-- end GAME PIECE MANIPULATION card layout -->
+
+
 
             <!-- Section: PASSING SECTION -->
             <!-- start PASSING SECTION card layout -->
@@ -263,12 +271,13 @@
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
 
+                <!-- start passing from section layout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <!-- start PASSING FROM layout -->
+                    <!-- start PASSING from text layout -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -311,9 +320,9 @@
                         <!-- end PASSING ZONE CHIPS layout -->
 
                     </LinearLayout>
-                    <!-- end PASSING FROM layout -->
+                    <!-- end PASSING from text layout -->
 
-                    <!-- start PASSING RATING layout -->
+                    <!-- start PASSING From RATE slider layout -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -321,6 +330,7 @@
                         android:paddingBottom="5dp"
                         android:orientation="vertical">
 
+                        <!-- start passing rate text layout -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -328,6 +338,7 @@
                             android:layout_marginTop="-7dp"
                             >
 
+                            <!-- start HERDING FUEL CHIP layout -->
                             <TextView
                                 android:id="@+id/teleop_passing_rate_label"
                                 android:layout_width="wrap_content"
@@ -340,7 +351,6 @@
                                 android:textSize="@dimen/font_medium"
                                 android:textStyle="bold" />
 
-                            <!-- start HERDING FUEL CHIP layout -->
                             <com.google.android.material.chip.Chip
                                 android:id="@+id/teleop_herded_fuel_chip"
                                 style="@style/CustomChipStyle"
@@ -351,10 +361,9 @@
                                 android:text="@string/herded_lots_of_fuel" />
                             <!--end HERDING FUEL CHIP layout -->
                         </LinearLayout>
+                        <!-- end passing rate text layout -->
 
-
-
-
+                        <!-- start passing rate slider text layout-->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -363,7 +372,7 @@
                             android:layout_marginEnd="9dp"
                             android:layout_marginBottom="5dp"
                             android:background="@drawable/rounded_rect"
-                            android:backgroundTint="#E5EEF8"
+                            android:backgroundTint="#E6F3FA"
                             android:orientation="vertical">
 
                             <!-- start text for PASSING RATE text labels layout -->
@@ -414,13 +423,14 @@
                                     android:textSize="19sp" />
 
                             </LinearLayout>
-
                             <!-- end PASSING RATE text labels layout -->
 
                             <!-- start PASSING RATE SLIDER layout -->
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+
+                                >
 
                                 <com.google.android.material.slider.Slider
                                     android:id="@+id/teleop_passing_effectiveness_slider"
@@ -439,19 +449,24 @@
                             </LinearLayout>
                             <!-- end PASSING RATE SLIDER layout -->
                         </LinearLayout>
-                        <!-- end PASSING RATING layout -->
+                        <!-- end PASSING RATE slider text layout -->
                     </LinearLayout>
+                    <!--end passing rate section layout -->
                 </LinearLayout>
+                <!--end passing section layout-->
             </com.google.android.material.card.MaterialCardView>
-            <!-- end PASSING SECTION card layout -->
+            <!--end passing section card-->
+
+
 
             <!-- Section: DEFENSE SECTION -->
             <!-- start DEFENSE SECTION card layout -->
+
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/card_margin"
                 android:layout_marginHorizontal="@dimen/card_margin"
+                android:layout_marginTop="@dimen/card_margin"
                 app:cardBackgroundColor="#adc7ee"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
@@ -459,92 +474,125 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/section_padding">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/teleop_defense_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:text="@string/defense"
-                        android:textColor="@color/customTextPrimary"
-                        android:textSize="@dimen/font_medium"
-                        android:textStyle="bold" />
-
-                    <!-- start DEFENSE RADIO BUTTONS layout -->
-                    <RadioGroup
-                        android:id="@+id/teleop_defense_radio_group"
+                    <!-- start PRELOAD ACCURACY section layout -->
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="4dp"
-                        android:paddingEnd="4dp"
-                        android:orientation="horizontal">
+                        android:layout_marginBottom="10dp"
+                        android:orientation="vertical">
 
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/teleop_defense_na"
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:buttonTint="#051650"
-                            android:text="@string/n_a"
+                            android:layout_marginTop="9dp"
+                            android:layout_marginStart="9dp"
+                            android:text="DEFENSE"
                             android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
+                            android:textSize="@dimen/font_medium"
+                            android:textStyle="bold" />
 
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/teleop_defense_low"
-                            android:layout_width="wrap_content"
+                        <!-- start text for PRELOAD ACCURACY text labels layout -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:buttonTint="#051650"
-                            android:text="@string/low"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
+                            android:layout_marginStart="9dp"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginEnd="9dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@drawable/rounded_rect"
+                            android:backgroundTint="#ecf2fb"
+                            android:orientation="vertical">
 
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/teleop_defense_med_low"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:buttonTint="#051650"
-                            android:text="@string/med_low"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:orientation="horizontal"
+                                >
 
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/teleop_defense_medium"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:buttonTint="#051650"
-                            android:text="@string/medium"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:text="N/A"
+                                    android:textColor="@color/customTextPrimary"
+                                    android:textSize="19sp" />
 
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/teleop_defense_med_high"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:buttonTint="#051650"
-                            android:text="@string/med_high"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="62dp"
+                                    android:text="Low"
+                                    android:textColor="@color/customTextPrimary"
+                                    android:textSize="19sp" />
 
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/teleop_defense_high"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:buttonTint="#051650"
-                            android:text="@string/high"
-                            android:textColor="@color/customTextPrimary"
-                            android:textSize="@dimen/font_medium" />
-                    </RadioGroup>
-                    <!-- end DEFENSE RADIO BUTTONS layout -->
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="68dp"
+                                    android:text="M low"
+                                    android:textColor="@color/customTextPrimary"
+                                    android:textSize="19sp" />
 
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="49dp"
+                                    android:text="Medium"
+                                    android:textColor="@color/customTextPrimary"
+                                    android:textSize="19sp" />
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="49dp"
+                                    android:text="M high"
+                                    android:textColor="@color/customTextPrimary"
+                                    android:textSize="19sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="41dp"
+                                    android:text="High"
+                                    android:textColor="@color/customTextPrimary"
+                                    android:textSize="19sp" />
+
+
+                            </LinearLayout>
+                            <!-- end text for PRELOAD ACCURACY text labels layout -->
+
+                            <!-- start PRELOAD ACCURACY SLIDER layout -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                >
+
+                                <com.google.android.material.slider.Slider
+                                    android:id="@+id/teleop_defense_effectiveness_slider"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:stepSize="1.0"
+                                    android:value="0.0"
+                                    android:valueFrom="0.0"
+                                    android:valueTo="5.0"
+                                    app:labelBehavior="gone"
+                                    app:thumbColor="#598edd"
+                                    app:tickColorActive="#c64e34"
+                                    app:trackColorActive="@color/customTextPrimary"
+                                    app:trackColorInactive="@color/customTextPrimary" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+                        <!-- end PRELOAD ACCURACY layout -->
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
+            <!-- end PRELOAD card layout -->
+
             <!-- end DEFENSE SECTION card layout -->
 
 

@@ -66,7 +66,7 @@ public class TeleopFragment extends Fragment
             //R.id.teleop_passing_rate_tons
     };
 <-REMOVE*/
-
+/*REMOVE->
     private static final int[] DEFENSE_RATE_IDS = {
             R.id.teleop_defense_na,
             R.id.teleop_defense_low,
@@ -75,6 +75,8 @@ public class TeleopFragment extends Fragment
             R.id.teleop_defense_med_high,
             R.id.teleop_defense_high
     };
+
+ <-REMOVE*/
 
     private MatchData m_matchData;
     private TeleopFragmentBinding m_binding;
@@ -161,7 +163,7 @@ public class TeleopFragment extends Fragment
 
         m_binding.teleopHopperTotalText.setText(String.valueOf(m_matchData.getHoppersUsed()));
         updateScoreColor(m_binding.teleopHopperTotalText);
-        //REMOVEinitAccuracyRate(m_matchData.CurrentAccuracyRate());
+
 
         m_binding.teleopIntakeShootChip.setChecked(m_matchData.getIntakeAndShoot());
         m_binding.teleopHerdedFuelChip.setChecked(m_matchData.getShovelFuel());
@@ -170,10 +172,10 @@ public class TeleopFragment extends Fragment
         m_binding.teleopPassAzChip.setChecked(m_matchData.getPassAllianceZone() == 1);
 
         Log.v(TAG,">>> from matchData: teleopPassingEffectiveness value = "+m_matchData.getPassingEffectivenessRate());
-        m_binding.teleopPassingEffectivenessSlider.setValue(m_matchData.getPassingEffectivenessRate());  
-        //REMOVEinitPassingRate(m_matchData.getPassingEffectivenessRate());
+        m_binding.teleopPassingEffectivenessSlider.setValue(m_matchData.getPassingEffectivenessRate());
 
-        initDefenseRate(m_matchData.getDefenseRate());
+        m_binding.teleopDefenseEffectivenessSlider.setValue(m_matchData.getDefenseRate());
+
         setupPhoto();
     }
 
@@ -189,10 +191,8 @@ public class TeleopFragment extends Fragment
         Log.v(TAG, "----> setupListeners(): doing teleopPassingEffectivenessSlider");
         m_binding.teleopPassingEffectivenessSlider.setOnClickListener((v) -> syncAndRefreshBadges());
 
-//REMOVE        //testing ai code
-//REMOVE        //m_binding.teleopHopperAccuracySlider.addOnChangeListener((slider,value,fromUser) -> {
-//REMOVE           //syncAndRefreshBadges();
-  //REMOVE      //});
+        m_binding.teleopDefenseEffectivenessSlider.setOnClickListener((v) -> syncAndRefreshBadges());
+
 
         Log.v(TAG, "----> setupListeners(): doing teleopHopperDecrButton");
         m_binding.teleopHopperDecrButton.setOnClickListener(v -> {
@@ -211,7 +211,7 @@ public class TeleopFragment extends Fragment
         Log.v(TAG, "----> setupListeners(): defense radio buttons");
 //REMOVE      //  m_binding.teleopAccuracyRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
 //REMOVE        //m_binding.teleopPassingRateRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
-        m_binding.teleopDefenseRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
+       //REMOVE m_binding.teleopDefenseRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
         Log.v(TAG, "----> setupListeners(): done");
     }
 
@@ -243,13 +243,7 @@ public class TeleopFragment extends Fragment
     //
     // @param value the index of the selected defense rate
     ///
-    private void initDefenseRate(int value)
-    {
-        if (value >= 0 && value < DEFENSE_RATE_IDS.length)
-        {
-            m_binding.teleopDefenseRadioGroup.check(DEFENSE_RATE_IDS[value]);
-        }
-    }
+
 
     /////////////////
     // Retrieves the selection for neutral zone passing.
@@ -474,15 +468,10 @@ public class TeleopFragment extends Fragment
     ///
     public int getCurrentDefenseLevel()
     {
-        int id = m_binding.teleopDefenseRadioGroup.getCheckedRadioButtonId();
-        for (int i = 0; i < DEFENSE_RATE_IDS.length; i++)
-        {
-            if (id == DEFENSE_RATE_IDS[i])
-            {
-                return i;
-            }
-        }
-        return 0;
+        float DefenseEffectValue = m_binding.teleopDefenseEffectivenessSlider.getValue();
+        int DefenseEffectValueInt = (int) DefenseEffectValue;
+        Log.v(TAG,"===> getCurrentDefenseEffectivenessRate: returning value: "+DefenseEffectValueInt);
+        return DefenseEffectValueInt;
     }
 
     ////////////////////
