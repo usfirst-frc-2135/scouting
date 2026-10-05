@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/card_margin"
                 android:layout_marginTop="@dimen/card_margin"
-                app:cardBackgroundColor="#9aa3f2"
+                app:cardBackgroundColor="#ADCAAD"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
 
@@ -55,8 +55,8 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="9dp"
                         android:layout_marginStart="9dp"
+                        android:layout_marginTop="9dp"
                         android:text="@string/driving_ability"
                         android:textColor="@color/customTextPrimary"
                         android:textSize="@dimen/font_medium"
@@ -70,7 +70,7 @@
                         android:layout_marginTop="7dp"
                         android:layout_marginEnd="9dp"
                         android:background="@drawable/rounded_rect"
-                        android:backgroundTint="#DBDEF8"
+                        android:backgroundTint="#EEE9EFE7"
                         android:orientation="vertical">
 
                         <!-- start DRIVING ABILITY text labels layout -->
@@ -163,7 +163,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/card_margin"
                 android:layout_marginTop="@dimen/card_margin"
-                app:cardBackgroundColor="#B786EF"
+                app:cardBackgroundColor="#C0A2E0"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
 
@@ -175,8 +175,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="9dp"
                         android:layout_marginStart="9dp"
+                        android:layout_marginTop="9dp"
                         android:text="@string/died"
                         android:textColor="@color/customTextPrimary"
                         android:textSize="@dimen/font_medium"
@@ -190,7 +190,7 @@
                         android:layout_marginEnd="9dp"
                         android:layout_marginBottom="15dp"
                         android:background="@drawable/rounded_rect"
-                        android:backgroundTint="#E9E0F8"
+                        android:backgroundTint="#C3F6F4F8"
                         android:orientation="vertical">
 
                         <!-- start DIED layout -->
@@ -274,9 +274,9 @@
                 android:id="@+id/no_show"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/card_margin"
                 android:layout_marginHorizontal="@dimen/card_margin"
-                app:cardBackgroundColor="#93A685"
+                android:layout_marginTop="@dimen/card_margin"
+                app:cardBackgroundColor="#9DBFB4"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp">
 
