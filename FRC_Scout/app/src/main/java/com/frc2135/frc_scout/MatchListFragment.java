@@ -187,6 +187,10 @@ public class MatchListFragment extends Fragment
                 {
                     SetTeamIndexDialog.newInstance().show(getParentFragmentManager(), "set_team_index_dialog");
                 }
+                else if (itemID == R.id.set_event_code_dialog)
+                {
+                    SetEventCodeDialog.newInstance().show(fm, "set_event_code_dialog");
+                }
                 else if (itemID == R.id.load_tba_schedule_dialog)
                 {
                     LoadTBAScheduleDialog.newInstance().show(fm, "load_tba_schedule_dialog");

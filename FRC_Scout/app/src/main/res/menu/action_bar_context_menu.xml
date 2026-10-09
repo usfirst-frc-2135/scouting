@@ -10,6 +10,9 @@
         android:id="@+id/set_team_index_dialog"
         android:title="@string/set_team_index" />
     <item
+        android:id="@+id/set_event_code_dialog"
+        android:title="@string/set_event_code" />
+    <item
         android:id="@+id/load_tba_schedule_dialog"
         android:title="@string/load_tba_schedule" />
     <item

@@ -54,6 +54,10 @@
     <string name="team_index_6">6 - Blue 3</string>
     <string name="clear_team_index">Clear Team Index</string>
 
+    <string name="set_event_code">Set Event Code</string>
+    <string name="set_event_code_title">Set Event Code</string>
+    <string name="default_event_code">Default Event Code</string>
+
     <string name="load_tba_schedule_title">Load TBA Schedule</string>
     <string name="delete_tba_schedule">Delete TBA Schedule</string>
 
