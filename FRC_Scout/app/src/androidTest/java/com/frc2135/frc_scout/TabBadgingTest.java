@@ -2,7 +2,6 @@ package com.frc2135.frc_scout;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.action.ViewActions.swipeLeft;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
@@ -50,7 +49,7 @@ public class TabBadgingTest {
             scenario.onActivity(activity -> {
                 BottomNavigationView navView = activity.findViewById(R.id.scouting_activity_nav_view);
                 
-                // Teleop should have badges initially (since required data like Driver Ability is missing)
+                // Teleop should have badges initially (since required data like passing/driver ability is missing)
                 BadgeDrawable teleopBadge = navView.getBadge(R.id.navigation_teleop);
                 assertTrue("Teleop should have badge initially", teleopBadge != null && teleopBadge.isVisible());
             });
@@ -61,7 +60,7 @@ public class TabBadgingTest {
             // Wait for swiping and fragment attachment
             try { Thread.sleep(2000); } catch (InterruptedException ignored) {}
 
-            // Use onActivity to update the UI directly (bypass Espresso flakiness on legacy hardware)
+            // Use onActivity to update the UI directly
             scenario.onActivity(activity -> {
                 // Find TeleopFragment
                 TeleopFragment teleopFragment = null;
@@ -73,18 +72,11 @@ public class TabBadgingTest {
                 }
                 
                 if (teleopFragment != null && teleopFragment.getView() != null) {
-                    // Update UI components directly via their parent RadioGroups/Views
-                    android.widget.RadioGroup rgAbility = teleopFragment.getView().findViewById(R.id.teleop_driving_ability_radio_group);
-                    rgAbility.check(R.id.teleop_driving_ability_avg);
-                    
-                    android.widget.RadioGroup rgRate = teleopFragment.getView().findViewById(R.id.teleop_passing_rate_radio_group);
-                    rgRate.check(R.id.teleop_passing_rate_medium);
-                    
                     com.google.android.material.chip.Chip chipNz = teleopFragment.getView().findViewById(R.id.teleop_pass_nz_chip);
                     chipNz.setChecked(true);
                     
-                    com.google.android.material.chip.Chip chipAz = teleopFragment.getView().findViewById(R.id.teleop_pass_az_chip);
-                    chipAz.setChecked(true);
+                    com.google.android.material.slider.Slider sliderPassing = teleopFragment.getView().findViewById(R.id.teleop_passing_effectiveness_slider);
+                    sliderPassing.setValue(1.0f);
                     
                     // Trigger data sync - this updates MatchData and calls updateTabBadges()
                     activity.updateCurrentFragmentData();
