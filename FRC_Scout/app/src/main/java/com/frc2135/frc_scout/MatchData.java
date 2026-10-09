@@ -472,7 +472,7 @@ public class MatchData
     ///
     public void setTeamNumber(String num)
     {
-        m_teamNumber = num;
+        m_teamNumber = ScoutUtils.normalizeTeamNumber(num);
     }
 
     ///////////////////////

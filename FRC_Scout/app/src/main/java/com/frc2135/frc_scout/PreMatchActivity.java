@@ -123,7 +123,9 @@ public class PreMatchActivity extends AppCompatActivity
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)
         {
-            actionBar.setTitle(R.string.pre_match);
+            String eventCode = Settings.getInstance(this).getEventCode();
+            String title = getString(R.string.pre_match) + " (" + eventCode + ")";
+            actionBar.setTitle(title);
             actionBar.setSubtitle(getString(R.string.team_index_label, m_teamIndexStr));
         }
     }
@@ -144,7 +146,12 @@ public class PreMatchActivity extends AppCompatActivity
                 Log.d(TAG, "Activity in Edit Mode: loading and disabling match and team number fields");
                 m_binding.preMatchNumberInput.setText(m_matchData.getMatchNumber());
                 m_binding.preMatchNumberInput.setEnabled(false);
-                m_binding.preMatchTeamNumberInput.setText(m_matchData.getTeamNumber());
+                String displayTeam = m_teamAliases.getAliasForTeamNum(m_matchData.getTeamNumber());
+                if (displayTeam == null || displayTeam.isEmpty())
+                {
+                    displayTeam = m_matchData.getTeamNumber();
+                }
+                m_binding.preMatchTeamNumberInput.setText(displayTeam);
                 m_binding.preMatchTeamNumberInput.setEnabled(false);
                 m_binding.preMatchScoutNameInput.setText(m_matchData.getScoutName());
             }
@@ -155,7 +162,12 @@ public class PreMatchActivity extends AppCompatActivity
                 m_binding.preMatchNumberInput.setEnabled(true);
                 if (!m_matchData.getTeamNumber().isEmpty())
                 {
-                    m_binding.preMatchTeamNumberInput.setText(m_matchData.getTeamNumber());
+                    String displayTeam = m_teamAliases.getAliasForTeamNum(m_matchData.getTeamNumber());
+                    if (displayTeam == null || displayTeam.isEmpty())
+                    {
+                        displayTeam = m_matchData.getTeamNumber();
+                    }
+                    m_binding.preMatchTeamNumberInput.setText(displayTeam);
                 }
                 else
                 {
@@ -488,6 +500,7 @@ public class PreMatchActivity extends AppCompatActivity
     {
         super.onResume();
         Log.v(TAG, "onResume");
+        setupActionBar();
     }
 
     /**

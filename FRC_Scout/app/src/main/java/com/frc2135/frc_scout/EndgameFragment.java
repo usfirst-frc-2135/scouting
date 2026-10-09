@@ -111,7 +111,9 @@ public class EndgameFragment extends Fragment
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         if (actionBar != null)
         {
-            actionBar.setTitle(R.string.endgame_title);
+            String eventCode = Settings.getInstance(requireContext()).getEventCode();
+            String title = getString(R.string.endgame_title) + " (" + eventCode + ")";
+            actionBar.setTitle(title);
 
             if (m_settings != null)
             {
@@ -236,6 +238,7 @@ public class EndgameFragment extends Fragment
     {
         super.onResume();
         Log.v(TAG, "onResume");
+        setupActionBar();
     }
 
     //////////////////////

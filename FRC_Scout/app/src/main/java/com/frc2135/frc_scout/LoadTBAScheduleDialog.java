@@ -280,7 +280,7 @@ public class LoadTBAScheduleDialog extends DialogFragment
     }
 
     /**
-     * Saves the downloaded event schedule data to internal storage and updates application state.
+     * Saves the downloaded event schedule data to internal storage.
      *
      * @param context   the application context
      * @param eventCode the TBA event code
@@ -290,13 +290,7 @@ public class LoadTBAScheduleDialog extends DialogFragment
     private boolean saveTBASchedule(Context context, String eventCode, JSONArray response)
     {
         TBASchedule tbaSchedule = TBASchedule.getInstance(context, eventCode, true);
-        if (tbaSchedule.writeTBAScheduleFile(eventCode, response))
-        {
-            // Update current event code settings!
-            Settings.getInstance(context).setEventCode(eventCode);
-            return true;
-        }
-        return false;
+        return tbaSchedule.writeTBAScheduleFile(eventCode, response);
     }
 
     /**

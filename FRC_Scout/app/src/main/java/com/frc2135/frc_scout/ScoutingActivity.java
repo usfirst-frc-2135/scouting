@@ -184,22 +184,30 @@ public class ScoutingActivity extends AppCompatActivity
             return;
         }
 
-        String stage = "Scouting";
+        String stage = getString(R.string.autonomous_title);
         if (position == 0)
         {
-            stage = "Autonomous";
+            stage = getString(R.string.autonomous_title);
         }
         else if (position == 1)
         {
-            stage = "Teleoperated";
+            stage = getString(R.string.teleoperated_title);
         }
         else if (position == 2)
         {
-            stage = "Endgame";
+            stage = getString(R.string.endgame_title);
         }
 
-        getSupportActionBar().setTitle(stage);
-        getSupportActionBar().setSubtitle(String.format("Team %s - %s", m_matchData.getTeamNumber(), m_matchData.getMatchNumber()));
+        String eventCode = Settings.getInstance(this).getEventCode();
+        String title = stage + " (" + eventCode + ")";
+
+        String teamDisplay = TeamAliases.getInstance(getApplicationContext()).getAliasForTeamNum(m_matchData.getTeamNumber());
+        if (teamDisplay == null || teamDisplay.isEmpty())
+        {
+            teamDisplay = m_matchData.getTeamNumber();
+        }
+        getSupportActionBar().setTitle(title);
+        getSupportActionBar().setSubtitle(String.format("Team %s - %s", teamDisplay, m_matchData.getMatchNumber()));
     }
 
     /**

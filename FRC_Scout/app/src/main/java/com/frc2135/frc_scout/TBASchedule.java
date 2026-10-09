@@ -309,7 +309,8 @@ public class TBASchedule extends BaseJSONSerializer
         {
             return "";
         }
-        return teamIdentifier.replaceAll("^\\D+", "");
+        String raw = teamIdentifier.replaceAll("^\\D+", "");
+        return ScoutUtils.normalizeTeamNumber(raw);
     }
 
     /**

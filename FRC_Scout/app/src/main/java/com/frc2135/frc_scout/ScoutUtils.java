@@ -23,6 +23,8 @@ import static java.lang.Integer.parseInt;
 
 import android.util.Log;
 
+import java.util.Locale;
+
 public class ScoutUtils
 {
     private static final int EVENT_CODE_MIN_LENGTH = 7; // 2026cur
@@ -182,6 +184,21 @@ public class ScoutUtils
         }
 
         return true;
+    }
+
+    /**
+     * Normalizes a team number to ensure any trailing letter is uppercase.
+     *
+     * @param teamNum the team number string to normalize
+     * @return the normalized team number string
+     */
+    public static String normalizeTeamNumber(String teamNum)
+    {
+        if (teamNum == null)
+        {
+            return "";
+        }
+        return teamNum.trim().toUpperCase(Locale.US);
     }
 
     /**

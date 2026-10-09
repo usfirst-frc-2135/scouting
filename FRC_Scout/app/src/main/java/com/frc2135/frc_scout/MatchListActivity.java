@@ -58,11 +58,7 @@ public class MatchListActivity extends AppCompatActivity
         setContentView(m_binding.getRoot());
 
         setSupportActionBar(m_binding.matchListActivityToolbar);
-        if (getSupportActionBar() != null)
-        {
-            getSupportActionBar().setTitle(R.string.title_match_list);
-        }
-
+        updateToolbarTitle();
         updateToolbarTeamIndex();
 
         // Initializes FragmentManager to host the match list fragment
@@ -83,6 +79,19 @@ public class MatchListActivity extends AppCompatActivity
     }
 
     /**
+     * Updates the toolbar title with the current event code.
+     */
+    public void updateToolbarTitle()
+    {
+        if (getSupportActionBar() != null)
+        {
+            String eventCode = (m_settings != null) ? m_settings.getEventCode() : Constants.DEFAULT_EVENT_CODE;
+            String title = getString(R.string.title_match_list) + " (" + eventCode + ")";
+            getSupportActionBar().setTitle(title);
+        }
+    }
+
+    /**
      * Updates the toolbar text with the current team index from application settings.
      */
     public void updateToolbarTeamIndex()
@@ -94,13 +103,14 @@ public class MatchListActivity extends AppCompatActivity
 
     /**
      * Called when the activity is becoming visible to the user.
-     * Ensures the toolbar team index is up to date.
+     * Ensures the toolbar title and team index are up to date.
      */
     @Override
     protected void onResume()
     {
         super.onResume();
         Log.v(TAG, "onResume");
+        updateToolbarTitle();
         updateToolbarTeamIndex();
     }
 

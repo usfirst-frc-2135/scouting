@@ -114,7 +114,9 @@ public class AutonFragment extends Fragment
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         if (actionBar != null)
         {
-            actionBar.setTitle(R.string.autonomous_title);
+            String eventCode = Settings.getInstance(requireContext()).getEventCode();
+            String title = getString(R.string.autonomous_title) + " (" + eventCode + ")";
+            actionBar.setTitle(title);
 
             if (m_settings != null)
             {
@@ -318,6 +320,7 @@ public class AutonFragment extends Fragment
     {
         super.onResume();
         Log.v(TAG, "onResume");
+        setupActionBar();
     }
 
     /////////////////////

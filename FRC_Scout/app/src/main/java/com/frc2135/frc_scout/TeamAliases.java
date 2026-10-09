@@ -25,8 +25,10 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.File;
+import java.util.Iterator;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
@@ -35,9 +37,16 @@ import java.util.Map;
 /**
  * Singleton class for managing team alias mappings.
  * <p>
- * Team aliases are used to map temporary or regional team identifiers (often starting with "99")
- * to actual FRC team numbers. This class handles loading these mappings from event-specific
- * JSON files, providing bidirectional resolution, and maintaining an in-memory cache.
+ * In FIRST Robotics Competition (FRC), teams are registered by unique positive integers (1 to ~12000,
+ * future-proofed up to 25000). At unofficial off-season events, teams may bring secondary robots
+ * with a capitalized suffix letter appended (e.g., 2135B, 2135C). These are treated as separate, distinct
+ * teams from their integer-only root.
+ * <p>
+ * Because scoring systems only support integers, these suffix teams are assigned an alias from a reserved
+ * pool of numbers in the range 9970 - 9999 (with 9900 - 9999 reserved for this and future use).
+ * <p>
+ * This class handles loading these mappings from event-specific JSON files using strict keys
+ * ("teamNum" and "aliasNum"), providing bidirectional resolution, and maintaining an in-memory cache.
  * <p>
  * It follows a "Write-through Cache" pattern where successful file writes automatically
  * trigger a refresh of the internal memory state.
@@ -176,13 +185,20 @@ public class TeamAliases extends BaseJSONSerializer
         m_aliasToTeamMap.clear();
         for (int i = 0; i < jsonArray.length(); i++)
         {
-            JSONObject obj = jsonArray.getJSONObject(i);
+            JSONObject obj = jsonArray.optJSONObject(i);
+            if (obj == null)
+            {
+                continue;
+            }
             String teamNum = obj.optString(TEAM_NUM_JSON_KEY);
             String alias = obj.optString(ALIAS_NUM_JSON_KEY);
+
             if (!teamNum.isEmpty() && !alias.isEmpty())
             {
-                m_teamToAliasMap.put(teamNum, alias);
-                m_aliasToTeamMap.put(alias, teamNum);
+                String cleanTeam = ScoutUtils.normalizeTeamNumber(teamNum);
+                String cleanAlias = alias.trim();
+                m_teamToAliasMap.put(cleanTeam, cleanAlias);
+                m_aliasToTeamMap.put(cleanAlias, cleanTeam);
             }
         }
     }
@@ -217,7 +233,52 @@ public class TeamAliases extends BaseJSONSerializer
 
         String filename = getFilename(eventCode);
         File file = new File(m_dataDir, filename);
-        return loadJSONArray(file);
+        if (!file.exists())
+        {
+            return null;
+        }
+        String jsonString = readStringFromFile(file);
+        if (jsonString == null || jsonString.isEmpty())
+        {
+            return null;
+        }
+
+        Object parsed = new JSONTokener(jsonString).nextValue();
+        if (parsed instanceof JSONArray)
+        {
+            return (JSONArray) parsed;
+        }
+        else if (parsed instanceof JSONObject)
+        {
+            JSONObject rootObj = (JSONObject) parsed;
+            String[] possibleKeys = {"teamAliases", "teams", "data", "aliases", "team_aliases"};
+            for (String key : possibleKeys)
+            {
+                if (rootObj.has(key) && rootObj.optJSONArray(key) != null)
+                {
+                    return rootObj.getJSONArray(key);
+                }
+            }
+            JSONArray array = new JSONArray();
+            Iterator<String> keys = rootObj.keys();
+            while (keys.hasNext())
+            {
+                String key = keys.next();
+                Object val = rootObj.opt(key);
+                if (val instanceof String)
+                {
+                    JSONObject entry = new JSONObject();
+                    entry.put("teamNum", key);
+                    entry.put("aliasNum", val);
+                    array.put(entry);
+                }
+            }
+            if (array.length() > 0)
+            {
+                return array;
+            }
+        }
+        return null;
     }
 
     /**
@@ -338,7 +399,8 @@ public class TeamAliases extends BaseJSONSerializer
         {
             return teamNum;
         }
-        String alias = m_teamToAliasMap.getOrDefault(teamNum, "");
+        String normalized = ScoutUtils.normalizeTeamNumber(teamNum);
+        String alias = m_teamToAliasMap.get(normalized);
         return (alias == null || alias.isEmpty()) ? teamNum : alias;
     }
 
