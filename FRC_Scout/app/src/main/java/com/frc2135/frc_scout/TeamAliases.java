@@ -28,9 +28,9 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.File;
-import java.util.Iterator;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 
@@ -412,11 +412,16 @@ public class TeamAliases extends BaseJSONSerializer
      */
     public String getTeamNumForAlias(String alias)
     {
-        if (alias == null || !isTeamAliasesLoaded() || !alias.startsWith("99"))
+        if (alias == null || !isTeamAliasesLoaded())
         {
             return alias;
         }
-        String teamNum = m_aliasToTeamMap.getOrDefault(alias, "");
+        String cleanAlias = alias.contains(" ") ? alias.substring(0, alias.indexOf(" ")).trim() : alias.trim();
+        if (!cleanAlias.startsWith("99"))
+        {
+            return alias;
+        }
+        String teamNum = m_aliasToTeamMap.get(cleanAlias);
         return (teamNum == null || teamNum.isEmpty()) ? alias : teamNum;
     }
 }

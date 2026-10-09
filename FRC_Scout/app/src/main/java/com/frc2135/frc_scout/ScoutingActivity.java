@@ -201,10 +201,18 @@ public class ScoutingActivity extends AppCompatActivity
         String eventCode = Settings.getInstance(this).getEventCode();
         String title = stage + " (" + eventCode + ")";
 
-        String teamDisplay = TeamAliases.getInstance(getApplicationContext()).getAliasForTeamNum(m_matchData.getTeamNumber());
-        if (teamDisplay == null || teamDisplay.isEmpty())
+        String teamNum = m_matchData.getTeamNumber();
+        String teamAlias = m_matchData.getTeamAlias();
+        String teamDisplay;
+        if (teamAlias != null && !teamAlias.isEmpty() && !teamAlias.equals("-"))
         {
-            teamDisplay = m_matchData.getTeamNumber();
+            teamDisplay = teamAlias + " (" + teamNum + ")";
+        }
+        else
+        {
+            TeamAliases teamAliases = TeamAliases.getInstance(getApplicationContext());
+            String alias = teamAliases.getAliasForTeamNum(teamNum);
+            teamDisplay = (alias != null && !alias.equals(teamNum)) ? alias + " (" + teamNum + ")" : teamNum;
         }
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setSubtitle(String.format("Team %s - %s", teamDisplay, m_matchData.getMatchNumber()));

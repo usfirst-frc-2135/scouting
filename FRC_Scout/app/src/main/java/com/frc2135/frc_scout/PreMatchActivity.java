@@ -35,6 +35,7 @@ import com.frc2135.frc_scout.databinding.PreMatchActivityBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -102,8 +103,7 @@ public class PreMatchActivity extends AppCompatActivity
         String matchId = getIntent().getStringExtra(Constants.MATCH_ID);
         m_matchData = ScoutedMatches.getInstance(getApplicationContext()).getMatch(matchId);
 
-        String eventCode = (m_matchData != null) ? m_matchData.getEventCode().trim() : "";
-        m_tbaSchedule = TBASchedule.getInstance(getApplicationContext(), eventCode, false);
+        m_tbaSchedule = TBASchedule.getInstance(getApplicationContext());
         m_teamAliases = TeamAliases.getInstance(getApplicationContext());
 
         m_settings = Settings.getInstance(getApplicationContext());
@@ -130,6 +130,64 @@ public class PreMatchActivity extends AppCompatActivity
         }
     }
 
+    public static class TeamInfo
+    {
+        public final String teamNum;
+        public final String teamAlias;
+
+        public TeamInfo(String num, String alias)
+        {
+            this.teamNum = num;
+            this.teamAlias = alias;
+        }
+    }
+
+    private TeamInfo parseTeamInput(String input)
+    {
+        if (input == null || input.isEmpty())
+        {
+            return new TeamInfo("", "");
+        }
+        String trimmed = input.trim();
+        if (trimmed.contains("(") && trimmed.endsWith(")"))
+        {
+            int openIdx = trimmed.indexOf('(');
+            String alias = trimmed.substring(0, openIdx).trim();
+            String teamNum = trimmed.substring(openIdx + 1, trimmed.length() - 1).trim();
+            return new TeamInfo(teamNum, alias);
+        }
+
+        if (trimmed.startsWith("99"))
+        {
+            String teamNum = m_teamAliases.getTeamNumForAlias(trimmed);
+            return new TeamInfo(teamNum, trimmed);
+        }
+
+        String alias = m_teamAliases.getAliasForTeamNum(trimmed);
+        String finalAlias = (alias != null && !alias.equals(trimmed) && alias.startsWith("99")) ? alias : "";
+        return new TeamInfo(trimmed, finalAlias);
+    }
+
+    /**
+     * Formats a team number to display the alias followed by the original team number in parentheses (e.g., "9989 (581B)").
+     *
+     * @param teamNum the raw team number
+     * @return the formatted display string
+     */
+    private String getDisplayTeamForTeamNum(String teamNum)
+    {
+        if (teamNum == null || teamNum.isEmpty())
+        {
+            return "";
+        }
+        String alias = m_teamAliases.getAliasForTeamNum(teamNum);
+        if (alias != null && !alias.equals(teamNum) && alias.startsWith("99"))
+        {
+            return String.format(Locale.US, "%s (%s)", alias, teamNum);
+        }
+        return teamNum;
+    }
+
     /**
      * Sets default values and initial hints for the input fields.
      */
@@ -146,10 +204,14 @@ public class PreMatchActivity extends AppCompatActivity
                 Log.d(TAG, "Activity in Edit Mode: loading and disabling match and team number fields");
                 m_binding.preMatchNumberInput.setText(m_matchData.getMatchNumber());
                 m_binding.preMatchNumberInput.setEnabled(false);
-                String displayTeam = m_teamAliases.getAliasForTeamNum(m_matchData.getTeamNumber());
-                if (displayTeam == null || displayTeam.isEmpty())
+                String teamNum = m_matchData.getTeamNumber();
+                String teamAlias = m_matchData.getTeamAlias();
+                String displayTeam = (teamAlias != null && !teamAlias.isEmpty() && !teamAlias.equals("-"))
+                        ? teamAlias + " (" + teamNum + ")"
+                        : getDisplayTeamForTeamNum(teamNum);
+                if (displayTeam.isEmpty())
                 {
-                    displayTeam = m_matchData.getTeamNumber();
+                    displayTeam = teamNum;
                 }
                 m_binding.preMatchTeamNumberInput.setText(displayTeam);
                 m_binding.preMatchTeamNumberInput.setEnabled(false);
@@ -162,10 +224,14 @@ public class PreMatchActivity extends AppCompatActivity
                 m_binding.preMatchNumberInput.setEnabled(true);
                 if (!m_matchData.getTeamNumber().isEmpty())
                 {
-                    String displayTeam = m_teamAliases.getAliasForTeamNum(m_matchData.getTeamNumber());
-                    if (displayTeam == null || displayTeam.isEmpty())
+                    String teamNum = m_matchData.getTeamNumber();
+                    String teamAlias = m_matchData.getTeamAlias();
+                    String displayTeam = (teamAlias != null && !teamAlias.isEmpty() && !teamAlias.equals("-"))
+                            ? teamAlias + " (" + teamNum + ")"
+                            : getDisplayTeamForTeamNum(teamNum);
+                    if (displayTeam.isEmpty())
                     {
-                        displayTeam = m_matchData.getTeamNumber();
+                        displayTeam = teamNum;
                     }
                     m_binding.preMatchTeamNumberInput.setText(displayTeam);
                 }
@@ -281,6 +347,23 @@ public class PreMatchActivity extends AppCompatActivity
             {
                 showTeamNumberDropDown();
             }
+            else
+            {
+                String input = m_binding.preMatchTeamNumberInput.getText().toString().trim();
+                if (input.matches("^99\\d{2}$"))
+                {
+                    String teamNum = m_teamAliases.getTeamNumForAlias(input);
+                    if (teamNum != null && !teamNum.equals(input))
+                    {
+                        m_binding.preMatchTeamNumberInput.setText(String.format(Locale.US, "%s (%s)", input, teamNum));
+                    }
+                }
+            }
+        });
+
+        m_binding.preMatchTeamNumberInput.setOnItemClickListener((parent, view, position, id) -> {
+            String selected = (String) parent.getItemAtPosition(position);
+            m_binding.preMatchTeamNumberInput.setText(selected);
         });
 
         m_binding.preMatchScoutNameInput.addTextChangedListener(new TextWatcher()
@@ -347,7 +430,7 @@ public class PreMatchActivity extends AppCompatActivity
                     // Process team numbers for aliases
                     for (int i = 1; i < teams.length; i++)
                     {
-                        teams[i] = m_teamAliases.getAliasForTeamNum(teams[i]);
+                        teams[i] = getDisplayTeamForTeamNum(teams[i]);
                     }
 
                     ArrayAdapter<String> teamAdapter = new ArrayAdapter<>(this, R.layout.dropdown_item, teams);
@@ -385,7 +468,7 @@ public class PreMatchActivity extends AppCompatActivity
                 {
                     String tbaTeamNum = matchTeams[teamIndex];
                     Log.d(TAG, "setTeamNumFromMatchNum: Auto-loading team number for tbaTeamNum " + tbaTeamNum);
-                    m_binding.preMatchTeamNumberInput.setText(m_teamAliases.getAliasForTeamNum(tbaTeamNum));
+                    m_binding.preMatchTeamNumberInput.setText(getDisplayTeamForTeamNum(tbaTeamNum));
                 }
             }
             catch (NumberFormatException e)
@@ -414,14 +497,13 @@ public class PreMatchActivity extends AppCompatActivity
         m_matchData.setEventCode(eventCode);
         m_matchData.setMatchNumber(matchNum);
 
-        String teamNum = m_teamAliases.getTeamNumForAlias(teamNumEntry);
-        String teamAlias = (!teamNum.equals(teamNumEntry)) ? teamNumEntry : "";
+        TeamInfo info = parseTeamInput(teamNumEntry);
 
-        m_matchData.setTeamNumber(teamNum);
-        m_matchData.setTeamAlias(teamAlias);
+        m_matchData.setTeamNumber(info.teamNum);
+        m_matchData.setTeamAlias(info.teamAlias);
 
         m_matchData.setScoutName(scoutName);
-        Log.i(TAG, "Updated MatchData: Team = " + teamNum + ", Alias = " + teamAlias);
+        Log.i(TAG, "Updated MatchData: Team = " + info.teamNum + ", Alias = " + info.teamAlias);
     }
 
     /**
