@@ -76,6 +76,11 @@ public class MatchListActivity extends AppCompatActivity
             Log.i(TAG, "Team index changed, updating toolbar");
             updateToolbarTeamIndex();
         });
+
+        getSupportFragmentManager().setFragmentResultListener("event_code_changed", this, (requestKey, result) -> {
+            Log.i(TAG, "Event code changed, updating toolbar title");
+            updateToolbarTitle();
+        });
     }
 
     /**
@@ -89,6 +94,15 @@ public class MatchListActivity extends AppCompatActivity
             String title = getString(R.string.title_match_list) + " (" + eventCode + ")";
             getSupportActionBar().setTitle(title);
         }
+    }
+
+    /**
+     * Refreshes both the event code title and the team index subtitle on the toolbar.
+     */
+    public void refreshActionBar()
+    {
+        updateToolbarTitle();
+        updateToolbarTeamIndex();
     }
 
     /**

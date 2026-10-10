@@ -30,7 +30,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
 
-////////////////////
+/// /////////////////
 // Core data model for a single scouted FRC match.
 // <p>
 // This class encapsulates all parameters gathered during the autonomous, teleoperated,
@@ -42,6 +42,7 @@ import java.util.UUID;
 // <p>
 // Each record is uniquely identified by a UUID to prevent file collisions across different
 // scout tablets and seasons.
+
 ///
 public class MatchData
 {
@@ -161,6 +162,7 @@ public class MatchData
     //
     // @param matchIdentifier the match identifier string
     // @return the numeric portion of the match identifier, or an empty string if null
+
     ///
     public static String extractMatchNumber(String matchIdentifier)
     {
@@ -174,6 +176,7 @@ public class MatchData
     ////////////////////
     // Default constructor for creating a new match data record.
     // Generates a unique UUID and sets defaults for all scouting parameters.
+
     ///
     public MatchData()
     {
@@ -182,10 +185,10 @@ public class MatchData
         m_timestamp = Calendar.getInstance().getTime();
         m_version = M_JSON_FORMAT_VERSION;
         m_eventCode = "";
-        m_matchNumber = "qm1";
-        m_teamNumber = "21350";
+        m_matchNumber = "";
+        m_teamNumber = "";
         m_teamAlias = "";
-        m_scoutName = "Jane D";
+        m_scoutName = "";
 
         m_autonPreload = false;
         m_autonPreloadAccRate = 0;
@@ -196,7 +199,7 @@ public class MatchData
         m_autonOutpost = false;
         m_autonNz = false;
         m_autonClimb = false;
-        m_noShow= false;
+        m_noShow = false;
 
         m_hoppersUsed = 0;
         m_accuracyRate = 0;
@@ -225,6 +228,7 @@ public class MatchData
     // Handles both ISO and legacy date formats for backward compatibility.
     //
     // @param json the source JSONObject
+
     ///
     public MatchData(JSONObject json)
     {
@@ -273,8 +277,13 @@ public class MatchData
 
         int tempClimb = json.optInt(KEY_AUTON_CLIMB, 0);
         if (tempClimb > 0)
+        {
             m_autonClimb = true;
-        else m_autonClimb = false;
+        }
+        else
+        {
+            m_autonClimb = false;
+        }
 
 
         m_hoppersUsed = json.optInt(KEY_TELEOP_HOPPERS_USED, 0);
@@ -296,8 +305,14 @@ public class MatchData
 
         m_shovelFuel = json.optBoolean(KEY_OTHER1, false);
         m_other2 = json.optString(KEY_OTHER2, "0");
-        if(m_other2 == "1") m_noShow = true; //TODO with new game, clean up
-            else m_noShow = false;
+        if (m_other2 == "1")
+        {
+            m_noShow = true; //TODO with new game, clean up
+        }
+        else
+        {
+            m_noShow = false;
+        }
 
         m_other3 = json.optString(KEY_OTHER3, "0");
         m_other4 = json.optString(KEY_OTHER4, "0");
@@ -308,6 +323,7 @@ public class MatchData
     //
     // @return the serialized JSONObject
     // @throws JSONException if JSON creation fails
+
     ///
     public JSONObject toJSON()
             throws JSONException
@@ -354,7 +370,7 @@ public class MatchData
         json.put(KEY_COMMENTS, m_comment);
 
         json.put(KEY_OTHER1, m_shovelFuel);
-        json.put(KEY_OTHER2,m_noShow ? "1" : "0");
+        json.put(KEY_OTHER2, m_noShow ? "1" : "0");
         json.put(KEY_OTHER3, m_other3);
         json.put(KEY_OTHER4, m_other4);
 
@@ -365,6 +381,7 @@ public class MatchData
     // Sets the timestamp for when this match was scouted.
     //
     // @param d the date and time
+
     ///
     @SuppressWarnings("unused")
     public void setTimestamp(Date d)
@@ -376,6 +393,7 @@ public class MatchData
     // Returns the timestamp for when this match was scouted.
     //
     // @return the date and time
+
     ///
     public Date getTimestamp()
     {
@@ -386,6 +404,7 @@ public class MatchData
     // Returns the unique identifier for this match record.
     //
     // @return the match UUID string
+
     ///
     public String getMatchID()
     {
@@ -396,6 +415,7 @@ public class MatchData
     // Sets the unique identifier for this match record.
     //
     // @param id the match UUID string
+
     ///
     @SuppressWarnings("unused")
     public void setMatchID(String id)
@@ -407,6 +427,7 @@ public class MatchData
     // Returns the version of the match data format.
     //
     // @return the version number
+
     ///
     @SuppressWarnings("unused")
     public double getVersion()
@@ -418,6 +439,7 @@ public class MatchData
     // Sets the version of the match data format.
     //
     // @param version the version number
+
     ///
     @SuppressWarnings("unused")
     public void setVersion(double version)
@@ -429,6 +451,7 @@ public class MatchData
     // Sets the FRC event code for this match.
     //
     // @param code the event code
+
     ///
     public void setEventCode(String code)
     {
@@ -439,6 +462,7 @@ public class MatchData
     // Returns the FRC event code for this match.
     //
     // @return the event code
+
     ///
     public String getEventCode()
     {
@@ -449,6 +473,7 @@ public class MatchData
     // Sets the match identifier (e.g., "qm1").
     //
     // @param num the match number string
+
     ///
     public void setMatchNumber(String num)
     {
@@ -459,6 +484,7 @@ public class MatchData
     // Returns the match identifier.
     //
     // @return the match number string
+
     ///
     public String getMatchNumber()
     {
@@ -469,6 +495,7 @@ public class MatchData
     // Sets the FRC team number for this match.
     //
     // @param num the team number string
+
     ///
     public void setTeamNumber(String num)
     {
@@ -479,6 +506,7 @@ public class MatchData
     // Returns the FRC team number.
     //
     // @return the team number string
+
     ///
     public String getTeamNumber()
     {
@@ -489,6 +517,7 @@ public class MatchData
     // Sets the team alias if applicable (e.g. for regional variants).
     //
     // @param alias the team alias string
+
     ///
     public void setTeamAlias(String alias)
     {
@@ -499,6 +528,7 @@ public class MatchData
     // Returns the team alias.
     //
     // @return the team alias string, or empty if none
+
     ///
     @SuppressWarnings("unused")
     public String getTeamAlias()
@@ -510,6 +540,7 @@ public class MatchData
     // Sets the name of the scout who recorded this match.
     //
     // @param name the scout's name
+
     ///
     public void setScoutName(String name)
     {
@@ -525,6 +556,7 @@ public class MatchData
     // Returns the name of the scout who recorded this match.
     //
     // @return the scout's name
+
     ///
     public String getScoutName()
     {
@@ -535,6 +567,7 @@ public class MatchData
     // Sets the number of hoppers used in the autonomous stage.
     //
     // @param val the hopper count
+
     ///
     public void setAutonHopper(int val)
     {
@@ -545,6 +578,7 @@ public class MatchData
     // Returns the number of hoppers used in the autonomous stage.
     //
     // @return the hopper count
+
     ///
     public int getAutonHopper()
     {
@@ -555,6 +589,7 @@ public class MatchData
     // Returns whether fuel was preloaded in the autonomous stage.
     //
     // @return true if fuel was preloaded
+
     ///
     public boolean isAutonPreload()
     {
@@ -565,6 +600,7 @@ public class MatchData
     // Sets whether fuel was preloaded in the autonomous stage.
     //
     // @param val true if fuel was preloaded
+
     ///
     public void setAutonPreload(boolean val)
     {
@@ -575,6 +611,7 @@ public class MatchData
     // Returns whether the alliance zone was used in the autonomous stage.
     //
     // @return true if the alliance zone was used
+
     ///
     public boolean isAutonAz()
     {
@@ -585,6 +622,7 @@ public class MatchData
     // Sets whether the alliance zone was used in the autonomous stage.
     //
     // @param val true if the alliance zone was used
+
     ///
     public void setAutonAz(boolean val)
     {
@@ -595,6 +633,7 @@ public class MatchData
     // Returns whether the depot was used in the autonomous stage.
     //
     // @return true if the depot was used
+
     ///
     public boolean isAutonDepot()
     {
@@ -605,6 +644,7 @@ public class MatchData
     // Sets whether the depot was used in the autonomous stage.
     //
     // @param val true if the depot was used
+
     ///
     public void setAutonDepot(boolean val)
     {
@@ -615,6 +655,7 @@ public class MatchData
     // Returns whether the outpost was used in the autonomous stage.
     //
     // @return true if the outpost was used
+
     ///
     public boolean isAutonOutpost()
     {
@@ -625,6 +666,7 @@ public class MatchData
     // Sets whether the outpost was used in the autonomous stage.
     //
     // @param val true if the outpost was used
+
     ///
     public void setAutonOutpost(boolean val)
     {
@@ -635,6 +677,7 @@ public class MatchData
     // Returns whether the neutral zone was used in the autonomous stage.
     //
     // @return true if the neutral zone was used
+
     ///
     public boolean isAutonNz()
     {
@@ -645,6 +688,7 @@ public class MatchData
     // Sets whether the neutral zone was used in the autonomous stage.
     //
     // @param val true if the neutral zone was used
+
     ///
     public void setAutonNz(boolean val)
     {
@@ -655,6 +699,7 @@ public class MatchData
     // Sets the autonomous accuracy rate index.
     //
     // @param val the accuracy rate index
+
     ///
     public void setAutonAccuracyRate(int val)
     {
@@ -665,6 +710,7 @@ public class MatchData
     // Returns the autonomous accuracy rate index.
     //
     // @return the accuracy rate index
+
     ///
     public int getAutonAccuracyRate()
     {
@@ -675,6 +721,7 @@ public class MatchData
     // Sets the autonomous preload accuracy level index.
     //
     // @param val the accuracy level index
+
     ///
     public void setPreloadAccuracyLevel(int val)
     {
@@ -685,6 +732,7 @@ public class MatchData
     // Returns the autonomous preload accuracy level index.
     //
     // @return the accuracy level index
+
     ///
     public int getPreloadAccuracyLevel()
     {
@@ -695,6 +743,7 @@ public class MatchData
     // Sets the autonomous climb chip index.
     //
     // @param val the climb chip index
+
     ///
     public void setAutonClimb(boolean val)
     {
@@ -705,6 +754,7 @@ public class MatchData
     // Returns the autonomous climb chip index.
     //
     // @return the climb chip index
+
     ///
     public boolean getAutonClimb()
     {
@@ -715,6 +765,7 @@ public class MatchData
     // Sets the number of hoppers used in the teleoperated stage.
     //
     // @param val the hopper count
+
     ///
     public void setHoppersUsed(int val)
     {
@@ -725,6 +776,7 @@ public class MatchData
     // Returns the number of hoppers used in the teleoperated stage.
     //
     // @return the hopper count
+
     ///
     public int getHoppersUsed()
     {
@@ -735,6 +787,7 @@ public class MatchData
     // Sets the teleoperated accuracy rate index.
     //
     // @param val the accuracy rate index
+
     ///
     public void setAccuracyRate(int val)
     {
@@ -745,6 +798,7 @@ public class MatchData
     // Returns the teleoperated accuracy rate index.
     //
     // @return the accuracy rate index
+
     ///
     public int getAccuracyRate()
     {
@@ -755,6 +809,7 @@ public class MatchData
     // Sets whether intake and shooting were performed simultaneously in the teleoperated stage.
     //
     // @param val true if both were performed simultaneously
+
     ///
     public void setIntakeAndShoot(boolean val)
     {
@@ -765,6 +820,7 @@ public class MatchData
     // Returns whether intake and shooting were performed simultaneously in the teleoperated stage.
     //
     // @return true if both were performed simultaneously
+
     ///
     public boolean getIntakeAndShoot()
     {
@@ -775,6 +831,7 @@ public class MatchData
     // Sets whether herding fuel was performed in the teleoperated stage.
     //
     // @param val true if herding fuel was performed
+
     ///
     public void setShovelFuel(boolean val)
     {
@@ -785,6 +842,7 @@ public class MatchData
     // Returns whether herding fuel was performed in the teleoperated stage.
     //
     // @return true if herding fuel was performed
+
     ///
     public boolean getShovelFuel()
     {
@@ -795,6 +853,7 @@ public class MatchData
     // Sets the passing effectiveness rate index.
     //
     // @param val the passing rate index
+
     ///
     public void setPassingRate(int val)
     {
@@ -805,6 +864,7 @@ public class MatchData
     // Returns the passing effectiveness rate index.
     //
     // @return the passing rate index
+
     ///
     public int getPassingEffectivenessRate()
     {
@@ -815,6 +875,7 @@ public class MatchData
     // Sets the teleoperated defense rate index.
     //
     // @param val the defense rate index
+
     ///
     public void setDefenseRate(int val)
     {
@@ -825,6 +886,7 @@ public class MatchData
     // Returns the teleoperated defense rate index.
     //
     // @return the defense rate index
+
     ///
     public int getDefenseRate()
     {
@@ -835,6 +897,7 @@ public class MatchData
     // Sets the driving ability index.
     //
     // @param val the driving ability index
+
     ///
     public void setDriveAbility(int val)
     {
@@ -845,6 +908,7 @@ public class MatchData
     // Returns the driving ability index.
     //
     // @return the driving ability index
+
     ///
     public int getDriverAbility()
     {
@@ -855,6 +919,7 @@ public class MatchData
     // Sets the selection index for neutral zone passing.
     //
     // @param val the selection index
+
     ///
     public void setPassNeutralZone(int val)
     {
@@ -865,6 +930,7 @@ public class MatchData
     // Returns the selection index for neutral zone passing.
     //
     // @return the selection index
+
     ///
     public int getPassNeutralZone()
     {
@@ -875,6 +941,7 @@ public class MatchData
     // Sets the selection index for alliance zone passing.
     //
     // @param val the selection index
+
     ///
     public void setPassAllianceZone(int val)
     {
@@ -885,6 +952,7 @@ public class MatchData
     // Returns the selection index for alliance zone passing.
     //
     // @return the selection index
+
     ///
     public int getPassAllianceZone()
     {
@@ -895,6 +963,7 @@ public class MatchData
     // Sets the identifier for the teleoperated stage placeholder photo.
     //
     // @param val the photo identifier
+
     ///
     public void setTeleopPhoto(int val)
     {
@@ -905,6 +974,7 @@ public class MatchData
     // Returns the identifier for the teleoperated stage placeholder photo.
     //
     // @return the photo identifier
+
     ///
     public int getTeleopPhoto()
     {
@@ -915,6 +985,7 @@ public class MatchData
     // Sets the died value index, indicating when the robot became disabled.
     //
     // @param val the died value index
+
     ///
     public void setDiedValue(int val)
     {
@@ -925,6 +996,7 @@ public class MatchData
     // Returns the died value index.
     //
     // @return the died value index
+
     ///
     public int getDiedValue()
     {
@@ -935,6 +1007,7 @@ public class MatchData
     // Sets the start climb time index.
     //
     // @param val the start climb index
+
     ///
     public void setStartClimb(int val)
     {
@@ -945,6 +1018,7 @@ public class MatchData
     // Returns the No Show chip index.
     //
     // @return the no Show chip index
+
     ///
     public boolean getNoShow()
     {
@@ -960,6 +1034,7 @@ public class MatchData
     // Returns the start No Show time index.
     //
     // @return the start No Show index
+
     ///
     public int getStartClimb()
     {
@@ -970,6 +1045,7 @@ public class MatchData
     // Sets the endgame climb level index.
     //
     // @param val the climb level index
+
     ///
     public void setEndgameClimbLevel(int val)
     {
@@ -980,6 +1056,7 @@ public class MatchData
     // Returns the endgame climb level index.
     //
     // @return the climb level index
+
     ///
     public int getEndgameClimbLevel()
     {
@@ -990,6 +1067,7 @@ public class MatchData
     // Sets the endgame climb position index.
     //
     // @param val the climb position index
+
     ///
     public void setEndgameClimbPos(int val)
     {
@@ -1000,6 +1078,7 @@ public class MatchData
     // Returns the endgame climb position index.
     //
     // @return the climb position index
+
     ///
     public int getEndgameClimbPos()
     {
@@ -1010,6 +1089,7 @@ public class MatchData
     // Sets the additional comments for the match.
     //
     // @param comment the comment string
+
     ///
     public void setComment(String comment)
     {
@@ -1020,6 +1100,7 @@ public class MatchData
     // Returns the additional comments for the match.
     //
     // @return the comment string
+
     ///
     public String getComment()
     {
@@ -1030,6 +1111,7 @@ public class MatchData
     // Returns the secondary "other" field value.
     //
     // @return the other2 string
+
     ///
     @SuppressWarnings("unused")
     public String getOther2()
@@ -1041,6 +1123,7 @@ public class MatchData
     // Sets the secondary "other" field value.
     //
     // @param value the other2 string
+
     ///
     @SuppressWarnings("unused")
     public void setOther2(String value)
@@ -1052,6 +1135,7 @@ public class MatchData
     // Returns the tertiary "other" field value.
     //
     // @return the other3 string
+
     ///
     @SuppressWarnings("unused")
     public String getOther3()
@@ -1063,6 +1147,7 @@ public class MatchData
     // Sets the tertiary "other" field value.
     //
     // @param value the other3 string
+
     ///
     @SuppressWarnings("unused")
     public void setOther3(String value)
@@ -1074,6 +1159,7 @@ public class MatchData
     // Returns the quaternary "other" field value.
     //
     // @return the other4 string
+
     ///
     @SuppressWarnings("unused")
     public String getOther4()
@@ -1085,6 +1171,7 @@ public class MatchData
     // Sets the quaternary "other" field value.
     //
     // @param value the other4 string
+
     ///
     @SuppressWarnings("unused")
     public void setOther4(String value)
@@ -1096,6 +1183,7 @@ public class MatchData
     // Validates the match data entries for consistency and completeness.
     //
     // @return a validation message string detailing any errors, or an empty string if all entries are valid
+
     ///
     public String validateEntries()
     {
@@ -1106,13 +1194,14 @@ public class MatchData
     // Validates the autonomous stage entries.
     //
     // @return a validation message string, or empty if valid
+
     ///
     public String validateAuton()
     {
-//        if (m_autonHopper > MAX_AUTON_HOPPERS)
-//        {
-//            return "Auton: Hopper score exceeds maximum (" + MAX_AUTON_HOPPERS + ")!\n";
-//        }
+        //        if (m_autonHopper > MAX_AUTON_HOPPERS)
+        //        {
+        //            return "Auton: Hopper score exceeds maximum (" + MAX_AUTON_HOPPERS + ")!\n";
+        //        }
         return "";
     }
 
@@ -1120,15 +1209,16 @@ public class MatchData
     // Validates the teleoperated stage entries.    TODO - these need to be updated!
     //
     // @return a validation message string, or empty if valid
+
     ///
     public String validateTeleop()
     {
         StringBuilder msg = new StringBuilder();
         // Teleop Hopper validation
-//        if (m_hoppersUsed > MAX_TELEOP_HOPPERS)
-//        {
-//            msg.append("Teleop: Hopper score exceeds maximum (").append(MAX_TELEOP_HOPPERS).append(")!\n");
-//        }
+        //        if (m_hoppersUsed > MAX_TELEOP_HOPPERS)
+        //        {
+        //            msg.append("Teleop: Hopper score exceeds maximum (").append(MAX_TELEOP_HOPPERS).append(")!\n");
+        //        }
 
         // Teleop Passing validation
         if (m_passedNz == 3 || m_passedAz == 3)
@@ -1176,6 +1266,7 @@ public class MatchData
     // Validates the endgame stage entries.
     //
     // @return a validation message string, or empty if valid
+
     ///
     public String validateEndgame()
     {
@@ -1193,6 +1284,7 @@ public class MatchData
     // Encodes the match data into a Tab-Separated Values (TSV) string for QR code generation.
     //
     // @return the TSV encoded string
+
     ///
     public String encodeToTSV()
     {
@@ -1252,6 +1344,7 @@ public class MatchData
     // Encodes the match data into a JSON string for QR code generation.
     //
     // @return the JSON encoded string
+
     ///
     @SuppressWarnings("unused")
     public String encodeToJSON()
@@ -1279,6 +1372,7 @@ public class MatchData
     // Aligns values vertically for easier reading.
     //
     // @return a multi-line string containing all data point names and values
+
     ///
     public String getMatchDataString()
     {

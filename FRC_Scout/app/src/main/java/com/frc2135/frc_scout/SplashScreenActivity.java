@@ -98,12 +98,23 @@ public class SplashScreenActivity extends AppCompatActivity
             ScoutNames.getInstance(context);
         }).start();
 
+        boolean isAbout = getIntent().getBooleanExtra("is_about", false);
+        if (isAbout)
+        {
+            m_binding.getRoot().setOnClickListener(v -> finish());
+        }
+
         // Simple fade-in animation
         m_binding.splashActivityContainer.setAlpha(0f);
         m_binding.splashActivityContainer.animate()
                 .alpha(1f)
                 .setDuration(500)
-                .withEndAction(this::startMainTransition)
+                .withEndAction(() -> {
+                    if (!isAbout)
+                    {
+                        startMainTransition();
+                    }
+                })
                 .start();
 
         logDisplayResolution();

@@ -94,6 +94,11 @@ public class SetEventCodeDialog extends DialogFragment
                     Log.i(TAG, "Load default event code called");
                     m_binding.loadEventCodeInput.setText(Constants.DEFAULT_EVENT_CODE);
                     m_binding.loadEventCodeLayout.setError(null);
+                    if (settings != null)
+                    {
+                        settings.setEventCode(Constants.DEFAULT_EVENT_CODE);
+                        getParentFragmentManager().setFragmentResult("event_code_changed", new Bundle());
+                    }
                 })
                 .create();
 
@@ -130,6 +135,7 @@ public class SetEventCodeDialog extends DialogFragment
                 {
                     Log.i(TAG, "Saving event code to settings: " + eventCode);
                     settings.setEventCode(eventCode);
+                    getParentFragmentManager().setFragmentResult("event_code_changed", new Bundle());
                 }
                 dialog.dismiss();
             });

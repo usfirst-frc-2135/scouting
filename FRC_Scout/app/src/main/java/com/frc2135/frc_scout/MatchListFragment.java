@@ -213,8 +213,9 @@ public class MatchListFragment extends Fragment
                 }
                 else if (itemID == R.id.about_screen_dialog)
                 {
-                    startActivity(new Intent(requireContext(), SplashScreenActivity.class));
-                    requireActivity().finish();
+                    Intent intent = new Intent(requireContext(), SplashScreenActivity.class);
+                    intent.putExtra("is_about", true);
+                    startActivity(intent);
                 }
                 return true;
             }
@@ -348,6 +349,10 @@ public class MatchListFragment extends Fragment
                     m_settings.defaultSettings();
                     m_settings.saveSettingsSilent();
 
+                    if (requireActivity() instanceof MatchListActivity)
+                    {
+                        ((MatchListActivity) requireActivity()).refreshActionBar();
+                    }
                     refreshMatchList();
                     Log.i(TAG, "All configuration data cleared");
                     Snackbar.make(m_binding.getRoot(), "All configuration data cleared", Snackbar.LENGTH_SHORT).show();
