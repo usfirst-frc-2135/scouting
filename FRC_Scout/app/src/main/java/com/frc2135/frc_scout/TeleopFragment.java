@@ -47,37 +47,6 @@ public class TeleopFragment extends Fragment
 {
     private static final String TAG = "TeleopFragment";
 
-/*REMOVE->
-    private static final int[] ACCURACY_IDS = {
-            //R.id.teleop_accuracy_na,
-            //R.id.teleop_accuracy_most,
-            //R.id.teleop_accuracy_three_fourths,
-            //R.id.teleop_accuracy_half,
-            //R.id.teleop_accuracy_quarter,
-            //R.id.teleop_accuracy_few,
-            //R.id.teleop_accuracy_none
-    };
-
-    private static final int[] PASSING_RATE_IDS = {
-            //R.id.teleop_passing_rate_na,
-            //R.id.teleop_passing_rate_low,
-            //R.id.teleop_passing_rate_medium,
-            //R.id.teleop_passing_rate_large,
-            //R.id.teleop_passing_rate_tons
-    };
-<-REMOVE*/
-/*REMOVE->
-    private static final int[] DEFENSE_RATE_IDS = {
-            R.id.teleop_defense_na,
-            R.id.teleop_defense_low,
-            R.id.teleop_defense_med_low,
-            R.id.teleop_defense_medium,
-            R.id.teleop_defense_med_high,
-            R.id.teleop_defense_high
-    };
-
- <-REMOVE*/
-
     private MatchData m_matchData;
     private TeleopFragmentBinding m_binding;
     private int m_photoNum;
@@ -92,7 +61,7 @@ public class TeleopFragment extends Fragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        Log.v(TAG, "onCreate");
+        Log.v(TAG, "TeleopFragment: onCreate");
         m_matchData = ((ScoutingActivity) requireActivity()).getCurrentMatch();
         m_settings = Settings.getInstance(requireContext());
     }
@@ -108,7 +77,7 @@ public class TeleopFragment extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
-        Log.v(TAG, "onCreateView");
+        Log.v(TAG, "TeleopFragment: onCreateView");
         m_binding = TeleopFragmentBinding.inflate(inflater, parent, false);
         return m_binding.getRoot();
     }
@@ -124,7 +93,7 @@ public class TeleopFragment extends Fragment
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        Log.v(TAG, "onViewCreated");
+        Log.v(TAG, "TeleopFragment: onViewCreated");
         setupActionBar();
         loadMatchData();
         setupListeners();
@@ -160,22 +129,16 @@ public class TeleopFragment extends Fragment
         }
 
 
-        Log.v(TAG,">>> from matchData: teleopHopperAccuracy value = "+m_matchData.getAccuracyRate());
         m_binding.teleopHopperAccuracySlider.setValue(m_matchData.getAccuracyRate());  //NEW
-
         m_binding.teleopHopperTotalText.setText(String.valueOf(m_matchData.getHoppersUsed()));
         updateScoreColor(m_binding.teleopHopperTotalText);
-
 
         m_binding.teleopIntakeShootChip.setChecked(m_matchData.getIntakeAndShoot());
         m_binding.teleopHerdedFuelChip.setChecked(m_matchData.getShovelFuel());
 
         m_binding.teleopPassNzChip.setChecked(m_matchData.getPassNeutralZone() == 1);
         m_binding.teleopPassAzChip.setChecked(m_matchData.getPassAllianceZone() == 1);
-
-        Log.v(TAG,">>> from matchData: teleopPassingEffectiveness value = "+m_matchData.getPassingEffectivenessRate());
         m_binding.teleopPassingEffectivenessSlider.setValue(m_matchData.getPassingEffectivenessRate());
-
         m_binding.teleopDefenseEffectivenessSlider.setValue(m_matchData.getDefenseRate());
 
         setupPhoto();
@@ -187,16 +150,9 @@ public class TeleopFragment extends Fragment
     ///
     private void setupListeners()
     {
-        Log.v(TAG, "----> setupListeners(): doing teleopHopperAccuracySlider");
         m_binding.teleopHopperAccuracySlider.setOnClickListener((v) -> syncAndRefreshBadges());
-
-        Log.v(TAG, "----> setupListeners(): doing teleopPassingEffectivenessSlider");
         m_binding.teleopPassingEffectivenessSlider.setOnClickListener((v) -> syncAndRefreshBadges());
-
         m_binding.teleopDefenseEffectivenessSlider.setOnClickListener((v) -> syncAndRefreshBadges());
-
-
-        Log.v(TAG, "----> setupListeners(): doing teleopHopperDecrButton");
         m_binding.teleopHopperDecrButton.setOnClickListener(v -> {
             updateTotalsInt(m_binding.teleopHopperTotalText, false);
             syncAndRefreshBadges();
@@ -205,16 +161,11 @@ public class TeleopFragment extends Fragment
             updateTotalsInt(m_binding.teleopHopperTotalText, true);
             syncAndRefreshBadges();
         });
-        Log.v(TAG, "----> setupListeners(): doing Chips");
         m_binding.teleopIntakeShootChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
         m_binding.teleopHerdedFuelChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
         m_binding.teleopPassNzChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
         m_binding.teleopPassAzChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
-        Log.v(TAG, "----> setupListeners(): defense radio buttons");
-//REMOVE      //  m_binding.teleopAccuracyRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
-//REMOVE        //m_binding.teleopPassingRateRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
-       //REMOVE m_binding.teleopDefenseRadioGroup.setOnCheckedChangeListener((g, i) -> syncAndRefreshBadges());
-        Log.v(TAG, "----> setupListeners(): done");
+        Log.v(TAG, "TeleopFragment: setupListeners(): done");
     }
 
     ///////////////////
@@ -274,7 +225,7 @@ public class TeleopFragment extends Fragment
     private void setupPhoto()
     {
         m_photoNum = m_matchData.getTeleopPhoto();
-        Log.d(TAG, "setupPhoto: image number = " + m_photoNum);
+        Log.d(TAG, "TeleopFragment: setupPhoto: image number = " + m_photoNum);
 
         ViewGroup.LayoutParams params = m_binding.teleopPhotoContainer.getLayoutParams();
         if (m_photoNum == 0)
@@ -444,7 +395,6 @@ public class TeleopFragment extends Fragment
     {
         float hopperAccuracyValue = m_binding.teleopHopperAccuracySlider.getValue();
         int hopperAccuracyValueInt = (int) hopperAccuracyValue;
-        Log.v(TAG,"===> getCurrentAccuracyRate: returning value: "+hopperAccuracyValueInt);
         return hopperAccuracyValueInt;
     }
 
@@ -459,7 +409,6 @@ public class TeleopFragment extends Fragment
     {
         float PassingEffectValue = m_binding.teleopPassingEffectivenessSlider.getValue();
         int PassingEffectValueInt = (int) PassingEffectValue;
-        Log.v(TAG,"===> getCurrentPassingEffectivenessRate: returning value: "+PassingEffectValueInt);
         return PassingEffectValueInt;
     }
 
@@ -472,7 +421,6 @@ public class TeleopFragment extends Fragment
     {
         float DefenseEffectValue = m_binding.teleopDefenseEffectivenessSlider.getValue();
         int DefenseEffectValueInt = (int) DefenseEffectValue;
-        Log.v(TAG,"===> getCurrentDefenseEffectivenessRate: returning value: "+DefenseEffectValueInt);
         return DefenseEffectValueInt;
     }
 
@@ -517,7 +465,7 @@ public class TeleopFragment extends Fragment
     public void onResume()
     {
         super.onResume();
-        Log.v(TAG, "onResume");
+        Log.v(TAG, "TeleopFragment: onResume");
         setupActionBar();
     }
 
@@ -528,7 +476,7 @@ public class TeleopFragment extends Fragment
     public void onDestroyView()
     {
         super.onDestroyView();
-        Log.v(TAG, "onDestroyView");
+        Log.v(TAG, "TeleopFragment: onDestroyView");
         m_binding = null;
     }
 }

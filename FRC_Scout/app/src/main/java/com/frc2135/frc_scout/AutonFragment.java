@@ -46,16 +46,6 @@ import com.frc2135.frc_scout.databinding.AutonFragmentBinding;
 public class AutonFragment extends Fragment
 {
     private static final String TAG = "AutonFragment";
-    private static final int[] AUTON_ACCURACY_IDS = {
-            //R.id.auton_accuracy_na,
-            //R.id.auton_accuracy_most,
-            //R.id.auton_accuracy_three_fourths,
-            //R.id.auton_accuracy_half,
-            //R.id.auton_accuracy_quarter,
-            //R.id.auton_accuracy_few,
-            //R.id.auton_accuracy_none
-    };
-
     private MatchData m_matchData;
     private AutonFragmentBinding m_binding;
     private Settings m_settings;
@@ -140,15 +130,7 @@ public class AutonFragment extends Fragment
 
         m_binding.autonHopperTotalText.setText(String.valueOf(m_matchData.getAutonHopper()));
         updateScoreColor(m_binding.autonHopperTotalText); // Check Hopper levels for MAX
-        Log.v(TAG,">>> from matchData: autonHopperAccuracy value = "+m_matchData.getAutonAccuracyRate());
         m_binding.autonHopperAccuracySlider.setValue(m_matchData.getAutonAccuracyRate());
-
-
-        m_binding.autonAzChip.setChecked(m_matchData.isAutonAz());
-        m_binding.autonDepotChip.setChecked(m_matchData.isAutonDepot());
-        m_binding.autonOutpostChip.setChecked(m_matchData.isAutonOutpost());
-        m_binding.autonNzChip.setChecked(m_matchData.isAutonNz());
-
         m_binding.autonClimbChip.setChecked(m_matchData.getAutonClimb());
     }
 
@@ -169,15 +151,8 @@ public class AutonFragment extends Fragment
         });
 
         m_binding.autonPreloadChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
-        m_binding.autonAzChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
-        m_binding.autonDepotChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
-        m_binding.autonOutpostChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
-        m_binding.autonNzChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
-
         m_binding.autonPreloadAccuracySlider.setOnClickListener((l) -> syncAndRefreshBadges());
-        Log.v(TAG,"----> setupListeners(): doing auton Hopper Accuracy Slider");
         m_binding.autonHopperAccuracySlider.setOnClickListener((l) ->syncAndRefreshBadges());
-
         m_binding.autonClimbChip.setOnCheckedChangeListener((v, b) -> syncAndRefreshBadges());
     }
 
@@ -303,10 +278,6 @@ public class AutonFragment extends Fragment
             Log.e(TAG, "updateAutonData: Invalid hopper score value", e);
         }
         m_matchData.setAutonPreload(m_binding.autonPreloadChip.isChecked());
-        m_matchData.setAutonNz(m_binding.autonNzChip.isChecked());
-        m_matchData.setAutonAz(m_binding.autonAzChip.isChecked());
-        m_matchData.setAutonDepot(m_binding.autonDepotChip.isChecked());
-        m_matchData.setAutonOutpost(m_binding.autonOutpostChip.isChecked());
         m_matchData.setAutonAccuracyRate(getCurrentAutonAccuracyRate());
         m_matchData.setPreloadAccuracyLevel(getPreloadAccuracyLevel());
         m_matchData.setAutonClimb(m_binding.autonClimbChip.isChecked());
@@ -319,7 +290,7 @@ public class AutonFragment extends Fragment
     public void onResume()
     {
         super.onResume();
-        Log.v(TAG, "onResume");
+        Log.v(TAG, "AutonFragment: onResume");
         setupActionBar();
     }
 
@@ -330,7 +301,7 @@ public class AutonFragment extends Fragment
     public void onDestroyView()
     {
         super.onDestroyView();
-        Log.v(TAG, "onDestroyView");
+        Log.v(TAG, "AutonFragment: onDestroyView");
         m_binding = null;
     }
 }

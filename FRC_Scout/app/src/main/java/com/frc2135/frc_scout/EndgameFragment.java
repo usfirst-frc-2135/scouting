@@ -62,7 +62,7 @@ public class EndgameFragment extends Fragment
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        Log.v(TAG, "onCreate");
+        Log.v(TAG, "EndgameFragment: onCreate");
         m_matchData = ((ScoutingActivity) requireActivity()).getCurrentMatch();
         m_settings = Settings.getInstance(requireContext());
     }
@@ -78,7 +78,7 @@ public class EndgameFragment extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
-        Log.v(TAG, "onCreateView");
+        Log.v(TAG, "EndgameFragment: onCreateView");
         m_binding = EndgameFragmentBinding.inflate(inflater, parent, false);
         return m_binding.getRoot();
     }
@@ -94,13 +94,10 @@ public class EndgameFragment extends Fragment
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        Log.i(TAG, "onViewCreated");
+        Log.i(TAG, "EndgameFragment: onViewCreated");
         setupActionBar();
-        Log.i(TAG,"--->> onViewCreated() calling loadMatchData()");
         loadMatchData();
-        Log.i(TAG,"    --->> onViewCreated() calling setupListeners()");
         setupListeners();
-        Log.i(TAG, "       ----> done with onViewCreated()");
     }
 
     //////////////////////
@@ -221,8 +218,6 @@ public class EndgameFragment extends Fragment
         {
             return;
         }
-
-
         m_matchData.setComment(Objects.requireNonNull(m_binding.endgameCommentsInput.getText()).toString());
         m_matchData.setNoShow(m_binding.noShowChip.isChecked());
         m_matchData.setDriveAbility(getCurrentDriverAbility());
@@ -237,7 +232,7 @@ public class EndgameFragment extends Fragment
     public void onResume()
     {
         super.onResume();
-        Log.v(TAG, "onResume");
+        Log.v(TAG, "EndgameFragment: onResume");
         setupActionBar();
     }
 
@@ -248,7 +243,7 @@ public class EndgameFragment extends Fragment
     public void onDestroyView()
     {
         super.onDestroyView();
-        Log.v(TAG, "onDestroyView");
+        Log.v(TAG, "EndgameFragment: onDestroyView");
         m_binding = null;
     }
 }
