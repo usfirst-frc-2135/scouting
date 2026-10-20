@@ -1194,68 +1194,48 @@ public class MatchData
     // Validates the autonomous stage entries.
     //
     // @return a validation message string, or empty if valid
-
     ///
     public String validateAuton()
     {
-        //        if (m_autonHopper > MAX_AUTON_HOPPERS)
-        //        {
-        //            return "Auton: Hopper score exceeds maximum (" + MAX_AUTON_HOPPERS + ")!\n";
-        //        }
-        return "";
+        StringBuilder msg = new StringBuilder();
+        // If the preload is shot, make sure the preload accuracy rate is set.
+        if (m_autonPreload && m_autonPreloadAccRate == 0)    
+        {
+            msg.append("\nAuton: Preload shot but Preload Accuracy Rate not set!\n");
+        }
+        // If the hopper is used, make sure the accuracy rate is set.
+        if (m_autonHopper > 0 && m_autonAccuracyRate == 0)
+        {
+            msg.append("\nAuton: Hopper used but Hopper Accuracy Rate not set!\n");
+        }
+        return msg.toString();
     }
 
     /////////////////////
     // Validates the teleoperated stage entries.    TODO - these need to be updated!
     //
     // @return a validation message string, or empty if valid
-
     ///
     public String validateTeleop()
     {
         StringBuilder msg = new StringBuilder();
-        // Teleop Hopper validation
-        //        if (m_hoppersUsed > MAX_TELEOP_HOPPERS)
-        //        {
-        //            msg.append("Teleop: Hopper score exceeds maximum (").append(MAX_TELEOP_HOPPERS).append(")!\n");
-        //        }
-
-/*REMOVE->
-        // Teleop Passing validation
-        if (m_passedNz == 3 || m_passedAz == 3)
+        // If teleop hopper used, make sure accuracy rate is set.
+        if (m_hoppersUsed > 0 && m_accuracyRate == 0)
         {
-            if (m_passedNz == 3 && m_passedAz == 3)
-            {
-                msg.append("Teleop: Passing From Neutral/Alliance Zone buttons must be set!\n");
-            }
-            else if (m_passedNz == 3)
-            {
-                msg.append("Teleop: Passing From Neutral Zone button must be set\n");
-            }
-            else
-            {
-                msg.append("Teleop: Passing From Alliance Zone button must be set\n");
-            }
+            msg.append("\nTeleop: Hopper used but Hopper Accuracy Rate not set!\n");
         }
-<-REMOVE*/
 
         // Passing rate validation
         if (((m_passedNz == 1 || m_passedAz == 1) && m_passingRate == 0) || ((m_passedNz == 0 && m_passedAz == 0) && m_passingRate > 0))
         {
             if ((m_passedNz == 1 || m_passedAz == 1) && m_passingRate == 0)
             {
-                msg.append("\nTeleop: Passed from zone set, Passing rate not set!\n");
+                msg.append("\nTeleop: Passing is used  but Passing Rate not set!\n");
             }
             else
             {
-                msg.append("\nTeleop: Passing rate set, Passed from zone not set!\n");
+                msg.append("\nTeleop: Passing Rate is set but Passing from Zone not set!\n");
             }
-        }
-
-        // Driver ability validation
-        if (m_drivingAbility == 6)           // THIS SHOULD PROB BE REMOVED
-        {
-            msg.append("\nTeleop: Driver ability not set!\n");
         }
         return msg.toString();
     }
@@ -1264,16 +1244,13 @@ public class MatchData
     // Validates the endgame stage entries.
     //
     // @return a validation message string, or empty if valid
-
     ///
     public String validateEndgame()
     {
-        // Climb selections validation
-        if ((m_startClimb == 0 && (m_endgameClimbLevel != 0 || m_endgameClimbPos != 0)) ||
-                (m_endgameClimbLevel == 0 && m_startClimb != 0) ||
-                (m_endgameClimbPos == 0 && m_startClimb != 0))
+        // Driver ability should be set unless Died or NoShow.
+        if (m_diedValue == 0 && m_noShow == false && m_drivingAbility == 0)
         {
-            return "\nEndgame: Start Climb, Climb Level and Climb Position settings don't match!\n";
+            return("\nEndgame: Driver Ability not set!\n");
         }
         return "";
     }
@@ -1282,7 +1259,6 @@ public class MatchData
     // Encodes the match data into a Tab-Separated Values (TSV) string for QR code generation.
     //
     // @return the TSV encoded string
-
     ///
     public String encodeToTSV()
     {
