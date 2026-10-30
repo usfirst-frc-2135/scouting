@@ -237,6 +237,12 @@ public class TeleopFragment extends Fragment
                 m_photoNum = 3;
                 m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.me_and_charlotte);
             }
+            //new
+            else if (rand < 0.04)
+            {
+                m_photoNum = 8;
+                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.me_and_trisha);
+            }
             else if (rand < 0.05)
             {
                 m_photoNum = 5;
@@ -310,6 +316,10 @@ public class TeleopFragment extends Fragment
                     break;
                 case 7:
                     resId = R.drawable.rebuilt_fuel_shiny;
+                    width = 250;
+                    break;
+                case 8:
+                    resId = R.drawable.me_and_trisha;
                     width = 250;
                     break;
             }
