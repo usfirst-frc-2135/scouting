@@ -235,9 +235,8 @@ public class TeleopFragment extends Fragment
             if (rand < 0.03)
             {
                 m_photoNum = 3;
-                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.me_and_charlotte);
+                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.charlotte_new);
             }
-            //new
             else if (rand < 0.04)
             {
                 m_photoNum = 8;
@@ -251,14 +250,14 @@ public class TeleopFragment extends Fragment
             else if (rand < 0.3)
             {
                 m_photoNum = 4;
-                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.frc_logo);
+                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.ccc_photo);
                 params.width = 450;
                 m_binding.teleopPhotoContainer.setLayoutParams(params);
             }
             else if (rand < 0.4)
             {
                 m_photoNum = 2;
-                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.rebuilt_logo);
+                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.toph);
                 params.width = 250;
                 m_binding.teleopPhotoContainer.setLayoutParams(params);
             }
@@ -272,7 +271,7 @@ public class TeleopFragment extends Fragment
             else
             {
                 m_photoNum = 1;
-                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.rebuilt_fuel);
+                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.new_improved_fuel);
                 params.width = 250;
                 m_binding.teleopPhotoContainer.setLayoutParams(params);
 
@@ -293,18 +292,18 @@ public class TeleopFragment extends Fragment
             switch (m_photoNum)
             {
                 case 1:
-                    resId = R.drawable.rebuilt_fuel;
+                    resId = R.drawable.new_improved_fuel;
                     width = 250;
                     break;
                 case 2:
-                    resId = R.drawable.rebuilt_logo;
+                    resId = R.drawable.toph;
                     width = 250;
                     break;
                 case 3:
-                    resId = R.drawable.me_and_charlotte;
+                    resId = R.drawable.charlotte_new;
                     break;
                 case 4:
-                    resId = R.drawable.frc_logo;
+                    resId = R.drawable.ccc_photo;
                     width = 450;
                     break;
                 case 5:
