@@ -230,55 +230,69 @@ public class TeleopFragment extends Fragment
         ViewGroup.LayoutParams params = m_binding.teleopPhotoContainer.getLayoutParams();
         if (m_photoNum == 0)
         {
+            // No photo number yet, so randomly assign it. 
             Random random = new Random();
-            double rand = random.nextDouble();
-            if (rand < 0.03)
+            double rand = random.nextDouble();    // get a random number
+            if (rand < 0.03)    // most rare - 3%
             {
                 m_photoNum = 3;
                 m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.charlotte_new);
+                params.width = 190;
+                m_binding.teleopPhotoContainer.setLayoutParams(params);
             }
-            else if (rand < 0.04)
+            else if (rand < 0.04)    // 4%
             {
                 m_photoNum = 8;
                 m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.me_and_trisha);
-            }
-            else if (rand < 0.05)
-            {
-                m_photoNum = 5;
-                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.me_and_charlotte_2);
-            }
-            else if (rand < 0.3)
-            {
-                m_photoNum = 4;
-                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.ccc_photo);
-                params.width = 450;
+                params.width = 220;
                 m_binding.teleopPhotoContainer.setLayoutParams(params);
             }
-            else if (rand < 0.4)
+            else if (rand < 0.05)     // 5%
+            {
+                m_photoNum = 6;
+                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.fuel_alisa);
+                params.width = 220;
+                m_binding.teleopPhotoContainer.setLayoutParams(params);
+            }
+            else if (rand < 0.07)   // 7%
+            {
+                m_photoNum = 5;
+                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.me_and_charlotte);
+            }
+            else if (rand < 0.4)  // 40%
             {
                 m_photoNum = 2;
                 m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.toph);
                 params.width = 250;
                 m_binding.teleopPhotoContainer.setLayoutParams(params);
             }
-            else if (rand < 0.5)
+            else if (rand < 0.5)    // 50%
             {
-                m_photoNum = 6;
-                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.t2135_logo_square);
-                params.width = 260;
+                m_photoNum = 4;
+                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.ccc_photo);
+                params.width = 450;
                 m_binding.teleopPhotoContainer.setLayoutParams(params);
             }
             else
             {
-                m_photoNum = 1;
-                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.new_improved_fuel);
-                params.width = 250;
-                m_binding.teleopPhotoContainer.setLayoutParams(params);
-
-                if (random.nextDouble() < 0.1)
+                double rand2 = random.nextDouble();    // get another random number
+                if (rand2 < 0.1)
+                {
+                    m_photoNum = 9;
+                    m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.evil_larry);
+                    params.width = 250;
+                    m_binding.teleopPhotoContainer.setLayoutParams(params);
+                }
+                else if (rand2 < 0.3)
                 {
                     m_photoNum = 7;
                     m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.rebuilt_fuel_shiny);
+                    params.width = 250;
+                    m_binding.teleopPhotoContainer.setLayoutParams(params);
+                } else  // most common
+                {
+                    m_photoNum = 1;
+                    m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.new_improved_fuel);
                     params.width = 250;
                     m_binding.teleopPhotoContainer.setLayoutParams(params);
                 }
@@ -301,17 +315,18 @@ public class TeleopFragment extends Fragment
                     break;
                 case 3:
                     resId = R.drawable.charlotte_new;
+                    width = 190;
                     break;
                 case 4:
                     resId = R.drawable.ccc_photo;
                     width = 450;
                     break;
                 case 5:
-                    resId = R.drawable.me_and_charlotte_2;
+                    resId = R.drawable.me_and_charlotte;
                     break;
                 case 6:
-                    resId = R.drawable.t2135_logo_square;
-                    width = 260;
+                    resId = R.drawable.fuel_alisa;
+                    width = 220;
                     break;
                 case 7:
                     resId = R.drawable.rebuilt_fuel_shiny;
@@ -319,6 +334,10 @@ public class TeleopFragment extends Fragment
                     break;
                 case 8:
                     resId = R.drawable.me_and_trisha;
+                    width = 250;
+                    break;
+                case 9:
+                    resId = R.drawable.evil_larry;
                     width = 250;
                     break;
             }
