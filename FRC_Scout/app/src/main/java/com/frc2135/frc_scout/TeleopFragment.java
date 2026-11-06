@@ -237,8 +237,6 @@ public class TeleopFragment extends Fragment
             {
                 m_photoNum = 3;
                 m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.charlotte_new);
-                params.width = 190;
-                m_binding.teleopPhotoContainer.setLayoutParams(params);
             }
             else if (rand < 0.04)    // 4%
             {
@@ -250,8 +248,8 @@ public class TeleopFragment extends Fragment
             else if (rand < 0.05)     // 5%
             {
                 m_photoNum = 6;
-                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.fuel_alisa);
-                params.width = 220;
+                m_binding.teleopPhotoContainer.setBackgroundResource(R.drawable.alisa_fuel);
+                params.width = 290;
                 m_binding.teleopPhotoContainer.setLayoutParams(params);
             }
             else if (rand < 0.07)   // 7%
@@ -315,7 +313,6 @@ public class TeleopFragment extends Fragment
                     break;
                 case 3:
                     resId = R.drawable.charlotte_new;
-                    width = 190;
                     break;
                 case 4:
                     resId = R.drawable.ccc_photo;
@@ -325,8 +322,8 @@ public class TeleopFragment extends Fragment
                     resId = R.drawable.me_and_charlotte;
                     break;
                 case 6:
-                    resId = R.drawable.fuel_alisa;
-                    width = 220;
+                    resId = R.drawable.alisa_fuel;
+                    width = 290;
                     break;
                 case 7:
                     resId = R.drawable.rebuilt_fuel_shiny;
